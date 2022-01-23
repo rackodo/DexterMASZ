@@ -1,8 +1,8 @@
-import { AutoModEventTableEntry } from "./AutoModEventTableEntry";
+import { AutoModerationEventTableEntry } from "./AutoModerationEventTableEntry";
 import { IModCaseTableEntry } from "./IModCaseTableEntry";
 
 export interface QuickSearchEntry {
-    entry: IModCaseTableEntry|AutoModEventTableEntry;
+    entry: IModCaseTableEntry|AutoModerationEventTableEntry;
     createdAt: Date;
     quickSearchEntryType: number;
 }

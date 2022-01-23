@@ -1,17 +1,17 @@
 <div class="d-flex flex-column w-100">
     <div class="p-2">
         <div class="d-flex flex-row flex-wrap align-items-end mb-4">
-            <form [formGroup]="newNoteFormGroup" *ngIf="!this.users.loading">
+            <form [formGroup]="newNoteFormGroup" *ngIf="!this.members.loading">
                 <mat-form-field class="mr-2">
-                    <mat-label>{{ 'UsernoteTable.User' | translate }}</mat-label>
+                    <mat-label>{{ 'UsernoteTable.Member' | translate }}</mat-label>
                     <input type="text"
                         placeholder="Pick one"
-                        aria-label="User"
+                        aria-label="Member"
                         matInput
                         formControlName="userid"
                         [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of this.filteredUsers | async" [value]="option.id">
+                        <mat-option *ngFor="let option of this.filteredMembers | async" [value]="option.id">
                             {{option.username}}#{{option.discriminator}}
                         </mat-option>
                     </mat-autocomplete>

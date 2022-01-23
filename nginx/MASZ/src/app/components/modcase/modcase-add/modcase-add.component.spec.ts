@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModCaseAddComponent } from './modcase-add.component';
+import { ModcaseAddComponent } from './modcase-add.component';
 
-describe('ModCaseAddComponent', () => {
-  let component: ModCaseAddComponent;
-  let fixture: ComponentFixture<ModCaseAddComponent>;
+describe('ModcaseAddComponent', () => {
+  let component: ModcaseAddComponent;
+  let fixture: ComponentFixture<ModcaseAddComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModCaseAddComponent ]
+      declarations: [ ModcaseAddComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModCaseAddComponent);
+    fixture = TestBed.createComponent(ModcaseAddComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

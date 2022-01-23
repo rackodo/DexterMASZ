@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { ApiToken } from 'src/app/models/ApiToken';
+import { APIToken } from 'src/app/models/APIToken';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { NewTokenDialog } from 'src/app/models/NewTokenDialog';
 import { ApiService } from 'src/app/services/api.service';
@@ -15,7 +15,7 @@ import { NewTokenDialogComponent } from '../../dialogs/new-token-dialog/new-toke
 })
 export class TokenOverviewComponent implements OnInit {
 
-  public tokens: ContentLoading<ApiToken[]> = { loading: true, content: [] };
+  public tokens: ContentLoading<APIToken[]> = { loading: true, content: [] };
 
   public generatingNewToken: boolean = false;
   public newToken: string = '';

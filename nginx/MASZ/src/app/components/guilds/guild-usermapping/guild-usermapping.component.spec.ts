@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GuildUsermappingComponent } from './guild-usermaps.component';
+import { GuildUsermappingComponent } from './guild-usermapping.component';
 
 describe('GuildUsermappingComponent', () => {
   let component: GuildUsermappingComponent;

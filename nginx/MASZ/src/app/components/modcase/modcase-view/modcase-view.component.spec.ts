@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModCaseViewComponent } from './modcase-view.component';
+import { ModcaseViewComponent } from './modcase-view.component';
 
-describe('ModCaseViewComponent', () => {
-  let component: ModCaseViewComponent;
-  let fixture: ComponentFixture<ModCaseViewComponent>;
+describe('ModcaseViewComponent', () => {
+  let component: ModcaseViewComponent;
+  let fixture: ComponentFixture<ModcaseViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModCaseViewComponent ]
+      declarations: [ ModcaseViewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModCaseViewComponent);
+    fixture = TestBed.createComponent(ModcaseViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

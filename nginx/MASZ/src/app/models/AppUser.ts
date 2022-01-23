@@ -2,7 +2,7 @@ import { DiscordUser } from "./DiscordUser";
 import { Guild } from "./Guild";
 
 export interface AppUser {
-  userGuilds: Guild[];
+  memberGuilds: Guild[];
   bannedGuilds: Guild[];
   modGuilds: Guild[];
   adminGuilds: Guild[];

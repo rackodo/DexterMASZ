@@ -23,8 +23,8 @@ import { ApiService } from 'src/app/services/api.service';
 export class GuildUsernotesComponent implements OnInit {
 
   public newNoteFormGroup!: FormGroup;
-  public filteredUsers!: Observable<DiscordUser[]>;
-  public users: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
+  public filteredMembers!: Observable<DiscordUser[]>;
+  public members: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
 
   private guildId!: string;
   private timeout: any;
@@ -40,7 +40,7 @@ export class GuildUsernotesComponent implements OnInit {
 
     this.resetForm();
 
-    this.filteredUsers = this.newNoteFormGroup.valueChanges
+    this.filteredMembers = this.newNoteFormGroup.valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value.userid))
@@ -61,11 +61,11 @@ export class GuildUsernotesComponent implements OnInit {
 
   private _filter(value: string): DiscordUser[] {
     if (!value?.trim()) {
-      return this.users.content?.filter(option => !option.bot)?.slice(0, 10) as DiscordUser[];
+      return this.members.content?.filter(option => !option.bot)?.slice(0, 10) as DiscordUser[];
     }
     const filterValue = value.trim().toLowerCase();
 
-    return this.users.content?.filter(option =>
+    return this.members.content?.filter(option =>
        ((option.username + "#" + option.discriminator).toLowerCase().includes(filterValue) ||
        option.id.includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
   }
@@ -74,7 +74,7 @@ export class GuildUsernotesComponent implements OnInit {
     this.loading = true;
     this.$showUserNotes.next([]);
     this.allUserNotes = [];
-    this.users = { loading: true, content: [] };
+    this.members = { loading: true, content: [] };
 
     this.api.getSimpleData(`/guilds/${this.guildId}/usernoteview`).subscribe((data: UserNoteView[]) => {
       this.allUserNotes = data;
@@ -88,12 +88,12 @@ export class GuildUsernotesComponent implements OnInit {
 
     const params = new HttpParams()
           .set('partial', 'true');
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}/users`, true, params).subscribe(data => {
-      this.users.content = data;
-      this.users.loading = false;
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}/members`, true, params).subscribe(data => {
+      this.members.content = data;
+      this.members.loading = false;
     }, error => {
       console.error(error);
-      this.toastr.error(this.translator.instant('UsernoteTable.FailedToLoadUser'));
+      this.toastr.error(this.translator.instant('UsernoteTable.FailedToLoadMember'));
     });
   }
 

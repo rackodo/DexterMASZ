@@ -4,9 +4,9 @@ import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { ApiEnumTypes } from 'src/app/models/ApiEmumTypes';
-import { ApiEnum } from 'src/app/models/ApiEnum';
-import { AutoModConfig } from 'src/app/models/AutoModConfig';
+import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
+import { APIEnum } from 'src/app/models/APIEnum';
+import { AutoModerationConfig } from 'src/app/models/AutoModerationConfig';
 import { AutoModRuleDefinition } from 'src/app/models/AutoModRuleDefinitions';
 import { ChannelNotificationBehavior } from 'src/app/models/ChannelNotificationBehavior';
 import { ContentLoading } from 'src/app/models/ContentLoading';
@@ -21,7 +21,7 @@ import { EnumManagerService } from 'src/app/services/enum-manager.service';
   templateUrl: './automod-rule.component.html',
   styleUrls: ['./automod-rule.component.css']
 })
-export class AutoModRuleComponent implements OnInit {
+export class AutomodRuleComponent implements OnInit {
 
   eventForm!: FormGroup;
   filterForm!: FormGroup;
@@ -29,13 +29,13 @@ export class AutoModRuleComponent implements OnInit {
   @Input() definition!: AutoModRuleDefinition;
   @Input() guildChannels!: GuildChannel[];
   @Input() guild!: Guild;
-  @Input() initialConfigs!: Promise<AutoModConfig[]>;
+  @Input() initialConfigs!: Promise<AutoModerationConfig[]>;
   public guildId!: string;
   public enableConfig: boolean = false;
   public tryingToSaveConfig: boolean = false;
-  public automodActionOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
-  public punishmentTypes: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
-  public automodChannelBehaviors: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
+  public automodActionOptions: ContentLoading<APIEnum[]> = { loading: true, content: [] };
+  public punishmentTypes: ContentLoading<APIEnum[]> = { loading: true, content: [] };
+  public automodChannelBehaviors: ContentLoading<APIEnum[]> = { loading: true, content: [] };
 
   public initRowsCustomWords = 1;
 
@@ -81,17 +81,17 @@ export class AutoModRuleComponent implements OnInit {
     });
 
     this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
-    this.initialConfigs.then((data: AutoModConfig[]) => {
+    this.initialConfigs.then((data: AutoModerationConfig[]) => {
       // if type in initial loaded configs
-      if (data.filter(x => x.autoModType == this.definition.type).length) {
+      if (data.filter(x => x.autoModerationType == this.definition.type).length) {
         this.enableConfig = true;
-        this.applyConfig(data.filter(x => x.autoModType == this.definition.type)[0]);
+        this.applyConfig(data.filter(x => x.autoModerationType == this.definition.type)[0]);
       } else {
         this.enableConfig = false;
       }
     });
 
-    this.enumManager.getEnum(ApiEnumTypes.AUTOMODACTION).subscribe((data) => {
+    this.enumManager.getEnum(APIEnumTypes.AUTOMODACTION).subscribe((data) => {
       this.automodActionOptions.loading = false;
       this.automodActionOptions.content = data;
     }, (error) => {
@@ -99,7 +99,7 @@ export class AutoModRuleComponent implements OnInit {
       this.automodActionOptions.loading = false;
     });
 
-    this.enumManager.getEnum(ApiEnumTypes.PUNISHMENT).subscribe((data) => {
+    this.enumManager.getEnum(APIEnumTypes.PUNISHMENT).subscribe((data) => {
       this.punishmentTypes.loading = false;
       this.punishmentTypes.content = data;
     }, (error) => {
@@ -107,7 +107,7 @@ export class AutoModRuleComponent implements OnInit {
       this.punishmentTypes.loading = false;
     });
 
-    this.enumManager.getEnum(ApiEnumTypes.AUTOMODCHANNELNOTIFICATIONBEHAVIOR).subscribe((data) => {
+    this.enumManager.getEnum(APIEnumTypes.AUTOMODCHANNELNOTIFICATIONBEHAVIOR).subscribe((data) => {
       this.automodChannelBehaviors.loading = false;
       this.automodChannelBehaviors.content = data;
     }, (error) => {
@@ -122,13 +122,13 @@ export class AutoModRuleComponent implements OnInit {
 
   reload() {
     this.enableConfig = false;
-    this.api.getSimpleData(`/guilds/${this.guildId}/automodconfig/${this.definition.type}`).subscribe((data) => {
+    this.api.getSimpleData(`/guilds/${this.guildId}/automoderationconfig/${this.definition.type}`).subscribe((data) => {
       this.enableConfig = true;
       this.applyConfig(data);
     });
   }
 
-  applyConfig(config: AutoModConfig) {
+  applyConfig(config: AutoModerationConfig) {
     this.eventForm.setValue({
       limit: this.definition.showLimitField ? config.limit : '',
       timeLimit: this.definition.showTimeLimitField ? config.timeLimitMinutes : '',
@@ -143,7 +143,7 @@ export class AutoModRuleComponent implements OnInit {
     this.actionForm.setValue({
       dmNotification: config.sendDmNotification,
       publicNotification: config.sendPublicNotification,
-      automodAction: config.autoModAction,
+      automodAction: config.autoModerationAction,
       punishmentType: config.punishmentType,
       punishmentDuration: config.punishmentDurationMinutes,
       channelNotificationBehavior: config.channelNotificationBehavior
@@ -157,13 +157,13 @@ export class AutoModRuleComponent implements OnInit {
   }
 
   deleteConfig() {
-    this.api.deleteData(`/guilds/${this.guildId}/automodconfig/${this.definition.type}`).subscribe(() => {
-      this.toastr.success(this.translator.instant('AutoModConfig.ConfigDeleted'));
+    this.api.deleteData(`/guilds/${this.guildId}/automoderationconfig/${this.definition.type}`).subscribe(() => {
+      this.toastr.success(this.translator.instant('AutomodConfig.ConfigDeleted'));
       this.reload();
     }, error => {
       console.error(error);
       if (error?.error?.status !== 404 && error?.status !== 404) {
-        this.toastr.error(this.translator.instant('AutoModConfig.FailedToDeleteConfig'));
+        this.toastr.error(this.translator.instant('AutomodConfig.FailedToDeleteConfig'));
       }
       this.reload();
     });
@@ -172,8 +172,8 @@ export class AutoModRuleComponent implements OnInit {
   saveConfig(stepper: MatStepper) {
     this.tryingToSaveConfig = true;
     const data = {
-      "AutoModType": this.definition.type,
-      "AutoModAction": this.actionForm.value.automodAction,
+      "AutoModerationType": this.definition.type,
+      "AutoModerationAction": this.actionForm.value.automodAction,
       "PunishmentType": this.actionForm.value.punishmentType,
       "PunishmentDurationMinutes": this.actionForm.value.punishmentDuration !== "" ? this.actionForm.value.punishmentDuration : null,
       "IgnoreChannels": this.filterForm.value.excludeChannels !== "" ? this.filterForm.value.excludeChannels : [],
@@ -186,15 +186,15 @@ export class AutoModRuleComponent implements OnInit {
       "ChannelNotificationBehavior": this.actionForm.value.channelNotificationBehavior !== "" ? this.actionForm.value.channelNotificationBehavior : 0
     }
 
-    this.api.putSimpleData(`/guilds/${this.guildId}/automodconfig`, data).subscribe((data) => {
+    this.api.putSimpleData(`/guilds/${this.guildId}/automoderationconfig`, data).subscribe((data) => {
       this.tryingToSaveConfig = false;
-      this.toastr.success(this.translator.instant('AutoModConfig.SavedConfig'));
+      this.toastr.success(this.translator.instant('AutomodConfig.SavedConfig'));
       this.applyConfig(data);
       stepper.selectedIndex = 0;
     }, error => {
       console.error(error);
       this.tryingToSaveConfig = false;
-      this.toastr.error(this.translator.instant('AutoModConfig.FailedToSaveConfig'))
+      this.toastr.error(this.translator.instant('AutomodConfig.FailedToSaveConfig'))
     });
   }
 }

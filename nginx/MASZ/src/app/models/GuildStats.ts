@@ -5,7 +5,7 @@ export interface GuildStats {
     activeMuteCount: number;
     moderationCount: number;
     trackedInvites: number;
-    userMaps: number;
+    userMappings: number;
     userNotes: number;
     comments: number;
 }

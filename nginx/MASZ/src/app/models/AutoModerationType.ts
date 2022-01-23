@@ -1,10 +1,10 @@
-export enum AutoModType {
+export enum AutoModerationType {
   InvitePosted,
   TooManyEmotes,
   TooManyMentions,
   TooManyAttachments,
   TooManyEmbeds,
-  TooManyAutoMods,
+  TooManyAutoModerations,
   CustomWordFilter,
   TooManyMessages
 }

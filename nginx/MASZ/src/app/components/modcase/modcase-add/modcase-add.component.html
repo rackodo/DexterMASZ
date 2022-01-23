@@ -30,20 +30,20 @@
                     <button mat-raised-button matStepperNext color="accent">{{ 'ModCaseDialog.Next' | translate }}</button>
                 </div>
             </mat-step>
-            <mat-step [stepControl]="userFormGroup">
-                <ng-template matStepLabel>{{ 'ModCaseDialog.ChooseAUser' | translate }}</ng-template>
-                <mat-spinner *ngIf="this.users.loading"></mat-spinner>
-                <form [formGroup]="userFormGroup" *ngIf="!this.users.loading">
+            <mat-step [stepControl]="memberFormGroup">
+                <ng-template matStepLabel>{{ 'ModCaseDialog.ChooseAMember' | translate }}</ng-template>
+                <mat-spinner *ngIf="this.members.loading"></mat-spinner>
+                <form [formGroup]="memberFormGroup" *ngIf="!this.members.loading">
                     <mat-form-field>
-                        <mat-label>{{ 'ModCaseDialog.User' | translate }}</mat-label>
+                        <mat-label>{{ 'ModCaseDialog.Member' | translate }}</mat-label>
                         <input type="text"
                             placeholder="{{ 'ModCaseDialog.PickOne' | translate }}"
-                            aria-label="User"
+                            aria-label="Member"
                             matInput
-                            formControlName="user"
+                            formControlName="member"
                             [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of this.filteredUsers | async" [value]="option.id">
+                        <mat-option *ngFor="let option of this.filteredMembers | async" [value]="option.id">
                             {{option.username}}#{{option.discriminator}}
                         </mat-option>
                         </mat-autocomplete>

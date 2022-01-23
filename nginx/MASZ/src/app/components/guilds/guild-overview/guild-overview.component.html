@@ -10,7 +10,7 @@
                     <span *ngIf="tab.component == 'dashboard'">{{ 'GuildOverview.Tabs.Dashboard' | translate }}</span>
                     <span *ngIf="tab.component == 'cases'">{{ 'GuildOverview.Tabs.Case' | translate }}</span>
                     <span *ngIf="tab.component == 'messages'">{{ 'GuildOverview.Tabs.Messages' | translate }}</span>
-                    <span *ngIf="tab.component == 'automods'">{{ 'GuildOverview.Tabs.AutoMod' | translate }}</span>
+                    <span *ngIf="tab.component == 'automods'">{{ 'GuildOverview.Tabs.Automoderation' | translate }}</span>
                     <span *ngIf="tab.component == 'config'">{{ 'GuildOverview.Tabs.Config' | translate }}</span>
                     <span *ngIf="tab.component == 'usermap'">{{ 'GuildOverview.Tabs.Usermap' | translate }}</span>
                     <span *ngIf="tab.component == 'usernote'">{{ 'GuildOverview.Tabs.Usernote' | translate }}</span>
@@ -21,7 +21,7 @@
                     <app-guild-messages *ngIf="tab.component=='messages'"></app-guild-messages>
                     <app-automod-table *ngIf="tab.component=='automods'"></app-automod-table>
                     <app-guild-config *ngIf="tab.component=='config'"></app-guild-config>
-                    <app-guild-usermaps *ngIf="tab.component=='usermap'"></app-guild-usermaps>
+                    <app-guild-usermapping *ngIf="tab.component=='usermap'"></app-guild-usermapping>
                     <app-guild-usernotes *ngIf="tab.component=='usernote'"></app-guild-usernotes>
                 </ng-template>
             </mat-tab>

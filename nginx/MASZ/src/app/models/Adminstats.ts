@@ -1,6 +1,6 @@
 import { IServiceStatus } from "./IServiceStatus";
 
-export interface AdminStats {
+export interface Adminstats {
     botStatus: IServiceStatus;
     dbStatus: IServiceStatus;
     cacheStatus: IServiceStatus;
@@ -9,9 +9,9 @@ export interface AdminStats {
     trackedInvites: number;
     modCases: number;
     guilds: number;
-    autoModEvents: number;
+    automodEvents: number;
     userNotes: number;
-    userMaps: number;
+    userMappings: number;
     apiTokens: number;
     nextCache: Date;
     cachedDataFromDiscord: string[];

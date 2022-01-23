@@ -7,7 +7,7 @@
                 class="rounded-circle z-depth-0 user-a-image"
                 alt="avatar image"
                 height="96"
-                title="SuspectA {{ userMap.userMap.userA }}"
+                title="SuspectA {{ userMap.userMapping.userA }}"
                 onerror="this.src='/assets/img/default_profile.png';"
             />
             <img
@@ -15,7 +15,7 @@
                 class="rounded-circle z-depth-0 user-b-image"
                 alt="avatar image"
                 height="96"
-                title="SuspectB {{ userMap.userMap.userB }}"
+                title="SuspectB {{ userMap.userMapping.userB }}"
                 onerror="this.src='/assets/img/default_profile.png';"
             />
             <img
@@ -23,39 +23,39 @@
                 class="rounded-circle z-depth-0 mod-image"
                 alt="avatar image"
                 height="40"
-                title="Moderator {{ userMap.userMap.creatorUserId }}"
+                title="Moderator {{ userMap.userMapping.creatorUserId }}"
                 onerror="this.src='/assets/img/default_profile.png';"
             />
         </div>
         <div class="flex-shrink-1 d-flex flex-column flex-wrap pr-2">
             <!-- Title -->
             <div>
-                <span title="{{ userMap.userMap.userA }}" class="mat-h2 mb-0">
+                <span title="{{ userMap.userMapping.userA }}" class="mat-h2 mb-0">
                     <span *ngIf="userMap.userA">
                         {{ userMap.userA?.username }}#{{ userMap.userA?.discriminator }}
                     </span>
                     <span *ngIf="!userMap.userA">
-                        {{ userMap.userMap.userB }}
+                        {{ userMap.userMapping.userB }}
                     </span>
                      -
                     <span *ngIf="userMap.userB">
                         {{ userMap.userB?.username }}#{{ userMap.userB?.discriminator }}
                     </span>
                     <span *ngIf="!userMap.userB">
-                        {{ userMap.userMap.userB }}
+                        {{ userMap.userMapping.userB }}
                     </span>
                 </span>
             </div>
 
             <!-- Text -->
-            <span title="{{ userMap.userMap.reason }}" style="white-space: pre-wrap; word-wrap: anywhere">
-                {{ userMap.userMap.reason }}
+            <span title="{{ userMap.userMapping.reason }}" style="white-space: pre-wrap; word-wrap: anywhere">
+                {{ userMap.userMapping.reason }}
             </span>
         </div>
         <div class="flex-grow-1"></div>
         <div class="d-flex flex-column align-content-center flex-shrink-0">
             <span class="text-black-50" style="text-align: right;">
-                <app-date-display [date]="userMap.userMap.createdAt" [prefixKey]="'UsermapCard.UpdatedPrefix'"></app-date-display>
+                <app-date-display [date]="userMap.userMapping.createdAt" [prefixKey]="'UsermapCard.UpdatedPrefix'"></app-date-display>
             </span>
             <div class="flex-grow-1"></div>
             <!-- Button -->

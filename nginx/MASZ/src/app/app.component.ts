@@ -130,14 +130,14 @@ export class AppComponent implements OnInit{
         this.versionManager.localVersionChanged(newLocalVersion);
       }, error => {
         console.error(error);
-        this.toastr.error(this.translator.instant('AdminStats.FailedToLoadLocalVersion'));
+        this.toastr.error(this.translator.instant('Adminstats.FailedToLoadLocalVersion'));
       });
 
       this.api.getSimpleData(`/meta/versions`).subscribe((data: IImageVersion[]) => {
         this.versionManager.availableVersionsChanged(data);
       }, error => {
         console.error(error);
-        this.toastr.error(this.translator.instant('AdminStats.FailedToLoadAvailableVersions'));
+        this.toastr.error(this.translator.instant('Adminstats.FailedToLoadAvailableVersions'));
       });
 
       this.triggerVersionLoadOnce = false;

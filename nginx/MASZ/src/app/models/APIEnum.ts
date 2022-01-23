@@ -1,4 +1,4 @@
-export interface ApiEnum {
+export interface APIEnum {
     key: number;
     value: string;
 }

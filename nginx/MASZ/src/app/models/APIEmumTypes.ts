@@ -1,11 +1,11 @@
-export enum ApiEnumTypes {
+export enum APIEnumTypes {
     PUNISHMENT = "punishment",
     VIEWPERMISSION = "viewpermission",
     AUTOMODACTION = "automodaction",
     AUTOMODTYPE = "automodtype",
     CASECREATIONTYPE = "casecreationtype",
     LANGUAGE = "language",
-    ApiERRORS = "apierror",
+    APIERRORS = "apierror",
     AUTOMODCHANNELNOTIFICATIONBEHAVIOR = "automodchannelbehavior",
     EDITSTATUS = "editstatus",
     LOCKEDCOMMENTSTATUS = "lockedcommentstatus",

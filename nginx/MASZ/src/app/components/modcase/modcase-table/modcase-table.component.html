@@ -25,12 +25,12 @@
         </div>
         <!-- Filters -->
         <div class="d-flex flex-row flex-wrap mb-2 align-items-baseline" *ngIf="useAdvancedFilters">
-            <app-multi-select class="px-2 pb-2" [elements]="this.users" (selected)="selectedUserChanged($event)"
-                              [placeholderKey]="'ModCaseTable.SelectUsers'"
+            <app-multi-select class="px-2 pb-2" [elements]="this.members" (selected)="selectedMemberChanged($event)"
+                              [placeholderKey]="'ModCaseTable.SelectMembers'"
                               [searchPredicate]="userFilterPredicate"
                               [compareWithPredicate]="userComparePredicate"
                               [displayPredicate]="userDisplayPredicate"></app-multi-select>
-            <app-multi-select class="px-2 pb-2" [elements]="this.users" (selected)="selectedModChanged($event)"
+            <app-multi-select class="px-2 pb-2" [elements]="this.members" (selected)="selectedModChanged($event)"
                               [placeholderKey]="'ModCaseTable.SelectModerators'"
                               [searchPredicate]="userFilterPredicate"
                               [compareWithPredicate]="userComparePredicate"

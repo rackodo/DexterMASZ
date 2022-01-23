@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AutoModRuleComponent } from './automod-rule.component';
+import { AutomodRuleComponent } from './automod-rule.component';
 
-describe('AutoModRuleComponent', () => {
-  let component: AutoModRuleComponent;
-  let fixture: ComponentFixture<AutoModRuleComponent>;
+describe('AutomodRuleComponent', () => {
+  let component: AutomodRuleComponent;
+  let fixture: ComponentFixture<AutomodRuleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AutoModRuleComponent ]
+      declarations: [ AutomodRuleComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AutoModRuleComponent);
+    fixture = TestBed.createComponent(AutomodRuleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,6 +1,6 @@
-import { AutoModType } from "./AutoModType";
+import { AutoModerationType } from "./AutoModerationType";
 
-export interface AutoModSplit {
-    type: AutoModType;
+export interface AutomodSplit {
+    type: AutoModerationType;
     count: number;
 }

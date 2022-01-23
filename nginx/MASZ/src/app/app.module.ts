@@ -50,12 +50,12 @@ import { GuildListComponent } from './components/guilds/guild-list/guild-list.co
 import { GuildDeleteDialogComponent } from './components/guilds/guild-delete-dialog/guild-delete-dialog.component';
 import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { GuildEditComponent } from './components/guilds/guild-edit/guild-edit.component';
-import { ModCaseAddComponent } from './components/modcase/modcase-add/modcase-add.component';
-import { ModCaseEditComponent } from './components/modcase/modcase-edit/modcase-edit.component';
-import { ModCaseViewComponent } from './components/modcase/modcase-view/modcase-view.component';
+import { ModcaseAddComponent } from './components/modcase/modcase-add/modcase-add.component';
+import { ModcaseEditComponent } from './components/modcase/modcase-edit/modcase-edit.component';
+import { ModcaseViewComponent } from './components/modcase/modcase-view/modcase-view.component';
 import { GuildDashboardComponent } from './components/guilds/guild-dashboard/guild-dashboard.component';
-import { ModCaseTableComponent } from './components/modcase/modcase-table/modcase-table.component';
-import { AutoModTableComponent } from './components/automod/automod-table/automod-table.component';
+import { ModcaseTableComponent } from './components/modcase/modcase-table/modcase-table.component';
+import { AutomodTableComponent } from './components/automod/automod-table/automod-table.component';
 import { DashboardMotdComponent } from './components/guilds/guild-dashboard/dashboard-motd/dashboard-motd.component';
 import { DashboardQuicksearchComponent } from './components/guilds/guild-dashboard/dashboard-quicksearch/dashboard-quicksearch.component';
 import { DashboardGuildinfoComponent } from './components/guilds/guild-dashboard/dashboard-guildinfo/dashboard-guildinfo.component';
@@ -68,14 +68,14 @@ import { QuicksearchCaseResultComponent } from './components/guilds/guild-dashbo
 import { QuicksearchModerationResultComponent } from './components/guilds/guild-dashboard/dashboard-quicksearch/quicksearch-moderation-result/quicksearch-moderation-result.component';
 import { CountChartComponent } from './components/guilds/guild-dashboard/dashboard-charts/count-chart/count-chart.component';
 import { ChartsModule } from 'ng2-charts';
-import { ModCaseCardComponent } from './components/modcase/modcase-table/modcase-card/modcase-card.component';
-import { ModCaseCardCompactComponent } from './components/guilds/guild-dashboard/dashboard-case-list/modcase-card-compact/modcase-card-compact.component';
-import { DashboardAutoModSplitComponent } from './components/guilds/guild-dashboard/dashboard-automod-split/dashboard-automod-split.component';
-import { AutoModCardComponent } from './components/automod/automod-card/automod-card.component';
+import { ModcaseCardComponent } from './components/modcase/modcase-table/modcase-card/modcase-card.component';
+import { ModcaseCardCompactComponent } from './components/guilds/guild-dashboard/dashboard-case-list/modcase-card-compact/modcase-card-compact.component';
+import { DashboardAutomodSplitComponent } from './components/guilds/guild-dashboard/dashboard-automod-split/dashboard-automod-split.component';
+import { AutomodCardComponent } from './components/automod/automod-card/automod-card.component';
 import { CommentsCardCompactComponent } from './components/guilds/guild-dashboard/dashboard-comment-list/comments-card-compact/comments-card-compact.component';
 import { MotdConfigComponent } from './components/guilds/guild-config/motd-config/motd-config.component';
-import { AutoModConfigComponent } from './components/guilds/guild-config/automod-config/automod-config.component';
-import { AutoModRuleComponent } from './components/guilds/guild-config/automod-config/automod-rule/automod-rule.component';
+import { AutomodConfigComponent } from './components/guilds/guild-config/automod-config/automod-config.component';
+import { AutomodRuleComponent } from './components/guilds/guild-config/automod-config/automod-rule/automod-rule.component';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { CaseDeleteDialogComponent } from './components/dialogs/case-delete-dialog/case-delete-dialog.component';
 import { CommentEditDialogComponent } from './components/dialogs/comment-edit-dialog/comment-edit-dialog.component';
@@ -84,14 +84,14 @@ import { TemplateCreateDialogComponent } from './components/dialogs/template-cre
 import { TokenOverviewComponent } from './components/api/token-overview/token-overview.component';
 import { NewTokenDialogComponent } from './components/dialogs/new-token-dialog/new-token-dialog.component';
 import { UserscanComponent } from './components/usergraph/userscan/userscan.component';
-import { GuildUsermappingComponent } from './components/guilds/guild-usermaps/guild-usermaps.component';
+import { GuildUsermappingComponent } from './components/guilds/guild-usermapping/guild-usermapping.component';
 import { GuildUsernotesComponent } from './components/guilds/guild-usernotes/guild-usernotes.component';
 import { UsernoteCardComponent } from './components/guilds/guild-usernotes/usernote-card/usernote-card.component';
 import { UsernoteEditDialogComponent } from './components/dialogs/usernote-edit-dialog/usernote-edit-dialog.component';
-import { UsermapCardComponent } from './components/guilds/guild-usermaps/usermap-card/usermap-card.component';
+import { UsermapCardComponent } from './components/guilds/guild-usermapping/usermap-card/usermap-card.component';
 import { UsermapEditDialogComponent } from './components/dialogs/usermap-edit-dialog/usermap-edit-dialog.component';
 import { QuicksearchUsermapsResultComponent } from './components/guilds/guild-dashboard/dashboard-quicksearch/quicksearch-usermaps-result/quicksearch-usermaps-result.component';
-import { AdminStatsComponent } from './components/api/adminstats/adminstats.component';
+import { AdminstatsComponent } from './components/api/adminstats/adminstats.component';
 import { AdminlistComponent } from './components/api/adminstats/adminlist/adminlist.component';
 import { StatcardComponent } from './components/api/adminstats/statcard/statcard.component';
 import { GuildIconComponent } from './components/basic/guild-icon/guild-icon.component';
@@ -137,12 +137,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     GuildDeleteDialogComponent,
     ConfirmationDialogComponent,
     GuildEditComponent,
-    ModCaseAddComponent,
-    ModCaseEditComponent,
-    ModCaseViewComponent,
+    ModcaseAddComponent,
+    ModcaseEditComponent,
+    ModcaseViewComponent,
     GuildDashboardComponent,
-    ModCaseTableComponent,
-    AutoModTableComponent,
+    ModcaseTableComponent,
+    AutomodTableComponent,
     DashboardMotdComponent,
     DashboardQuicksearchComponent,
     DashboardGuildinfoComponent,
@@ -154,14 +154,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     QuicksearchCaseResultComponent,
     QuicksearchModerationResultComponent,
     CountChartComponent,
-    ModCaseCardComponent,
-    ModCaseCardCompactComponent,
-    DashboardAutoModSplitComponent,
-    AutoModCardComponent,
+    ModcaseCardComponent,
+    ModcaseCardCompactComponent,
+    DashboardAutomodSplitComponent,
+    AutomodCardComponent,
     CommentsCardCompactComponent,
     MotdConfigComponent,
-    AutoModConfigComponent,
-    AutoModRuleComponent,
+    AutomodConfigComponent,
+    AutomodRuleComponent,
     CaseDeleteDialogComponent,
     CommentEditDialogComponent,
     TemplateCreateDialogComponent,
@@ -175,7 +175,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UsermapCardComponent,
     UsermapEditDialogComponent,
     QuicksearchUsermapsResultComponent,
-    AdminStatsComponent,
+    AdminstatsComponent,
     AdminlistComponent,
     StatcardComponent,
     GuildIconComponent,

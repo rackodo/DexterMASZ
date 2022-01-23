@@ -42,15 +42,15 @@ export class AuditlogConfigComponent implements OnInit {
     },
     {
       type: 6,
-      key: 'UserRolesUpdated'
+      key: 'MemberRolesUpdated'
     },
     {
       type: 7,
-      key: 'UserJoined'
+      key: 'MemberJoined'
     },
     {
       type: 8,
-      key: 'UserRemoved'
+      key: 'MemberRemoved'
     },
     {
       type: 9,

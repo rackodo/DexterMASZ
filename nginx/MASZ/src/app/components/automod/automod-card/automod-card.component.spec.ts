@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AutoModCardComponent } from './automod-card.component';
+import { AutomodCardComponent } from './automod-card.component';
 
-describe('AutoModCardComponent', () => {
-  let component: AutoModCardComponent;
-  let fixture: ComponentFixture<AutoModCardComponent>;
+describe('AutomodCardComponent', () => {
+  let component: AutomodCardComponent;
+  let fixture: ComponentFixture<AutomodCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AutoModCardComponent ]
+      declarations: [ AutomodCardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AutoModCardComponent);
+    fixture = TestBed.createComponent(AutomodCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

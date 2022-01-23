@@ -1,13 +1,13 @@
-import { AutoModAction } from "./AutoModAction";
-import { AutoModType } from "./AutoModType";
+import { AutoModerationAction } from "./AutoModerationAction";
+import { AutoModerationType } from "./AutoModerationType";
 import { ChannelNotificationBehavior } from "./ChannelNotificationBehavior";
 import { PunishmentType } from "./PunishmentType";
 
-export interface AutoModConfig {
+export interface AutoModerationConfig {
     id: number;
     guildId: string;
-    autoModType: AutoModType;
-    autoModAction: AutoModAction;
+    autoModerationType: AutoModerationType;
+    autoModerationAction: AutoModerationAction;
     punishmentType: PunishmentType;
     punishmentDurationMinutes: number;
     ignoreChannels: string[];
