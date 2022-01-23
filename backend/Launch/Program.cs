@@ -7,6 +7,7 @@ using MASZ.Bot.Models;
 using MASZ.Bot.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("========== Launching MASZ ==========");
@@ -15,9 +16,25 @@ Console.WriteLine("========== Launching MASZ ==========");
 
 ConsoleCreator.AddHeading("Getting Database Info");
 
-var provider = new MySqlProvider();
+var server = ConsoleCreator.AskAndSet("server host", "MYSQL_HOST");
 
-var databaseBuilder = provider.GetDatabaseBuilder();
+var port = ConsoleCreator.AskAndSet("server port", "MYSQL_PORT");
+
+var database = ConsoleCreator.AskAndSet("database name", "MYSQL_DATABASE");
+
+var uid = ConsoleCreator.AskAndSet("login username", "MYSQL_USER");
+
+var pwd = ConsoleCreator.AskAndSet("login password", "MYSQL_PASSWORD");
+
+ConsoleCreator.AddSubHeading("Successfully created: ", "MySQL Database Provider");
+
+var connectionString = $"Server={server};Port={port};Database={database};Uid={uid};Pwd={pwd};";
+
+Action<DbContextOptionsBuilder> databaseBuilder = x => x.UseMySql(
+	connectionString,
+	ServerVersion.AutoDetect(connectionString),
+	o => o.SchemaBehavior(MySqlSchemaBehavior.Translate, (schema, table) => $"{schema}_{table}")
+);
 
 // APP SETTINGS
 
