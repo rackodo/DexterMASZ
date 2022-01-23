@@ -29,7 +29,7 @@
         <div class="d-flex flex-row flex-wrap statcards" *ngIf="!stats.loading && stats.content != undefined">
             <app-statcard [emote]="'dns'" [text]="stats.content?.guilds" [titleKey]="'Guilds.Guilds'"></app-statcard>
             <app-statcard [emote]="'description'" [text]="stats.content?.modCases" [titleKey]="'Cases'"></app-statcard>
-            <app-statcard [emote]="'bolt'" [text]="stats.content?.automodEvents" [titleKey]="'AutoMods'"></app-statcard>
+            <app-statcard [emote]="'bolt'" [text]="stats.content?.autoModEvents" [titleKey]="'AutoMods'"></app-statcard>
             <app-statcard [emote]="'badge'" [text]="stats.content?.userNotes" [titleKey]="'Usernotes'"></app-statcard>
             <app-statcard [emote]="'people'" [text]="stats.content?.userMaps" [titleKey]="'Usermaps'"></app-statcard>
             <app-statcard [emote]="'link'" [text]="stats.content?.trackedInvites" [titleKey]="'Invites'"></app-statcard>

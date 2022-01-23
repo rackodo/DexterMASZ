@@ -35,7 +35,7 @@ export class AppsettingsComponent implements OnInit {
     });
     this.settingsFormGroup = this._formBuilder.group({
       defaultLanguage: ['', Validators.required ],
-      auditLogWebhookURL: ['',  Validators.pattern('https://discord(app)?\.com/api/webhooks/[0-9]+/.+') ],
+      auditLogWebhookUrl: ['',  Validators.pattern('https://discord(app)?\.com/api/webhooks/[0-9]+/.+') ],
       publicFileMode: ['']
     });
 
@@ -47,7 +47,7 @@ export class AppsettingsComponent implements OnInit {
       });
       this.settingsFormGroup.setValue({
         defaultLanguage: data.defaultLanguage,
-        auditLogWebhookURL: data.auditLogWebhookURL,
+        auditLogWebhookUrl: data.auditLogWebhookUrl,
         publicFileMode: data.publicFileMode
       });
 
@@ -84,7 +84,7 @@ export class AppsettingsComponent implements OnInit {
   updateSettings() {
     let body = {
       defaultLanguage: this.settingsFormGroup.value?.defaultLanguage ?? 0,
-      auditLogWebhookURL: this.settingsFormGroup.value?.auditLogWebhookURL ?? null,
+      auditLogWebhookUrl: this.settingsFormGroup.value?.auditLogWebhookUrl ?? null,
       publicFileMode: this.settingsFormGroup.value?.publicFileMode ?? false
     }
     this.api.putSimpleData('/settings/infrastructure', body, undefined, true, true).subscribe((data: IAppSettings) => {
@@ -92,7 +92,7 @@ export class AppsettingsComponent implements OnInit {
       this.settingsLoading = false;
       this.settingsFormGroup.setValue({
         defaultLanguage: data.defaultLanguage,
-        auditLogWebhookURL: data.auditLogWebhookURL,
+        auditLogWebhookUrl: data.auditLogWebhookUrl,
         publicFileMode: data.publicFileMode
       });
     }, error => {
@@ -105,6 +105,6 @@ export class AppsettingsComponent implements OnInit {
   get embedContent() { return this.embedFormGroup.get('content'); }
 
   get settingsDefaultLanguage() { return this.settingsFormGroup.get('defaultLanguage'); }
-  get settingsAuditLogWebhookURL() { return this.settingsFormGroup.get('auditLogWebhookURL'); }
+  get settingsAuditLogWebhookURL() { return this.settingsFormGroup.get('auditLogWebhookUrl'); }
   get settingsPublicFileMode() { return this.settingsFormGroup.get('publicFileMode'); }
 }

@@ -18,7 +18,7 @@ public class AppSettingsController : AuthenticatedController
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> GetAppSettings([FromRoute] ulong guildId)
+	public async Task<IActionResult> GetAppSettings()
 	{
 		var identity = await SetupAuthentication();
 
@@ -55,7 +55,7 @@ public class AppSettingsController : AuthenticatedController
 		var toAdd = await _settingsRepository.GetAppSettings();
 
 		toAdd.DefaultLanguage = newSettings.DefaultLanguage;
-		toAdd.AuditLogWebhookUrl = newSettings.AuditLogWebhookURL ?? string.Empty;
+		toAdd.AuditLogWebhookUrl = newSettings.AuditLogWebhookUrl ?? string.Empty;
 		toAdd.PublicFileMode = newSettings.PublicFileMode;
 
 		await _settingsRepository.UpdateAppSetting(toAdd);

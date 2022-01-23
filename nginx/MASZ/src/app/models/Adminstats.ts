@@ -9,7 +9,7 @@ export interface AdminStats {
     trackedInvites: number;
     modCases: number;
     guilds: number;
-    automodEvents: number;
+    autoModEvents: number;
     userNotes: number;
     userMaps: number;
     apiTokens: number;

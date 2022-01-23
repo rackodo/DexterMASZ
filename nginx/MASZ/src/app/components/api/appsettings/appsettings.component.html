@@ -62,7 +62,7 @@
             <div class="mb-2 warn-color">{{ 'AppSettings.Infrastrcture.AuditLogWebhookUrl.Explained' | translate }}</div>
             <mat-form-field class="w-75 mb-4">
                 <mat-label>{{ 'AppSettings.Infrastrcture.AuditLogWebhookUrl.Field' | translate }}</mat-label>
-                <input matInput type="text" formControlName="auditLogWebhookURL">
+                <input matInput type="text" formControlName="auditLogWebhookUrl">
                 <div *ngIf="settingsAuditLogWebhookURL?.invalid && (settingsAuditLogWebhookURL?.dirty || settingsAuditLogWebhookURL?.touched)" class="alert alert-danger my-1">
                     <div *ngIf="settingsAuditLogWebhookURL?.errors?.['pattern']">
                         {{ 'Forms.InvalidWebhookURL' | translate }}
