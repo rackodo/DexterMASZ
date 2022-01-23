@@ -6,8 +6,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
-import { APIEnum } from 'src/app/models/APIEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEmumTypes';
+import { ApiEnum } from 'src/app/models/ApiEnum';
 import { AppUser } from 'src/app/models/AppUser';
 import { CaseComment } from 'src/app/models/CaseComment';
 import { CaseDeleteDialogData } from 'src/app/models/CaseDeleteDialogData';
@@ -16,7 +16,7 @@ import { CommentEditDialog } from 'src/app/models/CommentEditDialog';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { FileInfo } from 'src/app/models/FileInfo';
 import { Guild } from 'src/app/models/Guild';
-import { convertModcaseToPunishmentString, ModCase } from 'src/app/models/ModCase';
+import { convertModCaseToPunishmentString, ModCase } from 'src/app/models/ModCase';
 import { PunishmentType } from 'src/app/models/PunishmentType';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -31,8 +31,8 @@ import * as moment from 'moment';
   templateUrl: './modcase-view.component.html',
   styleUrls: ['./modcase-view.component.css']
 })
-export class ModcaseViewComponent implements OnInit {
-  public convertModcaseToPunishmentString = convertModcaseToPunishmentString;
+export class ModCaseViewComponent implements OnInit {
+  public convertModCaseToPunishmentString = convertModCaseToPunishmentString;
   public restoringCase: boolean = false;
 
   public guildId!: string;
@@ -53,10 +53,10 @@ export class ModcaseViewComponent implements OnInit {
   public currentUser: ContentLoading<AppUser> = { loading: true, content: undefined };
   public currentGuild: ContentLoading<Guild> = { loading: true, content: undefined };
   public modCase: ContentLoading<CaseView> = { loading: true, content: undefined };
-  public punishments: ContentLoading<APIEnum[]> = { loading: true, content: [] };
+  public punishments: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
   public punishment: string = "Unknown";
 
-  public creationTypes: APIEnum[] = [];
+  public creationTypes: ApiEnum[] = [];
   public creationType = "";
 
   public markedDeleteParams = {
@@ -98,7 +98,7 @@ export class ModcaseViewComponent implements OnInit {
   }
 
   private reloadCreationTypes() {
-    this.enumManager.getEnum(APIEnumTypes.CASECREATIONTYPE).subscribe((data) => {
+    this.enumManager.getEnum(ApiEnumTypes.CASECREATIONTYPE).subscribe((data) => {
       this.creationTypes = data;
       this.creationType = data?.find(x => x.key == this.modCase.content?.modCase?.creationType)?.value ?? '';
     }, error => {
@@ -108,10 +108,10 @@ export class ModcaseViewComponent implements OnInit {
 
   private reloadPunishmentEnum() {
     this.punishments = { loading: true, content: [] };
-    this.enumManager.getEnum(APIEnumTypes.PUNISHMENT).subscribe(data => {
+    this.enumManager.getEnum(ApiEnumTypes.PUNISHMENT).subscribe(data => {
       this.punishments.loading = false;
       this.punishments.content = data;
-      this.punishment = convertModcaseToPunishmentString(this.modCase.content?.modCase, this.punishments?.content);
+      this.punishment = convertModCaseToPunishmentString(this.modCase.content?.modCase, this.punishments?.content);
     }, error => {
       console.error(error);
       this.punishments.loading = false;
@@ -157,7 +157,7 @@ export class ModcaseViewComponent implements OnInit {
     this.api.getSimpleData(`/guilds/${this.guildId}/cases/${this.caseId}/view`).subscribe((data: CaseView) => {
       this.modCase.content = data;
       this.renderedDescription = this.renderDescription(data.modCase.description, this.guildId)
-      this.punishment = convertModcaseToPunishmentString(this.modCase.content?.modCase, this.punishments?.content);
+      this.punishment = convertModCaseToPunishmentString(this.modCase.content?.modCase, this.punishments?.content);
       this.creationType = this.creationTypes?.find(x => x.key == this.modCase.content?.modCase?.creationType)?.value ?? '';
       this.markedDeleteParams = {
         user: data.deletedBy ? `${data.deletedBy.username}#${data.deletedBy.discriminator}` : this.translator.instant('ModCaseView.Moderators')

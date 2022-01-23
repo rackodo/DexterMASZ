@@ -20,7 +20,6 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ICaseLabel } from 'src/app/models/ICaseLabel';
 import { go, highlight } from 'fuzzysort';
 
-
 @Component({
   selector: 'app-modcase-edit',
   templateUrl: './modcase-edit.component.html',

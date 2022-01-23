@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UserMappingDto } from 'src/app/models/UserMappingDto';
+import { UserMapDto } from 'src/app/models/UserMapDto';
 
 @Component({
   selector: 'app-usermap-edit-dialog',
@@ -10,7 +10,7 @@ import { UserMappingDto } from 'src/app/models/UserMappingDto';
 export class UsermapEditDialogComponent implements OnInit {
 
   public initRows = 1;
-  constructor(@Inject(MAT_DIALOG_DATA) public settings: UserMappingDto) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public settings: UserMapDto) { }
 
   ngOnInit(): void {
     this.initRows = Math.min(this.settings.reason.split(/\r\n|\r|\n/).length, 15);

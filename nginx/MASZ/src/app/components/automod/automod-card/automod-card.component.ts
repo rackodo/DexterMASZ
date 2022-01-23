@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
-import { AutoModerationEvent } from 'src/app/models/AutoModerationEvent';
+import { ApiEnumTypes } from 'src/app/models/ApiEmumTypes';
+import { AutoModEvent } from 'src/app/models/AutoModEvent';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 
 @Component({
@@ -9,9 +9,9 @@ import { EnumManagerService } from 'src/app/services/enum-manager.service';
   templateUrl: './automod-card.component.html',
   styleUrls: ['./automod-card.component.css']
 })
-export class AutomodCardComponent implements OnInit {
+export class AutoModCardComponent implements OnInit {
 
-  @Input() moderation!: AutoModerationEvent;
+  @Input() moderation!: AutoModEvent;
 
   iconsMap: { [key: number]: string} = {
     0: 'forward_to_inbox',
@@ -32,11 +32,11 @@ export class AutomodCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.moderation.messageContent = this.moderation.messageContent.replace(/\n/g, "\\n");
-    this.enumManager.getEnum(APIEnumTypes.AUTOMODACTION).subscribe(data => {
-      this.action = data?.find(x => x.key == this.moderation.autoModerationAction)?.value ?? "Unknown";
+    this.enumManager.getEnum(ApiEnumTypes.AUTOMODACTION).subscribe(data => {
+      this.action = data?.find(x => x.key == this.moderation.autoModAction)?.value ?? "Unknown";
     });
-    this.enumManager.getEnum(APIEnumTypes.AUTOMODTYPE).subscribe(data => {
-      this.event = data?.find(x => x.key == this.moderation.autoModerationType)?.value ?? "Unknown";
+    this.enumManager.getEnum(ApiEnumTypes.AUTOMODTYPE).subscribe(data => {
+      this.event = data?.find(x => x.key == this.moderation.autoModType)?.value ?? "Unknown";
     });
   }
 

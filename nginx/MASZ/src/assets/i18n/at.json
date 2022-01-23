@@ -19,8 +19,7 @@
     "Punishments": "Bestrofungen",
     "Bans": "Banns",
     "Mutes": "Stummschoitungen",
-    "Automods": "Automods",
-    "Automoderations": "Automodarationen",
+    "AutoMods": "AutoMods",
     "Invite": "Eiladung",
     "Invites": "Eiladungen",
     "Usernotes": "Nutzanotizn",
@@ -36,7 +35,7 @@
         "Community": "Community",
         "Terms": "Nutzungsbedingungen",
         "Legal": "Rechtlichs",
-        "API": "API",
+        "Api": "Api",
         "Insights": "Statistikn",
         "Settings": "Einstellungn",
         "Scanning": "Untasuchung"
@@ -46,7 +45,7 @@
         "All": "Olle Güdn",
         "Admin": "Admingüdn",
         "Moderator": "Modaratorengüdn",
-        "Member": "Güdn",
+        "User": "Güdn",
         "Banned": "Gsperrt vo Güden"
     },
     "MASZ": {
@@ -81,7 +80,7 @@
             }
         }
     },
-    "Adminstats": {
+    "AdminStats": {
         "Bot": "Bot",
         "Database": "Datnbonk",
         "InternalCache": "Interna Speicha",
@@ -100,17 +99,17 @@
         "Published": "Veröffentlicht:",
         "UpdateAvailableText": "Update {{tag}} is verfügbar. Bit aktualisier deinen Bot."
     },
-    "AdminstatsList": {
+    "AdminStatsList": {
         "ShowMore": "Mehr ozeign"
     },
     "TokenOverview": {
-        "Description": "Oit Seitnadmin hom se de meglischkeit, de MASZ API zua nutznm um ernane eiganan Skripte und Automatisiarungen in MASZ einezumgeba. Erstöns bitte an API-Schlüssl, damits erna gegenüba da API authentifizian kenna, wenns Web-Ofrogn tätign tan.",
+        "Description": "Oit Seitnadmin hom se de meglischkeit, de MASZ Api zua nutznm um ernane eiganan Skripte und Automatisiarungen in MASZ einezumgeba. Erstöns bitte an Api-Schlüssl, damits erna gegenüba da Api authentifizian kenna, wenns Web-Ofrogn tätign tan.",
         "Documentation": "De voiständige Dokumentations findens im /docs-Vazeichnis.",
         "Postman": "Instalians bittsche den Postman und tuans de JSON-Datei importian.",
         "TokenHeader": "Tuan bitte den Tokn in den \"Authorization\"-Header mit am \"Bearer \"-Präfix eifügn.",
-        "PythonAPIWrapper": "Provians den offiziön Python-API-Wrapper aus.",
+        "PythonApiWrapper": "Provians den offiziön Python-Api-Wrapper aus.",
         "Warning": "Ochtung",
-        "TokenIsPowerful": "Da API-Schlüssl is ned ohne und ko ois am MASZ steian!",
+        "TokenIsPowerful": "Da Api-Schlüssl is ned ohne und ko ois am MASZ steian!",
         "CreateToken": "Schlüssl erstön",
         "SaveSecurely": "Tuans den Schlüssl speichan.",
         "Tokens": "Schlüssl",
@@ -128,7 +127,7 @@
         "Message": "Nochricht"
     },
     "AutoModTable": {
-        "FailedToLoad": "Automodaration konnt ned glodn wean.",
+        "FailedToLoad": "AutoModaration konnt ned glodn wean.",
         "NoMatches": "Es gibt kane modariaten Sochn.",
         "LoadMoreEvents": "Mehr Eiträge lodn"
     },
@@ -254,13 +253,13 @@
         "NicknameUpdated": {
             "title": "Spitznom umgändat"
         },
-        "MemberRolesUpdated": {
+        "UserRolesUpdated": {
             "title": "Mitgliedarollen umgändat"
         },
-        "MemberJoined": {
+        "UserJoined": {
             "title": "Mitglied beigetretn"
         },
-        "MemberRemoved": {
+        "UserRemoved": {
             "title": "Mitglied entfernt"
         },
         "BanAdded": {
@@ -279,8 +278,8 @@
             "title": "Thread erstöt"
         }
     },
-    "AutomodConfig": {
-        "Automoderation": "Automodaration",
+    "AutoModConfig": {
+        "AutoMod": "AutoModaration",
         "Invites": {
             "title": "Eiladungen",
             "details": "Ei Nochricht aufm Serva posst zum Eiladungs-Musta. Eiladunga zu dem Serva wera ignohriert.",
@@ -302,9 +301,9 @@
             "title": "Eibettungen",
             "details": "A Nochricht aufm Serva hot zvü Eibettungen. "
         },
-        "Automoderations": {
-            "title": "Automodarationen",
-            "details": "A Benutza hot zvü Automodarationen in am bestimmtn Zeitraum ausglest."
+        "AutoMods": {
+            "title": "AutoModarationen",
+            "details": "A Benutza hot zvü AutoModarationen in am bestimmtn Zeitraum ausglest."
         },
         "CustomFilter": {
             "title": "Benutzadefinirta Füta",
@@ -339,7 +338,7 @@
             "Done": "Fertig"
         },
         "UpperLimit": "Obarares Limit",
-        "TeamMembersExcluded": "Hinweis: Teammitglieda wean imma gfütat.",
+        "TeamUsersExcluded": "Hinweis: Teammitglieda wean imma gfütat.",
         "ExcludeRoles": "Ausgnommene Roin",
         "ExcludeChannels": "Ausgnommene Kanäle",
         "SendInternalNotification": "Send a interne Benochrichtigung",
@@ -380,8 +379,8 @@
         "Saved": "MotD gspeichat.",
         "Explanation": "De Nochricht wird am Administratoa oda am Modaratoa aufm Dashboard ozeigt."
     },
-    "AutomodSplit": {
-        "FailedToLoad": "Konnte de Automodarationsaufteilungsdotn ned lodn."
+    "AutoModSplit": {
+        "FailedToLoad": "Konnte de AutoModarationsaufteilungsdotn ned lodn."
     },
     "DashboardCaseList": {
         "NewestCases": "Neiaste Vorfälle",
@@ -392,7 +391,7 @@
         "Overview": "Übasicht",
         "Cases": "Vorfälle",
         "Punishments": "Bestrofungen",
-        "Automoderations": "Automodaratonen",
+        "AutoMods": "AutoModaratonen",
         "ChooseADate": "Tua a Datum auswöhn",
         "Reset": "Zrucksetzn"
     },
@@ -414,7 +413,7 @@
         "MessageFrom": "Nochricht vo {{name}}"
     },
     "Quicksearch": {
-        "Placeholder": "Schnösuche Benutza, Vorfälle, Bestrofungen, Automodaration, ...",
+        "Placeholder": "Schnösuche Benutza, Vorfälle, Bestrofungen, AutoModaration, ...",
         "NoMatches": "Kane Eiträg zua Suche gfundn :(",
         "SearchFailed": "Suche hod ned funktioniat."
     },
@@ -427,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Dashboard",
             "Case": "Vorfälle",
-            "Automoderation": "Automodarationen",
+            "AutoMod": "AutoModarationen",
             "Messages": "Nachrichten",
             "Usernote": "Benutzanotizn",
             "Usermap": "Benutzabeziehungen",
@@ -435,13 +434,13 @@
         }
     },
     "UsermapTable": {
-        "Member": "Mitglied",
+        "User": "Mitglied",
         "Description": "Beschreibung",
         "CreateNewMap": "Neue Benutzabeziehung erstön",
         "Search": "Such (Benutza ID, Beschreibung ...)",
         "NoMatches": "Kane Benutzabeziehung passt zu deina Suach.",
         "FailedToLoad": "Benutzabeziehungen konntn ned glodn wean.",
-        "FailedToLoadMember": "Mitgliedalistn konnte ned glodn wean",
+        "FailedToLoadUser": "Mitgliedalistn konnte ned glodn wean",
         "FailedToCreate": "Benutzabeziehung konnte ned erstöt wean.",
         "Created": "Benutzabeziehung erstöt."
     },
@@ -455,13 +454,13 @@
         "Deleted": "Benutzabeziehung glescht."
     },
     "UsernoteTable": {
-        "Member": "Mitglied",
+        "User": "Mitglied",
         "Description": "Beschreibung",
         "CreateNewNote": "Neie Benutzanotiz erstöt",
         "Search": "Such (Benutza, ID, Beschreibung ...)",
         "NoMatches": "Kane Benutzanotiz passt zu dana Suach.",
         "FailedToLoad": "Benutzanotizn kenna ned glodn wean.",
-        "FailedToLoadMember": "Mitgliedalistn konnte ned glodn wean.",
+        "FailedToLoadUser": "Mitgliedalistn konnte ned glodn wean.",
         "FailedToCreate": "Benutzanotiz konnte ned erstöt wean.",
         "Created": "Benutzanotiz erstöt."
     },
@@ -481,8 +480,8 @@
         "SearchTemplate": "Vorlog suacha",
         "Back": "Zruck",
         "Next": "Weita",
-        "ChooseAMember": "Nutzaauswoi",
-        "Member": "Nutza",
+        "ChooseAUser": "Nutzaauswoi",
+        "User": "Nutza",
         "PickOne": "Wöhn an",
         "DescribeCase": "Vorfoibeschreibung",
         "Title": "Titl",
@@ -502,7 +501,7 @@
         "CreateCaseButton": "Vorfoi erstön",
         "UpdateCaseButton": "Vorfoi aktualisian",
         "FailedToLoad": {
-            "MemberList": "Mitgliederlisn konnt ned glodn wean.",
+            "UserList": "Mitgliederlisn konnt ned glodn wean.",
             "PunishmentEnum": "Verfügbare Bestrofungen konntn ned glodn wean.",
             "CaseTemplates": "Vorlog konnt ned glodn wean.",
             "CurrentCase": "Vorfoi konnt ned erstöt wean."
@@ -518,7 +517,7 @@
         "CaseUpdated": "Vorfoi aktualisiat."
     },
     "ModCaseTable": {
-        "SelectMembers": "Mitglieda",
+        "SelectUsers": "Mitglieda",
         "SelectModerators": "Modaratoren",
         "SelectCreationTypes": "Erstöllungsoartn",
         "SelectPunishments": "Bestrofungen",

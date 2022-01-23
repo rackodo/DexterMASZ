@@ -19,8 +19,7 @@
     "Punishments": "Castigos",
     "Bans": "Prohibiciones",
     "Mutes": "Silencia",
-    "Automods": "Automods",
-    "Automoderations": "Automoderaciones",
+    "AutoMods": "AutoMods",
     "Invite": "Invitación",
     "Invites": "Invita",
     "Usernotes": "Notas de usuario",
@@ -36,7 +35,7 @@
         "Community": "Comunidad",
         "Terms": "Condiciones",
         "Legal": "Legal",
-        "API": "API",
+        "Api": "Api",
         "Insights": "Perspectivas",
         "Settings": "Ajustes",
         "Scanning": "Exploración"
@@ -46,7 +45,7 @@
         "All": "Todos los gremios",
         "Admin": "Gremios de administradores",
         "Moderator": "Gremios de moderadores",
-        "Member": "Gremios",
+        "User": "Gremios",
         "Banned": "Prohibido en los gremios"
     },
     "MASZ": {
@@ -81,7 +80,7 @@
             }
         }
     },
-    "Adminstats": {
+    "AdminStats": {
         "Bot": "Bot",
         "Database": "Base de datos",
         "InternalCache": "Caché interno",
@@ -100,17 +99,17 @@
         "Published": "Publicado:",
         "UpdateAvailableText": "La actualización {{tag}} está disponible. Actualice su instancia."
     },
-    "AdminstatsList": {
+    "AdminStatsList": {
         "ShowMore": "Mostrar más"
     },
     "TokenOverview": {
-        "Description": "Como administrador del sitio, puede usar la API de MASZ para implementar sus propios scripts personalizados y automatizar cosas en MASZ. Cree una clave de API a continuación para autorizarse contra la API mientras realiza solicitudes web.",
+        "Description": "Como administrador del sitio, puede usar la Api de MASZ para implementar sus propios scripts personalizados y automatizar cosas en MASZ. Cree una clave de Api a continuación para autorizarse contra la Api mientras realiza solicitudes web.",
         "Documentation": "Puede encontrar una documentación completa en el directorio / docs.",
         "Postman": "Simplemente instale el cartero e importe el archivo json.",
         "TokenHeader": "Incluya tokens en el encabezado \"Autorización\" con un prefijo \"Portador\".",
-        "PythonAPIWrapper": "Pruebe el contenedor oficial de la API de Python.",
+        "PythonApiWrapper": "Pruebe el contenedor oficial de la Api de Python.",
         "Warning": "Advertencia",
-        "TokenIsPowerful": "¡Una clave API es muy poderosa y puede controlar todo en MASZ!",
+        "TokenIsPowerful": "¡Una clave Api es muy poderosa y puede controlar todo en MASZ!",
         "CreateToken": "Crear token",
         "SaveSecurely": "Guarde este token de forma segura.",
         "Tokens": "Tokens",
@@ -254,13 +253,13 @@
         "NicknameUpdated": {
             "title": "Se actualizó el apodo"
         },
-        "MemberRolesUpdated": {
+        "UserRolesUpdated": {
             "title": "Se actualizaron las funciones de los miembros"
         },
-        "MemberJoined": {
+        "UserJoined": {
             "title": "Miembro se unió"
         },
-        "MemberRemoved": {
+        "UserRemoved": {
             "title": "Miembro eliminado"
         },
         "BanAdded": {
@@ -279,8 +278,8 @@
             "title": "Hilo creado"
         }
     },
-    "AutomodConfig": {
-        "Automoderation": "Automoderación",
+    "AutoModConfig": {
+        "AutoMod": "AutoModeración",
         "Invites": {
             "title": "Invita",
             "details": "Un mensaje en tu gremio coincide con el patrón de invitación. Se ignorarán las invitaciones a este gremio.",
@@ -302,8 +301,8 @@
             "title": "Incrusta",
             "details": "Un mensaje en tu gremio contiene demasiadas incrustaciones."
         },
-        "Automoderations": {
-            "title": "Automoderaciones",
+        "AutoMods": {
+            "title": "AutoModeraciones",
             "details": "Un usuario desencadena demasiadas automovilizaciones en un período de tiempo definido."
         },
         "CustomFilter": {
@@ -339,7 +338,7 @@
             "Done": "Hecho"
         },
         "UpperLimit": "Limite superior",
-        "TeamMembersExcluded": "Nota: los miembros del equipo siempre están excluidos.",
+        "TeamUsersExcluded": "Nota: los miembros del equipo siempre están excluidos.",
         "ExcludeRoles": "Excluir roles",
         "ExcludeChannels": "Excluir canales",
         "SendInternalNotification": "Enviar notificación interna",
@@ -380,7 +379,7 @@
         "Saved": "Motd guardado.",
         "Explanation": "Este mensaje se mostrará a sus administradores y moderadores en el panel de control."
     },
-    "AutomodSplit": {
+    "AutoModSplit": {
         "FailedToLoad": "No se pudo cargar el gráfico dividido de modificación automática del gremio."
     },
     "DashboardCaseList": {
@@ -392,7 +391,7 @@
         "Overview": "Visión general",
         "Cases": "Casos",
         "Punishments": "Castigos",
-        "Automoderations": "Automoderaciones",
+        "AutoMods": "AutoModeraciones",
         "ChooseADate": "Elige una fecha",
         "Reset": "Reiniciar"
     },
@@ -427,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Tablero",
             "Case": "Casos",
-            "Automoderation": "Automoderaciones",
+            "AutoMod": "AutoModeraciones",
             "Messages": "Mensajes",
             "Usernote": "Notas de usuario",
             "Usermap": "Mapas de usuario",
@@ -435,13 +434,13 @@
         }
     },
     "UsermapTable": {
-        "Member": "Miembro",
+        "User": "Miembro",
         "Description": "Descripción",
         "CreateNewMap": "Crear nuevo mapa de usuario",
         "Search": "Búsqueda (usuario, id, descripción ...)",
         "NoMatches": "Ningún mapa de usuario coincide con su búsqueda.",
         "FailedToLoad": "No se pudieron cargar los mapas de usuario.",
-        "FailedToLoadMember": "No se pudo cargar la lista de miembros.",
+        "FailedToLoadUser": "No se pudo cargar la lista de miembros.",
         "FailedToCreate": "No se pudo crear el mapa de usuario.",
         "Created": "Mapa de usuario creado."
     },
@@ -455,13 +454,13 @@
         "Deleted": "Mapa de usuario eliminado."
     },
     "UsernoteTable": {
-        "Member": "Miembro",
+        "User": "Miembro",
         "Description": "Descripción",
         "CreateNewNote": "Crear nueva nota de usuario",
         "Search": "Búsqueda (usuario, id, descripción ...)",
         "NoMatches": "Ninguna nota de usuario coincide con su búsqueda.",
         "FailedToLoad": "No se pudieron cargar las notas de usuario.",
-        "FailedToLoadMember": "No se pudo cargar la lista de miembros.",
+        "FailedToLoadUser": "No se pudo cargar la lista de miembros.",
         "FailedToCreate": "No se pudo crear la nota de usuario.",
         "Created": "Nota de usuario creada."
     },
@@ -481,8 +480,8 @@
         "SearchTemplate": "Plantilla de búsqueda",
         "Back": "atrás",
         "Next": "próximo",
-        "ChooseAMember": "Elige un miembro",
-        "Member": "Miembro",
+        "ChooseAUser": "Elige un miembro",
+        "User": "Miembro",
         "PickOne": "Elegir uno",
         "DescribeCase": "Describe el caso",
         "Title": "Título",
@@ -502,7 +501,7 @@
         "CreateCaseButton": "Crear caso",
         "UpdateCaseButton": "Actualizar caso",
         "FailedToLoad": {
-            "MemberList": "No se pudo cargar la lista de miembros.",
+            "UserList": "No se pudo cargar la lista de miembros.",
             "PunishmentEnum": "No se pudieron cargar los castigos disponibles.",
             "CaseTemplates": "No se pudieron cargar las plantillas de casos.",
             "CurrentCase": "No se pudo cargar el caso actual."
@@ -518,7 +517,7 @@
         "CaseUpdated": "Caso actualizado."
     },
     "ModCaseTable": {
-        "SelectMembers": "Miembros",
+        "SelectUsers": "Miembros",
         "SelectModerators": "Moderadores",
         "SelectCreationTypes": "Tipos de creación",
         "SelectPunishments": "Castigos",
@@ -567,7 +566,7 @@
             "Failed": "No se pudo activar el caso."
         },
         "PunishmentExpired": "El castigo ha expirado.",
-        "CaseInactive": "Modcase está inactivo.",
+        "CaseInactive": "ModCase está inactivo.",
         "CreatedAt": "Creado en",
         "EditedAt": "Editado en",
         "LastEditModerator": "Última edición del moderador",

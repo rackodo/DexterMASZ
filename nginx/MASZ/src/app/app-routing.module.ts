@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AdminstatsComponent } from './components/api/adminstats/adminstats.component';
+import { AdminStatsComponent } from './components/api/adminstats/adminstats.component';
 import { AppsettingsComponent } from './components/api/appsettings/appsettings.component';
 import { TokenOverviewComponent } from './components/api/token-overview/token-overview.component';
 import { DonateComponent } from './components/basic/donate/donate.component';
@@ -13,9 +13,9 @@ import { GuildAddComponent } from './components/guilds/guild-add/guild-add.compo
 import { GuildEditComponent } from './components/guilds/guild-edit/guild-edit.component';
 import { GuildListComponent } from './components/guilds/guild-list/guild-list.component';
 import { GuildOverviewComponent } from './components/guilds/guild-overview/guild-overview.component';
-import { ModcaseAddComponent } from './components/modcase/modcase-add/modcase-add.component';
-import { ModcaseEditComponent } from './components/modcase/modcase-edit/modcase-edit.component';
-import { ModcaseViewComponent } from './components/modcase/modcase-view/modcase-view.component';
+import { ModCaseAddComponent } from './components/modcase/modcase-add/modcase-add.component';
+import { ModCaseEditComponent } from './components/modcase/modcase-edit/modcase-edit.component';
+import { ModCaseViewComponent } from './components/modcase/modcase-view/modcase-view.component';
 import { UserscanComponent } from './components/usergraph/userscan/userscan.component';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -24,13 +24,13 @@ const routes: Routes = [
   { path: 'guilds/new', component: GuildAddComponent, canActivate: [AuthGuard] },
   { path: 'guilds/:guildid', component: GuildOverviewComponent, canActivate: [AuthGuard] },
   { path: 'guilds/:guildid/edit', component: GuildEditComponent, canActivate: [AuthGuard] },
-  { path: 'guilds/:guildid/cases/new', component: ModcaseAddComponent, canActivate: [AuthGuard] },
-  { path: 'guilds/:guildid/cases/:caseid', component: ModcaseViewComponent, canActivate: [AuthGuard] },
-  { path: 'guilds/:guildid/cases/:caseid/edit', component: ModcaseEditComponent, canActivate: [AuthGuard] },
+  { path: 'guilds/:guildid/cases/new', component: ModCaseAddComponent, canActivate: [AuthGuard] },
+  { path: 'guilds/:guildid/cases/:caseid', component: ModCaseViewComponent, canActivate: [AuthGuard] },
+  { path: 'guilds/:guildid/cases/:caseid/edit', component: ModCaseEditComponent, canActivate: [AuthGuard] },
   { path: 'tokens', component: TokenOverviewComponent, canActivate: [AuthGuard] },
   { path: 'userscan', component: UserscanComponent, canActivate: [AuthGuard] },
   { path: 'scanning', component: UserscanComponent, canActivate: [AuthGuard] },
-  { path: 'adminstats', component: AdminstatsComponent, canActivate: [AuthGuard] },
+  { path: 'adminstats', component: AdminStatsComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: AppsettingsComponent, canActivate: [AuthGuard] },
   { path: 'patchnotes', component: PatchnotesComponent },
   { path: 'oauthfailed', component: OauthFailedComponent },

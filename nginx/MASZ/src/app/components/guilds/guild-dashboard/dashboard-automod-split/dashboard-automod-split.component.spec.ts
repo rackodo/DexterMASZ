@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardAutomodSplitComponent } from './dashboard-automod-split.component';
+import { DashboardAutoModSplitComponent } from './dashboard-automod-split.component';
 
-describe('DashboardAutomodSplitComponent', () => {
-  let component: DashboardAutomodSplitComponent;
-  let fixture: ComponentFixture<DashboardAutomodSplitComponent>;
+describe('DashboardAutoModSplitComponent', () => {
+  let component: DashboardAutoModSplitComponent;
+  let fixture: ComponentFixture<DashboardAutoModSplitComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashboardAutomodSplitComponent ]
+      declarations: [ DashboardAutoModSplitComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardAutomodSplitComponent);
+    fixture = TestBed.createComponent(DashboardAutoModSplitComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

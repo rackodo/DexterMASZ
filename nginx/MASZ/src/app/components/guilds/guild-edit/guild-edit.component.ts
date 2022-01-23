@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
-import { APIEnum } from 'src/app/models/APIEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEmumTypes';
+import { ApiEnum } from 'src/app/models/ApiEnum';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { Guild } from 'src/app/models/Guild';
 import { GuildConfig } from 'src/app/models/GuildConfig';
@@ -24,7 +24,7 @@ export class GuildEditComponent implements OnInit {
   public muteRolesGroup!: FormGroup;
   public configGroup!: FormGroup;
 
-  public allLanguages: APIEnum[] = [];
+  public allLanguages: ApiEnum[] = [];
 
   public currentGuild: ContentLoading<Guild> = { loading: true, content: {} as Guild }
   public currentGuildConfig: ContentLoading<GuildConfig> = { loading: true, content: {} as GuildConfig }
@@ -74,7 +74,7 @@ export class GuildEditComponent implements OnInit {
   }
 
   loadLanguages() {
-    this.enumManager.getEnum(APIEnumTypes.LANGUAGE).subscribe((data: APIEnum[]) => {
+    this.enumManager.getEnum(ApiEnumTypes.LANGUAGE).subscribe((data: ApiEnum[]) => {
       this.allLanguages = data;
     });
   }

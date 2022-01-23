@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ReplaySubject } from 'rxjs';
 import { LANGUAGES } from '../config/config';
-import { APIEnumTypes } from '../models/APIEmumTypes';
-import { APIEnum } from '../models/APIEnum';
+import { ApiEnumTypes } from '../models/ApiEmumTypes';
+import { ApiEnum } from '../models/ApiEnum';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { ApiService } from './api.service';
 })
 export class EnumManagerService {
 
-  private cachedEnums: { [key: string]: ReplaySubject<APIEnum[]> } = {};
+  private cachedEnums: { [key: string]: ReplaySubject<ApiEnum[]> } = {};
 
   constructor(private api: ApiService, private translator: TranslateService) {
     this.translator.onLangChange.subscribe(() => {
@@ -24,11 +24,11 @@ export class EnumManagerService {
     return LANGUAGES.find(x => x.language === this.translator.currentLang)?.apiValue ?? 0;
   }
 
-  public getEnum(enumName: APIEnumTypes|string, renew: boolean = false) {
+  public getEnum(enumName: ApiEnumTypes|string, renew: boolean = false) {
     let reload = renew;
     if (! (enumName in this.cachedEnums)) {
       reload = true;
-      this.cachedEnums[enumName] = new ReplaySubject<APIEnum[]>(1);
+      this.cachedEnums[enumName] = new ReplaySubject<ApiEnum[]>(1);
     }
     if (reload) {
       const params = new HttpParams().set('language', this.getCurrentLanguage());

@@ -4,7 +4,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
+import { ApiEnumTypes } from 'src/app/models/ApiEmumTypes';
 import { Guild } from 'src/app/models/Guild';
 import { GuildChannel } from 'src/app/models/GuildChannel';
 import { GuildRole } from 'src/app/models/GuildRole';

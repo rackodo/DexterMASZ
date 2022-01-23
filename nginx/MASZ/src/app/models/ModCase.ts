@@ -1,4 +1,4 @@
-import { APIEnum } from "./APIEnum";
+import { ApiEnum } from "./ApiEnum";
 import { CaseComment } from "./CaseComment";
 import { PunishmentType } from "./PunishmentType";
 
@@ -32,6 +32,6 @@ export interface ModCase {
     comments: CaseComment[];
 }
 
-export function convertModcaseToPunishmentString(modcase?: ModCase, punishments?: APIEnum[]): string {
+export function convertModCaseToPunishmentString(modcase?: ModCase, punishments?: ApiEnum[]): string {
     return punishments?.find(x => x.key === modcase?.punishmentType)?.value ?? "Unknown";
 }

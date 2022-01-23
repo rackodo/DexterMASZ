@@ -1119,3 +1119,5 @@ webinterface/app/composer.lock
 .deployment/*
 .vscode/settings.json
 /backend/MASZ/Properties/launchSettings.json
+
+*.bak

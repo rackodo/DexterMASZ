@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<LangVersion>preview</LangVersion>
+		<EnablePreviewFeatures>True</EnablePreviewFeatures>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+
+		<ProjectReference Include="..\MASZ.AutoMods\MASZ.AutoMods.csproj" />
+		<ProjectReference Include="..\MASZ.GuildAudits\MASZ.GuildAudits.csproj" />
+		<ProjectReference Include="..\MASZ.Messaging\MASZ.Messaging.csproj" />
+		<ProjectReference Include="..\MASZ.MOTDs\MASZ.MOTDs.csproj" />
+		<ProjectReference Include="..\MASZ.Punishments\MASZ.Punishments.csproj" />
+		<ProjectReference Include="..\MASZ.UserMaps\MASZ.UserMaps.csproj" />
+		<ProjectReference Include="..\MASZ.UserNotes\MASZ.UserNotes.csproj" />
+		<ProjectReference Include="..\MASZ.Utilities\MASZ.Utilities.csproj" />
+	</ItemGroup>
+
+</Project>

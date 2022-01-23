@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { AppUser } from '../models/AppUser';
-import { API_URL } from '../config/config';
+import { Api_URL } from '../config/config';
 import { ReplaySubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -21,7 +21,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService, private toastr: ToastrService) { }
 
   loadUserConfig() {
-    this.http.get(API_URL + '/discord/users/@me').subscribe((data) => {
+    this.http.get(Api_URL + '/discord/users/@me').subscribe((data) => {
       this.currentUserSubject.next(data);
     }, (error) => {
       this.currentUserSubject.error(null);

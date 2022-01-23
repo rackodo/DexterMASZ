@@ -4,9 +4,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective, Color, Label } from 'ng2-charts';
 import { ToastrService } from 'ngx-toastr';
-import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
-import { AutoModerationType } from 'src/app/models/AutoModerationType';
-import { AutomodSplit } from 'src/app/models/AutomodSplit';
+import { ApiEnumTypes } from 'src/app/models/ApiEmumTypes';
+import { AutoModType } from 'src/app/models/AutoModType';
+import { AutoModSplit } from 'src/app/models/AutoModSplit';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
@@ -16,7 +16,7 @@ import { EnumManagerService } from 'src/app/services/enum-manager.service';
   templateUrl: './dashboard-automod-split.component.html',
   styleUrls: ['./dashboard-automod-split.component.css']
 })
-export class DashboardAutomodSplitComponent implements OnInit {
+export class DashboardAutoModSplitComponent implements OnInit {
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public loading: boolean = true;
@@ -47,7 +47,7 @@ export class DashboardAutomodSplitComponent implements OnInit {
   public chartLegend = true;
   public chartType: ChartType = 'pie';
   public chartPlugins: any = [];
-  public splittedData: AutomodSplit[] = [];
+  public splittedData: AutoModSplit[] = [];
 
   constructor(private route: ActivatedRoute, private api: ApiService, private toastr: ToastrService, private translator: TranslateService, private enumManager: EnumManagerService) { }
 
@@ -59,12 +59,12 @@ export class DashboardAutomodSplitComponent implements OnInit {
   initialize(guildId: string) {
     this.loading = true;
     this.foundContent = false;
-    this.api.getSimpleData(`/guilds/${guildId}/dashboard/automodchart`).subscribe((data: AutomodSplit[]) => {
+    this.api.getSimpleData(`/guilds/${guildId}/dashboard/automodchart`).subscribe((data: AutoModSplit[]) => {
       this.splittedData = data;
       this.chartData = [{ data: data.map(x => x.count), label: 'Count' }];
       if (data.length) {
         this.foundContent = true;
-        this.enumManager.getEnum(APIEnumTypes.AUTOMODTYPE).subscribe(data => {
+        this.enumManager.getEnum(ApiEnumTypes.AUTOMODTYPE).subscribe(data => {
           this.chartLabels = this.splittedData.map(d => data.find(x => x.key === d.type)?.value) as Label[];
           this.chart?.ngOnInit();
         });
@@ -73,7 +73,7 @@ export class DashboardAutomodSplitComponent implements OnInit {
     }, error => {
       console.error(error);
       this.loading = false;
-      this.toastr.error(this.translator.instant('AutomodSplit.FailedToLoad'));
+      this.toastr.error(this.translator.instant('AutoModSplit.FailedToLoad'));
     });
   }
 }

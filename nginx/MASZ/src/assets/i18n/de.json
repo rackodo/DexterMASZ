@@ -19,8 +19,7 @@
     "Punishments": "Bestrafungen",
     "Bans": "Banns",
     "Mutes": "Stummschaltungen",
-    "Automods": "Automods",
-    "Automoderations": "Automoderationen",
+    "AutoMods": "AutoMods",
     "Invite": "Einladung",
     "Invites": "Einladungen",
     "Usernotes": "Nutzernotizen",
@@ -36,7 +35,7 @@
         "Community": "Community",
         "Terms": "Nutzungsbedingungen",
         "Legal": "Rechtliches",
-        "API": "API",
+        "Api": "Api",
         "Insights": "Statistiken",
         "Settings": "Einstellungen",
         "Scanning": "Untersuchung"
@@ -46,7 +45,7 @@
         "All": "Alle Gilden",
         "Admin": "Admingilden",
         "Moderator": "Moderatorengilden",
-        "Member": "Gilden",
+        "User": "Gilden",
         "Banned": "Gesperrt von Gilden"
     },
     "MASZ": {
@@ -81,7 +80,7 @@
             }
         }
     },
-    "Adminstats": {
+    "AdminStats": {
         "Bot": "Bot",
         "Database": "Datenbank",
         "InternalCache": "Interner Speicher",
@@ -100,17 +99,17 @@
         "Published": "Veröffentlicht:",
         "UpdateAvailableText": "Update {{tag}} ist verfügbar. Bitte aktualisiere deinen Bot."
     },
-    "AdminstatsList": {
+    "AdminStatsList": {
         "ShowMore": "Mehr anzeigen"
     },
     "TokenOverview": {
-        "Description": "Als Seitenadministrator können Sie die MASZ API nutzen, um ihre eigene Skripte und Automatisierungen in MASZ zu implementieren. Erstellen Sie einen API-Schlüssel, um sich gegenüber der API zu authentifizieren, während Sie Web-Anfragen tätigen.",
+        "Description": "Als Seitenadministrator können Sie die MASZ Api nutzen, um ihre eigene Skripte und Automatisierungen in MASZ zu implementieren. Erstellen Sie einen Api-Schlüssel, um sich gegenüber der Api zu authentifizieren, während Sie Web-Anfragen tätigen.",
         "Documentation": "Sie finden die vollständige Dokumentation im /docs-Verzeichnis.",
         "Postman": "Installieren Sie Postman und importieren Sie die JSON-Datei.",
         "TokenHeader": "Fügen Sie Tokens in den \"Authorization\"-Header mit einem \"Bearer \"-Präfix ein.",
-        "PythonAPIWrapper": "Probieren Sie den offiziellen Python-API-Wrapper aus.",
+        "PythonApiWrapper": "Probieren Sie den offiziellen Python-Api-Wrapper aus.",
         "Warning": "Warnung",
-        "TokenIsPowerful": "Ein API-Schlüssel ist sehr mächtig und kann alles auf MASZ steuern!",
+        "TokenIsPowerful": "Ein Api-Schlüssel ist sehr mächtig und kann alles auf MASZ steuern!",
         "CreateToken": "Schlüssel erstellen",
         "SaveSecurely": "Sichern Sie diesen Schlüssel.",
         "Tokens": "Schlüssel",
@@ -128,7 +127,7 @@
         "Message": "Nachricht"
     },
     "AutoModTable": {
-        "FailedToLoad": "Automoderationen konnten nicht geladen werden.",
+        "FailedToLoad": "AutoModen konnten nicht geladen werden.",
         "NoMatches": "Es gibt keine moderierten Ereignisse.",
         "LoadMoreEvents": "Mehr Einträge laden"
     },
@@ -254,13 +253,13 @@
         "NicknameUpdated": {
             "title": "Nickname editiert"
         },
-        "MemberRolesUpdated": {
+        "UserRolesUpdated": {
             "title": "Mitgliederrollen editiert"
         },
-        "MemberJoined": {
+        "UserJoined": {
             "title": "Mitglied beigetreten"
         },
-        "MemberRemoved": {
+        "UserRemoved": {
             "title": "Mitglied entfernt"
         },
         "BanAdded": {
@@ -279,8 +278,8 @@
             "title": "Thread erstellt"
         }
     },
-    "AutomodConfig": {
-        "Automoderation": "Automoderation",
+    "AutoModConfig": {
+        "AutoMod": "AutoMod",
         "Invites": {
             "title": "Einladungen",
             "details": "Eine Nachricht auf deinem Server passt zum Einladungs-Muster. Einladungen zu dieser Gilde werden ignoriert.",
@@ -302,9 +301,9 @@
             "title": "Einbettungen",
             "details": "Eine Nachricht auf deinem Server enthält zu viele Einbettungen."
         },
-        "Automoderations": {
-            "title": "Automoderationen",
-            "details": "Ein Benutzer löst zu viele Automoderationen in einem definierten Zeitraum aus."
+        "AutoMods": {
+            "title": "AutoModen",
+            "details": "Ein Benutzer löst zu viele AutoModen in einem definierten Zeitraum aus."
         },
         "CustomFilter": {
             "title": "Benutzerdefinierter Filter",
@@ -339,7 +338,7 @@
             "Done": "Abschluss"
         },
         "UpperLimit": "Oberes Limit",
-        "TeamMembersExcluded": "Hinweis: Teammitglieder werden immer gefiltert.",
+        "TeamUsersExcluded": "Hinweis: Teammitglieder werden immer gefiltert.",
         "ExcludeRoles": "Ausgenommene Rollen",
         "ExcludeChannels": "Ausgenommene Kanäle",
         "SendInternalNotification": "Sende interne Benachrichtigung",
@@ -380,8 +379,8 @@
         "Saved": "MotD gespeichert.",
         "Explanation": "Diese Nachricht wird deinen Administratoren und Moderatoren auf dem Dashboard angezeigt."
     },
-    "AutomodSplit": {
-        "FailedToLoad": "Konnte Automoderationaufteilungsdaten nicht laden."
+    "AutoModSplit": {
+        "FailedToLoad": "Konnte AutoModaufteilungsdaten nicht laden."
     },
     "DashboardCaseList": {
         "NewestCases": "Neuste Vorfälle",
@@ -392,7 +391,7 @@
         "Overview": "Übersicht",
         "Cases": "Vorfälle",
         "Punishments": "Bestrafungen",
-        "Automoderations": "Automoderationen",
+        "AutoMods": "AutoModen",
         "ChooseADate": "Wähle ein Datum",
         "Reset": "Zurücksetzen"
     },
@@ -414,7 +413,7 @@
         "MessageFrom": "Nachricht von {{name}}"
     },
     "Quicksearch": {
-        "Placeholder": "Schnellsuche Benutzer, Vorfälle, Bestrafungen, Automoderationen, ...",
+        "Placeholder": "Schnellsuche Benutzer, Vorfälle, Bestrafungen, AutoModen, ...",
         "NoMatches": "Keine Einträge zur Suche gefunden :(",
         "SearchFailed": "Suche fehlgeschlagen."
     },
@@ -427,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Dashboard",
             "Case": "Vorfälle",
-            "Automoderation": "Automoderationen",
+            "AutoMod": "AutoModen",
             "Messages": "Nachrichten",
             "Usernote": "Benutzernotizen",
             "Usermap": "Benutzerbeziehungen",
@@ -435,13 +434,13 @@
         }
     },
     "UsermapTable": {
-        "Member": "Mitglied",
+        "User": "Mitglied",
         "Description": "Beschreibung",
         "CreateNewMap": "Neue Benutzerbeziehung erstellen",
         "Search": "Suchen (Benutzer, ID, Beschreibung...)",
         "NoMatches": "Keine Benutzerbeziehung passt zu deiner Suche.",
         "FailedToLoad": "Benutzerbeziehungen konnten nicht geladen werden.",
-        "FailedToLoadMember": "Mitgliederliste konnte nicht geladen werden.",
+        "FailedToLoadUser": "Mitgliederliste konnte nicht geladen werden.",
         "FailedToCreate": "Benutzerbeziehung konnte nicht erstellt werden.",
         "Created": "Benutzerbeziehung erstellt."
     },
@@ -455,13 +454,13 @@
         "Deleted": "Benutzerbeziehung gelöscht."
     },
     "UsernoteTable": {
-        "Member": "Mitglied",
+        "User": "Mitglied",
         "Description": "Beschreibung",
         "CreateNewNote": "Neue Benutzernotiz erstellen",
         "Search": "Suchen (Benutzer, ID, Beschreibung...)",
         "NoMatches": "Keine Benutzernotiz passt zu deiner Suche.",
         "FailedToLoad": "Benutzernotizen konnten nicht geladen werden.",
-        "FailedToLoadMember": "Mitgliederliste konnte nicht geladen werden.",
+        "FailedToLoadUser": "Mitgliederliste konnte nicht geladen werden.",
         "FailedToCreate": "Benutzernotiz konnte nicht erstellt werden.",
         "Created": "Benutzernotiz erstellt."
     },
@@ -481,8 +480,8 @@
         "SearchTemplate": "Vorlage suchen",
         "Back": "Zurück",
         "Next": "Nächster Schritt",
-        "ChooseAMember": "Nutzerauswahl",
-        "Member": "Mitglied",
+        "ChooseAUser": "Nutzerauswahl",
+        "User": "Mitglied",
         "PickOne": "Wähle einen",
         "DescribeCase": "Vorfallsbeschreibung",
         "Title": "Titel",
@@ -502,7 +501,7 @@
         "CreateCaseButton": "Vorfall erstellen",
         "UpdateCaseButton": "Vorfall aktualisieren",
         "FailedToLoad": {
-            "MemberList": "Mitgliederliste konnte nicht geladen werden.",
+            "UserList": "Mitgliederliste konnte nicht geladen werden.",
             "PunishmentEnum": "Verfügbare Bestrafungen konnten nicht geladen werden.",
             "CaseTemplates": "Vorlagen konnte nicht geladen werden.",
             "CurrentCase": "Vorfall konnte nicht geladen werden."
@@ -518,7 +517,7 @@
         "CaseUpdated": "Vorfall aktualisiert."
     },
     "ModCaseTable": {
-        "SelectMembers": "Mitglieder",
+        "SelectUsers": "Mitglieder",
         "SelectModerators": "Moderatoren",
         "SelectCreationTypes": "Erstellungsarten",
         "SelectPunishments": "Bestrafungen",

@@ -19,8 +19,7 @@
     "Punishments": "Punishments",
     "Bans": "Bans",
     "Mutes": "Mutes",
-    "Automods": "Automods",
-    "Automoderations": "Automoderations",
+    "AutoMods": "AutoMods",
     "Invite": "Invite",
     "Invites": "Invites",
     "Usernotes": "Usernotes",
@@ -36,7 +35,7 @@
         "Community": "Community",
         "Terms": "Terms",
         "Legal": "Legal",
-        "API": "API",
+        "Api": "Api",
         "Insights": "Insights",
         "Settings": "Settings",
         "Scanning": "Scanning"
@@ -46,7 +45,7 @@
         "All": "All guilds",
         "Admin": "Admin guilds",
         "Moderator": "Moderator guilds",
-        "Member": "Guilds",
+        "User": "Guilds",
         "Banned": "Banned from guilds"
     },
     "MASZ": {
@@ -81,7 +80,7 @@
             }
         }
     },
-    "Adminstats": {
+    "AdminStats": {
         "Bot": "Bot",
         "Database": "Database",
         "InternalCache": "Internal cache",
@@ -100,17 +99,17 @@
         "Published": "Published:",
         "UpdateAvailableText": "Update {{tag}} is available. Please update your instance."
     },
-    "AdminstatsList": {
+    "AdminStatsList": {
         "ShowMore": "Show more"
     },
     "TokenOverview": {
-        "Description": "As a siteadmin you can use the MASZ API to implement your own custom scripts and automate stuff on MASZ. Create an API key below to authorize yourself against the API while making web requests.",
+        "Description": "As a siteadmin you can use the MASZ Api to implement your own custom scripts and automate stuff on MASZ. Create an Api key below to authorize yourself against the Api while making web requests.",
         "Documentation": "You can find a full documentation in the /docs directory.",
         "Postman": "Just install postman and import the json file.",
         "TokenHeader": "Include tokens in the \"Authorization\" header with a \"Bearer \" prefix.",
-        "PythonAPIWrapper": "Try out the official python API wrapper.",
+        "PythonApiWrapper": "Try out the official python Api wrapper.",
         "Warning": "Warning",
-        "TokenIsPowerful": "An API key is very powerful and can control everything on MASZ!",
+        "TokenIsPowerful": "An Api key is very powerful and can control everything on MASZ!",
         "CreateToken": "Create token",
         "SaveSecurely": "Save this token securely.",
         "Tokens": "Tokens",
@@ -128,7 +127,7 @@
         "Message": "Message"
     },
     "AutoModTable": {
-        "FailedToLoad": "Failed to load automoderations.",
+        "FailedToLoad": "Failed to load automods.",
         "NoMatches": "There are no moderated events.",
         "LoadMoreEvents": "Load more entries"
     },
@@ -206,11 +205,11 @@
         "MutedRoles": "Muted roles",
         "StepFurtherConfiguration": "Select further configuration",
         "InternalStaffWebhook": "Internal staff notification webhook",
-        "PublicWebhook": "Public member notification webhook",
+        "PublicWebhook": "Public user notification webhook",
         "Language": "Language",
         "StrictPermissionCheckbox": "Strict permission check",
         "StrictPermissionDetails": "A moderator needs kick/ban permissions on discord to create kick/ban modcases",
-        "ExecuteWhois": "Execute whois on member join",
+        "ExecuteWhois": "Execute whois on user join",
         "WhoisDetails": "Automatically sends information about the joined user to your internal webhook.",
         "PublishModerator": "Publish moderator information",
         "PublishModeratorDetails": "A suspect will be able to see which moderator punished him.",
@@ -254,14 +253,14 @@
         "NicknameUpdated": {
             "title": "Nickname updated"
         },
-        "MemberRolesUpdated": {
-            "title": "Member roles updated"
+        "UserRolesUpdated": {
+            "title": "User roles updated"
         },
-        "MemberJoined": {
-            "title": "Member joined"
+        "UserJoined": {
+            "title": "User joined"
         },
-        "MemberRemoved": {
-            "title": "Member removed"
+        "UserRemoved": {
+            "title": "User removed"
         },
         "BanAdded": {
             "title": "Ban added"
@@ -279,8 +278,8 @@
             "title": "Thread created"
         }
     },
-    "AutomodConfig": {
-        "Automoderation": "Automoderation",
+    "AutoModConfig": {
+        "AutoMod": "AutoMod",
         "Invites": {
             "title": "Invites",
             "details": "A message on your guild matches the invite pattern. Invites to this guild will be ignored.",
@@ -302,9 +301,9 @@
             "title": "Embeds",
             "details": "A message on your guild contains too many embeds."
         },
-        "Automoderations": {
-            "title": "Automoderations",
-            "details": "A user triggers too many automoderations in a defined timespan."
+        "AutoMods": {
+            "title": "AutoMods",
+            "details": "A user triggers too many automods in a defined timespan."
         },
         "CustomFilter": {
             "title": "Custom filter",
@@ -339,7 +338,7 @@
             "Done": "Done"
         },
         "UpperLimit": "Upper limit",
-        "TeamMembersExcluded": "Note: team members are always excluded.",
+        "TeamUsersExcluded": "Note: team users are always excluded.",
         "ExcludeRoles": "Exclude roles",
         "ExcludeChannels": "Exclude channels",
         "SendInternalNotification": "Send internal notification",
@@ -380,7 +379,7 @@
         "Saved": "Saved motd.",
         "Explanation": "This message will be displayed to your administrators and moderators on the dashboard."
     },
-    "AutomodSplit": {
+    "AutoModSplit": {
         "FailedToLoad": "Failed to load guild autmod split chart."
     },
     "DashboardCaseList": {
@@ -392,7 +391,7 @@
         "Overview": "Overview",
         "Cases": "Cases",
         "Punishments": "Punishments",
-        "Automoderations": "Automoderations",
+        "AutoMods": "AutoMods",
         "ChooseADate": "Choose a date",
         "Reset": "Reset"
     },
@@ -414,7 +413,7 @@
         "MessageFrom": "Message from {{name}}"
     },
     "Quicksearch": {
-        "Placeholder": "Quicksearch users, modcases, punishments, automoderations, ...",
+        "Placeholder": "Quicksearch users, modcases, punishments, automods, ...",
         "NoMatches": "Nothing matches your search :(",
         "SearchFailed": "Search failed."
     },
@@ -427,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Dashboard",
             "Case": "Cases",
-            "Automoderation": "Automoderations",
+            "AutoMod": "AutoMods",
             "Messages": "Messages",
             "Usernote": "Usernotes",
             "Usermap": "Usermaps",
@@ -435,13 +434,13 @@
         }
     },
     "UsermapTable": {
-        "Member": "Member",
+        "User": "User",
         "Description": "Description",
         "CreateNewMap": "Create new usermap",
         "Search": "Search (user, id, description...)",
         "NoMatches": "No usermap matches your search.",
         "FailedToLoad": "Failed to load usermaps.",
-        "FailedToLoadMember": "Failed to load memberlist.",
+        "FailedToLoadUser": "Failed to load userlist.",
         "FailedToCreate": "Failed to create usermap.",
         "Created": "Usermap created."
     },
@@ -455,13 +454,13 @@
         "Deleted": "Usermap deleted."
     },
     "UsernoteTable": {
-        "Member": "Member",
+        "User": "User",
         "Description": "Description",
         "CreateNewNote": "Create new usernote",
         "Search": "Search (user, id, description...)",
         "NoMatches": "No usernote matches your search.",
         "FailedToLoad": "Failed to load usernotes.",
-        "FailedToLoadMember": "Failed to load memberlist.",
+        "FailedToLoadUser": "Failed to load userlist.",
         "FailedToCreate": "Failed to create usernote.",
         "Created": "Usernote created."
     },
@@ -481,8 +480,8 @@
         "SearchTemplate": "Search template",
         "Back": "Back",
         "Next": "Next",
-        "ChooseAMember": "Choose a member",
-        "Member": "Member",
+        "ChooseAUser": "Choose a user",
+        "User": "User",
         "PickOne": "Pick one",
         "DescribeCase": "Describe the case",
         "Title": "Title",
@@ -502,7 +501,7 @@
         "CreateCaseButton": "Create case",
         "UpdateCaseButton": "Update case",
         "FailedToLoad": {
-            "MemberList": "Failed to load member list.",
+            "UserList": "Failed to load user list.",
             "PunishmentEnum": "Failed to load available punishments.",
             "CaseTemplates": "Failed to load case templates.",
             "CurrentCase": "Failed to load current case."
@@ -518,7 +517,7 @@
         "CaseUpdated": "Case updated."
     },
     "ModCaseTable": {
-        "SelectMembers": "Members",
+        "SelectUsers": "Users",
         "SelectModerators": "Moderators",
         "SelectCreationTypes": "Creation types",
         "SelectPunishments": "Punishments",
@@ -567,7 +566,7 @@
             "Failed": "Failed to activate case."
         },
         "PunishmentExpired": "Punishment is expired.",
-        "CaseInactive": "Modcase is inactive.",
+        "CaseInactive": "ModCase is inactive.",
         "CreatedAt": "Created at",
         "EditedAt": "Edited at",
         "LastEditModerator": "Last edit by moderator",
@@ -633,8 +632,8 @@
         "EnterUserOrInvite": "Enter a users id or invite code",
         "Userscan": "Userscan",
         "Invitescan": "Invitescan",
-        "UserscanDescription": "Enter a users id to get a quick overview of a member or relations to other members. This also tracks invites a new member uses so you can quickly spot alt accounts. Use a double click to view other ressources such as a modcase.",
-        "InvitescanDescription": "Enter an invite code or link to get a quick overview of an invite or relations to other members. Use a double click to view other ressources such as another user.",
+        "UserscanDescription": "Enter a users id to get a quick overview of a user or relations to other users. This also tracks invites a new user uses so you can quickly spot alt accounts. Use a double click to view other ressources such as a modcase.",
+        "InvitescanDescription": "Enter an invite code or link to get a quick overview of an invite or relations to other users. Use a double click to view other ressources such as another user.",
         "FailedToLoad": {
             "Scan": "Failed to load scan information.",
             "Invite": "Failed to load scan information.",

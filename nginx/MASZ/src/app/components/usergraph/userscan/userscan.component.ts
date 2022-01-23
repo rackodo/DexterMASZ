@@ -4,14 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
-import { APIEnum } from 'src/app/models/APIEnum';
-import { AutoModerationEvent } from 'src/app/models/AutoModerationEvent';
+import { ApiEnumTypes } from 'src/app/models/ApiEmumTypes';
+import { ApiEnum } from 'src/app/models/ApiEnum';
+import { AutoModEvent } from 'src/app/models/AutoModEvent';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordUser } from 'src/app/models/DiscordUser';
 import { Guild } from 'src/app/models/Guild';
 import { InviteNetwork } from 'src/app/models/InviteNetwork';
-import { convertModcaseToPunishmentString, ModCase } from 'src/app/models/ModCase';
+import { convertModCaseToPunishmentString, ModCase } from 'src/app/models/ModCase';
 import { UserInvite } from 'src/app/models/UserInvite';
 import { UserNetwork } from 'src/app/models/UserNetwork';
 import { UserNote } from 'src/app/models/UserNote';
@@ -58,20 +58,20 @@ export class UserscanComponent implements OnInit {
     }
   };
   private data: {'nodes': Node[], 'edges': Edge[]} = { 'nodes': [], 'edges': [] };
-  private punishments: ContentLoading<APIEnum[]> = { loading: true, content: [] };
-  private automodtypes: ContentLoading<APIEnum[]> = { loading: true, content: [] };
+  private punishments: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
+  private automodtypes: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
 
   constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, private enumManager: EnumManagerService, private translator: TranslateService, private timezoneService: TimezoneService) { }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.reloadPunishmentEnum();
-    this.reloadAutomodTypeEnum();
+    this.reloadAutoModTypeEnum();
   }
 
   reloadPunishmentEnum() {
     this.punishments.loading = true;
-    this.enumManager.getEnum(APIEnumTypes.PUNISHMENT).subscribe((data: APIEnum[]) => {
+    this.enumManager.getEnum(ApiEnumTypes.PUNISHMENT).subscribe((data: ApiEnum[]) => {
       this.punishments.loading = false;
       this.punishments.content = data;
     }, () => {
@@ -79,9 +79,9 @@ export class UserscanComponent implements OnInit {
     });
   }
 
-  reloadAutomodTypeEnum() {
+  reloadAutoModTypeEnum() {
     this.automodtypes.loading = true;
-    this.enumManager.getEnum(APIEnumTypes.AUTOMODTYPE).subscribe((data: APIEnum[]) => {
+    this.enumManager.getEnum(ApiEnumTypes.AUTOMODTYPE).subscribe((data: ApiEnum[]) => {
       this.automodtypes.loading = false;
       this.automodtypes.content = data;
     }, () => {
@@ -236,7 +236,7 @@ export class UserscanComponent implements OnInit {
       }
       for (let modEvent of network.modEvents) {
         if (modEvent.guildId !== guild.id) continue;
-        let eventBaseNode = this.addNewNode(this.newBasicAutomodsNode, [userId, guild.id]) as Node;
+        let eventBaseNode = this.addNewNode(this.newBasicAutoModsNode, [userId, guild.id]) as Node;
         this.addNewEdge(guildNode, eventBaseNode);
         let eventNode = this.addNewNode(this.newEventNode, [modEvent, 5]) as Node;
         this.addNewEdge(eventBaseNode, eventNode, `${this.translator.instant('Scanning.OccuredAt')}: ${this.timezoneService.convertNearlyAnyDateToLocaleString(modEvent.createdAt)}`);
@@ -246,17 +246,17 @@ export class UserscanComponent implements OnInit {
         let noteNode = this.addNewNode(this.newNoteNode, [note]) as Node;
         this.addNewEdge(guildNode, noteNode, '', false, 'no', 250);
       }
-      for (let usermap of network.userMappings) {
-        if (usermap.userMapping.guildId !== guild.id) continue;
-        let mapBaseNode = this.addNewNode(this.newBasicMapNode, [userId, usermap.userMapping.guildId]) as Node;
+      for (let usermap of network.userMaps) {
+        if (usermap.userMap.guildId !== guild.id) continue;
+        let mapBaseNode = this.addNewNode(this.newBasicMapNode, [userId, usermap.userMap.guildId]) as Node;
         this.addNewEdge(guildNode, mapBaseNode);
-        if (usermap.userMapping.userA !== userId) {
-          let userNode = this.addNewNode(this.newUserNode, [usermap.userA, usermap.userMapping.userA]) as Node;
-          this.addNewEdge(mapBaseNode, userNode, usermap.userMapping.reason, true, 'to');
+        if (usermap.userMap.userA !== userId) {
+          let userNode = this.addNewNode(this.newUserNode, [usermap.userA, usermap.userMap.userA]) as Node;
+          this.addNewEdge(mapBaseNode, userNode, usermap.userMap.reason, true, 'to');
         }
-        else if (usermap.userMapping.userB !== userId) {
-          let userNode = this.addNewNode(this.newUserNode, [usermap.userB, usermap.userMapping.userB]) as Node;
-          this.addNewEdge(mapBaseNode, userNode, usermap.userMapping.reason, true, 'to');
+        else if (usermap.userMap.userB !== userId) {
+          let userNode = this.addNewNode(this.newUserNode, [usermap.userB, usermap.userMap.userB]) as Node;
+          this.addNewEdge(mapBaseNode, userNode, usermap.userMap.reason, true, 'to');
         }
       }
     }
@@ -348,7 +348,7 @@ export class UserscanComponent implements OnInit {
   }
 
   newCaseNode(modCase: ModCase, size: number = 20): Node {
-    let punishmentString = convertModcaseToPunishmentString(modCase, this.punishments.content);
+    let punishmentString = convertModCaseToPunishmentString(modCase, this.punishments.content);
     if (modCase.punishedUntil != null) {
       punishmentString += `, Until: ${this.timezoneService.convertNearlyAnyDateToLocaleString(modCase.punishedUntil)}`;
     }
@@ -362,11 +362,11 @@ export class UserscanComponent implements OnInit {
     } as Node
   }
 
-  newEventNode(modEvent: AutoModerationEvent, size: number = 20): Node {
+  newEventNode(modEvent: AutoModEvent, size: number = 20): Node {
     return {
       id: `${modEvent.guildId}/automod/${modEvent.id}`,
       group: `${modEvent.guildId}/automods`,
-      title: `${this.automodtypes.content?.find(x => x.key === modEvent.autoModerationType)?.value ?? 'Unknown'} ${modEvent.messageContent}`,
+      title: `${this.automodtypes.content?.find(x => x.key === modEvent.autoModType)?.value ?? 'Unknown'} ${modEvent.messageContent}`,
       size: size
     }
   }
@@ -393,10 +393,10 @@ export class UserscanComponent implements OnInit {
     }
   }
 
-  newBasicAutomodsNode(userId: string, guildId: string): Node {
+  newBasicAutoModsNode(userId: string, guildId: string): Node {
     return {
       id: `${userId}/${guildId}/automods`,
-      label: this.translator.instant('Automoderations'),
+      label: this.translator.instant('AutoMods'),
       group: `basics/sub`,
       shape: 'triangle',
       size: 15

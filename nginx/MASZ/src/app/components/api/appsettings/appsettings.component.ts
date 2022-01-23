@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
-import { APIEnum } from 'src/app/models/APIEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEmumTypes';
+import { ApiEnum } from 'src/app/models/ApiEnum';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { IAppSettings } from 'src/app/models/IAppSettings';
 import { ApiService } from 'src/app/services/api.service';
@@ -24,7 +24,7 @@ export class AppsettingsComponent implements OnInit {
   maxLength256 = { length: 256 };
   maxLength4096 = { length: 4096 };
 
-  public allLanguages: APIEnum[] = [];
+  public allLanguages: ApiEnum[] = [];
 
   constructor(private toastr: ToastrService, private api: ApiService, private _formBuilder: FormBuilder, private translator: TranslateService, private enumManager: EnumManagerService) { }
 
@@ -57,7 +57,7 @@ export class AppsettingsComponent implements OnInit {
       console.error(error);
     });
 
-    this.enumManager.getEnum(APIEnumTypes.LANGUAGE).subscribe((data: APIEnum[]) => {
+    this.enumManager.getEnum(ApiEnumTypes.LANGUAGE).subscribe((data: ApiEnum[]) => {
       this.allLanguages = data;
     });
   }
