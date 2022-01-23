@@ -1,4 +1,4 @@
-export interface APIToken {
+export interface ApiToken {
     id: number;
     name: string;
     tokenSalt?: any;

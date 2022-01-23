@@ -1121,3 +1121,4 @@ webinterface/app/composer.lock
 /backend/MASZ/Properties/launchSettings.json
 
 *.bak
+/package-lock.json

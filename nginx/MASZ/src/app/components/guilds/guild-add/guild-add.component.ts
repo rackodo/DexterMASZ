@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
-import { APIEnum } from 'src/app/models/APIEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
+import { ApiEnum } from 'src/app/models/ApiEnum';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { Guild } from 'src/app/models/Guild';
 import { GuildRole } from 'src/app/models/GuildRole';
@@ -36,7 +36,7 @@ export class GuildAddComponent implements OnInit {
   public selectedGuild: Guild|undefined;
   public selectedGuildDetails!: ContentLoading<Guild>;
 
-  public allLanguages: APIEnum[] = [];
+  public allLanguages: ApiEnum[] = [];
 
   constructor(private _formBuilder: FormBuilder, private api: ApiService, private toastr: ToastrService, private authService: AuthService, private router: Router, private applicationInfoService: ApplicationInfoService, private translator: TranslateService, private enumManager: EnumManagerService) { }
 
@@ -87,7 +87,7 @@ export class GuildAddComponent implements OnInit {
   }
 
   loadLanguages() {
-    this.enumManager.getEnum(APIEnumTypes.LANGUAGE).subscribe((data: APIEnum[]) => {
+    this.enumManager.getEnum(ApiEnumTypes.LANGUAGE).subscribe((data: ApiEnum[]) => {
       this.allLanguages = data;
     });
   }

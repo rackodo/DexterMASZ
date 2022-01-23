@@ -1,4 +1,4 @@
-export enum AutoModerationAction {
+export enum AutoModAction {
     None,
     ContentDeleted,
     CaseCreated,

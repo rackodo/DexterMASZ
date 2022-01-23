@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, interval, ReplaySubject } from 'rxjs';
-import { Adminstats } from 'src/app/models/Adminstats';
+import { AdminStats } from 'src/app/models/AdminStats';
 import { AppVersion } from 'src/app/models/AppVersion';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { ApiService } from 'src/app/services/api.service';
@@ -17,13 +17,13 @@ import { VersionManagerService } from 'src/app/services/version-manager.service'
   templateUrl: './adminstats.component.html',
   styleUrls: ['./adminstats.component.css']
 })
-export class AdminstatsComponent implements OnInit {
+export class AdminStatsComponent implements OnInit {
 
   private subscription?: any;
   private timeDifference?: number;
   public secondsToNewCache?: string = '--';
   public minutesToNewCache?: string = '--';
-  public stats: ContentLoading<Adminstats> = { loading: true, content: undefined };
+  public stats: ContentLoading<AdminStats> = { loading: true, content: undefined };
   public newVersionFound: ReplaySubject<IImageVersion> = new ReplaySubject(1);
   public localVersionFound?: string = undefined;
 
@@ -44,14 +44,14 @@ export class AdminstatsComponent implements OnInit {
     this.stats = { loading: true, content: undefined };
     this.subscription?.unsubscribe();
 
-    this.api.getSimpleData(`/meta/adminstats`).subscribe((data: Adminstats) => {
+    this.api.getSimpleData(`/meta/adminstats`).subscribe((data: AdminStats) => {
       this.stats = { loading: false, content: data };
       this.subscription = interval(1000)
            .subscribe(x => { this.getTimeDifference(); });
     }, error => {
       console.error(error);
       this.stats.loading = false;
-      this.toastr.error(this.translator.instant('Adminstats.FailedToLoad'));
+      this.toastr.error(this.translator.instant('AdminStats.FailedToLoad'));
     });
   }
 
@@ -78,13 +78,13 @@ export class AdminstatsComponent implements OnInit {
       if (confirmed) {
         this.api.postSimpleData(`/meta/cache`, {}).subscribe(() => {
           this.stats = { loading: true, content: undefined };
-          this.toastr.success(this.translator.instant('Adminstats.Cleared'));
+          this.toastr.success(this.translator.instant('AdminStats.Cleared'));
           setTimeout(() => {
             this.reload();
           }, 2000);
         }, (error) => {
           console.error(error);
-          this.toastr.error(this.translator.instant('Adminstats.FailedToClear'));
+          this.toastr.error(this.translator.instant('AdminStats.FailedToClear'));
         });
       }
     });

@@ -8,28 +8,28 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordUser } from 'src/app/models/DiscordUser';
-import { UserMappingView } from 'src/app/models/UserMappingView';
+import { UserMapView } from 'src/app/models/UserMapView';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
-  selector: 'app-guild-usermapping',
-  templateUrl: './guild-usermapping.component.html',
-  styleUrls: ['./guild-usermapping.component.css']
+  selector: 'app-guild-usermap',
+  templateUrl: './guild-usermap.component.html',
+  styleUrls: ['./guild-usermap.component.css']
 })
 export class GuildUsermappingComponent implements OnInit {
 
   public newMapFormGroup!: FormGroup;
-  public filteredMembersA!: Observable<DiscordUser[]>;
-  public filteredMembersB!: Observable<DiscordUser[]>;
-  public members: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
+  public filteredUsersA!: Observable<DiscordUser[]>;
+  public filteredUsersB!: Observable<DiscordUser[]>;
+  public users: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
 
   private guildId!: string;
   private timeout: any;
   public loading: boolean = true;
   public searchString: string = '';
-  private $showUserMappings: ReplaySubject<UserMappingView[]> = new ReplaySubject<UserMappingView[]>(1);
-  public showUserMappings: Observable<UserMappingView[]> = this.$showUserMappings.asObservable();
-  public allUserMappings: UserMappingView[] = [];
+  private $showUserMaps: ReplaySubject<UserMapView[]> = new ReplaySubject<UserMapView[]>(1);
+  public showUserMaps: Observable<UserMapView[]> = this.$showUserMaps.asObservable();
+  public allUserMaps: UserMapView[] = [];
   constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, private _formBuilder: FormBuilder, private translator: TranslateService) { }
 
   ngOnInit(): void {
@@ -37,12 +37,12 @@ export class GuildUsermappingComponent implements OnInit {
 
     this.resetForm();
 
-    this.filteredMembersA = this.newMapFormGroup.valueChanges
+    this.filteredUsersA = this.newMapFormGroup.valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value.userA))
       );
-    this.filteredMembersB = this.newMapFormGroup.valueChanges
+    this.filteredUsersB = this.newMapFormGroup.valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value.userB))
@@ -64,23 +64,23 @@ export class GuildUsermappingComponent implements OnInit {
 
   private _filter(value: string): DiscordUser[] {
     if (!value?.trim()) {
-      return this.members.content?.filter(option => !option.bot)?.slice(0, 10) as DiscordUser[];
+      return this.users.content?.filter(option => !option.bot)?.slice(0, 10) as DiscordUser[];
     }
     const filterValue = value.trim().toLowerCase();
 
-    return this.members.content?.filter(option =>
+    return this.users.content?.filter(option =>
        ((option.username + "#" + option.discriminator).toLowerCase().includes(filterValue) ||
        option.id.includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
   }
 
   private reloadData() {
     this.loading = true;
-    this.$showUserMappings.next([]);
-    this.allUserMappings = [];
-    this.members = { loading: true, content: [] };
+    this.$showUserMaps.next([]);
+    this.allUserMaps = [];
+    this.users = { loading: true, content: [] };
 
-    this.api.getSimpleData(`/guilds/${this.guildId}/usermapview`).subscribe((data: UserMappingView[]) => {
-      this.allUserMappings = data;
+    this.api.getSimpleData(`/guilds/${this.guildId}/usermapview`).subscribe((data: UserMapView[]) => {
+      this.allUserMaps = data;
       this.loading = false;
       this.search();
     }, error => {
@@ -91,12 +91,12 @@ export class GuildUsermappingComponent implements OnInit {
 
     const params = new HttpParams()
           .set('partial', 'true');
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}/members`, true, params).subscribe(data => {
-      this.members.content = data;
-      this.members.loading = false;
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}/users`, true, params).subscribe(data => {
+      this.users.content = data;
+      this.users.loading = false;
     }, error => {
       console.error(error);
-      this.toastr.error(this.translator.instant('UsermapTable.FailedToLoadMember'));
+      this.toastr.error(this.translator.instant('UsermapTable.FailedToLoadUser'));
     });
   }
 
@@ -113,22 +113,22 @@ export class GuildUsermappingComponent implements OnInit {
   search() {
     let tempSearch = this.searchString.toLowerCase();
     if (tempSearch.trim()) {
-      this.$showUserMappings.next(this.allUserMappings.filter(
-        x => x.userMapping.creatorUserId.includes(tempSearch) ||
-            x.userMapping.userA.includes(tempSearch) ||
-            x.userMapping.userB.includes(tempSearch) ||
-            x.userMapping.reason.toLowerCase().includes(tempSearch) ||
+      this.$showUserMaps.next(this.allUserMaps.filter(
+        x => x.userMap.creatorUserId.includes(tempSearch) ||
+            x.userMap.userA.includes(tempSearch) ||
+            x.userMap.userB.includes(tempSearch) ||
+            x.userMap.reason.toLowerCase().includes(tempSearch) ||
             (x.moderator?.username + "#" + x.moderator?.discriminator).toLowerCase().includes(tempSearch) ||
             (x.userA?.username + "#" + x.userA?.discriminator).toLowerCase().includes(tempSearch) ||
             (x.userB?.username + "#" + x.userB?.discriminator).toLowerCase().includes(tempSearch)
       ));
     } else {
-      this.$showUserMappings.next(this.allUserMappings);
+      this.$showUserMaps.next(this.allUserMaps);
     }
   }
 
   removeMap(event: any) {
-    this.allUserMappings = this.allUserMappings.filter(x => x.userMapping.id !== event);
+    this.allUserMaps = this.allUserMaps.filter(x => x.userMap.id !== event);
     this.search();
   }
 

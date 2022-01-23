@@ -1,4 +1,4 @@
-export enum APIEnumTypes {
+export enum ApiEnumTypes {
     PUNISHMENT = "punishment",
     VIEWPERMISSION = "viewpermission",
     AUTOMODACTION = "automodaction",

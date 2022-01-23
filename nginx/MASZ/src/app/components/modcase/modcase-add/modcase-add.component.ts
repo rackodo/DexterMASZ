@@ -18,9 +18,9 @@ import { TemplateCreateDialogComponent } from '../../dialogs/template-create-dia
 import { MatDialog } from '@angular/material/dialog';
 import { AppUser } from 'src/app/models/AppUser';
 import { PunishmentType } from 'src/app/models/PunishmentType';
-import { APIEnum } from 'src/app/models/APIEnum';
+import { ApiEnum } from 'src/app/models/ApiEnum';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
-import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import * as moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -33,13 +33,13 @@ import { go, highlight } from 'fuzzysort';
   templateUrl: './modcase-add.component.html',
   styleUrls: ['./modcase-add.component.css']
 })
-export class ModcaseAddComponent implements OnInit {
+export class ModCaseAddComponent implements OnInit {
 
   public punishedUntilChangeForPicker: ReplaySubject<Date> = new ReplaySubject<Date>(1);
   public punishedUntil?: moment.Moment;
 
   public templateFormGroup!: FormGroup;
-  public memberFormGroup!: FormGroup;
+  public userFormGroup!: FormGroup;
   public infoFormGroup!: FormGroup;
   public punishmentFormGroup!: FormGroup;
   public filesFormGroup!: FormGroup;
@@ -55,18 +55,18 @@ export class ModcaseAddComponent implements OnInit {
   public filteredLabels: ReplaySubject<ICaseLabel[]> = new ReplaySubject(1);
   public remoteLabels: ICaseLabel[] = [];
 
-  public memberForm = new FormControl();
-  public filteredMembers!: Observable<DiscordUser[]>;
+  public userForm = new FormControl();
+  public filteredUsers!: Observable<DiscordUser[]>;
 
   public templateSearch: string = "";
 
   public savingCase: boolean = false;
 
   public guildId!: string;
-  public members: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
+  public users: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
   public templates: ContentLoading<TemplateView[]> = { loading: true, content: [] };
   public allTemplates: TemplateView[] = [];
-  public punishmentOptions: ContentLoading<APIEnum[]> = { loading: true, content: [] };
+  public punishmentOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
   public currentUser!: AppUser;
   constructor(private _formBuilder: FormBuilder, private api: ApiService, private toastr: ToastrService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private enumManager: EnumManagerService, private translator: TranslateService) {
     this.labelInputForm.valueChanges.subscribe(data => {
@@ -78,8 +78,8 @@ export class ModcaseAddComponent implements OnInit {
   ngOnInit(): void {
     this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
 
-    this.memberFormGroup = this._formBuilder.group({
-      member: ['', Validators.required]
+    this.userFormGroup = this._formBuilder.group({
+      user: ['', Validators.required]
     });
     this.infoFormGroup = this._formBuilder.group({
       title: ['', [Validators.required, Validators.maxLength(100)]],
@@ -111,21 +111,21 @@ export class ModcaseAddComponent implements OnInit {
       }
     });
 
-    this.filteredMembers = this.memberFormGroup.valueChanges
+    this.filteredUsers = this.userFormGroup.valueChanges
       .pipe(
         startWith(''),
-        map(value => this._filter(value.member))
+        map(value => this._filter(value.user))
       );
     this.reload();
   }
 
   private _filter(value: string): DiscordUser[] {
     if (!value?.trim()) {
-      return this.members.content?.filter(option => !option.bot)?.slice(0, 10) as DiscordUser[];
+      return this.users.content?.filter(option => !option.bot)?.slice(0, 10) as DiscordUser[];
     }
     const filterValue = value.trim().toLowerCase();
 
-    return this.members.content?.filter(option =>
+    return this.users.content?.filter(option =>
        ((option.username + "#" + option.discriminator).toLowerCase().includes(filterValue) ||
        option.id.includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
   }
@@ -176,7 +176,7 @@ export class ModcaseAddComponent implements OnInit {
   }
 
   reload() {
-    this.members = { loading: true, content: [] };
+    this.users = { loading: true, content: [] };
     this.templates = { loading: true, content: [] };
     this.punishmentOptions = { loading: true, content: [] };
     this.templateSearch = "";
@@ -184,16 +184,16 @@ export class ModcaseAddComponent implements OnInit {
 
     const params = new HttpParams()
           .set('partial', 'true');
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}/members`, true, params).subscribe(data => {
-      this.members.content = data;
-      this.members.loading = false;
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}/users`, true, params).subscribe(data => {
+      this.users.content = data;
+      this.users.loading = false;
     }, error => {
       console.error(error);
-      this.members.loading = false;
-      this.toastr.error(this.translator.instant('ModCaseDialog.FailedToLoad.MemberList'));
+      this.users.loading = false;
+      this.toastr.error(this.translator.instant('ModCaseDialog.FailedToLoad.UserList'));
     });
 
-    this.enumManager.getEnum(APIEnumTypes.PUNISHMENT).subscribe(data => {
+    this.enumManager.getEnum(ApiEnumTypes.PUNISHMENT).subscribe(data => {
       this.punishmentOptions.content = data;
       this.punishmentOptions.loading = false;
     }, error => {
@@ -257,7 +257,7 @@ export class ModcaseAddComponent implements OnInit {
     const data = {
       title: this.infoFormGroup.value.title,
       description: this.infoFormGroup.value.description,
-      userid: this.memberFormGroup.value.member?.trim(),
+      userid: this.userFormGroup.value.user?.trim(),
       labels: this.caseLabels,
       punishmentType: this.punishmentFormGroup.value.punishmentType,
       punishedUntil: this.punishedUntil?.toISOString(),

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UserMappingView } from 'src/app/models/UserMappingView';
+import { UserMapView } from 'src/app/models/UserMapView';
 
 @Component({
   selector: 'app-quicksearch-usermaps-result',
@@ -8,7 +8,7 @@ import { UserMappingView } from 'src/app/models/UserMappingView';
 })
 export class QuicksearchUsermapsResultComponent implements OnInit {
 
-  @Input() usermaps!: UserMappingView[];
+  @Input() usermaps!: UserMapView[];
   @Input() searchedFor!: string;
   constructor() { }
 

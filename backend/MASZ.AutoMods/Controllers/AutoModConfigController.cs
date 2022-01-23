@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.AutoMods.Controllers;
 
-[Route("api/v1/guilds/{guildId}/autoModConfig")]
+[Route("api/v1/guilds/{guildId}/automodconfig")]
 public class AutoModConfigController : AuthenticatedController
 {
 	private readonly AutoModConfigRepository _autoModConfigRepository;

@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'src/app/components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ScheduledMessageEditDialogComponent } from 'src/app/components/dialogs/scheduled-message-edit-dialog/scheduled-message-edit-dialog.component';
-import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { IScheduledMessage } from 'src/app/models/IScheduledMessage';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -37,10 +37,10 @@ export class GuildMessageCardComponent implements OnInit {
       this.isAdminOrHigher = data;
     });
 
-    this.enumManager.getEnum(APIEnumTypes.SCHEDULEMESSAGESTATUS).subscribe(data => {
+    this.enumManager.getEnum(ApiEnumTypes.SCHEDULEMESSAGESTATUS).subscribe(data => {
       this.status = data?.find(x => x.key === this.message.status)?.value;
     });
-    this.enumManager.getEnum(APIEnumTypes.SCHEDULEMESSAGEFAILUREREASON).subscribe(data => {
+    this.enumManager.getEnum(ApiEnumTypes.SCHEDULEMESSAGEFAILUREREASON).subscribe(data => {
       this.failureReason = data?.find(x => x.key === this.message.failureReason)?.value;
     });
   }

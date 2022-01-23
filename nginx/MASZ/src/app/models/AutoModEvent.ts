@@ -1,9 +1,9 @@
-import { AutoModerationType } from "./AutoModerationType";
+import { AutoModType } from "./AutoModType";
 
-export interface AutoModerationEvent {
+export interface AutoModEvent {
     id: number;
     guildId: string;
-    autoModerationType: AutoModerationType;
+    autoModerationType: AutoModType;
     autoModerationAction: number;
     userId: string;
     username: string;

@@ -18,7 +18,7 @@ public class AutoModEnumsController : ControllerBase
 		_translator = translator;
 	}
 
-	[HttpGet("autoModAction")]
+	[HttpGet("automodaction")]
 	public IActionResult AutoModActions([FromQuery] Language? language = null)
 	{
 		_translator.SetLanguage(language);
@@ -31,7 +31,7 @@ public class AutoModEnumsController : ControllerBase
 		return Ok(enums);
 	}
 
-	[HttpGet("autoModChannelBehavior")]
+	[HttpGet("automodchannelbehavior")]
 	public IActionResult ChannelNotificationBehavior([FromQuery] Language? language = null)
 	{
 		_translator.SetLanguage(language);
@@ -44,7 +44,7 @@ public class AutoModEnumsController : ControllerBase
 		return Ok(enums);
 	}
 
-	[HttpGet("autoModType")]
+	[HttpGet("automodtype")]
 	public IActionResult AutoModTypes([FromQuery] Language? language = null)
 	{
 		_translator.SetLanguage(language);

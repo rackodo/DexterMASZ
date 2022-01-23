@@ -4,8 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { API_URL, APP_BASE_URL } from '../config/config';
-import { APIEnumTypes } from '../models/APIEmumTypes';
-import { APIEnum } from '../models/APIEnum';
+import { ApiEnumTypes } from '../models/ApiEnumTypes';
+import { ApiEnum } from '../models/ApiEnum';
 import { EnumManagerService } from './enum-manager.service';
 
 @Injectable({
@@ -14,12 +14,12 @@ import { EnumManagerService } from './enum-manager.service';
 export class ApiService {
 
   private enumManager?: EnumManagerService = undefined;
-  private apiErrors: APIEnum[] = [];
+  private apiErrors: ApiEnum[] = [];
 
   constructor(private http: HttpClient, private toastr: ToastrService, private injector: Injector) {
     setTimeout(() => {
       this.enumManager = this.injector.get(EnumManagerService);
-      this.enumManager.getEnum(APIEnumTypes.APIERRORS).subscribe((apiErrors: APIEnum[]) => {
+      this.enumManager.getEnum(ApiEnumTypes.APIERRORS).subscribe((apiErrors: ApiEnum[]) => {
         this.apiErrors = apiErrors;
       });
     });

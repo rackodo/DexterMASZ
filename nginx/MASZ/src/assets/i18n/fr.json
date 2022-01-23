@@ -19,8 +19,7 @@
     "Punishments": "Les sanctions",
     "Bans": "Interdictions",
     "Mutes": "Muet",
-    "Automods": "Automods",
-    "Automoderations": "Automodérations",
+    "AutoMods": "AutoMods",
     "Invite": "Inviter",
     "Invites": "Invite",
     "Usernotes": "Notes d'utilisateur",
@@ -36,7 +35,7 @@
         "Community": "Communauté",
         "Terms": "termes",
         "Legal": "Légal",
-        "API": "API",
+        "Api": "Api",
         "Insights": "Connaissances",
         "Settings": "Paramètres",
         "Scanning": "Balayage"
@@ -46,7 +45,7 @@
         "All": "Toutes les guildes",
         "Admin": "Guildes d'administration",
         "Moderator": "Guildes de modérateurs",
-        "Member": "Guildes",
+        "User": "Guildes",
         "Banned": "Banni des guildes"
     },
     "MASZ": {
@@ -81,7 +80,7 @@
             }
         }
     },
-    "Adminstats": {
+    "AdminStats": {
         "Bot": "Bot",
         "Database": "Base de données",
         "InternalCache": "Cache interne",
@@ -100,17 +99,17 @@
         "Published": "Publié :",
         "UpdateAvailableText": "La mise à jour {{tag}} est disponible. Veuillez mettre à jour votre instance."
     },
-    "AdminstatsList": {
+    "AdminStatsList": {
         "ShowMore": "Montre plus"
     },
     "TokenOverview": {
-        "Description": "En tant qu'administrateur de site, vous pouvez utiliser l'API MASZ pour implémenter vos propres scripts personnalisés et automatiser des choses sur MASZ. Créez une clé API ci-dessous pour vous autoriser par rapport à l'API lorsque vous effectuez des requêtes Web.",
+        "Description": "En tant qu'administrateur de site, vous pouvez utiliser l'Api MASZ pour implémenter vos propres scripts personnalisés et automatiser des choses sur MASZ. Créez une clé Api ci-dessous pour vous autoriser par rapport à l'Api lorsque vous effectuez des requêtes Web.",
         "Documentation": "Vous pouvez trouver une documentation complète dans le répertoire /docs.",
         "Postman": "Installez simplement postman et importez le fichier json.",
         "TokenHeader": "Incluez des jetons dans l'en-tête « Authorization » avec un préfixe « Bearer ».",
-        "PythonAPIWrapper": "Essayez le wrapper officiel de l'API python.",
+        "PythonApiWrapper": "Essayez le wrapper officiel de l'Api python.",
         "Warning": "Avertissement",
-        "TokenIsPowerful": "Une clé API est très puissante et permet de tout contrôler sur MASZ !",
+        "TokenIsPowerful": "Une clé Api est très puissante et permet de tout contrôler sur MASZ !",
         "CreateToken": "Créer un jeton",
         "SaveSecurely": "Enregistrez ce jeton en toute sécurité.",
         "Tokens": "Jetons",
@@ -254,13 +253,13 @@
         "NicknameUpdated": {
             "title": "Pseudo mis à jour"
         },
-        "MemberRolesUpdated": {
+        "UserRolesUpdated": {
             "title": "Rôles des membres mis à jour"
         },
-        "MemberJoined": {
+        "UserJoined": {
             "title": "Membre rejoint"
         },
-        "MemberRemoved": {
+        "UserRemoved": {
             "title": "Membre supprimé"
         },
         "BanAdded": {
@@ -279,8 +278,8 @@
             "title": "Fil créé"
         }
     },
-    "AutomodConfig": {
-        "Automoderation": "Automodération",
+    "AutoModConfig": {
+        "AutoModeration": "AutoModération",
         "Invites": {
             "title": "Invite",
             "details": "Un message sur votre guilde correspond au modèle d'invitation. Les invitations à cette guilde seront ignorées.",
@@ -302,8 +301,8 @@
             "title": "Intégrer",
             "details": "Un message sur votre guilde contient trop d'intégrations."
         },
-        "Automoderations": {
-            "title": "Automodérations",
+        "AutoMods": {
+            "title": "AutoModérations",
             "details": "Un utilisateur déclenche trop d'automodérations dans un laps de temps défini."
         },
         "CustomFilter": {
@@ -339,7 +338,7 @@
             "Done": "Terminé"
         },
         "UpperLimit": "Limite supérieure",
-        "TeamMembersExcluded": "Remarque : les membres de l'équipe sont toujours exclus.",
+        "TeamUsersExcluded": "Remarque : les membres de l'équipe sont toujours exclus.",
         "ExcludeRoles": "Exclure les rôles",
         "ExcludeChannels": "Exclure les chaînes",
         "SendInternalNotification": "Envoyer une notification interne",
@@ -380,7 +379,7 @@
         "Saved": "Mot enregistré.",
         "Explanation": "Ce message sera affiché à vos administrateurs et modérateurs sur le tableau de bord."
     },
-    "AutomodSplit": {
+    "AutoModSplit": {
         "FailedToLoad": "Échec du chargement du tableau de répartition autmod de la guilde."
     },
     "DashboardCaseList": {
@@ -392,7 +391,7 @@
         "Overview": "Aperçu",
         "Cases": "Cas",
         "Punishments": "Les sanctions",
-        "Automoderations": "Automodérations",
+        "AutoMods": "AutoModérations",
         "ChooseADate": "Choisissez une date",
         "Reset": "Réinitialiser"
     },
@@ -427,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Tableau de bord",
             "Case": "Cas",
-            "Automoderation": "Automodérations",
+            "AutoModeration": "AutoModérations",
             "Messages": "Messages",
             "Usernote": "Notes d'utilisateur",
             "Usermap": "Cartes utilisateur",
@@ -435,13 +434,13 @@
         }
     },
     "UsermapTable": {
-        "Member": "Membre",
+        "User": "Membre",
         "Description": "La description",
         "CreateNewMap": "Créer une nouvelle carte utilisateur",
         "Search": "Recherche (utilisateur, identifiant, description...)",
         "NoMatches": "Aucune usermap ne correspond à votre recherche.",
         "FailedToLoad": "Échec du chargement des cartes utilisateur.",
-        "FailedToLoadMember": "Échec du chargement de la liste des membres.",
+        "FailedToLoadUser": "Échec du chargement de la liste des membres.",
         "FailedToCreate": "Échec de la création de la carte utilisateur.",
         "Created": "Usermap créé."
     },
@@ -455,13 +454,13 @@
         "Deleted": "Carte utilisateur supprimée."
     },
     "UsernoteTable": {
-        "Member": "Membre",
+        "User": "Membre",
         "Description": "La description",
         "CreateNewNote": "Créer une nouvelle note d'utilisateur",
         "Search": "Recherche (utilisateur, identifiant, description...)",
         "NoMatches": "Aucune note d'utilisateur ne correspond à votre recherche.",
         "FailedToLoad": "Échec du chargement des notes d'utilisateur.",
-        "FailedToLoadMember": "Échec du chargement de la liste des membres.",
+        "FailedToLoadUser": "Échec du chargement de la liste des membres.",
         "FailedToCreate": "Échec de la création de la note utilisateur.",
         "Created": "Note utilisateur créée."
     },
@@ -481,8 +480,8 @@
         "SearchTemplate": "Modèle de recherche",
         "Back": "Arrière",
         "Next": "Prochain",
-        "ChooseAMember": "Choisissez un membre",
-        "Member": "Membre",
+        "ChooseAUser": "Choisissez un membre",
+        "User": "Membre",
         "PickOne": "Choisissez-en un",
         "DescribeCase": "Décrivez le cas",
         "Title": "Titre",
@@ -502,7 +501,7 @@
         "CreateCaseButton": "Créer un cas",
         "UpdateCaseButton": "Mettre à jour le cas",
         "FailedToLoad": {
-            "MemberList": "Échec du chargement de la liste des membres.",
+            "UserList": "Échec du chargement de la liste des membres.",
             "PunishmentEnum": "Échec du chargement des punitions disponibles.",
             "CaseTemplates": "Échec du chargement des modèles de cas.",
             "CurrentCase": "Échec du chargement du cas actuel."
@@ -518,7 +517,7 @@
         "CaseUpdated": "Cas mis à jour."
     },
     "ModCaseTable": {
-        "SelectMembers": "Membres",
+        "SelectUsers": "Membres",
         "SelectModerators": "Modérateurs",
         "SelectCreationTypes": "Types de création",
         "SelectPunishments": "Les sanctions",
@@ -567,7 +566,7 @@
             "Failed": "Échec de l'activation du boîtier."
         },
         "PunishmentExpired": "La peine est expirée.",
-        "CaseInactive": "Modcase est inactif.",
+        "CaseInactive": "ModCase est inactif.",
         "CreatedAt": "Créé à",
         "EditedAt": "Edité à",
         "LastEditModerator": "Dernière modification par le modérateur",

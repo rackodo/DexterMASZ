@@ -1,6 +1,6 @@
 export interface IImageVersion {
     id: number;
-    imagename: string;
+    imageName: string;
     createdAt: Date;
     tag: string;
     hash: string;

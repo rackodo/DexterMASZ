@@ -1,4 +1,4 @@
-export interface UserMapping {
+export interface UserMap {
     id: number;
     guildId: string;
     userA: string;

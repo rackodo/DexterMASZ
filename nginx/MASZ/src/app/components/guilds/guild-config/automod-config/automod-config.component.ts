@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { AutoModerationConfig } from 'src/app/models/AutoModerationConfig';
+import { AutoModConfig } from 'src/app/models/AutoModConfig';
 import { AutoModRuleDefinition } from 'src/app/models/AutoModRuleDefinitions';
 import { Guild } from 'src/app/models/Guild';
 import { GuildChannel } from 'src/app/models/GuildChannel';
@@ -13,7 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './automod-config.component.html',
   styleUrls: ['./automod-config.component.css']
 })
-export class AutomodConfigComponent implements OnInit {
+export class AutoModConfigComponent implements OnInit {
   types: AutoModRuleDefinition[] = [
     {
       type: 0,
@@ -49,7 +49,7 @@ export class AutomodConfigComponent implements OnInit {
     },
     {
       type: 5,
-      key: 'Automoderations',
+      key: 'AutoMods',
       showLimitField: true,
       showTimeLimitField: true
     },
@@ -90,7 +90,7 @@ export class AutomodConfigComponent implements OnInit {
   public guildId!: string;
   public guildInfo!: Guild;
   public guildChannels!: GuildChannel[];
-  public initialConfigs!: Promise<AutoModerationConfig[]>;
+  public initialConfigs!: Promise<AutoModConfig[]>;
 
   constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, private translator: TranslateService) { }
 
@@ -104,13 +104,13 @@ export class AutomodConfigComponent implements OnInit {
       data.roles = data.roles.sort((a, b) => (a.position < b.position) ? 1 : -1);
       this.guildInfo = data;
     }, () => {
-      this.toastr.error(this.translator.instant('AutomodConfig.FailedToLoadGuild'));
+      this.toastr.error(this.translator.instant('AutoModConfig.FailedToLoadGuild'));
     });
     this.api.getSimpleData(`/discord/guilds/${this.guildId}/channels`).subscribe((data: GuildChannel[]) => {
       this.guildChannels = data.filter(x => x.type === 0).sort((a, b) => (a.position > b.position) ? 1 : -1);
     }, () => {
-      this.toastr.error(this.translator.instant('AutomodConfig.FailedToLoadChannels'));
+      this.toastr.error(this.translator.instant('AutoModConfig.FailedToLoadChannels'));
     });
-    this.initialConfigs = this.api.getSimpleData(`/guilds/${this.guildId}/automoderationconfig`).toPromise();
+    this.initialConfigs = this.api.getSimpleData(`/guilds/${this.guildId}/automodconfig`).toPromise();
   }
 }

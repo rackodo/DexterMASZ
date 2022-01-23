@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { APIEnumTypes } from 'src/app/models/APIEmumTypes';
-import { APIEnum } from 'src/app/models/APIEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
+import { ApiEnum } from 'src/app/models/ApiEnum';
 import { ContentLoading } from 'src/app/models/ContentLoading';
-import { convertModcaseToPunishmentString } from 'src/app/models/ModCase';
+import { convertModCaseToPunishmentString } from 'src/app/models/ModCase';
 import { IModCaseTableEntry } from 'src/app/models/IModCaseTableEntry';
 import { PunishmentType } from 'src/app/models/PunishmentType';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
@@ -13,7 +13,7 @@ import * as moment from 'moment';
   templateUrl: './modcase-card-compact.component.html',
   styleUrls: ['./modcase-card-compact.component.css']
 })
-export class ModcaseCardCompactComponent implements OnInit {
+export class ModCaseCardCompactComponent implements OnInit {
 
   @Input() entry!: IModCaseTableEntry;
   @Input() showExpiring: boolean = true;
@@ -21,24 +21,24 @@ export class ModcaseCardCompactComponent implements OnInit {
 
   public punishmentTooltip: string = "";
   public punishment: string = "Unknown";
-  public punishments: ContentLoading<APIEnum[]> = { loading: true, content: [] };
+  public punishments: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
 
   constructor(private enumManager: EnumManagerService) { }
 
   ngOnInit(): void {
     if (this.entry.modCase.punishmentType !== PunishmentType.None && ! this.entry.modCase.punishmentActive) {
       if (this.entry.modCase.punishedUntil === null) {
-        this.punishmentTooltip = "Modcase deactivated.";
+        this.punishmentTooltip = "ModCase deactivated.";
       } else if (moment(this.entry.modCase.punishedUntil).utc(true).isAfter(moment())) {
-        this.punishmentTooltip = "Modcase deactivated.";
+        this.punishmentTooltip = "ModCase deactivated.";
       } else {
-        this.punishmentTooltip = "Modcase expired.";
+        this.punishmentTooltip = "ModCase expired.";
       }
     }
-    this.enumManager.getEnum(APIEnumTypes.PUNISHMENT).subscribe((data) => {
+    this.enumManager.getEnum(ApiEnumTypes.PUNISHMENT).subscribe((data) => {
       this.punishments.loading = false;
       this.punishments.content = data;
-      this.punishment = convertModcaseToPunishmentString(this.entry?.modCase, this.punishments.content);
+      this.punishment = convertModCaseToPunishmentString(this.entry?.modCase, this.punishments.content);
     }, () => {
       this.punishments.loading = false;
     });

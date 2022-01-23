@@ -1,6 +1,6 @@
 import { DiscordUser } from "./DiscordUser";
 
-export interface GuildMember {
+export interface GuildUser {
     user: DiscordUser;
     nick?: string;
     roles?: string[];
