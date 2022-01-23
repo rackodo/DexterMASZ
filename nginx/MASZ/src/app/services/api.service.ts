@@ -3,7 +3,7 @@ import { Injectable, Injector } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Api_URL, APP_BASE_URL } from '../config/config';
+import { API_URL, APP_BASE_URL } from '../config/config';
 import { ApiEnumTypes } from '../models/ApiEmumTypes';
 import { ApiEnum } from '../models/ApiEnum';
 import { EnumManagerService } from './enum-manager.service';
@@ -27,7 +27,7 @@ export class ApiService {
 
   public getSimpleData(path: string, includeBasePath: boolean = true, httpParams: HttpParams = new HttpParams(), handleApiError: boolean = false): Observable<any> {
     if (includeBasePath) {
-      path = Api_URL + path;
+      path = API_URL + path;
     } else {
       path = APP_BASE_URL + path;
     }
@@ -42,7 +42,7 @@ export class ApiService {
 
   public deleteData(path: string, httpParams: HttpParams = new HttpParams(), includeBasePath: boolean = true, handleApiError: boolean = false): Observable<any> {
     if (includeBasePath) {
-      path = Api_URL + path;
+      path = API_URL + path;
     } else {
       path = APP_BASE_URL + path;
     }
@@ -57,7 +57,7 @@ export class ApiService {
 
   public postSimpleData(path: string, body: any, httpParams: HttpParams = new HttpParams(), includeBasePath: boolean = true, handleApiError: boolean = false): Observable<any> {
     if (includeBasePath) {
-      path = Api_URL + path;
+      path = API_URL + path;
     } else {
       path = APP_BASE_URL + path;
     }
@@ -72,7 +72,7 @@ export class ApiService {
 
   public putSimpleData(path: string, body: any, httpParams: HttpParams = new HttpParams(), includeBasePath: boolean = true, handleApiError: boolean = false): Observable<any> {
     if (includeBasePath) {
-      path = Api_URL + path;
+      path = API_URL + path;
     } else {
       path = APP_BASE_URL + path;
     }
@@ -87,7 +87,7 @@ export class ApiService {
 
   public postFile(path: string, fileToUpload: File, includeBasePath: boolean = true, handleApiError: boolean = false): Observable<any> {
     if (includeBasePath) {
-      path = Api_URL + path;
+      path = API_URL + path;
     } else {
       path = APP_BASE_URL + path;
     }
