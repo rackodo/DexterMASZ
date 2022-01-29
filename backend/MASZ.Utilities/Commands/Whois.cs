@@ -31,7 +31,7 @@ public class WhoIs : Command<WhoIs>
 			.AddField(Translator.Get<BotTranslator>().Registered(), user.CreatedAt.DateTime.ToDiscordTs(), true);
 
 		foreach (var repo in ServiceCacher.GetInitializedAuthenticatedClasses<WhoIsResults>(ServiceProvider, Identity))
-			await repo.AddWhoIsInformation(embed, user, Context, (Translation)Translator);
+			await repo.AddWhoIsInformation(embed, user, Context, Translator);
 
 		await Context.Interaction.ModifyOriginalResponseAsync(message =>
 		{

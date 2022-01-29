@@ -10,9 +10,4 @@ public class EnumDto
 
 	public int Key { get; set; }
 	public string Value { get; set; }
-
-	public static EnumDto Create(int key, string value)
-	{
-		return new EnumDto(key, value);
-	}
 }

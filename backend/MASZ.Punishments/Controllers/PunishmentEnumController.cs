@@ -26,7 +26,7 @@ public class PunishmentEnumController : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<PunishmentType>())
-			EnumDto.Create((int)enumValue, _translator.Get<PunishmentEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<PunishmentEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}
@@ -39,7 +39,7 @@ public class PunishmentEnumController : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<CaseCreationType>())
-			EnumDto.Create((int)enumValue, _translator.Get<PunishmentEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<PunishmentEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}
@@ -52,7 +52,7 @@ public class PunishmentEnumController : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<LockedCommentStatus>())
-			EnumDto.Create((int)enumValue, _translator.Get<PunishmentEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<PunishmentEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}
@@ -65,7 +65,7 @@ public class PunishmentEnumController : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<MarkedToDeleteStatus>())
-			EnumDto.Create((int)enumValue, _translator.Get<PunishmentEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<PunishmentEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}
@@ -78,7 +78,7 @@ public class PunishmentEnumController : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<PunishmentActiveStatus>())
-			EnumDto.Create((int)enumValue, _translator.Get<PunishmentEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<PunishmentEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}

@@ -1,6 +1,6 @@
 export enum PunishmentType {
-    None,
-    Mute,
-    Kick,
-    Ban
+	Warn,
+	Mute,
+	Kick,
+	Ban
 }

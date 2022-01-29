@@ -169,7 +169,7 @@ export class ModCaseViewComponent implements OnInit {
         this.showActivationSlider = true;
         this.activationSliderModeDeactivation = this.modCase.content.modCase?.punishmentActive;
       }
-      if (this.modCase.content.modCase.punishmentType !== PunishmentType.None && this.modCase.content.modCase.punishmentType !== PunishmentType.Kick && ! this.modCase.content.modCase.punishmentActive) {
+      if (this.modCase.content.modCase.punishmentType !== PunishmentType.Warn && this.modCase.content.modCase.punishmentType !== PunishmentType.Kick && ! this.modCase.content.modCase.punishmentActive) {
         if (this.modCase.content.modCase?.punishedUntil == null) {
           this.punishmentDescriptionTranslationKey = "CaseInactive";
         } else if (moment(this.modCase.content.modCase?.punishedUntil).utc(true).isAfter(moment())) {

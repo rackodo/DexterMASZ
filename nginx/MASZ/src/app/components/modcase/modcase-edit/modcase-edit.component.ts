@@ -88,7 +88,7 @@ export class ModCaseEditComponent implements OnInit {
       if (val !== PunishmentType.Ban && val !== PunishmentType.Mute) {
         this.punishedUntil = undefined;
       }
-      if (val === PunishmentType.None) {
+      if (val === PunishmentType.Warn) {
         this.punishmentFormGroup.controls['handlePunishment'].setValue(false);
       } else {
         this.punishmentFormGroup.controls['handlePunishment'].setValue(true);

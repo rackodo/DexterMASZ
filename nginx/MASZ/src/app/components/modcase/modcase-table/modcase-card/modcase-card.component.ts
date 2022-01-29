@@ -21,7 +21,7 @@ export class ModCaseCardComponent implements OnInit {
   constructor(private enumManager: EnumManagerService) { }
 
   ngOnInit(): void {
-    if (this.entry.modCase.punishmentType !== PunishmentType.None && ! this.entry.modCase.punishmentActive) {
+    if (this.entry.modCase.punishmentType !== PunishmentType.Warn && ! this.entry.modCase.punishmentActive) {
       if (this.entry.modCase.punishedUntil === null) {
         this.punishmentTooltip = "ModCase deactivated.";
       } else if (moment(this.entry.modCase.punishedUntil).utc(true).isAfter(moment())) {

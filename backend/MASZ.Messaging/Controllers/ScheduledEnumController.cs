@@ -26,7 +26,7 @@ public class ScheduledEnumController : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<ScheduledMessageFailureReason>())
-			EnumDto.Create((int)enumValue, _translator.Get<MessagingEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<MessagingEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}
@@ -39,7 +39,7 @@ public class ScheduledEnumController : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<ScheduledMessageStatus>())
-			EnumDto.Create((int)enumValue, _translator.Get<MessagingEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<MessagingEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}

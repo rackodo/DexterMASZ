@@ -26,7 +26,7 @@ public class AutoModEnumsController : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<AutoModAction>())
-			EnumDto.Create((int)enumValue, _translator.Get<AutoModEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<AutoModEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}
@@ -39,7 +39,7 @@ public class AutoModEnumsController : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<AutoModChannelNotificationBehavior>())
-			EnumDto.Create((int)enumValue, _translator.Get<AutoModEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<AutoModEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}
@@ -52,7 +52,7 @@ public class AutoModEnumsController : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<AutoModType>())
-			EnumDto.Create((int)enumValue, _translator.Get<AutoModEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<AutoModEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}

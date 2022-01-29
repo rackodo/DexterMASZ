@@ -91,8 +91,6 @@ public class InviteRepository : Repository,
 
 		if (!string.IsNullOrEmpty(joinedInfo.ToString()))
 			embed.AddField(translator.Get<BotTranslator>().Joined(), joinedInfo.ToString(), true);
-
-		embed.AddField(translator.Get<BotTranslator>().Registered(), user.CreatedAt.DateTime.ToDiscordTs(), true);
 	}
 
 	public async Task<int> CountInvites()

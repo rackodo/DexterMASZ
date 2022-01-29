@@ -25,7 +25,7 @@ public class BotEnumControllers : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<ApiError>())
-			EnumDto.Create((int)enumValue, _translator.Get<BotEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<BotEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}
@@ -38,7 +38,7 @@ public class BotEnumControllers : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<EditStatus>())
-			EnumDto.Create((int)enumValue, _translator.Get<BotEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<BotEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}
@@ -51,7 +51,7 @@ public class BotEnumControllers : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<Language>())
-			EnumDto.Create((int)enumValue, _translator.Get<BotEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<BotEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}
@@ -64,7 +64,7 @@ public class BotEnumControllers : ControllerBase
 		var enums = new List<EnumDto>();
 
 		foreach (var enumValue in Enum.GetValues<ViewPermission>())
-			EnumDto.Create((int)enumValue, _translator.Get<BotEnumTranslator>().Enum(enumValue));
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<BotEnumTranslator>().Enum(enumValue)));
 
 		return Ok(enums);
 	}
