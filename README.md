@@ -1,55 +1,85 @@
-# 👮 MASZ
+<html>
+   <body>
+      <h1 align="center" style="position: relative;">
+         <img src="https://cdn.discordapp.com/attachments/781077443338960926/807479083297931264/DexLove.png" width="200" style="border-radius: 50%;" align="center">
+         <br>
+         Dexter .NET
+      </h1>
+      <h3 align="center">The official USFurries Discord bot!</h3>
+      <h4 align="center">Used to help moderate the server and provides useful tools. Made with love <3</h4>
+      <p align="center">
+         <a href="https://discord.gg/USFurries">
+         <img alt="Discord" src="https://img.shields.io/discord/336243033416794118?color=%237289DA&label=Discord">
+         </a>
+         <a href="https://dev.azure.com/frostrixz/Dexter">
+         <img alt="Azure Pipelines" src="https://dev.azure.com/frostrixz/Dexter/_apis/build/status/FeroxFoxxo.Dexter?branchName=master">
+         </a>
+         <a href="https://github.com/FeroxFoxxo/DexterMASZ/blob/master/LICENSE">
+         <img alt="GitHub" src="https://img.shields.io/github/license/feroxfoxxo/dextermasz?label=License">
+         </a>
+      </p>
+      <h2>Built With</h2>
+      <p>
+        <ul>
+          <li><a href="https://dotnet.microsoft.com/download/dotnet/5.0">.NET 6.0</a></li>
+          <li><a href="https://github.com/discord-net/Discord.Net">Discord.NET</a></li>
+          <li><a href="https://github.com/angelobreuer/Lavalink4NET">Lavalink4Net</a> - Music Plugin</li>
+        </ul>
+      </p>
+      <h2>Commemorations</h2>
+      <p>
+         This bot is an adaption from the version of Dexter, written in JavaScript, by <a href="https://github.com/Jakey-F">Jakey Floofle</a>. As such, some commands have been adaptions from their original sources.
+      </p>
+      <p>
+         This bot was originally built off of the <a href="https://github.com/zaanposni/discord-masz">MASZ bot</a>, but extends upon it by focusing on plugin support!
+      </p>
+   </body>
+</html>
 
-![LatestVersion](https://maszindex.zaanposni.com/api/v1/views/version/current/readme?)
-[![https://github.com/users/zaanposni/packages/container/package/masz_backend](https://img.shields.io/badge/using-docker-blue?style=for-the-badge)](https://github.com/users/zaanposni/packages/container/package/masz_backend)
-[![https://discord.gg/5zjpzw6h3S](https://img.shields.io/discord/779262870016884756?logo=discord&style=for-the-badge)](https://discord.gg/5zjpzw6h3S)
-[![SupportedLanguages](https://img.shields.io/badge/translated-7%20languages-brightgreen?style=for-the-badge)](https://github.com/zaanposni/discord-masz/blob/master/translations/supported_languages.json)
+## Features
+
+⭐ **A website and a discord bot** - to use Dexter\
+⭐ **Localization** - timezones and languages are fully customizable\
+⭐ **Userscan** - quickly spot relations between users with a included visualization
+
+### Plugins
+
+#### MASZ
+
+These plugins have been ported from [https://github.com/zaanposni/discord-masz](MASZ), are part of their own plugin, and can be enabled/disabled.
 
 ⭐ **Infractions and managed (temporary) punishments** - to moderate your server\
-⭐ **Userscan** - quickly spot relations between users with a included visualization\
 ⭐ **Quicksearch** - to reliably search for any infractions or notes a user has\
-⭐ **Localization** - timezones and languages are fully customizable\
 ⭐ **Automoderation** - to give trolls no chance\
-⭐ **Ban appeals and webhook notifications** - to moderate your server transparently\
-⭐ **A website and a discord bot** - to use MASZ\
-⭐ **Full API and plugin support** - for custom scripts and automations
+⭐ **Ban appeals and webhook notifications** - to moderate your server transparently
 
-### 🚀 Demo
+#### Dexter
 
-[![https://demomasz.zaanposni.com](https://img.shields.io/badge/demo-online-%234c1?style=for-the-badge)](https://demomasz.zaanposni.com)
+These plugins have been ported from [https://github.com/FeroxFoxxo/Dexter](Dexter), and can be enabled/disabled.
 
-Visit [https://demomasz.zaanposni.com](https://demomasz.zaanposni.com) for a demo.\
-Furthermore, join the demo guild [https://discord.gg/7ubU6aWX9c](https://discord.gg/7ubU6aWX9c) to get the required permissions.
+⭐ **Music Player** - for playing/pausing/resuming etc music from spotify and youtube.
 
 ### 👀 Preview
 
 ![dashboard preview](/docs/dashboard.png)
 
-**Previews and examples can be found at:** [https://github.com/zaanposni/discord-masz/tree/master/docs](https://github.com/zaanposni/discord-masz/tree/master/docs)
+**Previews and examples can be found at:** [https://github.com/FeroxFoxxo/DexterMASZ/tree/master/docs](https://github.com/FeroxFoxxo/DexterMASZ/tree/master/docs)
 
 ### 🤝 Support Server
 
-Join this server to receive update information or get support: [https://discord.gg/5zjpzw6h3S](https://discord.gg/5zjpzw6h3S)
+Join this server to receive update information or get support: [https://discord.gg/DBS664yjWN](https://discord.gg/DBS664yjWN)
 
 ## 🛠 Hosting
 
-You can **host your own instance of MASZ** by using the instructions below.\
-If you have any questions, feel free to contact Zaanposni, or a support member:
-
-- [Discord server](https://discord.gg/5zjpzw6h3S)
-- [Email](mailto:me@zaanposni.com)
-
-Note that MASZ is not hosted publicly. You will have to host your own instance.\
-Furthermore, only deployments on a linux and windows server are supported. Read below for software requirements.\
-Free hosting providers like replit or heroku **do not work**. You will have to use a VPS instead.
+You can **host your own instance of Dexter** by using the instructions below.\
+However! These instructions are only meant for developing.
+You should be using the official Dexter instance on your server.
 
 #### TL;DR;
 
 - Create a discord application at [https://discord.com/developers/applications](https://discord.com/developers/applications)
-- Set redirect urls on your discord application [as defined](https://github.com/zaanposni/discord-masz#discord-oauth).
+- Set redirect urls on your discord application [as defined](https://github.com/FeroxFoxxo/DexterMASZ#discord-oauth).
 - Enable **Server Members** and **Message Content Intent** in your bot settings.
-- Use `python3 setup.py` (`python setup.py` on windows) to setup the configuration.
-- Start the application with `docker-compose up -d`.
 - App will be hosted on `127.0.0.1:5565`.
 - Read further for more information on different deployment methods and further steps.
 
@@ -60,7 +90,7 @@ Free hosting providers like replit or heroku **do not work**. You will have to u
 
 #### Request logging and ratelimit
 
-MASZ uses the `X-Forwarded-For` http header for logging and ratelimit.\
+Dexter uses the `X-Forwarded-For` http header for logging and ratelimit.\
 Ensure that this header is set in your reverse proxy for best experience.
 
 #### MySQL Errors
@@ -69,6 +99,14 @@ Entity Framework implores some new features of MySQL for sake of optimising call
 As such, it is recommended you install MySQL 8+ to use this new syntax. Otherwise, you will encounter
 a `MySQLException` stating you need to check your MySQL version corresponds correctly with the version in your manual.
 
+## 💻 Self Hosting
+
+### .NET
+
+- If you're using an IDE like Visual Studio, you can copy and paste your ` launchSettingsExample.json` file inside `Properties` if your C# solution to `launchSettings.json`, replacing the values to your testing variables. On running the program, it will treat these as environmental variables.
+
+## 🚀 Discord Permissions
+
 ### Discord OAuth
 
 Create your own OAuth application [here](https://discord.com/developers/applications).
@@ -76,7 +114,6 @@ Also set the redirect paths in the tab `OAuth2`.\
 Be sure to set the following (choose localhost or domain depending on your deployment):
 
 ![redirect example](/docs/redirects.png)
-![redirect example 2](/docs/redirects2.png)
 
 ### Bot Intents
 
@@ -84,13 +121,7 @@ Enable **Server Members** and **Message Content Intent** in your bot settings.
 
 ![intents example](/docs/intents.png)
 
-### Slash commands
-
-If you have added your bot yourself, your bot might be missing the permission to create slashcommands.\
-Use the following link to authorize your bot to do so `https://discord.com/api/oauth2/authorize?permissions=8&scope=bot%20applications.commands&client_id=yourid`.\
-Be sure to replace "yourid" at the end with your client id.
-
-### Enabling Restricted Features
+### Enabling Restricted Features For Inbuilt Plugins
 
 #### ⭐ Unban request feature
 
@@ -108,64 +139,13 @@ Kick people
 Ban people
 ```
 
-Furthermore, make sure the bot is high enough in the role hierarchy to punish people below him.
-
 #### ⭐ Automoderation feature
 
 To avoid any issue for message deletion or read permissions it is recommended to grant your bot a very high and strong or even the `administrator` role.
 
 #### ⭐ Invite tracking
 
-Allows MASZ to track the invites new members are using. Grant your bot the `manage guild` permission to use this feature.
-
-#### ⭐ Strict permission check
-
-You can enable strict permissions in your guildconfig. This mode will check your moderators role permissions before creating a modcase.\
-A moderator can only create a kick or ban modcase if he has the respective permission in discord.\
-If you do not enable this mode, moderators can create any modcase.
-
-## ✔️ Docker Setup (Recommended)
-
-[![https://github.com/users/zaanposni/packages/container/package/masz_backend](https://img.shields.io/badge/using-docker-blue?style=for-the-badge)](https://github.com/users/zaanposni/packages/container/package/masz_backend)
-
-#### Requirements
-
-- [docker](https://docs.docker.com/engine/install/ubuntu/) & [docker-compose](https://docs.docker.com/compose/) (`docker-compose -v` > 1.25)
-- [python3](https://www.python.org/) for setup
-
-#### Instructions
-
-- Download this repository `git clone https://github.com/zaanposni/discord-masz` ([zip link](https://codeload.github.com/zaanposni/discord-masz/zip/master))
-- Use `python3 setup.py` (`python setup.py` on windows) to setup the configuration.
-- Start the application with `docker-compose up -d`.
-- App will be hosted on `127.0.0.1:5565`, if you are hosting the app on a domain, redirect your reverse proxy to this local port!
-
-#### Update
-
-To install a new update of MASZ just use:
-
-```bash
-docker-compose pull
-docker-compose up -d
-```
-
-## 💻 Self Hosting (Development)
-
-### .NET
-
-- If you're using an IDE like Visual Studio, you can copy and paste your ` launchSettingsExample.json` file inside `Properties` if your C# solution to `launchSettings.json`, replacing the values to your testing variables. On running the program, it will treat these as environmental variables.
-
-### Angular
-
-If you want to develop on the angular frontend, set the env var `ENABLE_CORS=true` for the backend container.
-To use the angular instance, please change the `APP_BASE_URL` and `ENABLE_CORS` values to their development alternatives in the ``config.ts`` file inside the ``src/app/config`` directory.
-Then use `ng serve` to get a hotload angular instance.
-
-### Building Docker Containers
-
-After development, you may want to build a docker container to test on! This can be done simply through the following commands:
-
-``docker-compose -f docker-compose-dev.yml up --force-recreate --build``
+Allows Dexter to track the invites new members are using. Grant your bot the `manage guild` permission to use this feature.
 
 ## ↪ After Deployment
 
@@ -176,22 +156,13 @@ After development, you may want to build a docker container to test on! This can
 - If you are logged in as a siteadmin, you can use the "register guild" (+) button to register your guilds and to get started.
 - Based on wanted features and functionalities you might have to grant your bot advanced permissions, read above under `Enabling Restricted Features`.
 
-### 🗃️ Backup
-
-There are backup example scripts in the `scripts` directory to backup uploaded files and the database.
-
-### 🤖 API scripting
-
-As a siteadmin you can create a token to authenticate yourself while making API requests.\
-You can also use my [python library](https://github.com/zaanposni/masz-api-wrapper) to integrate the MASZ API into your project.
-
 ### 🤝 Contribute
 
 Contributions are welcome.\
 You can find our contributions guidelines [here](CONTRIBUTING.md).\
 If you are new to open source, checkout [this tutorial](https://github.com/firstcontributions/first-contributions).\
-Feel free to get in touch with me via our support server [https://discord.gg/5zjpzw6h3S](https://discord.gg/5zjpzw6h3S).
+Feel free to get in touch with me via our support server [https://discord.gg/DBS664yjWN](https://discord.gg/DBS664yjWN).
 
 ### 💁🏻 Further Help
 
-Feel free to join our discord at [https://discord.gg/5zjpzw6h3S](https://discord.gg/5zjpzw6h3S) if you have further questions about your dev environment.
+Feel free to join our discord at [https://discord.gg/DBS664yjWN](https://discord.gg/DBS664yjWN) if you have further questions about your dev environment.
