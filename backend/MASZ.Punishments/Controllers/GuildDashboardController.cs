@@ -2,7 +2,7 @@
 using MASZ.Bot.Enums;
 using MASZ.Bot.Services;
 using MASZ.Punishments.Data;
-using MASZ.Punishments.Views;
+using MASZ.Punishments.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Punishments.Controllers;
@@ -28,10 +28,10 @@ public class GuildDashboardController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		List<CommentExpandedView> view = new();
+		List<ModCaseCommentExpanded> view = new();
 
 		foreach (var comment in await _modCaseCommentRepo.GetLastCommentsByGuild(guildId))
-			view.Add(new CommentExpandedTableView(
+			view.Add(new ModCaseCommentExpandedTable(
 				comment,
 				await _discordRest.FetchUserInfo(comment.UserId, CacheBehavior.OnlyCache),
 				guildId,

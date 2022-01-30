@@ -2,7 +2,7 @@ using MASZ.Bot.Abstractions;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Services;
 using MASZ.Punishments.Data;
-using MASZ.Punishments.Views;
+using MASZ.Punishments.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Punishments.Controllers;
@@ -27,10 +27,10 @@ public class TemplateViewController : AuthenticatedController
 		var identity = await SetupAuthentication();
 
 		var templates = await _templateRepository.GetTemplatesBasedOnPermissions(identity);
-		var templatesView = new List<CaseTemplateExpandedView>();
+		var templatesView = new List<CaseTemplateExpanded>();
 
 		foreach (var template in templates.Where(x => x.UserId == userId))
-			templatesView.Add(new CaseTemplateExpandedView(
+			templatesView.Add(new CaseTemplateExpanded(
 				template,
 				await _discordRest.FetchUserInfo(template.UserId, CacheBehavior.OnlyCache),
 				_discordRest.FetchGuildInfo(template.CreatedForGuildId, CacheBehavior.Default)

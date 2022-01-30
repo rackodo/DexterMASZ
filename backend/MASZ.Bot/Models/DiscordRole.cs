@@ -1,10 +1,10 @@
 using Discord;
 
-namespace MASZ.Bot.Views;
+namespace MASZ.Bot.Models;
 
-public class DiscordRoleView
+public class DiscordRole
 {
-	public DiscordRoleView(IRole role)
+	public DiscordRole(IRole role)
 	{
 		Id = role.Id.ToString();
 		Name = role.Name;

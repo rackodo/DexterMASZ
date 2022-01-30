@@ -2,7 +2,7 @@ using MASZ.Bot.Abstractions;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Services;
 using MASZ.UserMaps.Data;
-using MASZ.UserMaps.Views;
+using MASZ.UserMaps.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.UserMaps.Controllers;
@@ -29,10 +29,10 @@ public class UserMapViewController : AuthenticatedController
 		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
 		var userMaps = await _userMapRepo.GetUserMapsByGuild(guildId);
-		List<UserMapExpandedView> userMapsViews = new();
+		List<UserMapExpanded> userMapsViews = new();
 
 		foreach (var userMap in userMaps)
-			userMapsViews.Add(new UserMapExpandedView(
+			userMapsViews.Add(new UserMapExpanded(
 				userMap,
 				await _discordRest.FetchUserInfo(userMap.UserA, CacheBehavior.OnlyCache),
 				await _discordRest.FetchUserInfo(userMap.UserB, CacheBehavior.OnlyCache),

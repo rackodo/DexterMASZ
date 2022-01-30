@@ -1,25 +1,25 @@
 using Discord;
-using MASZ.Bot.Views;
+using MASZ.Bot.Models;
 
 namespace MASZ.Bot.DTOs;
 
 public class ApiUserDto
 {
-	public ApiUserDto(List<DiscordGuildView> userGuilds, List<DiscordGuildView> bannedGuilds,
-		List<DiscordGuildView> modGuilds, List<DiscordGuildView> adminGuilds, IUser user, bool isAdmin = false)
+	public ApiUserDto(List<DiscordGuild> userGuilds, List<DiscordGuild> bannedGuilds,
+		List<DiscordGuild> modGuilds, List<DiscordGuild> adminGuilds, IUser user, bool isAdmin = false)
 	{
 		UserGuilds = userGuilds;
 		BannedGuilds = bannedGuilds;
 		ModGuilds = modGuilds;
 		AdminGuilds = adminGuilds;
-		DiscordUser = new DiscordUserView(user);
+		DiscordUser = new DiscordUser(user);
 		IsAdmin = isAdmin;
 	}
 
-	public List<DiscordGuildView> UserGuilds { get; set; }
-	public List<DiscordGuildView> BannedGuilds { get; set; }
-	public List<DiscordGuildView> ModGuilds { get; set; }
-	public List<DiscordGuildView> AdminGuilds { get; set; }
-	public DiscordUserView DiscordUser { get; set; }
+	public List<DiscordGuild> UserGuilds { get; set; }
+	public List<DiscordGuild> BannedGuilds { get; set; }
+	public List<DiscordGuild> ModGuilds { get; set; }
+	public List<DiscordGuild> AdminGuilds { get; set; }
+	public DiscordUser DiscordUser { get; set; }
 	public bool IsAdmin { get; set; }
 }

@@ -2,7 +2,6 @@
 using MASZ.Bot.Services;
 using MASZ.Punishments.Models;
 using MASZ.Punishments.Translators;
-using MASZ.Punishments.Views;
 
 namespace MASZ.Punishments.Extensions;
 
@@ -18,7 +17,7 @@ public static class SearchContains
 		       search.Search(obj.Suspect);
 	}
 	
-	public static bool Search(this string search, CaseView obj, Translation translator)
+	public static bool Search(this string search, ModCase obj, Translation translator)
 	{
 		if (obj == null)
 			return false;

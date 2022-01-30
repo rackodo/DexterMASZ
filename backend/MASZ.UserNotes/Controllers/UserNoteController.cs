@@ -3,7 +3,6 @@ using MASZ.Bot.Enums;
 using MASZ.Bot.Services;
 using MASZ.UserNotes.Data;
 using MASZ.UserNotes.DTOs;
-using MASZ.UserNotes.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.UserNotes.Controllers;
@@ -28,7 +27,7 @@ public class UserNoteController : AuthenticatedController
 
 		var userNotes = await _userNoteRepo.GetUserNotesByGuild(guildId);
 
-		return Ok(userNotes.Select(x => new UserNoteView(x)));
+		return Ok(userNotes);
 	}
 
 	[HttpGet("{userId}")]
@@ -38,7 +37,7 @@ public class UserNoteController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		return Ok(new UserNoteView(await _userNoteRepo.GetUserNote(guildId, userId)));
+		return Ok(await _userNoteRepo.GetUserNote(guildId, userId));
 	}
 
 	[HttpPut]
@@ -51,7 +50,7 @@ public class UserNoteController : AuthenticatedController
 		var createdUserNote =
 			await _userNoteRepo.CreateOrUpdateUserNote(guildId, userNote.UserId, userNote.Description);
 
-		return StatusCode(201, new UserNoteView(createdUserNote));
+		return StatusCode(201, createdUserNote);
 	}
 
 	[HttpDelete("{userId}")]

@@ -10,7 +10,6 @@ using MASZ.UserMaps.Events;
 using MASZ.UserMaps.Exceptions;
 using MASZ.UserMaps.Models;
 using MASZ.UserMaps.Translators;
-using MASZ.UserMaps.Views;
 using MASZ.Utilities.Dynamics;
 
 namespace MASZ.UserMaps.Data;
@@ -47,11 +46,11 @@ public class UserMapRepository : Repository,
 
 	public async Task AddNetworkData(dynamic network, List<string> modGuilds, ulong userId)
 	{
-		List<UserMapExpandedView> userMaps = new();
+		List<UserMapExpanded> userMaps = new();
 
 		foreach (var userMap in (await GetUserMapsByUser(userId)).Where(userMap => modGuilds.Contains(userMap.GuildId.ToString())))
 		{
-			userMaps.Add(new UserMapExpandedView(
+			userMaps.Add(new UserMapExpanded(
 				userMap,
 				await _discordRest.FetchUserInfo(userMap.UserA, CacheBehavior.OnlyCache),
 				await _discordRest.FetchUserInfo(userMap.UserB, CacheBehavior.OnlyCache),
@@ -64,14 +63,14 @@ public class UserMapRepository : Repository,
 
 	public async Task AddSearchData(dynamic data, ulong guildId, string search)
 	{
-		List<UserMapExpandedView> userMapsViews = new();
+		List<UserMapExpanded> userMapsViews = new();
 		try
 		{
 			var userId = ulong.Parse(search);
 			var userMaps = await GetUserMapsByGuildAndUser(guildId, userId);
 
 			foreach (var userMap in userMaps)
-				userMapsViews.Add(new UserMapExpandedView(
+				userMapsViews.Add(new UserMapExpanded(
 					userMap,
 					await _discordRest.FetchUserInfo(userMap.UserA, CacheBehavior.OnlyCache),
 					await _discordRest.FetchUserInfo(userMap.UserB, CacheBehavior.OnlyCache),

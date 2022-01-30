@@ -2,13 +2,13 @@ using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Exceptions;
+using MASZ.Bot.Models;
 using MASZ.Bot.Services;
-using MASZ.Bot.Views;
 using MASZ.Punishments.Data;
 using MASZ.Punishments.Extensions;
-using MASZ.Punishments.Views;
+using MASZ.Punishments.Models;
 using MASZ.UserNotes.Data;
-using MASZ.UserNotes.Views;
+using MASZ.UserNotes.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Punishments.Controllers;
@@ -44,21 +44,21 @@ public class CaseViewController : AuthenticatedController
 
 		var suspect = await _discordRest.FetchUserInfo(modCase.UserId, CacheBehavior.OnlyCache);
 
-		var comments = new List<CommentExpandedView>();
+		var comments = new List<ModCaseCommentExpanded>();
 
 		foreach (var comment in modCase.Comments)
-			comments.Add(new CommentExpandedView(
+			comments.Add(new ModCaseCommentExpanded(
 				comment,
 				await _discordRest.FetchUserInfo(comment.UserId, CacheBehavior.OnlyCache)
 			));
 
-		UserNoteExpandedView userNote = null;
+		UserNoteExpanded userNote = null;
 
 		if (await identity.HasPermission(DiscordPermission.Moderator, guildId))
 			try
 			{
 				var note = await _userNoteRepository.GetUserNote(guildId, modCase.UserId);
-				userNote = new UserNoteExpandedView(
+				userNote = new UserNoteExpanded(
 					note,
 					suspect,
 					await _discordRest.FetchUserInfo(note.CreatorId, CacheBehavior.OnlyCache)
@@ -68,7 +68,7 @@ public class CaseViewController : AuthenticatedController
 			{
 			}
 
-		var caseView = new CaseExpandedView(
+		var caseView = new CaseExpanded(
 			modCase,
 			await _discordRest.FetchUserInfo(modCase.ModId, CacheBehavior.OnlyCache),
 			await _discordRest.FetchUserInfo(modCase.LastEditedByModId, CacheBehavior.OnlyCache),
@@ -79,11 +79,11 @@ public class CaseViewController : AuthenticatedController
 
 		if (modCase.LockedByUserId != 0)
 			caseView.LockedBy =
-				new DiscordUserView(await _discordRest.FetchUserInfo(modCase.LockedByUserId, CacheBehavior.OnlyCache));
+				new DiscordUser(await _discordRest.FetchUserInfo(modCase.LockedByUserId, CacheBehavior.OnlyCache));
 
 		if (modCase.DeletedByUserId != 0)
 			caseView.DeletedBy =
-				new DiscordUserView(await _discordRest.FetchUserInfo(modCase.DeletedByUserId, CacheBehavior.OnlyCache));
+				new DiscordUser(await _discordRest.FetchUserInfo(modCase.DeletedByUserId, CacheBehavior.OnlyCache));
 
 		if (!(await identity.HasPermission(DiscordPermission.Moderator, guildId) || guildConfig.PublishModeratorInfo))
 			caseView.RemoveModeratorInfo();

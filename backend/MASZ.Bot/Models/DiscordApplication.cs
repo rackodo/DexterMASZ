@@ -2,11 +2,11 @@ using Discord;
 using MASZ.Bot.Exceptions;
 using MASZ.Bot.Extensions;
 
-namespace MASZ.Bot.Views;
+namespace MASZ.Bot.Models;
 
-public class DiscordApplicationView
+public class DiscordApplication
 {
-	public DiscordApplicationView(IApplication application)
+	public DiscordApplication(IApplication application)
 	{
 		if (application is null)
 			throw new ResourceNotFoundException("Application for DiscordApplicationView is null!");

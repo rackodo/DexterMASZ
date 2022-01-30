@@ -6,7 +6,6 @@ using MASZ.Punishments.Data;
 using MASZ.Punishments.DTOs;
 using MASZ.Punishments.Exceptions;
 using MASZ.Punishments.Extensions;
-using MASZ.Punishments.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Punishments.Controllers;
@@ -45,7 +44,7 @@ public class ModCaseCommentsController : AuthenticatedController
 
 		var createdComment = await _modCaseCommentRepository.CreateComment(guildId, caseId, comment.Message);
 
-		return StatusCode(201, new CommentsView(createdComment));
+		return StatusCode(201, createdComment);
 	}
 
 	[HttpPut("{commentId}")]
@@ -68,7 +67,7 @@ public class ModCaseCommentsController : AuthenticatedController
 		var createdComment =
 			await _modCaseCommentRepository.UpdateComment(guildId, caseId, commentId, newValue.Message);
 
-		return Ok(new CommentsView(createdComment));
+		return Ok(createdComment);
 	}
 
 	[HttpDelete("{commentId}")]

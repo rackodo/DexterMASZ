@@ -2,11 +2,11 @@ using Discord;
 using MASZ.Bot.Exceptions;
 using MASZ.Bot.Extensions;
 
-namespace MASZ.Bot.Views;
+namespace MASZ.Bot.Models;
 
-public class DiscordUserView
+public class DiscordUser
 {
-	public DiscordUserView(IUser user)
+	public DiscordUser(IUser user)
 	{
 		if (user is null)
 			throw new ResourceNotFoundException("User for DiscordUserView is equal to null!");

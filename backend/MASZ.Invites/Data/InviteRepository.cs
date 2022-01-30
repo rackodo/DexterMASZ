@@ -9,7 +9,6 @@ using MASZ.Bot.Translators;
 using MASZ.Invites.Events;
 using MASZ.Invites.Models;
 using MASZ.Invites.Translators;
-using MASZ.Invites.Views;
 using MASZ.Utilities.Dynamics;
 
 namespace MASZ.Invites.Data;
@@ -46,21 +45,21 @@ public class InviteRepository : Repository,
 
 	public async Task AddNetworkData(dynamic network, List<string> modGuilds, ulong userId)
 	{
-		var invited = new List<UserInviteExpandedView>();
+		var invited = new List<UserInviteExpanded>();
 
 		foreach (var invite in (await GetInvitedForUser(userId)).Where(invite => modGuilds.Contains(invite.GuildId.ToString())))
 		{
-			invited.Add(new UserInviteExpandedView(
+			invited.Add(new UserInviteExpanded(
 				invite,
 				await _discordRest.FetchUserInfo(invite.JoinedUserId, CacheBehavior.OnlyCache),
 				await _discordRest.FetchUserInfo(invite.InviteIssuerId, CacheBehavior.OnlyCache)
 			));
 		}
 
-		var invitedBy = new List<UserInviteExpandedView>();
+		var invitedBy = new List<UserInviteExpanded>();
 		foreach (var invite in (await GetUsedInvitesForUser(userId)).Where(invite => modGuilds.Contains(invite.GuildId.ToString())))
 		{
-			invitedBy.Add(new UserInviteExpandedView(
+			invitedBy.Add(new UserInviteExpanded(
 				invite,
 				await _discordRest.FetchUserInfo(invite.JoinedUserId, CacheBehavior.OnlyCache),
 				await _discordRest.FetchUserInfo(invite.InviteIssuerId, CacheBehavior.OnlyCache)

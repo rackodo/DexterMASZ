@@ -6,7 +6,6 @@ using MASZ.Bot.Enums;
 using MASZ.Bot.Exceptions;
 using MASZ.Bot.Models;
 using MASZ.Bot.Services;
-using MASZ.Bot.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Bot.Controllers;
@@ -36,7 +35,7 @@ public class GuildConfigController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Admin, guildId);
 
-		return Ok(new GuildConfigView(await _guildConfigRepo.GetGuildConfig(guildId)));
+		return Ok(await _guildConfigRepo.GetGuildConfig(guildId));
 	}
 
 	[HttpDelete("{guildId}")]

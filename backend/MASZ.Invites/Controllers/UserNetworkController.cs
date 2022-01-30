@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Enums;
+using MASZ.Bot.Models;
 using MASZ.Bot.Services;
-using MASZ.Bot.Views;
 using MASZ.Invites.Data;
-using MASZ.Invites.Views;
+using MASZ.Invites.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Invites.Controllers;
@@ -34,12 +34,12 @@ public class UserNetworkController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Moderator, invites[0].GuildId);
 
-		DiscordGuildView guild = new(_discordRest.FetchGuildInfo(invites[0].GuildId, CacheBehavior.Default));
+		DiscordGuild guild = new(_discordRest.FetchGuildInfo(invites[0].GuildId, CacheBehavior.Default));
 
-		List<UserInviteExpandedView> inviteViews = new();
+		List<UserInviteExpanded> inviteViews = new();
 
 		foreach (var invite in invites)
-			inviteViews.Add(new UserInviteExpandedView(
+			inviteViews.Add(new UserInviteExpanded(
 				invite,
 				await _discordRest.FetchUserInfo(invite.JoinedUserId, CacheBehavior.OnlyCache),
 				await _discordRest.FetchUserInfo(invite.InviteIssuerId, CacheBehavior.OnlyCache)

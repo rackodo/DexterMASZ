@@ -8,7 +8,6 @@ using MASZ.Messaging.DTOs;
 using MASZ.Messaging.Enums;
 using MASZ.Messaging.Exceptions;
 using MASZ.Messaging.Models;
-using MASZ.Messaging.Views;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -41,11 +40,12 @@ public class ScheduledMessageController : AuthenticatedController
 
 		var messages = await _messagingRepo.GetAllMessages(guildId, page);
 
-		var results = new List<ScheduledMessageView>();
+		var results = new List<ScheduledMessageExtended>();
 
 		foreach (var message in messages)
 		{
-			results.Add(new ScheduledMessageView(message,
+			results.Add(new ScheduledMessageExtended(
+				message,
 				await _discordRest.FetchUserInfo(message.CreatorId, CacheBehavior.OnlyCache),
 				await _discordRest.FetchUserInfo(message.LastEditedById, CacheBehavior.OnlyCache),
 				_discordRest.FetchGuildChannels(guildId, CacheBehavior.OnlyCache).FirstOrDefault(x => x.Id == message.ChannelId)));
@@ -77,7 +77,7 @@ public class ScheduledMessageController : AuthenticatedController
 
 		message = await _messagingRepo.CreateMessage(message);
 
-		return Ok(new ScheduledMessageView(
+		return Ok(new ScheduledMessageExtended(
 			message,
 			await _discordRest.FetchUserInfo(message.CreatorId, CacheBehavior.OnlyCache),
 			 await _discordRest.FetchUserInfo(message.LastEditedById, CacheBehavior.OnlyCache),
@@ -117,7 +117,7 @@ public class ScheduledMessageController : AuthenticatedController
 
 		message = await _messagingRepo.UpdateMessage(message);
 
-		return Ok(new ScheduledMessageView(
+		return Ok(new ScheduledMessageExtended(
 			message,
 			await _discordRest.FetchUserInfo(message.CreatorId, CacheBehavior.OnlyCache),
 			await _discordRest.FetchUserInfo(message.LastEditedById, CacheBehavior.OnlyCache),

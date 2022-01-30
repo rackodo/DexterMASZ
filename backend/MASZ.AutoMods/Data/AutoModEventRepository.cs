@@ -5,7 +5,6 @@ using MASZ.AutoMods.Events;
 using MASZ.AutoMods.Extensions;
 using MASZ.AutoMods.Models;
 using MASZ.AutoMods.Translators;
-using MASZ.AutoMods.Views;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Dynamics;
@@ -14,7 +13,6 @@ using MASZ.Bot.Extensions;
 using MASZ.Bot.Models;
 using MASZ.Bot.Services;
 using MASZ.Bot.Translators;
-using MASZ.Bot.Views;
 using MASZ.Punishments.Data;
 using MASZ.Punishments.Enums;
 using MASZ.Punishments.Models;
@@ -70,16 +68,15 @@ public class AutoModEventRepository : Repository,
 
 	public async Task AddNetworkData(dynamic network, List<string> modGuilds, ulong userId)
 	{
-		network.modEvents = (await GetAllEventsForUser(userId)).Where(x => modGuilds.Contains(x.GuildId.ToString()))
-			.Select(x => new AutoModEventView(x)).ToList();
+		network.modEvents = (await GetAllEventsForUser(userId)).Where(x => modGuilds.Contains(x.GuildId.ToString())).ToList();
 	}
 
 	public async Task AddQuickSearchResults(List<QuickSearchEntry> entries, ulong guildId, string search)
 	{
 		foreach (var item in await SearchInGuild(guildId, search))
-			entries.Add(new QuickSearchEntry<AutoModEventExpandedView>
+			entries.Add(new QuickSearchEntry<AutoModEventExpanded>
 			{
-				Entry = new AutoModEventExpandedView(
+				Entry = new AutoModEventExpanded(
 					item,
 					await _discordRest.FetchUserInfo(item.UserId, CacheBehavior.OnlyCache)
 				),
@@ -204,7 +201,7 @@ public class AutoModEventRepository : Repository,
 		return await _autoModDatabase.SelectAllPunishmentsEventsForSpecificUser(userId, minutes);
 	}
 
-	public async Task<List<DbCountView>> GetCounts(ulong guildId, DateTime since)
+	public async Task<List<DbCount>> GetCounts(ulong guildId, DateTime since)
 	{
 		return await _autoModDatabase.GetPunishmentsCountGraph(guildId, since);
 	}
@@ -221,7 +218,7 @@ public class AutoModEventRepository : Repository,
 
 		foreach (var c in events)
 		{
-			var entry = new AutoModEventExpandedView(
+			var entry = new AutoModEventExpanded(
 				c,
 				await _discordRest.FetchUserInfo(c.UserId, CacheBehavior.OnlyCache)
 			);

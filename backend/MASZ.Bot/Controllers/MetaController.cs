@@ -1,7 +1,7 @@
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
+using MASZ.Bot.Models;
 using MASZ.Bot.Services;
-using MASZ.Bot.Views;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 
@@ -22,7 +22,7 @@ public class MetaController : BaseController
 	[HttpGet("user")]
 	public IActionResult GetBotUser()
 	{
-		return Ok(new DiscordUserView(_discordRest.GetCurrentBotInfo()));
+		return Ok(new DiscordUser(_discordRest.GetCurrentBotInfo()));
 	}
 
 	[HttpGet("embed")]
@@ -40,7 +40,7 @@ public class MetaController : BaseController
 	[HttpGet("application")]
 	public async Task<IActionResult> GetApplication()
 	{
-		return Ok(new DiscordApplicationView(await _discordRest.GetCurrentApplicationInfo()));
+		return Ok(new DiscordApplication(await _discordRest.GetCurrentApplicationInfo()));
 	}
 
 	[HttpGet("versions")]
