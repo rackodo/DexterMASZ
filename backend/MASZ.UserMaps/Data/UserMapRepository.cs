@@ -16,7 +16,7 @@ using MASZ.Utilities.Dynamics;
 namespace MASZ.UserMaps.Data;
 
 public class UserMapRepository : Repository,
-	AddAdminStats, CacheUsers, AddGuildStats, AddSearch, AddNetworks, WhoIsResults
+	AddAdminStats, CacheUsers, AddGuildStats, AddSearch, AddNetworks, WhoIsResults, DeleteGuildData
 {
 	private readonly DiscordRest _discordRest;
 	private readonly UserMapEventHandler _eventHandler;
@@ -28,6 +28,11 @@ public class UserMapRepository : Repository,
 		_userMapsDatabase = userMapsDatabase;
 		_discordRest = discordRest;
 		_eventHandler = eventHandler;
+	}
+
+	public async Task DeleteGuildData(ulong guildId)
+	{
+		await _userMapsDatabase.DeleteUserMapByGuild(guildId);
 	}
 
 	public async Task AddAdminStatistics(dynamic adminStats)

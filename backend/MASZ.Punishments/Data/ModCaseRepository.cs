@@ -25,7 +25,7 @@ namespace MASZ.Punishments.Data;
 
 public class ModCaseRepository : Repository,
 	AddAdminStats, ImportGuildInfo, LoopCaches, CacheUsers, AddChart, AddGuildStats, AddQuickEntrySearch,
-	AddNetworks, WhoIsResults
+	AddNetworks, WhoIsResults, DeleteGuildData
 {
 	private readonly DiscordRest _discordRest;
 	private readonly PunishmentEventHandler _eventHandler;
@@ -52,6 +52,11 @@ public class ModCaseRepository : Repository,
 
 		_settingsRepository.AsUser(Identity);
 		_guildConfigRepository.AsUser(Identity);
+	}
+
+	public async Task DeleteGuildData(ulong guildId)
+	{
+		await _punishmentDatabase.DeleteAllModCasesForGuild(guildId);
 	}
 
 	public async Task AddAdminStatistics(dynamic adminStats)

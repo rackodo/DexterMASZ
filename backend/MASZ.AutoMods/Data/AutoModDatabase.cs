@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MASZ.AutoMods.Data;
 
-public class AutoModDatabase : DataContext<AutoModDatabase>, DataContextCreate, DeleteGuildData
+public class AutoModDatabase : DataContext<AutoModDatabase>, DataContextCreate
 {
 	public AutoModDatabase(DbContextOptions<AutoModDatabase> options) : base(options)
 	{
@@ -23,12 +23,6 @@ public class AutoModDatabase : DataContext<AutoModDatabase>, DataContextCreate, 
 		IServiceCollection serviceCollection)
 	{
 		serviceCollection.AddDbContext<AutoModDatabase>(optionsAction);
-	}
-
-	public async Task DeleteGuildData(ulong guildId)
-	{
-		await DeleteAllPunishmentsConfigsForGuild(guildId);
-		await DeleteAllPunishmentsEventsForGuild(guildId);
 	}
 
 	public async Task<List<AutoModConfig>> SelectAllPunishmentsConfigsForGuild(ulong guildId)

@@ -1,4 +1,5 @@
 using MASZ.Bot.Abstractions;
+using MASZ.Bot.Dynamics;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Exceptions;
 using MASZ.Bot.Extensions;
@@ -10,7 +11,7 @@ using MASZ.GuildAudits.Models;
 
 namespace MASZ.GuildAudits.Data;
 
-public class GuildAuditConfigRepository : Repository
+public class GuildAuditConfigRepository : Repository, DeleteGuildData
 {
 	private readonly GuildAuditEventHandler _eventHandler;
 	private readonly GuildAuditDatabase _guildAuditDatabase;
@@ -20,6 +21,11 @@ public class GuildAuditConfigRepository : Repository
 	{
 		_guildAuditDatabase = guildAuditDatabase;
 		_eventHandler = eventHandler;
+	}
+
+	public async Task DeleteGuildData(ulong guildId)
+	{
+		await _guildAuditDatabase.DeleteAllAuditLogConfigsForGuild(guildId);
 	}
 
 	public async Task<List<GuildAuditConfig>> GetConfigsByGuild(ulong guildId)

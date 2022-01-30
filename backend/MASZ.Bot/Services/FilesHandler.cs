@@ -61,7 +61,10 @@ public class FilesHandler : DeleteGuildData
 
 		var uniqueFileName = GetUniqueFileName(file);
 		var filePath = Path.Combine(directory, uniqueFileName);
-		await file.CopyToAsync(new FileStream(filePath, FileMode.Create));
+
+		using var stream = new FileStream(filePath, FileMode.Create);
+
+		await file.CopyToAsync(stream);
 
 		return uniqueFileName;
 	}

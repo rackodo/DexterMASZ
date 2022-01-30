@@ -3,6 +3,7 @@ using MASZ.AutoMods.Events;
 using MASZ.AutoMods.Exceptions;
 using MASZ.AutoMods.Models;
 using MASZ.Bot.Abstractions;
+using MASZ.Bot.Dynamics;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Exceptions;
 using MASZ.Bot.Extensions;
@@ -10,7 +11,7 @@ using MASZ.Bot.Services;
 
 namespace MASZ.AutoMods.Data;
 
-public class AutoModConfigRepository : Repository
+public class AutoModConfigRepository : Repository, DeleteGuildData
 {
 	private readonly AutoModDatabase _autoModDatabase;
 	private readonly AutoModEventHandler _eventHandler;
@@ -91,5 +92,10 @@ public class AutoModConfigRepository : Repository
 		_eventHandler.AutoModConfigDeletedEvent.Invoke(config, Identity);
 
 		return config;
+	}
+
+	public async Task DeleteGuildData(ulong guildId)
+	{
+		await _autoModDatabase.DeleteAllPunishmentsConfigsForGuild(guildId);
 	}
 }
