@@ -1,5 +1,6 @@
 ﻿using MASZ.AutoMods.Enums;
 using MASZ.AutoMods.Translators;
+using MASZ.Bot.Abstractions;
 using MASZ.Bot.DTOs;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Services;
@@ -7,9 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.AutoMods.Controllers;
 
-[ApiController]
 [Route("api/v1/enums")]
-public class AutoModEnumsController : ControllerBase
+public class AutoModEnumsController : BaseController
 {
 	private readonly Translation _translator;
 

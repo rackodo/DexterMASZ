@@ -1,3 +1,4 @@
+using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Services;
 using MASZ.Bot.Views;
@@ -6,9 +7,8 @@ using RestSharp;
 
 namespace MASZ.Bot.Controllers;
 
-[ApiController]
 [Route("api/v1/meta")]
-public class MetaController : ControllerBase
+public class MetaController : BaseController
 {
 	private readonly DiscordRest _discordRest;
 	private readonly SettingsRepository _settingsRepository;

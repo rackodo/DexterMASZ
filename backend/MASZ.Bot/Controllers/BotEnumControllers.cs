@@ -1,3 +1,4 @@
+using MASZ.Bot.Abstractions;
 using MASZ.Bot.DTOs;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Services;
@@ -6,9 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Bot.Controllers;
 
-[ApiController]
 [Route("api/v1/enums")]
-public class BotEnumControllers : ControllerBase
+public class BotEnumControllers : BaseController
 {
 	private readonly Translation _translator;
 

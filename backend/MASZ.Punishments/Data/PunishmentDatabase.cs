@@ -1,5 +1,4 @@
 ﻿using MASZ.Bot.Abstractions;
-using MASZ.Bot.Dynamics;
 using MASZ.Bot.Views;
 using MASZ.Punishments.Enums;
 using MASZ.Punishments.Models;

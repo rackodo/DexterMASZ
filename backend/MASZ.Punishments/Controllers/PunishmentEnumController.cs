@@ -1,3 +1,4 @@
+using MASZ.Bot.Abstractions;
 using MASZ.Bot.DTOs;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Services;
@@ -7,9 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Punishments.Controllers;
 
-[ApiController]
 [Route("api/v1/enums/")]
-public class PunishmentEnumController : ControllerBase
+public class PunishmentEnumController : BaseController
 {
 	private readonly Translation _translator;
 

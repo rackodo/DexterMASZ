@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace MASZ.Bot.Logger;
+namespace MASZ.Bot.Loggers;
 
 public class LoggerProvider : ILoggerProvider
 {

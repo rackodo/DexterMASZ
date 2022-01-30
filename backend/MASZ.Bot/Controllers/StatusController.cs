@@ -1,13 +1,13 @@
 using System.Globalization;
+using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Bot.Controllers;
 
-[ApiController]
 [Route("api/v1")]
-public class StatusController : ControllerBase
+public class StatusController : BaseController
 {
 	private readonly SettingsRepository _settingsRepository;
 
