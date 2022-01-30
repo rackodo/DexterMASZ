@@ -3,7 +3,7 @@ using MASZ.Punishments.Enums;
 
 namespace MASZ.Punishments.Models;
 
-public class CaseTemplate
+public class ModCaseTemplate
 {
 	public int Id { get; set; }
 	public ulong UserId { get; set; }

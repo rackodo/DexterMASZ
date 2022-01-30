@@ -14,7 +14,7 @@ public class DiscordUser
 		if (user.Id is 0)
 			throw new ResourceNotFoundException("User for DiscordUserView has an ID of 0!");
 
-		Id = user.Id.ToString();
+		Id = user.Id;
 		Username = user.Username;
 		Discriminator = user.Discriminator;
 		ImageUrl = user.GetAvatarOrDefaultUrl(size: 512);
@@ -23,7 +23,7 @@ public class DiscordUser
 		Bot = user.IsBot;
 	}
 
-	public string Id { get; set; }
+	public ulong Id { get; set; }
 	public string Username { get; set; }
 	public string Discriminator { get; set; }
 	public string ImageUrl { get; set; }

@@ -6,14 +6,14 @@ public class DiscordRole
 {
 	public DiscordRole(IRole role)
 	{
-		Id = role.Id.ToString();
+		Id = role.Id;
 		Name = role.Name;
 		Color = Convert.ToInt32(role.Color.RawValue);
 		Position = role.Position;
 		Permissions = role.Permissions.GetHashCode().ToString();
 	}
 
-	public string Id { get; set; }
+	public ulong Id { get; set; }
 	public string Name { get; set; }
 	public int Color { get; set; }
 	public int Position { get; set; }

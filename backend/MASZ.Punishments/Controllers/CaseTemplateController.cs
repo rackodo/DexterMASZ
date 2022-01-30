@@ -28,7 +28,7 @@ public class CaseTemplateController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		var template = new CaseTemplate
+		var template = new ModCaseTemplate
 		{
 			TemplateName = templateDto.TemplateName,
 			UserId = identity.GetCurrentUser().Id,

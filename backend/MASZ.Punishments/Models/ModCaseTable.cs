@@ -1,8 +1,8 @@
 namespace MASZ.Punishments.Models;
 
-public class CaseTable
+public class ModCaseTable
 {
-	public CaseTable(List<ModCaseTableEntry> modCase, int fullSize)
+	public ModCaseTable(List<ModCaseTableEntry> modCase, int fullSize)
 	{
 		Cases = modCase;
 		FullSize = fullSize;

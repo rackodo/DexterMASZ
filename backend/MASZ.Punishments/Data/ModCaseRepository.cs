@@ -84,9 +84,9 @@ public class ModCaseRepository : Repository,
 	public async Task AddQuickSearchResults(List<QuickSearchEntry> entries, ulong guildId, string search)
 	{
 		foreach (var item in await SearchCases(guildId, search))
-			entries.Add(new QuickSearchEntry<CaseExpanded>
+			entries.Add(new QuickSearchEntry<ModCaseExpanded>
 			{
-				Entry = new CaseExpanded(
+				Entry = new ModCaseExpanded(
 					item,
 					await _discordRest.FetchUserInfo(item.ModId, CacheBehavior.OnlyCache),
 					await _discordRest.FetchUserInfo(item.LastEditedByModId, CacheBehavior.OnlyCache),

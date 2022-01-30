@@ -14,7 +14,7 @@ public class DiscordApplication
 		if (application.Id is 0)
 			throw new ResourceNotFoundException("Application for DiscordApplicationView has an ID of 0!");
 
-		Id = application.Id.ToString();
+		Id = application.Id;
 		Name = application.Name;
 		Description = application.Description;
 		IconUrl = application.IconUrl.GetAnimatedOrDefaultAvatar();
@@ -23,7 +23,7 @@ public class DiscordApplication
 		TermsOfServiceUrl = application.TermsOfService ?? "";
 	}
 
-	public string Id { get; set; }
+	public ulong Id { get; set; }
 	public string Name { get; set; }
 	public string Description { get; set; }
 	public string IconUrl { get; set; }

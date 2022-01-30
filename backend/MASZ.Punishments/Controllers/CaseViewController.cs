@@ -68,7 +68,7 @@ public class CaseViewController : AuthenticatedController
 			{
 			}
 
-		var caseView = new CaseExpanded(
+		var caseView = new ModCaseExpanded(
 			modCase,
 			await _discordRest.FetchUserInfo(modCase.ModId, CacheBehavior.OnlyCache),
 			await _discordRest.FetchUserInfo(modCase.LastEditedByModId, CacheBehavior.OnlyCache),

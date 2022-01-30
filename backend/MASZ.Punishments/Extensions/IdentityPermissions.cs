@@ -83,14 +83,14 @@ public static class IdentityPermissions
 	}
 
 	public static async Task RequirePermission(this Identity identity, ApiActionPermission permission,
-		CaseTemplate caseTemplate)
+		ModCaseTemplate caseTemplate)
 	{
 		if (!await identity.HasPermission(permission, caseTemplate))
 			throw new UnauthorizedException();
 	}
 
 	public static async Task<bool> HasPermission(this Identity identity, ApiActionPermission permission,
-		CaseTemplate caseTemplate)
+		ModCaseTemplate caseTemplate)
 	{
 		var currentUser = identity.GetCurrentUser();
 

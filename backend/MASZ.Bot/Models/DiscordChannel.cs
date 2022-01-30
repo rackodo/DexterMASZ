@@ -14,13 +14,13 @@ public class DiscordChannel
 		if (channel.Id is 0)
 			throw new ResourceNotFoundException("Channel for DiscordChannelView has an ID of 0!");
 
-		Id = channel.Id.ToString();
+		Id = channel.Id;
 		Name = channel.Name;
 		Position = channel.Position;
 		Type = (int)channel.GetChannelType();
 	}
 
-	public string Id { get; set; }
+	public ulong Id { get; set; }
 	public string Name { get; set; }
 	public int Position { get; set; }
 	public int Type { get; set; }

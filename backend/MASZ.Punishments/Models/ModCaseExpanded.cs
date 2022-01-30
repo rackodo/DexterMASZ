@@ -4,9 +4,9 @@ using MASZ.UserNotes.Models;
 
 namespace MASZ.Punishments.Models;
 
-public class CaseExpanded
+public class ModCaseExpanded
 {
-	public CaseExpanded(ModCase modCase, IUser moderator, IUser lastModerator, IUser suspect,
+	public ModCaseExpanded(ModCase modCase, IUser moderator, IUser lastModerator, IUser suspect,
 		List<ModCaseCommentExpanded> comments, UserNoteExpanded userNoteView)
 	{
 		ModCase = modCase;

@@ -27,10 +27,10 @@ public class TemplateViewController : AuthenticatedController
 		var identity = await SetupAuthentication();
 
 		var templates = await _templateRepository.GetTemplatesBasedOnPermissions(identity);
-		var templatesView = new List<CaseTemplateExpanded>();
+		var templatesView = new List<ModCaseTemplateExpanded>();
 
 		foreach (var template in templates.Where(x => x.UserId == userId))
-			templatesView.Add(new CaseTemplateExpanded(
+			templatesView.Add(new ModCaseTemplateExpanded(
 				template,
 				await _discordRest.FetchUserInfo(template.UserId, CacheBehavior.OnlyCache),
 				_discordRest.FetchGuildInfo(template.CreatedForGuildId, CacheBehavior.Default)
