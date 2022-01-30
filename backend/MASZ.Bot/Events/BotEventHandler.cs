@@ -1,9 +1,9 @@
-using MASZ.Bot.Abstractions;
+﻿using MASZ.Bot.Abstractions;
 using MASZ.Bot.Models;
 
 namespace MASZ.Bot.Events;
 
-public class BotEventHandler : Abstractions.EventHandler
+public class BotEventHandler : InternalEventHandler
 {
 	public readonly AsyncEvent<Func<Task>> BotLaunchedEvent = new();
 

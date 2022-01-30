@@ -1,11 +1,11 @@
-using Discord;
+﻿using Discord;
 using MASZ.AutoMods.Models;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Models;
 
 namespace MASZ.AutoMods.Events;
 
-public class AutoModEventHandler : Bot.Abstractions.EventHandler
+public class AutoModEventHandler : InternalEventHandler
 {
 	internal readonly AsyncEvent<Func<AutoModConfig, IUser, Task>> AutoModConfigCreatedEvent = new();
 

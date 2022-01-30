@@ -62,7 +62,7 @@ public class BotModule : Module
 
 		services.AddSingleton<InteractionService>();
 
-		foreach (var type in serviceCacher.GetClassTypes<Abstractions.EventHandler>())
+		foreach (var type in serviceCacher.GetClassTypes<InternalEventHandler>())
 			services.AddSingleton(type);
 
 		foreach (var type in serviceCacher.GetClassTypes<Event>())
