@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MASZ.Invites.Data;
 
-public class InviteDatabase : DataContext<InviteDatabase>, DataContextCreate, DeleteGuildData
+public class InviteDatabase : DataContext<InviteDatabase>, DataContextCreate
 {
 	public InviteDatabase(DbContextOptions<InviteDatabase> options) : base(options)
 	{
@@ -18,11 +18,6 @@ public class InviteDatabase : DataContext<InviteDatabase>, DataContextCreate, De
 		IServiceCollection serviceCollection)
 	{
 		serviceCollection.AddDbContext<InviteDatabase>(optionsAction);
-	}
-
-	public async Task DeleteGuildData(ulong guildId)
-	{
-		await DeleteInviteHistoryByGuild(guildId);
 	}
 
 	public async Task<List<UserInvite>> GetInvitedUsersByUser(ulong userId)

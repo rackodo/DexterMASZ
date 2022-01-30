@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MASZ.UserMaps.Data;
 
-public class UserMapDatabase : DataContext<UserMapDatabase>, DataContextCreate, DeleteGuildData
+public class UserMapDatabase : DataContext<UserMapDatabase>, DataContextCreate
 {
 	public UserMapDatabase(DbContextOptions<UserMapDatabase> options) : base(options)
 	{
@@ -18,11 +18,6 @@ public class UserMapDatabase : DataContext<UserMapDatabase>, DataContextCreate, 
 		IServiceCollection serviceCollection)
 	{
 		serviceCollection.AddDbContext<UserMapDatabase>(optionsAction);
-	}
-
-	public async Task DeleteGuildData(ulong guildId)
-	{
-		await DeleteUserMapByGuild(guildId);
 	}
 
 	public async Task<List<UserMap>> SelectLatestUserMaps(DateTime timeLimit, int limit)

@@ -601,7 +601,7 @@
         },
         "FileUpload": {
             "Uploaded": "File uploaded.",
-            "Failed": "Failed to upload ffile."
+            "Failed": "Failed to upload file."
         },
         "FileDelete": {
             "Deleted": "File deleted.",

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MASZ.GuildAudits.Data;
 
-public class GuildAuditDatabase : DataContext<GuildAuditDatabase>, DataContextCreate, DeleteGuildData
+public class GuildAuditDatabase : DataContext<GuildAuditDatabase>, DataContextCreate
 {
 	public GuildAuditDatabase(DbContextOptions<GuildAuditDatabase> options) : base(options)
 	{
@@ -19,11 +19,6 @@ public class GuildAuditDatabase : DataContext<GuildAuditDatabase>, DataContextCr
 		IServiceCollection serviceCollection)
 	{
 		serviceCollection.AddDbContext<GuildAuditDatabase>(optionsAction);
-	}
-
-	public async Task DeleteGuildData(ulong guildId)
-	{
-		await DeleteAllAuditLogConfigsForGuild(guildId);
 	}
 
 	public async Task DeleteAllAuditLogConfigsForGuild(ulong guildId)

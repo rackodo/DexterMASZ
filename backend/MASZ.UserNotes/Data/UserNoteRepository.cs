@@ -14,7 +14,7 @@ using MASZ.Utilities.Dynamics;
 namespace MASZ.UserNotes.Data;
 
 public class UserNoteRepository : Repository,
-	AddAdminStats, CacheUsers, AddGuildStats, AddSearch, AddNetworks, WhoIsResults
+	AddAdminStats, CacheUsers, AddGuildStats, AddSearch, AddNetworks, WhoIsResults, DeleteGuildData
 {
 	private readonly DiscordRest _discordRest;
 	private readonly UserNoteEventHandler _eventHandler;
@@ -26,6 +26,11 @@ public class UserNoteRepository : Repository,
 		_userNoteDatabase = userNoteDatabase;
 		_discordRest = discordRest;
 		_eventHandler = eventHandler;
+	}
+
+	public async Task DeleteGuildData(ulong guildId)
+	{
+		await _userNoteDatabase.DeleteUserNoteByGuild(guildId);
 	}
 
 	public async Task AddAdminStatistics(dynamic adminStats)

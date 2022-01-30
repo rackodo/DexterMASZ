@@ -150,7 +150,7 @@ public class AutoModEventAnnouncer : Event
 
 			try
 			{
-				var embed = await config.CreateAutoModConfigEmbed(actor, action, _serviceProvider);
+				var embed = await config.CreateAutoModConfigEmbed(actor, action, scope.ServiceProvider);
 				await DiscordRest.ExecuteWebhook(guildConfig.ModInternalNotificationWebhook, embed.Build());
 			}
 			catch (Exception e)

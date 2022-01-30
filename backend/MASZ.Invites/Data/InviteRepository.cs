@@ -15,7 +15,7 @@ using MASZ.Utilities.Dynamics;
 namespace MASZ.Invites.Data;
 
 public class InviteRepository : Repository,
-	AddAdminStats, AddGuildStats, AddNetworks, WhoIsResults
+	AddAdminStats, AddGuildStats, AddNetworks, WhoIsResults, DeleteGuildData
 {
 	private readonly DiscordRest _discordRest;
 	private readonly InviteEventHandler _eventHandler;
@@ -27,6 +27,11 @@ public class InviteRepository : Repository,
 		_userInviteDatabase = userInviteDatabase;
 		_eventHandler = eventHandler;
 		_discordRest = discordRest;
+	}
+
+	public async Task DeleteGuildData(ulong guildId)
+	{
+		await _userInviteDatabase.DeleteInviteHistoryByGuild(guildId);
 	}
 
 	public async Task AddAdminStatistics(dynamic adminStats)

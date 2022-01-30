@@ -1,4 +1,5 @@
 using MASZ.Bot.Abstractions;
+using MASZ.Bot.Dynamics;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Exceptions;
 using MASZ.Bot.Extensions;
@@ -8,7 +9,7 @@ using MASZ.MOTDs.Models;
 
 namespace MASZ.MOTDs.Data;
 
-public class MotdRepository : Repository
+public class MotdRepository : Repository, DeleteGuildData
 {
 	private readonly MotdEventHandler _eventHandler;
 	private readonly MotdDatabase _guildMotdDatabase;
@@ -18,6 +19,11 @@ public class MotdRepository : Repository
 	{
 		_guildMotdDatabase = guildMotdDatabase;
 		_eventHandler = eventHandler;
+	}
+
+	public async Task DeleteGuildData(ulong guildId)
+	{
+		await _guildMotdDatabase.DeleteMotdForGuild(guildId);
 	}
 
 	public async Task<GuildMotd> GetMotd(ulong guildId)

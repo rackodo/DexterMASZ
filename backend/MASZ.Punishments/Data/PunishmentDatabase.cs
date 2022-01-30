@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MASZ.Punishments.Data;
 
-public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCreate, DeleteGuildData
+public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCreate
 {
 	public PunishmentDatabase(DbContextOptions<PunishmentDatabase> options) : base(options)
 	{
@@ -24,12 +24,6 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 		IServiceCollection serviceCollection)
 	{
 		serviceCollection.AddDbContext<PunishmentDatabase>(optionsAction);
-	}
-
-	public async Task DeleteGuildData(ulong guildId)
-	{
-		await DeleteAllModCasesForGuild(guildId);
-		await DeleteAllTemplatesForGuild(guildId);
 	}
 
 	public override void OverrideModelCreating(ModelBuilder builder)

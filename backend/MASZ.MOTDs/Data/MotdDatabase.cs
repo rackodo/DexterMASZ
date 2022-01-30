@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MASZ.MOTDs.Data;
 
-public class MotdDatabase : DataContext<MotdDatabase>, DataContextCreate, DeleteGuildData
+public class MotdDatabase : DataContext<MotdDatabase>, DataContextCreate
 {
 	public MotdDatabase(DbContextOptions<MotdDatabase> options) : base(options)
 	{
@@ -18,11 +18,6 @@ public class MotdDatabase : DataContext<MotdDatabase>, DataContextCreate, Delete
 		IServiceCollection serviceCollection)
 	{
 		serviceCollection.AddDbContext<MotdDatabase>(optionsAction);
-	}
-
-	public async Task DeleteGuildData(ulong guildId)
-	{
-		await DeleteMotdForGuild(guildId);
 	}
 
 	public async Task<GuildMotd> GetMotdForGuild(ulong guildId)

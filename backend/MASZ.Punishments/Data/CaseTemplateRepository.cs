@@ -1,4 +1,5 @@
 using MASZ.Bot.Abstractions;
+using MASZ.Bot.Dynamics;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Exceptions;
 using MASZ.Bot.Extensions;
@@ -9,7 +10,7 @@ using MASZ.Punishments.Models;
 
 namespace MASZ.Punishments.Data;
 
-public class CaseTemplateRepository : Repository
+public class CaseTemplateRepository : Repository, DeleteGuildData
 {
 	private const int MaxAllowedCaseTemplatesPerUser = 20;
 	private readonly PunishmentEventHandler _eventHandler;
@@ -22,7 +23,12 @@ public class CaseTemplateRepository : Repository
 		_punishmentDatabase = punishmentDatabase;
 		_eventHandler = eventHandler;
 	}
-	
+
+	public async Task DeleteGuildData(ulong guildId)
+	{
+		await _punishmentDatabase.DeleteAllTemplatesForGuild(guildId);
+	}
+
 	public async Task<CaseTemplate> CreateTemplate(CaseTemplate template)
 	{
 		var existingTemplates = await _punishmentDatabase.GetAllTemplatesFromUser(template.UserId);

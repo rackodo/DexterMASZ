@@ -23,7 +23,7 @@ using Microsoft.Extensions.Logging;
 namespace MASZ.AutoMods.Data;
 
 public class AutoModEventRepository : Repository,
-	AddAdminStats, AddChart, AddGuildStats, AddQuickEntrySearch, AddNetworks
+	AddAdminStats, AddChart, AddGuildStats, AddQuickEntrySearch, AddNetworks, DeleteGuildData
 {
 	private readonly AutoModConfigRepository _autoModConfigRepo;
 	private readonly AutoModDatabase _autoModDatabase;
@@ -231,5 +231,11 @@ public class AutoModEventRepository : Repository,
 		}
 
 		return filteredEvents;
+	}
+
+
+	public async Task DeleteGuildData(ulong guildId)
+	{
+		await _autoModDatabase.DeleteAllPunishmentsEventsForGuild(guildId);
 	}
 }

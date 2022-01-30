@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MASZ.UserNotes.Data;
 
-public class UserNoteDatabase : DataContext<UserNoteDatabase>, DataContextCreate, DeleteGuildData
+public class UserNoteDatabase : DataContext<UserNoteDatabase>, DataContextCreate
 {
 	public UserNoteDatabase(DbContextOptions<UserNoteDatabase> options) : base(options)
 	{
@@ -18,11 +18,6 @@ public class UserNoteDatabase : DataContext<UserNoteDatabase>, DataContextCreate
 		IServiceCollection serviceCollection)
 	{
 		serviceCollection.AddDbContext<UserNoteDatabase>(optionsAction);
-	}
-
-	public async Task DeleteGuildData(ulong guildId)
-	{
-		await DeleteUserNoteByGuild(guildId);
 	}
 
 	public async Task<List<UserNote>> SelectLatestUserNotes(DateTime timeLimit, int limit)
