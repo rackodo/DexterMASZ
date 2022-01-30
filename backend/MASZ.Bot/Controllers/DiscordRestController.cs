@@ -7,7 +7,6 @@ using MASZ.Bot.Exceptions;
 using MASZ.Bot.Identities;
 using MASZ.Bot.Models;
 using MASZ.Bot.Services;
-using MASZ.Bot.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Bot.Controllers;

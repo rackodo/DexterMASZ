@@ -6,7 +6,6 @@ using MASZ.Punishments.Data;
 using MASZ.Punishments.DTOs;
 using MASZ.Punishments.Exceptions;
 using MASZ.Punishments.Extensions;
-using MASZ.Punishments.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Punishments.Controllers;

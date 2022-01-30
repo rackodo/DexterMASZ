@@ -1,7 +1,7 @@
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
+using MASZ.Bot.Models;
 using MASZ.Bot.Services;
-using MASZ.Bot.Views;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 

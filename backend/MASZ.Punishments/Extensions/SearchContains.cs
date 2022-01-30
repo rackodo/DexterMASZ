@@ -2,7 +2,6 @@
 using MASZ.Bot.Services;
 using MASZ.Punishments.Models;
 using MASZ.Punishments.Translators;
-using MASZ.Punishments.Views;
 
 namespace MASZ.Punishments.Extensions;
 

@@ -8,7 +8,6 @@ using MASZ.Punishments.DTOs;
 using MASZ.Punishments.Enums;
 using MASZ.Punishments.Extensions;
 using MASZ.Punishments.Models;
-using MASZ.Punishments.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Punishments.Controllers;
