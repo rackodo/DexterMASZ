@@ -5,7 +5,7 @@ using MASZ.Punishments.Models;
 
 namespace MASZ.Punishments.Events;
 
-public class PunishmentEventHandler : Bot.Abstractions.EventHandler
+public class PunishmentEventHandler : InternalEventHandler
 {
 	internal readonly AsyncEvent<Func<CaseTemplate, Task>> CaseTemplateCreatedEvent = new();
 

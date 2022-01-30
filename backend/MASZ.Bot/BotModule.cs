@@ -2,7 +2,7 @@
 using Discord.Interactions;
 using Discord.WebSocket;
 using MASZ.Bot.Abstractions;
-using MASZ.Bot.Logger;
+using MASZ.Bot.Loggers;
 using MASZ.Bot.Models;
 using MASZ.Bot.Services;
 using Microsoft.EntityFrameworkCore;
@@ -62,7 +62,7 @@ public class BotModule : Module
 
 		services.AddSingleton<InteractionService>();
 
-		foreach (var type in serviceCacher.GetClassTypes<Abstractions.EventHandler>())
+		foreach (var type in serviceCacher.GetClassTypes<InternalEventHandler>())
 			services.AddSingleton(type);
 
 		foreach (var type in serviceCacher.GetClassTypes<Event>())

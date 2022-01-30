@@ -1,3 +1,4 @@
+using MASZ.Bot.Abstractions;
 using MASZ.Bot.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -6,9 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Bot.Controllers;
 
-[ApiController]
 [Route("api/v1")]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : BaseController
 {
 	private readonly IdentityManager _identityManager;
 

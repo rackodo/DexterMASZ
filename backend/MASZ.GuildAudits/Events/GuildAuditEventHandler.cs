@@ -4,7 +4,7 @@ using MASZ.GuildAudits.Models;
 
 namespace MASZ.GuildAudits.Events;
 
-public class GuildAuditEventHandler : Bot.Abstractions.EventHandler
+public class GuildAuditEventHandler : InternalEventHandler
 {
 	internal readonly AsyncEvent<Func<GuildAuditConfig, IUser, Task>> GuildAuditConfigCreatedEvent = new();
 

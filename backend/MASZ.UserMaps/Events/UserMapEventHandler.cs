@@ -4,7 +4,7 @@ using MASZ.UserMaps.Models;
 
 namespace MASZ.UserMaps.Events;
 
-public class UserMapEventHandler : Bot.Abstractions.EventHandler
+public class UserMapEventHandler : InternalEventHandler
 {
 	internal readonly AsyncEvent<Func<UserMap, IUser, Task>> UserMapCreatedEvent = new();
 

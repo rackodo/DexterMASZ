@@ -1,5 +1,4 @@
 ﻿using MASZ.Bot.Abstractions;
-using MASZ.Bot.Dynamics;
 using MASZ.GuildAudits.Enums;
 using MASZ.GuildAudits.Models;
 using Microsoft.EntityFrameworkCore;

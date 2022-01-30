@@ -4,7 +4,7 @@ using MASZ.MOTDs.Models;
 
 namespace MASZ.MOTDs.Events;
 
-public class MotdEventHandler : Bot.Abstractions.EventHandler
+public class MotdEventHandler : InternalEventHandler
 {
 	internal readonly AsyncEvent<Func<GuildMotd, IUser, Task>> GuildMotdCreatedEvent = new();
 

@@ -1,4 +1,5 @@
-﻿using MASZ.Bot.DTOs;
+﻿using MASZ.Bot.Abstractions;
+using MASZ.Bot.DTOs;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Services;
 using MASZ.Messaging.Enums;
@@ -7,9 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Messaging.Controllers;
 
-[ApiController]
 [Route("api/v1/enums")]
-public class ScheduledEnumController : ControllerBase
+public class ScheduledEnumController : BaseController
 {
 	private readonly Translation _translator;
 

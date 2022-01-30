@@ -22,7 +22,6 @@ public enum ApiError
 	TokenAlreadyRegistered,
 
 	// USER MAPS
-
 	CannotBeSameUser,
 
 	// MODCASES

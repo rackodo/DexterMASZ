@@ -1,12 +1,10 @@
 ﻿using MASZ.Bot.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Bot.Abstractions;
 
-[ApiController]
 [Authorize]
-public abstract class AuthenticatedController : ControllerBase
+public abstract class AuthenticatedController : BaseController
 {
 	private readonly IdentityManager _identityManager;
 	private readonly Repository[] _repositories;

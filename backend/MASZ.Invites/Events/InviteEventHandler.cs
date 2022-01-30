@@ -4,7 +4,7 @@ using MASZ.Invites.Models;
 
 namespace MASZ.Invites.Events;
 
-public class InviteEventHandler : Bot.Abstractions.EventHandler
+public class InviteEventHandler : InternalEventHandler
 {
 	internal readonly AsyncEvent<Func<SocketGuildChannel, TrackedInvite, Task>> InviteDeletedEvent = new();
 

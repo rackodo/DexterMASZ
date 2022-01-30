@@ -2,7 +2,6 @@
 using MASZ.AutoMods.Models;
 using MASZ.AutoMods.Views;
 using MASZ.Bot.Abstractions;
-using MASZ.Bot.Dynamics;
 using MASZ.Bot.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

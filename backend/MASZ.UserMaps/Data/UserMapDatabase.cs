@@ -1,5 +1,4 @@
 ﻿using MASZ.Bot.Abstractions;
-using MASZ.Bot.Dynamics;
 using MASZ.UserMaps.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

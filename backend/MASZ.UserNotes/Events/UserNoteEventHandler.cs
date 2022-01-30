@@ -4,7 +4,7 @@ using MASZ.UserNotes.Models;
 
 namespace MASZ.UserNotes.Events;
 
-public class UserNoteEventHandler : Bot.Abstractions.EventHandler
+public class UserNoteEventHandler : InternalEventHandler
 {
 	internal readonly AsyncEvent<Func<UserNote, IUser, Task>> UserNoteCreatedEvent = new();
 
