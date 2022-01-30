@@ -46,7 +46,7 @@ public class ModCaseController : AuthenticatedController
 
 		await identity.RequirePermission(ApiActionPermission.View, modCase);
 
-		var caseView = new CaseView(await _modCaseRepository.GetModCase(guildId, caseId));
+		var caseView = await _modCaseRepository.GetModCase(guildId, caseId);
 
 		if ((await _guildConfigRepository.GetGuildConfig(guildId)).PublishModeratorInfo)
 			return Ok(caseView);
@@ -148,14 +148,12 @@ public class ModCaseController : AuthenticatedController
 		if (!await identity.HasPermission(DiscordPermission.Moderator, guildId))
 			userOnly = identity.GetCurrentUser().Id;
 
-		List<CaseView> modCases;
+		List<ModCase> modCases;
 
 		if (userOnly == 0)
-			modCases = (await _modCaseRepository.GetCasePagination(guildId, startPage)).Select(x => new CaseView(x))
-				.ToList();
+			modCases = (await _modCaseRepository.GetCasePagination(guildId, startPage)).ToList();
 		else
-			modCases = (await _modCaseRepository.GetCasePaginationFilteredForUser(guildId, userOnly, startPage))
-				.Select(x => new CaseView(x)).ToList();
+			modCases = (await _modCaseRepository.GetCasePaginationFilteredForUser(guildId, userOnly, startPage)).ToList();
 
 		if ((await _guildConfigRepository.GetGuildConfig(guildId)).PublishModeratorInfo)
 			return Ok(modCases);

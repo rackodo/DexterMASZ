@@ -32,4 +32,12 @@ public class ModCase
 	public DateTime? MarkedToDeleteAt { get; set; }
 	public ulong DeletedByUserId { get; set; }
 	public ICollection<ModCaseComment> Comments { get; set; }
+
+	public void RemoveModeratorInfo()
+	{
+		ModId = default;
+		LastEditedByModId = default;
+		LockedByUserId = default;
+		DeletedByUserId = default;
+	}
 }

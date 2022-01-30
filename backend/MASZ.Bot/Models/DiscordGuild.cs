@@ -1,32 +1,31 @@
 using Discord;
 using MASZ.Bot.Extensions;
-using MASZ.Bot.Models;
 
-namespace MASZ.Bot.Views;
+namespace MASZ.Bot.Models;
 
-public class DiscordGuildView
+public class DiscordGuild
 {
-	public DiscordGuildView(IGuild guild)
+	public DiscordGuild(IGuild guild)
 	{
 		Id = guild.Id.ToString();
 		Name = guild.Name;
 		IconUrl = guild.IconUrl.GetAnimatedOrDefaultAvatar();
-		Roles = new List<DiscordRoleView>();
+		Roles = new List<DiscordRole>();
 
 		foreach (var role in guild.Roles)
-			Roles.Add(new DiscordRoleView(role));
+			Roles.Add(new DiscordRole(role));
 	}
 
-	public DiscordGuildView(UserGuild guild)
+	public DiscordGuild(UserGuild guild)
 	{
 		Id = guild.Id.ToString();
 		Name = guild.Name;
 		IconUrl = guild.IconUrl.GetAnimatedOrDefaultAvatar();
-		Roles = new List<DiscordRoleView>();
+		Roles = new List<DiscordRole>();
 	}
 
 	public string Id { get; set; }
 	public string Name { get; set; }
 	public string IconUrl { get; set; }
-	public List<DiscordRoleView> Roles { get; set; }
+	public List<DiscordRole> Roles { get; set; }
 }

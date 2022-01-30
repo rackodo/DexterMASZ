@@ -1,5 +1,5 @@
 ﻿using MASZ.Bot.Abstractions;
-using MASZ.Bot.Views;
+using MASZ.Bot.Models;
 using MASZ.Punishments.Enums;
 using MASZ.Punishments.Models;
 using Microsoft.EntityFrameworkCore;
@@ -198,20 +198,20 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 			.CountAsync();
 	}
 
-	public async Task<List<DbCountView>> GetCaseCountGraph(ulong guildId, DateTime since)
+	public async Task<List<DbCount>> GetCaseCountGraph(ulong guildId, DateTime since)
 	{
 		return await ModCases.AsQueryable().Where(x => x.GuildId == guildId && x.OccurredAt > since)
 			.GroupBy(x => new { x.OccurredAt.Month, x.OccurredAt.Year })
-			.Select(x => new DbCountView { Year = x.Key.Year, Month = x.Key.Month, Count = x.Count() })
+			.Select(x => new DbCount { Year = x.Key.Year, Month = x.Key.Month, Count = x.Count() })
 			.OrderByDescending(x => x.Year).ThenByDescending(x => x.Month).ToListAsync();
 	}
 
-	public async Task<List<DbCountView>> GetPunishmentCountGraph(ulong guildId, DateTime since)
+	public async Task<List<DbCount>> GetPunishmentCountGraph(ulong guildId, DateTime since)
 	{
 		return await ModCases.AsQueryable().Where(x =>
 				x.GuildId == guildId && x.OccurredAt > since && x.PunishmentType != PunishmentType.Warn)
 			.GroupBy(x => new { x.OccurredAt.Month, x.OccurredAt.Year })
-			.Select(x => new DbCountView { Year = x.Key.Year, Month = x.Key.Month, Count = x.Count() })
+			.Select(x => new DbCount { Year = x.Key.Year, Month = x.Key.Month, Count = x.Count() })
 			.OrderByDescending(x => x.Year).ThenByDescending(x => x.Month).ToListAsync();
 	}
 

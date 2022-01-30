@@ -45,7 +45,7 @@ public class ModCaseCommentsController : AuthenticatedController
 
 		var createdComment = await _modCaseCommentRepository.CreateComment(guildId, caseId, comment.Message);
 
-		return StatusCode(201, new CommentsView(createdComment));
+		return StatusCode(201, createdComment);
 	}
 
 	[HttpPut("{commentId}")]
@@ -68,7 +68,7 @@ public class ModCaseCommentsController : AuthenticatedController
 		var createdComment =
 			await _modCaseCommentRepository.UpdateComment(guildId, caseId, commentId, newValue.Message);
 
-		return Ok(new CommentsView(createdComment));
+		return Ok(createdComment);
 	}
 
 	[HttpDelete("{commentId}")]

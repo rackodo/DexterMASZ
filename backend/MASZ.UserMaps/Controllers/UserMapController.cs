@@ -4,7 +4,6 @@ using MASZ.Bot.Exceptions;
 using MASZ.Bot.Services;
 using MASZ.UserMaps.Data;
 using MASZ.UserMaps.DTOs;
-using MASZ.UserMaps.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.UserMaps.Controllers;
@@ -29,7 +28,7 @@ public class UserMapController : AuthenticatedController
 
 		var userMaps = await _userMapRepo.GetUserMapsByGuild(guildId);
 
-		return Ok(userMaps.Select(x => new UserMapView(x)));
+		return Ok(userMaps);
 	}
 
 	[HttpGet("{userId}")]
@@ -41,7 +40,7 @@ public class UserMapController : AuthenticatedController
 
 		var userMaps = await _userMapRepo.GetUserMapsByGuildAndUser(guildId, userId);
 
-		return Ok(userMaps.Select(x => new UserMapView(x)));
+		return Ok(userMaps);
 	}
 
 	[HttpPost]
@@ -63,7 +62,7 @@ public class UserMapController : AuthenticatedController
 		var userMap =
 			await _userMapRepo.CreateOrUpdateUserMap(guildId, userMapDto.UserA, userMapDto.UserB, userMapDto.Reason);
 
-		return StatusCode(201, new UserMapView(userMap));
+		return StatusCode(201, userMap);
 	}
 
 	[HttpPut("{id}")]
@@ -81,7 +80,7 @@ public class UserMapController : AuthenticatedController
 
 		var result = await _userMapRepo.CreateOrUpdateUserMap(guildId, userMap.UserA, userMap.UserB, userMapDto.Reason);
 
-		return Ok(new UserMapView(result));
+		return Ok(result);
 	}
 
 

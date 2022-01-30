@@ -2,11 +2,11 @@ using Discord;
 using MASZ.Bot.Exceptions;
 using MASZ.Bot.Extensions;
 
-namespace MASZ.Bot.Views;
+namespace MASZ.Bot.Models;
 
-public class DiscordChannelView
+public class DiscordChannel
 {
-	public DiscordChannelView(IGuildChannel channel)
+	public DiscordChannel(IGuildChannel channel)
 	{
 		if (channel is null)
 			throw new ResourceNotFoundException("Channel for DiscordChannelView is equal to null!");

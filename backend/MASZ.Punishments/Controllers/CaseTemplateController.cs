@@ -5,7 +5,6 @@ using MASZ.Punishments.Data;
 using MASZ.Punishments.DTOs;
 using MASZ.Punishments.Extensions;
 using MASZ.Punishments.Models;
-using MASZ.Punishments.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Punishments.Controllers;
@@ -48,7 +47,7 @@ public class CaseTemplateController : AuthenticatedController
 
 		var createdTemplate = await _caseTemplateRepo.CreateTemplate(template);
 
-		return StatusCode(201, new CaseTemplateView(createdTemplate));
+		return StatusCode(201, createdTemplate);
 	}
 
 	[HttpDelete("{templateId}")]
@@ -62,6 +61,6 @@ public class CaseTemplateController : AuthenticatedController
 
 		await _caseTemplateRepo.DeleteTemplate(template);
 
-		return Ok(new CaseTemplateView(template));
+		return Ok(template);
 	}
 }

@@ -5,8 +5,8 @@ using MASZ.Bot.Data;
 using MASZ.Bot.Dynamics;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Exceptions;
+using MASZ.Bot.Models;
 using MASZ.Bot.Services;
-using MASZ.Bot.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.Bot.Controllers;
@@ -35,7 +35,7 @@ public class UserNetworkController : AuthenticatedController
 		var identity = await SetupAuthentication();
 
 		List<string> modGuilds = new();
-		List<DiscordGuildView> guildViews = new();
+		List<DiscordGuild> guildViews = new();
 
 		var guildConfigs = await _guildConfigRepository.GetAllGuildConfigs();
 
@@ -47,13 +47,13 @@ public class UserNetworkController : AuthenticatedController
 			{
 				modGuilds.Add(guildConfig.GuildId.ToString());
 				guildViews.Add(
-					new DiscordGuildView(_discordRest.FetchGuildInfo(guildConfig.GuildId, CacheBehavior.Default)));
+					new DiscordGuild(_discordRest.FetchGuildInfo(guildConfig.GuildId, CacheBehavior.Default)));
 			}
 
 		if (modGuilds.Count == 0)
 			return Unauthorized();
 
-		DiscordUserView searchedUser =
+		DiscordUser searchedUser =
 			new(await _discordRest.FetchUserInfo(userId, CacheBehavior.IgnoreButCacheOnError));
 
 		dynamic data = new ExpandoObject();

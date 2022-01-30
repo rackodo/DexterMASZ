@@ -1,6 +1,6 @@
-namespace MASZ.Bot.Views;
+namespace MASZ.Bot.Models;
 
-public class DbCountView
+public class DbCount
 {
 	public int Year { get; set; }
 	public int Month { get; set; }

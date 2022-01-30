@@ -128,12 +128,12 @@ public class ModCaseTableController : AuthenticatedController
 				search.CustomTextFilter.Search(t.Suspect));
 
 		if (search?.UserIds != null && search.UserIds.Count > 0)
-			table = table.Where(x => search.UserIds.Contains(x.ModCase.UserId));
+			table = table.Where(x => search.UserIds.Contains(x.ModCase.UserId.ToString()));
 
 		if (search?.ModeratorIds != null && search.ModeratorIds.Count > 0)
 			table = table.Where(x =>
-				search.ModeratorIds.Contains(x.ModCase.ModId) ||
-				search.ModeratorIds.Contains(x.ModCase.LastEditedByModId));
+				search.ModeratorIds.Contains(x.ModCase.ModId.ToString()) ||
+				search.ModeratorIds.Contains(x.ModCase.LastEditedByModId.ToString()));
 
 		if (search?.Since != null && search.Since != DateTime.MinValue)
 			table = table.Where(x => x.ModCase.CreatedAt >= search.Since);

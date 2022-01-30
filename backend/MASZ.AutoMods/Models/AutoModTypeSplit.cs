@@ -1,6 +1,6 @@
 using MASZ.AutoMods.Enums;
 
-namespace MASZ.AutoMods.Views;
+namespace MASZ.AutoMods.Models;
 
 public class AutoModTypeSplit
 {

@@ -9,7 +9,6 @@ using MASZ.Bot.Extensions;
 using MASZ.Bot.Models;
 using MASZ.Bot.Services;
 using MASZ.Bot.Translators;
-using MASZ.Bot.Views;
 using MASZ.Punishments.Enums;
 using MASZ.Punishments.Events;
 using MASZ.Punishments.Exceptions;
@@ -17,7 +16,6 @@ using MASZ.Punishments.Extensions;
 using MASZ.Punishments.Models;
 using MASZ.Punishments.Services;
 using MASZ.Punishments.Translators;
-using MASZ.Punishments.Views;
 using MASZ.Utilities.Dynamics;
 using Microsoft.Extensions.Logging;
 
@@ -80,21 +78,20 @@ public class ModCaseRepository : Repository,
 
 	public async Task AddNetworkData(dynamic network, List<string> modGuilds, ulong userId)
 	{
-		network.modCases = (await GetCasesForUser(userId)).Where(x => modGuilds.Contains(x.GuildId.ToString()))
-			.Select(x => new CaseView(x)).ToList();
+		network.modCases = (await GetCasesForUser(userId)).Where(x => modGuilds.Contains(x.GuildId.ToString())).ToList();
 	}
 
 	public async Task AddQuickSearchResults(List<QuickSearchEntry> entries, ulong guildId, string search)
 	{
 		foreach (var item in await SearchCases(guildId, search))
-			entries.Add(new QuickSearchEntry<CaseExpandedView>
+			entries.Add(new QuickSearchEntry<CaseExpanded>
 			{
-				Entry = new CaseExpandedView(
+				Entry = new CaseExpanded(
 					item,
 					await _discordRest.FetchUserInfo(item.ModId, CacheBehavior.OnlyCache),
 					await _discordRest.FetchUserInfo(item.LastEditedByModId, CacheBehavior.OnlyCache),
 					await _discordRest.FetchUserInfo(item.UserId, CacheBehavior.OnlyCache),
-					new List<CommentExpandedView>(),
+					new List<ModCaseCommentExpanded>(),
 					null
 				),
 				CreatedAt = item.CreatedAt,
@@ -656,12 +653,12 @@ public class ModCaseRepository : Repository,
 		return modCase;
 	}
 
-	public async Task<List<DbCountView>> GetCounts(ulong guildId, DateTime since)
+	public async Task<List<DbCount>> GetCounts(ulong guildId, DateTime since)
 	{
 		return await _punishmentDatabase.GetCaseCountGraph(guildId, since);
 	}
 
-	public async Task<List<DbCountView>> GetPunishmentCounts(ulong guildId, DateTime since)
+	public async Task<List<DbCount>> GetPunishmentCounts(ulong guildId, DateTime since)
 	{
 		return await _punishmentDatabase.GetPunishmentCountGraph(guildId, since);
 	}

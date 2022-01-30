@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using MASZ.AutoMods.Data;
 using MASZ.AutoMods.Models;
-using MASZ.AutoMods.Views;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Enums;
@@ -54,7 +53,7 @@ public class AutoModEventController : AuthenticatedController
 
 		return Ok(new
 		{
-			events = events.Select(x => new AutoModEventView(x)),
+			events,
 			count = eventsCount
 		});
 	}

@@ -1,8 +1,7 @@
 ﻿using MASZ.AutoMods.Enums;
 using MASZ.AutoMods.Models;
-using MASZ.AutoMods.Views;
 using MASZ.Bot.Abstractions;
-using MASZ.Bot.Views;
+using MASZ.Bot.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -59,11 +58,11 @@ public class AutoModDatabase : DataContext<AutoModDatabase>, DataContextCreate
 		return await AutoModEvents.AsQueryable().CountAsync();
 	}
 
-	public async Task<List<DbCountView>> GetPunishmentsCountGraph(ulong guildId, DateTime since)
+	public async Task<List<DbCount>> GetPunishmentsCountGraph(ulong guildId, DateTime since)
 	{
 		return await AutoModEvents.AsQueryable().Where(x => x.GuildId == guildId && x.CreatedAt > since)
 			.GroupBy(x => new { x.CreatedAt.Month, x.CreatedAt.Year })
-			.Select(x => new DbCountView { Year = x.Key.Year, Month = x.Key.Month, Count = x.Count() })
+			.Select(x => new DbCount { Year = x.Key.Year, Month = x.Key.Month, Count = x.Count() })
 			.OrderByDescending(x => x.Year).ThenByDescending(x => x.Month).ToListAsync();
 	}
 

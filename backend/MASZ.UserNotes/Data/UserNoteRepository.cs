@@ -8,7 +8,6 @@ using MASZ.Bot.Services;
 using MASZ.UserNotes.Events;
 using MASZ.UserNotes.Models;
 using MASZ.UserNotes.Translators;
-using MASZ.UserNotes.Views;
 using MASZ.Utilities.Dynamics;
 
 namespace MASZ.UserNotes.Data;
@@ -45,18 +44,17 @@ public class UserNoteRepository : Repository,
 
 	public async Task AddNetworkData(dynamic network, List<string> modGuilds, ulong userId)
 	{
-		network.userNotes = (await GetUserNotesByUser(userId)).Where(x => modGuilds.Contains(x.GuildId.ToString()))
-			.Select(x => new UserNoteView(x)).ToList();
+		network.userNotes = (await GetUserNotesByUser(userId)).Where(x => modGuilds.Contains(x.GuildId.ToString())).ToList();
 	}
 
 	public async Task AddSearchData(dynamic data, ulong guildId, string search)
 	{
-		UserNoteExpandedView userNote = null;
+		UserNoteExpanded userNote = null;
 		try
 		{
 			var userId = ulong.Parse(search);
 			var note = await GetUserNote(guildId, userId);
-			userNote = new UserNoteExpandedView(
+			userNote = new UserNoteExpanded(
 				note,
 				await _discordRest.FetchUserInfo(note.UserId, CacheBehavior.OnlyCache),
 				await _discordRest.FetchUserInfo(note.CreatorId, CacheBehavior.OnlyCache)

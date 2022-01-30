@@ -5,7 +5,6 @@ using MASZ.GuildAudits.Data;
 using MASZ.GuildAudits.DTOs;
 using MASZ.GuildAudits.Enums;
 using MASZ.GuildAudits.Models;
-using MASZ.GuildAudits.Views;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.GuildAudits.Controllers;
@@ -28,7 +27,7 @@ public class GuildAuditConfigController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Admin, guildId);
 
-		return Ok(new GuildAuditConfigView(await _guildAuditLogRepo.UpdateConfig(new GuildAuditConfig(dto, guildId))));
+		return Ok(await _guildAuditLogRepo.UpdateConfig(new GuildAuditConfig(dto, guildId)));
 	}
 
 	[HttpDelete("{type}")]
@@ -38,7 +37,7 @@ public class GuildAuditConfigController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Admin, guildId);
 
-		return Ok(new GuildAuditConfigView(await _guildAuditLogRepo.DeleteConfigForGuild(guildId, type)));
+		return Ok(await _guildAuditLogRepo.DeleteConfigForGuild(guildId, type));
 	}
 
 	[HttpGet("{type}")]
@@ -48,7 +47,7 @@ public class GuildAuditConfigController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Admin, guildId);
 
-		return Ok(new GuildAuditConfigView(await _guildAuditLogRepo.GetConfigsByGuildAndType(guildId, type)));
+		return Ok(await _guildAuditLogRepo.GetConfigsByGuildAndType(guildId, type));
 	}
 
 	[HttpGet]
@@ -58,7 +57,6 @@ public class GuildAuditConfigController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Admin, guildId);
 
-		return Ok((await _guildAuditLogRepo.GetConfigsByGuild(guildId))
-			.Select(x => new GuildAuditConfigView(x)));
+		return Ok(await _guildAuditLogRepo.GetConfigsByGuild(guildId));
 	}
 }

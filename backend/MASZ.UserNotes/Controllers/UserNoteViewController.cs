@@ -2,7 +2,7 @@ using MASZ.Bot.Abstractions;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Services;
 using MASZ.UserNotes.Data;
-using MASZ.UserNotes.Views;
+using MASZ.UserNotes.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASZ.UserNotes.Controllers;
@@ -29,10 +29,10 @@ public class UserNoteViewController : AuthenticatedController
 		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
 		var userNotes = await _userNoteRepo.GetUserNotesByGuild(guildId);
-		List<UserNoteExpandedView> userNoteViews = new();
+		List<UserNoteExpanded> userNoteViews = new();
 
 		foreach (var userNote in userNotes)
-			userNoteViews.Add(new UserNoteExpandedView(
+			userNoteViews.Add(new UserNoteExpanded(
 				userNote,
 				await _discordRest.FetchUserInfo(userNote.UserId, CacheBehavior.OnlyCache),
 				await _discordRest.FetchUserInfo(userNote.CreatorId, CacheBehavior.OnlyCache)

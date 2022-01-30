@@ -2,7 +2,6 @@ using MASZ.AutoMods.Data;
 using MASZ.AutoMods.DTOs;
 using MASZ.AutoMods.Enums;
 using MASZ.AutoMods.Models;
-using MASZ.AutoMods.Views;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Services;
@@ -30,9 +29,7 @@ public class AutoModConfigController : AuthenticatedController
 
 		var config = await _autoModConfigRepository.UpdateConfig(new AutoModConfig(dto, guildId));
 
-		return Ok(
-			new AutoModConfigView(config)
-		);
+		return Ok(config);
 	}
 
 	[HttpDelete("{type}")]
@@ -44,7 +41,7 @@ public class AutoModConfigController : AuthenticatedController
 
 		var config = await _autoModConfigRepository.DeleteConfigForGuild(guildId, type);
 
-		return Ok(new AutoModConfigView(config));
+		return Ok(config);
 	}
 
 	[HttpGet("{type}")]
@@ -56,7 +53,7 @@ public class AutoModConfigController : AuthenticatedController
 
 		var config = await _autoModConfigRepository.GetConfigsByGuildAndType(guildId, type);
 
-		return Ok(new AutoModConfigView(config));
+		return Ok(config);
 	}
 
 	[HttpGet]
@@ -68,6 +65,6 @@ public class AutoModConfigController : AuthenticatedController
 
 		var configs = await _autoModConfigRepository.GetConfigsByGuild(guildId);
 
-		return Ok(configs.Select(x => new AutoModConfigView(x)));
+		return Ok(configs);
 	}
 }
