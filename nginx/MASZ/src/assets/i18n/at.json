@@ -554,7 +554,7 @@
         "ID": "ID",
         "Moderator": "Modarator",
         "Punishment": "Bestrofung",
-        "DiscordGuild": "Güde",
+        "Guild": "Güde",
         "PunishedUntil": "Bestroft bis:",
         "PunishedForever": "Bestroft fia imma",
         "Deactivated": {
@@ -587,7 +587,7 @@
         "FailedToLoad": {
             "Punishments": "Verfügbare Bestrofungen konntn ned glodn wean.",
             "Files": "Datein konntn ned glodn wean.",
-            "DiscordGuild": "Güdninformationen konntn ned glodn wean.",
+            "Guild": "Güdninformationen konntn ned glodn wean.",
             "Case": "Vorfoi konnte ned glodn wean."
         },
         "DeleteCase": {

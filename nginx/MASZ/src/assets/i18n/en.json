@@ -49,7 +49,7 @@
         "Banned": "Banned from guilds"
     },
     "MASZ": {
-        "GuildDeleted": "DiscordGuild deleted.",
+        "GuildDeleted": "Guild deleted.",
         "FailedToDeleteGuild": "Failed to delete guild.",
         "PleaseLoginFirst": "Please login first."
     },
@@ -221,8 +221,8 @@
         "FailedInviteWindow": "Failed to open invite window.",
         "FailedToRegisterGuild": "Failed to register guild.",
         "FailedToUpdateGuild": "Failed to update guild.",
-        "GuildCreated": "DiscordGuild created",
-        "GuildUpdated": "DiscordGuild updated"
+        "GuildCreated": "Guild created",
+        "GuildUpdated": "Guild updated"
     },
     "GuildAuditConfig": {
         "TargetChannel": "Target channel",
@@ -554,7 +554,7 @@
         "ID": "ID",
         "Moderator": "Moderator",
         "Punishment": "Punishment",
-        "DiscordGuild": "DiscordGuild",
+        "Guild": "Guild",
         "PunishedUntil": "Punished until:",
         "PunishedForever": "Punished forever",
         "Deactivated": {
@@ -587,7 +587,7 @@
         "FailedToLoad": {
             "Punishments": "Failed to load available punishments.",
             "Files": "Failed to load files.",
-            "DiscordGuild": "Failed to load guild info.",
+            "Guild": "Failed to load guild info.",
             "Case": "Failed to load case."
         },
         "DeleteCase": {

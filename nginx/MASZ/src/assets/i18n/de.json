@@ -554,7 +554,7 @@
         "ID": "ID",
         "Moderator": "Moderator",
         "Punishment": "Bestrafung",
-        "DiscordGuild": "Gilde",
+        "Guild": "Gilde",
         "PunishedUntil": "Bestraft bis:",
         "PunishedForever": "Bestraft für immer",
         "Deactivated": {
@@ -587,7 +587,7 @@
         "FailedToLoad": {
             "Punishments": "Verfügbare Bestrafungen konnten nicht geladen werden.",
             "Files": "Dateien konnten nicht geladen werden.",
-            "DiscordGuild": "Gildeninformationen konnten nicht geladen werden.",
+            "Guild": "Gildeninformationen konnten nicht geladen werden.",
             "Case": "Vorfall konnte nicht geladen werden."
         },
         "DeleteCase": {

@@ -554,7 +554,7 @@
         "ID": "ID",
         "Moderator": "Moderatore",
         "Punishment": "Punizione",
-        "DiscordGuild": "Gilda",
+        "Guild": "Gilda",
         "PunishedUntil": "Punito fino a:",
         "PunishedForever": "Punito per sempre",
         "Deactivated": {
@@ -587,7 +587,7 @@
         "FailedToLoad": {
             "Punishments": "Impossibile caricare le punizioni disponibili.",
             "Files": "Impossibile caricare i file.",
-            "DiscordGuild": "Impossibile caricare le informazioni sulla gilda.",
+            "Guild": "Impossibile caricare le informazioni sulla gilda.",
             "Case": "Impossibile caricare il caso."
         },
         "DeleteCase": {

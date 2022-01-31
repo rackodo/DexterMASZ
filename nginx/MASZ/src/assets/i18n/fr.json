@@ -41,15 +41,15 @@
         "Scanning": "Balayage"
     },
     "Guilds": {
-        "Guilds": "DiscordGuildes",
+        "Guilds": "Guildes",
         "All": "Toutes les guildes",
-        "Admin": "DiscordGuildes d'administration",
-        "Moderator": "DiscordGuildes de modérateurs",
-        "User": "DiscordGuildes",
+        "Admin": "Guildes d'administration",
+        "Moderator": "Guildes de modérateurs",
+        "User": "Guildes",
         "Banned": "Banni des guildes"
     },
     "MASZ": {
-        "GuildDeleted": "DiscordGuilde supprimée.",
+        "GuildDeleted": "Guilde supprimée.",
         "FailedToDeleteGuild": "Échec de la suppression de la guilde.",
         "PleaseLoginFirst": "S'il vous plait Connectez-vous d'abord."
     },
@@ -221,8 +221,8 @@
         "FailedInviteWindow": "Échec de l'ouverture de la fenêtre d'invitation.",
         "FailedToRegisterGuild": "Échec de l'enregistrement de la guilde.",
         "FailedToUpdateGuild": "Échec de la mise à jour de la guilde.",
-        "GuildCreated": "DiscordGuilde créée",
-        "GuildUpdated": "DiscordGuilde mise à jour"
+        "GuildCreated": "Guilde créée",
+        "GuildUpdated": "Guilde mise à jour"
     },
     "GuildAuditConfig": {
         "TargetChannel": "Canal cible",
@@ -554,7 +554,7 @@
         "ID": "identifiant",
         "Moderator": "Modérateur",
         "Punishment": "Châtiment",
-        "DiscordGuild": "DiscordGuilde",
+        "Guild": "Guilde",
         "PunishedUntil": "Puni jusqu'à :",
         "PunishedForever": "Puni à jamais",
         "Deactivated": {
@@ -587,7 +587,7 @@
         "FailedToLoad": {
             "Punishments": "Échec du chargement des punitions disponibles.",
             "Files": "Échec du chargement des fichiers.",
-            "DiscordGuild": "Échec du chargement des informations de guilde.",
+            "Guild": "Échec du chargement des informations de guilde.",
             "Case": "Échec du chargement du dossier."
         },
         "DeleteCase": {
