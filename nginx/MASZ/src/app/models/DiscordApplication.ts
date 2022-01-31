@@ -1,5 +1,5 @@
 export interface DiscordApplication {
-  id: bigint;
+  id: string;
   name: string;
   description: string;
   iconUrl: string;

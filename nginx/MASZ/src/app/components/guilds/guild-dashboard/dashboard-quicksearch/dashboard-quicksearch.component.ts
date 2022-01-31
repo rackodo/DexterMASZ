@@ -13,7 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DashboardQuicksearchComponent implements OnInit {
 
-  public guildId!: bigint;
+  public guildId!: string;
   public showOverlay: boolean = false;
   public search!: string;
   public searchResults?: QuickSearchResult;

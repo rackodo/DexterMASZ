@@ -23,7 +23,7 @@ export class GuildUsermappingComponent implements OnInit {
   public filteredUsersB!: Observable<DiscordUser[]>;
   public users: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
 
-  private guildId!: bigint;
+  private guildId!: string;
   private timeout: any;
   public loading: boolean = true;
   public searchString: string = '';

@@ -4,10 +4,10 @@ export interface ScheduledMessage {
     content: string;
     scheduledFor: Date;
     status: ScheduledMessageExtendedStatus;
-    guildId: bigint;
-    channelId: bigint;
-    creatorId: bigint;
-    lastEditedById: bigint;
+    guildId: string;
+    channelId: string;
+    creatorId: string;
+    lastEditedById: string;
     createdAt: Date;
     lastEditedAt: Date;
     failureReason?: FailureReason;

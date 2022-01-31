@@ -74,7 +74,7 @@ export class AuditlogConfigComponent implements OnInit {
     }
   ];
 
-  public guildId!: bigint;
+  public guildId!: string;
   public guildInfo!: DiscordGuild;
   public guildChannels!: DiscordChannel[];
   public initialConfigs!: Promise<GuildAuditConfig[]>;

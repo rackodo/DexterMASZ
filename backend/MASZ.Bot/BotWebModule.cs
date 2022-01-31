@@ -95,6 +95,9 @@ public class BotWebModule : WebModule
 		services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 		services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 		services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+
+		services.AddEndpointsApiExplorer();
+		services.AddSwaggerGen();
 	}
 
 	public override void PostWebBuild(WebApplication app, AppSettings settings)
@@ -110,5 +113,13 @@ public class BotWebModule : WebModule
 		app.UseMiddleware<HeaderMiddleware>();
 		app.UseMiddleware<RequestLoggingMiddleware>();
 		app.UseMiddleware<ApiExceptionHandlingMiddleware>();
+		app.UseMiddleware<SwaggerAuthorizedMiddleware>();
+
+		app.UseSwagger();
+		app.UseSwaggerUI(options =>
+		{
+			options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+			options.RoutePrefix = string.Empty;
+		});
 	}
 }

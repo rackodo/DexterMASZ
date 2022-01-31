@@ -1,8 +1,8 @@
 export interface UserNote {
     id: number;
-    guildId: bigint;
-    userId: bigint;
+    guildId: string;
+    userId: string;
     description: string;
-    creatorId: bigint;
+    creatorId: string;
     updatedAt: Date;
 }

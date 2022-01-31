@@ -5,6 +5,6 @@ export interface ModCaseComment {
     id: number;
     message: string;
     modCase?: ModCase;
-    userId: bigint;
+    userId: string;
     createdAt: Date;
 }

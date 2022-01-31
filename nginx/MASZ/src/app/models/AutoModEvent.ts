@@ -2,14 +2,14 @@ import { AutoModType } from "./AutoModType";
 
 export interface AutoModEvent {
     id: number;
-    guildId: bigint;
+    guildId: string;
     autoModerationType: AutoModType;
     autoModerationAction: number;
-    userId: bigint;
+    userId: string;
     username: string;
     nickname?: string;
     discriminator: string;
-    messageId: bigint;
+    messageId: string;
     messageContent: string;
     createdAt: Date;
     associatedCaseId?: number;

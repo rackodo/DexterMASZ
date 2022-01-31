@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class GuildDashboardComponent implements OnInit {
 
-  public guildId!: bigint;
+  public guildId!: string;
   public isAdminOrHigher: boolean = false;
   constructor(private toastr: ToastrService, private route: ActivatedRoute, private api: ApiService, private auth: AuthService) { }
 

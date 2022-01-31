@@ -13,7 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DashboardGuildInfoComponent implements OnInit {
 
-  private guildId!: bigint;
+  private guildId!: string;
   public guild: ContentLoading<DiscordGuild> = { loading: true, content: undefined };
 
   constructor(private route: ActivatedRoute, private api: ApiService, private toastr: ToastrService, private translator: TranslateService) { }

@@ -49,7 +49,7 @@ export class ModCaseEditComponent implements OnInit {
   public userForm = new FormControl();
   public filteredUsers!: Observable<DiscordUser[]>;
 
-  public guildId!: bigint;
+  public guildId!: string;
   public caseId!: string;
   public users: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
   public oldCase: ContentLoading<ModCase> = { loading: true, content: undefined };

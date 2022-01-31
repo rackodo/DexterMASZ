@@ -14,7 +14,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class MotdConfigComponent implements OnInit {
 
   timeout: any = null;
-  private guildId!: bigint;
+  private guildId!: string;
   public motd: ContentLoading<GuildMotdView> = { loading: true, content: undefined };
   constructor(private route: ActivatedRoute, private api: ApiService, private toastr: ToastrService, private translator: TranslateService) { }
 

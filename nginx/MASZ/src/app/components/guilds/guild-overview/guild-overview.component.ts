@@ -38,7 +38,7 @@ export class GuildOverviewComponent implements OnInit {
     });
   }
 
-  initialize(guildId: bigint) {
+  initialize(guildId: string) {
     this.tabs = [
       {
         "icon": "list",

@@ -1,5 +1,5 @@
 export interface DiscordChannel {
-    id: bigint;
+    id: string;
     name: string;
     type: number;
     position: number;

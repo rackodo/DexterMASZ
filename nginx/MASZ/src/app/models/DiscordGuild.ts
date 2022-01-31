@@ -1,7 +1,7 @@
 import { DiscordRole } from "./DiscordRole";
 
 export interface DiscordGuild {
-  id: bigint;
+  id: string;
   name: string;
   iconUrl: string;
   roles: DiscordRole[];

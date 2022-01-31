@@ -1,5 +1,5 @@
 export interface DiscordRole {
-  id: bigint;
+  id: string;
   name: string;
   color: number;
   position: number;

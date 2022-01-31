@@ -26,7 +26,7 @@ export class GuildUsernotesComponent implements OnInit {
   public filteredUsers!: Observable<DiscordUser[]>;
   public users: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
 
-  private guildId!: bigint;
+  private guildId!: string;
   private timeout: any;
   public loading: boolean = true;
   public searchString: string = '';

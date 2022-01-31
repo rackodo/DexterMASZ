@@ -62,7 +62,7 @@ export class ModCaseAddComponent implements OnInit {
 
   public savingCase: boolean = false;
 
-  public guildId!: bigint;
+  public guildId!: string;
   public users: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
   public templates: ContentLoading<ModCaseTemplateExpanded[]> = { loading: true, content: [] };
   public allTemplates: ModCaseTemplateExpanded[] = [];

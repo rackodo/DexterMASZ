@@ -31,7 +31,7 @@ export class GuildAddComponent implements OnInit {
   public guilds!: ContentLoading<DiscordGuild[]>;
   public searchGuilds!: string;
   public showGuilds: DiscordGuild[] = [];
-  public clientId!: bigint;
+  public clientId!: string;
 
   public selectedGuild: DiscordGuild|undefined;
   public selectedGuildDetails!: ContentLoading<DiscordGuild>;
@@ -108,7 +108,7 @@ export class GuildAddComponent implements OnInit {
     return '#' + role.color.toString(16);
   }
 
-  selectGuild(id: bigint) {
+  selectGuild(id: string) {
     this.searchGuilds = '';
     this.selectedGuild = this.guilds.content?.find(x => x.id === id) as DiscordGuild;
     this.selectedGuildDetails = { loading: true, content: undefined };

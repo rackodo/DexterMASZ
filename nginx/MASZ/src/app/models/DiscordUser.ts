@@ -1,5 +1,5 @@
 export interface DiscordUser {
-  id: bigint;
+  id: string;
   username: string;
   discriminator: string;
   avatar: string;

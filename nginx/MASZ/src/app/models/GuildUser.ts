@@ -3,6 +3,6 @@ import { DiscordUser } from "./DiscordUser";
 export interface GuildUser {
     user: DiscordUser;
     nick?: string;
-    roles?: bigint[];
+    roles?: string[];
     joined_at?: Date;
 }

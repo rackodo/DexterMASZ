@@ -2,7 +2,7 @@ import { DiscordUser } from "./DiscordUser";
 
 export interface GuildMotd {
     id: number;
-    guildId: bigint;
+    guildId: string;
     message: string;
     showMotd: boolean;
     userId: string;

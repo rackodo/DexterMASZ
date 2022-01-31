@@ -17,7 +17,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DashboardChartsComponent implements OnInit {
 
-  private guildId!: bigint;
+  private guildId!: string;
   public loading: boolean = true;
   public since: Date = new Date();
 

@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AutoModTableComponent implements OnInit {
 
-  guildId!: bigint;
+  guildId!: string;
   isAdminOrHigher!: Observable<boolean>;
   maxCount: number = 0;
   moderationEvents: AutoModEvent[] = [];

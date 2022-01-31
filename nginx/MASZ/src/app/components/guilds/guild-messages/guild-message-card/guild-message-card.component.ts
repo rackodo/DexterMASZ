@@ -20,7 +20,7 @@ import { EnumManagerService } from 'src/app/services/enum-manager.service';
 })
 export class GuildMessageCardComponent implements OnInit {
 
-  public guildId!: bigint;
+  public guildId!: string;
   public isAdminOrHigher: boolean = false;
 
   public status?: string;

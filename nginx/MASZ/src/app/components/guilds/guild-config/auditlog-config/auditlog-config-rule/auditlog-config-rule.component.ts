@@ -25,7 +25,7 @@ export class AuditlogConfigRuleComponent implements OnInit {
   @Input() guildChannels!: DiscordChannel[];
   @Input() guild!: DiscordGuild;
   @Input() initialConfigs!: Promise<GuildAuditConfig[]>;
-  public guildId!: bigint;
+  public guildId!: string;
   public enableConfig: boolean = false;
   public tryingToSaveConfig: boolean = false;
   public initStuff: boolean = true;

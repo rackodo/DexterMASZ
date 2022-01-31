@@ -2,8 +2,8 @@ import { PunishmentType } from "./PunishmentType";
 
 export interface ModCaseFilter {
     customTextFilter?: string;
-    userIds?: bigint[];
-    moderatorIds?: bigint[];
+    userIds?: string[];
+    moderatorIds?: string[];
     since?: string;
     before?: string;
     punishedUntilMin?: string;

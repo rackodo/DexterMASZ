@@ -217,10 +217,11 @@ catch (Exception ex)
 
 builder.Services.AddMemoryCache();
 
-var controller = builder.Services.AddControllers();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var controller = builder.Services.AddControllers()
+	.AddNewtonsoftJson(x => {
+		x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+		x.SerializerSettings.Converters.Add(new UlongConverter());
+	});
 
 foreach (var assembly in serviceCacher.Dependents)
 	controller.AddApplicationPart(assembly);
@@ -252,16 +253,6 @@ ConsoleCreator.AddSubHeading("Successfully Added: ", "Migrations To Databases.")
 // CONFIGURE
 
 ConsoleCreator.AddHeading("Building MASZ");
-
-if (app.Environment.IsDevelopment())
-{
-	app.UseSwagger();
-	app.UseSwaggerUI(options =>
-	{
-		options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-		options.RoutePrefix = string.Empty;
-	});
-}
 
 foreach (var startup in modules)
 {

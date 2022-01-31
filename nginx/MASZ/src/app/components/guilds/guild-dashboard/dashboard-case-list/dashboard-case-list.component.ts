@@ -14,7 +14,7 @@ export class DashboardCaseListComponent implements OnInit {
 
   @Input() title!: string;
   @Input() resource!: string;
-  private guildId!: bigint;
+  private guildId!: string;
   public cases: ModCaseTableEntry[] = [];
   public loading: boolean = true;
 

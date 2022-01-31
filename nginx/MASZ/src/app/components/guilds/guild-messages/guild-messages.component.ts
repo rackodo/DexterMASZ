@@ -19,7 +19,7 @@ import { EnumManagerService } from 'src/app/services/enum-manager.service';
 })
 export class GuildMessagesComponent implements OnInit {
 
-  public guildId!: bigint;
+  public guildId!: string;
 
   public messages: any[] = [];
   public apiPage: number = 1;

@@ -1,12 +1,12 @@
 export interface AppSettings {
-	clientId: bigint;
+	clientId: string;
 	discordBotToken: string;
 	clientSecret: string;
 	absolutePathToFileUpload: string;
 	serviceHostName: string;
 	serviceDomain: string;
 	serviceBaseUrl: string;
-	siteAdmins: bigint[];
+	siteAdmins: string[];
     embedTitle: string;
     embedContent: string;
     defaultLanguage: number;

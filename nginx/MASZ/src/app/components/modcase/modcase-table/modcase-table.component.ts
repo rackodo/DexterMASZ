@@ -30,7 +30,7 @@ export class ModCaseTableComponent implements OnInit {
   showTable: ModCaseTableEntry[] = [];
   casesTable!: ModCaseTable;
   isModOrHigher!: Observable<boolean>;
-  guildId!: bigint;
+  guildId!: string;
   @Input() uniqueIdentifier: string = "casetable";
   loading: boolean = true;
 

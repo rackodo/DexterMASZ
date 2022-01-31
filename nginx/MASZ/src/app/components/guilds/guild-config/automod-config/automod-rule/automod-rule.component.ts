@@ -30,7 +30,7 @@ export class AutoModRuleComponent implements OnInit {
   @Input() guildChannels!: DiscordChannel[];
   @Input() guild!: DiscordGuild;
   @Input() initialConfigs!: Promise<AutoModConfig[]>;
-  public guildId!: bigint;
+  public guildId!: string;
   public enableConfig: boolean = false;
   public tryingToSaveConfig: boolean = false;
   public automodActionOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };

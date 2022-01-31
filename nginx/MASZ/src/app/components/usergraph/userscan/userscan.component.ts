@@ -203,7 +203,7 @@ export class UserscanComponent implements OnInit {
     this.redraw();
   }
 
-  calculateNewUserNetwork(network: UserNetwork, userId: bigint) {
+  calculateNewUserNetwork(network: UserNetwork, userId: string) {
     let baseNode = this.addNewNode(this.newUserNode, [network?.user, userId, 50, 'basics']) as Node;
     for (let guild of network.guilds) {
       let guildNode = this.addNewNode(this.newGuildNode, [guild, guild.id, 40, `${userId}/`]) as Node;
@@ -313,7 +313,7 @@ export class UserscanComponent implements OnInit {
     return newEdge;
   }
 
-  newUserNode(user: DiscordUser, backupUserId: bigint = 0n, size: number = 30, group: string = 'otherusers'): Node {
+  newUserNode(user: DiscordUser, backupUserId: string = 0n, size: number = 30, group: string = 'otherusers'): Node {
     return {
       id: (user?.id ?? backupUserId).toString(),
       shape: 'circularImage',
@@ -326,7 +326,7 @@ export class UserscanComponent implements OnInit {
     } as Node
   }
 
-  newGuildNode(guild: DiscordGuild, guildId: bigint, size: number = 30, idPrefix: string = ''): Node {
+  newGuildNode(guild: DiscordGuild, guildId: string, size: number = 30, idPrefix: string = ''): Node {
     return {
       id: idPrefix + (guild?.id ?? guildId).toString(),
       shape: 'circularImage',

@@ -87,7 +87,7 @@ export class AutoModConfigComponent implements OnInit {
     }
   ];
 
-  public guildId!: bigint;
+  public guildId!: string;
   public guildInfo!: DiscordGuild;
   public guildChannels!: DiscordChannel[];
   public initialConfigs!: Promise<AutoModConfig[]>;

@@ -13,7 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DashboardCommentListComponent implements OnInit {
 
-  public guildId!: bigint;
+  public guildId!: string;
   public comments: ContentLoading<ModCaseCommentExpandedTable[]> = { loading: true, content: [] };
   constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, private translator: TranslateService) { }
 

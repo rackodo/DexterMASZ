@@ -1,7 +1,7 @@
 export interface GuildAuditConfig {
     id: number;
-    guildId: bigint;
+    guildId: string;
     guildAuditLogEvent: number;
-    channelId: bigint;
-    pingRoles: bigint[];
+    channelId: string;
+    pingRoles: string[];
 }

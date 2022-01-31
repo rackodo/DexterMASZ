@@ -1,9 +1,9 @@
 export interface GuildConfig {
     id: number;
-    guildId: bigint;
-    modRoles: bigint[];
-    adminRoles: bigint[];
-    mutedRoles: bigint[];
+    guildId: string;
+    modRoles: string[];
+    adminRoles: string[];
+    mutedRoles: string[];
     modNotificationDM: boolean;
     strictModPermissionCheck: boolean;
     executeWhoisOnJoin: boolean;

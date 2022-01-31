@@ -35,7 +35,7 @@ export class ModCaseViewComponent implements OnInit {
   public convertModCaseToPunishmentString = convertModCaseToPunishmentString;
   public restoringCase: boolean = false;
 
-  public guildId!: bigint;
+  public guildId!: string;
   public caseId!: string;
 
   @ViewChild("fileInput", {static: false}) fileInput!: ElementRef;
@@ -389,7 +389,7 @@ export class ModCaseViewComponent implements OnInit {
     return str.replace(/[&<>]/g, replaceTag);
   }
 
-  renderDescription(str: string, guildId: bigint): string {
+  renderDescription(str: string, guildId: string): string {
     return this.safe_tags_replace(str).replace(/#(\d+)/g, function(match: any, id: any) {
       return `<a href="/guilds/${guildId}/cases/${id}">#${id}</a>`
     });  // TODO: make this a routerLink?

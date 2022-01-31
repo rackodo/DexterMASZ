@@ -1,6 +1,6 @@
 import { ModCaseCommentExpanded } from "./ModCaseCommentExpanded";
 
 export interface ModCaseCommentExpandedTable extends ModCaseCommentExpanded {
-    guildId: bigint;
+    guildId: string;
     caseId: number;
 }

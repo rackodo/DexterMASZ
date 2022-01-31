@@ -5,18 +5,18 @@ import { PunishmentType } from "./PunishmentType";
 export interface ModCase {
     id: number;
     caseId: number;
-    guildId: bigint;
+    guildId: string;
     title: string;
     description: string;
-    userId: bigint;
+    userId: string;
     username: string;
     discriminator?: string;
     nickname?: string;
-    modId?: bigint;
+    modId?: string;
     createdAt: Date;
     occuredAt: Date;
     lastEditedAt: Date;
-    lastEditedByModId?: bigint;
+    lastEditedByModId?: string;
     labels: string[];
     others?: string;
     valid: boolean;
@@ -26,9 +26,9 @@ export interface ModCase {
     punishmentActive: boolean;
     allowComments: boolean;
     lockedAt: Date;
-    lockedByUserId: bigint;
+    lockedByUserId: string;
     markedToDeleteAt?: Date;
-    deletedByUserId?: bigint;
+    deletedByUserId?: string;
     comments: ModCaseComment[];
 }
 
