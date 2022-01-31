@@ -9,7 +9,7 @@ import { ScheduledMessageExtended } from 'src/app/models/ScheduledMessageExtende
   templateUrl: './scheduled-message-edit-dialog.component.html',
   styleUrls: ['./scheduled-message-edit-dialog.component.css']
 })
-export class ScheduledMessageExtendedEditDialogComponent implements OnInit {
+export class ScheduledMessageEditDialogComponent implements OnInit {
 
   public initRows = 1;
   public scheduledForChangedForPicker: ReplaySubject<Date> = new ReplaySubject<Date>(1);

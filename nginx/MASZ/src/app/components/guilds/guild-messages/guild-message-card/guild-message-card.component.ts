@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'src/app/components/dialogs/confirmation-dialog/confirmation-dialog.component';
-import { ScheduledMessageExtendedEditDialogComponent } from 'src/app/components/dialogs/scheduled-message-edit-dialog/scheduled-message-edit-dialog.component';
+import { ScheduledMessageEditDialogComponent } from 'src/app/components/dialogs/scheduled-message-edit-dialog/scheduled-message-edit-dialog.component';
 import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ScheduledMessageExtended } from 'src/app/models/ScheduledMessageExtended';
 import { ScheduledMessage } from 'src/app/models/ScheduledMessage';
