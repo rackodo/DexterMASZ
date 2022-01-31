@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ScheduledMessageEditDialogComponent } from './scheduled-message-edit-dialog.component';
 
-describe('ScheduledMessageExtendedEditDialogComponent', () => {
-  let component: ScheduledMessageExtendedEditDialogComponent;
-  let fixture: ComponentFixture<ScheduledMessageExtendedEditDialogComponent>;
+describe('ScheduledMessageEditDialogComponent', () => {
+  let component: ScheduledMessageEditDialogComponent;
+  let fixture: ComponentFixture<ScheduledMessageEditDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,7 +14,7 @@ describe('ScheduledMessageExtendedEditDialogComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScheduledMessageExtendedEditDialogComponent);
+    fixture = TestBed.createComponent(ScheduledMessageEditDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

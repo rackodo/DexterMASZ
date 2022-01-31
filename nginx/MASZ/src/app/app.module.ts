@@ -191,7 +191,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppsettingsComponent,
     GuildMessagesComponent,
     GuildMessageCardComponent,
-    ScheduledMessageExtendedEditDialogComponent
+    ScheduledMessageEditDialogComponent
   ],
   imports: [
     CommonModule,

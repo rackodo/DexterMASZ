@@ -54,7 +54,7 @@ export class GuildMessageCardComponent implements OnInit {
       name: this.message.scheduledMessage.name,
       channelId: this.message.scheduledMessage.channelId
     } as ScheduledMessage;
-    const editDialogRef = this.dialog.open(ScheduledMessageExtendedEditDialogComponent, {
+    const editDialogRef = this.dialog.open(ScheduledMessageEditDialogComponent, {
       data: messageDto,
       minWidth: '800px'
     });
