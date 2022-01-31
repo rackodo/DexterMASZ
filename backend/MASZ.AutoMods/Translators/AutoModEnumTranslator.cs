@@ -108,7 +108,7 @@ public class AutoModEnumTranslator : Translator
 				Language.It => "Troppi incorporamenti utilizzati",
 				_ => "Too many embeds used"
 			},
-			AutoModType.TooManyAutoModerations => PreferredLanguage switch
+			AutoModType.TooManyAutoMods => PreferredLanguage switch
 			{
 				Language.De => "Zu viele automatische Punishmentsen",
 				Language.At => "Zu vü automatische Modarationen",

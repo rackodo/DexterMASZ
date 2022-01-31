@@ -76,7 +76,7 @@ export class ModCaseAddComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
+    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
 
     this.userFormGroup = this._formBuilder.group({
       user: ['', Validators.required]

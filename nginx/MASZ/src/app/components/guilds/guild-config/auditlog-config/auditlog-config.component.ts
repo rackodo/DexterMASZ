@@ -83,7 +83,7 @@ export class AuditlogConfigComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.guildId = BigInt(params.get('guildid'));
+      this.guildId = params.get('guildid') as string;
       this.reload();
     });
   }

@@ -21,7 +21,7 @@ export class DashboardCaseListComponent implements OnInit {
   constructor(private route: ActivatedRoute, private api: ApiService) { }
 
   ngOnInit(): void {
-    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
+    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
     this.reload();
   }
 

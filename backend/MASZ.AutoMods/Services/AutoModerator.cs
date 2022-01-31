@@ -144,91 +144,91 @@ public class AutoModerator : Event
 		);
 	}
 
-	private async Task<bool> CheckAutoMod(AutoModType autoModerationType, IMessage message,
+	private async Task<bool> CheckAutoMod(AutoModType autoModType, IMessage message,
 		Func<IMessage, AutoModConfig, DiscordSocketClient, Task<bool>> predicate, IServiceScope scope)
 	{
 		var guild = ((ITextChannel)message.Channel).Guild;
 
-		var autoModerationConfig = (await scope.ServiceProvider.GetRequiredService<AutoModConfigRepository>()
+		var autoModConfig = (await scope.ServiceProvider.GetRequiredService<AutoModConfigRepository>()
 				.GetConfigsByGuild(guild.Id))
-			.FirstOrDefault(x => x.AutoModType == autoModerationType);
+			.FirstOrDefault(x => x.AutoModType == autoModType);
 
-		if (autoModerationConfig == null) return false;
+		if (autoModConfig == null) return false;
 
-		if (!await predicate(message, autoModerationConfig, _client)) return false;
+		if (!await predicate(message, autoModConfig, _client)) return false;
 
-		if (await IsProtectedByFilter(message, autoModerationConfig, scope)) return false;
+		if (await IsProtectedByFilter(message, autoModConfig, scope)) return false;
 
 		var channel = (ITextChannel)message.Channel;
 
 		_logger.LogInformation(
-			$"U: {message.Author.Id} | C: {channel.Id} | G: {channel.Guild.Id} triggered {autoModerationConfig.AutoModType}.");
+			$"U: {message.Author.Id} | C: {channel.Id} | G: {channel.Guild.Id} triggered {autoModConfig.AutoModType}.");
 
-		await ExecutePunishment(message, autoModerationConfig, scope);
+		await ExecutePunishment(message, autoModConfig, scope);
 
-		if (autoModerationConfig.AutoModType != AutoModType.TooManyAutoModerations)
-			await CheckAutoMod(AutoModType.TooManyAutoModerations, message, CheckMultipleEvents, scope);
+		if (autoModConfig.AutoModType != AutoModType.TooManyAutoMods)
+			await CheckAutoMod(AutoModType.TooManyAutoMods, message, CheckMultipleEvents, scope);
 
 		return true;
 
 	}
 
-	private async Task<bool> CheckAutoMod(AutoModType autoModerationType, IMessage message,
+	private async Task<bool> CheckAutoMod(AutoModType autoModType, IMessage message,
 		Func<IMessage, AutoModConfig, DiscordSocketClient, bool> predicate, IServiceScope scope)
 	{
 		var guild = ((ITextChannel)message.Channel).Guild;
 
-		var autoModerationConfig = (await scope.ServiceProvider.GetRequiredService<AutoModConfigRepository>()
+		var autoModConfig = (await scope.ServiceProvider.GetRequiredService<AutoModConfigRepository>()
 				.GetConfigsByGuild(guild.Id))
-			.FirstOrDefault(x => x.AutoModType == autoModerationType);
+			.FirstOrDefault(x => x.AutoModType == autoModType);
 
-		if (autoModerationConfig == null) return false;
+		if (autoModConfig == null) return false;
 
-		if (!predicate(message, autoModerationConfig, _client)) return false;
+		if (!predicate(message, autoModConfig, _client)) return false;
 
-		if (await IsProtectedByFilter(message, autoModerationConfig, scope)) return false;
+		if (await IsProtectedByFilter(message, autoModConfig, scope)) return false;
 
 		var channel = (ITextChannel)message.Channel;
 
 		_logger.LogInformation(
-			$"U: {message.Author.Id} | C: {channel.Id} | G: {channel.Guild.Id} triggered {autoModerationConfig.AutoModType}.");
+			$"U: {message.Author.Id} | C: {channel.Id} | G: {channel.Guild.Id} triggered {autoModConfig.AutoModType}.");
 
-		await ExecutePunishment(message, autoModerationConfig, scope);
+		await ExecutePunishment(message, autoModConfig, scope);
 
-		if (autoModerationConfig.AutoModType != AutoModType.TooManyAutoModerations)
-			await CheckAutoMod(AutoModType.TooManyAutoModerations, message, CheckMultipleEvents, scope);
+		if (autoModConfig.AutoModType != AutoModType.TooManyAutoMods)
+			await CheckAutoMod(AutoModType.TooManyAutoMods, message, CheckMultipleEvents, scope);
 
 		return true;
 
 	}
 
-	private async Task CheckAutoMod(AutoModType autoModerationType, IMessage message,
+	private async Task CheckAutoMod(AutoModType autoModType, IMessage message,
 		Func<IMessage, AutoModConfig, IServiceScope, Task<bool>> predicate, IServiceScope scope)
 	{
 		var guild = ((ITextChannel)message.Channel).Guild;
 
-		var autoModerationConfig = (await scope.ServiceProvider.GetRequiredService<AutoModConfigRepository>()
+		var autoModConfig = (await scope.ServiceProvider.GetRequiredService<AutoModConfigRepository>()
 				.GetConfigsByGuild(guild.Id))
-			.FirstOrDefault(x => x.AutoModType == autoModerationType);
+			.FirstOrDefault(x => x.AutoModType == autoModType);
 
-		if (autoModerationConfig == null) return;
+		if (autoModConfig == null) return;
 
-		if (!await predicate(message, autoModerationConfig, scope)) return;
+		if (!await predicate(message, autoModConfig, scope)) return;
 
-		if (await IsProtectedByFilter(message, autoModerationConfig, scope)) return;
+		if (await IsProtectedByFilter(message, autoModConfig, scope)) return;
 
 		var channel = (ITextChannel)message.Channel;
 
 		_logger.LogInformation(
-			$"U: {message.Author.Id} | C: {channel.Id} | G: {channel.Guild.Id} triggered {autoModerationConfig.AutoModType}.");
+			$"U: {message.Author.Id} | C: {channel.Id} | G: {channel.Guild.Id} triggered {autoModConfig.AutoModType}.");
 
-		await ExecutePunishment(message, autoModerationConfig, scope);
+		await ExecutePunishment(message, autoModConfig, scope);
 
-		if (autoModerationConfig.AutoModType != AutoModType.TooManyAutoModerations)
-			await CheckAutoMod(AutoModType.TooManyAutoModerations, message, CheckMultipleEvents, scope);
+		if (autoModConfig.AutoModType != AutoModType.TooManyAutoMods)
+			await CheckAutoMod(AutoModType.TooManyAutoMods, message, CheckMultipleEvents, scope);
 	}
 
-	private static async Task<bool> IsProtectedByFilter(IMessage message, AutoModConfig autoModerationConfig,
+	private static async Task<bool> IsProtectedByFilter(IMessage message, AutoModConfig autoModConfig,
 		IServiceScope scope)
 	{
 		var config = await scope.ServiceProvider.GetRequiredService<SettingsRepository>().GetAppSettings();
@@ -251,7 +251,7 @@ public class AutoModerator : Event
 
 		return user.RoleIds.Any(x => guildConfig.ModRoles.Contains(x) ||
 		                             guildConfig.AdminRoles.Contains(x) ||
-		                             autoModerationConfig.IgnoreRoles.Contains(x)) || autoModerationConfig.IgnoreChannels.Contains(((ITextChannel)message.Channel).Id);
+		                             autoModConfig.IgnoreRoles.Contains(x)) || autoModConfig.IgnoreChannels.Contains(((ITextChannel)message.Channel).Id);
 	}
 
 	private static async Task<bool> CheckMultipleEvents(IMessage message, AutoModConfig config, IServiceScope scope)
@@ -268,13 +268,13 @@ public class AutoModerator : Event
 		return existing.Count > config.Limit.Value;
 	}
 
-	private async Task ExecutePunishment(IMessage message, AutoModConfig autoModerationConfig, IServiceScope scope)
+	private async Task ExecutePunishment(IMessage message, AutoModConfig autoModConfig, IServiceScope scope)
 	{
 		AutoModEvent modEvent = new()
 		{
 			GuildId = ((ITextChannel)message.Channel).Guild.Id,
-			AutoModType = autoModerationConfig.AutoModType,
-			AutoModAction = autoModerationConfig.AutoModAction,
+			AutoModType = autoModConfig.AutoModType,
+			AutoModAction = autoModConfig.AutoModAction,
 			UserId = message.Author.Id,
 			MessageId = message.Id,
 			MessageContent = message.Content

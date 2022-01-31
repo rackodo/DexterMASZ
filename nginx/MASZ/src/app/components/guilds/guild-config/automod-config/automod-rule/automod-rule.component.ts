@@ -80,7 +80,7 @@ export class AutoModRuleComponent implements OnInit {
       }
     });
 
-    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
+    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
     this.initialConfigs.then((data: AutoModConfig[]) => {
       // if type in initial loaded configs
       if (data.filter(x => x.autoModerationType == this.definition.type).length) {

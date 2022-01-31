@@ -23,7 +23,7 @@ export class DashboardQuicksearchComponent implements OnInit {
   constructor(private api: ApiService, private route: ActivatedRoute, private toastr: ToastrService, private translator: TranslateService) { }
 
   ngOnInit(): void {
-    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
+    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
   }
 
   onSearch(event: any) {

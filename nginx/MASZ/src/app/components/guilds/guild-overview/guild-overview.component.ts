@@ -34,7 +34,7 @@ export class GuildOverviewComponent implements OnInit {
     this.route.paramMap.subscribe((data) => {
       this.modSub?.unsubscribe();
       this.adminSub?.unsubscribe();
-      this.initialize(BigInt(data.get('guildid')));
+      this.initialize(data.get('guildid') as string);
     });
   }
 

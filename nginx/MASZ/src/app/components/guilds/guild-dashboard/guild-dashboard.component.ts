@@ -16,7 +16,7 @@ export class GuildDashboardComponent implements OnInit {
   constructor(private toastr: ToastrService, private route: ActivatedRoute, private api: ApiService, private auth: AuthService) { }
 
   ngOnInit(): void {
-    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
+    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
     this.auth.isAdminInGuild(this.guildId).subscribe((data) => {
       this.isAdminOrHigher = data;
     });

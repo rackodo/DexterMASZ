@@ -110,7 +110,7 @@ export class UserscanComponent implements OnInit {
       let userIdRegex = new RegExp('[0-9]{16,20}', 'i');
       if (userIdRegex.test(searchString)) {
         this.loadDataForUserId(searchString).subscribe((data: UserNetwork) => {
-          this.calculateNewUserNetwork(data, BigInt(this.search?.trim()));
+          this.calculateNewUserNetwork(data, this.search?.trim());
           this.loading = false;
         }, error => {
           console.error(error);
@@ -191,7 +191,7 @@ export class UserscanComponent implements OnInit {
       if (invite.userInvite.guildId !== guild.id) continue;
       let inviteNode = this.addNewNode(this.newInviteNode, [invite.userInvite]) as Node;
       this.addNewEdge(baseNode, inviteNode, '', false, 'no');
-      if (invite?.userInvite?.inviteIssuerId !== 0n)
+      if (invite?.userInvite?.inviteIssuerId !== "0")
       {
         let inviterUserNode = this.addNewNode(this.newUserNode, [invite?.invitedBy, invite?.userInvite?.inviteIssuerId, 50]) as Node;
         this.addNewEdge(inviteNode, inviterUserNode, `${this.translator.instant('Scanning.CreatedAt')}: ${this.timezoneService.convertNearlyAnyDateToLocaleString(invite.userInvite.inviteCreatedAt)}`, false, 'from');
@@ -212,7 +212,7 @@ export class UserscanComponent implements OnInit {
         if (invite.userInvite.guildId !== guild.id) continue;
         let inviteNode = this.addNewNode(this.newInviteNode, [invite.userInvite]) as Node;
         this.addNewEdge(guildNode, inviteNode, `${this.translator.instant('Scanning.JoinedAt')}: ${this.timezoneService.convertNearlyAnyDateToLocaleString(invite.userInvite.joinedAt)}`, true, 'from');
-        if (invite?.userInvite?.inviteIssuerId !== 0n)
+        if (invite?.userInvite?.inviteIssuerId !== "0")
         {
           let invitedUserNode = this.addNewNode(this.newUserNode, [invite?.invitedBy, invite?.userInvite?.inviteIssuerId]) as Node;
           this.addNewEdge(inviteNode, invitedUserNode, `${this.translator.instant('Scanning.CreatedAt')}: ${this.timezoneService.convertNearlyAnyDateToLocaleString(invite.userInvite.inviteCreatedAt)}`, false, 'from');
@@ -313,7 +313,7 @@ export class UserscanComponent implements OnInit {
     return newEdge;
   }
 
-  newUserNode(user: DiscordUser, backupUserId: string = 0n, size: number = 30, group: string = 'otherusers'): Node {
+  newUserNode(user: DiscordUser, backupUserId: string = "0", size: number = 30, group: string = 'otherusers'): Node {
     return {
       id: (user?.id ?? backupUserId).toString(),
       shape: 'circularImage',

@@ -25,7 +25,7 @@ export class AutoModTableComponent implements OnInit {
   constructor(private api: ApiService, public router: Router, private auth: AuthService, private route: ActivatedRoute, private translator: TranslateService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
+    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
     this.isAdminOrHigher = this.auth.isAdminInGuild(this.guildId);
     this.api.getSimpleData(`/guilds/${this.guildId}/automods`).subscribe((data: AutoModEventInfo) => {
       this.maxCount = data.count;

@@ -15,7 +15,13 @@ public class UlongConverter : JsonConverter
 
 	public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 	{
-		return ulong.Parse(new((existingValue as string).Where(char.IsDigit).ToArray()));
+		var deserialized = serializer.Deserialize(reader);
+
+		if (deserialized is string deStr)
+			if (ulong.TryParse(deStr, out var value))
+				return value;
+
+		return deserialized;
 	}
 
 	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

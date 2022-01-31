@@ -3,7 +3,7 @@ export interface GuildStats {
     activeCount: number;
     activeBanCount: number;
     activeMuteCount: number;
-    moderationCount: number;
+    autoModCount: number;
     trackedInvites: number;
     userMaps: number;
     userNotes: number;

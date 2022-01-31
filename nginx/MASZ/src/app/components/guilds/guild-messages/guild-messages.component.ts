@@ -35,7 +35,7 @@ export class GuildMessagesComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, private toastr: ToastrService, private api: ApiService, private route: ActivatedRoute, private translator: TranslateService) { }
 
   ngOnInit(): void {
-    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
+    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
 
     this.newMessageForm = this._formBuilder.group({
       name: ['', [ Validators.required ]],

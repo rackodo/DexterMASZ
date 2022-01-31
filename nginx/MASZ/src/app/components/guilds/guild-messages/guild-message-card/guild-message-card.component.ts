@@ -32,7 +32,7 @@ export class GuildMessageCardComponent implements OnInit {
   constructor(private auth: AuthService, private enumManager: EnumManagerService, private toastr: ToastrService, private route: ActivatedRoute, private api: ApiService, private dialog: MatDialog, private translator: TranslateService) { }
 
   ngOnInit(): void {
-    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
+    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
 
     this.auth.isAdminInGuild(this.guildId).subscribe(data => {
       this.isAdminOrHigher = data;

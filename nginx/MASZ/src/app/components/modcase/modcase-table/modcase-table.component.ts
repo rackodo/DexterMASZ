@@ -69,7 +69,7 @@ export class ModCaseTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((data) => {
-      this.guildId = BigInt(data.get('guildid'));
+      this.guildId = data.get('guildid') as string;
       this.isModOrHigher = this.auth.isModInGuild(this.guildId);
       this.reload();
     });
