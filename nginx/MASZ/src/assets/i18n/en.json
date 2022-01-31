@@ -566,7 +566,7 @@
             "Failed": "Failed to activate case."
         },
         "PunishmentExpired": "Punishment is expired.",
-        "CaseInactive": "ModCase is inactive.",
+        "CaseInactive": "Modcase is inactive.",
         "CreatedAt": "Created at",
         "EditedAt": "Edited at",
         "LastEditModerator": "Last edit by moderator",
