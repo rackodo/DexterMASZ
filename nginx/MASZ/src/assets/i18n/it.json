@@ -224,7 +224,7 @@
         "GuildCreated": "Gilda creata",
         "GuildUpdated": "Gilda aggiornata"
     },
-    "GuildAuditLogConfig": {
+    "GuildAuditConfig": {
         "TargetChannel": "Canale di destinazione",
         "ComingSoon": "Prossimamente",
         "PingRoles": "Ping ruoli",
@@ -554,7 +554,7 @@
         "ID": "ID",
         "Moderator": "Moderatore",
         "Punishment": "Punizione",
-        "Guild": "Gilda",
+        "DiscordGuild": "Gilda",
         "PunishedUntil": "Punito fino a:",
         "PunishedForever": "Punito per sempre",
         "Deactivated": {
@@ -587,7 +587,7 @@
         "FailedToLoad": {
             "Punishments": "Impossibile caricare le punizioni disponibili.",
             "Files": "Impossibile caricare i file.",
-            "Guild": "Impossibile caricare le informazioni sulla gilda.",
+            "DiscordGuild": "Impossibile caricare le informazioni sulla gilda.",
             "Case": "Impossibile caricare il caso."
         },
         "DeleteCase": {

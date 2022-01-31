@@ -1,4 +1,4 @@
-export interface IDashboardTabs {
+export interface DashboardTabs {
     component: string;
     icon: string;
 }

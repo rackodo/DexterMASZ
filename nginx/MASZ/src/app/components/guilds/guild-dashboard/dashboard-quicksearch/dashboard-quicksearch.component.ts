@@ -13,7 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DashboardQuicksearchComponent implements OnInit {
 
-  public guildId!: string;
+  public guildId!: bigint;
   public showOverlay: boolean = false;
   public search!: string;
   public searchResults?: QuickSearchResult;
@@ -23,7 +23,7 @@ export class DashboardQuicksearchComponent implements OnInit {
   constructor(private api: ApiService, private route: ActivatedRoute, private toastr: ToastrService, private translator: TranslateService) { }
 
   ngOnInit(): void {
-    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
+    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
   }
 
   onSearch(event: any) {

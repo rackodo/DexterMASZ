@@ -1,7 +1,7 @@
 import { DiscordUser } from "./DiscordUser";
 import { UserNote } from "./UserNote";
 
-export interface UserNoteView {
+export interface UserNoteExpanded {
     userNote: UserNote;
     user?: DiscordUser;
     moderator?: DiscordUser;

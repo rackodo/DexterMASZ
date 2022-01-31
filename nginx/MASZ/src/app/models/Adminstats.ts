@@ -1,9 +1,9 @@
-import { IServiceStatus } from "./IServiceStatus";
+import { ServiceStatus } from "./ServiceStatus";
 
 export interface AdminStats {
-    botStatus: IServiceStatus;
-    dbStatus: IServiceStatus;
-    cacheStatus: IServiceStatus;
+    botStatus: ServiceStatus;
+    dbStatus: ServiceStatus;
+    cacheStatus: ServiceStatus;
     loginsInLast15Minutes: string[];
     defaultLanguage: number;
     trackedInvites: number;

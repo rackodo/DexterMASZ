@@ -1,8 +1,8 @@
-export interface CaseTemplate {
+export interface ModCaseTemplate {
     id: number;
-    userId: string;
+    userId: bigint;
     templateName: string;
-    createdForGuildId: string;
+    createdForGuildId: bigint;
     viewPermission: number;
     createdAt: Date;
     caseTitle: string;

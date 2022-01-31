@@ -1,5 +1,5 @@
-export interface IApplicationInfo {
-  id: string;
+export interface DiscordApplication {
+  id: bigint;
   name: string;
   description: string;
   iconUrl: string;

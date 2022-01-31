@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { ContentLoading } from 'src/app/models/ContentLoading';
-import { ICommentListTableViewEntry } from 'src/app/models/ICommentListTableViewEntry';
+import { ModCaseCommentExpandedTable } from 'src/app/models/ModCaseCommentExpandedTable';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -13,12 +13,12 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DashboardCommentListComponent implements OnInit {
 
-  public guildId!: string;
-  public comments: ContentLoading<ICommentListTableViewEntry[]> = { loading: true, content: [] };
+  public guildId!: bigint;
+  public comments: ContentLoading<ModCaseCommentExpandedTable[]> = { loading: true, content: [] };
   constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, private translator: TranslateService) { }
 
   ngOnInit(): void {
-    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
+    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
     this.reload();
   }
 

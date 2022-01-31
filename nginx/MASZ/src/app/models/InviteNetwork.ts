@@ -1,7 +1,7 @@
-import { Guild } from "./Guild";
-import { UserInviteView } from "./UserInviteView";
+import { DiscordGuild } from "./DiscordGuild";
+import { UserInviteExpanded } from "./UserInviteExpanded";
 
 export interface InviteNetwork {
-    guild?: Guild;
-    invites: UserInviteView[];
+    guild?: DiscordGuild;
+    invites: UserInviteExpanded[];
 }

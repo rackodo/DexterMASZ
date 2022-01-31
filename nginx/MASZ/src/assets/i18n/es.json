@@ -224,7 +224,7 @@
         "GuildCreated": "Gremio creado",
         "GuildUpdated": "Gremio actualizado"
     },
-    "GuildAuditLogConfig": {
+    "GuildAuditConfig": {
         "TargetChannel": "Canal objetivo",
         "ComingSoon": "Próximamente, en breve, pronto",
         "PingRoles": "Roles de ping",
@@ -554,7 +554,7 @@
         "ID": "IDENTIFICACIÓN",
         "Moderator": "Moderador",
         "Punishment": "Castigo",
-        "Guild": "Gremio",
+        "DiscordGuild": "Gremio",
         "PunishedUntil": "Castigado hasta:",
         "PunishedForever": "Castigado para siempre",
         "Deactivated": {
@@ -587,7 +587,7 @@
         "FailedToLoad": {
             "Punishments": "No se pudieron cargar los castigos disponibles.",
             "Files": "No se pudieron cargar los archivos.",
-            "Guild": "No se pudo cargar la información del gremio.",
+            "DiscordGuild": "No se pudo cargar la información del gremio.",
             "Case": "No se pudo cargar el caso."
         },
         "DeleteCase": {

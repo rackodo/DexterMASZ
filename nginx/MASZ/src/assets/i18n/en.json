@@ -49,7 +49,7 @@
         "Banned": "Banned from guilds"
     },
     "MASZ": {
-        "GuildDeleted": "Guild deleted.",
+        "GuildDeleted": "DiscordGuild deleted.",
         "FailedToDeleteGuild": "Failed to delete guild.",
         "PleaseLoginFirst": "Please login first."
     },
@@ -58,7 +58,7 @@
         "Infrastrcture": {
             "Title": "Infrastructure",
             "DefaultLanguage": {
-                "Explained": "MASZ will use this language as the default language whenever possible. However, possibly only an english version is available for certain texts. Guild specific settings overwrite this setting.",
+                "Explained": "MASZ will use this language as the default language whenever possible. However, possibly only an english version is available for certain texts. DiscordGuild specific settings overwrite this setting.",
                 "Field": "Default language"
             },
             "AuditLogWebhookUrl": {
@@ -221,10 +221,10 @@
         "FailedInviteWindow": "Failed to open invite window.",
         "FailedToRegisterGuild": "Failed to register guild.",
         "FailedToUpdateGuild": "Failed to update guild.",
-        "GuildCreated": "Guild created",
-        "GuildUpdated": "Guild updated"
+        "GuildCreated": "DiscordGuild created",
+        "GuildUpdated": "DiscordGuild updated"
     },
-    "GuildAuditLogConfig": {
+    "GuildAuditConfig": {
         "TargetChannel": "Target channel",
         "ComingSoon": "Coming soon",
         "PingRoles": "Ping roles",
@@ -554,7 +554,7 @@
         "ID": "ID",
         "Moderator": "Moderator",
         "Punishment": "Punishment",
-        "Guild": "Guild",
+        "DiscordGuild": "DiscordGuild",
         "PunishedUntil": "Punished until:",
         "PunishedForever": "Punished forever",
         "Deactivated": {
@@ -587,7 +587,7 @@
         "FailedToLoad": {
             "Punishments": "Failed to load available punishments.",
             "Files": "Failed to load files.",
-            "Guild": "Failed to load guild info.",
+            "DiscordGuild": "Failed to load guild info.",
             "Case": "Failed to load case."
         },
         "DeleteCase": {

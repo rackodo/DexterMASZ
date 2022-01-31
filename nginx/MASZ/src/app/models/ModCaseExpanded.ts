@@ -1,16 +1,16 @@
-import { CommentListViewEntry } from "./CommentListViewEntry";
+import { ModCaseCommentExpanded } from "./ModCaseCommentExpanded";
 import { DiscordUser } from "./DiscordUser";
 import { ModCase } from "./ModCase";
-import { UserNoteView } from "./UserNoteView";
+import { UserNoteExpanded } from "./UserNoteExpanded";
 
-export interface CaseView {
+export interface ModCaseExpanded {
     modCase: ModCase;
     moderator?: DiscordUser;
     lastModerator?: DiscordUser;
     suspect?: DiscordUser;
     lockedBy?: DiscordUser;
     deletedBy?: DiscordUser;
-    comments: CommentListViewEntry[];
+    comments: ModCaseCommentExpanded[];
     punishmentProgress?: number;
-    userNote?: UserNoteView;
+    userNote?: UserNoteExpanded;
 }

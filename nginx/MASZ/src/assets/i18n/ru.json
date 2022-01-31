@@ -224,7 +224,7 @@
         "GuildCreated": "Гильдия создана",
         "GuildUpdated": "Гильдия обновлена"
     },
-    "GuildAuditLogConfig": {
+    "GuildAuditConfig": {
         "TargetChannel": "Целевой канал",
         "ComingSoon": "Скоро будет",
         "PingRoles": "Роли пинга",
@@ -554,7 +554,7 @@
         "ID": "Я БЫ",
         "Moderator": "Модератор",
         "Punishment": "Наказание",
-        "Guild": "Гильдия",
+        "DiscordGuild": "Гильдия",
         "PunishedUntil": "Наказан до:",
         "PunishedForever": "Наказан навсегда",
         "Deactivated": {
@@ -587,7 +587,7 @@
         "FailedToLoad": {
             "Punishments": "Не удалось загрузить доступные наказания.",
             "Files": "Не удалось загрузить файлы.",
-            "Guild": "Не удалось загрузить информацию о гильдии.",
+            "DiscordGuild": "Не удалось загрузить информацию о гильдии.",
             "Case": "Не удалось загрузить дело."
         },
         "DeleteCase": {

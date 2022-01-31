@@ -1,22 +1,22 @@
 import { ApiEnum } from "./ApiEnum";
-import { CaseComment } from "./CaseComment";
+import { ModCaseComment } from "./ModCaseComment";
 import { PunishmentType } from "./PunishmentType";
 
 export interface ModCase {
     id: number;
     caseId: number;
-    guildId: string;
+    guildId: bigint;
     title: string;
     description: string;
-    userId: string;
+    userId: bigint;
     username: string;
     discriminator?: string;
     nickname?: string;
-    modId?: string;
+    modId?: bigint;
     createdAt: Date;
     occuredAt: Date;
     lastEditedAt: Date;
-    lastEditedByModId?: string;
+    lastEditedByModId?: bigint;
     labels: string[];
     others?: string;
     valid: boolean;
@@ -26,10 +26,10 @@ export interface ModCase {
     punishmentActive: boolean;
     allowComments: boolean;
     lockedAt: Date;
-    lockedByUserId: string;
+    lockedByUserId: bigint;
     markedToDeleteAt?: Date;
-    deletedByUserId?: string;
-    comments: CaseComment[];
+    deletedByUserId?: bigint;
+    comments: ModCaseComment[];
 }
 
 export function convertModCaseToPunishmentString(modcase?: ModCase, punishments?: ApiEnum[]): string {

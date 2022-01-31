@@ -1,5 +1,5 @@
-export interface GuildChannel {
-    id: string;
+export interface DiscordChannel {
+    id: bigint;
     name: string;
     type: number;
     position: number;

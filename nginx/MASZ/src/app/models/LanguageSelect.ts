@@ -1,4 +1,4 @@
-export interface ILanguageSelect {
+export interface LanguageSelect {
     language: string;
     displayName: string;
     apiValue: number;

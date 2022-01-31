@@ -108,7 +108,7 @@
                     <div class="infobox bg-g-orange">
                         <div class="infobox-body d-flex flex-row flex-wrap">
                             <div class="flex-grow-1 d-flex flex-column">
-                                <span class="mat-h2 mb-0 font-weight-bold">{{ 'ModCaseView.Guild' | translate }}</span>
+                                <span class="mat-h2 mb-0 font-weight-bold">{{ 'ModCaseView.DiscordGuild' | translate }}</span>
                                 <ng-container *ngIf="this.modCase.loading">
                                     <div class="waiting-for-text mb-2" style="width: 10rem"></div>
                                     <div class="waiting-for-text mb-2" style="width: 8rem"></div>
@@ -419,13 +419,13 @@
                         <button mat-raised-button color="accent"
                             class="flex-shrink-1 mb-2"
                             [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined"
-                            (click)="lockCaseComments()"
+                            (click)="lockModCaseComments()"
                             *ngIf="this.isModOrHigher && this.modCase?.content?.modCase?.allowComments">
                             {{ 'ModCaseView.LockComments' | translate }}
                         </button>
                         <button mat-raised-button color="accent"
                             class="flex-shrink-1 mb-2"
-                            (click)="unlockCaseComments()"
+                            (click)="unlockModCaseComments()"
                             *ngIf="this.isModOrHigher && ! this.modCase?.content?.modCase?.allowComments"
                             [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined">
                             {{ 'ModCaseView.UnlockComments' | translate }}

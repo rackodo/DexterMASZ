@@ -265,7 +265,7 @@ public class ModCaseRepository : Repository,
 		}
 	}
 
-	public async Task<List<LabelUsage>> GetLabelUsages(ulong guildId)
+	public async Task<List<ModCaseLabel>> GetLabelUsages(ulong guildId)
 	{
 		var labels = await _punishmentDatabase.GetAllLabels(guildId);
 
@@ -277,9 +277,9 @@ public class ModCaseRepository : Repository,
 			else
 				countMap[label] = 1;
 
-		List<LabelUsage> result = new();
+		List<ModCaseLabel> result = new();
 		foreach (var label in countMap.Keys)
-			result.Add(new LabelUsage()
+			result.Add(new ModCaseLabel()
 			{
 				Label = label,
 				Count = countMap[label]

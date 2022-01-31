@@ -1,11 +1,11 @@
 import { DiscordUser } from "./DiscordUser";
-import { Guild } from "./Guild";
+import { DiscordGuild } from "./DiscordGuild";
 
 export interface AppUser {
-  userGuilds: Guild[];
-  bannedGuilds: Guild[];
-  modGuilds: Guild[];
-  adminGuilds: Guild[];
+  userGuilds: DiscordGuild[];
+  bannedGuilds: DiscordGuild[];
+  modGuilds: DiscordGuild[];
+  adminGuilds: DiscordGuild[];
   discordUser: DiscordUser;
   isAdmin: boolean;
 }

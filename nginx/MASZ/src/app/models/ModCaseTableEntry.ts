@@ -1,7 +1,7 @@
 import { DiscordUser } from "./DiscordUser";
 import { ModCase } from "./ModCase";
 
-export interface IModCaseTableEntry {
+export interface ModCaseTableEntry {
     modCase: ModCase;
     moderator?: DiscordUser;
     suspect?: DiscordUser;

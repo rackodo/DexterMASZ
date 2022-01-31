@@ -1,6 +1,6 @@
-import { Guild } from "./Guild";
+import { DiscordGuild } from "./DiscordGuild";
 
 export interface GuildDeleteDialogData {
-    guild: Guild;
+    guild: DiscordGuild;
     deleteData: boolean;
 }

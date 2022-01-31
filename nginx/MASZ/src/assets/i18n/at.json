@@ -224,7 +224,7 @@
         "GuildCreated": "Güde registriat",
         "GuildUpdated": "Güde aktualisiat"
     },
-    "GuildAuditLogConfig": {
+    "GuildAuditConfig": {
         "TargetChannel": "Zielkanal",
         "ComingSoon": "Kimmt boid",
         "PingRoles": "Rolle pingan",
@@ -554,7 +554,7 @@
         "ID": "ID",
         "Moderator": "Modarator",
         "Punishment": "Bestrofung",
-        "Guild": "Güde",
+        "DiscordGuild": "Güde",
         "PunishedUntil": "Bestroft bis:",
         "PunishedForever": "Bestroft fia imma",
         "Deactivated": {
@@ -587,7 +587,7 @@
         "FailedToLoad": {
             "Punishments": "Verfügbare Bestrofungen konntn ned glodn wean.",
             "Files": "Datein konntn ned glodn wean.",
-            "Guild": "Güdninformationen konntn ned glodn wean.",
+            "DiscordGuild": "Güdninformationen konntn ned glodn wean.",
             "Case": "Vorfoi konnte ned glodn wean."
         },
         "DeleteCase": {

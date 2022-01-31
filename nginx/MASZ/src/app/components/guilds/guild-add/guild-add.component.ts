@@ -7,9 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ApiEnum } from 'src/app/models/ApiEnum';
 import { ContentLoading } from 'src/app/models/ContentLoading';
-import { Guild } from 'src/app/models/Guild';
-import { GuildRole } from 'src/app/models/GuildRole';
-import { IApplicationInfo } from 'src/app/models/IApplicationInfo';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
+import { DiscordRole } from 'src/app/models/DiscordRole';
+import { DiscordApplication } from 'src/app/models/DiscordApplication';
 import { ApiService } from 'src/app/services/api.service';
 import { ApplicationInfoService } from 'src/app/services/application-info.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -28,13 +28,13 @@ export class GuildAddComponent implements OnInit {
   public configGroup!: FormGroup;
   public queryGroup!: FormGroup;
 
-  public guilds!: ContentLoading<Guild[]>;
+  public guilds!: ContentLoading<DiscordGuild[]>;
   public searchGuilds!: string;
-  public showGuilds: Guild[] = [];
-  public clientId!: string;
+  public showGuilds: DiscordGuild[] = [];
+  public clientId!: bigint;
 
-  public selectedGuild: Guild|undefined;
-  public selectedGuildDetails!: ContentLoading<Guild>;
+  public selectedGuild: DiscordGuild|undefined;
+  public selectedGuildDetails!: ContentLoading<DiscordGuild>;
 
   public allLanguages: ApiEnum[] = [];
 
@@ -63,7 +63,7 @@ export class GuildAddComponent implements OnInit {
       importExistingBans: [''],
     });
 
-    this.applicationInfoService.currentApplicationInfo.subscribe((data: IApplicationInfo) => {
+    this.applicationInfoService.currentApplicationInfo.subscribe((data: DiscordApplication) => {
       this.clientId = data.id;
     });
 
@@ -94,9 +94,9 @@ export class GuildAddComponent implements OnInit {
 
   onSearch() {
     if (this.searchGuilds.trim() === '') {
-      this.showGuilds = this.guilds.content as Guild[];
+      this.showGuilds = this.guilds.content as DiscordGuild[];
     }
-    this.showGuilds = this.guilds.content?.filter(x => x.name.toLowerCase().includes(this.searchGuilds.toLowerCase()) || x.id.includes(this.searchGuilds)) as Guild[];
+    this.showGuilds = this.guilds.content?.filter(x => x.name.toLowerCase().includes(this.searchGuilds.toLowerCase()) || x.id.toString().includes(this.searchGuilds)) as DiscordGuild[];
   }
 
   resetSearch() {
@@ -104,15 +104,15 @@ export class GuildAddComponent implements OnInit {
     this.onSearch();
   }
 
-  generateRoleColor(role: GuildRole): string {
+  generateRoleColor(role: DiscordRole): string {
     return '#' + role.color.toString(16);
   }
 
-  selectGuild(id: string) {
+  selectGuild(id: bigint) {
     this.searchGuilds = '';
-    this.selectedGuild = this.guilds.content?.find(x => x.id === id) as Guild;
+    this.selectedGuild = this.guilds.content?.find(x => x.id === id) as DiscordGuild;
     this.selectedGuildDetails = { loading: true, content: undefined };
-    this.api.getSimpleData(`/discord/guilds/${id}`).subscribe((data: Guild) => {
+    this.api.getSimpleData(`/discord/guilds/${id}`).subscribe((data: DiscordGuild) => {
       data.roles = data.roles.sort((a, b) => (a.position < b.position) ? 1 : -1);
       this.selectedGuildDetails = { loading: false, content: data };
     }, error => {

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Guild } from 'src/app/models/Guild';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { GuildDeleteDialogData } from 'src/app/models/GuildDeleteDialogData';
 
 @Component({

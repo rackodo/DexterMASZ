@@ -58,7 +58,7 @@ import { ModCaseTableComponent } from './components/modcase/modcase-table/modcas
 import { AutoModTableComponent } from './components/automod/automod-table/automod-table.component';
 import { DashboardMotdComponent } from './components/guilds/guild-dashboard/dashboard-motd/dashboard-motd.component';
 import { DashboardQuicksearchComponent } from './components/guilds/guild-dashboard/dashboard-quicksearch/dashboard-quicksearch.component';
-import { DashboardGuildinfoComponent } from './components/guilds/guild-dashboard/dashboard-guildinfo/dashboard-guildinfo.component';
+import { DashboardGuildInfoComponent } from './components/guilds/guild-dashboard/dashboard-guildinfo/dashboard-guildinfo.component';
 import { DashboardGuildStatsComponent } from './components/guilds/guild-dashboard/dashboard-guild-stats/dashboard-guild-stats.component';
 import { DashboardCaseListComponent } from './components/guilds/guild-dashboard/dashboard-case-list/dashboard-case-list.component';
 import { DashboardCommentListComponent } from './components/guilds/guild-dashboard/dashboard-comment-list/dashboard-comment-list.component';
@@ -115,7 +115,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppsettingsComponent } from './components/api/appsettings/appsettings.component';
 import { GuildMessagesComponent } from './components/guilds/guild-messages/guild-messages.component';
 import { GuildMessageCardComponent } from './components/guilds/guild-messages/guild-message-card/guild-message-card.component';
-import { ScheduledMessageEditDialogComponent } from './components/dialogs/scheduled-message-edit-dialog/scheduled-message-edit-dialog.component';
+import { ScheduledMessageExtendedEditDialogComponent } from './components/dialogs/scheduled-message-edit-dialog/scheduled-message-edit-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -145,7 +145,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AutoModTableComponent,
     DashboardMotdComponent,
     DashboardQuicksearchComponent,
-    DashboardGuildinfoComponent,
+    DashboardGuildInfoComponent,
     DashboardGuildStatsComponent,
     DashboardCaseListComponent,
     DashboardCommentListComponent,
@@ -191,7 +191,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppsettingsComponent,
     GuildMessagesComponent,
     GuildMessageCardComponent,
-    ScheduledMessageEditDialogComponent
+    ScheduledMessageExtendedEditDialogComponent
   ],
   imports: [
     CommonModule,

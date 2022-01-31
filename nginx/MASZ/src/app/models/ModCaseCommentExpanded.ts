@@ -1,7 +1,7 @@
 import { ModCaseComment } from "./ModCaseComment";
 import { DiscordUser } from "./DiscordUser";
 
-export interface CommentListViewEntry {
+export interface ModCaseCommentExpanded {
     comment: ModCaseComment;
     commentor?: DiscordUser;
 }

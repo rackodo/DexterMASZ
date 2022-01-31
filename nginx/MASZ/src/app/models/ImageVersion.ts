@@ -1,4 +1,4 @@
-export interface IImageVersion {
+export interface ImageVersion {
     id: number;
     imageName: string;
     createdAt: Date;

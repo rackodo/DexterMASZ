@@ -1,4 +1,4 @@
-export interface IServiceStatus {
+export interface ServiceStatus {
     online: boolean;
     lastDisconnect?: Date;
     responseTime: number;

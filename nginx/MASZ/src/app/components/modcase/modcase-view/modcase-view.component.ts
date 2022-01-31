@@ -9,13 +9,13 @@ import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ApiEnum } from 'src/app/models/ApiEnum';
 import { AppUser } from 'src/app/models/AppUser';
-import { CaseComment } from 'src/app/models/CaseComment';
+import { ModCaseComment } from 'src/app/models/ModCaseComment';
 import { CaseDeleteDialogData } from 'src/app/models/CaseDeleteDialogData';
-import { CaseView } from 'src/app/models/CaseView';
+import { ModCaseExpanded } from 'src/app/models/ModCaseExpanded';
 import { CommentEditDialog } from 'src/app/models/CommentEditDialog';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { FileInfo } from 'src/app/models/FileInfo';
-import { Guild } from 'src/app/models/Guild';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { convertModCaseToPunishmentString, ModCase } from 'src/app/models/ModCase';
 import { PunishmentType } from 'src/app/models/PunishmentType';
 import { ApiService } from 'src/app/services/api.service';
@@ -35,7 +35,7 @@ export class ModCaseViewComponent implements OnInit {
   public convertModCaseToPunishmentString = convertModCaseToPunishmentString;
   public restoringCase: boolean = false;
 
-  public guildId!: string;
+  public guildId!: bigint;
   public caseId!: string;
 
   @ViewChild("fileInput", {static: false}) fileInput!: ElementRef;
@@ -51,8 +51,8 @@ export class ModCaseViewComponent implements OnInit {
   private filesSubject$ = new ReplaySubject<FileInfo>(1);
   public files: ContentLoading<Observable<FileInfo>> = { loading: true, content: this.filesSubject$.asObservable() };
   public currentUser: ContentLoading<AppUser> = { loading: true, content: undefined };
-  public currentGuild: ContentLoading<Guild> = { loading: true, content: undefined };
-  public modCase: ContentLoading<CaseView> = { loading: true, content: undefined };
+  public currentGuild: ContentLoading<DiscordGuild> = { loading: true, content: undefined };
+  public modCase: ContentLoading<ModCaseExpanded> = { loading: true, content: undefined };
   public punishments: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
   public punishment: string = "Unknown";
 
@@ -69,7 +69,7 @@ export class ModCaseViewComponent implements OnInit {
   constructor(private route: ActivatedRoute, private auth: AuthService, private toastr: ToastrService, private api: ApiService, public router: Router, private _formBuilder: FormBuilder, private dialog: MatDialog, private enumManager: EnumManagerService, private translator: TranslateService) { }
 
   ngOnInit(): void {
-    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
+    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
     this.caseId = this.route.snapshot.paramMap.get('caseid') as string;
 
     // reload files from case creation
@@ -147,14 +147,14 @@ export class ModCaseViewComponent implements OnInit {
       this.currentGuild.loading = false;
     }, () => {
       this.currentGuild.loading = false;
-      this.toastr.error(this.translator.instant('ModCaseView.FailedToLoad.Guild'));
+      this.toastr.error(this.translator.instant('ModCaseView.FailedToLoad.DiscordGuild'));
     });
   }
 
   private reloadCase() {
     this.modCase = { loading: true, content: undefined };
     this.punishmentDescriptionTranslationKey = "";
-    this.api.getSimpleData(`/guilds/${this.guildId}/cases/${this.caseId}/view`).subscribe((data: CaseView) => {
+    this.api.getSimpleData(`/guilds/${this.guildId}/cases/${this.caseId}/view`).subscribe((data: ModCaseExpanded) => {
       this.modCase.content = data;
       this.renderedDescription = this.renderDescription(data.modCase.description, this.guildId)
       this.punishment = convertModCaseToPunishmentString(this.modCase.content?.modCase, this.punishments?.content);
@@ -326,7 +326,7 @@ export class ModCaseViewComponent implements OnInit {
     });
   }
 
-  updateComment(comment: CaseComment) {
+  updateComment(comment: ModCaseComment) {
     const commentDialog: CommentEditDialog = {
       message: comment.message,
     };
@@ -365,7 +365,7 @@ export class ModCaseViewComponent implements OnInit {
     });
   }
 
-  lockCaseComments() {
+  lockModCaseComments() {
     this.api.postSimpleData(`/guilds/${this.guildId}/cases/${this.caseId}/lock`, null).subscribe(() => {
       this.toastr.success(this.translator.instant('ModCaseView.CommentLock.Locked'));
       this.reloadCase();
@@ -375,7 +375,7 @@ export class ModCaseViewComponent implements OnInit {
     });
   }
 
-  unlockCaseComments() {
+  unlockModCaseComments() {
     this.api.deleteData(`/guilds/${this.guildId}/cases/${this.caseId}/lock`).subscribe(() => {
       this.toastr.success(this.translator.instant('ModCaseView.CommentUnlock.Unlocked'));
       this.reloadCase();
@@ -389,7 +389,7 @@ export class ModCaseViewComponent implements OnInit {
     return str.replace(/[&<>]/g, replaceTag);
   }
 
-  renderDescription(str: string, guildId: string): string {
+  renderDescription(str: string, guildId: bigint): string {
     return this.safe_tags_replace(str).replace(/#(\d+)/g, function(match: any, id: any) {
       return `<a href="/guilds/${guildId}/cases/${id}">#${id}</a>`
     });  // TODO: make this a routerLink?

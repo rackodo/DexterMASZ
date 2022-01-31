@@ -10,9 +10,9 @@ import { AutoModConfig } from 'src/app/models/AutoModConfig';
 import { AutoModRuleDefinition } from 'src/app/models/AutoModRuleDefinitions';
 import { ChannelNotificationBehavior } from 'src/app/models/ChannelNotificationBehavior';
 import { ContentLoading } from 'src/app/models/ContentLoading';
-import { Guild } from 'src/app/models/Guild';
-import { GuildChannel } from 'src/app/models/GuildChannel';
-import { GuildRole } from 'src/app/models/GuildRole';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
+import { DiscordChannel } from 'src/app/models/DiscordChannel';
+import { DiscordRole } from 'src/app/models/DiscordRole';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 
@@ -27,10 +27,10 @@ export class AutoModRuleComponent implements OnInit {
   filterForm!: FormGroup;
   actionForm!: FormGroup;
   @Input() definition!: AutoModRuleDefinition;
-  @Input() guildChannels!: GuildChannel[];
-  @Input() guild!: Guild;
+  @Input() guildChannels!: DiscordChannel[];
+  @Input() guild!: DiscordGuild;
   @Input() initialConfigs!: Promise<AutoModConfig[]>;
-  public guildId!: string;
+  public guildId!: bigint;
   public enableConfig: boolean = false;
   public tryingToSaveConfig: boolean = false;
   public automodActionOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
@@ -80,7 +80,7 @@ export class AutoModRuleComponent implements OnInit {
       }
     });
 
-    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
+    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
     this.initialConfigs.then((data: AutoModConfig[]) => {
       // if type in initial loaded configs
       if (data.filter(x => x.autoModerationType == this.definition.type).length) {
@@ -116,7 +116,7 @@ export class AutoModRuleComponent implements OnInit {
     });
   }
 
-  generateRoleColor(role: GuildRole): string {
+  generateRoleColor(role: DiscordRole): string {
     return '#' + role.color.toString(16);
   }
 

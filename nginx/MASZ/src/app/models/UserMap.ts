@@ -1,9 +1,9 @@
 export interface UserMap {
     id: number;
-    guildId: string;
-    userA: string;
-    userB: string;
-    creatorUserId: string;
+    guildId: bigint;
+    userA: bigint;
+    userB: bigint;
+    creatorUserId: bigint;
     createdAt: Date;
     reason: string;
 }

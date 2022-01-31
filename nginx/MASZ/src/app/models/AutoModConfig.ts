@@ -5,13 +5,13 @@ import { PunishmentType } from "./PunishmentType";
 
 export interface AutoModConfig {
     id: number;
-    guildId: string;
+    guildId: bigint;
     autoModerationType: AutoModType;
     autoModerationAction: AutoModAction;
     punishmentType: PunishmentType;
     punishmentDurationMinutes: number;
-    ignoreChannels: string[];
-    ignoreRoles: string[];
+    ignoreChannels: bigint[];
+    ignoreRoles: bigint[];
     timeLimitMinutes?: number;
     limit?: number;
     customWordFilter?: string;

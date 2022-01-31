@@ -1,10 +1,10 @@
 export interface UserInvite {
     id: number;
-    guildId: string;
-    targetChannelId?: string;
-    joinedUserId: string;
+    guildId: bigint;
+    targetChannelId?: bigint;
+    joinedUserId: bigint;
     usedInvite: string;
-    inviteIssuerId: string;
+    inviteIssuerId: bigint;
     joinedAt: Date;
     inviteCreatedAt: Date;
 }

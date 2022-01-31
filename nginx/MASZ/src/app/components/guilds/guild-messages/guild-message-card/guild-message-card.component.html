@@ -8,15 +8,15 @@
                     class="rounded-circle z-depth-0 big-image"
                     alt="avatar image"
                     height="96"
-                    title="Suspect {{ message.creatorId }}"
+                    title="Suspect {{ message.scheduledMessage.creatorId }}"
                     onerror="this.src='/assets/img/default_profile.png';"
                 />
-                <img *ngIf="message.creatorId !== message.lastEditedById"
+                <img *ngIf="message.scheduledMessage.creatorId !== message.scheduledMessage.lastEditedById"
                     src="{{ message.lastEdited?.imageUrl }}"
                     class="rounded-circle z-depth-0 small-image"
                     alt="avatar image"
                     height="40"
-                    title="Moderator {{ message.lastEditedById }}"
+                    title="Moderator {{ message.scheduledMessage.lastEditedById }}"
                     onerror="this.style.display='none';"
                 />
             </div>
@@ -24,39 +24,39 @@
                 <!-- Title -->
                 <div>
                     <span class="badge mat-h4 mb-0 mr-1" style="padding: .1rem .4rem"
-                    [class.badge-primary]="message.status === 0"
-                    [class.badge-success]="message.status === 1"
-                    [class.badge-danger]="message.status === 2">
-                        {{ status }}{{ message.status === 2 ? ': ' : '' }}{{ failureReason }}
+                    [class.badge-primary]="message.scheduledMessage.status === 0"
+                    [class.badge-success]="message.scheduledMessage.status === 1"
+                    [class.badge-danger]="message.scheduledMessage.status === 2">
+                        {{ status }}{{ message.scheduledMessage.status === 2 ? ': ' : '' }}{{ failureReason }}
                     </span>
 
                     <span *ngIf="message.channel" class="mat-h2 mb-0">
                         #{{ message.channel?.name }}:
                     </span>
 
-                    <span title="{{ message.name }}" class="mat-h2 mb-0">
-                        {{ message.name.length > 35 ? message.name.slice(0, 35) + ' [...]' : message.name }}
+                    <span title="{{ message.scheduledMessage.name }}" class="mat-h2 mb-0">
+                        {{ message.scheduledMessage.name?.length ?? 0 > 35 ? message.scheduledMessage.name?.slice(0, 35) + ' [...]' : message.scheduledMessage.name }}
                     </span>
                 </div>
 
-                <app-date-display [date]="message.scheduledFor" [showTime]="true"></app-date-display>
+                <app-date-display [date]="message.scheduledMessage.scheduledFor" [showTime]="true"></app-date-display>
 
                 <!-- Text -->
-                <span title="{{ message.content }}" style="white-space: pre-wrap; word-wrap: anywhere;">{{ message.content }}</span>
+                <span title="{{ message.scheduledMessage.content }}" style="white-space: pre-wrap; word-wrap: anywhere;">{{ message.scheduledMessage.content }}</span>
             </div>
             <div class="flex-grow-1"></div>
             <div class="d-flex flex-column align-content-center flex-shrink-0">
                 <ng-container>
                     <span class="text-black-50" style="text-align: right;">
-                        <app-date-display [date]="message.createdAt" [prefixKey]="'ScheduleMessageCard.Created'"></app-date-display>
+                        <app-date-display [date]="message.scheduledMessage.createdAt" [prefixKey]="'ScheduleMessageCard.Created'"></app-date-display>
                     </span>
-                    <span class="text-black-50" style="text-align: right;" *ngIf="message.createdAt !== message.lastEditedAt">
-                        <app-date-display [date]="message.lastEditedAt" [prefixKey]="'ScheduleMessageCard.Edited'"></app-date-display>
+                    <span class="text-black-50" style="text-align: right;" *ngIf="message.scheduledMessage.createdAt !== message.scheduledMessage.lastEditedAt">
+                        <app-date-display [date]="message.scheduledMessage.lastEditedAt" [prefixKey]="'ScheduleMessageCard.Edited'"></app-date-display>
                     </span>
                 </ng-container>
                 <div class="flex-grow-1"></div>
                 <!-- Button -->
-                <button mat-raised-button color="accent" class="mb-1" (click)="editMessage()" *ngIf="message.status === 0">
+                <button mat-raised-button color="accent" class="mb-1" (click)="editMessage()" *ngIf="message.scheduledMessage.status === 0">
                     {{ 'ScheduleMessageCard.Edit' | translate }}
                 </button>
                 <button mat-raised-button color="accent" (click)="deleteMessage()" *ngIf="isAdminOrHigher">

@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AutoModTableComponent implements OnInit {
 
-  guildId!: string;
+  guildId!: bigint;
   isAdminOrHigher!: Observable<boolean>;
   maxCount: number = 0;
   moderationEvents: AutoModEvent[] = [];
@@ -25,7 +25,7 @@ export class AutoModTableComponent implements OnInit {
   constructor(private api: ApiService, public router: Router, private auth: AuthService, private route: ActivatedRoute, private translator: TranslateService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
+    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
     this.isAdminOrHigher = this.auth.isAdminInGuild(this.guildId);
     this.api.getSimpleData(`/guilds/${this.guildId}/automods`).subscribe((data: AutoModEventInfo) => {
       this.maxCount = data.count;

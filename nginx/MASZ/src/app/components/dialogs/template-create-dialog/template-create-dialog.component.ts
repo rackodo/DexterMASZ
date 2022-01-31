@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ApiEnum } from 'src/app/models/ApiEnum';
 import { ContentLoading } from 'src/app/models/ContentLoading';
-import { TemplateSettings, TemplateViewPermissionOptions } from 'src/app/models/TemplateSettings';
+import { ModCaseTemplateSettings, ModCaseTemplateExpandedPermissionOptions } from 'src/app/models/ModCaseTemplateSettings';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { EnumManagerService } from 'src/app/services/enum-manager.service';
 })
 export class TemplateCreateDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public settings: TemplateSettings, private enumManager: EnumManagerService, private toastr: ToastrService, private translator: TranslateService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public settings: ModCaseTemplateSettings, private enumManager: EnumManagerService, private toastr: ToastrService, private translator: TranslateService) { }
 
   templateViewPermissionOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
 

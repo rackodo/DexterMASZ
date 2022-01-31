@@ -1,4 +1,4 @@
 export interface UserNoteDto{
-    userid: string;
+    userid: bigint;
     description: string;
 }

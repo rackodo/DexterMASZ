@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'src/app/components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { UsernoteEditDialogComponent } from 'src/app/components/dialogs/usernote-edit-dialog/usernote-edit-dialog.component';
 import { UserNoteDto } from 'src/app/models/UserNoteDto';
-import { UserNoteView } from 'src/app/models/UserNoteView';
+import { UserNoteExpanded } from 'src/app/models/UserNoteExpanded';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class UsernoteCardComponent implements OnInit {
 
   @Output() updateEvent = new EventEmitter<number>();
   @Output() deleteEvent = new EventEmitter<number>();
-  @Input() userNote!: UserNoteView;
+  @Input() userNote!: UserNoteExpanded;
   @Input() showDeleteButton: boolean = true;
   constructor(private dialog: MatDialog, private api: ApiService, private toastr: ToastrService, private translator: TranslateService) { }
 

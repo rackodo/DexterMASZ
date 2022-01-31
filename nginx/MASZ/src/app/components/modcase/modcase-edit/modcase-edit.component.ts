@@ -17,7 +17,7 @@ import { PunishmentType } from 'src/app/models/PunishmentType';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { ICaseLabel } from 'src/app/models/ICaseLabel';
+import { ModCaseLabel } from 'src/app/models/ModCaseLabel';
 import { go, highlight } from 'fuzzysort';
 
 
@@ -41,15 +41,15 @@ export class ModCaseEditComponent implements OnInit {
   public caseLabels: string[] = [];
   public labelInputForm: FormControl = new FormControl();
   @ViewChild('labelInput') labelInput?: ElementRef<HTMLInputElement>;
-  public filteredLabels: ReplaySubject<ICaseLabel[]> = new ReplaySubject(1);
-  public remoteLabels: ICaseLabel[] = [];
+  public filteredLabels: ReplaySubject<ModCaseLabel[]> = new ReplaySubject(1);
+  public remoteLabels: ModCaseLabel[] = [];
 
   public savingCase: boolean = false;
 
   public userForm = new FormControl();
   public filteredUsers!: Observable<DiscordUser[]>;
 
-  public guildId!: string;
+  public guildId!: bigint;
   public caseId!: string;
   public users: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
   public oldCase: ContentLoading<ModCase> = { loading: true, content: undefined };
@@ -63,7 +63,7 @@ export class ModCaseEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
+    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
     this.caseId = this.route.snapshot.paramMap.get('caseid') as string;
 
     this.userFormGroup = this._formBuilder.group({
@@ -141,7 +141,7 @@ export class ModCaseEditComponent implements OnInit {
     });
   }
 
-  private _filterLabel(value: string): ICaseLabel[] {
+  private _filterLabel(value: string): ModCaseLabel[] {
     const localeLowerCaseCopy = this.caseLabels.slice().map(x => x.toLowerCase());
     if (! value)
     {
@@ -153,7 +153,7 @@ export class ModCaseEditComponent implements OnInit {
       label: highlight(r),
       cleanValue: r.obj.label,
       count: r.obj.count
-    }as ICaseLabel)).sort((a, b) => b.count - a.count).slice(0, 5);
+    }as ModCaseLabel)).sort((a, b) => b.count - a.count).slice(0, 5);
   }
 
   private _filter(value: string): DiscordUser[] {
@@ -164,7 +164,7 @@ export class ModCaseEditComponent implements OnInit {
 
     return this.users.content?.filter(option =>
        ((option.username + "#" + option.discriminator).toLowerCase().includes(filterValue) ||
-       option.id.includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
+       option.id.toString().includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
   }
 
   public applyOldCase(modCase: ModCase) {

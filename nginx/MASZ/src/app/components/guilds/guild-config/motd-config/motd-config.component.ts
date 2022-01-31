@@ -14,12 +14,12 @@ import { ApiService } from 'src/app/services/api.service';
 export class MotdConfigComponent implements OnInit {
 
   timeout: any = null;
-  private guildId!: string;
+  private guildId!: bigint;
   public motd: ContentLoading<GuildMotdView> = { loading: true, content: undefined };
   constructor(private route: ActivatedRoute, private api: ApiService, private toastr: ToastrService, private translator: TranslateService) { }
 
   ngOnInit(): void {
-    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
+    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
     this.reload();
   }
 

@@ -1,6 +1,6 @@
 import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { Guild } from 'src/app/models/Guild';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
 
 @Component({
   selector: 'app-guild-icon',
@@ -9,7 +9,7 @@ import { Guild } from 'src/app/models/Guild';
 })
 export class GuildIconComponent {
 
-  @Input() public guild?: Guild = undefined;
+  @Input() public guild?: DiscordGuild = undefined;
   @Input() public width: string = '24px';
   @Input() public height: string = '24px';
   @Input() public showBorder: boolean = true;

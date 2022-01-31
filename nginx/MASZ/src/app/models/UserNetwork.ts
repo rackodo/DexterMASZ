@@ -1,18 +1,18 @@
 import { AutoModEvent } from "./AutoModEvent";
 import { DiscordUser } from "./DiscordUser";
-import { Guild } from "./Guild";
+import { DiscordGuild } from "./DiscordGuild";
 import { ModCase } from "./ModCase";
-import { UserInviteView } from "./UserInviteView";
-import { UserMapView } from "./UserMapView";
+import { UserInviteExpanded } from "./UserInviteExpanded";
+import { UserMapExpanded } from "./UserMapExpanded";
 import { UserNote } from "./UserNote";
 
 export interface UserNetwork {
-    guilds: Guild[];
+    guilds: DiscordGuild[];
     user : DiscordUser;
-    invited: UserInviteView[];
-    invitedBy: UserInviteView[];
+    invited: UserInviteExpanded[];
+    invitedBy: UserInviteExpanded[];
     modCases: ModCase[];
     modEvents: AutoModEvent[];
-    userMaps: UserMapView[];
+    userMaps: UserMapExpanded[];
     userNotes: UserNote[];
 }

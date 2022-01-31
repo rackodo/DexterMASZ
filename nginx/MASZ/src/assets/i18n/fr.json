@@ -41,15 +41,15 @@
         "Scanning": "Balayage"
     },
     "Guilds": {
-        "Guilds": "Guildes",
+        "Guilds": "DiscordGuildes",
         "All": "Toutes les guildes",
-        "Admin": "Guildes d'administration",
-        "Moderator": "Guildes de modérateurs",
-        "User": "Guildes",
+        "Admin": "DiscordGuildes d'administration",
+        "Moderator": "DiscordGuildes de modérateurs",
+        "User": "DiscordGuildes",
         "Banned": "Banni des guildes"
     },
     "MASZ": {
-        "GuildDeleted": "Guilde supprimée.",
+        "GuildDeleted": "DiscordGuilde supprimée.",
         "FailedToDeleteGuild": "Échec de la suppression de la guilde.",
         "PleaseLoginFirst": "S'il vous plait Connectez-vous d'abord."
     },
@@ -221,10 +221,10 @@
         "FailedInviteWindow": "Échec de l'ouverture de la fenêtre d'invitation.",
         "FailedToRegisterGuild": "Échec de l'enregistrement de la guilde.",
         "FailedToUpdateGuild": "Échec de la mise à jour de la guilde.",
-        "GuildCreated": "Guilde créée",
-        "GuildUpdated": "Guilde mise à jour"
+        "GuildCreated": "DiscordGuilde créée",
+        "GuildUpdated": "DiscordGuilde mise à jour"
     },
-    "GuildAuditLogConfig": {
+    "GuildAuditConfig": {
         "TargetChannel": "Canal cible",
         "ComingSoon": "Bientôt disponible",
         "PingRoles": "Rôles de ping",
@@ -554,7 +554,7 @@
         "ID": "identifiant",
         "Moderator": "Modérateur",
         "Punishment": "Châtiment",
-        "Guild": "Guilde",
+        "DiscordGuild": "DiscordGuilde",
         "PunishedUntil": "Puni jusqu'à :",
         "PunishedForever": "Puni à jamais",
         "Deactivated": {
@@ -587,7 +587,7 @@
         "FailedToLoad": {
             "Punishments": "Échec du chargement des punitions disponibles.",
             "Files": "Échec du chargement des fichiers.",
-            "Guild": "Échec du chargement des informations de guilde.",
+            "DiscordGuild": "Échec du chargement des informations de guilde.",
             "Case": "Échec du chargement du dossier."
         },
         "DeleteCase": {

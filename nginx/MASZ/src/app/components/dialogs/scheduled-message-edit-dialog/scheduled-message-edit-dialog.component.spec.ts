@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScheduledMessageEditDialogComponent } from './scheduled-message-edit-dialog.component';
+import { ScheduledMessageExtendedEditDialogComponent } from './scheduled-message-edit-dialog.component';
 
-describe('ScheduledMessageEditDialogComponent', () => {
-  let component: ScheduledMessageEditDialogComponent;
-  let fixture: ComponentFixture<ScheduledMessageEditDialogComponent>;
+describe('ScheduledMessageExtendedEditDialogComponent', () => {
+  let component: ScheduledMessageExtendedEditDialogComponent;
+  let fixture: ComponentFixture<ScheduledMessageExtendedEditDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScheduledMessageEditDialogComponent ]
+      declarations: [ ScheduledMessageExtendedEditDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScheduledMessageEditDialogComponent);
+    fixture = TestBed.createComponent(ScheduledMessageExtendedEditDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

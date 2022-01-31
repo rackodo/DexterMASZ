@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { IDashboardTabs } from 'src/app/models/IDashboardTabs';
+import { DashboardTabs } from 'src/app/models/DashboardTabs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class GuildOverviewComponent implements OnInit {
 
   private modSub: any;
   private adminSub: any;
-  public tabs: IDashboardTabs[] = [
+  public tabs: DashboardTabs[] = [
     {
       "icon": "list",
       "component": "cases"
@@ -34,11 +34,11 @@ export class GuildOverviewComponent implements OnInit {
     this.route.paramMap.subscribe((data) => {
       this.modSub?.unsubscribe();
       this.adminSub?.unsubscribe();
-      this.initialize(data.get('guildid') as string);
+      this.initialize(BigInt(data.get('guildid')));
     });
   }
 
-  initialize(guildId: string) {
+  initialize(guildId: bigint) {
     this.tabs = [
       {
         "icon": "list",

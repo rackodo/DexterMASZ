@@ -1,12 +1,12 @@
-export interface IAppSettings {
-	clientId: number;
+export interface AppSettings {
+	clientId: bigint;
 	discordBotToken: string;
 	clientSecret: string;
 	absolutePathToFileUpload: string;
 	serviceHostName: string;
 	serviceDomain: string;
 	serviceBaseUrl: string;
-	siteAdmins: number[];
+	siteAdmins: bigint[];
     embedTitle: string;
     embedContent: string;
     defaultLanguage: number;

@@ -8,7 +8,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordUser } from 'src/app/models/DiscordUser';
-import { UserMapView } from 'src/app/models/UserMapView';
+import { UserMapExpanded } from 'src/app/models/UserMapExpanded';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -23,17 +23,17 @@ export class GuildUsermappingComponent implements OnInit {
   public filteredUsersB!: Observable<DiscordUser[]>;
   public users: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
 
-  private guildId!: string;
+  private guildId!: bigint;
   private timeout: any;
   public loading: boolean = true;
   public searchString: string = '';
-  private $showUserMaps: ReplaySubject<UserMapView[]> = new ReplaySubject<UserMapView[]>(1);
-  public showUserMaps: Observable<UserMapView[]> = this.$showUserMaps.asObservable();
-  public allUserMaps: UserMapView[] = [];
+  private $showUserMaps: ReplaySubject<UserMapExpanded[]> = new ReplaySubject<UserMapExpanded[]>(1);
+  public showUserMaps: Observable<UserMapExpanded[]> = this.$showUserMaps.asObservable();
+  public allUserMaps: UserMapExpanded[] = [];
   constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, private _formBuilder: FormBuilder, private translator: TranslateService) { }
 
   ngOnInit(): void {
-    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
+    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
 
     this.resetForm();
 
@@ -70,7 +70,7 @@ export class GuildUsermappingComponent implements OnInit {
 
     return this.users.content?.filter(option =>
        ((option.username + "#" + option.discriminator).toLowerCase().includes(filterValue) ||
-       option.id.includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
+       option.id.toString().includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
   }
 
   private reloadData() {
@@ -79,7 +79,7 @@ export class GuildUsermappingComponent implements OnInit {
     this.allUserMaps = [];
     this.users = { loading: true, content: [] };
 
-    this.api.getSimpleData(`/guilds/${this.guildId}/usermapview`).subscribe((data: UserMapView[]) => {
+    this.api.getSimpleData(`/guilds/${this.guildId}/usermapview`).subscribe((data: UserMapExpanded[]) => {
       this.allUserMaps = data;
       this.loading = false;
       this.search();
@@ -114,9 +114,9 @@ export class GuildUsermappingComponent implements OnInit {
     let tempSearch = this.searchString.toLowerCase();
     if (tempSearch.trim()) {
       this.$showUserMaps.next(this.allUserMaps.filter(
-        x => x.userMap.creatorUserId.includes(tempSearch) ||
-            x.userMap.userA.includes(tempSearch) ||
-            x.userMap.userB.includes(tempSearch) ||
+        x => x.userMap.creatorUserId.toString().includes(tempSearch) ||
+            x.userMap.userA.toString().includes(tempSearch) ||
+            x.userMap.userB.toString().includes(tempSearch) ||
             x.userMap.reason.toLowerCase().includes(tempSearch) ||
             (x.moderator?.username + "#" + x.moderator?.discriminator).toLowerCase().includes(tempSearch) ||
             (x.userA?.username + "#" + x.userA?.discriminator).toLowerCase().includes(tempSearch) ||

@@ -11,12 +11,12 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class GuildDashboardComponent implements OnInit {
 
-  public guildId!: string;
+  public guildId!: bigint;
   public isAdminOrHigher: boolean = false;
   constructor(private toastr: ToastrService, private route: ActivatedRoute, private api: ApiService, private auth: AuthService) { }
 
   ngOnInit(): void {
-    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
+    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
     this.auth.isAdminInGuild(this.guildId).subscribe((data) => {
       this.isAdminOrHigher = data;
     });

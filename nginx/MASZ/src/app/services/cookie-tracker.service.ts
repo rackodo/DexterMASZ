@@ -2,21 +2,21 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie';
 import { ReplaySubject } from 'rxjs';
 import { DEFAULT_LANGUAGE, DEFAULT_TIMEZONE } from '../config/config';
-import { ILocalAppSettings } from '../models/ILocalAppSettings';
+import { LocalAppSettings } from '../models/LocalAppSettings';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CookieTrackerService {
 
-  settings: ReplaySubject<ILocalAppSettings> = new ReplaySubject<ILocalAppSettings>(1);
+  settings: ReplaySubject<LocalAppSettings> = new ReplaySubject<LocalAppSettings>(1);
 
   constructor(private cookieService: CookieService) {
     this.updateObservable();
   }
 
   private updateObservable() {
-    let settings: ILocalAppSettings = {
+    let settings: LocalAppSettings = {
       language: this.cookieService.hasKey('language') ? this.cookieService.get('language') : DEFAULT_LANGUAGE,
       timezone: this.cookieService.hasKey('timezone') ? this.cookieService.get('timezone') : DEFAULT_TIMEZONE,
     }
@@ -30,7 +30,7 @@ export class CookieTrackerService {
     this.updateObservable();
   }
 
-  updateSettings(newSettings: ILocalAppSettings) {
+  updateSettings(newSettings: LocalAppSettings) {
     let currentDate = new Date();
     let futureDate  = new Date(currentDate.getFullYear() + 10, currentDate.getMonth(), currentDate.getDay());
     this.cookieService.put('language', newSettings.language, { httpOnly: false, expires: futureDate, secure: false, sameSite: 'lax' });

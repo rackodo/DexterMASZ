@@ -17,7 +17,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DashboardChartsComponent implements OnInit {
 
-  private guildId!: string;
+  private guildId!: bigint;
   public loading: boolean = true;
   public since: Date = new Date();
 
@@ -33,7 +33,7 @@ export class DashboardChartsComponent implements OnInit {
   constructor(private api: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
+    this.guildId = BigInt(this.route.snapshot.paramMap.get('guildid'));
     this.since.setDate(this.since.getDate() - 365); // - 1year
     this.reload();
   }

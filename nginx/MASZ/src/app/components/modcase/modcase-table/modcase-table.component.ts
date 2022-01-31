@@ -10,9 +10,9 @@ import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ApiEnum } from 'src/app/models/ApiEnum';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordUser } from 'src/app/models/DiscordUser';
-import { IModCaseFilter } from 'src/app/models/IModCaseFilter';
-import { IModCaseTable } from 'src/app/models/IModCaseTable';
-import { IModCaseTableEntry } from 'src/app/models/IModCaseTableEntry';
+import { ModCaseFilter } from 'src/app/models/ModCaseFilter';
+import { ModCaseTable } from 'src/app/models/ModCaseTable';
+import { ModCaseTableEntry } from 'src/app/models/ModCaseTableEntry';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
@@ -27,10 +27,10 @@ export class ModCaseTableComponent implements OnInit {
   @Input() apiUrl: string = 'modcasetable'
   currentPage: number = 0;
 
-  showTable: IModCaseTableEntry[] = [];
-  casesTable!: IModCaseTable;
+  showTable: ModCaseTableEntry[] = [];
+  casesTable!: ModCaseTable;
   isModOrHigher!: Observable<boolean>;
-  guildId!: string;
+  guildId!: bigint;
   @Input() uniqueIdentifier: string = "casetable";
   loading: boolean = true;
 
@@ -51,7 +51,7 @@ export class ModCaseTableComponent implements OnInit {
   public punishmentActiveCtrl: FormControl = new FormControl();
 
   public userFilterPredicate = (user: DiscordUser, search: string) =>
-      `${user.username.toLowerCase()}#${user.discriminator}`.indexOf(search.toLowerCase()) > -1 || user.id == search;
+      `${user.username.toLowerCase()}#${user.discriminator}`.indexOf(search.toLowerCase()) > -1 || user.id.toString() == search;
   public userDisplayPredicate = (user: DiscordUser) => `${user.username.toLowerCase()}#${user.discriminator}`;
   public userIdPredicate = (user: DiscordUser) => user.id;
   public userComparePredicate = (user: DiscordUser, user2: DiscordUser) => user?.id == user2?.id;
@@ -63,13 +63,13 @@ export class ModCaseTableComponent implements OnInit {
   public excludePermaPunishments: boolean = false;
   public useAdvancedFilters: boolean = true;
 
-  public apiFilter: IModCaseFilter = {};
+  public apiFilter: ModCaseFilter = {};
 
   constructor(public router: Router, private api: ApiService, private auth: AuthService, private route: ActivatedRoute, private toastr: ToastrService, private translator: TranslateService, private enumManager: EnumManagerService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((data) => {
-      this.guildId = data.get('guildid') as string;
+      this.guildId = BigInt(data.get('guildid'));
       this.isModOrHigher = this.auth.isModInGuild(this.guildId);
       this.reload();
     });
@@ -179,7 +179,7 @@ export class ModCaseTableComponent implements OnInit {
   loadFirstCases() {
     this.loading = true;
     this.currentPage = 0;
-    this.api.postSimpleData(`/guilds/${this.guildId}/${this.apiUrl}`, this.apiFilter).subscribe((data: IModCaseTable) => {
+    this.api.postSimpleData(`/guilds/${this.guildId}/${this.apiUrl}`, this.apiFilter).subscribe((data: ModCaseTable) => {
       this.loading = false;
       this.casesTable = data;
       this.applyCurrentFilters();
@@ -194,7 +194,7 @@ export class ModCaseTableComponent implements OnInit {
     this.currentPage++;
     const params = new HttpParams()
           .set('startPage', this.currentPage.toString());
-    this.api.postSimpleData(`/guilds/${this.guildId}/${this.apiUrl}`, {}, params).subscribe((data: IModCaseTable) => {
+    this.api.postSimpleData(`/guilds/${this.guildId}/${this.apiUrl}`, {}, params).subscribe((data: ModCaseTable) => {
       // this.loading = false;
       this.casesTable.cases.push(...data.cases);
       this.casesTable.fullSize = data.fullSize;
