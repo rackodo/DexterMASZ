@@ -108,7 +108,7 @@
                     <div class="infobox bg-g-orange">
                         <div class="infobox-body d-flex flex-row flex-wrap">
                             <div class="flex-grow-1 d-flex flex-column">
-                                <span class="mat-h2 mb-0 font-weight-bold">{{ 'ModCaseView.DiscordGuild' | translate }}</span>
+                                <span class="mat-h2 mb-0 font-weight-bold">{{ 'ModCaseView.Guild' | translate }}</span>
                                 <ng-container *ngIf="this.modCase.loading">
                                     <div class="waiting-for-text mb-2" style="width: 10rem"></div>
                                     <div class="waiting-for-text mb-2" style="width: 8rem"></div>
@@ -344,7 +344,7 @@
                                 <div class="d-flex flex-row flex-grow-1 w-100 align-self-start align-items-center">
                                     <ng-container *ngIf="comment?.comment?.userId">
                                         <img
-                                            [attr.src]="comment?.commentor?.imageUrl"
+                                            [attr.src]="comment?.commenter?.imageUrl"
                                             class="card-img rounded-circle z-depth-0 mr-1"
                                             alt="avatar icon"
                                             height="32"
@@ -362,7 +362,7 @@
                                     <!-- Title -->
                                     <span>
                                         <div class="mat-h3" style="display: inline;" *ngIf="comment?.comment?.userId">
-                                            {{ comment?.commentor?.username || comment?.commentor?.id }}#{{ comment?.commentor?.discriminator || comment?.commentor?.id }}
+                                            {{ comment?.commenter?.username || comment?.commenter?.id }}#{{ comment?.commenter?.discriminator || comment?.commenter?.id }}
                                         </div>
                                         <div class="mat-h3" style="display: inline;" *ngIf="! comment?.comment?.userId">
                                             {{ 'ModCaseView.Moderators' | translate }}

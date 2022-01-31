@@ -3,5 +3,5 @@ import { DiscordUser } from "./DiscordUser";
 
 export interface CommentListViewEntry {
     comment: ModCaseComment;
-    commentor?: DiscordUser;
+    commenter?: DiscordUser;
 }

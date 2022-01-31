@@ -3,5 +3,5 @@ import { DiscordUser } from "./DiscordUser";
 
 export interface ModCaseCommentExpanded {
     comment: ModCaseComment;
-    commentor?: DiscordUser;
+    commenter?: DiscordUser;
 }
