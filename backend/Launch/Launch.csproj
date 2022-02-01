@@ -15,7 +15,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 
-		<ProjectReference Include="..\MASZ.AutoMods\MASZ.AutoModsAutomods.csproj" />
+		<ProjectReference Include="..\MASZ.AutoMods\MASZ.AutoMods.csproj" />
 		<ProjectReference Include="..\MASZ.GuildAudits\MASZ.GuildAudits.csproj" />
 		<ProjectReference Include="..\MASZ.Messaging\MASZ.Messaging.csproj" />
 		<ProjectReference Include="..\MASZ.MOTDs\MASZ.MOTDs.csproj" />
