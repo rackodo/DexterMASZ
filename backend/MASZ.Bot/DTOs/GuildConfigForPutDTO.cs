@@ -17,11 +17,11 @@ public class GuildConfigForPutDto
 	public bool ModNotificationDm { get; set; }
 
 	[Url(ErrorMessage = "Webhook needs to be a valid url")]
-	[RegularExpression(@"^https://(.*\.)?discord(app)?\.com/api/webhooks/[0-9]+/[A-Za-z0-9]+", ErrorMessage = "Must be a valid webhook url")]
+	[RegularExpression("https://(.*\.)?discord(app)?.com/api/webhooks/[0-9]+/.+", ErrorMessage = "Must be a valid webhook url")]
 	public string ModPublicNotificationWebhook { get; set; }
 
 	[Url(ErrorMessage = "Webhook needs to be a valid url")]
-	[RegularExpression(@"^https://(.*\.)?discord(app)?\.com/api/webhooks/[0-9]+/[A-Za-z0-9]+", ErrorMessage = "Must be a valid webhook url")]
+	[RegularExpression("https://(.*\.)?discord(app)?.com/api/webhooks/[0-9]+/.+", ErrorMessage = "Must be a valid webhook url")]
 	public string ModInternalNotificationWebhook { get; set; }
 
 	[Required(ErrorMessage = "ExecuteWhoIsOnJoin field is required")]

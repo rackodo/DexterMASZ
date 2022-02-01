@@ -106,7 +106,7 @@
         "Description": "As a siteadmin you can use the MASZ Api to implement your own custom scripts and automate stuff on MASZ. Create an Api key below to authorize yourself against the Api while making web requests.",
         "Documentation": "You can find a full documentation in the /docs directory.",
         "Postman": "Just install postman and import the json file.",
-        "TokenHeader": "Include tokens in the \"Authorization\" header with a \"Bearer \" prefix.",
+        "TokenHeader": "Include tokens in the \"Authorization\" header with a \"Bearer\" prefix.",
         "PythonApiWrapper": "Try out the official python Api wrapper.",
         "Warning": "Warning",
         "TokenIsPowerful": "An Api key is very powerful and can control everything on MASZ!",

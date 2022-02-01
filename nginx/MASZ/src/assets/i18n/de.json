@@ -106,7 +106,7 @@
         "Description": "Als Seitenadministrator können Sie die MASZ Api nutzen, um ihre eigene Skripte und Automatisierungen in MASZ zu implementieren. Erstellen Sie einen Api-Schlüssel, um sich gegenüber der Api zu authentifizieren, während Sie Web-Anfragen tätigen.",
         "Documentation": "Sie finden die vollständige Dokumentation im /docs-Verzeichnis.",
         "Postman": "Installieren Sie Postman und importieren Sie die JSON-Datei.",
-        "TokenHeader": "Fügen Sie Tokens in den \"Authorization\"-Header mit einem \"Bearer \"-Präfix ein.",
+        "TokenHeader": "Fügen Sie Tokens in den \"Authorization\"-Header mit einem \"Bearer\"-Präfix ein.",
         "PythonApiWrapper": "Probieren Sie den offiziellen Python-Api-Wrapper aus.",
         "Warning": "Warnung",
         "TokenIsPowerful": "Ein Api-Schlüssel ist sehr mächtig und kann alles auf MASZ steuern!",

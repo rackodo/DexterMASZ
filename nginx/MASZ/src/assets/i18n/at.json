@@ -106,7 +106,7 @@
         "Description": "Oit Seitnadmin hom se de meglischkeit, de MASZ Api zua nutznm um ernane eiganan Skripte und Automatisiarungen in MASZ einezumgeba. Erstöns bitte an Api-Schlüssl, damits erna gegenüba da Api authentifizian kenna, wenns Web-Ofrogn tätign tan.",
         "Documentation": "De voiständige Dokumentations findens im /docs-Vazeichnis.",
         "Postman": "Instalians bittsche den Postman und tuans de JSON-Datei importian.",
-        "TokenHeader": "Tuan bitte den Tokn in den \"Authorization\"-Header mit am \"Bearer \"-Präfix eifügn.",
+        "TokenHeader": "Tuan bitte den Tokn in den \"Authorization\"-Header mit am \"Bearer\"-Präfix eifügn.",
         "PythonApiWrapper": "Provians den offiziön Python-Api-Wrapper aus.",
         "Warning": "Ochtung",
         "TokenIsPowerful": "Da Api-Schlüssl is ned ohne und ko ois am MASZ steian!",

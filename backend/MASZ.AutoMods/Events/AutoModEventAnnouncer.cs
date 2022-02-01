@@ -32,7 +32,7 @@ public class AutoModEventAnnouncer : Event
 
 	public void RegisterEvents()
 	{
-		_eventHandler.OnAutoModEventRegistered += AnnounceAutoMod;
+		_eventHandler.OnAutoModEventRegistered += async (a, b, c, d, e) => await AnnounceAutoMod(a, b, c, d, e);
 
 		_eventHandler.OnAutoModConfigCreated += async (a, b) => await AnnounceAutoModConfig(a, b, RestAction.Created);
 

@@ -449,7 +449,19 @@ public class GuildAuditLogger : Event
 				.WithDescription(description.ToString());
 
 			if (!string.IsNullOrEmpty(message.Content))
-				embed.AddField(translator.Get<GuildAuditTranslator>().Content(), message.Content.Truncate(1024));
+			{
+				if (message.Content.Length > 1024)
+				{
+					for (var i = 0; i < 4; i++)
+						if (message.Content.Length > i * 1024)
+							embed.AddField(
+								$"{translator.Get<GuildAuditTranslator>().Content()} [{i + 1}]",
+								new string(message.Content.Skip(i * 1024).Take(1024).ToArray())
+							);
+				}
+				else
+					embed.AddField(translator.Get<GuildAuditTranslator>().Content(), message.Content);
+			}
 
 			if (message.Attachments.Count > 0)
 			{
@@ -499,7 +511,19 @@ public class GuildAuditLogger : Event
 					.WithFooter($"{translator.Get<BotTranslator>().UserId()}: {message.Author.Id}");
 
 				if (!string.IsNullOrEmpty(message.Content))
-					embed.AddField(translator.Get<GuildAuditTranslator>().Content(), message.Content.Truncate(1024));
+				{
+					if (message.Content.Length > 1024)
+					{
+						for (var i = 0; i < 4; i++)
+							if (message.Content.Length > i * 1024)
+								embed.AddField(
+									$"{translator.Get<GuildAuditTranslator>().Content()} [{i + 1}]",
+									new string(message.Content.Skip(i * 1024).Take(1024).ToArray())
+								);
+					}
+					else
+						embed.AddField(translator.Get<GuildAuditTranslator>().Content(), message.Content);
+				}
 
 				if (message.Attachments.Count > 0)
 				{
@@ -557,11 +581,25 @@ public class GuildAuditLogger : Event
 				if (before == null)
 					embed.AddField(translator.Get<GuildAuditTranslator>().Before(),
 						translator.Get<GuildAuditTranslator>().InformationNotCached());
-				else if (!string.IsNullOrEmpty(before.Content))
+				else if (string.Equals(before.Content, messageAfter.Content) && before.Embeds.Count != messageAfter.Embeds.Count)
+					return;
+				else if(!string.IsNullOrEmpty(before.Content))
 					embed.AddField(translator.Get<GuildAuditTranslator>().Before(), before.Content.Truncate(1024));
 
 				if (!string.IsNullOrEmpty(messageAfter.Content))
-					embed.AddField(translator.Get<GuildAuditTranslator>().New(), messageAfter.Content.Truncate(1024));
+				{
+					if (messageAfter.Content.Length > 1024)
+					{
+						for (var i = 0; i < 4; i++)
+							if (messageAfter.Content.Length > i * 1024)
+								embed.AddField(
+									$"{translator.Get<GuildAuditTranslator>().New()} [{i + 1}]",
+									new string(messageAfter.Content.Skip(i * 1024).Take(1024).ToArray())
+								);
+					}
+					else
+						embed.AddField(translator.Get<GuildAuditTranslator>().New(), messageAfter.Content);
+				}
 
 				if (messageAfter.Attachments.Count > 0)
 				{
