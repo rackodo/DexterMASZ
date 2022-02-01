@@ -19,7 +19,7 @@
     "Punishments": "Bestrafungen",
     "Bans": "Banns",
     "Mutes": "Stummschaltungen",
-    "AutoMods": "AutoMods",
+    "Automods": "Automods",
     "Invite": "Einladung",
     "Invites": "Einladungen",
     "Usernotes": "Nutzernotizen",
@@ -301,7 +301,7 @@
             "title": "Einbettungen",
             "details": "Eine Nachricht auf deinem Server enthält zu viele Einbettungen."
         },
-        "AutoMods": {
+        "Automods": {
             "title": "AutoModerationen",
             "details": "Ein Benutzer löst zu viele AutoModerationen in einem definierten Zeitraum aus."
         },
@@ -391,7 +391,7 @@
         "Overview": "Übersicht",
         "Cases": "Vorfälle",
         "Punishments": "Bestrafungen",
-        "AutoMods": "AutoModerationen",
+        "Automods": "AutoModerationen",
         "ChooseADate": "Wähle ein Datum",
         "Reset": "Zurücksetzen"
     },

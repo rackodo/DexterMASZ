@@ -49,7 +49,7 @@ export class AutoModConfigComponent implements OnInit {
     },
     {
       type: 5,
-      key: 'AutoMods',
+      key: 'Automods',
       showLimitField: true,
       showTimeLimitField: true
     },

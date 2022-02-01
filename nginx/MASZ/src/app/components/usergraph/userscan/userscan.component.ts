@@ -236,7 +236,7 @@ export class UserscanComponent implements OnInit {
       }
       for (let modEvent of network.modEvents) {
         if (modEvent.guildId !== guild.id) continue;
-        let eventBaseNode = this.addNewNode(this.newBasicAutoModsNode, [userId, guild.id]) as Node;
+        let eventBaseNode = this.addNewNode(this.newBasicAutomodsNode, [userId, guild.id]) as Node;
         this.addNewEdge(guildNode, eventBaseNode);
         let eventNode = this.addNewNode(this.newEventNode, [modEvent, 5]) as Node;
         this.addNewEdge(eventBaseNode, eventNode, `${this.translator.instant('Scanning.OccuredAt')}: ${this.timezoneService.convertNearlyAnyDateToLocaleString(modEvent.createdAt)}`);
@@ -393,10 +393,10 @@ export class UserscanComponent implements OnInit {
     }
   }
 
-  newBasicAutoModsNode(userId: string, guildId: string): Node {
+  newBasicAutomodsNode(userId: string, guildId: string): Node {
     return {
       id: `${userId}/${guildId}/automods`,
-      label: this.translator.instant('AutoMods'),
+      label: this.translator.instant('Automods'),
       group: `basics/sub`,
       shape: 'triangle',
       size: 15

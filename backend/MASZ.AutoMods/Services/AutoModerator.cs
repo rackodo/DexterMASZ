@@ -166,8 +166,8 @@ public class AutoModerator : Event
 
 		await ExecutePunishment(message, autoModConfig, scope);
 
-		if (autoModConfig.AutoModType != AutoModType.TooManyAutoMods)
-			await CheckAutoMod(AutoModType.TooManyAutoMods, message, CheckMultipleEvents, scope);
+		if (autoModConfig.AutoModType != AutoModType.TooManyAutomods)
+			await CheckAutoMod(AutoModType.TooManyAutomods, message, CheckMultipleEvents, scope);
 
 		return true;
 
@@ -195,8 +195,8 @@ public class AutoModerator : Event
 
 		await ExecutePunishment(message, autoModConfig, scope);
 
-		if (autoModConfig.AutoModType != AutoModType.TooManyAutoMods)
-			await CheckAutoMod(AutoModType.TooManyAutoMods, message, CheckMultipleEvents, scope);
+		if (autoModConfig.AutoModType != AutoModType.TooManyAutomods)
+			await CheckAutoMod(AutoModType.TooManyAutomods, message, CheckMultipleEvents, scope);
 
 		return true;
 
@@ -224,8 +224,8 @@ public class AutoModerator : Event
 
 		await ExecutePunishment(message, autoModConfig, scope);
 
-		if (autoModConfig.AutoModType != AutoModType.TooManyAutoMods)
-			await CheckAutoMod(AutoModType.TooManyAutoMods, message, CheckMultipleEvents, scope);
+		if (autoModConfig.AutoModType != AutoModType.TooManyAutomods)
+			await CheckAutoMod(AutoModType.TooManyAutomods, message, CheckMultipleEvents, scope);
 	}
 
 	private static async Task<bool> IsProtectedByFilter(IMessage message, AutoModConfig autoModConfig,

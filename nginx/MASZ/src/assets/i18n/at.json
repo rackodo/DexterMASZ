@@ -19,7 +19,7 @@
     "Punishments": "Bestrofungen",
     "Bans": "Banns",
     "Mutes": "Stummschoitungen",
-    "AutoMods": "AutoMods",
+    "Automods": "Automods",
     "Invite": "Eiladung",
     "Invites": "Eiladungen",
     "Usernotes": "Nutzanotizn",
@@ -301,7 +301,7 @@
             "title": "Eibettungen",
             "details": "A Nochricht aufm Serva hot zvü Eibettungen. "
         },
-        "AutoMods": {
+        "Automods": {
             "title": "AutoModarationen",
             "details": "A Benutza hot zvü AutoModarationen in am bestimmtn Zeitraum ausglest."
         },
@@ -391,7 +391,7 @@
         "Overview": "Übasicht",
         "Cases": "Vorfälle",
         "Punishments": "Bestrofungen",
-        "AutoMods": "AutoModaratonen",
+        "Automods": "AutoModaratonen",
         "ChooseADate": "Tua a Datum auswöhn",
         "Reset": "Zrucksetzn"
     },

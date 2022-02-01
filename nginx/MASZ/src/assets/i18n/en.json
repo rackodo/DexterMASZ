@@ -19,7 +19,7 @@
     "Punishments": "Punishments",
     "Bans": "Bans",
     "Mutes": "Mutes",
-    "AutoMods": "AutoMods",
+    "Automods": "Automods",
     "Invite": "Invite",
     "Invites": "Invites",
     "Usernotes": "Usernotes",
@@ -301,8 +301,8 @@
             "title": "Embeds",
             "details": "A message on your guild contains too many embeds."
         },
-        "AutoMods": {
-            "title": "AutoMods",
+        "Automods": {
+            "title": "Automods",
             "details": "A user triggers too many automods in a defined timespan."
         },
         "CustomFilter": {
@@ -391,7 +391,7 @@
         "Overview": "Overview",
         "Cases": "Cases",
         "Punishments": "Punishments",
-        "AutoMods": "AutoMods",
+        "Automods": "Automods",
         "ChooseADate": "Choose a date",
         "Reset": "Reset"
     },
@@ -426,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Dashboard",
             "Case": "Cases",
-            "AutoModeration": "AutoMods",
+            "AutoModeration": "Automods",
             "Messages": "Messages",
             "Usernote": "Usernotes",
             "Usermap": "Usermaps",
