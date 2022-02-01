@@ -3,7 +3,7 @@ import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ApiEnum } from 'src/app/models/ApiEnum';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { convertModCaseToPunishmentString } from 'src/app/models/ModCase';
-import { IModCaseTableEntry } from 'src/app/models/IModCaseTableEntry';
+import { ModCaseTableEntry } from 'src/app/models/ModCaseTableEntry';
 import { PunishmentType } from 'src/app/models/PunishmentType';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 import * as moment from 'moment';
@@ -15,7 +15,7 @@ import * as moment from 'moment';
 })
 export class ModCaseCardCompactComponent implements OnInit {
 
-  @Input() entry!: IModCaseTableEntry;
+  @Input() entry!: ModCaseTableEntry;
   @Input() showExpiring: boolean = true;
   @Input() showCreated: boolean = false;
 

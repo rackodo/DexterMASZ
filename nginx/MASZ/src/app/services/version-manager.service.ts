@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, ReplaySubject } from 'rxjs';
 import { AppVersion } from '../models/AppVersion';
-import { IImageVersion } from '../models/IImageVersion';
+import { ImageVersion } from '../models/ImageVersion';
 import { compare } from 'compare-versions';
 
 @Injectable({
@@ -10,8 +10,8 @@ import { compare } from 'compare-versions';
 export class VersionManagerService {
 
   localVersion: ReplaySubject<AppVersion> = new ReplaySubject<AppVersion>(1);
-  availableVersions: ReplaySubject<IImageVersion[]> = new ReplaySubject<IImageVersion[]>(1);
-  newVersionFound: ReplaySubject<IImageVersion> = new ReplaySubject<IImageVersion>(1);
+  availableVersions: ReplaySubject<ImageVersion[]> = new ReplaySubject<ImageVersion[]>(1);
+  newVersionFound: ReplaySubject<ImageVersion> = new ReplaySubject<ImageVersion>(1);
 
   constructor() {
     combineLatest([this.localVersion, this.availableVersions]).subscribe(([newLocalVersion, newAvailableVersions]) => {
@@ -31,7 +31,7 @@ export class VersionManagerService {
     this.localVersion.next(data);
   }
 
-  availableVersionsChanged(data: IImageVersion[]) {
+  availableVersionsChanged(data: ImageVersion[]) {
     this.availableVersions.next(data);
   }
 }

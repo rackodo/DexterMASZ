@@ -7,7 +7,7 @@ public enum AutoModType
 	TooManyMentions,
 	TooManyAttachments,
 	TooManyEmbeds,
-	TooManyAutoModerations,
+	TooManyAutomods,
 	CustomWordFilter,
 	TooManyMessages,
 	TooManyDuplicatedCharacters,

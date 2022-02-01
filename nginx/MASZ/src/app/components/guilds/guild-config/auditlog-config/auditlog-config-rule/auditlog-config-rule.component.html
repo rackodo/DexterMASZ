@@ -6,19 +6,19 @@
           [(ngModel)]="this.enableConfig"
           (ngModelChange)="onRuleToggle($event)"
           [labelPosition]="'after'">
-          {{ 'GuildAuditLogConfig.' + definition.key + ".title" | translate }}
+          {{ 'GuildAuditConfig.' + definition.key + ".title" | translate }}
         </mat-checkbox>
     </span>
     <form [formGroup]="configForm" class="d-flex flex-row align-items-baseline conditional-fc conditional-center" *ngIf="enableConfig">
         <mat-form-field class="ml-4">
-            <mat-label>{{ 'GuildAuditLogConfig.TargetChannel' | translate }}</mat-label>
+            <mat-label>{{ 'GuildAuditConfig.TargetChannel' | translate }}</mat-label>
             <mat-select formControlName="channel" [disabled]="this.definition?.comingSoon ?? false">
             <mat-option *ngFor="let channel of this.guildChannels"
             [value]="channel.id" >#{{channel.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field class="ml-4">
-            <mat-label>{{ 'GuildAuditLogConfig.PingRoles' | translate }}</mat-label>
+            <mat-label>{{ 'GuildAuditConfig.PingRoles' | translate }}</mat-label>
             <mat-select formControlName="pingRoles" multiple [disabled]="this.definition?.comingSoon ?? false">
             <mat-option *ngFor="let role of this.guild?.roles"
             [value]="role.id" [style.color]="generateRoleColor(role)">{{role.name}}</mat-option>
@@ -26,6 +26,6 @@
         </mat-form-field>
     </form>
     <div class="mat-h4 mb-0 ml-4 text-warning" *ngIf="this.definition.comingSoon">
-        {{ 'GuildAuditLogConfig.ComingSoon' | translate }}
+        {{ 'GuildAuditConfig.ComingSoon' | translate }}
     </div>
 </div>

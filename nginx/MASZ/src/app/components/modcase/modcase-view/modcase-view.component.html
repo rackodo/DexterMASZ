@@ -344,7 +344,7 @@
                                 <div class="d-flex flex-row flex-grow-1 w-100 align-self-start align-items-center">
                                     <ng-container *ngIf="comment?.comment?.userId">
                                         <img
-                                            [attr.src]="comment?.commentor?.imageUrl"
+                                            [attr.src]="comment?.commenter?.imageUrl"
                                             class="card-img rounded-circle z-depth-0 mr-1"
                                             alt="avatar icon"
                                             height="32"
@@ -362,7 +362,7 @@
                                     <!-- Title -->
                                     <span>
                                         <div class="mat-h3" style="display: inline;" *ngIf="comment?.comment?.userId">
-                                            {{ comment?.commentor?.username || comment?.commentor?.id }}#{{ comment?.commentor?.discriminator || comment?.commentor?.id }}
+                                            {{ comment?.commenter?.username || comment?.commenter?.id }}#{{ comment?.commenter?.discriminator || comment?.commenter?.id }}
                                         </div>
                                         <div class="mat-h3" style="display: inline;" *ngIf="! comment?.comment?.userId">
                                             {{ 'ModCaseView.Moderators' | translate }}
@@ -419,13 +419,13 @@
                         <button mat-raised-button color="accent"
                             class="flex-shrink-1 mb-2"
                             [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined"
-                            (click)="lockCaseComments()"
+                            (click)="lockModCaseComments()"
                             *ngIf="this.isModOrHigher && this.modCase?.content?.modCase?.allowComments">
                             {{ 'ModCaseView.LockComments' | translate }}
                         </button>
                         <button mat-raised-button color="accent"
                             class="flex-shrink-1 mb-2"
-                            (click)="unlockCaseComments()"
+                            (click)="unlockModCaseComments()"
                             *ngIf="this.isModOrHigher && ! this.modCase?.content?.modCase?.allowComments"
                             [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined">
                             {{ 'ModCaseView.UnlockComments' | translate }}

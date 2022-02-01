@@ -19,7 +19,7 @@
     "Punishments": "Punishments",
     "Bans": "Bans",
     "Mutes": "Mutes",
-    "AutoMods": "AutoMods",
+    "Automods": "Automods",
     "Invite": "Invite",
     "Invites": "Invites",
     "Usernotes": "Usernotes",
@@ -58,7 +58,7 @@
         "Infrastrcture": {
             "Title": "Infrastructure",
             "DefaultLanguage": {
-                "Explained": "MASZ will use this language as the default language whenever possible. However, possibly only an english version is available for certain texts. Guild specific settings overwrite this setting.",
+                "Explained": "MASZ will use this language as the default language whenever possible. However, possibly only an english version is available for certain texts. DiscordGuild specific settings overwrite this setting.",
                 "Field": "Default language"
             },
             "AuditLogWebhookUrl": {
@@ -106,7 +106,7 @@
         "Description": "As a siteadmin you can use the MASZ Api to implement your own custom scripts and automate stuff on MASZ. Create an Api key below to authorize yourself against the Api while making web requests.",
         "Documentation": "You can find a full documentation in the /docs directory.",
         "Postman": "Just install postman and import the json file.",
-        "TokenHeader": "Include tokens in the \"Authorization\" header with a \"Bearer \" prefix.",
+        "TokenHeader": "Include tokens in the \"Authorization\" header with a \"Bearer\" prefix.",
         "PythonApiWrapper": "Try out the official python Api wrapper.",
         "Warning": "Warning",
         "TokenIsPowerful": "An Api key is very powerful and can control everything on MASZ!",
@@ -224,7 +224,7 @@
         "GuildCreated": "Guild created",
         "GuildUpdated": "Guild updated"
     },
-    "GuildAuditLogConfig": {
+    "GuildAuditConfig": {
         "TargetChannel": "Target channel",
         "ComingSoon": "Coming soon",
         "PingRoles": "Ping roles",
@@ -301,8 +301,8 @@
             "title": "Embeds",
             "details": "A message on your guild contains too many embeds."
         },
-        "AutoMods": {
-            "title": "AutoMods",
+        "Automods": {
+            "title": "Automods",
             "details": "A user triggers too many automods in a defined timespan."
         },
         "CustomFilter": {
@@ -391,7 +391,7 @@
         "Overview": "Overview",
         "Cases": "Cases",
         "Punishments": "Punishments",
-        "AutoMods": "AutoMods",
+        "Automods": "Automods",
         "ChooseADate": "Choose a date",
         "Reset": "Reset"
     },
@@ -401,7 +401,7 @@
         "FailedToLoad": "Failed to load comments."
     },
     "GuildStats": {
-        "GuildStats": "Guildstats",
+        "GuildStats": "Guild statistics",
         "FailedToLoad": "Failed to load guild stats."
     },
     "GuildInfoCard": {
@@ -426,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Dashboard",
             "Case": "Cases",
-            "AutoModeration": "AutoMods",
+            "AutoModeration": "Automods",
             "Messages": "Messages",
             "Usernote": "Usernotes",
             "Usermap": "Usermaps",
@@ -566,7 +566,7 @@
             "Failed": "Failed to activate case."
         },
         "PunishmentExpired": "Punishment is expired.",
-        "CaseInactive": "ModCase is inactive.",
+        "CaseInactive": "Modcase is inactive.",
         "CreatedAt": "Created at",
         "EditedAt": "Edited at",
         "LastEditModerator": "Last edit by moderator",

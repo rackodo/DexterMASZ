@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Moment } from 'moment';
 import { ReplaySubject } from 'rxjs';
-import { IScheduledMessage } from 'src/app/models/IScheduledMessage';
+import { ScheduledMessageExtended } from 'src/app/models/ScheduledMessageExtended';
 
 @Component({
   selector: 'app-scheduled-message-edit-dialog',
@@ -13,14 +13,14 @@ export class ScheduledMessageEditDialogComponent implements OnInit {
 
   public initRows = 1;
   public scheduledForChangedForPicker: ReplaySubject<Date> = new ReplaySubject<Date>(1);
-  constructor(@Inject(MAT_DIALOG_DATA) public message: IScheduledMessage) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public message: ScheduledMessageExtended) { }
 
   ngOnInit(): void {
-    this.initRows = Math.min(this.message.content.split(/\r\n|\r|\n/).length, 15);
-    this.scheduledForChangedForPicker.next(this.message.scheduledFor);
+    this.initRows = Math.min(this.message.scheduledMessage.content.split(/\r\n|\r|\n/).length, 15);
+    this.scheduledForChangedForPicker.next(this.message.scheduledMessage.scheduledFor);
   }
 
   dateChanged(date: Moment) {
-    this.message.scheduledFor = date as any;
+    this.message.scheduledMessage.scheduledFor = date as any;
   }
 }

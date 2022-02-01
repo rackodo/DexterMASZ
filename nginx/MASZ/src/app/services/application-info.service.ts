@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { IApplicationInfo } from '../models/IApplicationInfo';
+import { DiscordApplication } from '../models/DiscordApplication';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApplicationInfoService {
 
-  currentApplicationInfo: ReplaySubject<IApplicationInfo> = new ReplaySubject<IApplicationInfo>(1);
+  currentApplicationInfo: ReplaySubject<DiscordApplication> = new ReplaySubject<DiscordApplication>(1);
 
   constructor() { }
 
-  infoChanged(data: IApplicationInfo) {
+  infoChanged(data: DiscordApplication) {
     this.currentApplicationInfo.next(data);
     if (data?.iconUrl) {
       document.getElementById('favicon')?.setAttribute('href', data.iconUrl);

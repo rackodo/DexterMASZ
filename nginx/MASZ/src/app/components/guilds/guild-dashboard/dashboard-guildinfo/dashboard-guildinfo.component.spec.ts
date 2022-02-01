@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardGuildinfoComponent } from './dashboard-guildinfo.component';
+import { DashboardGuildInfoComponent } from './dashboard-guildinfo.component';
 
-describe('DashboardGuildinfoComponent', () => {
-  let component: DashboardGuildinfoComponent;
-  let fixture: ComponentFixture<DashboardGuildinfoComponent>;
+describe('DashboardGuildInfoComponent', () => {
+  let component: DashboardGuildInfoComponent;
+  let fixture: ComponentFixture<DashboardGuildInfoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashboardGuildinfoComponent ]
+      declarations: [ DashboardGuildInfoComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardGuildinfoComponent);
+    fixture = TestBed.createComponent(DashboardGuildInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

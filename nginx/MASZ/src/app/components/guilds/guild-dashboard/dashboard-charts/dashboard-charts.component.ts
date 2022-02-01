@@ -72,12 +72,12 @@ export class DashboardChartsComponent implements OnInit {
         this.punishmentChartLabels = [ sinceInsert.toString(), ...data.punishments.map(x => this.convertTime(x)) ];
       }
 
-      if (data.autoModerations.map(x => this.convertTime(x)).includes(sinceInsert)) {
-        this.moderationChartData = [{ data: data.autoModerations.map(x => x.count), label: 'Count' }];
-        this.moderationChartLabels = data.autoModerations.map(x => this.convertTime(x));
+      if (data.autoMods.map(x => this.convertTime(x)).includes(sinceInsert)) {
+        this.moderationChartData = [{ data: data.autoMods.map(x => x.count), label: 'Count' }];
+        this.moderationChartLabels = data.autoMods.map(x => this.convertTime(x));
       } else {
-        this.moderationChartData = [{ data: [ 0, ...data.autoModerations.map(x => x.count) ], label: 'Count' }];
-        this.moderationChartLabels = [ sinceInsert.toString(), ...data.autoModerations.map(x => this.convertTime(x)) ];
+        this.moderationChartData = [{ data: [ 0, ...data.autoMods.map(x => x.count) ], label: 'Count' }];
+        this.moderationChartLabels = [ sinceInsert.toString(), ...data.autoMods.map(x => this.convertTime(x)) ];
       }
 
       this.maxSubject$.next(Math.max( ...data.modCases.map(x => x.count), ...data.punishments.map(x => x.count), 10 ));

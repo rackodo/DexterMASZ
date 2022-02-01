@@ -7,10 +7,10 @@ public class ModCaseCommentExpandedTable : ModCaseCommentExpanded
 	public ModCaseCommentExpandedTable(ModCaseComment comment, IUser commenter, ulong guildId, int caseId) : base(comment,
 		commenter)
 	{
-		GuildId = guildId.ToString();
+		GuildId = guildId;
 		CaseId = caseId;
 	}
 
-	public string GuildId { get; set; }
+	public ulong GuildId { get; set; }
 	public int CaseId { get; set; }
 }

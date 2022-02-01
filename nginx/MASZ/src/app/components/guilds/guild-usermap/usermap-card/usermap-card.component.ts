@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'src/app/components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { UsermapEditDialogComponent } from 'src/app/components/dialogs/usermap-edit-dialog/usermap-edit-dialog.component';
-import { UserMapView } from 'src/app/models/UserMapView';
+import { UserMapExpanded } from 'src/app/models/UserMapExpanded';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class UsermapCardComponent implements OnInit {
 
   @Output() updateEvent = new EventEmitter<number>();
   @Output() deleteEvent = new EventEmitter<number>();
-  @Input() userMap!: UserMapView;
+  @Input() userMap!: UserMapExpanded;
   @Input() showDeleteButton: boolean = true;
   constructor(private dialog: MatDialog, private api: ApiService, private toastr: ToastrService, private translator: TranslateService) { }
 

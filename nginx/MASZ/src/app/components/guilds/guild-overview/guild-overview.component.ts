@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { IDashboardTabs } from 'src/app/models/IDashboardTabs';
+import { DashboardTabs } from 'src/app/models/DashboardTabs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class GuildOverviewComponent implements OnInit {
 
   private modSub: any;
   private adminSub: any;
-  public tabs: IDashboardTabs[] = [
+  public tabs: DashboardTabs[] = [
     {
       "icon": "list",
       "component": "cases"

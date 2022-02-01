@@ -1,6 +1,6 @@
 <div class="d-flex flex-row flex-wrap">
     <ng-container *ngFor="let usermap of usermaps">
-        <ng-container *ngIf="usermap.userA?.id && usermap.userA?.id !== searchedFor">
+        <ng-container *ngIf="usermap.userA?.id && usermap.userA?.id?.toString() !== searchedFor">
             <div class="p-1">
                 <img
                     src="{{ usermap.userA?.imageUrl }}"
@@ -12,7 +12,7 @@
                 />
             </div>
         </ng-container>
-        <ng-container *ngIf="usermap.userB?.id && usermap.userB?.id !== searchedFor">
+        <ng-container *ngIf="usermap.userB?.id && usermap.userB?.id?.toString() !== searchedFor">
             <div class="p-1">
                 <img
                     src="{{ usermap.userB?.imageUrl }}"

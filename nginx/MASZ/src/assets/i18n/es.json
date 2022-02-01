@@ -19,7 +19,7 @@
     "Punishments": "Castigos",
     "Bans": "Prohibiciones",
     "Mutes": "Silencia",
-    "AutoMods": "AutoMods",
+    "Automods": "Automods",
     "Invite": "Invitación",
     "Invites": "Invita",
     "Usernotes": "Notas de usuario",
@@ -224,7 +224,7 @@
         "GuildCreated": "Gremio creado",
         "GuildUpdated": "Gremio actualizado"
     },
-    "GuildAuditLogConfig": {
+    "GuildAuditConfig": {
         "TargetChannel": "Canal objetivo",
         "ComingSoon": "Próximamente, en breve, pronto",
         "PingRoles": "Roles de ping",
@@ -301,7 +301,7 @@
             "title": "Incrusta",
             "details": "Un mensaje en tu gremio contiene demasiadas incrustaciones."
         },
-        "AutoMods": {
+        "Automods": {
             "title": "AutoModeraciones",
             "details": "Un usuario desencadena demasiadas automovilizaciones en un período de tiempo definido."
         },
@@ -391,7 +391,7 @@
         "Overview": "Visión general",
         "Cases": "Casos",
         "Punishments": "Castigos",
-        "AutoMods": "AutoModeraciones",
+        "Automods": "AutoModeraciones",
         "ChooseADate": "Elige una fecha",
         "Reset": "Reiniciar"
     },

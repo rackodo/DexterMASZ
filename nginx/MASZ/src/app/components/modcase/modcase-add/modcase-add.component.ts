@@ -7,13 +7,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { CaseTemplate } from 'src/app/models/CaseTemplate';
+import { ModCaseTemplate } from 'src/app/models/ModCaseTemplate';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordUser } from 'src/app/models/DiscordUser';
-import { TemplateView } from 'src/app/models/TemplateView';
+import { ModCaseTemplateExpanded } from 'src/app/models/ModCaseTemplateExpanded';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { TemplateSettings, TemplateViewPermission } from 'src/app/models/TemplateSettings';
+import { ModCaseTemplateSettings, ModCaseTemplateExpandedPermission } from 'src/app/models/ModCaseTemplateSettings';
 import { TemplateCreateDialogComponent } from '../../dialogs/template-create-dialog/template-create-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AppUser } from 'src/app/models/AppUser';
@@ -24,7 +24,7 @@ import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import * as moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { ICaseLabel } from 'src/app/models/ICaseLabel';
+import { ModCaseLabel } from 'src/app/models/ModCaseLabel';
 import { go, highlight } from 'fuzzysort';
 
 
@@ -52,8 +52,8 @@ export class ModCaseAddComponent implements OnInit {
   public caseLabels: string[] = [];
   public labelInputForm: FormControl = new FormControl();
   @ViewChild('labelInput') labelInput?: ElementRef<HTMLInputElement>;
-  public filteredLabels: ReplaySubject<ICaseLabel[]> = new ReplaySubject(1);
-  public remoteLabels: ICaseLabel[] = [];
+  public filteredLabels: ReplaySubject<ModCaseLabel[]> = new ReplaySubject(1);
+  public remoteLabels: ModCaseLabel[] = [];
 
   public userForm = new FormControl();
   public filteredUsers!: Observable<DiscordUser[]>;
@@ -64,8 +64,8 @@ export class ModCaseAddComponent implements OnInit {
 
   public guildId!: string;
   public users: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
-  public templates: ContentLoading<TemplateView[]> = { loading: true, content: [] };
-  public allTemplates: TemplateView[] = [];
+  public templates: ContentLoading<ModCaseTemplateExpanded[]> = { loading: true, content: [] };
+  public allTemplates: ModCaseTemplateExpanded[] = [];
   public punishmentOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
   public currentUser!: AppUser;
   constructor(private _formBuilder: FormBuilder, private api: ApiService, private toastr: ToastrService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private enumManager: EnumManagerService, private translator: TranslateService) {
@@ -127,10 +127,10 @@ export class ModCaseAddComponent implements OnInit {
 
     return this.users.content?.filter(option =>
        ((option.username + "#" + option.discriminator).toLowerCase().includes(filterValue) ||
-       option.id.includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
+       option.id.toString().includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
   }
 
-  private _filterLabel(value: string): ICaseLabel[] {
+  private _filterLabel(value: string): ModCaseLabel[] {
     const localeLowerCaseCopy = this.caseLabels.slice().map(x => x.toLowerCase());
     if (! value)
     {
@@ -142,7 +142,7 @@ export class ModCaseAddComponent implements OnInit {
       label: highlight(r),
       cleanValue: r.obj.label,
       count: r.obj.count
-    }as ICaseLabel)).sort((a, b) => b.count - a.count).slice(0, 5);
+    }as ModCaseLabel)).sort((a, b) => b.count - a.count).slice(0, 5);
   }
 
   uploadInit() {
@@ -171,7 +171,7 @@ export class ModCaseAddComponent implements OnInit {
         (x.creator?.username + "#" + x.creator?.discriminator).includes(search) ||
 
         x.guild.name.includes(search) ||
-        x.guild.id.includes(search)
+        x.guild.id.toString().includes(search)
       ).slice(0, 3)};
   }
 
@@ -216,7 +216,7 @@ export class ModCaseAddComponent implements OnInit {
 
   reloadTemplates() {
     const params = new HttpParams()
-          .set('guildid', this.guildId)
+          .set('guildid', this.guildId.toString())
     this.api.getSimpleData(`/templatesview`, true, params).subscribe(data => {
       this.allTemplates = data;
       this.searchTemplate();
@@ -227,7 +227,7 @@ export class ModCaseAddComponent implements OnInit {
     });
   }
 
-  applyTemplate(template: CaseTemplate, stepper: any) {
+  applyTemplate(template: ModCaseTemplate, stepper: any) {
     stepper?.next();
     this.infoFormGroup.setValue({
       title: template.caseTitle,
@@ -292,9 +292,9 @@ export class ModCaseAddComponent implements OnInit {
 
   saveTemplate() {
     this.savingCase = true;
-    let templateSetting: TemplateSettings = {
+    let templateSetting: ModCaseTemplateSettings = {
       name: '',
-      viewPermission: TemplateViewPermission.Self
+      viewPermission: ModCaseTemplateExpandedPermission.Self
     };
     const confirmDialogRef = this.dialog.open(TemplateCreateDialogComponent, {
       data: templateSetting
@@ -315,7 +315,7 @@ export class ModCaseAddComponent implements OnInit {
         };
 
         const params = new HttpParams()
-          .set('guildid', this.guildId);
+          .set('guildid', this.guildId.toString());
 
         this.api.postSimpleData(`/templates`, data, params, true, true).subscribe(() => {
           this.toastr.success(this.translator.instant('ModCaseDialog.TemplateSaved'));

@@ -1,9 +1,9 @@
 import { QuickSearchEntry } from "./QuickSearchEntry";
-import { UserMapView } from "./UserMapView";
-import { UserNoteView } from "./UserNoteView";
+import { UserMapExpanded } from "./UserMapExpanded";
+import { UserNoteExpanded } from "./UserNoteExpanded";
 
 export interface QuickSearchResult {
     searchEntries: QuickSearchEntry[];
-    userNoteView: UserNoteView;
-    userMapViews: UserMapView[];
+    userNoteExpanded: UserNoteExpanded;
+    userMapExpands: UserMapExpanded[];
 }

@@ -6,8 +6,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Moment } from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { ReplaySubject } from 'rxjs';
-import { GuildChannel } from 'src/app/models/GuildChannel';
-import { IScheduledMessage } from 'src/app/models/IScheduledMessage';
+import { DiscordChannel } from 'src/app/models/DiscordChannel';
+import { ScheduledMessageExtended } from 'src/app/models/ScheduledMessageExtended';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
@@ -25,7 +25,7 @@ export class GuildMessagesComponent implements OnInit {
   public apiPage: number = 1;
   public loadingFurtherMessages: boolean = false;
 
-  public channels: GuildChannel[] = [];
+  public channels: DiscordChannel[] = [];
 
   maxLength4096 = { length: 4096 };
   public newMessageLoading: boolean = false;
@@ -48,7 +48,7 @@ export class GuildMessagesComponent implements OnInit {
       this.messages.push(...data);
     });
 
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}/channels`).subscribe((data: GuildChannel[]) => {
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}/channels`).subscribe((data: DiscordChannel[]) => {
       this.channels = data.filter(x => x.type === 0).sort((a, b) => (a.position > b.position) ? 1 : -1);
     });
   }

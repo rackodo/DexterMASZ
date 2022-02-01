@@ -47,40 +47,40 @@ public class AutoModConfigRepository : Repository, DeleteGuildData
 			throw new InvalidAutoModActionException();
 
 		var action = RestAction.Updated;
-		AutoModConfig autoModerationConfig;
+		AutoModConfig autoModConfig;
 
 		try
 		{
-			autoModerationConfig = await GetConfigsByGuildAndType(newValue.GuildId, newValue.AutoModType);
+			autoModConfig = await GetConfigsByGuildAndType(newValue.GuildId, newValue.AutoModType);
 		}
 		catch (ResourceNotFoundException)
 		{
-			autoModerationConfig = new AutoModConfig();
+			autoModConfig = new AutoModConfig();
 			action = RestAction.Created;
 		}
 
-		autoModerationConfig.GuildId = newValue.GuildId;
-		autoModerationConfig.AutoModType = newValue.AutoModType;
-		autoModerationConfig.AutoModAction = newValue.AutoModAction;
-		autoModerationConfig.PunishmentType = newValue.PunishmentType;
-		autoModerationConfig.PunishmentDurationMinutes = newValue.PunishmentDurationMinutes;
-		autoModerationConfig.IgnoreChannels = newValue.IgnoreChannels;
-		autoModerationConfig.IgnoreRoles = newValue.IgnoreRoles;
-		autoModerationConfig.TimeLimitMinutes = newValue.TimeLimitMinutes;
-		autoModerationConfig.Limit = newValue.Limit;
-		autoModerationConfig.CustomWordFilter = newValue.CustomWordFilter;
-		autoModerationConfig.SendDmNotification = newValue.SendDmNotification;
-		autoModerationConfig.SendPublicNotification = newValue.SendPublicNotification;
-		autoModerationConfig.ChannelNotificationBehavior = newValue.ChannelNotificationBehavior;
+		autoModConfig.GuildId = newValue.GuildId;
+		autoModConfig.AutoModType = newValue.AutoModType;
+		autoModConfig.AutoModAction = newValue.AutoModAction;
+		autoModConfig.PunishmentType = newValue.PunishmentType;
+		autoModConfig.PunishmentDurationMinutes = newValue.PunishmentDurationMinutes;
+		autoModConfig.IgnoreChannels = newValue.IgnoreChannels;
+		autoModConfig.IgnoreRoles = newValue.IgnoreRoles;
+		autoModConfig.TimeLimitMinutes = newValue.TimeLimitMinutes;
+		autoModConfig.Limit = newValue.Limit;
+		autoModConfig.CustomWordFilter = newValue.CustomWordFilter;
+		autoModConfig.SendDmNotification = newValue.SendDmNotification;
+		autoModConfig.SendPublicNotification = newValue.SendPublicNotification;
+		autoModConfig.ChannelNotificationBehavior = newValue.ChannelNotificationBehavior;
 
-		await _autoModDatabase.PutPunishmentsConfig(autoModerationConfig);
+		await _autoModDatabase.PutPunishmentsConfig(autoModConfig);
 
 		if (action == RestAction.Created)
-			_eventHandler.AutoModConfigCreatedEvent.Invoke(autoModerationConfig, Identity);
+			_eventHandler.AutoModConfigCreatedEvent.Invoke(autoModConfig, Identity);
 		else
-			_eventHandler.AutoModConfigUpdatedEvent.Invoke(autoModerationConfig, Identity);
+			_eventHandler.AutoModConfigUpdatedEvent.Invoke(autoModConfig, Identity);
 
-		return autoModerationConfig;
+		return autoModConfig;
 	}
 	
 	public async Task<AutoModConfig> DeleteConfigForGuild(ulong guildId, AutoModType type)

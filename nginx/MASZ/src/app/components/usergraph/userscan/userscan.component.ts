@@ -9,7 +9,7 @@ import { ApiEnum } from 'src/app/models/ApiEnum';
 import { AutoModEvent } from 'src/app/models/AutoModEvent';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordUser } from 'src/app/models/DiscordUser';
-import { Guild } from 'src/app/models/Guild';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { InviteNetwork } from 'src/app/models/InviteNetwork';
 import { convertModCaseToPunishmentString, ModCase } from 'src/app/models/ModCase';
 import { UserInvite } from 'src/app/models/UserInvite';
@@ -236,7 +236,7 @@ export class UserscanComponent implements OnInit {
       }
       for (let modEvent of network.modEvents) {
         if (modEvent.guildId !== guild.id) continue;
-        let eventBaseNode = this.addNewNode(this.newBasicAutoModsNode, [userId, guild.id]) as Node;
+        let eventBaseNode = this.addNewNode(this.newBasicAutomodsNode, [userId, guild.id]) as Node;
         this.addNewEdge(guildNode, eventBaseNode);
         let eventNode = this.addNewNode(this.newEventNode, [modEvent, 5]) as Node;
         this.addNewEdge(eventBaseNode, eventNode, `${this.translator.instant('Scanning.OccuredAt')}: ${this.timezoneService.convertNearlyAnyDateToLocaleString(modEvent.createdAt)}`);
@@ -313,27 +313,27 @@ export class UserscanComponent implements OnInit {
     return newEdge;
   }
 
-  newUserNode(user: DiscordUser, backupUserId: string = '', size: number = 30, group: string = 'otherusers'): Node {
+  newUserNode(user: DiscordUser, backupUserId: string = "0", size: number = 30, group: string = 'otherusers'): Node {
     return {
-      id: user?.id ?? backupUserId,
+      id: (user?.id ?? backupUserId).toString(),
       shape: 'circularImage',
       group: group,
       image: user?.imageUrl ?? '/assets/img/default_profile.png',
-      label: user != null ? `${user.username}#${user.discriminator}` : backupUserId,
-      title: user?.id ?? backupUserId,
+      label: user != null ? `${user.username}#${user.discriminator}` : backupUserId.toString(),
+      title: (user?.id ?? backupUserId).toString(),
       size: size,
-      searchFor: user?.id ?? backupUserId
+      searchFor: (user?.id ?? backupUserId).toString()
     } as Node
   }
 
-  newGuildNode(guild: Guild, guildId: string, size: number = 30, idPrefix: string = ''): Node {
+  newGuildNode(guild: DiscordGuild, guildId: string, size: number = 30, idPrefix: string = ''): Node {
     return {
-      id: idPrefix + guild?.id ?? guildId,
+      id: idPrefix + (guild?.id ?? guildId).toString(),
       shape: 'circularImage',
       group: 'basics',
       image: guild?.iconUrl ?? '/assets/img/default_profile.png',
       label: guild?.name ?? guildId,
-      title: guild?.id ?? guildId,
+      title: (guild?.id ?? guildId).toString(),
       size: size
     }
   }
@@ -393,10 +393,10 @@ export class UserscanComponent implements OnInit {
     }
   }
 
-  newBasicAutoModsNode(userId: string, guildId: string): Node {
+  newBasicAutomodsNode(userId: string, guildId: string): Node {
     return {
       id: `${userId}/${guildId}/automods`,
-      label: this.translator.instant('AutoMods'),
+      label: this.translator.instant('Automods'),
       group: `basics/sub`,
       shape: 'triangle',
       size: 15

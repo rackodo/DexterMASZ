@@ -7,9 +7,9 @@ namespace MASZ.Punishments.Events;
 
 public class PunishmentEventHandler : InternalEventHandler
 {
-	internal readonly AsyncEvent<Func<CaseTemplate, Task>> CaseTemplateCreatedEvent = new();
+	internal readonly AsyncEvent<Func<ModCaseTemplate, Task>> CaseTemplateCreatedEvent = new();
 
-	internal readonly AsyncEvent<Func<CaseTemplate, Task>> CaseTemplateDeletedEvent = new();
+	internal readonly AsyncEvent<Func<ModCaseTemplate, Task>> CaseTemplateDeletedEvent = new();
 
 	internal readonly AsyncEvent<Func<UploadedFile, ModCase, IUser, Task>> FileDeletedEvent = new();
 
@@ -79,13 +79,13 @@ public class PunishmentEventHandler : InternalEventHandler
 		remove => ModCaseRestoredEvent.Remove(value);
 	}
 
-	public event Func<CaseTemplate, Task> OnCaseTemplateCreated
+	public event Func<ModCaseTemplate, Task> OnCaseTemplateCreated
 	{
 		add => CaseTemplateCreatedEvent.Add(value);
 		remove => CaseTemplateCreatedEvent.Remove(value);
 	}
 
-	public event Func<CaseTemplate, Task> OnCaseTemplateDeleted
+	public event Func<ModCaseTemplate, Task> OnCaseTemplateDeleted
 	{
 		add => CaseTemplateDeletedEvent.Add(value);
 		remove => CaseTemplateDeletedEvent.Remove(value);

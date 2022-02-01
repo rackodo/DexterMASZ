@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IImageVersion } from 'src/app/models/IImageVersion';
+import { ImageVersion } from 'src/app/models/ImageVersion';
 
 @Component({
   selector: 'app-update-warning',
@@ -9,8 +9,8 @@ import { IImageVersion } from 'src/app/models/IImageVersion';
 })
 export class UpdateWarningComponent implements OnInit {
 
-  @Input() newestVersionObservable?: Observable<IImageVersion> = undefined;
-  public newestVersion?: IImageVersion = undefined;
+  @Input() newestVersionObservable?: Observable<ImageVersion> = undefined;
+  public newestVersion?: ImageVersion = undefined;
 
   constructor() { }
 

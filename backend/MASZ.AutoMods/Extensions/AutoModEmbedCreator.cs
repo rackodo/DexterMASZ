@@ -53,12 +53,12 @@ public static class AutoModEmbedCreator
 		return embed;
 	}
 
-	public static async Task<EmbedBuilder> CreateAutoModConfigEmbed(this AutoModConfig autoModerationConfig,
+	public static async Task<EmbedBuilder> CreateAutoModConfigEmbed(this AutoModConfig autoModConfig,
 		IUser actor, RestAction action, IServiceProvider provider)
 	{
 		var translator = provider.GetRequiredService<Translation>();
 
-		await translator.SetLanguage(autoModerationConfig.GuildId);
+		await translator.SetLanguage(autoModConfig.GuildId);
 
 		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
 
@@ -66,9 +66,9 @@ public static class AutoModEmbedCreator
 			embed.WithThumbnailUrl(actor.GetAvatarOrDefaultUrl());
 
 		embed.WithTitle(translator.Get<AutoModTranslator>().AutoModeration() + ": " +
-		                translator.Get<AutoModEnumTranslator>().Enum(autoModerationConfig.AutoModType));
+		                translator.Get<AutoModEnumTranslator>().Enum(autoModConfig.AutoModType));
 
-		var autoModTypeName = translator.Get<AutoModEnumTranslator>().Enum(autoModerationConfig.AutoModType);
+		var autoModTypeName = translator.Get<AutoModEnumTranslator>().Enum(autoModConfig.AutoModType);
 
 		switch (action)
 		{
@@ -85,53 +85,53 @@ public static class AutoModEmbedCreator
 					.NotificationAutoModerationConfigInternalDelete(autoModTypeName, actor));
 		}
 
-		if (autoModerationConfig.Limit != null)
+		if (autoModConfig.Limit != null)
 			embed.AddField(translator.Get<AutoModNotificationTranslator>().NotificationAutoModerationConfigLimit(),
-				$"`{autoModerationConfig.Limit}`", true);
+				$"`{autoModConfig.Limit}`", true);
 
-		if (autoModerationConfig.TimeLimitMinutes != null)
+		if (autoModConfig.TimeLimitMinutes != null)
 			embed.AddField(translator.Get<AutoModNotificationTranslator>().NotificationAutoModerationConfigTimeLimit(),
-				$"`{autoModerationConfig.TimeLimitMinutes}`", true);
+				$"`{autoModConfig.TimeLimitMinutes}`", true);
 
-		if (autoModerationConfig.Limit != null || autoModerationConfig.TimeLimitMinutes != null)
+		if (autoModConfig.Limit != null || autoModConfig.TimeLimitMinutes != null)
 			embed.AddField("​", "​"); // ZERO WIDTH SPACE
 
-		if (autoModerationConfig.IgnoreRoles.Length > 0)
+		if (autoModConfig.IgnoreRoles.Length > 0)
 			embed.AddField(translator.Get<AutoModNotificationTranslator>().NotificationAutoModerationConfigIgnoredRoles(),
-				string.Join(" ", autoModerationConfig.IgnoreRoles.Select(x => $"<@&{x}>")), true);
+				string.Join(" ", autoModConfig.IgnoreRoles.Select(x => $"<@&{x}>")), true);
 
-		if (autoModerationConfig.IgnoreChannels.Length > 0)
+		if (autoModConfig.IgnoreChannels.Length > 0)
 			embed.AddField(translator.Get<AutoModNotificationTranslator>().NotificationAutoModerationConfigIgnoredChannels(),
-				string.Join(" ", autoModerationConfig.IgnoreChannels.Select(x => $"<#{x}>")), true);
+				string.Join(" ", autoModConfig.IgnoreChannels.Select(x => $"<#{x}>")), true);
 
-		if (autoModerationConfig.IgnoreRoles.Length > 0 || autoModerationConfig.IgnoreChannels.Length > 0)
+		if (autoModConfig.IgnoreRoles.Length > 0 || autoModConfig.IgnoreChannels.Length > 0)
 			embed.AddField("​", "​"); // ZERO WIDTH SPACE
 
-		if (autoModerationConfig.PunishmentType != null &&
-		    autoModerationConfig.AutoModAction is AutoModAction.CaseCreated or AutoModAction.ContentDeletedAndCaseCreated)
+		if (autoModConfig.PunishmentType != null &&
+		    autoModConfig.AutoModAction is AutoModAction.CaseCreated or AutoModAction.ContentDeletedAndCaseCreated)
 		{
 			embed.AddField($"⚖ {translator.Get<PunishmentTranslator>().Punishment()}",
-				translator.Get<PunishmentEnumTranslator>().Enum(autoModerationConfig.PunishmentType.Value), true);
+				translator.Get<PunishmentEnumTranslator>().Enum(autoModConfig.PunishmentType.Value), true);
 
-			if (autoModerationConfig.PunishmentDurationMinutes > 0)
+			if (autoModConfig.PunishmentDurationMinutes > 0)
 				embed.AddField(
 					$"⏰ {translator.Get<AutoModNotificationTranslator>().NotificationAutoModerationConfigDuration()}",
-					$"`{autoModerationConfig.PunishmentDurationMinutes}`", true);
+					$"`{autoModConfig.PunishmentDurationMinutes}`", true);
 
 			embed.AddField(
 				translator.Get<AutoModNotificationTranslator>().NotificationAutoModerationConfigSendPublic(),
-				autoModerationConfig.SendPublicNotification.GetCheckEmoji(),
+				autoModConfig.SendPublicNotification.GetCheckEmoji(),
 				true);
 
 			embed.AddField(
 				translator.Get<AutoModNotificationTranslator>().NotificationAutoModerationConfigSendDm(),
-				autoModerationConfig.SendDmNotification.GetCheckEmoji(),
+				autoModConfig.SendDmNotification.GetCheckEmoji(),
 				true);
 		}
 
 		embed.AddField(
 			translator.Get<AutoModNotificationTranslator>().NotificationAutoModerationConfigDeleteMessage(),
-			(autoModerationConfig.AutoModAction is AutoModAction.ContentDeleted or AutoModAction.ContentDeletedAndCaseCreated).GetCheckEmoji(),
+			(autoModConfig.AutoModAction is AutoModAction.ContentDeleted or AutoModAction.ContentDeletedAndCaseCreated).GetCheckEmoji(),
 			true);
 
 		return embed;

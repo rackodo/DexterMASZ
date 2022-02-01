@@ -7,7 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'src/app/components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ScheduledMessageEditDialogComponent } from 'src/app/components/dialogs/scheduled-message-edit-dialog/scheduled-message-edit-dialog.component';
 import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
-import { IScheduledMessage } from 'src/app/models/IScheduledMessage';
+import { ScheduledMessageExtended } from 'src/app/models/ScheduledMessageExtended';
+import { ScheduledMessage } from 'src/app/models/ScheduledMessage';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
@@ -25,7 +26,7 @@ export class GuildMessageCardComponent implements OnInit {
   public status?: string;
   public failureReason?: string;
 
-  @Input() message!: IScheduledMessage;
+  @Input() message!: ScheduledMessageExtended;
   @Output() deleteEvent = new EventEmitter<number>();
 
   constructor(private auth: AuthService, private enumManager: EnumManagerService, private toastr: ToastrService, private route: ActivatedRoute, private api: ApiService, private dialog: MatDialog, private translator: TranslateService) { }
@@ -38,21 +39,21 @@ export class GuildMessageCardComponent implements OnInit {
     });
 
     this.enumManager.getEnum(ApiEnumTypes.SCHEDULEMESSAGESTATUS).subscribe(data => {
-      this.status = data?.find(x => x.key === this.message.status)?.value;
+      this.status = data?.find(x => x.key === this.message.scheduledMessage.status)?.value;
     });
     this.enumManager.getEnum(ApiEnumTypes.SCHEDULEMESSAGEFAILUREREASON).subscribe(data => {
-      this.failureReason = data?.find(x => x.key === this.message.failureReason)?.value;
+      this.failureReason = data?.find(x => x.key === this.message.scheduledMessage.failureReason)?.value;
     });
   }
 
   editMessage() {
-    let messageDto: IScheduledMessage = {
-      id: this.message.id,
-      content: this.message.content,
-      scheduledFor: this.message.scheduledFor,
-      name: this.message.name,
-      channelId: this.message.channelId
-    } as IScheduledMessage;
+    let messageDto: ScheduledMessage = {
+      id: this.message.scheduledMessage.id,
+      content: this.message.scheduledMessage.content,
+      scheduledFor: this.message.scheduledMessage.scheduledFor,
+      name: this.message.scheduledMessage.name,
+      channelId: this.message.scheduledMessage.channelId
+    } as ScheduledMessage;
     const editDialogRef = this.dialog.open(ScheduledMessageEditDialogComponent, {
       data: messageDto,
       minWidth: '800px'
@@ -66,7 +67,7 @@ export class GuildMessageCardComponent implements OnInit {
           scheduledFor: messageDto.scheduledFor?.toISOString()
         }
 
-        this.api.putSimpleData(`/guilds/${this.guildId}/scheduledmessages/${this.message.id}`, body, undefined, true, true).subscribe((data) => {
+        this.api.putSimpleData(`/guilds/${this.guildId}/scheduledmessages/${this.message.scheduledMessage.id}`, body, undefined, true, true).subscribe((data) => {
           this.message = data;
           this.toastr.success(this.translator.instant('ScheduledMessageEditDialog.EditSuccess'));
         }, error => {
@@ -80,9 +81,9 @@ export class GuildMessageCardComponent implements OnInit {
     const editDialogRef = this.dialog.open(ConfirmationDialogComponent);
     editDialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        this.api.deleteData(`/guilds/${this.guildId}/scheduledmessages/${this.message.id}`, undefined, true, true).subscribe(() => {
+        this.api.deleteData(`/guilds/${this.guildId}/scheduledmessages/${this.message.scheduledMessage.id}`, undefined, true, true).subscribe(() => {
           this.toastr.success(this.translator.instant('ScheduledMessageEditDialog.DeleteSuccess'));
-          this.deleteEvent.emit(this.message.id);
+          this.deleteEvent.emit(this.message.scheduledMessage.id);
         });
       }
     });

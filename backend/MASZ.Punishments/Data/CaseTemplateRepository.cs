@@ -29,7 +29,7 @@ public class CaseTemplateRepository : Repository, DeleteGuildData
 		await _punishmentDatabase.DeleteAllTemplatesForGuild(guildId);
 	}
 
-	public async Task<CaseTemplate> CreateTemplate(CaseTemplate template)
+	public async Task<ModCaseTemplate> CreateTemplate(ModCaseTemplate template)
 	{
 		var existingTemplates = await _punishmentDatabase.GetAllTemplatesFromUser(template.UserId);
 
@@ -46,7 +46,7 @@ public class CaseTemplateRepository : Repository, DeleteGuildData
 		return template;
 	}
 
-	public async Task<CaseTemplate> GetTemplate(int id)
+	public async Task<ModCaseTemplate> GetTemplate(int id)
 	{
 		var template = await _punishmentDatabase.GetSpecificCaseTemplate(id);
 
@@ -56,17 +56,17 @@ public class CaseTemplateRepository : Repository, DeleteGuildData
 		return template;
 	}
 
-	public async Task DeleteTemplate(CaseTemplate template)
+	public async Task DeleteTemplate(ModCaseTemplate template)
 	{
 		await _punishmentDatabase.DeleteSpecificCaseTemplate(template);
 
 		_eventHandler.CaseTemplateDeletedEvent.Invoke(template);
 	}
 
-	public async Task<List<CaseTemplate>> GetTemplatesBasedOnPermissions(Identity identity)
+	public async Task<List<ModCaseTemplate>> GetTemplatesBasedOnPermissions(Identity identity)
 	{
 		var templates = await _punishmentDatabase.GetAllCaseTemplates();
-		List<CaseTemplate> filteredTemplates = new();
+		List<ModCaseTemplate> filteredTemplates = new();
 
 		foreach (var template in templates)
 			if (await AllowedToView(template, identity))
@@ -75,7 +75,7 @@ public class CaseTemplateRepository : Repository, DeleteGuildData
 		return filteredTemplates;
 	}
 
-	private async Task<bool> AllowedToView(CaseTemplate template, Identity identity)
+	private async Task<bool> AllowedToView(ModCaseTemplate template, Identity identity)
 	{
 		if (identity.GetCurrentUser().IsBot)
 			return true;

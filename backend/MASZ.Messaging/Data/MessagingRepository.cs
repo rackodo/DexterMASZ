@@ -1,4 +1,5 @@
 ﻿using MASZ.Bot.Abstractions;
+using MASZ.Bot.Dynamics;
 using MASZ.Bot.Exceptions;
 using MASZ.Bot.Services;
 using MASZ.Messaging.Enums;
@@ -6,7 +7,7 @@ using MASZ.Messaging.Models;
 
 namespace MASZ.Messaging.Data;
 
-public class MessagingRepository : Repository
+public class MessagingRepository : Repository, DeleteGuildData
 {
 	private readonly MessagingDatabase _messagingDatabase;
 
@@ -93,5 +94,10 @@ public class MessagingRepository : Repository
 	public async Task DeleteMessagesForGuild(ulong guildId)
 	{
 		await _messagingDatabase.DeleteMessagesForGuild(guildId);
+	}
+
+	public async Task DeleteGuildData(ulong guildId)
+	{
+		await DeleteMessagesForGuild(guildId);
 	}
 }

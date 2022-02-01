@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { ContentLoading } from 'src/app/models/ContentLoading';
-import { Guild } from 'src/app/models/Guild';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -11,10 +11,10 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './dashboard-guildinfo.component.html',
   styleUrls: ['./dashboard-guildinfo.component.css']
 })
-export class DashboardGuildinfoComponent implements OnInit {
+export class DashboardGuildInfoComponent implements OnInit {
 
   private guildId!: string;
-  public guild: ContentLoading<Guild> = { loading: true, content: undefined };
+  public guild: ContentLoading<DiscordGuild> = { loading: true, content: undefined };
 
   constructor(private route: ActivatedRoute, private api: ApiService, private toastr: ToastrService, private translator: TranslateService) { }
 

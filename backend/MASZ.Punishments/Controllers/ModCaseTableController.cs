@@ -54,7 +54,7 @@ public class ModCaseTableController : AuthenticatedController
 			ModCaseTableSortType.SortByDeleting));
 	}
 
-	private async Task<CaseTable> GenerateTable(ulong guildId, ModCaseTableType tableType, int startPage = 0,
+	private async Task<ModCaseTable> GenerateTable(ulong guildId, ModCaseTableType tableType, int startPage = 0,
 		ModCaseTableFilterDto search = null, ModCaseTableSortType sortBy = ModCaseTableSortType.Default)
 	{
 		var identity = await SetupAuthentication();
@@ -167,7 +167,7 @@ public class ModCaseTableController : AuthenticatedController
 
 		var modCaseTableEntries = table as ModCaseTableEntry[] ?? table.ToArray();
 
-		return new CaseTable(modCaseTableEntries.Skip(startPage * 20).Take(20).ToList(),
+		return new ModCaseTable(modCaseTableEntries.Skip(startPage * 20).Take(20).ToList(),
 			modCaseTableEntries.Length);
 	}
 }

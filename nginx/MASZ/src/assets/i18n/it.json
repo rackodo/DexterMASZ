@@ -19,7 +19,7 @@
     "Punishments": "punizioni",
     "Bans": "Divieti",
     "Mutes": "Disattiva",
-    "AutoMods": "AutoMod",
+    "Automods": "AutoMod",
     "Invite": "Invitare",
     "Invites": "invita",
     "Usernotes": "Note utente",
@@ -224,7 +224,7 @@
         "GuildCreated": "Gilda creata",
         "GuildUpdated": "Gilda aggiornata"
     },
-    "GuildAuditLogConfig": {
+    "GuildAuditConfig": {
         "TargetChannel": "Canale di destinazione",
         "ComingSoon": "Prossimamente",
         "PingRoles": "Ping ruoli",
@@ -301,7 +301,7 @@
             "title": "Incorpora",
             "details": "Un messaggio sulla tua gilda contiene troppi incorporamenti."
         },
-        "AutoMods": {
+        "Automods": {
             "title": "AutoModerazione",
             "details": "Un utente attiva troppe moderazioni automatiche in un intervallo di tempo definito."
         },
@@ -391,7 +391,7 @@
         "Overview": "Panoramica",
         "Cases": "casi",
         "Punishments": "punizioni",
-        "AutoMods": "AutoModerazione",
+        "Automods": "AutoModerazione",
         "ChooseADate": "Scegli una data",
         "Reset": "Ripristina"
     },

@@ -6,23 +6,23 @@ import { AppUser } from './models/AppUser';
 import { ToastrService } from 'ngx-toastr';
 import { GuildDeleteDialogComponent } from './components/guilds/guild-delete-dialog/guild-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Guild } from './models/Guild';
+import { DiscordGuild } from './models/DiscordGuild';
 import { GuildDeleteDialogData } from './models/GuildDeleteDialogData';
 import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { HttpParams } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { IApplicationInfo } from './models/IApplicationInfo';
+import { DiscordApplication } from './models/DiscordApplication';
 import { ApplicationInfoService } from './services/application-info.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DEFAULT_LANGUAGE, DEFAULT_TIMEZONE, LANGUAGES, TIMEZONES } from './config/config';
 import { TimezoneService } from './services/timezone.service';
 import { CookieTrackerService } from './services/cookie-tracker.service';
-import { ILocalAppSettings } from './models/ILocalAppSettings';
+import { LocalAppSettings } from './models/LocalAppSettings';
 import { AppVersion } from './models/AppVersion';
 import { VersionManagerService } from './services/version-manager.service';
-import { IImageVersion } from './models/IImageVersion';
+import { ImageVersion } from './models/ImageVersion';
 import { ReplaySubject } from 'rxjs';
 
 
@@ -39,15 +39,15 @@ export class AppComponent implements OnInit{
   currentUser!: AppUser;
   guildDeleteDialogData!: GuildDeleteDialogData;
   @ViewChild('snav') snav: any;
-  applicationInfo?: IApplicationInfo = undefined;
+  applicationInfo?: DiscordApplication = undefined;
   languages = LANGUAGES;
   timezones = TIMEZONES;
-  currentAppSettings: ILocalAppSettings = {
+  currentAppSettings: LocalAppSettings = {
     language: DEFAULT_LANGUAGE,
     timezone: DEFAULT_TIMEZONE
   };
   triggerVersionLoadOnce: boolean = true;
-  newVersionFound: ReplaySubject<IImageVersion> = new ReplaySubject(1);
+  newVersionFound: ReplaySubject<ImageVersion> = new ReplaySubject(1);
 
   public changeLanguage(lang: string) {
     this.translator.use(lang);
@@ -93,7 +93,7 @@ export class AppComponent implements OnInit{
       this.currentAppSettings.timezone = data;
     });
 
-    this.api.getSimpleData('/meta/application').subscribe((data: IApplicationInfo) => {
+    this.api.getSimpleData('/meta/application').subscribe((data: DiscordApplication) => {
       this.applicationInfoService.infoChanged(data);
     });
 
@@ -101,7 +101,7 @@ export class AppComponent implements OnInit{
       this.currentAppSettings.language = this.translator.currentLang;
     });
 
-    this.cookieTracker.settings.subscribe((data: ILocalAppSettings) => {
+    this.cookieTracker.settings.subscribe((data: LocalAppSettings) => {
       if (TIMEZONES.includes(data.timezone)) {  // user might enter random stuff
         this.currentAppSettings.timezone = data.timezone;
         this.timezoneService.timezoneChanged(data.timezone);
@@ -133,7 +133,7 @@ export class AppComponent implements OnInit{
         this.toastr.error(this.translator.instant('AdminStats.FailedToLoadLocalVersion'));
       });
 
-      this.api.getSimpleData(`/meta/versions`).subscribe((data: IImageVersion[]) => {
+      this.api.getSimpleData(`/meta/versions`).subscribe((data: ImageVersion[]) => {
         this.versionManager.availableVersionsChanged(data);
       }, error => {
         console.error(error);
@@ -168,7 +168,7 @@ export class AppComponent implements OnInit{
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
-  deleteGuild(guild: Guild) {
+  deleteGuild(guild: DiscordGuild) {
     this.guildDeleteDialogData = {
       guild: guild,
       deleteData: false

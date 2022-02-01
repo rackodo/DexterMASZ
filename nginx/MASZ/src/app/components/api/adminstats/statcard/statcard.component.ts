@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IServiceStatus } from 'src/app/models/IServiceStatus';
+import { ServiceStatus } from 'src/app/models/ServiceStatus';
 
 @Component({
   selector: 'app-statcard',
@@ -11,7 +11,7 @@ export class StatcardComponent implements OnInit {
   @Input() titleKey: string = "";
   @Input() text?: string | number | undefined;
   @Input() emote?: string;
-  @Input() renderPing?: IServiceStatus = undefined;
+  @Input() renderPing?: ServiceStatus = undefined;
   @Input() warningPingLimit: number = 200;
   @Input() errorPingLimit: number = 400;
 

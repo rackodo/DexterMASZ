@@ -9,7 +9,7 @@ import { ContentLoading } from 'src/app/models/ContentLoading';
 import { ApiService } from 'src/app/services/api.service';
 import { ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/confirmation-dialog.component';
 import { compare } from 'compare-versions';
-import { IImageVersion } from 'src/app/models/IImageVersion';
+import { ImageVersion } from 'src/app/models/ImageVersion';
 import { VersionManagerService } from 'src/app/services/version-manager.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class AdminStatsComponent implements OnInit {
   public secondsToNewCache?: string = '--';
   public minutesToNewCache?: string = '--';
   public stats: ContentLoading<AdminStats> = { loading: true, content: undefined };
-  public newVersionFound: ReplaySubject<IImageVersion> = new ReplaySubject(1);
+  public newVersionFound: ReplaySubject<ImageVersion> = new ReplaySubject(1);
   public localVersionFound?: string = undefined;
 
   constructor(private api: ApiService, private toastr: ToastrService, private dialog: MatDialog, private translator: TranslateService, private versionManager: VersionManagerService) { }

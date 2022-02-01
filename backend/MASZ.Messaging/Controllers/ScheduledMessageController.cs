@@ -67,7 +67,8 @@ public class ScheduledMessageController : AuthenticatedController
 			Name = dto.Name,
 			Content = dto.Content,
 			ScheduledFor = dto.ScheduledFor,
-			ChannelId = dto.ChannelId
+			ChannelId = dto.ChannelId,
+			GuildId = guildId
 		};
 
 		if (message.ScheduledFor < DateTime.UtcNow.AddMinutes(1))

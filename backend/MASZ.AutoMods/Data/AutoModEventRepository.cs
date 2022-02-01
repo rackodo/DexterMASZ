@@ -58,12 +58,12 @@ public class AutoModEventRepository : Repository,
 
 	public async Task AddChartData(dynamic chart, ulong guildId, DateTime since)
 	{
-		chart.autoModerations = await GetCounts(guildId, since);
+		chart.autoMods = await GetCounts(guildId, since);
 	}
 
 	public async Task AddGuildStatistics(dynamic stats, ulong guildId)
 	{
-		stats.punishmentsCount = await CountEventsByGuild(guildId);
+		stats.autoModCount = await CountEventsByGuild(guildId);
 	}
 
 	public async Task AddNetworkData(dynamic network, List<string> modGuilds, ulong userId)

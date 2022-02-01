@@ -13,7 +13,7 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 	{
 	}
 
-	public DbSet<CaseTemplate> CaseTemplates { get; set; }
+	public DbSet<ModCaseTemplate> CaseTemplates { get; set; }
 
 	public DbSet<ModCaseComment> ModCaseComments { get; set; }
 
@@ -34,17 +34,17 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 			.OnDelete(DeleteBehavior.Cascade);
 	}
 
-	public async Task<CaseTemplate> GetSpecificCaseTemplate(int templateId)
+	public async Task<ModCaseTemplate> GetSpecificCaseTemplate(int templateId)
 	{
 		return await CaseTemplates.AsQueryable().FirstOrDefaultAsync(x => x.Id == templateId);
 	}
 
-	public async Task<List<CaseTemplate>> GetAllCaseTemplates()
+	public async Task<List<ModCaseTemplate>> GetAllCaseTemplates()
 	{
 		return await CaseTemplates.AsQueryable().OrderByDescending(x => x.CreatedAt).ToListAsync();
 	}
 
-	public async Task<List<CaseTemplate>> GetAllTemplatesFromUser(ulong userId)
+	public async Task<List<ModCaseTemplate>> GetAllTemplatesFromUser(ulong userId)
 	{
 		return await CaseTemplates.AsQueryable().Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedAt)
 			.ToListAsync();
@@ -55,13 +55,13 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 		return await CaseTemplates.AsQueryable().CountAsync();
 	}
 
-	public async Task SaveCaseTemplate(CaseTemplate template)
+	public async Task SaveCaseTemplate(ModCaseTemplate template)
 	{
 		await CaseTemplates.AddAsync(template);
 		await SaveChangesAsync();
 	}
 
-	public async Task DeleteSpecificCaseTemplate(CaseTemplate template)
+	public async Task DeleteSpecificCaseTemplate(ModCaseTemplate template)
 	{
 		CaseTemplates.Remove(template);
 		await SaveChangesAsync();

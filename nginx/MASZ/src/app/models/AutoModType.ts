@@ -4,7 +4,7 @@ export enum AutoModType {
   TooManyMentions,
   TooManyAttachments,
   TooManyEmbeds,
-  TooManyAutoMods,
+  TooManyAutomods,
   CustomWordFilter,
   TooManyMessages
 }

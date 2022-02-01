@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MASZ.UserMaps", "MASZ.UserM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Launch", "Launch\Launch.csproj", "{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MASZ.Messaging", "MASZ.Messaging\MASZ.Messaging.csproj", "{8BE049C2-1FA3-4264-8806-7EC8488A228E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MASZ.Messaging", "MASZ.Messaging\MASZ.Messaging.csproj", "{8BE049C2-1FA3-4264-8806-7EC8488A228E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

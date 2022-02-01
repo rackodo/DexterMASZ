@@ -4,8 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AutoModConfig } from 'src/app/models/AutoModConfig';
 import { AutoModRuleDefinition } from 'src/app/models/AutoModRuleDefinitions';
-import { Guild } from 'src/app/models/Guild';
-import { GuildChannel } from 'src/app/models/GuildChannel';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
+import { DiscordChannel } from 'src/app/models/DiscordChannel';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -49,7 +49,7 @@ export class AutoModConfigComponent implements OnInit {
     },
     {
       type: 5,
-      key: 'AutoMods',
+      key: 'Automods',
       showLimitField: true,
       showTimeLimitField: true
     },
@@ -88,8 +88,8 @@ export class AutoModConfigComponent implements OnInit {
   ];
 
   public guildId!: string;
-  public guildInfo!: Guild;
-  public guildChannels!: GuildChannel[];
+  public guildInfo!: DiscordGuild;
+  public guildChannels!: DiscordChannel[];
   public initialConfigs!: Promise<AutoModConfig[]>;
 
   constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, private translator: TranslateService) { }
@@ -100,13 +100,13 @@ export class AutoModConfigComponent implements OnInit {
   }
 
   reload() {
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}`).subscribe((data: Guild) => {
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}`).subscribe((data: DiscordGuild) => {
       data.roles = data.roles.sort((a, b) => (a.position < b.position) ? 1 : -1);
       this.guildInfo = data;
     }, () => {
       this.toastr.error(this.translator.instant('AutoModConfig.FailedToLoadGuild'));
     });
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}/channels`).subscribe((data: GuildChannel[]) => {
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}/channels`).subscribe((data: DiscordChannel[]) => {
       this.guildChannels = data.filter(x => x.type === 0).sort((a, b) => (a.position > b.position) ? 1 : -1);
     }, () => {
       this.toastr.error(this.translator.instant('AutoModConfig.FailedToLoadChannels'));

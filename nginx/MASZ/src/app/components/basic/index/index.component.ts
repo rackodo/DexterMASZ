@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IApplicationInfo } from 'src/app/models/IApplicationInfo';
+import { DiscordApplication } from 'src/app/models/DiscordApplication';
 import { ApplicationInfoService } from 'src/app/services/application-info.service';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -13,7 +13,7 @@ export class IndexComponent implements OnInit {
 
   public initLoading: boolean = true;
   public attemptingLogin: boolean = false;
-  public applicationInfo?: IApplicationInfo = undefined;
+  public applicationInfo?: DiscordApplication = undefined;
 
   constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router, private applicationInfoService: ApplicationInfoService) { }
 

@@ -12,7 +12,7 @@ import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordUser } from 'src/app/models/DiscordUser';
 import { UserNote } from 'src/app/models/UserNote';
 import { UserNoteDto } from 'src/app/models/UserNoteDto';
-import { UserNoteView } from 'src/app/models/UserNoteView';
+import { UserNoteExpanded } from 'src/app/models/UserNoteExpanded';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -30,9 +30,9 @@ export class GuildUsernotesComponent implements OnInit {
   private timeout: any;
   public loading: boolean = true;
   public searchString: string = '';
-  private $showUserNotes: ReplaySubject<UserNoteView[]> = new ReplaySubject<UserNoteView[]>(1);
-  public showUserNotes: Observable<UserNoteView[]> = this.$showUserNotes.asObservable();
-  public allUserNotes: UserNoteView[] = [];
+  private $showUserNotes: ReplaySubject<UserNoteExpanded[]> = new ReplaySubject<UserNoteExpanded[]>(1);
+  public showUserNotes: Observable<UserNoteExpanded[]> = this.$showUserNotes.asObservable();
+  public allUserNotes: UserNoteExpanded[] = [];
   constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, private _formBuilder: FormBuilder, private translator: TranslateService) { }
 
   ngOnInit(): void {
@@ -67,7 +67,7 @@ export class GuildUsernotesComponent implements OnInit {
 
     return this.users.content?.filter(option =>
        ((option.username + "#" + option.discriminator).toLowerCase().includes(filterValue) ||
-       option.id.includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
+       option.id.toString().includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
   }
 
   private reloadData() {
@@ -76,7 +76,7 @@ export class GuildUsernotesComponent implements OnInit {
     this.allUserNotes = [];
     this.users = { loading: true, content: [] };
 
-    this.api.getSimpleData(`/guilds/${this.guildId}/usernoteview`).subscribe((data: UserNoteView[]) => {
+    this.api.getSimpleData(`/guilds/${this.guildId}/usernoteview`).subscribe((data: UserNoteExpanded[]) => {
       this.allUserNotes = data;
       this.loading = false;
       this.search();
@@ -111,8 +111,8 @@ export class GuildUsernotesComponent implements OnInit {
     let tempSearch = this.searchString.toLowerCase();
     if (tempSearch.trim()) {
       this.$showUserNotes.next(this.allUserNotes.filter(
-        x => x.userNote.creatorId.includes(tempSearch) ||
-            x.userNote.userId.includes(tempSearch) ||
+        x => x.userNote.creatorId.toString().includes(tempSearch) ||
+            x.userNote.userId.toString().includes(tempSearch) ||
             x.userNote.description.toLowerCase().includes(tempSearch) ||
             (x.moderator?.username + "#" + x.moderator?.discriminator).toLowerCase().includes(tempSearch) ||
             (x.user?.username + "#" + x.user?.discriminator).toLowerCase().includes(tempSearch)

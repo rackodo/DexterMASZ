@@ -6,9 +6,9 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ApiEnum } from 'src/app/models/ApiEnum';
 import { ContentLoading } from 'src/app/models/ContentLoading';
-import { Guild } from 'src/app/models/Guild';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { GuildConfig } from 'src/app/models/GuildConfig';
-import { GuildRole } from 'src/app/models/GuildRole';
+import { DiscordRole } from 'src/app/models/DiscordRole';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 
@@ -26,7 +26,7 @@ export class GuildEditComponent implements OnInit {
 
   public allLanguages: ApiEnum[] = [];
 
-  public currentGuild: ContentLoading<Guild> = { loading: true, content: {} as Guild }
+  public currentGuild: ContentLoading<DiscordGuild> = { loading: true, content: {} as DiscordGuild }
   public currentGuildConfig: ContentLoading<GuildConfig> = { loading: true, content: {} as GuildConfig }
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router, private toastr: ToastrService, private _formBuilder: FormBuilder, private translator: TranslateService, private enumManager: EnumManagerService) { }
 
@@ -57,13 +57,13 @@ export class GuildEditComponent implements OnInit {
       });
   }
 
-  generateRoleColor(role: GuildRole): string {
+  generateRoleColor(role: DiscordRole): string {
     return '#' + role.color.toString(16);
   }
 
   loadGuild(id: string|null) {
-    this.currentGuild = { loading: true, content: {} as Guild };
-    this.api.getSimpleData(`/discord/guilds/${id}`).subscribe((data: Guild) => {
+    this.currentGuild = { loading: true, content: {} as DiscordGuild };
+    this.api.getSimpleData(`/discord/guilds/${id}`).subscribe((data: DiscordGuild) => {
       data.roles = data.roles.sort((a, b) => (a.position < b.position) ? 1 : -1);
       this.currentGuild = { loading: false, content: data };
     }, error => {

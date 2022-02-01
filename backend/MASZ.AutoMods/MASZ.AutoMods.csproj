@@ -8,6 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\MASZ.Bot\MASZ.Bot.csproj" />
 		<ProjectReference Include="..\MASZ.Punishments\MASZ.Punishments.csproj" />
 	</ItemGroup>
 

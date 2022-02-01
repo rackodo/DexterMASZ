@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { Guild } from 'src/app/models/Guild';
-import { GuildChannel } from 'src/app/models/GuildChannel';
-import { IGuildAuditLogConfig } from 'src/app/models/IGuildAuditLogConfig';
-import { IGuildAuditLogRuleDefinition } from 'src/app/models/IGuildAuditLogRuleDefinition';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
+import { DiscordChannel } from 'src/app/models/DiscordChannel';
+import { GuildAuditConfig } from 'src/app/models/GuildAuditConfig';
+import { GuildAuditRuleDefinition } from 'src/app/models/GuildAuditRuleDefinition';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class AuditlogConfigComponent implements OnInit {
 
-  types: IGuildAuditLogRuleDefinition[] = [
+  types: GuildAuditRuleDefinition[] = [
     {
       type: 0,
       key: 'MessageSent'
@@ -75,9 +75,9 @@ export class AuditlogConfigComponent implements OnInit {
   ];
 
   public guildId!: string;
-  public guildInfo!: Guild;
-  public guildChannels!: GuildChannel[];
-  public initialConfigs!: Promise<IGuildAuditLogConfig[]>;
+  public guildInfo!: DiscordGuild;
+  public guildChannels!: DiscordChannel[];
+  public initialConfigs!: Promise<GuildAuditConfig[]>;
 
   constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, private translator: TranslateService) { }
 
@@ -89,17 +89,17 @@ export class AuditlogConfigComponent implements OnInit {
   }
 
   reload() {
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}`).subscribe((data: Guild) => {
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}`).subscribe((data: DiscordGuild) => {
       data.roles = data.roles.sort((a, b) => (a.position < b.position) ? 1 : -1);
       this.guildInfo = data;
     }, () => {
-      this.toastr.error(this.translator.instant('GuildAuditLogConfig.FailedToLoadGuild'));
+      this.toastr.error(this.translator.instant('GuildAuditConfig.FailedToLoadGuild'));
     });
 
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}/channels`).subscribe((data: GuildChannel[]) => {
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}/channels`).subscribe((data: DiscordChannel[]) => {
       this.guildChannels = data.filter(x => x.type === 0).sort((a, b) => (a.position > b.position) ? 1 : -1);
     }, () => {
-      this.toastr.error(this.translator.instant('GuildAuditLogConfig.FailedToLoadChannels'));
+      this.toastr.error(this.translator.instant('GuildAuditConfig.FailedToLoadChannels'));
     });
 
     this.initialConfigs = this.api.getSimpleData(`/guilds/${this.guildId}/auditlog`).toPromise();

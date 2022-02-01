@@ -7,7 +7,7 @@ public class DiscordGuild
 {
 	public DiscordGuild(IGuild guild)
 	{
-		Id = guild.Id.ToString();
+		Id = guild.Id;
 		Name = guild.Name;
 		IconUrl = guild.IconUrl.GetAnimatedOrDefaultAvatar();
 		Roles = new List<DiscordRole>();
@@ -18,13 +18,13 @@ public class DiscordGuild
 
 	public DiscordGuild(UserGuild guild)
 	{
-		Id = guild.Id.ToString();
+		Id = guild.Id;
 		Name = guild.Name;
 		IconUrl = guild.IconUrl.GetAnimatedOrDefaultAvatar();
 		Roles = new List<DiscordRole>();
 	}
 
-	public string Id { get; set; }
+	public ulong Id { get; set; }
 	public string Name { get; set; }
 	public string IconUrl { get; set; }
 	public List<DiscordRole> Roles { get; set; }

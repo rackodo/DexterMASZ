@@ -1,5 +1,5 @@
 import { ApiEnum } from "./ApiEnum";
-import { CaseComment } from "./CaseComment";
+import { ModCaseComment } from "./ModCaseComment";
 import { PunishmentType } from "./PunishmentType";
 
 export interface ModCase {
@@ -29,7 +29,7 @@ export interface ModCase {
     lockedByUserId: string;
     markedToDeleteAt?: Date;
     deletedByUserId?: string;
-    comments: CaseComment[];
+    comments: ModCaseComment[];
 }
 
 export function convertModCaseToPunishmentString(modcase?: ModCase, punishments?: ApiEnum[]): string {
