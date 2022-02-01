@@ -401,7 +401,7 @@
         "FailedToLoad": "Failed to load comments."
     },
     "GuildStats": {
-        "GuildStats": "Guildstats",
+        "GuildStats": "Guild statistics",
         "FailedToLoad": "Failed to load guild stats."
     },
     "GuildInfoCard": {

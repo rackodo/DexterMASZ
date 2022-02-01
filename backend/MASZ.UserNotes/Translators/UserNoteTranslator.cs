@@ -12,10 +12,10 @@ public class UserNoteTranslator : Translator
 			Language.De => "Benutzernotiz",
 			Language.At => "Benutzanotiz",
 			Language.Fr => "Note de l'utilisateur",
-			Language.Es => "UserNote",
-			Language.Ru => "UserNote",
+			Language.Es => "Usernote",
+			Language.Ru => "Usernote",
 			Language.It => "Nota utente",
-			_ => "UserNote"
+			_ => "Usernote"
 		};
 	}
 	
@@ -29,7 +29,7 @@ public class UserNoteTranslator : Translator
 			Language.Es => "ID de nota de usuario",
 			Language.Ru => "идентификатор пользовательской заметки",
 			Language.It => "ID nota utente",
-			_ => "User Note ID"
+			_ => "Usernote ID"
 		};
 	}
 }

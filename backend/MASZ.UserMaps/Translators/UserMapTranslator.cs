@@ -12,11 +12,11 @@ public class UserMapTranslator : Translator
 		{
 			Language.De => $"Benutzerbeziehung zwischen {userMap.UserA} und {userMap.UserB}.",
 			Language.At => $"Benutzabeziehung zwischa {userMap.UserA} und {userMap.UserB}.",
-			Language.Fr => $"UserMap entre {userMap.UserA} et {userMap.UserB}.",
-			Language.Es => $"UserMap entre {userMap.UserA} y {userMap.UserB}.",
-			Language.Ru => $"UserMap между {userMap.UserA} и {userMap.UserB}.",
-			Language.It => $"UserMap tra {userMap.UserA} e {userMap.UserB}.",
-			_ => $"UserMap between {userMap.UserA} and {userMap.UserB}."
+			Language.Fr => $"Usermap entre {userMap.UserA} et {userMap.UserB}.",
+			Language.Es => $"Usermap entre {userMap.UserA} y {userMap.UserB}.",
+			Language.Ru => $"Usermap между {userMap.UserA} и {userMap.UserB}.",
+			Language.It => $"Usermap tra {userMap.UserA} e {userMap.UserB}.",
+			_ => $"Usermap between {userMap.UserA} and {userMap.UserB}."
 		};
 	}
 
@@ -26,11 +26,11 @@ public class UserMapTranslator : Translator
 		{
 			Language.De => "Benutzerbeziehung",
 			Language.At => "Benutzabeziehung",
-			Language.Fr => "UserMap",
-			Language.Es => "UserMap",
-			Language.Ru => "UserMap",
+			Language.Fr => "Usermap",
+			Language.Es => "Usermap",
+			Language.Ru => "Usermap",
 			Language.It => "Mappa utente",
-			_ => "UserMap"
+			_ => "Usermap"
 		};
 	}
 
@@ -40,11 +40,11 @@ public class UserMapTranslator : Translator
 		{
 			Language.De => "Benutzerbeziehungen",
 			Language.At => "Benutzabeziehungen",
-			Language.Fr => "UserMaps",
-			Language.Es => "UserMaps",
-			Language.Ru => "UserMaps",
+			Language.Fr => "Usermaps",
+			Language.Es => "Usermaps",
+			Language.Ru => "Usermaps",
 			Language.It => "Mappe utente",
-			_ => "UserMaps"
+			_ => "Usermaps"
 		};
 	}
 
@@ -58,7 +58,7 @@ public class UserMapTranslator : Translator
 			Language.Es => "ID de mapa de usuario",
 			Language.Ru => "идентификатор пользовательской карты",
 			Language.It => "ID mappa utente",
-			_ => "User Note ID"
+			_ => "Usermap ID"
 		};
 	}
 }
