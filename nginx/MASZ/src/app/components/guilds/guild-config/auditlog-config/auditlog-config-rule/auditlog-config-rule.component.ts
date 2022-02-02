@@ -50,9 +50,9 @@ export class AuditlogConfigRuleComponent implements OnInit {
 
     this.initialConfigs.then((data: GuildAuditConfig[]) => {
       // if type in initial loaded configs
-      if (data.filter(x => x.guildAuditLogEvent == this.definition.type).length) {
+      if (data.filter(x => x.guildAuditEvent == this.definition.type).length) {
         this.enableConfig = true;
-        this.applyConfig(data.filter(x => x.guildAuditLogEvent == this.definition.type)[0]);
+        this.applyConfig(data.filter(x => x.guildAuditEvent == this.definition.type)[0]);
         this.initStuff = false;
       } else {
         this.enableConfig = false;
