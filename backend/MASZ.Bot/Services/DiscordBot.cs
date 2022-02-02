@@ -308,7 +308,7 @@ public class DiscordBot : IHostedService, Event
 					{
 						await context.Interaction.RespondAsync(embed: builder.Build());
 					}
-					catch (TimeoutException)
+					catch (Exception)
 					{
 						await context.Channel.SendMessageAsync(embed: builder.Build());
 					}
