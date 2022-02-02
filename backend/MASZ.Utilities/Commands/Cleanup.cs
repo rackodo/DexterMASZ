@@ -84,64 +84,60 @@ public class Cleanup : Command<Cleanup>
 	private static async Task<int> IterateAndDeleteChannels(ITextChannel channel, int limit,
 		Func<IMessage, bool> predicate, IUser currentActor, IUser filterUser = null)
 	{
-		ulong lastId = 0;
+		var latestMessage = await channel.GetMessagesAsync(1).FirstOrDefaultAsync();
+
+		if (latestMessage is null)
+			return 0;
+		else if (latestMessage.FirstOrDefault() is null)
+			return 0;
+
+		var lastId = latestMessage.First().Id;
 		var deleted = 0;
 
 		while (limit > 0)
 		{
 			var messages = channel.GetMessagesAsync(lastId, Direction.Before, Math.Min(limit, 100));
-			var breakAfterDeleteIteration = false;
-			List<IMessage> toDelete = new();
+			var toDelete = new List<IMessage>();
 
-			if (messages == null)
+			if (await messages.CountAsync() == 0)
+			{
 				break;
-
-			var count = await messages.CountAsync();
-
-			if (count == 0)
-				break;
-
-			if (count < Math.Min(limit, 100))
-				breakAfterDeleteIteration = true;
-
+			}
 			foreach (var message in await messages.FlattenAsync())
 			{
 				lastId = message.Id;
 				limit--;
-
 				if (filterUser != null && message.Author.Id != filterUser.Id)
-					continue;
-
-				if (!predicate(message)) continue;
-				deleted++;
-
-				if (message.CreatedAt.UtcDateTime.AddDays(14) > DateTime.UtcNow)
-					toDelete.Add(message);
-				else
-					await message.DeleteAsync();
-			}
-
-			switch (toDelete.Count)
-			{
-				case >= 2:
 				{
-					RequestOptions options = new()
-					{
-						AuditLogReason = $"Bulk delete by {currentActor.Username}#{currentActor.Discriminator} ({currentActor.Id})."
-					};
-
-					await channel.DeleteMessagesAsync(toDelete, options);
-					break;
+					continue;
 				}
-				case > 0:
-					await toDelete[0].DeleteAsync();
-					break;
+				if (predicate(message))
+				{
+					deleted++;
+					if (message.CreatedAt.UtcDateTime.AddDays(14) > DateTime.UtcNow)
+					{
+						toDelete.Add(message);
+					}
+					else
+					{
+						await message.DeleteAsync();
+					}
+				}
 			}
+			if (toDelete.Count >= 2)
+			{
+				RequestOptions options = new();
+				options.AuditLogReason = $"Bulkdelete by {currentActor.Username}#{currentActor.Discriminator} ({currentActor.Id}).";
 
-			if (breakAfterDeleteIteration)
-				break;
+				await channel.DeleteMessagesAsync(toDelete, options);
+				toDelete.Clear();
+			}
+			else if (toDelete.Count > 0)
+			{
+				await toDelete[0].DeleteAsync();
+				toDelete.Clear();
+			}
 		}
-
 		return deleted;
 	}
 }
