@@ -23,23 +23,23 @@ public static class GuildAuditEmbedCreator
 		if (actor != null)
 			embed.WithThumbnailUrl(actor.GetAvatarOrDefaultUrl());
 
-		embed.WithTitle(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditLogTitle());
+		embed.WithTitle(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditTitle());
 
-		var guildEventType = translator.Get<GuildAuditEnumTranslator>().Enum(config.GuildAuditLogEvent);
+		var guildEventType = translator.Get<GuildAuditEnumTranslator>().Enum(config.GuildAuditEvent);
 
 		switch (action)
 		{
 			case RestAction.Created:
 				embed.WithDescription(translator.Get<GuildAuditNotificationTranslator>()
-					.NotificationGuildAuditLogInternalCreate(guildEventType, actor));
+					.NotificationGuildAuditInternalCreate(guildEventType, actor));
 				break;
 			case RestAction.Updated:
 				embed.WithDescription(translator.Get<GuildAuditNotificationTranslator>()
-					.NotificationGuildAuditLogInternalUpdate(guildEventType, actor));
+					.NotificationGuildAuditInternalUpdate(guildEventType, actor));
 				break;
 			case RestAction.Deleted:
 				return embed.WithDescription(translator.Get<GuildAuditNotificationTranslator>()
-					.NotificationGuildAuditLogInternalDelete(guildEventType, actor));
+					.NotificationGuildAuditInternalDelete(guildEventType, actor));
 			default:
 				throw new ArgumentOutOfRangeException(nameof(action), action, null);
 		}
@@ -47,7 +47,7 @@ public static class GuildAuditEmbedCreator
 		embed.AddField(translator.Get<BotTranslator>().Channel(), $"<#{config.ChannelId}>");
 
 		if (config.PingRoles.Length > 0)
-			embed.AddField(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditLogMentionRoles(),
+			embed.AddField(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditMentionRoles(),
 				string.Join(" ", config.PingRoles.Select(x => $"<@&{x}>")));
 
 		return embed;

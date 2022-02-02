@@ -34,7 +34,7 @@ public class GuildAuditDatabase : DataContext<GuildAuditDatabase>, DataContextCr
 	public async Task<GuildAuditConfig> SelectAuditLogConfigForGuildAndType(ulong guildId, GuildAuditEvent type)
 	{
 		return await GuildAuditConfigs.AsQueryable()
-			.FirstOrDefaultAsync(x => x.GuildId == guildId && x.GuildAuditLogEvent == type);
+			.FirstOrDefaultAsync(x => x.GuildId == guildId && x.GuildAuditEvent == type);
 	}
 
 	public async Task PutAuditLogConfig(GuildAuditConfig auditLogConfig)

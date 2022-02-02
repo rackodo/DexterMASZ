@@ -27,21 +27,21 @@ public class GuildAuditEventAnnouncer : Event
 	public void RegisterEvents()
 	{
 		_eventHandler.OnGuildAuditConfigCreated +=
-			async (a, b) => await AnnounceGuildAuditLog(a, b, RestAction.Created);
+			async (a, b) => await AnnounceGuildAudit(a, b, RestAction.Created);
 
 		_eventHandler.OnGuildAuditConfigUpdated +=
-			async (a, b) => await AnnounceGuildAuditLog(a, b, RestAction.Updated);
+			async (a, b) => await AnnounceGuildAudit(a, b, RestAction.Updated);
 
 		_eventHandler.OnGuildAuditConfigDeleted +=
-			async (a, b) => await AnnounceGuildAuditLog(a, b, RestAction.Deleted);
+			async (a, b) => await AnnounceGuildAudit(a, b, RestAction.Deleted);
 	}
 
-	private async Task AnnounceGuildAuditLog(GuildAuditConfig config, IUser actor, RestAction action)
+	private async Task AnnounceGuildAudit(GuildAuditConfig config, IUser actor, RestAction action)
 	{
 		using var scope = _serviceProvider.CreateScope();
 
 		_logger.LogInformation(
-			$"Announcing guild audit log {config.GuildId}/{config.GuildAuditLogEvent} ({config.Id}).");
+			$"Announcing guild audit log {config.GuildId}/{config.GuildAuditEvent} ({config.Id}).");
 
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(config.GuildId);
@@ -49,7 +49,7 @@ public class GuildAuditEventAnnouncer : Event
 		if (!string.IsNullOrEmpty(guildConfig.ModInternalNotificationWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending internal webhook for guild audit log {config.GuildId}/{config.GuildAuditLogEvent} ({config.Id}) to {guildConfig.ModInternalNotificationWebhook}.");
+				$"Sending internal webhook for guild audit log {config.GuildId}/{config.GuildAuditEvent} ({config.Id}) to {guildConfig.ModInternalNotificationWebhook}.");
 
 			try
 			{
@@ -59,7 +59,7 @@ public class GuildAuditEventAnnouncer : Event
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing guild audit log {config.GuildId}/{config.GuildAuditLogEvent} ({config.Id}) to {guildConfig.ModInternalNotificationWebhook}.");
+					$"Error while announcing guild audit log {config.GuildId}/{config.GuildAuditEvent} ({config.Id}) to {guildConfig.ModInternalNotificationWebhook}.");
 			}
 		}
 	}

@@ -12,12 +12,12 @@ namespace MASZ.GuildAudits.Controllers;
 [Route("api/v1/guilds/{guildId}/auditlog")]
 public class GuildAuditConfigController : AuthenticatedController
 {
-	private readonly GuildAuditConfigRepository _guildAuditLogRepo;
+	private readonly GuildAuditConfigRepository _guildAuditRepo;
 
-	public GuildAuditConfigController(IdentityManager identityManager, GuildAuditConfigRepository guildAuditLogRepo) :
-		base(identityManager, guildAuditLogRepo)
+	public GuildAuditConfigController(IdentityManager identityManager, GuildAuditConfigRepository guildAuditRepo) :
+		base(identityManager, guildAuditRepo)
 	{
-		_guildAuditLogRepo = guildAuditLogRepo;
+		_guildAuditRepo = guildAuditRepo;
 	}
 
 	[HttpPut]
@@ -27,7 +27,7 @@ public class GuildAuditConfigController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Admin, guildId);
 
-		return Ok(await _guildAuditLogRepo.UpdateConfig(new GuildAuditConfig(dto, guildId)));
+		return Ok(await _guildAuditRepo.UpdateConfig(new GuildAuditConfig(dto, guildId)));
 	}
 
 	[HttpDelete("{type}")]
@@ -37,7 +37,7 @@ public class GuildAuditConfigController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Admin, guildId);
 
-		return Ok(await _guildAuditLogRepo.DeleteConfigForGuild(guildId, type));
+		return Ok(await _guildAuditRepo.DeleteConfigForGuild(guildId, type));
 	}
 
 	[HttpGet("{type}")]
@@ -47,7 +47,7 @@ public class GuildAuditConfigController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Admin, guildId);
 
-		return Ok(await _guildAuditLogRepo.GetConfigsByGuildAndType(guildId, type));
+		return Ok(await _guildAuditRepo.GetConfigsByGuildAndType(guildId, type));
 	}
 
 	[HttpGet]
@@ -57,6 +57,6 @@ public class GuildAuditConfigController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Admin, guildId);
 
-		return Ok(await _guildAuditLogRepo.GetConfigsByGuild(guildId));
+		return Ok(await _guildAuditRepo.GetConfigsByGuild(guildId));
 	}
 }

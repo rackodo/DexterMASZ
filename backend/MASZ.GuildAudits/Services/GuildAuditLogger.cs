@@ -15,13 +15,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MASZ.GuildAudits.Services;
 
-public class GuildAuditLogger : Event
+public class GuildAuditer : Event
 {
 	private readonly DiscordSocketClient _client;
 	private readonly InviteEventHandler _eventHandler;
 	private readonly IServiceProvider _serviceProvider;
 
-	public GuildAuditLogger(DiscordSocketClient client, IServiceProvider serviceProvider,
+	public GuildAuditer(DiscordSocketClient client, IServiceProvider serviceProvider,
 		InviteEventHandler eventHandler)
 	{
 		_client = client;
@@ -87,9 +87,9 @@ public class GuildAuditLogger : Event
 				return;
 
 			if (embed.Footer == null)
-				embed.WithFooter(auditLogConfig.GuildAuditLogEvent.ToString());
+				embed.WithFooter(auditLogConfig.GuildAuditEvent.ToString());
 			else
-				embed.WithFooter(embed.Footer.Text + $" | {auditLogConfig.GuildAuditLogEvent}");
+				embed.WithFooter(embed.Footer.Text + $" | {auditLogConfig.GuildAuditEvent}");
 
 			StringBuilder rolePings = new();
 

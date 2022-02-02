@@ -6,7 +6,7 @@ namespace MASZ.GuildAudits.Translators;
 
 public class GuildAuditNotificationTranslator : Translator
 {
-	public string NotificationGuildAuditLogMentionRoles()
+	public string NotificationGuildAuditMentionRoles()
 	{
 		return PreferredLanguage switch
 		{
@@ -20,7 +20,7 @@ public class GuildAuditNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationGuildAuditLogTitle()
+	public string NotificationGuildAuditTitle()
 	{
 		return PreferredLanguage switch
 		{
@@ -34,7 +34,7 @@ public class GuildAuditNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationGuildAuditLogInternalCreate(string eventName, IUser actor)
+	public string NotificationGuildAuditInternalCreate(string eventName, IUser actor)
 	{
 		return PreferredLanguage switch
 		{
@@ -53,7 +53,7 @@ public class GuildAuditNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationGuildAuditLogInternalUpdate(string eventName, IUser actor)
+	public string NotificationGuildAuditInternalUpdate(string eventName, IUser actor)
 	{
 		return PreferredLanguage switch
 		{
@@ -71,7 +71,7 @@ public class GuildAuditNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationGuildAuditLogInternalDelete(string eventName, IUser actor)
+	public string NotificationGuildAuditInternalDelete(string eventName, IUser actor)
 	{
 		return PreferredLanguage switch
 		{

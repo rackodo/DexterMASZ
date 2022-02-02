@@ -30,7 +30,7 @@ namespace MASZ.GuildAudits.Migrations
                     b.Property<ulong>("ChannelId")
                         .HasColumnType("bigint unsigned");
 
-                    b.Property<int>("GuildAuditLogEvent")
+                    b.Property<int>("GuildAuditEvent")
                         .HasColumnType("int");
 
                     b.Property<ulong>("GuildId")
