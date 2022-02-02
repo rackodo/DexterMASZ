@@ -1,9 +1,12 @@
+import { DiscordUser } from "./DiscordUser";
+import { DiscordChannel } from "./DiscordChannel";
+
 export interface ScheduledMessage {
     id: number;
     name: string;
     content: string;
     scheduledFor: Date;
-    status: ScheduledMessageExtendedStatus;
+    status: ScheduledMessageStatus;
     guildId: string;
     channelId: string;
     creatorId: string;
@@ -11,9 +14,13 @@ export interface ScheduledMessage {
     createdAt: Date;
     lastEditedAt: Date;
     failureReason?: FailureReason;
+
+    creator?: DiscordUser;
+    lastEdited?: DiscordUser;
+    channel?: DiscordChannel;
 }
 
-export enum ScheduledMessageExtendedStatus {
+export enum ScheduledMessageStatus {
     Pending = 0,
     Sent = 1,
     Failed = 2
@@ -24,3 +31,4 @@ export enum FailureReason {
     ChannelNotFound = 1,
     InsufficientPermissions = 2,
 }
+
