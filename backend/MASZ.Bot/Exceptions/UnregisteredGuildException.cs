@@ -15,6 +15,6 @@ public class UnregisteredGuildException : ApiException
 	{
 		GuildId = guildId;
 	}
-	
+
 	public ulong GuildId { get; set; }
 }

@@ -1,5 +1,5 @@
-﻿using System.Text;
-using Discord;
+﻿using Discord;
+using Humanizer;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Extensions;
 using MASZ.Bot.Models;
@@ -8,6 +8,7 @@ using MASZ.Bot.Translators;
 using MASZ.Punishments.Models;
 using MASZ.Punishments.Translators;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 
 namespace MASZ.Punishments.Extensions;
 

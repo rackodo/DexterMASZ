@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using MASZ.GuildAudits.DTOs;
 using MASZ.GuildAudits.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace MASZ.GuildAudits.Models;
 

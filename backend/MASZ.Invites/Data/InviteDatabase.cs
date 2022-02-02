@@ -23,7 +23,7 @@ public class InviteDatabase : DataContext<InviteDatabase>, DataContextCreate
 	{
 		return await UserInvites.AsQueryable().Where(x => x.InviteIssuerId == userId).ToListAsync();
 	}
-	
+
 	public async Task<List<UserInvite>> GetUsedInvitesByUser(ulong userId)
 	{
 		return await UserInvites.AsQueryable().Where(x => x.JoinedUserId == userId).ToListAsync();

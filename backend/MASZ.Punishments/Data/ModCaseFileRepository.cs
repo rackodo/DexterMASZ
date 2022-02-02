@@ -1,4 +1,3 @@
-using System.Net.Mime;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Exceptions;
@@ -8,6 +7,7 @@ using MASZ.Bot.Services;
 using MASZ.Punishments.Events;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Net.Mime;
 
 namespace MASZ.Punishments.Data;
 

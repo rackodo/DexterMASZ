@@ -23,10 +23,10 @@ public class BotEventAnnouncer : Event
 
 	public void RegisterEvents()
 	{
-		_eventHandler.OnGuildRegistered += async (a, b) => await AnnounceTipsInNewGuild(a, b);
+		_eventHandler.OnGuildRegistered += async (a, b) => await AnnounceTipsInNewGuild(a);
 	}
 
-	private async Task AnnounceTipsInNewGuild(GuildConfig guildConfig, bool importExistingBans)
+	private async Task AnnounceTipsInNewGuild(GuildConfig guildConfig)
 	{
 		if (!string.IsNullOrEmpty(guildConfig.ModInternalNotificationWebhook))
 		{

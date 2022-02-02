@@ -1,13 +1,13 @@
-using System.Text;
 using Discord;
 using Discord.Interactions;
+using Humanizer;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
-using MASZ.Bot.Extensions;
 using MASZ.Bot.Services;
 using MASZ.Bot.Translators;
 using MASZ.Punishments.Translators;
 using Microsoft.Extensions.Logging;
+using System.Text;
 
 namespace MASZ.Punishments.Commands;
 

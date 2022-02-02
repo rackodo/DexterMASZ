@@ -1,5 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using MASZ.Punishments.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace MASZ.Punishments.DTOs;
 

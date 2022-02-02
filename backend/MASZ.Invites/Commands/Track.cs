@@ -1,5 +1,3 @@
-using System.Net;
-using System.Text;
 using Discord;
 using Discord.Interactions;
 using Discord.Net;
@@ -10,6 +8,8 @@ using MASZ.Bot.Extensions;
 using MASZ.Bot.Services;
 using MASZ.Invites.Data;
 using MASZ.Invites.Translators;
+using System.Net;
+using System.Text;
 
 namespace MASZ.Invites.Commands;
 

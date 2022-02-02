@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Discord;
+﻿using Discord;
 using Discord.Interactions;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Attributes;
@@ -7,6 +6,7 @@ using MASZ.Bot.Data;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Models;
 using MASZ.Utilities.Translators;
+using System.Text;
 
 namespace MASZ.Utilities.Commands;
 
@@ -117,17 +117,17 @@ public class Feature : Command<Feature>
 	public static bool FeaturePunishmentExecution(IGuildUser user)
 	{
 		return HasKickPermission(user) &&
-		       HasBanPermission(user) &&
-		       HasManagedRolePermission(user) &&
-		       HasManagedGuildPermission(user);
+			   HasBanPermission(user) &&
+			   HasManagedRolePermission(user) &&
+			   HasManagedGuildPermission(user);
 	}
 
 	public static bool SupportsAllFeatures(IGuildUser user, GuildConfig guildConfig)
 	{
 		return HasKickPermission(user) &&
-		       HasBanPermission(user) &&
-		       HasManagedRolePermission(user) &&
-		       HasManagedGuildPermission(user) &&
-		       HasInternalWebhookDefined(guildConfig);
+			   HasBanPermission(user) &&
+			   HasManagedRolePermission(user) &&
+			   HasManagedGuildPermission(user) &&
+			   HasInternalWebhookDefined(guildConfig);
 	}
 }

@@ -1,5 +1,5 @@
-using System.Text;
 using Discord;
+using Humanizer;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Dynamics;
 using MASZ.Bot.Enums;
@@ -11,6 +11,7 @@ using MASZ.UserMaps.Exceptions;
 using MASZ.UserMaps.Models;
 using MASZ.UserMaps.Translators;
 using MASZ.Utilities.Dynamics;
+using System.Text;
 
 namespace MASZ.UserMaps.Data;
 

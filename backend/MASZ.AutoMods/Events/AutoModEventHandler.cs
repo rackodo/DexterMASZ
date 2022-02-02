@@ -33,7 +33,7 @@ public class AutoModEventHandler : InternalEventHandler
 		add => AutoModConfigDeletedEvent.Add(value);
 		remove => AutoModConfigDeletedEvent.Remove(value);
 	}
-	
+
 	public event Func<AutoModEvent, AutoModConfig, GuildConfig, ITextChannel, IUser, Task> OnAutoModEventRegistered
 	{
 		add => AutoModEventRegisteredEvent.Add(value);

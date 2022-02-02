@@ -75,7 +75,7 @@ public class GuildAuditConfigRepository : Repository, DeleteGuildData
 
 		return auditLogConfig;
 	}
-	
+
 	public async Task<GuildAuditConfig> DeleteConfigForGuild(ulong guildId, GuildAuditEvent type)
 	{
 		var config = await GetConfigsByGuildAndType(guildId, type);

@@ -80,61 +80,61 @@ public class AutoModChecker : Event
 
 		if (!onEdit)
 			if (await CheckAutoMod(
-				    AutoModType.TooManyMessages,
-				    message,
-				    SpamCheck.Check,
-				    scope
-			    ))
+					AutoModType.TooManyMessages,
+					message,
+					SpamCheck.Check,
+					scope
+				))
 				return;
 
 		if (await CheckAutoMod(
-			    AutoModType.InvitePosted,
-			    message,
-			    InviteChecker.Check,
-			    scope
-		    )) return;
+				AutoModType.InvitePosted,
+				message,
+				InviteChecker.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.TooManyEmotes,
-			    message,
-			    EmoteCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.TooManyEmotes,
+				message,
+				EmoteCheck.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.TooManyMentions,
-			    message,
-			    MentionCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.TooManyMentions,
+				message,
+				MentionCheck.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.TooManyAttachments,
-			    message,
-			    AttachmentCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.TooManyAttachments,
+				message,
+				AttachmentCheck.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.TooManyEmbeds,
-			    message,
-			    EmbedCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.TooManyEmbeds,
+				message,
+				EmbedCheck.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.CustomWordFilter,
-			    message,
-			    CustomWordCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.CustomWordFilter,
+				message,
+				CustomWordCheck.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.TooManyDuplicatedCharacters,
-			    message,
-			    DuplicatedCharacterCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.TooManyDuplicatedCharacters,
+				message,
+				DuplicatedCharacterCheck.Check,
+				scope
+			)) return;
 
 		await CheckAutoMod(
 			AutoModType.TooManyLinks,
@@ -250,8 +250,8 @@ public class AutoModChecker : Event
 			.GetGuildConfig(guild.Id);
 
 		return user.RoleIds.Any(x => guildConfig.ModRoles.Contains(x) ||
-		                             guildConfig.AdminRoles.Contains(x) ||
-		                             autoModConfig.IgnoreRoles.Contains(x)) || autoModConfig.IgnoreChannels.Contains(((ITextChannel)message.Channel).Id);
+									 guildConfig.AdminRoles.Contains(x) ||
+									 autoModConfig.IgnoreRoles.Contains(x)) || autoModConfig.IgnoreChannels.Contains(((ITextChannel)message.Channel).Id);
 	}
 
 	private static async Task<bool> CheckMultipleEvents(IMessage message, AutoModConfig config, IServiceScope scope)

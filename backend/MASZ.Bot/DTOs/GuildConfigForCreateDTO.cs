@@ -1,5 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using MASZ.Bot.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace MASZ.Bot.DTOs;
 

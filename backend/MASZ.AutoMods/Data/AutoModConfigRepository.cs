@@ -82,7 +82,7 @@ public class AutoModConfigRepository : Repository, DeleteGuildData
 
 		return autoModConfig;
 	}
-	
+
 	public async Task<AutoModConfig> DeleteConfigForGuild(ulong guildId, AutoModType type)
 	{
 		var config = await GetConfigsByGuildAndType(guildId, type);

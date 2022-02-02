@@ -1,5 +1,5 @@
-using System.Text;
 using Discord;
+using Humanizer;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Dynamics;
@@ -18,6 +18,7 @@ using MASZ.Punishments.Services;
 using MASZ.Punishments.Translators;
 using MASZ.Utilities.Dynamics;
 using Microsoft.Extensions.Logging;
+using System.Text;
 
 namespace MASZ.Punishments.Data;
 
@@ -128,22 +129,22 @@ public class ModCaseRepository : Repository,
 		_translator.SetLanguage(guildConfig);
 
 		foreach (var modCase in (await _discordRest.GetGuildBans(guildConfig.GuildId, CacheBehavior.OnlyCache)).Select(ban => new ModCase
-		         {
-			         Title = string.IsNullOrEmpty(ban.Reason)
-				         ? _translator.Get<PunishmentTranslator>().ImportedFromExistingBans()
-				         : ban.Reason,
-			         Description = string.IsNullOrEmpty(ban.Reason)
-				         ? _translator.Get<PunishmentTranslator>().ImportedFromExistingBans()
-				         : ban.Reason,
-			         GuildId = guildConfig.GuildId,
-			         UserId = ban.User.Id,
-			         Username = ban.User.Username,
-			         Labels = new[] { _translator.Get<PunishmentTranslator>().Imported() },
-			         Discriminator = ban.User.Discriminator,
-			         CreationType = CaseCreationType.Imported,
-			         PunishmentType = PunishmentType.Ban,
-			         PunishedUntil = null
-		         }))
+		{
+			Title = string.IsNullOrEmpty(ban.Reason)
+						 ? _translator.Get<PunishmentTranslator>().ImportedFromExistingBans()
+						 : ban.Reason,
+			Description = string.IsNullOrEmpty(ban.Reason)
+						 ? _translator.Get<PunishmentTranslator>().ImportedFromExistingBans()
+						 : ban.Reason,
+			GuildId = guildConfig.GuildId,
+			UserId = ban.User.Id,
+			Username = ban.User.Username,
+			Labels = new[] { _translator.Get<PunishmentTranslator>().Imported() },
+			Discriminator = ban.User.Discriminator,
+			CreationType = CaseCreationType.Imported,
+			PunishmentType = PunishmentType.Ban,
+			PunishedUntil = null
+		}))
 		{
 			await ImportModCase(modCase);
 		}
@@ -331,7 +332,7 @@ public class ModCaseRepository : Repository,
 			if (currentReportedMember != null)
 			{
 				if (currentReportedMember.RoleIds.Any(x => guildConfig.ModRoles.Contains(x)) ||
-				    currentReportedMember.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x)))
+					currentReportedMember.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x)))
 				{
 					_logger.LogInformation("Cannot create cases for team members.");
 
@@ -486,7 +487,7 @@ public class ModCaseRepository : Repository,
 			if (currentReportedMember != null)
 			{
 				if (currentReportedMember.RoleIds.Any(x => guildConfig.ModRoles.Contains(x)) ||
-				    currentReportedMember.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x)))
+					currentReportedMember.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x)))
 				{
 					_logger.LogInformation("Cannot create cases for team members.");
 
@@ -600,7 +601,7 @@ public class ModCaseRepository : Repository,
 
 		return filteredModCases;
 	}
-	
+
 	public async Task<ModCase> LockCaseComments(ulong guildId, int caseId)
 	{
 		var modCase = await GetModCase(guildId, caseId);

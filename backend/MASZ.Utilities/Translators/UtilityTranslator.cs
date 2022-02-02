@@ -98,7 +98,7 @@ public class UtilityTranslator : Translator
 			_ => $"Experienced last disconnect at {time}.",
 		};
 	}
-	
+
 	public string Invite()
 	{
 		return PreferredLanguage switch

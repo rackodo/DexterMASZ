@@ -66,7 +66,7 @@ public static class AutoModEmbedCreator
 			embed.WithThumbnailUrl(actor.GetAvatarOrDefaultUrl());
 
 		embed.WithTitle(translator.Get<AutoModTranslator>().AutoModeration() + ": " +
-		                translator.Get<AutoModEnumTranslator>().Enum(autoModConfig.AutoModType));
+						translator.Get<AutoModEnumTranslator>().Enum(autoModConfig.AutoModType));
 
 		var autoModTypeName = translator.Get<AutoModEnumTranslator>().Enum(autoModConfig.AutoModType);
 
@@ -108,7 +108,7 @@ public static class AutoModEmbedCreator
 			embed.AddField("​", "​"); // ZERO WIDTH SPACE
 
 		if (autoModConfig.PunishmentType != null &&
-		    autoModConfig.AutoModAction is AutoModAction.CaseCreated or AutoModAction.ContentDeletedAndCaseCreated)
+			autoModConfig.AutoModAction is AutoModAction.CaseCreated or AutoModAction.ContentDeletedAndCaseCreated)
 		{
 			embed.AddField($"⚖ {translator.Get<PunishmentTranslator>().Punishment()}",
 				translator.Get<PunishmentEnumTranslator>().Enum(autoModConfig.PunishmentType.Value), true);

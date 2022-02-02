@@ -1,6 +1,6 @@
-using System.Text;
 using Discord;
 using Discord.WebSocket;
+using Humanizer;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Exceptions;
@@ -12,6 +12,7 @@ using MASZ.GuildAudits.Translators;
 using MASZ.Invites.Events;
 using MASZ.Invites.Models;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 
 namespace MASZ.GuildAudits.Services;
 
@@ -53,23 +54,23 @@ public class GuildAuditer : Event
 		var guildConfigRepository = scope.ServiceProvider.GetRequiredService<GuildConfigRepository>();
 
 		embed.WithColor(eventType switch
-			{
-				GuildAuditEvent.MessageSent => Color.Green,
-				GuildAuditEvent.MessageUpdated => Color.Orange,
-				GuildAuditEvent.MessageDeleted => Color.Red,
-				GuildAuditEvent.UsernameUpdated => Color.Orange,
-				GuildAuditEvent.AvatarUpdated => Color.Orange,
-				GuildAuditEvent.NicknameUpdated => Color.Orange,
-				GuildAuditEvent.UserRolesUpdated => Color.Orange,
-				GuildAuditEvent.UserJoined => Color.Green,
-				GuildAuditEvent.UserRemoved => Color.Red,
-				GuildAuditEvent.BanAdded => Color.Red,
-				GuildAuditEvent.BanRemoved => Color.Green,
-				GuildAuditEvent.InviteCreated => Color.Green,
-				GuildAuditEvent.InviteDeleted => Color.Red,
-				GuildAuditEvent.ThreadCreated => Color.Green,
-				_ => throw new NotImplementedException()
-			})
+		{
+			GuildAuditEvent.MessageSent => Color.Green,
+			GuildAuditEvent.MessageUpdated => Color.Orange,
+			GuildAuditEvent.MessageDeleted => Color.Red,
+			GuildAuditEvent.UsernameUpdated => Color.Orange,
+			GuildAuditEvent.AvatarUpdated => Color.Orange,
+			GuildAuditEvent.NicknameUpdated => Color.Orange,
+			GuildAuditEvent.UserRolesUpdated => Color.Orange,
+			GuildAuditEvent.UserJoined => Color.Green,
+			GuildAuditEvent.UserRemoved => Color.Red,
+			GuildAuditEvent.BanAdded => Color.Red,
+			GuildAuditEvent.BanRemoved => Color.Green,
+			GuildAuditEvent.InviteCreated => Color.Green,
+			GuildAuditEvent.InviteDeleted => Color.Red,
+			GuildAuditEvent.ThreadCreated => Color.Green,
+			_ => throw new NotImplementedException()
+		})
 			.WithCurrentTimestamp();
 
 		try
@@ -87,9 +88,9 @@ public class GuildAuditer : Event
 				return;
 
 			if (embed.Footer == null)
-				embed.WithFooter(auditLogConfig.GuildAuditEvent.ToString());
+				embed.WithFooter(auditLogConfig.GuildAuditEvent.Humanize());
 			else
-				embed.WithFooter(embed.Footer.Text + $" | {auditLogConfig.GuildAuditEvent}");
+				embed.WithFooter(embed.Footer.Text + $" | {auditLogConfig.GuildAuditEvent.Humanize()}");
 
 			StringBuilder rolePings = new();
 
@@ -99,8 +100,6 @@ public class GuildAuditer : Event
 			if (await _client.GetChannelAsync(auditLogConfig.ChannelId) is ITextChannel channel)
 			{
 				await channel.SendMessageAsync(rolePings.ToString(), embed: embed.Build());
-
-				await channel.SendMessageAsync(embed: embed.Build());
 			}
 		}
 		catch (ResourceNotFoundException)
@@ -583,7 +582,7 @@ public class GuildAuditer : Event
 						translator.Get<GuildAuditTranslator>().InformationNotCached());
 				else if (string.Equals(before.Content, messageAfter.Content) && before.Embeds.Count != messageAfter.Embeds.Count)
 					return;
-				else if(!string.IsNullOrEmpty(before.Content))
+				else if (!string.IsNullOrEmpty(before.Content))
 					embed.AddField(translator.Get<GuildAuditTranslator>().Before(), before.Content.Truncate(1024));
 
 				if (!string.IsNullOrEmpty(messageAfter.Content))

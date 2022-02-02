@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Discord;
+﻿using Discord;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Dynamics;
 using MASZ.Bot.Enums;
@@ -10,6 +9,7 @@ using MASZ.Invites.Events;
 using MASZ.Invites.Models;
 using MASZ.Invites.Translators;
 using MASZ.Utilities.Dynamics;
+using System.Text;
 
 namespace MASZ.Invites.Data;
 
@@ -106,7 +106,7 @@ public class InviteRepository : Repository,
 	{
 		return await _userInviteDatabase.CountTrackedInvitesForGuild(guildId);
 	}
-	
+
 	public async Task<List<UserInvite>> GetInvitedForUser(ulong userId)
 	{
 		return await _userInviteDatabase.GetInvitedUsersByUser(userId);

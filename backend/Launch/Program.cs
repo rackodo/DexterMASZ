@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Launch;
+﻿using Launch;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Enums;
@@ -8,6 +7,7 @@ using MASZ.Bot.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using System.Reflection;
 
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("========== Launching MASZ ==========");
@@ -97,8 +97,8 @@ await using (var dataContext = new BotDatabase(dbBuilder.Options))
 		settings.AbsolutePathToFileUpload = directoryPath;
 
 		switch (ConsoleCreator.AskDefinedChoice<DeploymentType>("stance on whether this is being deployed on " +
-		                                                        "a domain or locally, as a test version", "DEPLOY_MODE",
-			        false))
+																"a domain or locally, as a test version", "DEPLOY_MODE",
+					false))
 		{
 			case DeploymentType.Domain:
 				settings.ServiceHostName = ConsoleCreator.Ask("service name", "META_SERVICE_NAME");
@@ -218,7 +218,8 @@ catch (Exception ex)
 builder.Services.AddMemoryCache();
 
 var controller = builder.Services.AddControllers()
-	.AddNewtonsoftJson(x => {
+	.AddNewtonsoftJson(x =>
+	{
 		x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 		x.SerializerSettings.Converters.Add(new UlongConverter());
 	});

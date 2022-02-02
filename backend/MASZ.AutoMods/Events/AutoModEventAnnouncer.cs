@@ -89,7 +89,7 @@ public class AutoModEventAnnouncer : Event
 		}
 
 		if (modEvent.AutoModAction is AutoModAction.ContentDeleted or AutoModAction.ContentDeletedAndCaseCreated &&
-		    punishmentsConfig.ChannelNotificationBehavior != AutoModChannelNotificationBehavior.NoNotification)
+			punishmentsConfig.ChannelNotificationBehavior != AutoModChannelNotificationBehavior.NoNotification)
 		{
 			_logger.LogInformation(
 				$"Sending channel notification to {modEvent.GuildId}/{modEvent.Id} {channel.GuildId}/{channel.Id}.");
@@ -101,7 +101,7 @@ public class AutoModEventAnnouncer : Event
 					.NotificationAutoModerationChannel(author, reason));
 
 				if (punishmentsConfig.ChannelNotificationBehavior ==
-				    AutoModChannelNotificationBehavior.SendNotificationAndDelete)
+					AutoModChannelNotificationBehavior.SendNotificationAndDelete)
 				{
 					async void Action()
 					{

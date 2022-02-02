@@ -18,7 +18,7 @@ public class UserNoteTranslator : Translator
 			_ => "Usernote"
 		};
 	}
-	
+
 	public string UserNoteId()
 	{
 		return PreferredLanguage switch

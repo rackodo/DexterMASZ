@@ -82,14 +82,14 @@ public class DiscordCommandIdentity : Identity
 				return true;
 
 			return guildUser.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x) ||
-			                                  guildConfig.ModRoles.Contains(x));
+											  guildConfig.ModRoles.Contains(x));
 		}
 		catch (ResourceNotFoundException)
 		{
 			return false;
 		}
 	}
-	
+
 	public override bool IsOnGuild(ulong guildId)
 	{
 		return CurrentUser != null && CurrentUserGuilds.Any(x => x.Id == guildId);

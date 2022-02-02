@@ -25,11 +25,11 @@ public abstract class DataContext<TContext> : DbContext where TContext : DbConte
 		UlongArrayComparer ulongArrayComparer = new();
 
 		foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-		foreach (var property in entityType.GetProperties())
-			if (property.ClrType == typeof(ulong[]))
-				property.SetValueComparer(ulongArrayComparer);
-			else if (property.ClrType == typeof(string[]))
-				property.SetValueComparer(stringArrayComparer);
+			foreach (var property in entityType.GetProperties())
+				if (property.ClrType == typeof(ulong[]))
+					property.SetValueComparer(ulongArrayComparer);
+				else if (property.ClrType == typeof(string[]))
+					property.SetValueComparer(stringArrayComparer);
 
 		OverrideModelCreating(modelBuilder);
 	}

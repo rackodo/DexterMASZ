@@ -1,4 +1,3 @@
-using System.Net;
 using Discord;
 using Discord.Interactions;
 using Discord.Net;
@@ -8,6 +7,7 @@ using MASZ.Bot.Enums;
 using MASZ.Bot.Translators;
 using MASZ.Utilities.Enums;
 using MASZ.Utilities.Translators;
+using System.Net;
 
 namespace MASZ.Utilities.Commands;
 

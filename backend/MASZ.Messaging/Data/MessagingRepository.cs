@@ -39,7 +39,7 @@ public class MessagingRepository : Repository, DeleteGuildData
 	public async Task<ScheduledMessage> CreateMessage(ScheduledMessage message)
 	{
 		message.CreatedAt = DateTime.UtcNow;
-		message.LastEditedAt = message.CreatedAt; 
+		message.LastEditedAt = message.CreatedAt;
 		message.CreatorId = Identity.Id;
 		message.LastEditedById = Identity.Id;
 		message.Status = ScheduledMessageStatus.Pending;

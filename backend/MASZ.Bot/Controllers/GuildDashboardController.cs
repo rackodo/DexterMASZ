@@ -75,7 +75,7 @@ public class GuildDashboardController : AuthenticatedController
 		dynamic searchResults = new ExpandoObject();
 
 		searchResults.searchEntries = entries.OrderByDescending(x => x.CreatedAt).ToList();
-		
+
 		foreach (var repo in _serviceCacher.GetInitializedAuthenticatedClasses<AddSearch>(_serviceProvider, identity))
 			await repo.AddSearchData(searchResults, guildId, search);
 

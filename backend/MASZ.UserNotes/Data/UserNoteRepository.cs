@@ -1,4 +1,5 @@
 using Discord;
+using Humanizer;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Dynamics;
 using MASZ.Bot.Enums;
@@ -173,7 +174,7 @@ public class UserNoteRepository : Repository,
 
 		_eventHandler.UserNoteDeletedEvent.Invoke(userNote, Identity);
 	}
-	
+
 	public async Task<int> CountUserNotesForGuild(ulong guildId)
 	{
 		return await _userNoteDatabase.CountUserNotesForGuild(guildId);

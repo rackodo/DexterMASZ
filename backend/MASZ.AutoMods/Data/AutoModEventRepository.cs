@@ -1,4 +1,3 @@
-using System.Text;
 using Discord;
 using MASZ.AutoMods.Enums;
 using MASZ.AutoMods.Events;
@@ -17,6 +16,7 @@ using MASZ.Punishments.Data;
 using MASZ.Punishments.Enums;
 using MASZ.Punishments.Models;
 using Microsoft.Extensions.Logging;
+using System.Text;
 
 namespace MASZ.AutoMods.Data;
 
@@ -123,7 +123,7 @@ public class AutoModEventRepository : Repository,
 			ModCase modCase = new()
 			{
 				Title = $"{_translator.Get<AutoModTranslator>().AutoModeration()}: " +
-				        _translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModType)
+						_translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModType)
 			};
 
 			StringBuilder description = new();
@@ -131,16 +131,16 @@ public class AutoModEventRepository : Repository,
 			description.AppendLine(_translator.Get<AutoModNotificationTranslator>().NotificationAutoModerationCase(user));
 
 			description.AppendLine($"{_translator.Get<BotTranslator>().Type()}: " +
-			                       _translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModType));
+								   _translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModType));
 
 			description.AppendLine($"{_translator.Get<BotTranslator>().Action()}: " +
-			                       _translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModAction));
+								   _translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModAction));
 
 			description.AppendLine($"{_translator.Get<BotTranslator>().Message()}: " +
-			                       modEvent.MessageId);
+								   modEvent.MessageId);
 
 			description.AppendLine($"{_translator.Get<BotTranslator>().MessageContent()}: " +
-			                       modEvent.MessageContent);
+								   modEvent.MessageContent);
 
 			modCase.Description = description.ToString();
 
@@ -178,7 +178,7 @@ public class AutoModEventRepository : Repository,
 
 		return modEvent;
 	}
-	
+
 	public async Task<List<AutoModEvent>> GetPagination(ulong guildId, int startPage = 1, int pageSize = 20)
 	{
 		return await _autoModDatabase.SelectAllPunishmentsEventsForGuild(guildId, startPage, pageSize);

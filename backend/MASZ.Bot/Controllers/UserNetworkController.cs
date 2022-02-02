@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Dynamic;
-using MASZ.Bot.Abstractions;
+﻿using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Dynamics;
 using MASZ.Bot.Enums;
@@ -8,6 +6,8 @@ using MASZ.Bot.Exceptions;
 using MASZ.Bot.Models;
 using MASZ.Bot.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Dynamic;
 
 namespace MASZ.Bot.Controllers;
 
@@ -60,7 +60,7 @@ public class UserNetworkController : AuthenticatedController
 
 		data.guilds = guildViews;
 		data.user = searchedUser;
-		
+
 		foreach (var repo in
 				 _serviceCacher.GetInitializedAuthenticatedClasses<AddNetworks>(_serviceProvider, identity))
 			await repo.AddNetworkData(data, modGuilds, userId);

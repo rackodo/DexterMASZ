@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Enums;
@@ -9,6 +8,7 @@ using MASZ.Punishments.Enums;
 using MASZ.Punishments.Extensions;
 using MASZ.Punishments.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace MASZ.Punishments.Controllers;
 
@@ -138,7 +138,7 @@ public class ModCaseController : AuthenticatedController
 
 	[HttpGet]
 	public async Task<IActionResult> GetAllItems([FromRoute] ulong guildId,
-		[FromQuery] [Range(0, int.MaxValue)] int startPage = 0)
+		[FromQuery][Range(0, int.MaxValue)] int startPage = 0)
 	{
 		var identity = await SetupAuthentication();
 

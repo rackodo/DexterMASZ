@@ -22,7 +22,7 @@ public class SettingsRepository : Repository
 	{
 		await _botDatabase.AddAppSetting(appSettings);
 	}
-	
+
 	public async Task UpdateAppSetting(AppSettings updatedAppSettings)
 	{
 		await _botDatabase.UpdateAppSetting(updatedAppSettings);

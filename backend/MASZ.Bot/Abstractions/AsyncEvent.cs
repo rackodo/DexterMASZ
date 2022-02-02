@@ -1,5 +1,5 @@
-using System.Collections.Immutable;
 using MASZ.Bot.Extensions;
+using System.Collections.Immutable;
 
 namespace MASZ.Bot.Abstractions;
 

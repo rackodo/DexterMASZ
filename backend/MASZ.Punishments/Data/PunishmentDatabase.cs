@@ -131,26 +131,26 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 		return await ModCases.AsQueryable().Where(x => x.GuildId == guildId && x.UserId == userId)
 			.OrderByDescending(x => x.CaseId).ToListAsync();
 	}
-	
+
 	public async Task<List<ModCase>> SelectAllModCasesForGuild(ulong guildId)
 	{
 		return await ModCases.AsQueryable().Where(x => x.GuildId == guildId).OrderByDescending(x => x.CaseId)
 			.ToListAsync();
 	}
-	
+
 	public async Task<List<ModCase>> SelectAllModCasesForSpecificUserOnGuild(ulong guildId, ulong userId, int startPage,
 		int pageSize)
 	{
 		return await ModCases.AsQueryable().Where(x => x.GuildId == guildId && x.UserId == userId)
 			.OrderByDescending(x => x.CaseId).Skip(startPage * pageSize).Take(pageSize).ToListAsync();
 	}
-	
+
 	public async Task<List<ModCase>> SelectAllModCasesForGuild(ulong guildId, int startPage, int pageSize)
 	{
 		return await ModCases.AsQueryable().Where(x => x.GuildId == guildId).OrderByDescending(x => x.CaseId)
 			.Skip(startPage * pageSize).Take(pageSize).ToListAsync();
 	}
-	
+
 	public async Task<List<ModCase>> SelectAllModCasesWithActiveMuteForGuildAndUser(ulong guildId, ulong userId)
 	{
 		return await ModCases.AsQueryable().Where(x =>
@@ -163,7 +163,7 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 		return await ModCases.AsQueryable().Where(x => x.PunishmentActive == true && x.MarkedToDeleteAt == null)
 			.ToListAsync();
 	}
-	
+
 	public async Task<List<ModCase>> SelectAllModCasesForSpecificUser(ulong userId)
 	{
 		return await ModCases.AsQueryable().Where(x => x.UserId == userId).ToListAsync();

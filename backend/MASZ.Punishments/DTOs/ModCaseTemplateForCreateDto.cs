@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using MASZ.Bot.Enums;
 using MASZ.Punishments.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace MASZ.Punishments.DTOs;
 

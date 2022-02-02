@@ -39,7 +39,7 @@ public class BotDatabase : DataContext<BotDatabase>, DataContextCreate
 		AppSettings.Add(appSettings);
 		await SaveChangesAsync();
 	}
-	
+
 	public async Task<GuildConfig> SelectSpecificGuildConfig(ulong guildId)
 	{
 		return await GuildConfigs.AsQueryable().FirstOrDefaultAsync(x => x.GuildId == guildId);

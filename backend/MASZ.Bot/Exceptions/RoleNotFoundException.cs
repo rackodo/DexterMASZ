@@ -9,6 +9,6 @@ public class RoleNotFoundException : ApiException
 	{
 		RoleId = roleId;
 	}
-	
+
 	public ulong RoleId { get; set; }
 }

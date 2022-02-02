@@ -31,7 +31,7 @@ public class BotTranslator : Translator
 			_ => "Guild ID"
 		};
 	}
-	
+
 	public string Author()
 	{
 		return PreferredLanguage switch
@@ -143,7 +143,7 @@ public class BotTranslator : Translator
 			_ => "Message content"
 		};
 	}
-	
+
 	public string Attachments()
 	{
 		return PreferredLanguage switch
