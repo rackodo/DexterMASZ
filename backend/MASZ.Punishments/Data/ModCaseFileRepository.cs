@@ -11,15 +11,15 @@ using Microsoft.Extensions.Logging;
 
 namespace MASZ.Punishments.Data;
 
-public class CaseFileRepository : Repository
+public class ModCaseFileRepository : Repository
 {
 	private readonly SettingsRepository _configRepo;
 	private readonly PunishmentEventHandler _eventHandler;
-	private readonly ILogger<CaseFileRepository> _logger;
+	private readonly ILogger<ModCaseFileRepository> _logger;
 	private readonly ModCaseRepository _modCaseRepository;
 
-	public CaseFileRepository(SettingsRepository configRepo,
-		PunishmentEventHandler eventHandler, ILogger<CaseFileRepository> logger,
+	public ModCaseFileRepository(SettingsRepository configRepo,
+		PunishmentEventHandler eventHandler, ILogger<ModCaseFileRepository> logger,
 		ModCaseRepository modCaseRepository, DiscordRest discordRest) : base(discordRest)
 	{
 		_configRepo = configRepo;

@@ -279,7 +279,7 @@
         }
     },
     "AutoModConfig": {
-        "AutoModeration": "AutoModaration",
+        "AutoMods": "AutoModaration",
         "Invites": {
             "title": "Eiladungen",
             "details": "Ei Nochricht aufm Serva posst zum Eiladungs-Musta. Eiladunga zu dem Serva wera ignohriert.",
@@ -426,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Dashboard",
             "Case": "Vorfälle",
-            "AutoModeration": "AutoModarationen",
+            "AutoMods": "AutoModarationen",
             "Messages": "Nachrichten",
             "Usernote": "Benutzanotizn",
             "Usermap": "Benutzabeziehungen",

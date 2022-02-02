@@ -279,7 +279,7 @@
         }
     },
     "AutoModConfig": {
-        "AutoModeration": "AutoModeración",
+        "AutoMods": "AutoModeración",
         "Invites": {
             "title": "Invita",
             "details": "Un mensaje en tu gremio coincide con el patrón de invitación. Se ignorarán las invitaciones a este gremio.",
@@ -426,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Tablero",
             "Case": "Casos",
-            "AutoModeration": "AutoModeraciones",
+            "AutoMods": "AutoModeraciones",
             "Messages": "Mensajes",
             "Usernote": "Notas de usuario",
             "Usermap": "Mapas de usuario",

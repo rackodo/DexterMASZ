@@ -14,11 +14,11 @@ namespace MASZ.Punishments.Controllers;
 [Route("api/v1/guilds/{guildId}/cases/{caseId}/files")]
 public class ModCaseFileController : AuthenticatedController
 {
-	private readonly CaseFileRepository _caseFileRepository;
+	private readonly ModCaseFileRepository _caseFileRepository;
 	private readonly ModCaseRepository _modCaseRepository;
 	private readonly SettingsRepository _settingsRepository;
 
-	public ModCaseFileController(IdentityManager identityManager, CaseFileRepository caseFileRepository,
+	public ModCaseFileController(IdentityManager identityManager, ModCaseFileRepository caseFileRepository,
 		ModCaseRepository modCaseRepository, SettingsRepository settingsRepository) :
 		base(identityManager, caseFileRepository, settingsRepository, modCaseRepository)
 	{

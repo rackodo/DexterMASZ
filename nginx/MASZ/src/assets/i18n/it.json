@@ -279,7 +279,7 @@
         }
     },
     "AutoModConfig": {
-        "AutoModeration": "AutoModerazione",
+        "AutoMods": "AutoModerazione",
         "Invites": {
             "title": "invita",
             "details": "Un messaggio sulla tua gilda corrisponde al modello di invito. Gli inviti a questa gilda verranno ignorati.",
@@ -426,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Pannello di controllo",
             "Case": "casi",
-            "AutoModeration": "AutoModerazione",
+            "AutoMods": "AutoModerazione",
             "Messages": "Messaggi",
             "Usernote": "Note utente",
             "Usermap": "Mappe utente",

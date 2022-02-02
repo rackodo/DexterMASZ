@@ -279,7 +279,7 @@
         }
     },
     "AutoModConfig": {
-        "AutoModeration": "AutoModération",
+        "AutoMods": "AutoModération",
         "Invites": {
             "title": "Invite",
             "details": "Un message sur votre guilde correspond au modèle d'invitation. Les invitations à cette guilde seront ignorées.",
@@ -426,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Tableau de bord",
             "Case": "Cas",
-            "AutoModeration": "AutoModérations",
+            "AutoMods": "AutoModérations",
             "Messages": "Messages",
             "Usernote": "Notes d'utilisateur",
             "Usermap": "Cartes utilisateur",

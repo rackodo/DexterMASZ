@@ -16,7 +16,7 @@ public partial class InitialCreate : Migration
 			.Annotation("MySql:CharSet", "utf8mb4");
 
 		migrationBuilder.CreateTable(
-			name: "CaseTemplates",
+			name: "ModCaseTemplates",
 			schema: "Punishments",
 			columns: table => new
 			{
@@ -42,7 +42,7 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("PK_CaseTemplates", x => x.Id);
+				table.PrimaryKey("PK_ModCaseTemplates", x => x.Id);
 			})
 			.Annotation("MySql:CharSet", "utf8mb4");
 
@@ -128,7 +128,7 @@ public partial class InitialCreate : Migration
 	protected override void Down(MigrationBuilder migrationBuilder)
 	{
 		migrationBuilder.DropTable(
-			name: "CaseTemplates",
+			name: "ModCaseTemplates",
 			schema: "Punishments");
 
 		migrationBuilder.DropTable(

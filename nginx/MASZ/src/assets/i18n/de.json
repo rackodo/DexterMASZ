@@ -127,7 +127,7 @@
         "Message": "Nachricht"
     },
     "AutoModTable": {
-        "FailedToLoad": "AutoModerationen konnten nicht geladen werden.",
+        "FailedToLoad": "AutoModsen konnten nicht geladen werden.",
         "NoMatches": "Es gibt keine moderierten Ereignisse.",
         "LoadMoreEvents": "Mehr Einträge laden"
     },
@@ -279,7 +279,7 @@
         }
     },
     "AutoModConfig": {
-        "AutoModeration": "AutoModeration",
+        "AutoMods": "AutoMods",
         "Invites": {
             "title": "Einladungen",
             "details": "Eine Nachricht auf deinem Server passt zum Einladungs-Muster. Einladungen zu dieser Gilde werden ignoriert.",
@@ -302,8 +302,8 @@
             "details": "Eine Nachricht auf deinem Server enthält zu viele Einbettungen."
         },
         "Automods": {
-            "title": "AutoModerationen",
-            "details": "Ein Benutzer löst zu viele AutoModerationen in einem definierten Zeitraum aus."
+            "title": "AutoModsen",
+            "details": "Ein Benutzer löst zu viele AutoModsen in einem definierten Zeitraum aus."
         },
         "CustomFilter": {
             "title": "Benutzerdefinierter Filter",
@@ -380,7 +380,7 @@
         "Explanation": "Diese Nachricht wird deinen Administratoren und Moderatoren auf dem Dashboard angezeigt."
     },
     "AutoModSplit": {
-        "FailedToLoad": "Konnte AutoModerationaufteilungsdaten nicht laden."
+        "FailedToLoad": "Konnte AutoModsaufteilungsdaten nicht laden."
     },
     "DashboardCaseList": {
         "NewestCases": "Neuste Vorfälle",
@@ -391,7 +391,7 @@
         "Overview": "Übersicht",
         "Cases": "Vorfälle",
         "Punishments": "Bestrafungen",
-        "Automods": "AutoModerationen",
+        "Automods": "AutoModsen",
         "ChooseADate": "Wähle ein Datum",
         "Reset": "Zurücksetzen"
     },
@@ -413,7 +413,7 @@
         "MessageFrom": "Nachricht von {{name}}"
     },
     "Quicksearch": {
-        "Placeholder": "Schnellsuche Benutzer, Vorfälle, Bestrafungen, AutoModerationen, ...",
+        "Placeholder": "Schnellsuche Benutzer, Vorfälle, Bestrafungen, AutoModsen, ...",
         "NoMatches": "Keine Einträge zur Suche gefunden :(",
         "SearchFailed": "Suche fehlgeschlagen."
     },
@@ -426,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Dashboard",
             "Case": "Vorfälle",
-            "AutoModeration": "AutoModerationen",
+            "AutoMods": "AutoModsen",
             "Messages": "Nachrichten",
             "Usernote": "Benutzernotizen",
             "Usermap": "Benutzerbeziehungen",

@@ -4,7 +4,7 @@ using MASZ.Punishments.Enums;
 
 namespace MASZ.Punishments.DTOs;
 
-public class CaseTemplateForCreateDto
+public class ModCaseTemplateForCreateDto
 {
 	[Required(ErrorMessage = "TemplateName field is required", AllowEmptyStrings = false)]
 	[MaxLength(100)]

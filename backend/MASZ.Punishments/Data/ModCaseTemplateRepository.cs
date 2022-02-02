@@ -10,14 +10,14 @@ using MASZ.Punishments.Models;
 
 namespace MASZ.Punishments.Data;
 
-public class CaseTemplateRepository : Repository, DeleteGuildData
+public class ModCaseTemplateRepository : Repository, DeleteGuildData
 {
-	private const int MaxAllowedCaseTemplatesPerUser = 20;
+	private const int MaxAllowedModCaseTemplatesPerUser = 20;
 	private readonly PunishmentEventHandler _eventHandler;
 
 	private readonly PunishmentDatabase _punishmentDatabase;
 
-	public CaseTemplateRepository(PunishmentDatabase punishmentDatabase, PunishmentEventHandler eventHandler,
+	public ModCaseTemplateRepository(PunishmentDatabase punishmentDatabase, PunishmentEventHandler eventHandler,
 		DiscordRest discordRest) : base(discordRest)
 	{
 		_punishmentDatabase = punishmentDatabase;
@@ -33,7 +33,7 @@ public class CaseTemplateRepository : Repository, DeleteGuildData
 	{
 		var existingTemplates = await _punishmentDatabase.GetAllTemplatesFromUser(template.UserId);
 
-		if (existingTemplates.Count >= MaxAllowedCaseTemplatesPerUser)
+		if (existingTemplates.Count >= MaxAllowedModCaseTemplatesPerUser)
 			throw new TooManyTemplatesCreatedException();
 
 		template.CreatedAt = DateTime.UtcNow;
@@ -65,7 +65,7 @@ public class CaseTemplateRepository : Repository, DeleteGuildData
 
 	public async Task<List<ModCaseTemplate>> GetTemplatesBasedOnPermissions(Identity identity)
 	{
-		var templates = await _punishmentDatabase.GetAllCaseTemplates();
+		var templates = await _punishmentDatabase.GetAllModCaseTemplates();
 		List<ModCaseTemplate> filteredTemplates = new();
 
 		foreach (var template in templates)

@@ -10,18 +10,18 @@ using Microsoft.AspNetCore.Mvc;
 namespace MASZ.Punishments.Controllers;
 
 [Route("api/v1/templates")]
-public class CaseTemplateController : AuthenticatedController
+public class ModCaseTemplateController : AuthenticatedController
 {
-	private readonly CaseTemplateRepository _caseTemplateRepo;
+	private readonly ModCaseTemplateRepository _caseTemplateRepo;
 
-	public CaseTemplateController(CaseTemplateRepository caseTemplateRepo, IdentityManager identityManager) :
+	public ModCaseTemplateController(ModCaseTemplateRepository caseTemplateRepo, IdentityManager identityManager) :
 		base(identityManager, caseTemplateRepo)
 	{
 		_caseTemplateRepo = caseTemplateRepo;
 	}
 
 	[HttpPost]
-	public async Task<IActionResult> CreateTemplate([FromBody] CaseTemplateForCreateDto templateDto,
+	public async Task<IActionResult> CreateTemplate([FromBody] ModCaseTemplateForCreateDto templateDto,
 		[FromQuery] ulong guildId)
 	{
 		var identity = await SetupAuthentication();

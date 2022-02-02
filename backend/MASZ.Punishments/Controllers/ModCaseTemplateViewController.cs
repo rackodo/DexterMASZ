@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace MASZ.Punishments.Controllers;
 
 [Route("api/v1/templatesview")]
-public class TemplateViewController : AuthenticatedController
+public class ModCaseTemplateViewController : AuthenticatedController
 {
 	private readonly DiscordRest _discordRest;
-	private readonly CaseTemplateRepository _templateRepository;
+	private readonly ModCaseTemplateRepository _templateRepository;
 
-	public TemplateViewController(CaseTemplateRepository templateRepository, DiscordRest discordRest,
+	public ModCaseTemplateViewController(ModCaseTemplateRepository templateRepository, DiscordRest discordRest,
 		IdentityManager identityManager) :
 		base(identityManager, templateRepository)
 	{
@@ -29,7 +29,7 @@ public class TemplateViewController : AuthenticatedController
 		var templates = await _templateRepository.GetTemplatesBasedOnPermissions(identity);
 		var templatesView = new List<ModCaseTemplateExpanded>();
 
-		foreach (var template in templates.Where(x => x.UserId == userId))
+		foreach (var template in templates.Where(x => x.UserId == userId || userId == 0))
 			templatesView.Add(new ModCaseTemplateExpanded(
 				template,
 				await _discordRest.FetchUserInfo(template.UserId, CacheBehavior.OnlyCache),
