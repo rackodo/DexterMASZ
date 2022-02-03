@@ -132,7 +132,7 @@ ConsoleCreator.AddHeading("Importing Modules");
 
 foreach (var module in modules)
 {
-	ConsoleCreator.AddSubHeading("Imported: ", module.GetType().Namespace);
+	ConsoleCreator.AddSubHeading("Imported: ", $"{module.GetType().Namespace}{(module is WebModule ? " (WEB)" : "")}");
 
 	Console.Write("    Maintained By:      ");
 
