@@ -1,4 +1,5 @@
 ﻿using Discord;
+using Humanizer;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Extensions;
 using MASZ.Bot.Services;

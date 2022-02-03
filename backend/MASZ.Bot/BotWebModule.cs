@@ -35,7 +35,7 @@ public class BotWebModule : WebModule
 		services.Configure<IpRateLimitPolicies>(configuration.GetSection("IpRateLimitPolicies"));
 	}
 
-	public override void AddServices(IServiceCollection services, ServiceCacher serviceCacher, AppSettings settings)
+	public override void AddServices(IServiceCollection services, CachedServices cachedServices, AppSettings settings)
 	{
 		services.AddSingleton<FilesHandler>();
 

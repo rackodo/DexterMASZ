@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Interactions;
+using Humanizer;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Attributes;
 using MASZ.Bot.Data;

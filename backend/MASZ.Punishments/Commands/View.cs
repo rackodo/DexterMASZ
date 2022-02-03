@@ -1,6 +1,6 @@
-﻿using System.Text;
-using Discord;
+﻿using Discord;
 using Discord.Interactions;
+using Humanizer;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Enums;
@@ -11,6 +11,7 @@ using MASZ.Bot.Translators;
 using MASZ.Punishments.Data;
 using MASZ.Punishments.Extensions;
 using MASZ.Punishments.Translators;
+using System.Text;
 
 namespace MASZ.Punishments.Commands;
 
@@ -45,7 +46,7 @@ public class View : Command<View>
 				.WithTimestamp(modCase.CreatedAt)
 				.WithColor(Color.Blue)
 				.WithTitle($"#{modCase.CaseId} {modCase.Title.Truncate(200)}")
-				.WithDescription(modCase.Description.Truncate())
+				.WithDescription(modCase.Description.Truncate(2000))
 				.AddField($"⚖️ - {Translator.Get<PunishmentTranslator>().Punishment()}",
 					Translator.Get<PunishmentEnumTranslator>().Enum(modCase.PunishmentType), true);
 

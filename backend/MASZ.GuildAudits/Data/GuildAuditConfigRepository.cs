@@ -38,14 +38,14 @@ public class GuildAuditConfigRepository : Repository, DeleteGuildData
 		var config = await _guildAuditDatabase.SelectAuditLogConfigForGuildAndType(guildId, type);
 
 		if (config == null)
-			throw new ResourceNotFoundException($"GuildAuditLog config {guildId}/{type} does not exist.");
+			throw new ResourceNotFoundException($"GuildAudit config {guildId}/{type} does not exist.");
 
 		return config;
 	}
 
 	public async Task<GuildAuditConfig> UpdateConfig(GuildAuditConfig newValue)
 	{
-		if (!Enum.IsDefined(typeof(GuildAuditEvent), newValue.GuildAuditLogEvent))
+		if (!Enum.IsDefined(typeof(GuildAuditEvent), newValue.GuildAuditEvent))
 			throw new InvalidAuditLogEventException();
 
 		var action = RestAction.Updated;
@@ -53,7 +53,7 @@ public class GuildAuditConfigRepository : Repository, DeleteGuildData
 
 		try
 		{
-			auditLogConfig = await GetConfigsByGuildAndType(newValue.GuildId, newValue.GuildAuditLogEvent);
+			auditLogConfig = await GetConfigsByGuildAndType(newValue.GuildId, newValue.GuildAuditEvent);
 		}
 		catch (ResourceNotFoundException)
 		{
@@ -62,7 +62,7 @@ public class GuildAuditConfigRepository : Repository, DeleteGuildData
 		}
 
 		auditLogConfig.GuildId = newValue.GuildId;
-		auditLogConfig.GuildAuditLogEvent = newValue.GuildAuditLogEvent;
+		auditLogConfig.GuildAuditEvent = newValue.GuildAuditEvent;
 		auditLogConfig.ChannelId = newValue.ChannelId;
 		auditLogConfig.PingRoles = newValue.PingRoles;
 
@@ -75,7 +75,7 @@ public class GuildAuditConfigRepository : Repository, DeleteGuildData
 
 		return auditLogConfig;
 	}
-	
+
 	public async Task<GuildAuditConfig> DeleteConfigForGuild(ulong guildId, GuildAuditEvent type)
 	{
 		var config = await GetConfigsByGuildAndType(guildId, type);

@@ -1,4 +1,3 @@
-using System.Net.Mime;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Exceptions;
@@ -8,18 +7,19 @@ using MASZ.Bot.Services;
 using MASZ.Punishments.Events;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Net.Mime;
 
 namespace MASZ.Punishments.Data;
 
-public class CaseFileRepository : Repository
+public class ModCaseFileRepository : Repository
 {
 	private readonly SettingsRepository _configRepo;
 	private readonly PunishmentEventHandler _eventHandler;
-	private readonly ILogger<CaseFileRepository> _logger;
+	private readonly ILogger<ModCaseFileRepository> _logger;
 	private readonly ModCaseRepository _modCaseRepository;
 
-	public CaseFileRepository(SettingsRepository configRepo,
-		PunishmentEventHandler eventHandler, ILogger<CaseFileRepository> logger,
+	public ModCaseFileRepository(SettingsRepository configRepo,
+		PunishmentEventHandler eventHandler, ILogger<ModCaseFileRepository> logger,
 		ModCaseRepository modCaseRepository, DiscordRest discordRest) : base(discordRest)
 	{
 		_configRepo = configRepo;

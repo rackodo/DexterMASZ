@@ -1,15 +1,15 @@
-﻿using System.Reflection;
-using MASZ.Bot.Abstractions;
+﻿using MASZ.Bot.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace MASZ.Bot.Services;
 
-public class ServiceCacher
+public class CachedServices
 {
 	public readonly List<Assembly> Dependents;
 	public readonly Dictionary<string, Type[]> Services;
 
-	public ServiceCacher()
+	public CachedServices()
 	{
 		Services = new Dictionary<string, Type[]>();
 
@@ -34,7 +34,7 @@ public class ServiceCacher
 			classes.AddRange(
 				assembly.GetTypes()
 					.Where(c => c.IsClass && (!c.IsAbstract && c.IsSubclassOf(type) ||
-					                          !c.IsInterface && c.GetInterfaces().Contains(type)))
+											  !c.IsInterface && c.GetInterfaces().Contains(type)))
 			);
 
 		Services.Add(type.FullName, classes.ToArray());

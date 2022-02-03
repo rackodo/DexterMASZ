@@ -79,7 +79,7 @@ public class AutoModEventAnnouncer : Event
 				var action = translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModAction);
 				await _discordRest.SendDmMessage(author.Id,
 					translator.Get<AutoModNotificationTranslator>()
-						.NotificationAutoModerationDm(author, channel, reason, action));
+						.NotificationAutoModDm(author, channel, reason, action));
 			}
 			catch (Exception e)
 			{
@@ -89,7 +89,7 @@ public class AutoModEventAnnouncer : Event
 		}
 
 		if (modEvent.AutoModAction is AutoModAction.ContentDeleted or AutoModAction.ContentDeletedAndCaseCreated &&
-		    punishmentsConfig.ChannelNotificationBehavior != AutoModChannelNotificationBehavior.NoNotification)
+			punishmentsConfig.ChannelNotificationBehavior != AutoModChannelNotificationBehavior.NoNotification)
 		{
 			_logger.LogInformation(
 				$"Sending channel notification to {modEvent.GuildId}/{modEvent.Id} {channel.GuildId}/{channel.Id}.");
@@ -98,10 +98,10 @@ public class AutoModEventAnnouncer : Event
 			{
 				var reason = translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModType);
 				IMessage msg = await channel.SendMessageAsync(translator.Get<AutoModNotificationTranslator>()
-					.NotificationAutoModerationChannel(author, reason));
+					.NotificationAutoModChannel(author, reason));
 
 				if (punishmentsConfig.ChannelNotificationBehavior ==
-				    AutoModChannelNotificationBehavior.SendNotificationAndDelete)
+					AutoModChannelNotificationBehavior.SendNotificationAndDelete)
 				{
 					async void Action()
 					{

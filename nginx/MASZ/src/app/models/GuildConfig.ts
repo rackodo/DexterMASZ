@@ -6,7 +6,7 @@ export interface GuildConfig {
     mutedRoles: string[];
     modNotificationDM: boolean;
     strictModPermissionCheck: boolean;
-    executeWhoisOnJoin: boolean;
+    executeWhoIsOnJoin: boolean;
     modPublicNotificationWebhook: string;
     modInternalNotificationWebhook: string;
     publishModeratorInfo: boolean;

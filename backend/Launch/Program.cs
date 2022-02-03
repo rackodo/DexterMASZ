@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Launch;
+﻿using Launch;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Enums;
@@ -8,6 +7,7 @@ using MASZ.Bot.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using System.Reflection;
 
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("========== Launching MASZ ==========");
@@ -97,8 +97,8 @@ await using (var dataContext = new BotDatabase(dbBuilder.Options))
 		settings.AbsolutePathToFileUpload = directoryPath;
 
 		switch (ConsoleCreator.AskDefinedChoice<DeploymentType>("stance on whether this is being deployed on " +
-		                                                        "a domain or locally, as a test version", "DEPLOY_MODE",
-			        false))
+																"a domain or locally, as a test version", "DEPLOY_MODE",
+					false))
 		{
 			case DeploymentType.Domain:
 				settings.ServiceHostName = ConsoleCreator.Ask("service name", "META_SERVICE_NAME");
@@ -132,7 +132,7 @@ ConsoleCreator.AddHeading("Importing Modules");
 
 foreach (var module in modules)
 {
-	ConsoleCreator.AddSubHeading("Imported: ", module.GetType().Namespace);
+	ConsoleCreator.AddSubHeading("Imported: ", $"{module.GetType().Namespace}{(module is WebModule ? " (WEB)" : "")}");
 
 	Console.Write("    Maintained By:      ");
 
@@ -171,9 +171,9 @@ builder.WebHost.CaptureStartupErrors(true);
 
 builder.WebHost.UseUrls("http://0.0.0.0:80/");
 
-var serviceCacher = new ServiceCacher();
+var cachedServices = new CachedServices();
 
-builder.Services.AddSingleton(serviceCacher);
+builder.Services.AddSingleton(cachedServices);
 
 var authorizationPolicies = new List<string>();
 
@@ -185,12 +185,12 @@ try
 	ConsoleCreator.AddSubHeading("Successfully Initialized: ", "Logging.");
 
 	foreach (var startup in modules)
-		startup.AddPreServices(builder.Services, serviceCacher, databaseBuilder);
+		startup.AddPreServices(builder.Services, cachedServices, databaseBuilder);
 
 	ConsoleCreator.AddSubHeading("Successfully Initialized: ", "Pre-Services.");
 
 	foreach (var startup in modules)
-		startup.AddServices(builder.Services, serviceCacher, settings);
+		startup.AddServices(builder.Services, cachedServices, settings);
 	ConsoleCreator.AddSubHeading("Successfully Initialized: ", "Services.");
 
 	foreach (var startup in modules)
@@ -218,12 +218,13 @@ catch (Exception ex)
 builder.Services.AddMemoryCache();
 
 var controller = builder.Services.AddControllers()
-	.AddNewtonsoftJson(x => {
+	.AddNewtonsoftJson(x =>
+	{
 		x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 		x.SerializerSettings.Converters.Add(new UlongConverter());
 	});
 
-foreach (var assembly in serviceCacher.Dependents)
+foreach (var assembly in cachedServices.Dependents)
 	controller.AddApplicationPart(assembly);
 
 builder.Services.AddAuthorization(options =>
@@ -241,7 +242,7 @@ Console.WriteLine("This might take a while on a first install...\n");
 
 using (var scope = app.Services.CreateScope())
 {
-	foreach (var dataContext in serviceCacher.GetInitializedClasses<DbContext>(scope.ServiceProvider))
+	foreach (var dataContext in cachedServices.GetInitializedClasses<DbContext>(scope.ServiceProvider))
 	{
 		ConsoleCreator.AddSubHeading("Adding Migrations For: ", dataContext.GetType().Name);
 		await dataContext.Database.MigrateAsync();
@@ -256,7 +257,7 @@ ConsoleCreator.AddHeading("Building MASZ");
 
 foreach (var startup in modules)
 {
-	startup.PostBuild(app.Services, serviceCacher);
+	startup.PostBuild(app.Services, cachedServices);
 
 	if (startup is WebModule module)
 		module.PostWebBuild(app, settings);

@@ -1,10 +1,11 @@
-using System.Text;
 using Discord;
 using Discord.WebSocket;
+using Humanizer;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Exceptions;
 using MASZ.Bot.Extensions;
+using MASZ.Bot.Services;
 using MASZ.Bot.Translators;
 using MASZ.GuildAudits.Data;
 using MASZ.GuildAudits.Enums;
@@ -12,16 +13,17 @@ using MASZ.GuildAudits.Translators;
 using MASZ.Invites.Events;
 using MASZ.Invites.Models;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 
 namespace MASZ.GuildAudits.Services;
 
-public class GuildAuditLogger : Event
+public class GuildAuditer : Event
 {
 	private readonly DiscordSocketClient _client;
 	private readonly InviteEventHandler _eventHandler;
 	private readonly IServiceProvider _serviceProvider;
 
-	public GuildAuditLogger(DiscordSocketClient client, IServiceProvider serviceProvider,
+	public GuildAuditer(DiscordSocketClient client, IServiceProvider serviceProvider,
 		InviteEventHandler eventHandler)
 	{
 		_client = client;
@@ -41,7 +43,7 @@ public class GuildAuditLogger : Event
 		_client.MessageUpdated += HandleMessageUpdated;
 		_client.ThreadCreated += HandleThreadCreated;
 		_client.UserUpdated += HandleUsernameUpdated;
-		_client.GuildMemberUpdated += HandleGUserUpdated;
+		_client.GuildMemberUpdated += HandleGuildUserUpdated;
 
 		_eventHandler.OnInviteDeleted += HandleInviteDeleted;
 	}
@@ -53,23 +55,23 @@ public class GuildAuditLogger : Event
 		var guildConfigRepository = scope.ServiceProvider.GetRequiredService<GuildConfigRepository>();
 
 		embed.WithColor(eventType switch
-			{
-				GuildAuditEvent.MessageSent => Color.Green,
-				GuildAuditEvent.MessageUpdated => Color.Orange,
-				GuildAuditEvent.MessageDeleted => Color.Red,
-				GuildAuditEvent.UsernameUpdated => Color.Orange,
-				GuildAuditEvent.AvatarUpdated => Color.Orange,
-				GuildAuditEvent.NicknameUpdated => Color.Orange,
-				GuildAuditEvent.UserRolesUpdated => Color.Orange,
-				GuildAuditEvent.UserJoined => Color.Green,
-				GuildAuditEvent.UserRemoved => Color.Red,
-				GuildAuditEvent.BanAdded => Color.Red,
-				GuildAuditEvent.BanRemoved => Color.Green,
-				GuildAuditEvent.InviteCreated => Color.Green,
-				GuildAuditEvent.InviteDeleted => Color.Red,
-				GuildAuditEvent.ThreadCreated => Color.Green,
-				_ => throw new NotImplementedException()
-			})
+		{
+			GuildAuditEvent.MessageSent => Color.Green,
+			GuildAuditEvent.MessageUpdated => Color.Orange,
+			GuildAuditEvent.MessageDeleted => Color.Red,
+			GuildAuditEvent.UsernameUpdated => Color.Orange,
+			GuildAuditEvent.AvatarUpdated => Color.Orange,
+			GuildAuditEvent.NicknameUpdated => Color.Orange,
+			GuildAuditEvent.UserRolesUpdated => Color.Orange,
+			GuildAuditEvent.UserJoined => Color.Green,
+			GuildAuditEvent.UserRemoved => Color.Red,
+			GuildAuditEvent.BanAdded => Color.Red,
+			GuildAuditEvent.BanRemoved => Color.Green,
+			GuildAuditEvent.InviteCreated => Color.Green,
+			GuildAuditEvent.InviteDeleted => Color.Red,
+			GuildAuditEvent.ThreadCreated => Color.Green,
+			_ => throw new NotImplementedException()
+		})
 			.WithCurrentTimestamp();
 
 		try
@@ -87,9 +89,9 @@ public class GuildAuditLogger : Event
 				return;
 
 			if (embed.Footer == null)
-				embed.WithFooter(auditLogConfig.GuildAuditLogEvent.ToString());
+				embed.WithFooter(auditLogConfig.GuildAuditEvent.Humanize());
 			else
-				embed.WithFooter(embed.Footer.Text + $" | {auditLogConfig.GuildAuditLogEvent}");
+				embed.WithFooter(embed.Footer.Text + $" | {auditLogConfig.GuildAuditEvent.Humanize()}");
 
 			StringBuilder rolePings = new();
 
@@ -99,8 +101,6 @@ public class GuildAuditLogger : Event
 			if (await _client.GetChannelAsync(auditLogConfig.ChannelId) is ITextChannel channel)
 			{
 				await channel.SendMessageAsync(rolePings.ToString(), embed: embed.Build());
-
-				await channel.SendMessageAsync(embed: embed.Build());
 			}
 		}
 		catch (ResourceNotFoundException)
@@ -108,24 +108,25 @@ public class GuildAuditLogger : Event
 		}
 	}
 
-	public async Task HandleGUserUpdated(Cacheable<SocketGuildUser, ulong> oldU, SocketGuildUser newU)
+	public async Task HandleGuildUserUpdated(Cacheable<SocketGuildUser, ulong> oldU, SocketGuildUser newU)
 	{
-		if (oldU.HasValue)
-		{
-			if (oldU.Value.Nickname != newU.Nickname)
-				await HandleNicknameUpdated(oldU.Value, newU, newU.Guild.Id);
-			else if (oldU.Value.AvatarId != newU.AvatarId)
-				await HandleAvatarUpdated(oldU.Value, newU, newU.Guild.Id);
-			else if (!Equals(oldU.Value.Roles, newU.Roles))
-				await HandleUserRolesUpdated(newU, oldU.Value.Roles, newU.Roles, newU.Guild.Id);
-		}
+		var oldUser = await oldU.GetOrDownloadAsync();
+
+		if (oldUser.Nickname != newU.Nickname)
+			await HandleNicknameUpdated(oldUser, newU, newU.Guild.Id);
+		
+		if (oldUser.AvatarId != newU.AvatarId)
+			await HandleAvatarUpdated(oldUser, newU, newU.Guild.Id);
+
+		if (!Equals(oldUser.Roles, newU.Roles))
+			await HandleUserRolesUpdated(newU, oldUser.Roles, newU.Roles, newU.Guild.Id);
 	}
 
 	public async Task HandleAvatarUpdated(IGuildUser oldU, IGuildUser newU, ulong guildId)
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 		await translator.SetLanguage(guildId);
 
 		StringBuilder description = new();
@@ -145,7 +146,8 @@ public class GuildAuditLogger : Event
 				translator.Get<GuildAuditTranslator>().New(),
 				newU.GetAvatarOrDefaultUrl(),
 				true
-			);
+			)
+			.WithAuthor(newU);
 
 		await SendEmbed(embed, guildId, GuildAuditEvent.AvatarUpdated);
 	}
@@ -154,7 +156,7 @@ public class GuildAuditLogger : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 		await translator.SetLanguage(guildId);
 
 		StringBuilder description = new();
@@ -178,7 +180,8 @@ public class GuildAuditLogger : Event
 					? $"`{translator.Get<GuildAuditTranslator>().Empty()}`"
 					: newU.Nickname,
 				true
-			);
+			)
+			.WithAuthor(newU);
 
 		await SendEmbed(embed, guildId, GuildAuditEvent.NicknameUpdated);
 	}
@@ -188,7 +191,7 @@ public class GuildAuditLogger : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 		await translator.SetLanguage(guildId);
 
 		StringBuilder description = new();
@@ -198,7 +201,8 @@ public class GuildAuditLogger : Event
 
 		var embed = new EmbedBuilder()
 			.WithTitle(translator.Get<GuildAuditTranslator>().RolesUpdated())
-			.WithDescription(description.ToString());
+			.WithDescription(description.ToString())
+			.WithAuthor(user);
 
 		var addedRoles = roleNew.Except(roleOld).ToList();
 		var removedRoles = roleOld.Except(roleNew).ToList();
@@ -227,7 +231,7 @@ public class GuildAuditLogger : Event
 		{
 			using var scope = _serviceProvider.CreateScope();
 
-			var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+			var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 
 			foreach (var guild in newU.MutualGuilds)
 			{
@@ -240,7 +244,8 @@ public class GuildAuditLogger : Event
 
 				var embed = new EmbedBuilder()
 					.WithTitle(translator.Get<GuildAuditTranslator>().UsernameUpdated())
-					.WithDescription(description.ToString());
+					.WithDescription(description.ToString())
+					.WithAuthor(newU);
 
 				embed.AddField(
 					translator.Get<GuildAuditTranslator>().Old(),
@@ -262,7 +267,7 @@ public class GuildAuditLogger : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 		await translator.SetLanguage(guild.Id);
 
 		StringBuilder description = new();
@@ -282,7 +287,7 @@ public class GuildAuditLogger : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 		await translator.SetLanguage(guild.Id);
 
 		StringBuilder description = new();
@@ -302,7 +307,7 @@ public class GuildAuditLogger : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 		await translator.SetLanguage(invite.Guild.Id);
 
 		EmbedBuilder embed = new();
@@ -339,7 +344,7 @@ public class GuildAuditLogger : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 		await translator.SetLanguage(channel.Guild.Id);
 
 		EmbedBuilder embed = new();
@@ -371,7 +376,7 @@ public class GuildAuditLogger : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 		await translator.SetLanguage(user.Guild.Id);
 
 		StringBuilder description = new();
@@ -394,7 +399,7 @@ public class GuildAuditLogger : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 		await translator.SetLanguage(guild.Id);
 
 		StringBuilder description = new();
@@ -422,7 +427,7 @@ public class GuildAuditLogger : Event
 		{
 			using var scope = _serviceProvider.CreateScope();
 
-			var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+			var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 			await translator.SetLanguage(textChannel.Guild.Id);
 
 			EmbedBuilder embed = new();
@@ -493,7 +498,7 @@ public class GuildAuditLogger : Event
 			{
 				using var scope = _serviceProvider.CreateScope();
 
-				var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+				var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 				await translator.SetLanguage(textChannel.Guild.Id);
 
 				StringBuilder description = new();
@@ -552,12 +557,15 @@ public class GuildAuditLogger : Event
 	public async Task HandleMessageUpdated(Cacheable<IMessage, ulong> messageBefore, SocketMessage messageAfter,
 		ISocketMessageChannel channel)
 	{
+		if (messageAfter.Author.Id == 0)
+			return;
+
 		if (!messageAfter.Author.IsBot && !messageAfter.Author.IsWebhook)
 			if (channel is ITextChannel textChannel)
 			{
 				using var scope = _serviceProvider.CreateScope();
 
-				var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+				var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 				await translator.SetLanguage(textChannel.Guild.Id);
 
 				StringBuilder description = new();
@@ -583,8 +591,9 @@ public class GuildAuditLogger : Event
 						translator.Get<GuildAuditTranslator>().InformationNotCached());
 				else if (string.Equals(before.Content, messageAfter.Content) && before.Embeds.Count != messageAfter.Embeds.Count)
 					return;
-				else if(!string.IsNullOrEmpty(before.Content))
-					embed.AddField(translator.Get<GuildAuditTranslator>().Before(), before.Content.Truncate(1024));
+				else if (!string.Equals(before.Content, messageAfter.Content))
+					if (!string.IsNullOrEmpty(before.Content))
+						embed.AddField(translator.Get<GuildAuditTranslator>().Before(), before.Content.Truncate(1024));
 
 				if (!string.IsNullOrEmpty(messageAfter.Content))
 				{
@@ -629,7 +638,7 @@ public class GuildAuditLogger : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Bot.Services.Translation>();
+		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 		await translator.SetLanguage(thread.Guild.Id);
 
 		StringBuilder description = new();

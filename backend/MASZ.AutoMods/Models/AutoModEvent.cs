@@ -1,5 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using MASZ.AutoMods.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace MASZ.AutoMods.Models;
 

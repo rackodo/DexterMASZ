@@ -55,7 +55,7 @@ export class GuildAddComponent implements OnInit {
       internal: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
       public: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
       strictPermissionCheck: [''],
-      executeWhoisOnJoin: [''],
+      executeWhoIsOnJoin: [''],
       publishModeratorInfo: [''],
       preferredLanguage: [''],
     });
@@ -147,7 +147,7 @@ export class GuildAddComponent implements OnInit {
       modInternalNotificationWebhook: this.configGroup.value?.internal?.trim()      != '' ? this.configGroup?.value?.internal                      : null,
       modPublicNotificationWebhook:   this.configGroup.value?.public?.trim()        != '' ? this.configGroup?.value?.public                        : null,
       strictModPermissionCheck:       this.configGroup.value?.strictPermissionCheck != '' ? this.configGroup.value?.strictPermissionCheck ?? false : false,
-      executeWhoisOnJoin:             this.configGroup.value?.executeWhoisOnJoin    != '' ? this.configGroup.value?.executeWhoisOnJoin    ?? false : false,
+      executeWhoIsOnJoin:             this.configGroup.value?.executeWhoIsOnJoin    != '' ? this.configGroup.value?.executeWhoIsOnJoin    ?? false : false,
       publishModeratorInfo:           this.configGroup.value?.publishModeratorInfo  != '' ? this.configGroup.value?.publishModeratorInfo  ?? false : false,
       preferredLanguage:              this.configGroup.value?.preferredLanguage     != '' ? this.configGroup.value?.preferredLanguage     ?? null  : null
     };

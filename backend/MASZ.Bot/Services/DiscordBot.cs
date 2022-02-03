@@ -19,7 +19,7 @@ public class DiscordBot : IHostedService, Event
 	private readonly DiscordSocketClient _client;
 	private readonly BotEventHandler _eventHandler;
 	private readonly InteractionService _interactions;
-	private readonly ServiceCacher _cacher;
+	private readonly CachedServices _cacher;
 	private readonly ILogger<DiscordBot> _logger;
 	private readonly IServiceProvider _serviceProvider;
 
@@ -28,14 +28,14 @@ public class DiscordBot : IHostedService, Event
 	private DateTime? _lastDisconnect;
 
 	public DiscordBot(ILogger<DiscordBot> logger, DiscordSocketClient client, InteractionService interactions,
-		IServiceProvider serviceProvider, BotEventHandler eventHandler, ServiceCacher cacher)
+		IServiceProvider serviceProvider, BotEventHandler eventHandler, CachedServices cacher)
 	{
 		_logger = logger;
 		_client = client;
 		_interactions = interactions;
 		_serviceProvider = serviceProvider;
 		_eventHandler = eventHandler;
-		_cacher	= cacher;
+		_cacher = cacher;
 
 		_firstReady = true;
 		_isRunning = false;
@@ -45,12 +45,12 @@ public class DiscordBot : IHostedService, Event
 	public void RegisterEvents()
 	{
 		_client.JoinedGuild += GuildCreatedHandler;
-		_client.GuildMemberUpdated += GuildMemberUpdatedHandler;
+		_client.GuildMemberUpdated += GuildUserUpdatedHandler;
 		_client.UserLeft += GuildUserRemoved;
 		_client.UserBanned += GuildBanAdded;
 		_client.UserUnbanned += GuildBanRemoved;
 		_client.ThreadCreated += ThreadCreatedHandler;
-		
+
 		_client.Connected += Connected;
 		_client.Disconnected += Disconnected;
 		_client.Ready += ReadyHandler;
@@ -233,7 +233,7 @@ public class DiscordBot : IHostedService, Event
 		// Refresh identity memberships
 		var identityManager = scope.ServiceProvider.GetRequiredService<IdentityManager>();
 		foreach (var identity in identityManager.GetCurrentIdentities()
-			         .Where(identity => identity.GetCurrentUser().Id == user.Id))
+					 .Where(identity => identity.GetCurrentUser().Id == user.Id))
 			identity.RemoveGuildMembership(guild.Id);
 	}
 
@@ -244,20 +244,20 @@ public class DiscordBot : IHostedService, Event
 		// Refresh identity memberships
 		var identityManager = scope.ServiceProvider.GetRequiredService<IdentityManager>();
 		foreach (var identity in identityManager.GetCurrentIdentities()
-			         .Where(identity => identity.GetCurrentUser().Id == usr.Id))
+					 .Where(identity => identity.GetCurrentUser().Id == usr.Id))
 			identity.RemoveGuildMembership(guild.Id);
 
 		return Task.CompletedTask;
 	}
 
-	private Task GuildMemberUpdatedHandler(Cacheable<SocketGuildUser, ulong> oldUsrCached, SocketGuildUser newUsr)
+	private Task GuildUserUpdatedHandler(Cacheable<SocketGuildUser, ulong> oldUsrCached, SocketGuildUser newUsr)
 	{
 		using var scope = _serviceProvider.CreateScope();
 
 		// Refresh identity memberships
 		var identityManager = scope.ServiceProvider.GetRequiredService<IdentityManager>();
 		foreach (var identity in identityManager.GetCurrentIdentities()
-			         .Where(identity => identity.GetCurrentUser().Id == newUsr.Id))
+					 .Where(identity => identity.GetCurrentUser().Id == newUsr.Id))
 			identity.UpdateGuildMembership(newUsr);
 
 		// Refresh user cache
@@ -308,7 +308,7 @@ public class DiscordBot : IHostedService, Event
 					{
 						await context.Interaction.RespondAsync(embed: builder.Build());
 					}
-					catch (TimeoutException)
+					catch (Exception)
 					{
 						await context.Channel.SendMessageAsync(embed: builder.Build());
 					}

@@ -583,7 +583,7 @@ public class DiscordRest : IHostedService, Event
 
 		return channel;
 	}
-	
+
 	public async Task SendDmMessage(ulong userId, string content)
 	{
 		var channel = await CreateDmChannel(userId);

@@ -1,9 +1,9 @@
-using System.Diagnostics;
 using Discord;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Dynamics;
 using MASZ.Bot.Models;
 using MASZ.Bot.Services;
+using System.Diagnostics;
 
 namespace MASZ.Bot.Data;
 

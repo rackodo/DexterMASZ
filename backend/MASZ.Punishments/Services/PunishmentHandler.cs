@@ -1,10 +1,10 @@
 using Discord.WebSocket;
+using Humanizer;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Data;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Events;
 using MASZ.Bot.Exceptions;
-using MASZ.Bot.Extensions;
 using MASZ.Bot.Models;
 using MASZ.Bot.Services;
 using MASZ.Punishments.Data;

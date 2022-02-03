@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using MASZ.AutoMods.Data;
 using MASZ.AutoMods.Models;
 using MASZ.Bot.Abstractions;
@@ -6,6 +5,7 @@ using MASZ.Bot.Data;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace MASZ.AutoMods.Controllers;
 
@@ -25,7 +25,7 @@ public class AutoModEventController : AuthenticatedController
 
 	[HttpGet]
 	public async Task<IActionResult> GetAllItems([FromRoute] ulong guildId,
-		[FromQuery] [Range(0, int.MaxValue)] int startPage = 0)
+		[FromQuery][Range(0, int.MaxValue)] int startPage = 0)
 	{
 		var identity = await SetupAuthentication();
 

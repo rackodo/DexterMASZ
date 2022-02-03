@@ -43,7 +43,7 @@ public static class IdentityPermissions
 					return false;
 
 				return modCase.UserId == currentUser.Id ||
-				       await identity.HasPermission(DiscordPermission.Moderator, modCase.GuildId);
+					   await identity.HasPermission(DiscordPermission.Moderator, modCase.GuildId);
 			case ApiActionPermission.Delete:
 				return await identity.HasPermission(DiscordPermission.Moderator, modCase.GuildId);
 			case ApiActionPermission.ForceDelete:
@@ -70,7 +70,7 @@ public static class IdentityPermissions
 						return true;
 
 					return await identity.HasPermission(DiscordPermission.Moderator, modCase.GuildId) &&
-					       await identity.HasPermission(x, modCase.GuildId);
+						   await identity.HasPermission(x, modCase.GuildId);
 
 				}
 				catch (ResourceNotFoundException)

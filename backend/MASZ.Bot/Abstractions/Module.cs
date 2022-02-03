@@ -19,12 +19,12 @@ public abstract class Module
 	{
 	}
 
-	public virtual void AddPreServices(IServiceCollection services, ServiceCacher serviceCacher,
+	public virtual void AddPreServices(IServiceCollection services, CachedServices cachedServices,
 		Action<DbContextOptionsBuilder> dbOption)
 	{
 	}
 
-	public virtual void AddServices(IServiceCollection services, ServiceCacher serviceCacher, AppSettings appSettings)
+	public virtual void AddServices(IServiceCollection services, CachedServices cachedServices, AppSettings appSettings)
 	{
 	}
 
@@ -32,7 +32,7 @@ public abstract class Module
 	{
 	}
 
-	public virtual void PostBuild(IServiceProvider services, ServiceCacher serviceCacher)
+	public virtual void PostBuild(IServiceProvider services, CachedServices cachedServices)
 	{
 	}
 }

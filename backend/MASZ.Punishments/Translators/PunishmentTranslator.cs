@@ -222,7 +222,7 @@ public class PunishmentTranslator : Translator
 			_ => "Waiting for approval."
 		};
 	}
-	
+
 	public string Canceled()
 	{
 		return PreferredLanguage switch

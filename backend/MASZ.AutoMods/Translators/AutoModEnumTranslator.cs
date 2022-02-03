@@ -110,13 +110,13 @@ public class AutoModEnumTranslator : Translator
 			},
 			AutoModType.TooManyAutomods => PreferredLanguage switch
 			{
-				Language.De => "Zu viele automatische Punishmentsen",
-				Language.At => "Zu vü automatische Modarationen",
+				Language.De => "Zu viele automatische punishmentsen",
+				Language.At => "Zu vü automatische modarationen",
 				Language.Fr => "Trop de modérations automatiques",
 				Language.Es => "Demasiadas moderaciones automáticas",
 				Language.Ru => "Слишком много автоматических модераций",
 				Language.It => "Troppe moderazioni automatiche",
-				_ => "Too many auto-Punishmentss"
+				_ => "Too many auto-punishments"
 			},
 			AutoModType.CustomWordFilter => PreferredLanguage switch
 			{

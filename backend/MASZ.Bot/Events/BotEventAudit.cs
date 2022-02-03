@@ -1,4 +1,5 @@
-﻿using MASZ.Bot.Abstractions;
+﻿using Humanizer;
+using MASZ.Bot.Abstractions;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Extensions;
 using MASZ.Bot.Identities;
@@ -79,7 +80,7 @@ public class BotEventAudit : Event
 	private async Task OnInternalCachingDoneAudit(int _, DateTime nextCache)
 	{
 		_auditLogger.QueueLog($"Internal cache refreshed with `{_discordRest.GetCache().Keys.Count}` entries. " +
-		                      $"Next cache refresh {nextCache.ToDiscordTs(DiscordTimestampFormats.RelativeTime)}.");
+							  $"Next cache refresh {nextCache.ToDiscordTs(DiscordTimestampFormats.RelativeTime)}.");
 
 		await _auditLogger.ExecuteWebhook();
 	}

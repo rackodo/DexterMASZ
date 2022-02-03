@@ -25,22 +25,22 @@ public class BotModule : Module
 		loggingBuilder.AddProvider(new LoggerProvider());
 	}
 
-	public override void AddPreServices(IServiceCollection services, ServiceCacher serviceCacher,
+	public override void AddPreServices(IServiceCollection services, CachedServices cachedServices,
 		Action<DbContextOptionsBuilder> dbOption)
 	{
-		foreach (var type in serviceCacher.GetClassTypes<DataContextCreate>())
+		foreach (var type in cachedServices.GetClassTypes<DataContextCreate>())
 			type.GetMethod("AddContextToServiceProvider")?.Invoke(null, new object[] { dbOption, services });
 
-		foreach (var type in serviceCacher.GetClassTypes<Repository>())
+		foreach (var type in cachedServices.GetClassTypes<Repository>())
 			services.AddScoped(type);
 
 		services.AddScoped<Translation>();
 
-		foreach (var type in serviceCacher.GetClassTypes<Translator>())
+		foreach (var type in cachedServices.GetClassTypes<Translator>())
 			services.AddScoped(type);
 	}
 
-	public override void AddServices(IServiceCollection services, ServiceCacher serviceCacher, AppSettings settings)
+	public override void AddServices(IServiceCollection services, CachedServices cachedServices, AppSettings settings)
 	{
 		services.AddSingleton(new DiscordSocketConfig
 		{
@@ -62,10 +62,10 @@ public class BotModule : Module
 
 		services.AddSingleton<InteractionService>();
 
-		foreach (var type in serviceCacher.GetClassTypes<InternalEventHandler>())
+		foreach (var type in cachedServices.GetClassTypes<InternalEventHandler>())
 			services.AddSingleton(type);
 
-		foreach (var type in serviceCacher.GetClassTypes<Event>())
+		foreach (var type in cachedServices.GetClassTypes<Event>())
 			services.AddSingleton(type);
 
 		services.AddHostedService(s => s.GetRequiredService<DiscordBot>());
@@ -73,9 +73,9 @@ public class BotModule : Module
 		services.AddHostedService(s => s.GetRequiredService<DiscordRest>());
 	}
 
-	public override void PostBuild(IServiceProvider services, ServiceCacher serviceCacher)
+	public override void PostBuild(IServiceProvider services, CachedServices cachedServices)
 	{
-		foreach (var initEvent in serviceCacher.GetInitializedClasses<Event>(services))
+		foreach (var initEvent in cachedServices.GetInitializedClasses<Event>(services))
 			initEvent.RegisterEvents();
 	}
 }

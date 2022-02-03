@@ -219,25 +219,25 @@ public class BotEnumTranslator : Translator
 				Language.It => "L'ultimo commento era già del sospettato.",
 				_ => "The last comment was already from the suspect."
 			},
-			ApiError.InvalidAutoModerationAction => PreferredLanguage switch
+			ApiError.InvalidAutoModAction => PreferredLanguage switch
 			{
-				Language.De => "Ungültige AutoModerationsaktion",
+				Language.De => "Ungültige automodsaktion",
 				Language.At => "Ned gütige automodarationsaktion",
 				Language.Fr => "Action de modération automatique non valide",
 				Language.Es => "Acción de automoderación no válida",
 				Language.Ru => "Недопустимое действие автомодерации",
 				Language.It => "Azione di moderazione automatica non valida",
-				_ => "Invalid AutoModeration action"
+				_ => "Invalid automod action"
 			},
-			ApiError.InvalidAutoModerationType => PreferredLanguage switch
+			ApiError.InvalidAutoModType => PreferredLanguage switch
 			{
-				Language.De => "Ungültiger AutoModerationstyp",
+				Language.De => "Ungültiger automodstyp",
 				Language.At => "Ungütiga automodarationstyp",
 				Language.Fr => "Type d'automodération non valide",
 				Language.Es => "Tipo de automoderación no válido",
 				Language.Ru => "Неверный тип автомодерации.",
 				Language.It => "Tipo di moderazione automatica non valido",
-				_ => "Invalid AutoModeration type"
+				_ => "Invalid automod type"
 			},
 			ApiError.TooManyTemplates => PreferredLanguage switch
 			{

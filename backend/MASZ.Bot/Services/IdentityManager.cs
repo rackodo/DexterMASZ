@@ -149,7 +149,7 @@ public class IdentityManager : Event
 		{
 			_logger.LogInformation("Registering new DiscordIdentity.");
 			var token = await httpContext.GetTokenAsync("Cookies", "access_token");
-			
+
 			var rest = _serviceProvider.GetRequiredService<DiscordRest>();
 			var user = await rest.FetchCurrentUserInfo(token, CacheBehavior.IgnoreButCacheOnError);
 			var guilds = await rest.FetchGuildsOfCurrentUser(token, CacheBehavior.IgnoreButCacheOnError);

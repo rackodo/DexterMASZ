@@ -8,7 +8,7 @@ public abstract class ApiException : Exception
 	{
 		Error = error;
 	}
-	
+
 	public ApiError Error { get; set; }
 
 	public Exception WithError(ApiError error)

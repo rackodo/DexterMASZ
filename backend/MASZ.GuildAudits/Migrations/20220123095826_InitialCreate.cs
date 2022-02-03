@@ -23,7 +23,7 @@ public partial class InitialCreate : Migration
 				Id = table.Column<int>(type: "int", nullable: false)
 					.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
 				GuildId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-				GuildAuditLogEvent = table.Column<int>(type: "int", nullable: false),
+				GuildAuditEvent = table.Column<int>(type: "int", nullable: false),
 				ChannelId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
 				PingRoles = table.Column<string>(type: "longtext", nullable: true)
 					.Annotation("MySql:CharSet", "utf8mb4")

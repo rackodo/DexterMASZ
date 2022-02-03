@@ -223,7 +223,7 @@ public class PunishmentNotificationTranslator : Translator
 				$"The moderators of guild `{guild.Name}` have kicked you.\nFor more information or rehabilitation visit: {serviceBaseUrl}"
 		};
 	}
-	
+
 	public string NotificationDiscordAuditLogPunishmentsExecute(int caseId, ulong modId, string reason)
 	{
 		return PreferredLanguage switch

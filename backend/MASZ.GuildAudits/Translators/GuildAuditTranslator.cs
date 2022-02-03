@@ -18,7 +18,7 @@ public class GuildAuditTranslator : Translator
 			_ => "Created"
 		};
 	}
-	
+
 	public string InformationNotCached()
 	{
 		return PreferredLanguage switch

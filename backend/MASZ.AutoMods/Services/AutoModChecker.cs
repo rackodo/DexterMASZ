@@ -11,13 +11,13 @@ using Microsoft.Extensions.Logging;
 
 namespace MASZ.AutoMods.Services;
 
-public class AutoModerator : Event
+public class AutoModChecker : Event
 {
 	private readonly DiscordSocketClient _client;
-	private readonly ILogger<AutoModerator> _logger;
+	private readonly ILogger<AutoModChecker> _logger;
 	private readonly IServiceProvider _services;
 
-	public AutoModerator(DiscordSocketClient client, ILogger<AutoModerator> logger, IServiceProvider services)
+	public AutoModChecker(DiscordSocketClient client, ILogger<AutoModChecker> logger, IServiceProvider services)
 	{
 		_client = client;
 		_logger = logger;
@@ -43,7 +43,7 @@ public class AutoModerator : Event
 			if (channel.Guild == null)
 				return;
 
-			await HandleAutoModeration(message);
+			await HandleAutoMod(message);
 		}
 	}
 
@@ -61,11 +61,11 @@ public class AutoModerator : Event
 			if (txtChannel.Guild == null)
 				return;
 
-			await HandleAutoModeration(newMsg, true);
+			await HandleAutoMod(newMsg, true);
 		}
 	}
 
-	public async Task HandleAutoModeration(IMessage message, bool onEdit = false)
+	public async Task HandleAutoMod(IMessage message, bool onEdit = false)
 	{
 		if (message.Type != MessageType.Default && message.Type != MessageType.Reply)
 			return;
@@ -80,61 +80,61 @@ public class AutoModerator : Event
 
 		if (!onEdit)
 			if (await CheckAutoMod(
-				    AutoModType.TooManyMessages,
-				    message,
-				    SpamCheck.Check,
-				    scope
-			    ))
+					AutoModType.TooManyMessages,
+					message,
+					SpamCheck.Check,
+					scope
+				))
 				return;
 
 		if (await CheckAutoMod(
-			    AutoModType.InvitePosted,
-			    message,
-			    InviteChecker.Check,
-			    scope
-		    )) return;
+				AutoModType.InvitePosted,
+				message,
+				InviteChecker.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.TooManyEmotes,
-			    message,
-			    EmoteCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.TooManyEmotes,
+				message,
+				EmoteCheck.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.TooManyMentions,
-			    message,
-			    MentionCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.TooManyMentions,
+				message,
+				MentionCheck.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.TooManyAttachments,
-			    message,
-			    AttachmentCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.TooManyAttachments,
+				message,
+				AttachmentCheck.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.TooManyEmbeds,
-			    message,
-			    EmbedCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.TooManyEmbeds,
+				message,
+				EmbedCheck.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.CustomWordFilter,
-			    message,
-			    CustomWordCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.CustomWordFilter,
+				message,
+				CustomWordCheck.Check,
+				scope
+			)) return;
 
 		if (await CheckAutoMod(
-			    AutoModType.TooManyDuplicatedCharacters,
-			    message,
-			    DuplicatedCharacterCheck.Check,
-			    scope
-		    )) return;
+				AutoModType.TooManyDuplicatedCharacters,
+				message,
+				DuplicatedCharacterCheck.Check,
+				scope
+			)) return;
 
 		await CheckAutoMod(
 			AutoModType.TooManyLinks,
@@ -250,8 +250,8 @@ public class AutoModerator : Event
 			.GetGuildConfig(guild.Id);
 
 		return user.RoleIds.Any(x => guildConfig.ModRoles.Contains(x) ||
-		                             guildConfig.AdminRoles.Contains(x) ||
-		                             autoModConfig.IgnoreRoles.Contains(x)) || autoModConfig.IgnoreChannels.Contains(((ITextChannel)message.Channel).Id);
+									 guildConfig.AdminRoles.Contains(x) ||
+									 autoModConfig.IgnoreRoles.Contains(x)) || autoModConfig.IgnoreChannels.Contains(((ITextChannel)message.Channel).Id);
 	}
 
 	private static async Task<bool> CheckMultipleEvents(IMessage message, AutoModConfig config, IServiceScope scope)

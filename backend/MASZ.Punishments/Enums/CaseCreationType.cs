@@ -3,7 +3,7 @@ namespace MASZ.Punishments.Enums;
 public enum CaseCreationType
 {
 	Default,
-	AutoModeration,
+	AutoMod,
 	Imported,
 	ByCommand
 }

@@ -14,14 +14,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace MASZ.Punishments.Controllers;
 
 [Route("api/v1/guilds/{guildId}/cases/{caseId}/view")]
-public class CaseViewController : AuthenticatedController
+public class ModCaseViewController : AuthenticatedController
 {
 	private readonly DiscordRest _discordRest;
 	private readonly GuildConfigRepository _guildConfigRepository;
 	private readonly ModCaseRepository _modCaseRepository;
 	private readonly UserNoteRepository _userNoteRepository;
 
-	public CaseViewController(IdentityManager identityManager, GuildConfigRepository guildConfigRepository,
+	public ModCaseViewController(IdentityManager identityManager, GuildConfigRepository guildConfigRepository,
 		UserNoteRepository userNoteRepository, ModCaseRepository modCaseRepository, DiscordRest discordRest) :
 		base(identityManager, guildConfigRepository, userNoteRepository, modCaseRepository)
 	{

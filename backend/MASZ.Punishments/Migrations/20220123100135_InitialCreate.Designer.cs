@@ -69,7 +69,7 @@ namespace MASZ.Punishments.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CaseTemplates", "Punishments");
+                    b.ToTable("ModCaseTemplates", "Punishments");
                 });
 
             modelBuilder.Entity("MASZ.Punishments.Models.ModCase", b =>

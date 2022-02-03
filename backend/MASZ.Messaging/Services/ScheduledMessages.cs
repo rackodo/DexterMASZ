@@ -40,7 +40,7 @@ public class ScheduledMessages : Event
 			AutoReset = true,
 			Enabled = true
 		};
-		
+
 		MinuteEventTimer.Elapsed += async (s, e) => await CheckDueScheduledMessages();
 
 		await Task.Run(() => MinuteEventTimer.Start());

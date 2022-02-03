@@ -1,7 +1,7 @@
-using System.Text.RegularExpressions;
 using Discord;
 using Discord.WebSocket;
 using MASZ.AutoMods.Models;
+using System.Text.RegularExpressions;
 
 namespace MASZ.AutoMods.MessageChecks;
 
@@ -37,8 +37,8 @@ public static class InviteChecker
 				alreadyChecked.Add(inviteCode);
 				IInvite fetchedInvite = await client.GetInviteAsync(inviteCode);
 
-				if (fetchedInvite.Guild.Id != ((ITextChannel)message.Channel).GuildId &&
-				    !ignoreGuilds.Contains(fetchedInvite.Guild.Id.ToString()))
+				if (fetchedInvite.GuildId != ((ITextChannel)message.Channel).GuildId &&
+					!ignoreGuilds.Contains(fetchedInvite.GuildId.ToString()))
 					return true;
 			}
 			catch (Exception e)

@@ -16,13 +16,13 @@ public class AdminStatsController : AuthenticatedController
 	private readonly IdentityManager _identityManager;
 	private readonly ILogger<AdminStatsController> _logger;
 	private readonly ScheduledCacher _scheduler;
-	private readonly ServiceCacher _serviceCacher;
+	private readonly CachedServices _cachedServices;
 	private readonly IServiceProvider _serviceProvider;
 	private readonly SettingsRepository _settingsRepository;
 
 	public AdminStatsController(ILogger<AdminStatsController> logger, ScheduledCacher scheduler,
 		SettingsRepository settingsRepository, DiscordRest discordRest, IdentityManager identityManager,
-		IServiceProvider serviceProvider, ServiceCacher serviceCacher) :
+		IServiceProvider serviceProvider, CachedServices cachedServices) :
 		base(identityManager, settingsRepository)
 	{
 		_logger = logger;
@@ -30,7 +30,7 @@ public class AdminStatsController : AuthenticatedController
 		_settingsRepository = settingsRepository;
 		_discordRest = discordRest;
 		_serviceProvider = serviceProvider;
-		_serviceCacher = serviceCacher;
+		_cachedServices = cachedServices;
 		_identityManager = identityManager;
 	}
 
@@ -65,7 +65,7 @@ public class AdminStatsController : AuthenticatedController
 		adminStats.nextCache = _scheduler.GetNextCacheSchedule();
 		adminStats.cachedDataFromDiscord = _discordRest.GetCache().Keys;
 
-		foreach (var repo in _serviceCacher.GetInitializedAuthenticatedClasses<AddAdminStats>(_serviceProvider,
+		foreach (var repo in _cachedServices.GetInitializedAuthenticatedClasses<AddAdminStats>(_serviceProvider,
 					 identity))
 			await repo.AddAdminStatistics(adminStats);
 

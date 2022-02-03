@@ -13,7 +13,7 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 	{
 	}
 
-	public DbSet<ModCaseTemplate> CaseTemplates { get; set; }
+	public DbSet<ModCaseTemplate> ModCaseTemplates { get; set; }
 
 	public DbSet<ModCaseComment> ModCaseComments { get; set; }
 
@@ -36,41 +36,41 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 
 	public async Task<ModCaseTemplate> GetSpecificCaseTemplate(int templateId)
 	{
-		return await CaseTemplates.AsQueryable().FirstOrDefaultAsync(x => x.Id == templateId);
+		return await ModCaseTemplates.AsQueryable().FirstOrDefaultAsync(x => x.Id == templateId);
 	}
 
-	public async Task<List<ModCaseTemplate>> GetAllCaseTemplates()
+	public async Task<List<ModCaseTemplate>> GetAllModCaseTemplates()
 	{
-		return await CaseTemplates.AsQueryable().OrderByDescending(x => x.CreatedAt).ToListAsync();
+		return await ModCaseTemplates.AsQueryable().OrderByDescending(x => x.CreatedAt).ToListAsync();
 	}
 
 	public async Task<List<ModCaseTemplate>> GetAllTemplatesFromUser(ulong userId)
 	{
-		return await CaseTemplates.AsQueryable().Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedAt)
+		return await ModCaseTemplates.AsQueryable().Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedAt)
 			.ToListAsync();
 	}
 
-	public async Task<int> CountAllCaseTemplates()
+	public async Task<int> CountAllModCaseTemplates()
 	{
-		return await CaseTemplates.AsQueryable().CountAsync();
+		return await ModCaseTemplates.AsQueryable().CountAsync();
 	}
 
 	public async Task SaveCaseTemplate(ModCaseTemplate template)
 	{
-		await CaseTemplates.AddAsync(template);
+		await ModCaseTemplates.AddAsync(template);
 		await SaveChangesAsync();
 	}
 
 	public async Task DeleteSpecificCaseTemplate(ModCaseTemplate template)
 	{
-		CaseTemplates.Remove(template);
+		ModCaseTemplates.Remove(template);
 		await SaveChangesAsync();
 	}
 
 	public async Task DeleteAllTemplatesForGuild(ulong guildId)
 	{
-		var templates = await CaseTemplates.AsQueryable().Where(x => x.CreatedForGuildId == guildId).ToListAsync();
-		CaseTemplates.RemoveRange(templates);
+		var templates = await ModCaseTemplates.AsQueryable().Where(x => x.CreatedForGuildId == guildId).ToListAsync();
+		ModCaseTemplates.RemoveRange(templates);
 		await SaveChangesAsync();
 	}
 
@@ -131,26 +131,26 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 		return await ModCases.AsQueryable().Where(x => x.GuildId == guildId && x.UserId == userId)
 			.OrderByDescending(x => x.CaseId).ToListAsync();
 	}
-	
+
 	public async Task<List<ModCase>> SelectAllModCasesForGuild(ulong guildId)
 	{
 		return await ModCases.AsQueryable().Where(x => x.GuildId == guildId).OrderByDescending(x => x.CaseId)
 			.ToListAsync();
 	}
-	
+
 	public async Task<List<ModCase>> SelectAllModCasesForSpecificUserOnGuild(ulong guildId, ulong userId, int startPage,
 		int pageSize)
 	{
 		return await ModCases.AsQueryable().Where(x => x.GuildId == guildId && x.UserId == userId)
 			.OrderByDescending(x => x.CaseId).Skip(startPage * pageSize).Take(pageSize).ToListAsync();
 	}
-	
+
 	public async Task<List<ModCase>> SelectAllModCasesForGuild(ulong guildId, int startPage, int pageSize)
 	{
 		return await ModCases.AsQueryable().Where(x => x.GuildId == guildId).OrderByDescending(x => x.CaseId)
 			.Skip(startPage * pageSize).Take(pageSize).ToListAsync();
 	}
-	
+
 	public async Task<List<ModCase>> SelectAllModCasesWithActiveMuteForGuildAndUser(ulong guildId, ulong userId)
 	{
 		return await ModCases.AsQueryable().Where(x =>
@@ -163,7 +163,7 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 		return await ModCases.AsQueryable().Where(x => x.PunishmentActive == true && x.MarkedToDeleteAt == null)
 			.ToListAsync();
 	}
-	
+
 	public async Task<List<ModCase>> SelectAllModCasesForSpecificUser(ulong userId)
 	{
 		return await ModCases.AsQueryable().Where(x => x.UserId == userId).ToListAsync();

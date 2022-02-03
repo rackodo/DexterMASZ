@@ -7,7 +7,7 @@ import { Moment } from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { ReplaySubject } from 'rxjs';
 import { DiscordChannel } from 'src/app/models/DiscordChannel';
-import { ScheduledMessageExtended } from 'src/app/models/ScheduledMessageExtended';
+import { ScheduledMessage } from 'src/app/models/ScheduledMessage';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';

@@ -83,7 +83,7 @@ public class AutoModDatabase : DataContext<AutoModDatabase>, DataContextCreate
 		return await AutoModEvents.AsQueryable().Where(x => x.GuildId == guildId && x.UserId == userId)
 			.CountAsync();
 	}
-	
+
 	public async Task<List<AutoModEvent>> SelectAllPunishmentsEventsForSpecificUser(ulong userId)
 	{
 		return await AutoModEvents.AsQueryable().Where(x => x.UserId == userId).ToListAsync();

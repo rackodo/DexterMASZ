@@ -6,8 +6,8 @@ import { PunishmentType } from "./PunishmentType";
 export interface AutoModConfig {
     id: number;
     guildId: string;
-    autoModerationType: AutoModType;
-    autoModerationAction: AutoModAction;
+    autoModType: AutoModType;
+    autoModAction: AutoModAction;
     punishmentType: PunishmentType;
     punishmentDurationMinutes: number;
     ignoreChannels: string[];

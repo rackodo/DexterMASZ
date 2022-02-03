@@ -1,4 +1,3 @@
-using System.Net;
 using Discord;
 using Discord.Interactions;
 using Discord.Net;
@@ -10,6 +9,7 @@ using MASZ.Bot.Services;
 using MASZ.Bot.Translators;
 using MASZ.Messaging.Translators;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace MASZ.Messaging.Commands;
 

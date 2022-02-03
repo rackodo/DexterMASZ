@@ -228,7 +228,7 @@
         "TargetChannel": "Target channel",
         "ComingSoon": "Coming soon",
         "PingRoles": "Ping roles",
-        "AuditLog": "AuditLog",
+        "AuditLog": "AuditLogs",
         "ConfigDeleted": "Config deleted.",
         "FailedToDeleteConfig": "Failed to delete config.",
         "SavedConfig": "Saved config.",
@@ -279,7 +279,7 @@
         }
     },
     "AutoModConfig": {
-        "AutoModeration": "AutoModeration",
+        "AutoMods": "AutoMods",
         "Invites": {
             "title": "Invites",
             "details": "A message on your guild matches the invite pattern. Invites to this guild will be ignored.",
@@ -426,7 +426,7 @@
         "Tabs": {
             "Dashboard": "Dashboard",
             "Case": "Cases",
-            "AutoModeration": "Automods",
+            "AutoMods": "Automods",
             "Messages": "Messages",
             "Usernote": "Usernotes",
             "Usermap": "Usermaps",

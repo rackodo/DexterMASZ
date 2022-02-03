@@ -20,9 +20,9 @@ public class ScheduledMessageController : AuthenticatedController
 	private readonly GuildConfigRepository _guildConfigRepo;
 	private readonly DiscordRest _discordRest;
 
-	public ScheduledMessageController(MessagingRepository messagingRepo, GuildConfigRepository guildConfigRepo, 
+	public ScheduledMessageController(MessagingRepository messagingRepo, GuildConfigRepository guildConfigRepo,
 			DiscordRest discordRest, IdentityManager identityManager) :
-		base (identityManager, messagingRepo, guildConfigRepo)
+		base(identityManager, messagingRepo, guildConfigRepo)
 	{
 		_messagingRepo = messagingRepo;
 		_guildConfigRepo = guildConfigRepo;

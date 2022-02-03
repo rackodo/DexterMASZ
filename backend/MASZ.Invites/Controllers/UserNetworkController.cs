@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using MASZ.Bot.Abstractions;
+﻿using MASZ.Bot.Abstractions;
 using MASZ.Bot.Enums;
 using MASZ.Bot.Models;
 using MASZ.Bot.Services;
 using MASZ.Invites.Data;
 using MASZ.Invites.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace MASZ.Invites.Controllers;
 
@@ -23,7 +23,7 @@ public class UserNetworkController : AuthenticatedController
 	}
 
 	[HttpGet("invite")]
-	public async Task<IActionResult> GetInviteNetwork([FromQuery] [Required] string inviteUrl)
+	public async Task<IActionResult> GetInviteNetwork([FromQuery][Required] string inviteUrl)
 	{
 		var identity = await SetupAuthentication();
 

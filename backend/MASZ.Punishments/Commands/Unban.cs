@@ -1,8 +1,7 @@
-using System.Globalization;
-using System.Text;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
+using Humanizer;
 using MASZ.Bot.Abstractions;
 using MASZ.Bot.Attributes;
 using MASZ.Bot.Data;
@@ -12,6 +11,8 @@ using MASZ.Bot.Translators;
 using MASZ.Punishments.Data;
 using MASZ.Punishments.Enums;
 using MASZ.Punishments.Translators;
+using System.Globalization;
+using System.Text;
 
 namespace MASZ.Punishments.Commands;
 

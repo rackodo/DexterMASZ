@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using MASZ.AutoMods.DTOs;
 using MASZ.AutoMods.Enums;
 using MASZ.Punishments.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace MASZ.AutoMods.Models;
 
@@ -14,8 +14,8 @@ public class AutoModConfig
 	public AutoModConfig(AutoModConfigForPutDto dto, ulong guildId)
 	{
 		GuildId = guildId;
-		AutoModType = dto.AutoModerationType;
-		AutoModAction = dto.AutoModerationAction;
+		AutoModType = dto.AutoModType;
+		AutoModAction = dto.AutoModAction;
 		PunishmentType = dto.PunishmentType;
 		PunishmentDurationMinutes = dto.PunishmentDurationMinutes;
 		IgnoreChannels = dto.IgnoreChannels;
