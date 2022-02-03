@@ -30,7 +30,7 @@ public class AutoModNotificationTranslator : Translator
 			Language.Es => $"{user.Username}#{user.Discriminator} desencadenó la automoderación.",
 			Language.Ru => $"{user.Username}#{user.Discriminator} запускает автомодерацию.",
 			Language.It => $"{user.Username}#{user.Discriminator} ha attivato la moderazione automatica.",
-			_ => $"{user.Username}#{user.Discriminator} triggered automod."
+			_ => $"{user.Username}#{user.Discriminator} triggered the automoderator."
 		};
 	}
 
@@ -39,7 +39,7 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"Hallo {user.Mention},\n\nDu hast die automod in {channel.Mention} ausgelöst.\nGrund: {reason}\nAktion: {action}",
+				$"Hallo {user.Mention},\n\nDu hast die automoderation in {channel.Mention} ausgelöst.\nGrund: {reason}\nAktion: {action}",
 			Language.At =>
 				$"Servus {user.Mention},\n\nDu host de automodaration in {channel.Mention} ausglest. Grund: {reason}\nAktion: {action}",
 			Language.Fr =>
@@ -51,7 +51,7 @@ public class AutoModNotificationTranslator : Translator
 			Language.It =>
 				$"Ciao {user.Mention},\n\nHai attivato la moderazione automatica in {channel.Mention}.\nMotivo: {reason}\nAzione: {action}",
 			_ =>
-				$"Hi {user.Mention},\n\nYou triggered automod in {channel.Mention}.\nReason: {reason}\nAction: {action}"
+				$"Hi {user.Mention},\n\nYou triggered the automoderation in {channel.Mention}.\nReason: {reason}\nAction: {action}"
 		};
 	}
 
@@ -60,7 +60,7 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"{user.Mention} du hast die automod ausgelöst. Grund: {reason}. Deine Nachricht wurde gelöscht.",
+				$"{user.Mention} du hast die automoderation ausgelöst. Grund: {reason}. Deine Nachricht wurde gelöscht.",
 			Language.At =>
 				$"{user.Mention} du host de automodaration ausglest. Grund: {reason}. Dei Nochricht wuad glescht.",
 			Language.Fr =>
@@ -71,7 +71,7 @@ public class AutoModNotificationTranslator : Translator
 				$"{user.Mention} вы запустили автомодерацию. Причина: {reason}. Ваше сообщение было удалено.",
 			Language.It =>
 				$"{user.Mention} hai attivato la moderazione automatica. reason: {reason}. Il tuo messaggio è stato cancellato.",
-			_ => $"{user.Mention} you triggered automod. Reason: {reason}. Your message has been deleted."
+			_ => $"{user.Mention} you triggered the automoderation. Reason: {reason}. Your message has been deleted."
 		};
 	}
 
