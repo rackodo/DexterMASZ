@@ -556,6 +556,9 @@ public class GuildAuditer : Event
 	public async Task HandleMessageUpdated(Cacheable<IMessage, ulong> messageBefore, SocketMessage messageAfter,
 		ISocketMessageChannel channel)
 	{
+		if (messageAfter.Author.Id == 0)
+			return;
+
 		if (!messageAfter.Author.IsBot && !messageAfter.Author.IsWebhook)
 			if (channel is ITextChannel textChannel)
 			{

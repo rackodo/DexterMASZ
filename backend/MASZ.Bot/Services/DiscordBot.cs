@@ -45,7 +45,7 @@ public class DiscordBot : IHostedService, Event
 	public void RegisterEvents()
 	{
 		_client.JoinedGuild += GuildCreatedHandler;
-		_client.GuildMemberUpdated += GuildMemberUpdatedHandler;
+		_client.GuildMemberUpdated += GuildUserUpdatedHandler;
 		_client.UserLeft += GuildUserRemoved;
 		_client.UserBanned += GuildBanAdded;
 		_client.UserUnbanned += GuildBanRemoved;
@@ -250,7 +250,7 @@ public class DiscordBot : IHostedService, Event
 		return Task.CompletedTask;
 	}
 
-	private Task GuildMemberUpdatedHandler(Cacheable<SocketGuildUser, ulong> oldUsrCached, SocketGuildUser newUsr)
+	private Task GuildUserUpdatedHandler(Cacheable<SocketGuildUser, ulong> oldUsrCached, SocketGuildUser newUsr)
 	{
 		using var scope = _serviceProvider.CreateScope();
 

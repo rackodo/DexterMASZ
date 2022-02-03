@@ -326,13 +326,13 @@ public class ModCaseRepository : Repository,
 			modCase.Username = currentReportedUser.Username;
 			modCase.Discriminator = currentReportedUser.Discriminator;
 
-			var currentReportedMember =
+			var reportedGuildUser =
 				await _discordRest.FetchUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
 
-			if (currentReportedMember != null)
+			if (reportedGuildUser != null)
 			{
-				if (currentReportedMember.RoleIds.Any(x => guildConfig.ModRoles.Contains(x)) ||
-					currentReportedMember.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x)))
+				if (reportedGuildUser.RoleIds.Any(x => guildConfig.ModRoles.Contains(x)) ||
+					reportedGuildUser.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x)))
 				{
 					_logger.LogInformation("Cannot create cases for team members.");
 
@@ -340,7 +340,7 @@ public class ModCaseRepository : Repository,
 						.WithError(ApiError.ProtectedModCaseSuspectIsTeam);
 				}
 
-				modCase.Nickname = currentReportedMember.Nickname;
+				modCase.Nickname = reportedGuildUser.Nickname;
 			}
 
 			modCase.CaseId = await _punishmentDatabase.GetHighestCaseIdForGuild(modCase.GuildId) + 1;
@@ -481,21 +481,21 @@ public class ModCaseRepository : Repository,
 			modCase.Username = currentReportedUser.Username;
 			modCase.Discriminator = currentReportedUser.Discriminator;
 
-			var currentReportedMember =
+			var reportedGuildUser =
 				await _discordRest.FetchUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
 
-			if (currentReportedMember != null)
+			if (reportedGuildUser != null)
 			{
-				if (currentReportedMember.RoleIds.Any(x => guildConfig.ModRoles.Contains(x)) ||
-					currentReportedMember.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x)))
+				if (reportedGuildUser.RoleIds.Any(x => guildConfig.ModRoles.Contains(x)) ||
+					reportedGuildUser.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x)))
 				{
-					_logger.LogInformation("Cannot create cases for team members.");
+					_logger.LogInformation("Cannot create cases for team Users.");
 
-					throw new ProtectedModCaseSuspectException("Cannot create cases for team members.", modCase)
+					throw new ProtectedModCaseSuspectException("Cannot create cases for team Users.", modCase)
 						.WithError(ApiError.ProtectedModCaseSuspectIsTeam);
 				}
 
-				modCase.Nickname = currentReportedMember.Nickname;
+				modCase.Nickname = reportedGuildUser.Nickname;
 			}
 
 			modCase.LastEditedAt = DateTime.UtcNow;

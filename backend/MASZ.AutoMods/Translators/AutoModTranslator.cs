@@ -9,13 +9,13 @@ public class AutoModTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Automod",
+			Language.De => "Automoderation",
 			Language.At => "Automodaration",
 			Language.Fr => "Automodération",
 			Language.Es => "Automoderación",
 			Language.Ru => "Автомобильная промышленность",
 			Language.It => "Automoderazione",
-			_ => "Automod"
+			_ => "Automoderation"
 		};
 	}
 }

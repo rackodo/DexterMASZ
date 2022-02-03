@@ -39,19 +39,19 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"Hallo {user.Mention},\n\nDu hast die automoderation in {channel.Mention} ausgelöst.\nGrund: {reason}\nAktion: {action}",
+				$"Hallo {user.Mention},\n\nDu hast die automoderation in {channel.Mention} ausgelöst.\nGrund: **{reason}**\nAktion: {action}",
 			Language.At =>
-				$"Servus {user.Mention},\n\nDu host de automodaration in {channel.Mention} ausglest. Grund: {reason}\nAktion: {action}",
+				$"Servus {user.Mention},\n\nDu host de automodaration in {channel.Mention} ausglest. Grund: **{reason}**\nAktion: {action}",
 			Language.Fr =>
-				$"Salut {user.Mention},\n\nVous avez déclenché l'automodération dans {channel.Mention}.\nRaison : {reason}\nAction : {action}",
+				$"Salut {user.Mention},\n\nVous avez déclenché l'automodération dans {channel.Mention}.\nRaison : **{reason}**\nAction : {action}",
 			Language.Es =>
-				$"Hola, {user.Mention}:\n\nActivó la automoderación en {channel.Mention}.\nMotivo: {reason}\nAcción: {action}",
+				$"Hola, {user.Mention}:\n\nActivó la automoderación en {channel.Mention}.\nMotivo: **{reason}**\nAcción: {action}",
 			Language.Ru =>
-				$"Привет, {user.Mention}!\n\nВы активировали автомодерацию в {channel.Mention}.\nПричина: {reason}\nДействие: {action}",
+				$"Привет, {user.Mention}!\n\nВы активировали автомодерацию в {channel.Mention}.\nПричина: **{reason}**\nДействие: {action}",
 			Language.It =>
-				$"Ciao {user.Mention},\n\nHai attivato la moderazione automatica in {channel.Mention}.\nMotivo: {reason}\nAzione: {action}",
+				$"Ciao {user.Mention},\n\nHai attivato la moderazione automatica in {channel.Mention}.\nMotivo: **{reason}**\nAzione: {action}",
 			_ =>
-				$"Hi {user.Mention},\n\nYou triggered the automod in {channel.Mention}.\nReason: {reason}\nAction: {action}"
+				$"Hi {user.Mention},\n\nYou triggered the automod in {channel.Mention}.\nReason: **{reason}**\nAction: {action}"
 		};
 	}
 
@@ -60,18 +60,18 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"{user.Mention} du hast die automoderation ausgelöst. Grund: {reason}. Deine Nachricht wurde gelöscht.",
+				$"{user.Mention} du hast die automoderation ausgelöst. Grund: **{reason}**. Deine Nachricht wurde gelöscht.",
 			Language.At =>
-				$"{user.Mention} du host de automodaration ausglest. Grund: {reason}. Dei Nochricht wuad glescht.",
+				$"{user.Mention} du host de automodaration ausglest. Grund: **{reason}**. Dei Nochricht wuad glescht.",
 			Language.Fr =>
-				$"{user.Mention} vous avez déclenché l'automodération. Raison : {reason}. Votre message a été supprimé.",
+				$"{user.Mention} vous avez déclenché l'automodération. Raison : **{reason}**. Votre message a été supprimé.",
 			Language.Es =>
-				$"{user.Mention} has activado la automoderación. Razón: {reason}. Su mensaje ha sido eliminado.",
+				$"{user.Mention} has activado la automoderación. Razón: **{reason}**. Su mensaje ha sido eliminado.",
 			Language.Ru =>
-				$"{user.Mention} вы запустили автомодерацию. Причина: {reason}. Ваше сообщение было удалено.",
+				$"{user.Mention} вы запустили автомодерацию. Причина: **{reason}**. Ваше сообщение было удалено.",
 			Language.It =>
-				$"{user.Mention} hai attivato la moderazione automatica. reason: {reason}. Il tuo messaggio è stato cancellato.",
-			_ => $"{user.Mention} you triggered the automod! Reason: {reason}. Your message has been deleted."
+				$"{user.Mention} hai attivato la moderazione automatica. reason: **{reason}**. Il tuo messaggio è stato cancellato.",
+			_ => $"{user.Mention} you triggered the automod! Reason: **{reason}**. Your message has been deleted."
 		};
 	}
 
@@ -79,13 +79,13 @@ public class AutoModNotificationTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"Automod konfiguration für {eventType} von {actor.Mention} erstellt.",
-			Language.At => $"Automod konfiguration fia {eventType} vo {actor.Mention} erstöt.",
-			Language.Fr => $"Automod config créé pour {eventType} par {actor.Mention}.",
-			Language.Es => $"Automod config creado para {eventType} por {actor.Mention}.",
-			Language.Ru => $"Automod config, созданный для {eventType} пользователем {actor.Mention}.",
-			Language.It => $"Automod config creato per {eventType} da {actor.Mention}.",
-			_ => $"Automod config created for {eventType} by {actor.Mention}."
+			Language.De => $"Automod konfiguration für **{eventType}** von {actor.Mention} erstellt.",
+			Language.At => $"Automod konfiguration fia **{eventType}** vo {actor.Mention} erstöt.",
+			Language.Fr => $"Automod config créé pour **{eventType}** par {actor.Mention}.",
+			Language.Es => $"Automod config creado para **{eventType}** por {actor.Mention}.",
+			Language.Ru => $"Automod config, созданный для **{eventType}** пользователем {actor.Mention}.",
+			Language.It => $"Automod config creato per **{eventType}** da {actor.Mention}.",
+			_ => $"Automod config created for **{eventType}** by {actor.Mention}."
 		};
 	}
 
@@ -93,13 +93,13 @@ public class AutoModNotificationTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"Automod konfiguration für {eventType} von {actor.Mention} bearbeitet.",
-			Language.At => $"Automod konfiguration fia {eventType} is vo {actor.Mention} beorbeit woan.",
-			Language.Fr => $"Automod config mis à jour pour {eventType} par {actor.Mention}.",
-			Language.Es => $"Automod config actualizado para {eventType} por {actor.Mention}.",
-			Language.Ru => $"Automod config обновлен для {eventType} пользователем {actor.Mention}.",
-			Language.It => $"Automod config aggiornato per {eventType} da {actor.Mention}.",
-			_ => $"Automod config updated for {eventType} by {actor.Mention}."
+			Language.De => $"Automod konfiguration für **{eventType}** von {actor.Mention} bearbeitet.",
+			Language.At => $"Automod konfiguration fia **{eventType}** is vo {actor.Mention} beorbeit woan.",
+			Language.Fr => $"Automod config mis à jour pour **{eventType}** par {actor.Mention}.",
+			Language.Es => $"Automod config actualizado para **{eventType}** por {actor.Mention}.",
+			Language.Ru => $"Automod config обновлен для **{eventType}** пользователем {actor.Mention}.",
+			Language.It => $"Automod config aggiornato per **{eventType}** da {actor.Mention}.",
+			_ => $"Automod config updated for **{eventType}** by {actor.Mention}."
 		};
 	}
 
@@ -107,13 +107,13 @@ public class AutoModNotificationTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"Automod konfiguration für `{eventType}` von {actor.Mention} gelöscht.",
-			Language.At => $"Automod konfiguration fia `{eventType}` vo {actor.Mention} glescht.",
-			Language.Fr => $"Automod config supprimé pour `{eventType}` par {actor.Mention}.",
-			Language.Es => $"Automod config eliminado para `{eventType}` por {actor.Mention}.",
-			Language.Ru => $"Automod config удален для `{eventType}` пользователем {actor.Mention}.",
-			Language.It => $"Automod config eliminato per `{eventType}` da {actor.Mention}.",
-			_ => $"Automod config deleted for `{eventType}` by {actor.Mention}."
+			Language.De => $"Automod konfiguration für **{eventType}** von {actor.Mention} gelöscht.",
+			Language.At => $"Automod konfiguration fia **{eventType}** vo {actor.Mention} glescht.",
+			Language.Fr => $"Automod config supprimé pour **{eventType}** par {actor.Mention}.",
+			Language.Es => $"Automod config eliminado para **{eventType}** por {actor.Mention}.",
+			Language.Ru => $"Automod config удален для **{eventType}** пользователем {actor.Mention}.",
+			Language.It => $"Automod config eliminato per **{eventType}** da {actor.Mention}.",
+			_ => $"Automod config deleted for **{eventType}** by {actor.Mention}."
 		};
 	}
 

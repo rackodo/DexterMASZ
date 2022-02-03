@@ -26,6 +26,7 @@ public static class AutoModEmbedCreator
 		var embed = await EmbedCreator.CreateBasicEmbed(RestAction.Created, provider);
 
 		embed.WithTitle(translator.Get<AutoModTranslator>().AutoMod())
+			.WithAuthor(user)
 			.WithDescription(translator.Get<AutoModNotificationTranslator>().NotificationAutoModInternal(user))
 			.AddField(
 				translator.Get<BotTranslator>().Channel(),
@@ -38,10 +39,15 @@ public static class AutoModEmbedCreator
 			).AddField(
 				translator.Get<BotTranslator>().Type(),
 				translator.Get<AutoModEnumTranslator>().Enum(autoModEvent.AutoModType)
-			).AddField(
+			);
+
+		if (autoModEvent.MessageContent.Length > 0)
+			embed.AddField(
 				translator.Get<BotTranslator>().MessageContent(),
 				autoModEvent.MessageContent
-			).AddField(
+			);
+		
+		embed.AddField(
 				translator.Get<BotTranslator>().Action(),
 				translator.Get<AutoModEnumTranslator>().Enum(autoModEvent.AutoModAction)
 			).WithFooter($"{translator.Get<BotTranslator>().GuildId()}: {guildConfig.GuildId}");
@@ -68,7 +74,8 @@ public static class AutoModEmbedCreator
 		embed.WithTitle(translator.Get<AutoModTranslator>().AutoMod() + ": " +
 						translator.Get<AutoModEnumTranslator>().Enum(autoModConfig.AutoModType));
 
-		var autoModTypeName = translator.Get<AutoModEnumTranslator>().Enum(autoModConfig.AutoModType);
+		var autoModTypeName =
+			$"**{translator.Get<AutoModEnumTranslator>().Enum(autoModConfig.AutoModType).ToLower()}**";
 
 		switch (action)
 		{
@@ -116,7 +123,7 @@ public static class AutoModEmbedCreator
 			if (autoModConfig.PunishmentDurationMinutes > 0)
 				embed.AddField(
 					$"⏰ {translator.Get<AutoModNotificationTranslator>().NotificationAutoModConfigDuration()}",
-					$"`{autoModConfig.PunishmentDurationMinutes}`", true);
+					$"{autoModConfig.PunishmentDurationMinutes}", true);
 
 			embed.AddField(
 				translator.Get<AutoModNotificationTranslator>().NotificationAutoModConfigSendPublic(),
