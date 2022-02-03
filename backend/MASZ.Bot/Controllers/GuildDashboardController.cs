@@ -10,14 +10,14 @@ namespace MASZ.Bot.Controllers;
 [Route("api/v1/guilds/{guildId}/dashboard")]
 public class GuildDashboardController : AuthenticatedController
 {
-	private readonly ServiceCacher _serviceCacher;
+	private readonly CachedServices _cachedServices;
 	private readonly IServiceProvider _serviceProvider;
 
-	public GuildDashboardController(IServiceProvider serviceProvider, ServiceCacher serviceCacher,
+	public GuildDashboardController(IServiceProvider serviceProvider, CachedServices cachedServices,
 		IdentityManager identityManager) : base(identityManager)
 	{
 		_serviceProvider = serviceProvider;
-		_serviceCacher = serviceCacher;
+		_cachedServices = cachedServices;
 	}
 
 	[HttpGet("chart")]
@@ -34,7 +34,7 @@ public class GuildDashboardController : AuthenticatedController
 
 		dynamic chart = new ExpandoObject();
 
-		foreach (var repo in _serviceCacher.GetInitializedAuthenticatedClasses<AddChart>(_serviceProvider, identity))
+		foreach (var repo in _cachedServices.GetInitializedAuthenticatedClasses<AddChart>(_serviceProvider, identity))
 			await repo.AddChartData(chart, guildId, sinceTime);
 
 		return Ok(chart);
@@ -49,7 +49,7 @@ public class GuildDashboardController : AuthenticatedController
 
 		dynamic stats = new ExpandoObject();
 
-		foreach (var repo in _serviceCacher.GetInitializedAuthenticatedClasses<AddGuildStats>(_serviceProvider,
+		foreach (var repo in _cachedServices.GetInitializedAuthenticatedClasses<AddGuildStats>(_serviceProvider,
 					 identity))
 			await repo.AddGuildStatistics(stats, guildId);
 
@@ -68,7 +68,7 @@ public class GuildDashboardController : AuthenticatedController
 
 		List<QuickSearchEntry> entries = new();
 
-		foreach (var repo in _serviceCacher.GetInitializedAuthenticatedClasses<AddQuickEntrySearch>(_serviceProvider,
+		foreach (var repo in _cachedServices.GetInitializedAuthenticatedClasses<AddQuickEntrySearch>(_serviceProvider,
 					 identity))
 			await repo.AddQuickSearchResults(entries, guildId, search);
 
@@ -76,7 +76,7 @@ public class GuildDashboardController : AuthenticatedController
 
 		searchResults.searchEntries = entries.OrderByDescending(x => x.CreatedAt).ToList();
 
-		foreach (var repo in _serviceCacher.GetInitializedAuthenticatedClasses<AddSearch>(_serviceProvider, identity))
+		foreach (var repo in _cachedServices.GetInitializedAuthenticatedClasses<AddSearch>(_serviceProvider, identity))
 			await repo.AddSearchData(searchResults, guildId, search);
 
 		return Ok(searchResults);

@@ -18,20 +18,20 @@ public class ScheduledCacher : Event
 	private readonly BotEventHandler _eventHandler;
 	private readonly IdentityManager _identityManager;
 	private readonly ILogger<ScheduledCacher> _logger;
-	private readonly ServiceCacher _serviceCacher;
+	private readonly CachedServices _cachedServices;
 	private readonly IServiceProvider _serviceProvider;
 
 	private DateTime _nextCacheSchedule;
 
 	public ScheduledCacher(ILogger<ScheduledCacher> logger, DiscordRest discordRest, IServiceProvider serviceProvider,
-		IdentityManager identityManager, BotEventHandler eventHandler, ServiceCacher serviceCacher)
+		IdentityManager identityManager, BotEventHandler eventHandler, CachedServices cachedServices)
 	{
 		_logger = logger;
 		_discordRest = discordRest;
 		_serviceProvider = serviceProvider;
 		_identityManager = identityManager;
 		_eventHandler = eventHandler;
-		_serviceCacher = serviceCacher;
+		_cachedServices = cachedServices;
 	}
 
 	public void RegisterEvents()
@@ -49,7 +49,7 @@ public class ScheduledCacher : Event
 		using var scope = _serviceProvider.CreateScope();
 
 		if (importExistingBans)
-			foreach (var repo in _serviceCacher.GetInitializedClasses<ImportGuildInfo>(scope.ServiceProvider))
+			foreach (var repo in _cachedServices.GetInitializedClasses<ImportGuildInfo>(scope.ServiceProvider))
 				await repo.ImportGuildInfo(guildConfig);
 	}
 
@@ -87,7 +87,7 @@ public class ScheduledCacher : Event
 
 			using (var scope = _serviceProvider.CreateScope())
 			{
-				foreach (var repo in _serviceCacher.GetInitializedClasses<LoopCaches>(scope.ServiceProvider))
+				foreach (var repo in _cachedServices.GetInitializedClasses<LoopCaches>(scope.ServiceProvider))
 					await repo.LoopCaches();
 			}
 
@@ -177,7 +177,7 @@ public class ScheduledCacher : Event
 
 		using var scope = _serviceProvider.CreateScope();
 
-		foreach (var repo in _serviceCacher.GetInitializedClasses<CacheUsers>(scope.ServiceProvider))
+		foreach (var repo in _cachedServices.GetInitializedClasses<CacheUsers>(scope.ServiceProvider))
 			await repo.CacheKnownUsers(handledUsers);
 
 		return handledUsers;

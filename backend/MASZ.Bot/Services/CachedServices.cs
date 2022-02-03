@@ -4,12 +4,12 @@ using System.Reflection;
 
 namespace MASZ.Bot.Services;
 
-public class ServiceCacher
+public class CachedServices
 {
 	public readonly List<Assembly> Dependents;
 	public readonly Dictionary<string, Type[]> Services;
 
-	public ServiceCacher()
+	public CachedServices()
 	{
 		Services = new Dictionary<string, Type[]>();
 

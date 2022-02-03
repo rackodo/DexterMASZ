@@ -43,7 +43,7 @@ public class GuildAuditer : Event
 		_client.MessageUpdated += HandleMessageUpdated;
 		_client.ThreadCreated += HandleThreadCreated;
 		_client.UserUpdated += HandleUsernameUpdated;
-		_client.GuildMemberUpdated += HandleGUserUpdated;
+		_client.GuildMemberUpdated += HandleGuildUserUpdated;
 
 		_eventHandler.OnInviteDeleted += HandleInviteDeleted;
 	}
@@ -108,17 +108,18 @@ public class GuildAuditer : Event
 		}
 	}
 
-	public async Task HandleGUserUpdated(Cacheable<SocketGuildUser, ulong> oldU, SocketGuildUser newU)
+	public async Task HandleGuildUserUpdated(Cacheable<SocketGuildUser, ulong> oldU, SocketGuildUser newU)
 	{
-		if (oldU.HasValue)
-		{
-			if (oldU.Value.Nickname != newU.Nickname)
-				await HandleNicknameUpdated(oldU.Value, newU, newU.Guild.Id);
-			else if (oldU.Value.AvatarId != newU.AvatarId)
-				await HandleAvatarUpdated(oldU.Value, newU, newU.Guild.Id);
-			else if (!Equals(oldU.Value.Roles, newU.Roles))
-				await HandleUserRolesUpdated(newU, oldU.Value.Roles, newU.Roles, newU.Guild.Id);
-		}
+		var oldUser = await oldU.GetOrDownloadAsync();
+
+		if (oldUser.Nickname != newU.Nickname)
+			await HandleNicknameUpdated(oldUser, newU, newU.Guild.Id);
+		
+		if (oldUser.AvatarId != newU.AvatarId)
+			await HandleAvatarUpdated(oldUser, newU, newU.Guild.Id);
+
+		if (!Equals(oldUser.Roles, newU.Roles))
+			await HandleUserRolesUpdated(newU, oldUser.Roles, newU.Roles, newU.Guild.Id);
 	}
 
 	public async Task HandleAvatarUpdated(IGuildUser oldU, IGuildUser newU, ulong guildId)

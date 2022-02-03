@@ -171,9 +171,9 @@ builder.WebHost.CaptureStartupErrors(true);
 
 builder.WebHost.UseUrls("http://0.0.0.0:80/");
 
-var serviceCacher = new ServiceCacher();
+var cachedServices = new CachedServices();
 
-builder.Services.AddSingleton(serviceCacher);
+builder.Services.AddSingleton(cachedServices);
 
 var authorizationPolicies = new List<string>();
 
@@ -185,12 +185,12 @@ try
 	ConsoleCreator.AddSubHeading("Successfully Initialized: ", "Logging.");
 
 	foreach (var startup in modules)
-		startup.AddPreServices(builder.Services, serviceCacher, databaseBuilder);
+		startup.AddPreServices(builder.Services, cachedServices, databaseBuilder);
 
 	ConsoleCreator.AddSubHeading("Successfully Initialized: ", "Pre-Services.");
 
 	foreach (var startup in modules)
-		startup.AddServices(builder.Services, serviceCacher, settings);
+		startup.AddServices(builder.Services, cachedServices, settings);
 	ConsoleCreator.AddSubHeading("Successfully Initialized: ", "Services.");
 
 	foreach (var startup in modules)
@@ -224,7 +224,7 @@ var controller = builder.Services.AddControllers()
 		x.SerializerSettings.Converters.Add(new UlongConverter());
 	});
 
-foreach (var assembly in serviceCacher.Dependents)
+foreach (var assembly in cachedServices.Dependents)
 	controller.AddApplicationPart(assembly);
 
 builder.Services.AddAuthorization(options =>
@@ -242,7 +242,7 @@ Console.WriteLine("This might take a while on a first install...\n");
 
 using (var scope = app.Services.CreateScope())
 {
-	foreach (var dataContext in serviceCacher.GetInitializedClasses<DbContext>(scope.ServiceProvider))
+	foreach (var dataContext in cachedServices.GetInitializedClasses<DbContext>(scope.ServiceProvider))
 	{
 		ConsoleCreator.AddSubHeading("Adding Migrations For: ", dataContext.GetType().Name);
 		await dataContext.Database.MigrateAsync();
@@ -257,7 +257,7 @@ ConsoleCreator.AddHeading("Building MASZ");
 
 foreach (var startup in modules)
 {
-	startup.PostBuild(app.Services, serviceCacher);
+	startup.PostBuild(app.Services, cachedServices);
 
 	if (startup is WebModule module)
 		module.PostWebBuild(app, settings);

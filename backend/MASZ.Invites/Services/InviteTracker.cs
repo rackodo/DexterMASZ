@@ -170,13 +170,15 @@ public class InviteTracker : Event
 		}
 
 		if (invite != null)
-			AddInvite(invite.Guild.Id,
-				new TrackedInvite(invite.Guild.Id, invite.Code, invite.Uses.GetValueOrDefault()));
+			if (invite.GuildId.HasValue)
+				AddInvite(invite.GuildId.Value,
+					new TrackedInvite(invite.GuildId.Value, invite.Code, invite.Uses.GetValueOrDefault()));
 	}
 
 	private Task InviteCreatedHandler(SocketInvite invite)
 	{
-		AddInvite(invite.Guild.Id, new TrackedInvite(invite, invite.Guild.Id));
+		if (invite.GuildId.HasValue)
+			AddInvite(invite.GuildId.Value, new TrackedInvite(invite, invite.GuildId.Value));
 
 		return Task.CompletedTask;
 	}
@@ -223,12 +225,15 @@ public class InviteTracker : Event
 		}
 	}
 
-	private IEnumerable<TrackedInvite> RemoveInvite(ulong guildId, string code)
+	private List<TrackedInvite> RemoveInvite(ulong guildId, string code)
 	{
-		if (!_guildInvites.ContainsKey(guildId)) return new List<TrackedInvite>();
-		var invites = _guildInvites[guildId].TakeWhile(x => x.Code == code);
-		_guildInvites[guildId].RemoveAll(x => x.Code == code);
-		return invites.ToList();
+		if (!_guildInvites.ContainsKey(guildId))
+			return new List<TrackedInvite>();
 
+		var invites = _guildInvites[guildId].Where(x => x.Code == code).ToList();
+
+		_guildInvites[guildId].RemoveAll(x => x.Code == code);
+
+		return invites;
 	}
 }

@@ -12,7 +12,7 @@ namespace MASZ.Utilities.Commands;
 
 public class WhoIs : Command<WhoIs>
 {
-	public ServiceCacher ServiceCacher { get; set; }
+	public CachedServices cachedServices { get; set; }
 	public IServiceProvider ServiceProvider { get; set; }
 
 	[Require(RequireCheck.GuildModerator)]
@@ -30,7 +30,7 @@ public class WhoIs : Command<WhoIs>
 			.WithThumbnailUrl(user.GetAvatarOrDefaultUrl(size: 1024))
 			.AddField(Translator.Get<BotTranslator>().Registered(), user.CreatedAt.DateTime.ToDiscordTs(), true);
 
-		foreach (var repo in ServiceCacher.GetInitializedAuthenticatedClasses<WhoIsResults>(ServiceProvider, Identity))
+		foreach (var repo in cachedServices.GetInitializedAuthenticatedClasses<WhoIsResults>(ServiceProvider, Identity))
 			await repo.AddWhoIsInformation(embed, user, Context, Translator);
 
 		await Context.Interaction.ModifyOriginalResponseAsync(message =>

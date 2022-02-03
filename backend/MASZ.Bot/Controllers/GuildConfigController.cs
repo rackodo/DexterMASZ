@@ -14,18 +14,18 @@ namespace MASZ.Bot.Controllers;
 public class GuildConfigController : AuthenticatedController
 {
 	private readonly GuildConfigRepository _guildConfigRepo;
-	private readonly ServiceCacher _serviceCacher;
+	private readonly CachedServices _cachedServices;
 	private readonly IServiceProvider _serviceProvider;
 	private readonly SettingsRepository _settingsRepository;
 
 	public GuildConfigController(SettingsRepository settingsRepository, GuildConfigRepository guildConfigRepo,
-		IdentityManager identityManager, IServiceProvider serviceProvider, ServiceCacher serviceCacher)
+		IdentityManager identityManager, IServiceProvider serviceProvider, CachedServices cachedServices)
 		: base(identityManager, settingsRepository, guildConfigRepo)
 	{
 		_settingsRepository = settingsRepository;
 		_guildConfigRepo = guildConfigRepo;
 		_serviceProvider = serviceProvider;
-		_serviceCacher = serviceCacher;
+		_cachedServices = cachedServices;
 	}
 
 	[HttpGet("{guildId}")]
@@ -48,7 +48,7 @@ public class GuildConfigController : AuthenticatedController
 		await _guildConfigRepo.RequireGuildRegistered(guildId);
 
 		if (deleteData)
-			foreach (var repo in _serviceCacher.GetInitializedAuthenticatedClasses<DeleteGuildData>(_serviceProvider,
+			foreach (var repo in _cachedServices.GetInitializedAuthenticatedClasses<DeleteGuildData>(_serviceProvider,
 						 identity))
 				await repo.DeleteGuildData(guildId);
 

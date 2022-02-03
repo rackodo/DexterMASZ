@@ -16,16 +16,16 @@ public class UserNetworkController : AuthenticatedController
 {
 	private readonly DiscordRest _discordRest;
 	private readonly GuildConfigRepository _guildConfigRepository;
-	private readonly ServiceCacher _serviceCacher;
+	private readonly CachedServices _cachedServices;
 	private readonly IServiceProvider _serviceProvider;
 
 	public UserNetworkController(GuildConfigRepository guildConfigRepository, DiscordRest discordRest,
-		IdentityManager identityManager, ServiceCacher serviceCacher, IServiceProvider serviceProvider)
+		IdentityManager identityManager, CachedServices cachedServices, IServiceProvider serviceProvider)
 		: base(identityManager, guildConfigRepository)
 	{
 		_guildConfigRepository = guildConfigRepository;
 		_discordRest = discordRest;
-		_serviceCacher = serviceCacher;
+		_cachedServices = cachedServices;
 		_serviceProvider = serviceProvider;
 	}
 
@@ -62,7 +62,7 @@ public class UserNetworkController : AuthenticatedController
 		data.user = searchedUser;
 
 		foreach (var repo in
-				 _serviceCacher.GetInitializedAuthenticatedClasses<AddNetworks>(_serviceProvider, identity))
+				 _cachedServices.GetInitializedAuthenticatedClasses<AddNetworks>(_serviceProvider, identity))
 			await repo.AddNetworkData(data, modGuilds, userId);
 
 		return Ok(data);

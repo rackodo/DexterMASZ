@@ -19,7 +19,7 @@ public class DiscordBot : IHostedService, Event
 	private readonly DiscordSocketClient _client;
 	private readonly BotEventHandler _eventHandler;
 	private readonly InteractionService _interactions;
-	private readonly ServiceCacher _cacher;
+	private readonly CachedServices _cacher;
 	private readonly ILogger<DiscordBot> _logger;
 	private readonly IServiceProvider _serviceProvider;
 
@@ -28,7 +28,7 @@ public class DiscordBot : IHostedService, Event
 	private DateTime? _lastDisconnect;
 
 	public DiscordBot(ILogger<DiscordBot> logger, DiscordSocketClient client, InteractionService interactions,
-		IServiceProvider serviceProvider, BotEventHandler eventHandler, ServiceCacher cacher)
+		IServiceProvider serviceProvider, BotEventHandler eventHandler, CachedServices cacher)
 	{
 		_logger = logger;
 		_client = client;
