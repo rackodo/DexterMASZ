@@ -21,7 +21,7 @@ public class AppSettings
 	public bool CorsEnabled { get; set; } = false;
 	[JsonIgnore] public string Lang { get; set; } = "en";
 	public string EmbedTitle { get; set; } = "MASZ - a discord moderation bot";
-	public string EmbedContent { get; set; } = "MASZ is a moderation bot for Discord Moderators. Keep track of all moderation events on your server, search reliably for infractions or setup automoderation to be one step ahead of trolls and rule breakers.";
+	public string EmbedContent { get; set; } = "MASZ is a moderation bot for Discord Moderators. Keep track of all moderation events on your server, search reliably for infractions or setup automod to be one step ahead of trolls and rule breakers.";
 
 	[NotMapped]
 	public Language DefaultLanguage

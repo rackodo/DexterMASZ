@@ -6,42 +6,42 @@ namespace MASZ.AutoMods.Translators;
 
 public class AutoModNotificationTranslator : Translator
 {
-	public string NotificationAutoModerationInternal(IUser user)
+	public string NotificationAutoModInternal(IUser user)
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"{user.Mention} hat die AutoModeration ausgelöst.",
-			Language.At => $"{user.Mention} hot de Automodaration ausglest.",
+			Language.De => $"{user.Mention} hat die automod ausgelöst.",
+			Language.At => $"{user.Mention} hot de automodaration ausglest.",
 			Language.Fr => $"{user.Mention} a déclenché l'automodération.",
 			Language.Es => $"{user.Mention} activó la automoderación.",
 			Language.Ru => $"{user.Mention} запустил автомодерацию.",
 			Language.It => $"{user.Mention} ha attivato la moderazione automatica.",
-			_ => $"{user.Mention} triggered AutoModeration."
+			_ => $"{user.Mention} triggered automod."
 		};
 	}
 
-	public string NotificationAutoModerationCase(IUser user)
+	public string NotificationAutoModCase(IUser user)
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"{user.Username}#{user.Discriminator} hat die AutoModeration ausgelöst.",
-			Language.At => $"{user.Username}#{user.Discriminator} hot de Automodaration ausglest.",
+			Language.De => $"{user.Username}#{user.Discriminator} hat die automod ausgelöst.",
+			Language.At => $"{user.Username}#{user.Discriminator} hot de automodaration ausglest.",
 			Language.Fr => $"{user.Username}#{user.Discriminator} a déclenché la modération automatique.",
 			Language.Es => $"{user.Username}#{user.Discriminator} desencadenó la automoderación.",
 			Language.Ru => $"{user.Username}#{user.Discriminator} запускает автомодерацию.",
 			Language.It => $"{user.Username}#{user.Discriminator} ha attivato la moderazione automatica.",
-			_ => $"{user.Username}#{user.Discriminator} triggered AutoModeration."
+			_ => $"{user.Username}#{user.Discriminator} triggered automod."
 		};
 	}
 
-	public string NotificationAutoModerationDm(IUser user, IMentionable channel, string reason, string action)
+	public string NotificationAutoModDm(IUser user, IMentionable channel, string reason, string action)
 	{
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"Hallo {user.Mention},\n\nDu hast die AutoModeration in {channel.Mention} ausgelöst.\nGrund: {reason}\nAktion: {action}",
+				$"Hallo {user.Mention},\n\nDu hast die automod in {channel.Mention} ausgelöst.\nGrund: {reason}\nAktion: {action}",
 			Language.At =>
-				$"Servus {user.Mention},\n\nDu host de Automodaration in {channel.Mention} ausglest. Grund: {reason}\nAktion: {action}",
+				$"Servus {user.Mention},\n\nDu host de automodaration in {channel.Mention} ausglest. Grund: {reason}\nAktion: {action}",
 			Language.Fr =>
 				$"Salut {user.Mention},\n\nVous avez déclenché l'automodération dans {channel.Mention}.\nRaison : {reason}\nAction : {action}",
 			Language.Es =>
@@ -51,18 +51,18 @@ public class AutoModNotificationTranslator : Translator
 			Language.It =>
 				$"Ciao {user.Mention},\n\nHai attivato la moderazione automatica in {channel.Mention}.\nMotivo: {reason}\nAzione: {action}",
 			_ =>
-				$"Hi {user.Mention},\n\nYou triggered AutoModeration in {channel.Mention}.\nReason: {reason}\nAction: {action}"
+				$"Hi {user.Mention},\n\nYou triggered automod in {channel.Mention}.\nReason: {reason}\nAction: {action}"
 		};
 	}
 
-	public string NotificationAutoModerationChannel(IUser user, string reason)
+	public string NotificationAutoModChannel(IUser user, string reason)
 	{
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"{user.Mention} du hast die AutoModeration ausgelöst. Grund: {reason}. Deine Nachricht wurde gelöscht.",
+				$"{user.Mention} du hast die automod ausgelöst. Grund: {reason}. Deine Nachricht wurde gelöscht.",
 			Language.At =>
-				$"{user.Mention} du host de Automodaration ausglest. Grund: {reason}. Dei Nochricht wuad glescht.",
+				$"{user.Mention} du host de automodaration ausglest. Grund: {reason}. Dei Nochricht wuad glescht.",
 			Language.Fr =>
 				$"{user.Mention} vous avez déclenché l'automodération. Raison : {reason}. Votre message a été supprimé.",
 			Language.Es =>
@@ -71,53 +71,53 @@ public class AutoModNotificationTranslator : Translator
 				$"{user.Mention} вы запустили автомодерацию. Причина: {reason}. Ваше сообщение было удалено.",
 			Language.It =>
 				$"{user.Mention} hai attivato la moderazione automatica. reason: {reason}. Il tuo messaggio è stato cancellato.",
-			_ => $"{user.Mention} you triggered AutoModeration. Reason: {reason}. Your message has been deleted."
+			_ => $"{user.Mention} you triggered automod. Reason: {reason}. Your message has been deleted."
 		};
 	}
 
-	public string NotificationAutoModerationConfigInternalCreate(string eventType, IUser actor)
+	public string NotificationAutoModConfigInternalCreate(string eventType, IUser actor)
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"Automodkonfiguration für {eventType} von {actor.Mention} erstellt.",
-			Language.At => $"Automodkonfiguration fia {eventType} vo {actor.Mention} erstöt.",
-			Language.Fr => $"Automodconfig créé pour {eventType} par {actor.Mention}.",
-			Language.Es => $"Automodconfig creado para {eventType} por {actor.Mention}.",
-			Language.Ru => $"Automodconfig, созданный для {eventType} пользователем {actor.Mention}.",
-			Language.It => $"Automodconfig creato per {eventType} da {actor.Mention}.",
-			_ => $"Automodconfig created for {eventType} by {actor.Mention}."
+			Language.De => $"Automod konfiguration für {eventType} von {actor.Mention} erstellt.",
+			Language.At => $"Automod konfiguration fia {eventType} vo {actor.Mention} erstöt.",
+			Language.Fr => $"Automod config créé pour {eventType} par {actor.Mention}.",
+			Language.Es => $"Automod config creado para {eventType} por {actor.Mention}.",
+			Language.Ru => $"Automod config, созданный для {eventType} пользователем {actor.Mention}.",
+			Language.It => $"Automod config creato per {eventType} da {actor.Mention}.",
+			_ => $"Automod config created for {eventType} by {actor.Mention}."
 		};
 	}
 
-	public string NotificationAutoModerationConfigInternalUpdate(string eventType, IUser actor)
+	public string NotificationAutoModConfigInternalUpdate(string eventType, IUser actor)
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"Automodkonfiguration für {eventType} von {actor.Mention} bearbeitet.",
-			Language.At => $"Automodkonfiguration fia {eventType} is vo {actor.Mention} beorbeit woan.",
-			Language.Fr => $"Automodconfig mis à jour pour {eventType} par {actor.Mention}.",
-			Language.Es => $"Automodconfig actualizado para {eventType} por {actor.Mention}.",
-			Language.Ru => $"Automodconfig обновлен для {eventType} пользователем {actor.Mention}.",
-			Language.It => $"Automodconfig aggiornato per {eventType} da {actor.Mention}.",
-			_ => $"Automodconfig updated for {eventType} by {actor.Mention}."
+			Language.De => $"Automod konfiguration für {eventType} von {actor.Mention} bearbeitet.",
+			Language.At => $"Automod konfiguration fia {eventType} is vo {actor.Mention} beorbeit woan.",
+			Language.Fr => $"Automod config mis à jour pour {eventType} par {actor.Mention}.",
+			Language.Es => $"Automod config actualizado para {eventType} por {actor.Mention}.",
+			Language.Ru => $"Automod config обновлен для {eventType} пользователем {actor.Mention}.",
+			Language.It => $"Automod config aggiornato per {eventType} da {actor.Mention}.",
+			_ => $"Automod config updated for {eventType} by {actor.Mention}."
 		};
 	}
 
-	public string NotificationAutoModerationConfigInternalDelete(string eventType, IUser actor)
+	public string NotificationAutoModConfigInternalDelete(string eventType, IUser actor)
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"Automodkonfiguration für {eventType} von {actor.Mention} gelöscht.",
-			Language.At => $"Automodkonfiguration fia {eventType} vo {actor.Mention} glescht.",
-			Language.Fr => $"Automodconfig supprimé pour {eventType} par {actor.Mention}.",
-			Language.Es => $"Automodconfig eliminado para {eventType} por {actor.Mention}.",
-			Language.Ru => $"Automodconfig удален для {eventType} пользователем {actor.Mention}.",
-			Language.It => $"Automodconfig eliminato per {eventType} da {actor.Mention}.",
-			_ => $"Automodconfig deleted for {eventType} by {actor.Mention}."
+			Language.De => $"Automod konfiguration für `{eventType}` von {actor.Mention} gelöscht.",
+			Language.At => $"Automod konfiguration fia `{eventType}` vo {actor.Mention} glescht.",
+			Language.Fr => $"Automod config supprimé pour `{eventType}` par {actor.Mention}.",
+			Language.Es => $"Automod config eliminado para `{eventType}` por {actor.Mention}.",
+			Language.Ru => $"Automod config удален для `{eventType}` пользователем {actor.Mention}.",
+			Language.It => $"Automod config eliminato per `{eventType}` da {actor.Mention}.",
+			_ => $"Automod config deleted for `{eventType}` by {actor.Mention}."
 		};
 	}
 
-	public string NotificationAutoModerationConfigLimit()
+	public string NotificationAutoModConfigLimit()
 	{
 		return PreferredLanguage switch
 		{
@@ -131,7 +131,7 @@ public class AutoModNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationAutoModerationConfigTimeLimit()
+	public string NotificationAutoModConfigTimeLimit()
 	{
 		return PreferredLanguage switch
 		{
@@ -145,7 +145,7 @@ public class AutoModNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationAutoModerationConfigIgnoredRoles()
+	public string NotificationAutoModConfigIgnoredRoles()
 	{
 		return PreferredLanguage switch
 		{
@@ -159,7 +159,7 @@ public class AutoModNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationAutoModerationConfigIgnoredChannels()
+	public string NotificationAutoModConfigIgnoredChannels()
 	{
 		return PreferredLanguage switch
 		{
@@ -173,7 +173,7 @@ public class AutoModNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationAutoModerationConfigDuration()
+	public string NotificationAutoModConfigDuration()
 	{
 		return PreferredLanguage switch
 		{
@@ -187,7 +187,7 @@ public class AutoModNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationAutoModerationConfigDeleteMessage()
+	public string NotificationAutoModConfigDeleteMessage()
 	{
 		return PreferredLanguage switch
 		{
@@ -201,7 +201,7 @@ public class AutoModNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationAutoModerationConfigSendPublic()
+	public string NotificationAutoModConfigSendPublic()
 	{
 		return PreferredLanguage switch
 		{
@@ -215,7 +215,7 @@ public class AutoModNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationAutoModerationConfigSendDm()
+	public string NotificationAutoModConfigSendDm()
 	{
 		return PreferredLanguage switch
 		{

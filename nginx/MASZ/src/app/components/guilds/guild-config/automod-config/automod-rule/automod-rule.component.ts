@@ -83,9 +83,9 @@ export class AutoModRuleComponent implements OnInit {
     this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
     this.initialConfigs.then((data: AutoModConfig[]) => {
       // if type in initial loaded configs
-      if (data.filter(x => x.autoModerationType == this.definition.type).length) {
+      if (data.filter(x => x.autoModType == this.definition.type).length) {
         this.enableConfig = true;
-        this.applyConfig(data.filter(x => x.autoModerationType == this.definition.type)[0]);
+        this.applyConfig(data.filter(x => x.autoModType == this.definition.type)[0]);
       } else {
         this.enableConfig = false;
       }
@@ -143,7 +143,7 @@ export class AutoModRuleComponent implements OnInit {
     this.actionForm.setValue({
       dmNotification: config.sendDmNotification,
       publicNotification: config.sendPublicNotification,
-      automodAction: config.autoModerationAction,
+      automodAction: config.autoModAction,
       punishmentType: config.punishmentType,
       punishmentDuration: config.punishmentDurationMinutes,
       channelNotificationBehavior: config.channelNotificationBehavior

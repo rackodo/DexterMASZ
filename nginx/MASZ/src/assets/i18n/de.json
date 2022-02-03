@@ -228,7 +228,7 @@
         "TargetChannel": "Zielkanal",
         "ComingSoon": "Bald verfügbar",
         "PingRoles": "Rolle pingen",
-        "AuditLog": "AuditLog",
+        "AuditLog": "AuditLogs",
         "ConfigDeleted": "Konfiguration gelöscht.",
         "FailedToDeleteConfig": "Konfiguration konnte nicht gelöscht werden.",
         "SavedConfig": "Konfiguration gespeichert.",

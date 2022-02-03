@@ -43,7 +43,7 @@ public class AutoModChecker : Event
 			if (channel.Guild == null)
 				return;
 
-			await HandleAutoModeration(message);
+			await HandleAutoMod(message);
 		}
 	}
 
@@ -61,11 +61,11 @@ public class AutoModChecker : Event
 			if (txtChannel.Guild == null)
 				return;
 
-			await HandleAutoModeration(newMsg, true);
+			await HandleAutoMod(newMsg, true);
 		}
 	}
 
-	public async Task HandleAutoModeration(IMessage message, bool onEdit = false)
+	public async Task HandleAutoMod(IMessage message, bool onEdit = false)
 	{
 		if (message.Type != MessageType.Default && message.Type != MessageType.Reply)
 			return;

@@ -14,8 +14,8 @@ public class AutoModConfig
 	public AutoModConfig(AutoModConfigForPutDto dto, ulong guildId)
 	{
 		GuildId = guildId;
-		AutoModType = dto.AutoModerationType;
-		AutoModAction = dto.AutoModerationAction;
+		AutoModType = dto.AutoModType;
+		AutoModAction = dto.AutoModAction;
 		PunishmentType = dto.PunishmentType;
 		PunishmentDurationMinutes = dto.PunishmentDurationMinutes;
 		IgnoreChannels = dto.IgnoreChannels;

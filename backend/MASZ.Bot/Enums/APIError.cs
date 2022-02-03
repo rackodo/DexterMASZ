@@ -36,8 +36,8 @@ public enum ApiError
 	LastCommentAlreadyFromSuspect,
 
 	// AUTOMOD
-	InvalidAutoModerationAction,
-	InvalidAutoModerationType,
+	InvalidAutoModAction,
+	InvalidAutoModType,
 
 	// SCHEDULED MESSAGES
 	ProtectedScheduledMessage,

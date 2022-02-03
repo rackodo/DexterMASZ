@@ -10,7 +10,7 @@ public static class SearchContains
 		if (obj == null)
 			return false;
 
-		return search.Search(obj.AutoModerationEvent) ||
+		return search.Search(obj.AutoModEvent) ||
 			   search.Search(obj.Suspect);
 	}
 

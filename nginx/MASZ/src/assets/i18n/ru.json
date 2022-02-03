@@ -228,7 +228,7 @@
         "TargetChannel": "Целевой канал",
         "ComingSoon": "Скоро будет",
         "PingRoles": "Роли пинга",
-        "AuditLog": "AuditLog",
+        "AuditLog": "AuditLogs",
         "ConfigDeleted": "Конфиг удален.",
         "FailedToDeleteConfig": "Не удалось удалить конфигурацию.",
         "SavedConfig": "Сохраненный конфиг.",

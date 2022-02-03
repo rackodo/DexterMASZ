@@ -33,10 +33,10 @@ export class AutoModCardComponent implements OnInit {
   ngOnInit(): void {
     this.moderation.messageContent = this.moderation.messageContent.replace(/\n/g, "\\n");
     this.enumManager.getEnum(ApiEnumTypes.AUTOMODACTION).subscribe(data => {
-      this.action = data?.find(x => x.key == this.moderation.autoModerationAction)?.value ?? "Unknown";
+      this.action = data?.find(x => x.key == this.moderation.autoModAction)?.value ?? "Unknown";
     });
     this.enumManager.getEnum(ApiEnumTypes.AUTOMODTYPE).subscribe(data => {
-      this.event = data?.find(x => x.key == this.moderation.autoModerationType)?.value ?? "Unknown";
+      this.event = data?.find(x => x.key == this.moderation.autoModType)?.value ?? "Unknown";
     });
   }
 

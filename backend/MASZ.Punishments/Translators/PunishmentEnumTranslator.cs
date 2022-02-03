@@ -134,7 +134,7 @@ public class PunishmentEnumTranslator : Translator
 				Language.It => "Predefinito",
 				_ => "Default"
 			},
-			CaseCreationType.AutoModeration => PreferredLanguage switch
+			CaseCreationType.AutoMod => PreferredLanguage switch
 			{
 				Language.De => "Automoderiert.",
 				Language.At => "Automodariat.",

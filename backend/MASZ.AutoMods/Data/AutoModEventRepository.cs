@@ -81,7 +81,7 @@ public class AutoModEventRepository : Repository,
 					await _discordRest.FetchUserInfo(item.UserId, CacheBehavior.OnlyCache)
 				),
 				CreatedAt = item.CreatedAt,
-				QuickSearchEntryType = QuickSearchEntryType.AutoModeration
+				QuickSearchEntryType = QuickSearchEntryType.AutoMod
 			});
 	}
 
@@ -122,13 +122,13 @@ public class AutoModEventRepository : Repository,
 		{
 			ModCase modCase = new()
 			{
-				Title = $"{_translator.Get<AutoModTranslator>().AutoModeration()}: " +
+				Title = $"{_translator.Get<AutoModTranslator>().AutoMod()}: " +
 						_translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModType)
 			};
 
 			StringBuilder description = new();
 
-			description.AppendLine(_translator.Get<AutoModNotificationTranslator>().NotificationAutoModerationCase(user));
+			description.AppendLine(_translator.Get<AutoModNotificationTranslator>().NotificationAutoModCase(user));
 
 			description.AppendLine($"{_translator.Get<BotTranslator>().Type()}: " +
 								   _translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModType));
@@ -144,8 +144,8 @@ public class AutoModEventRepository : Repository,
 
 			modCase.Description = description.ToString();
 
-			modCase.Labels = new List<string> { "AutoModeration", modEvent.AutoModType.ToString() }.ToArray();
-			modCase.CreationType = CaseCreationType.AutoModeration;
+			modCase.Labels = new List<string> { "Automod", modEvent.AutoModType.ToString() }.ToArray();
+			modCase.CreationType = CaseCreationType.AutoMod;
 			modCase.PunishmentType = PunishmentType.Warn;
 			modCase.PunishedUntil = null;
 

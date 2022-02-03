@@ -6,9 +6,9 @@ namespace MASZ.AutoMods.DTOs;
 
 public class AutoModConfigForPutDto
 {
-	[Required] public AutoModType AutoModerationType { get; set; }
+	[Required] public AutoModType AutoModType { get; set; }
 
-	[Required] public AutoModAction AutoModerationAction { get; set; }
+	[Required] public AutoModAction AutoModAction { get; set; }
 
 	public PunishmentType? PunishmentType { get; set; }
 	public int? PunishmentDurationMinutes { get; set; }

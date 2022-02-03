@@ -7,10 +7,10 @@ public class AutoModEventExpanded
 {
 	public AutoModEventExpanded(AutoModEvent punishmentsEvent, IUser suspect)
 	{
-		AutoModerationEvent = punishmentsEvent;
+		AutoModEvent = punishmentsEvent;
 		Suspect = new DiscordUser(suspect);
 	}
 
-	public AutoModEvent AutoModerationEvent { get; set; }
+	public AutoModEvent AutoModEvent { get; set; }
 	public DiscordUser Suspect { get; set; }
 }

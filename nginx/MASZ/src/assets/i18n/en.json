@@ -228,7 +228,7 @@
         "TargetChannel": "Target channel",
         "ComingSoon": "Coming soon",
         "PingRoles": "Ping roles",
-        "AuditLog": "AuditLog",
+        "AuditLog": "AuditLogs",
         "ConfigDeleted": "Config deleted.",
         "FailedToDeleteConfig": "Failed to delete config.",
         "SavedConfig": "Saved config.",

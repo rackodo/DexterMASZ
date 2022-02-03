@@ -366,7 +366,7 @@ export class UserscanComponent implements OnInit {
     return {
       id: `${modEvent.guildId}/automod/${modEvent.id}`,
       group: `${modEvent.guildId}/automods`,
-      title: `${this.automodtypes.content?.find(x => x.key === modEvent.autoModerationType)?.value ?? 'Unknown'} ${modEvent.messageContent}`,
+      title: `${this.automodtypes.content?.find(x => x.key === modEvent.autoModType)?.value ?? 'Unknown'} ${modEvent.messageContent}`,
       size: size
     }
   }

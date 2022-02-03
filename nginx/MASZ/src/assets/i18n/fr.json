@@ -228,7 +228,7 @@
         "TargetChannel": "Canal cible",
         "ComingSoon": "Bientôt disponible",
         "PingRoles": "Rôles de ping",
-        "AuditLog": "Journal d'audit",
+        "AuditLogs": "Journal d'audit",
         "ConfigDeleted": "Configuration supprimée.",
         "FailedToDeleteConfig": "Échec de la suppression de la configuration.",
         "SavedConfig": "Configuration enregistrée.",

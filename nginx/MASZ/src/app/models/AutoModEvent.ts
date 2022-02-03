@@ -3,8 +3,8 @@ import { AutoModType } from "./AutoModType";
 export interface AutoModEvent {
     id: number;
     guildId: string;
-    autoModerationType: AutoModType;
-    autoModerationAction: number;
+    autoModType: AutoModType;
+    autoModAction: number;
     userId: string;
     username: string;
     nickname?: string;
