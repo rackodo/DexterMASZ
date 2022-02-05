@@ -30,7 +30,7 @@ public class GuildAuditNotificationTranslator : Translator
 			Language.Es => "Registro de auditoría a nivel de gremio",
 			Language.Ru => "Журнал аудита на уровне гильдии",
 			Language.It => "Registro di controllo a livello di gilda",
-			_ => "Guild-level audit log"
+			_ => "Guild audit*
 		};
 	}
 
@@ -49,7 +49,7 @@ public class GuildAuditNotificationTranslator : Translator
 			Language.Ru => $"Журнал аудита на уровне гильдии для события `{eventName}` был создан {actor.Mention}.",
 			Language.It =>
 				$"Il registro di controllo a livello di gilda per l'evento `{eventName}` è stato impostato da {actor.Mention}.",
-			_ => $"Guild-level audit log for event `{eventName}` has been set up by {actor.Mention}."
+			_ => $"Guild audit for event **{eventName}** has been set up by {actor.Mention}."
 		};
 	}
 
@@ -67,7 +67,7 @@ public class GuildAuditNotificationTranslator : Translator
 			Language.Ru => $"Журнал аудита на уровне гильдии для события `{eventName}` отредактировал {actor.Mention}.",
 			Language.It =>
 				$"Il registro di controllo a livello di gilda per l'evento `{eventName}` è stato modificato da {actor.Mention}.",
-			_ => $"Guild-level audit log for event `{eventName}` has been edited by {actor.Mention}."
+			_ => $"Guild audit for event **{eventName}** has been edited by {actor.Mention}."
 		};
 	}
 
@@ -85,7 +85,7 @@ public class GuildAuditNotificationTranslator : Translator
 			Language.Ru => $"Журнал аудита на уровне гильдии для события `{eventName}` был удален {actor.Mention}.",
 			Language.It =>
 				$"Il registro di controllo a livello di gilda per l'evento `{eventName}` è stato eliminato da {actor.Mention}.",
-			_ => $"Guild-level audit log for event `{eventName}` has been deleted by {actor.Mention}."
+			_ => $"Guild audit for event **{eventName}** has been deleted by {actor.Mention}."
 		};
 	}
 }
