@@ -306,7 +306,13 @@ public class DiscordBot : IHostedService, Event
 
 					try
 					{
-						await context.Interaction.RespondAsync(embed: builder.Build());
+						if (context is SocketInteraction interaction)
+							if (!interaction.HasResponded)
+								await interaction.RespondAsync(embed: builder.Build());
+							else
+								await context.Interaction.ModifyOriginalResponseAsync(x => x.Embed = builder.Build());
+						else
+							await context.Channel.SendMessageAsync(embed: builder.Build());
 					}
 					catch (Exception)
 					{

@@ -23,9 +23,9 @@ public class BotDatabase : DataContext<BotDatabase>, DataContextCreate
 		serviceCollection.AddDbContext<BotDatabase>(optionsAction);
 	}
 
-	public async Task<AppSettings> GetAppSettings()
+	public async Task<AppSettings> GetAppSettings(ulong clientId)
 	{
-		return await AppSettings.AsQueryable().OrderByDescending(x => x.ClientId).FirstOrDefaultAsync();
+		return await AppSettings.FindAsync(clientId);
 	}
 
 	public async Task UpdateAppSetting(AppSettings appSettings)
