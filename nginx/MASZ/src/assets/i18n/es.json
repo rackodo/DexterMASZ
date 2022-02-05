@@ -338,7 +338,7 @@
             "Done": "Hecho"
         },
         "UpperLimit": "Limite superior",
-        "TeamUsersExcluded": "Nota: los miembros del equipo siempre están excluidos.",
+        "TeamMembersExcluded": "Nota: los miembros del equipo siempre están excluidos.",
         "ExcludeRoles": "Excluir roles",
         "ExcludeChannels": "Excluir canales",
         "SendInternalNotification": "Enviar notificación interna",

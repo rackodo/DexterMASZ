@@ -338,7 +338,7 @@
             "Done": "Abschluss"
         },
         "UpperLimit": "Oberes Limit",
-        "TeamUsersExcluded": "Hinweis: Teammitglieder werden immer gefiltert.",
+        "TeamMembersExcluded": "Hinweis: Teammitglieder werden immer gefiltert.",
         "ExcludeRoles": "Ausgenommene Rollen",
         "ExcludeChannels": "Ausgenommene Kanäle",
         "SendInternalNotification": "Sende interne Benachrichtigung",

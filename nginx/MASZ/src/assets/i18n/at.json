@@ -338,7 +338,7 @@
             "Done": "Fertig"
         },
         "UpperLimit": "Obarares Limit",
-        "TeamUsersExcluded": "Hinweis: Teammitglieda wean imma gfütat.",
+        "TeamMembersExcluded": "Hinweis: Teammitglieda wean imma gfütat.",
         "ExcludeRoles": "Ausgnommene Roin",
         "ExcludeChannels": "Ausgnommene Kanäle",
         "SendInternalNotification": "Send a interne Benochrichtigung",
