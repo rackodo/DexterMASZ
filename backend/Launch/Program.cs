@@ -48,7 +48,11 @@ var connectionString = $"Server={databaseSettings.Host};Port={databaseSettings.P
 Action<DbContextOptionsBuilder> databaseBuilder = x => x.UseMySql(
 	connectionString,
 	ServerVersion.AutoDetect(connectionString),
-	o => o.SchemaBehavior(MySqlSchemaBehavior.Translate, (schema, table) => $"{schema}_{table}")
+	o =>
+	{
+		o.SchemaBehavior(MySqlSchemaBehavior.Translate, (schema, table) => $"{schema}_{table}");
+		o.EnableRetryOnFailure();
+	}
 );
 
 // APP SETTINGS
