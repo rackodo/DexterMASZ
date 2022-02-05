@@ -1,4 +1,5 @@
-﻿using MASZ.Bot.Enums;
+﻿using MASZ.Bot.Dynamics;
+using MASZ.Bot.Enums;
 using MASZ.Bot.Models;
 using System.Diagnostics;
 using System.Reflection;
@@ -17,6 +18,50 @@ public static class ConsoleCreator
 		Console.WriteLine($"\n{name.PadLeft(padLeft, '=').PadRight(HeadingPadding, '=')}\n");
 	}
 
+	public static bool WaitForUser(string objEditName, int waitTime)
+	{
+		var original = DateTime.Now;
+		var remainingWaitTime = waitTime;
+		var lastWaitTime = waitTime.ToString();
+
+		Console.WriteLine();
+
+		Console.ForegroundColor = ConsoleColor.DarkCyan;
+		Console.Write($"Press any key to {objEditName} before: ");
+
+		Console.ForegroundColor = ConsoleColor.Cyan;
+		Console.Write(waitTime);
+
+		bool keyRead;
+		do
+		{
+			keyRead = Console.KeyAvailable;
+			if (!keyRead)
+			{
+				var newTime = DateTime.Now;
+				remainingWaitTime = waitTime - (int)(newTime - original).TotalSeconds;
+				var newWaitTime = remainingWaitTime.ToString();
+				if (newWaitTime != lastWaitTime)
+				{
+					var backSpaces = new string('\b', lastWaitTime.Length);
+					var spaces = new string(' ', lastWaitTime.Length);
+					Console.Write(backSpaces + spaces + backSpaces);
+					lastWaitTime = newWaitTime;
+					Console.Write(lastWaitTime);
+					Thread.Sleep(25);
+				}
+			}
+			else
+				Console.ReadKey();
+		} while (remainingWaitTime > 0 && !keyRead);
+
+		Console.WriteLine();
+
+		Console.ResetColor();
+
+		return keyRead;
+	}
+
 	public static void AddSubHeading(string name, string value)
 	{
 		Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -28,11 +73,49 @@ public static class ConsoleCreator
 		Console.ResetColor();
 	}
 
-	public static AppSettings CreateAppSettings(ulong clientID, bool isEdit)
+	public static KeyValuePair<DatabaseSettings, bool> CreateDatabaseSettings(bool isEdit)
+	{
+		var (host, updatedHost) = AskAndSet("database server host", "MYSQL_HOST", !isEdit);
+		var (port, updatedPort) = AskAndSet("database server port", "MYSQL_PORT", !isEdit);
+		var (database, updatedDatabase) = AskAndSet("database name", "MYSQL_DATABASE", !isEdit);
+		var (user, updatedUser) = AskAndSet("database login username", "MYSQL_USER", !isEdit);
+		var (pass, updatedPass) = AskAndSet("database login password", "MYSQL_PASSWORD", !isEdit);
+
+		KeyValuePair<ulong, bool> clientId;
+
+		while (true)
+		{
+			var client = 
+				AskAndSet("Discord OAuth Client ID", "DISCORD_OAUTH_CLIENT_ID", !isEdit);
+
+			if (ulong.TryParse(client.Key, out var id))
+			{
+				clientId = new(id, client.Value);
+				break;
+			}
+		}
+
+		var hasChanged = false;
+
+		if (updatedHost || updatedPort || updatedDatabase || updatedUser || updatedPass || clientId.Value)
+			hasChanged = true;
+
+		return new(new DatabaseSettings
+		{
+			ClientId = clientId.Key,
+			Database = database,
+			Host = host,
+			Port = port,
+			User = user,
+			Pass = pass
+		}, hasChanged);
+	}
+
+	public static AppSettings CreateAppSettings(ClientIdContainer clientIdContainer, bool isEdit)
 	{
 		var settings = new AppSettings
 		{
-			ClientId = clientID,
+			ClientId = clientIdContainer.ClientId,
 			ClientSecret = Ask("Discord OAuth Client Secret", "DISCORD_OAUTH_CLIENT_SECRET", !isEdit),
 
 			DiscordBotToken = Ask("Discord bot token", "DISCORD_BOT_TOKEN", !isEdit),
@@ -90,14 +173,17 @@ public static class ConsoleCreator
 		return settings;
 	}
 
-	public static string AskAndSet(string name, string envVar)
+	public static KeyValuePair<string, bool> AskAndSet(string name, string envVar, bool useEnvVars)
 	{
-		var option = Ask(name, envVar, true);
+		var option = Ask(name, envVar, useEnvVars);
 
 		if (GetEnvironmentalVariable(envVar) != option)
+		{
 			SetEnvironmentalVariable(envVar, option);
-
-		return option;
+			return new(option, true);
+		}
+		else
+			return new(option, false);
 	}
 
 	public static string Ask(string name, string envVar, bool useEnvVars, bool ignoreIfEmpty = false)

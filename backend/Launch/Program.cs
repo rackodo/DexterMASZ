@@ -11,25 +11,39 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("========== Launching MASZ ==========");
 
+var skipStartup = ConsoleCreator.WaitForUser("skip update setting prompts", 10);
+
 var builder = WebApplication.CreateBuilder();
 
 // DATABASES
 
 ConsoleCreator.AddHeading("Getting Database Info");
 
-var server = ConsoleCreator.AskAndSet("server host", "MYSQL_HOST");
+var (databaseSettings, hasUpdatedDbSettings) = ConsoleCreator.CreateDatabaseSettings(false);
 
-var port = ConsoleCreator.AskAndSet("server port", "MYSQL_PORT");
+if (hasUpdatedDbSettings)
+{
+	ConsoleCreator.AddSubHeading("You are finished creating the database settings for", databaseSettings.User);
+}
+else
+{
+	ConsoleCreator.AddSubHeading("Found database settings for", $"{databaseSettings.User} // {databaseSettings.Database}");
 
-var database = ConsoleCreator.AskAndSet("database name", "MYSQL_DATABASE");
+	if (!skipStartup)
+		if (ConsoleCreator.WaitForUser($"edit {nameof(DatabaseSettings)}", 10))
+			databaseSettings = ConsoleCreator.CreateDatabaseSettings(true).Key;
 
-var uid = ConsoleCreator.AskAndSet("login username", "MYSQL_USER");
+	Console.WriteLine();
+}
 
-var pwd = ConsoleCreator.AskAndSet("login password", "MYSQL_PASSWORD");
+var clientIdContainer = new ClientIdContainer(databaseSettings.ClientId);
+
+builder.Services.AddSingleton(clientIdContainer);
 
 ConsoleCreator.AddSubHeading("Successfully created", "MySQL database provider");
 
-var connectionString = $"Server={server};Port={port};Database={database};Uid={uid};Pwd={pwd};";
+var connectionString = $"Server={databaseSettings.Host};Port={databaseSettings.Port};" +
+	$"Database={databaseSettings.Database};Uid={databaseSettings.User};Pwd={databaseSettings.Pass};";
 
 Action<DbContextOptionsBuilder> databaseBuilder = x => x.UseMySql(
 	connectionString,
@@ -53,12 +67,6 @@ await using (var dataContext = new BotDatabase(dbBuilder.Options))
 {
 	await dataContext.Database.MigrateAsync();
 
-	var clientId = ulong.Parse(ConsoleCreator.AskAndSet("Discord OAuth Client ID", "DISCORD_OAUTH_CLIENT_ID"));
-
-	var clientIdContainer = new ClientIdContainer(clientId);
-
-	builder.Services.AddSingleton(clientIdContainer);
-
 	var appSettingRepo = new SettingsRepository(dataContext, clientIdContainer, null);
 
 	settings = await appSettingRepo.GetAppSettings();
@@ -70,11 +78,12 @@ await using (var dataContext = new BotDatabase(dbBuilder.Options))
 		ConsoleCreator.AddSubHeading("Welcome to", "MASZ!");
 		ConsoleCreator.AddSubHeading("Support Discord", "https://discord.gg/5zjpzw6h3S");
 
-		settings = ConsoleCreator.CreateAppSettings(clientId, false);
+		settings = ConsoleCreator.CreateAppSettings(clientIdContainer, false);
 
 		await appSettingRepo.AddAppSetting(settings);
 
-		ConsoleCreator.AddSubHeading("You are finished creating app settings for client", clientId.ToString());
+		ConsoleCreator.AddSubHeading("You are finished creating the app settings for client",
+			databaseSettings.ClientId.ToString());
 
 		ConsoleCreator.AddSubHeading("You can now access the panel at", settings.ServiceBaseUrl);
 
@@ -82,54 +91,18 @@ await using (var dataContext = new BotDatabase(dbBuilder.Options))
 	}
 	else
 	{
-		ConsoleCreator.AddSubHeading("Found app settings for client", clientId.ToString());
+		ConsoleCreator.AddSubHeading("Found app settings for client",
+			databaseSettings.ClientId.ToString());
 
-		var original = DateTime.Now;
-		var newTime = original;
-
-		var waitTime = 10;
-		var remainingWaitTime = waitTime;
-		var lastWaitTime = waitTime.ToString();
-		var keyRead = false;
-
-		Console.WriteLine();
-
-		Console.ForegroundColor = ConsoleColor.DarkCyan;
-		Console.Write($"Press any key to edit {nameof(AppSettings)} before: ");
-
-		Console.ForegroundColor = ConsoleColor.Cyan;
-		Console.Write(waitTime);
-
-		do
-		{
-			keyRead = Console.KeyAvailable;
-			if (!keyRead)
+		if (!skipStartup)
+			if (ConsoleCreator.WaitForUser($"edit {nameof(AppSettings)}", 10))
 			{
-				newTime = DateTime.Now;
-				remainingWaitTime = waitTime - (int)(newTime - original).TotalSeconds;
-				var newWaitTime = remainingWaitTime.ToString();
-				if (newWaitTime != lastWaitTime)
-				{
-					var backSpaces = new string('\b', lastWaitTime.Length);
-					var spaces = new string(' ', lastWaitTime.Length);
-					Console.Write(backSpaces + spaces + backSpaces);
-					lastWaitTime = newWaitTime;
-					Console.Write(lastWaitTime);
-					Thread.Sleep(25);
-				}
+				settings = ConsoleCreator.CreateAppSettings(clientIdContainer, true);
+
+				await appSettingRepo.UpdateAppSetting(settings);
+
+				Console.WriteLine();
 			}
-			else
-				Console.ReadKey();
-		} while (remainingWaitTime > 0 && !keyRead);
-
-		if (keyRead)
-		{
-			Console.WriteLine();
-			settings = ConsoleCreator.CreateAppSettings(clientId, true);
-			await appSettingRepo.UpdateAppSetting(settings);
-		}
-
-		Console.WriteLine();
 	}
 }
 
