@@ -79,13 +79,13 @@ public class AutoModNotificationTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"Automod konfiguration für **{eventType}** von {actor.Mention} erstellt.",
-			Language.At => $"Automod konfiguration fia **{eventType}** vo {actor.Mention} erstöt.",
-			Language.Fr => $"Automod config créé pour **{eventType}** par {actor.Mention}.",
-			Language.Es => $"Automod config creado para **{eventType}** por {actor.Mention}.",
-			Language.Ru => $"Automod config, созданный для **{eventType}** пользователем {actor.Mention}.",
-			Language.It => $"Automod config creato per **{eventType}** da {actor.Mention}.",
-			_ => $"Automod config created for **{eventType}** by {actor.Mention}."
+			Language.De => $"Auto mod konfiguration für **{eventType}** von {actor.Mention} erstellt.",
+			Language.At => $"Auto mod konfiguration fia **{eventType}** vo {actor.Mention} erstöt.",
+			Language.Fr => $"Mode automatique config créé pour **{eventType}** par {actor.Mention}.",
+			Language.Es => $"Modo automático config creado para **{eventType}** por {actor.Mention}.",
+			Language.Ru => $"Конфигурация авто мода, созданный для **{eventType}** пользователем {actor.Mention}.",
+			Language.It => $"Configurazione mod automatica creato per **{eventType}** da {actor.Mention}.",
+			_ => $"Auto mod config created for **{eventType}** by {actor.Mention}."
 		};
 	}
 
@@ -93,13 +93,13 @@ public class AutoModNotificationTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"Automod konfiguration für **{eventType}** von {actor.Mention} bearbeitet.",
-			Language.At => $"Automod konfiguration fia **{eventType}** is vo {actor.Mention} beorbeit woan.",
-			Language.Fr => $"Automod config mis à jour pour **{eventType}** par {actor.Mention}.",
-			Language.Es => $"Automod config actualizado para **{eventType}** por {actor.Mention}.",
-			Language.Ru => $"Automod config обновлен для **{eventType}** пользователем {actor.Mention}.",
-			Language.It => $"Automod config aggiornato per **{eventType}** da {actor.Mention}.",
-			_ => $"Automod config updated for **{eventType}** by {actor.Mention}."
+			Language.De => $"Auto mod konfiguration für **{eventType}** von {actor.Mention} bearbeitet.",
+			Language.At => $"Auto mod konfiguration fia **{eventType}** is vo {actor.Mention} beorbeit woan.",
+			Language.Fr => $"Mode automatique config mis à jour pour **{eventType}** par {actor.Mention}.",
+			Language.Es => $"Modo automático config actualizado para **{eventType}** por {actor.Mention}.",
+			Language.Ru => $"Конфигурация авто мода обновлен для **{eventType}** пользователем {actor.Mention}.",
+			Language.It => $"Configurazione mod automatica aggiornato per **{eventType}** da {actor.Mention}.",
+			_ => $"Auto mod config updated for **{eventType}** by {actor.Mention}."
 		};
 	}
 
@@ -107,13 +107,13 @@ public class AutoModNotificationTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"Automod konfiguration für **{eventType}** von {actor.Mention} gelöscht.",
-			Language.At => $"Automod konfiguration fia **{eventType}** vo {actor.Mention} glescht.",
-			Language.Fr => $"Automod config supprimé pour **{eventType}** par {actor.Mention}.",
-			Language.Es => $"Automod config eliminado para **{eventType}** por {actor.Mention}.",
-			Language.Ru => $"Automod config удален для **{eventType}** пользователем {actor.Mention}.",
-			Language.It => $"Automod config eliminato per **{eventType}** da {actor.Mention}.",
-			_ => $"Automod config deleted for **{eventType}** by {actor.Mention}."
+			Language.De => $"Auto mod konfiguration für **{eventType}** von {actor.Mention} gelöscht.",
+			Language.At => $"Auto mod konfiguration fia **{eventType}** vo {actor.Mention} glescht.",
+			Language.Fr => $"Mode automatique config supprimé pour **{eventType}** par {actor.Mention}.",
+			Language.Es => $"Modo automático config eliminado para **{eventType}** por {actor.Mention}.",
+			Language.Ru => $"Конфигурация авто мода удален для **{eventType}** пользователем {actor.Mention}.",
+			Language.It => $"Configurazione mod automatica eliminato per **{eventType}** da {actor.Mention}.",
+			_ => $"Auto mod config deleted for **{eventType}** by {actor.Mention}."
 		};
 	}
 

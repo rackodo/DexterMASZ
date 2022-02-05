@@ -23,23 +23,25 @@ public static class GuildAuditEmbedCreator
 		if (actor != null)
 			embed.WithThumbnailUrl(actor.GetAvatarOrDefaultUrl());
 
-		embed.WithTitle(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditTitle());
+		embed.WithTitle(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditTitle() + ": " +
+				translator.Get<GuildAuditEnumTranslator>().Enum(config.GuildAuditEvent));
 
-		var guildEventType = translator.Get<GuildAuditEnumTranslator>().Enum(config.GuildAuditEvent);
+		var guildEventTypeName =
+			$"**{translator.Get<GuildAuditEnumTranslator>().Enum(config.GuildAuditEvent).ToLower()}**";
 
 		switch (action)
 		{
 			case RestAction.Created:
 				embed.WithDescription(translator.Get<GuildAuditNotificationTranslator>()
-					.NotificationGuildAuditInternalCreate(guildEventType, actor));
+					.NotificationGuildAuditInternalCreate(guildEventTypeName, actor));
 				break;
 			case RestAction.Updated:
 				embed.WithDescription(translator.Get<GuildAuditNotificationTranslator>()
-					.NotificationGuildAuditInternalUpdate(guildEventType, actor));
+					.NotificationGuildAuditInternalUpdate(guildEventTypeName, actor));
 				break;
 			case RestAction.Deleted:
 				return embed.WithDescription(translator.Get<GuildAuditNotificationTranslator>()
-					.NotificationGuildAuditInternalDelete(guildEventType, actor));
+					.NotificationGuildAuditInternalDelete(guildEventTypeName, actor));
 			default:
 				throw new ArgumentOutOfRangeException(nameof(action), action, null);
 		}
