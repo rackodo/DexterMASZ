@@ -30,7 +30,7 @@ public class GuildAuditNotificationTranslator : Translator
 			Language.Es => "Registro de auditoría a nivel de gremio",
 			Language.Ru => "Журнал аудита на уровне гильдии",
 			Language.It => "Registro di controllo a livello di gilda",
-			_ => "Guild audit*
+			_ => "Guild audit"
 		};
 	}
 
