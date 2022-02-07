@@ -1,7 +1,7 @@
-﻿using Discord;
-using AutoMods.Models;
+﻿using AutoMods.Models;
 using Bot.Abstractions;
 using Bot.Models;
+using Discord;
 
 namespace AutoMods.Events;
 

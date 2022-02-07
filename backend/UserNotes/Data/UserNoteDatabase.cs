@@ -1,7 +1,7 @@
 ﻿using Bot.Abstractions;
-using UserNotes.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using UserNotes.Models;
 
 namespace UserNotes.Data;
 

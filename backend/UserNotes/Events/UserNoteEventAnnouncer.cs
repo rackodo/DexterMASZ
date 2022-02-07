@@ -1,12 +1,12 @@
-﻿using Discord;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Services;
-using UserNotes.Extensions;
-using UserNotes.Models;
+using Discord;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using UserNotes.Extensions;
+using UserNotes.Models;
 
 namespace UserNotes.Events;
 

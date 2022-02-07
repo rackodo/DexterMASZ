@@ -1,6 +1,6 @@
+using AutoMods.Models;
 using Discord;
 using Discord.WebSocket;
-using AutoMods.Models;
 using System.Text.RegularExpressions;
 
 namespace AutoMods.MessageChecks;

@@ -1,10 +1,10 @@
-﻿using Discord;
-using Discord.Interactions;
-using Discord.WebSocket;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Loggers;
 using Bot.Models;
 using Bot.Services;
+using Discord;
+using Discord.Interactions;
+using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

@@ -1,5 +1,5 @@
-using Discord;
 using Bot.Models;
+using Discord;
 
 namespace Punishments.Models;
 

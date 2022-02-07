@@ -1,11 +1,11 @@
-using Discord;
-using Discord.WebSocket;
 using AutoMods.Data;
 using AutoMods.Enums;
 using AutoMods.MessageChecks;
 using AutoMods.Models;
 using Bot.Abstractions;
 using Bot.Data;
+using Discord;
+using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 

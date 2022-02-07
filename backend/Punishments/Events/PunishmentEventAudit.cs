@@ -1,7 +1,7 @@
-﻿using Discord;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Models;
 using Bot.Services;
+using Discord;
 using Punishments.Models;
 
 namespace Punishments.Events;

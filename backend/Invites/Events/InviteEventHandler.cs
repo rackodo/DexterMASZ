@@ -1,5 +1,5 @@
-﻿using Discord.WebSocket;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
+using Discord.WebSocket;
 using Invites.Models;
 
 namespace Invites.Events;

@@ -1,11 +1,11 @@
-using Discord;
-using Discord.Net;
-using Discord.WebSocket;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Exceptions;
 using Bot.Extensions;
 using Bot.Services;
+using Discord;
+using Discord.Net;
+using Discord.WebSocket;
 using Invites.Data;
 using Invites.Events;
 using Invites.Models;

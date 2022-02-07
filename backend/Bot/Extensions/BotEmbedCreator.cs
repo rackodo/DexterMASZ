@@ -1,8 +1,8 @@
-﻿using Discord;
-using Bot.Enums;
+﻿using Bot.Enums;
 using Bot.Models;
 using Bot.Services;
 using Bot.Translators;
+using Discord;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bot.Extensions;

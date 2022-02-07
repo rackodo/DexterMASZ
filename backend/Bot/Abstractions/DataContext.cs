@@ -18,7 +18,7 @@ public abstract class DataContext<TContext> : DbContext where TContext : DbConte
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		modelBuilder.HasDefaultSchema(GetType().Namespace?.Split('.')[1]);
+		modelBuilder.HasDefaultSchema(GetType().Namespace?.Split('.').FirstOrDefault());
 
 		StringArrayComparer stringArrayComparer = new();
 

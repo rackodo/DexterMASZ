@@ -1,5 +1,5 @@
-﻿using Discord;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
+using Discord;
 using UserNotes.Models;
 
 namespace UserNotes.Events;

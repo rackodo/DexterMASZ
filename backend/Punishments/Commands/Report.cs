@@ -1,12 +1,12 @@
-using Discord;
-using Discord.Interactions;
-using Humanizer;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Services;
 using Bot.Translators;
-using Punishments.Translators;
+using Discord;
+using Discord.Interactions;
+using Humanizer;
 using Microsoft.Extensions.Logging;
+using Punishments.Translators;
 using System.Text;
 
 namespace Punishments.Commands;

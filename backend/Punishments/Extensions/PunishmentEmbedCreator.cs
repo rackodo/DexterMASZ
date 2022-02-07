@@ -1,13 +1,13 @@
-﻿using Discord;
-using Humanizer;
-using Bot.Enums;
+﻿using Bot.Enums;
 using Bot.Extensions;
 using Bot.Models;
 using Bot.Services;
 using Bot.Translators;
+using Discord;
+using Humanizer;
+using Microsoft.Extensions.DependencyInjection;
 using Punishments.Models;
 using Punishments.Translators;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 
 namespace Punishments.Extensions;

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GuildAudits.Migrations
 {
     [DbContext(typeof(GuildAuditDatabase))]
-    [Migration("20220123095826_InitialCreate")]
+    [Migration("20220207080714_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

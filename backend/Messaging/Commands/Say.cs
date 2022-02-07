@@ -1,12 +1,12 @@
-using Discord;
-using Discord.Interactions;
-using Discord.Net;
 using Bot.Abstractions;
 using Bot.Attributes;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Services;
 using Bot.Translators;
+using Discord;
+using Discord.Interactions;
+using Discord.Net;
 using Messaging.Translators;
 using Microsoft.Extensions.Logging;
 using System.Net;

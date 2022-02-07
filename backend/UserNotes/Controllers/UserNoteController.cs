@@ -1,9 +1,9 @@
 using Bot.Abstractions;
 using Bot.Enums;
 using Bot.Services;
+using Microsoft.AspNetCore.Mvc;
 using UserNotes.Data;
 using UserNotes.DTOs;
-using Microsoft.AspNetCore.Mvc;
 
 namespace UserNotes.Controllers;
 

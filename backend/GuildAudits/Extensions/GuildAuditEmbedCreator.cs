@@ -1,8 +1,8 @@
-﻿using Discord;
-using Bot.Enums;
+﻿using Bot.Enums;
 using Bot.Extensions;
 using Bot.Services;
 using Bot.Translators;
+using Discord;
 using GuildAudits.Models;
 using GuildAudits.Translators;
 using Microsoft.Extensions.DependencyInjection;

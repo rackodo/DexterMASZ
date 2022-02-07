@@ -1,8 +1,8 @@
-using Discord;
 using Bot.Abstractions;
 using Bot.Dynamics;
 using Bot.Models;
 using Bot.Services;
+using Discord;
 using System.Diagnostics;
 
 namespace Bot.Data;

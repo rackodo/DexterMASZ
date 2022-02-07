@@ -3,12 +3,12 @@ using Bot.Data;
 using Bot.Enums;
 using Bot.Extensions;
 using Bot.Services;
+using Microsoft.AspNetCore.Mvc;
 using Punishments.Data;
 using Punishments.DTOs;
 using Punishments.Enums;
 using Punishments.Models;
 using Punishments.Translators;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Punishments.Controllers;

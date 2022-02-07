@@ -1,5 +1,4 @@
-﻿using Discord;
-using AutoMods.Enums;
+﻿using AutoMods.Enums;
 using AutoMods.Extensions;
 using AutoMods.Models;
 using AutoMods.Translators;
@@ -9,6 +8,7 @@ using Bot.Enums;
 using Bot.Exceptions;
 using Bot.Models;
 using Bot.Services;
+using Discord;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 

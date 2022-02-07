@@ -1,8 +1,8 @@
-using Discord;
-using Discord.Interactions;
 using Bot.Abstractions;
 using Bot.Extensions;
 using Bot.Translators;
+using Discord;
+using Discord.Interactions;
 using Utilities.Translators;
 
 namespace Utilities.Commands;

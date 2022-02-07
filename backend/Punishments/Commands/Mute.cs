@@ -1,9 +1,9 @@
-using Discord;
-using Discord.Interactions;
 using Bot.Abstractions;
 using Bot.Attributes;
 using Bot.Data;
 using Bot.Enums;
+using Discord;
+using Discord.Interactions;
 using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Models;

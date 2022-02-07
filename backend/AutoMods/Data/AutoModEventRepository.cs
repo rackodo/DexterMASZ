@@ -1,4 +1,3 @@
-using Discord;
 using AutoMods.Enums;
 using AutoMods.Events;
 using AutoMods.Extensions;
@@ -12,10 +11,11 @@ using Bot.Extensions;
 using Bot.Models;
 using Bot.Services;
 using Bot.Translators;
+using Discord;
+using Microsoft.Extensions.Logging;
 using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Models;
-using Microsoft.Extensions.Logging;
 using System.Text;
 
 namespace AutoMods.Data;

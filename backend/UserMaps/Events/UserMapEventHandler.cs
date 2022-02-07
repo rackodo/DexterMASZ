@@ -1,5 +1,5 @@
-﻿using Discord;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
+using Discord;
 using UserMaps.Models;
 
 namespace UserMaps.Events;

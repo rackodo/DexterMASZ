@@ -1,5 +1,3 @@
-using Discord.WebSocket;
-using Humanizer;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
@@ -7,12 +5,14 @@ using Bot.Events;
 using Bot.Exceptions;
 using Bot.Models;
 using Bot.Services;
+using Discord.WebSocket;
+using Humanizer;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Models;
 using Punishments.Translators;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Timer = System.Timers.Timer;
 
 namespace Punishments.Services;

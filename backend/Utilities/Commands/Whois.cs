@@ -1,11 +1,11 @@
-using Discord;
-using Discord.Interactions;
 using Bot.Abstractions;
 using Bot.Attributes;
 using Bot.Enums;
 using Bot.Extensions;
 using Bot.Services;
 using Bot.Translators;
+using Discord;
+using Discord.Interactions;
 using Utilities.Dynamics;
 
 namespace Utilities.Commands;

@@ -4,12 +4,12 @@ using Bot.Enums;
 using Bot.Exceptions;
 using Bot.Models;
 using Bot.Services;
+using Microsoft.AspNetCore.Mvc;
 using Punishments.Data;
 using Punishments.Extensions;
 using Punishments.Models;
 using UserNotes.Data;
 using UserNotes.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Punishments.Controllers;
 

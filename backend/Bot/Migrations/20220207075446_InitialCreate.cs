@@ -86,8 +86,6 @@ public partial class InitialCreate : Migration
 					.Annotation("MySql:CharSet", "utf8mb4"),
 				AdminRoles = table.Column<string>(type: "longtext", nullable: true)
 					.Annotation("MySql:CharSet", "utf8mb4"),
-				MutedRoles = table.Column<string>(type: "longtext", nullable: true)
-					.Annotation("MySql:CharSet", "utf8mb4"),
 				ModNotificationDm = table.Column<bool>(type: "tinyint(1)", nullable: false),
 				ModPublicNotificationWebhook = table.Column<string>(type: "longtext", nullable: true)
 					.Annotation("MySql:CharSet", "utf8mb4"),

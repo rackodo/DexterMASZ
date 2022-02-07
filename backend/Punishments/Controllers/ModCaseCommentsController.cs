@@ -2,11 +2,11 @@ using Bot.Abstractions;
 using Bot.Enums;
 using Bot.Exceptions;
 using Bot.Services;
+using Microsoft.AspNetCore.Mvc;
 using Punishments.Data;
 using Punishments.DTOs;
 using Punishments.Exceptions;
 using Punishments.Extensions;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Punishments.Controllers;
 

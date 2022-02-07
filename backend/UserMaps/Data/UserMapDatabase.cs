@@ -1,7 +1,7 @@
 ﻿using Bot.Abstractions;
-using UserMaps.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using UserMaps.Models;
 
 namespace UserMaps.Data;
 

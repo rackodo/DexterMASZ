@@ -1,5 +1,5 @@
-using Discord;
 using Bot.Models;
+using Discord;
 using MOTDs.Models;
 
 namespace MOTDs.Views;

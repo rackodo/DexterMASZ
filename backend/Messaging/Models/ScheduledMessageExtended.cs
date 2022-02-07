@@ -1,5 +1,5 @@
-﻿using Discord;
-using Bot.Models;
+﻿using Bot.Models;
+using Discord;
 using Messaging.Enums;
 
 namespace Messaging.Models;

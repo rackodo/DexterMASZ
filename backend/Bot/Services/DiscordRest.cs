@@ -1,12 +1,12 @@
-using Discord;
-using Discord.Rest;
-using Discord.Webhook;
-using Discord.WebSocket;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Exceptions;
 using Bot.Models;
+using Discord;
+using Discord.Rest;
+using Discord.Webhook;
+using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

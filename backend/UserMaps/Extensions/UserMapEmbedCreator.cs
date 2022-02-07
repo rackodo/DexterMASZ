@@ -1,12 +1,12 @@
-﻿using Discord;
-using Humanizer;
-using Bot.Enums;
+﻿using Bot.Enums;
 using Bot.Extensions;
 using Bot.Services;
 using Bot.Translators;
+using Discord;
+using Humanizer;
+using Microsoft.Extensions.DependencyInjection;
 using UserMaps.Models;
 using UserMaps.Translators;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace UserMaps.Extensions;
 

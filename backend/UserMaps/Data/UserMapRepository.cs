@@ -1,17 +1,17 @@
-using Discord;
-using Humanizer;
 using Bot.Abstractions;
 using Bot.Dynamics;
 using Bot.Enums;
 using Bot.Exceptions;
 using Bot.Extensions;
 using Bot.Services;
+using Discord;
+using Humanizer;
+using System.Text;
 using UserMaps.Events;
 using UserMaps.Exceptions;
 using UserMaps.Models;
 using UserMaps.Translators;
 using Utilities.Dynamics;
-using System.Text;
 
 namespace UserMaps.Data;
 

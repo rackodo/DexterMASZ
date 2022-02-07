@@ -1,9 +1,9 @@
-using Discord;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Exceptions;
 using Bot.Models;
+using Discord;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bot.Identities;

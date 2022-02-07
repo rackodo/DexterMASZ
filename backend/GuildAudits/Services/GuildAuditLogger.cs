@@ -1,15 +1,15 @@
-using Discord;
-using Discord.WebSocket;
-using Humanizer;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Exceptions;
 using Bot.Extensions;
 using Bot.Services;
 using Bot.Translators;
+using Discord;
+using Discord.WebSocket;
 using GuildAudits.Data;
 using GuildAudits.Enums;
 using GuildAudits.Translators;
+using Humanizer;
 using Invites.Events;
 using Invites.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -114,7 +114,7 @@ public class GuildAuditer : Event
 
 		if (oldUser.Nickname != newU.Nickname)
 			await HandleNicknameUpdated(oldUser, newU, newU.Guild.Id);
-		
+
 		if (oldUser.AvatarId != newU.AvatarId)
 			await HandleAvatarUpdated(oldUser, newU, newU.Guild.Id);
 

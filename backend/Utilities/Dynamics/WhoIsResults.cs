@@ -1,5 +1,5 @@
-﻿using Discord;
-using Bot.Services;
+﻿using Bot.Services;
+using Discord;
 
 namespace Utilities.Dynamics;
 

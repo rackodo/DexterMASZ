@@ -1,6 +1,6 @@
-﻿using Discord;
-using Bot.Data;
+﻿using Bot.Data;
 using Bot.Enums;
+using Discord;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bot.Extensions;

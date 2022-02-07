@@ -2,9 +2,9 @@ using Bot.Abstractions;
 using Bot.DTOs;
 using Bot.Enums;
 using Bot.Services;
+using Microsoft.AspNetCore.Mvc;
 using Punishments.Enums;
 using Punishments.Translators;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Punishments.Controllers;
 

@@ -126,9 +126,6 @@ namespace Bot.Migrations
                     b.Property<string>("ModRoles")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("MutedRoles")
-                        .HasColumnType("longtext");
-
                     b.Property<int>("PreferredLanguage")
                         .HasColumnType("int");
 

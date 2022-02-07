@@ -1,5 +1,5 @@
-using Discord;
 using Bot.Extensions;
+using Discord;
 
 namespace Bot.Models;
 

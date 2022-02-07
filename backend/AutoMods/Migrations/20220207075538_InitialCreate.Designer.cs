@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoMods.Migrations
 {
     [DbContext(typeof(AutoModDatabase))]
-    [Migration("20220123095813_InitialCreate")]
+    [Migration("20220207075538_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

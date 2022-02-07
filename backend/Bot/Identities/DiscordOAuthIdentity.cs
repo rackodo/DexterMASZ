@@ -1,10 +1,10 @@
-using Discord;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Exceptions;
 using Bot.Models;
 using Bot.Services;
+using Discord;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;

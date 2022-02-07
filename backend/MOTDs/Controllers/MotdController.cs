@@ -1,10 +1,10 @@
 using Bot.Abstractions;
 using Bot.Enums;
 using Bot.Services;
+using Microsoft.AspNetCore.Mvc;
 using MOTDs.Data;
 using MOTDs.DTOs;
 using MOTDs.Views;
-using Microsoft.AspNetCore.Mvc;
 
 namespace MOTDs.Controllers;
 

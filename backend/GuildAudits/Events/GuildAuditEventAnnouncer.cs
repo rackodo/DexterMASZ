@@ -1,8 +1,8 @@
-﻿using Discord;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Services;
+using Discord;
 using GuildAudits.Extensions;
 using GuildAudits.Models;
 using Microsoft.Extensions.DependencyInjection;

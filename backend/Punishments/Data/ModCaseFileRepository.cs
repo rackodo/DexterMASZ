@@ -4,9 +4,9 @@ using Bot.Exceptions;
 using Bot.Extensions;
 using Bot.Models;
 using Bot.Services;
-using Punishments.Events;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Punishments.Events;
 using System.Net.Mime;
 
 namespace Punishments.Data;

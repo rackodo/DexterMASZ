@@ -1,7 +1,7 @@
 ﻿using Bot.Abstractions;
-using MOTDs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MOTDs.Models;
 
 namespace MOTDs.Data;
 

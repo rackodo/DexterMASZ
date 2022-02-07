@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bot.Migrations
 {
     [DbContext(typeof(BotDatabase))]
-    [Migration("20220123100216_InitialCreate")]
+    [Migration("20220207075446_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,9 +126,6 @@ namespace Bot.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("ModRoles")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("MutedRoles")
                         .HasColumnType("longtext");
 
                     b.Property<int>("PreferredLanguage")

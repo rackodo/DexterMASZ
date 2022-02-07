@@ -1,5 +1,5 @@
-﻿using Discord;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
+using Discord;
 using GuildAudits.Models;
 
 namespace GuildAudits.Events;

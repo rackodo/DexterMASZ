@@ -1,6 +1,6 @@
-using Discord.Interactions;
 using Bot.Exceptions;
 using Bot.Services;
+using Discord.Interactions;
 using Microsoft.Extensions.Logging;
 
 namespace Bot.Abstractions;

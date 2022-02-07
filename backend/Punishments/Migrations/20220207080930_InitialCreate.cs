@@ -16,37 +16,6 @@ public partial class InitialCreate : Migration
 			.Annotation("MySql:CharSet", "utf8mb4");
 
 		migrationBuilder.CreateTable(
-			name: "ModCaseTemplates",
-			schema: "Punishments",
-			columns: table => new
-			{
-				Id = table.Column<int>(type: "int", nullable: false)
-					.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-				UserId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-				TemplateName = table.Column<string>(type: "longtext", nullable: true)
-					.Annotation("MySql:CharSet", "utf8mb4"),
-				CreatedForGuildId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-				ViewPermission = table.Column<int>(type: "int", nullable: false),
-				CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-				CaseTitle = table.Column<string>(type: "longtext", nullable: true)
-					.Annotation("MySql:CharSet", "utf8mb4"),
-				CaseDescription = table.Column<string>(type: "longtext", nullable: true)
-					.Annotation("MySql:CharSet", "utf8mb4"),
-				CaseLabels = table.Column<string>(type: "longtext", nullable: true)
-					.Annotation("MySql:CharSet", "utf8mb4"),
-				CasePunishmentType = table.Column<int>(type: "int", nullable: false),
-				CasePunishedUntil = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-				SendPublicNotification = table.Column<bool>(type: "tinyint(1)", nullable: false),
-				HandlePunishment = table.Column<bool>(type: "tinyint(1)", nullable: false),
-				AnnounceDm = table.Column<bool>(type: "tinyint(1)", nullable: false)
-			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_ModCaseTemplates", x => x.Id);
-			})
-			.Annotation("MySql:CharSet", "utf8mb4");
-
-		migrationBuilder.CreateTable(
 			name: "ModCases",
 			schema: "Punishments",
 			columns: table => new
@@ -93,6 +62,37 @@ public partial class InitialCreate : Migration
 			.Annotation("MySql:CharSet", "utf8mb4");
 
 		migrationBuilder.CreateTable(
+			name: "ModCaseTemplates",
+			schema: "Punishments",
+			columns: table => new
+			{
+				Id = table.Column<int>(type: "int", nullable: false)
+					.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+				UserId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
+				TemplateName = table.Column<string>(type: "longtext", nullable: true)
+					.Annotation("MySql:CharSet", "utf8mb4"),
+				CreatedForGuildId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
+				ViewPermission = table.Column<int>(type: "int", nullable: false),
+				CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+				CaseTitle = table.Column<string>(type: "longtext", nullable: true)
+					.Annotation("MySql:CharSet", "utf8mb4"),
+				CaseDescription = table.Column<string>(type: "longtext", nullable: true)
+					.Annotation("MySql:CharSet", "utf8mb4"),
+				CaseLabels = table.Column<string>(type: "longtext", nullable: true)
+					.Annotation("MySql:CharSet", "utf8mb4"),
+				CasePunishmentType = table.Column<int>(type: "int", nullable: false),
+				CasePunishedUntil = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+				SendPublicNotification = table.Column<bool>(type: "tinyint(1)", nullable: false),
+				HandlePunishment = table.Column<bool>(type: "tinyint(1)", nullable: false),
+				AnnounceDm = table.Column<bool>(type: "tinyint(1)", nullable: false)
+			},
+			constraints: table =>
+			{
+				table.PrimaryKey("PK_ModCaseTemplates", x => x.Id);
+			})
+			.Annotation("MySql:CharSet", "utf8mb4");
+
+		migrationBuilder.CreateTable(
 			name: "ModCaseComments",
 			schema: "Punishments",
 			columns: table => new
@@ -128,11 +128,11 @@ public partial class InitialCreate : Migration
 	protected override void Down(MigrationBuilder migrationBuilder)
 	{
 		migrationBuilder.DropTable(
-			name: "ModCaseTemplates",
+			name: "ModCaseComments",
 			schema: "Punishments");
 
 		migrationBuilder.DropTable(
-			name: "ModCaseComments",
+			name: "ModCaseTemplates",
 			schema: "Punishments");
 
 		migrationBuilder.DropTable(

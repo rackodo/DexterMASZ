@@ -1,6 +1,6 @@
+using AutoMods.Models;
 using Discord;
 using Discord.WebSocket;
-using AutoMods.Models;
 
 namespace AutoMods.MessageChecks;
 

@@ -4,10 +4,10 @@ using Bot.DTOs;
 using Bot.Enums;
 using Bot.Exceptions;
 using Bot.Services;
-using Punishments.Data;
-using Punishments.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Punishments.Data;
+using Punishments.Extensions;
 
 namespace Punishments.Controllers;
 

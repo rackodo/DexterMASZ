@@ -1,5 +1,4 @@
-﻿using Discord;
-using AutoMods.Enums;
+﻿using AutoMods.Enums;
 using AutoMods.Models;
 using AutoMods.Translators;
 using Bot.Enums;
@@ -7,9 +6,10 @@ using Bot.Extensions;
 using Bot.Models;
 using Bot.Services;
 using Bot.Translators;
+using Discord;
+using Microsoft.Extensions.DependencyInjection;
 using Punishments.Enums;
 using Punishments.Translators;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AutoMods.Extensions;
 
@@ -46,7 +46,7 @@ public static class AutoModEmbedCreator
 				translator.Get<BotTranslator>().MessageContent(),
 				autoModEvent.MessageContent
 			);
-		
+
 		embed.AddField(
 				translator.Get<BotTranslator>().Action(),
 				translator.Get<AutoModEnumTranslator>().Enum(autoModEvent.AutoModAction)

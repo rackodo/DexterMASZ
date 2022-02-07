@@ -85,7 +85,7 @@ public static class ConsoleCreator
 
 		while (true)
 		{
-			var client = 
+			var client =
 				AskAndSet("Discord OAuth Client ID", "DISCORD_OAUTH_CLIENT_ID", !isEdit);
 
 			if (ulong.TryParse(client.Key, out var id))

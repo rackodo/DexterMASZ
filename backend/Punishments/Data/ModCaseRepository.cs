@@ -1,5 +1,3 @@
-using Discord;
-using Humanizer;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Dynamics;
@@ -9,6 +7,9 @@ using Bot.Extensions;
 using Bot.Models;
 using Bot.Services;
 using Bot.Translators;
+using Discord;
+using Humanizer;
+using Microsoft.Extensions.Logging;
 using Punishments.Enums;
 using Punishments.Events;
 using Punishments.Exceptions;
@@ -16,9 +17,8 @@ using Punishments.Extensions;
 using Punishments.Models;
 using Punishments.Services;
 using Punishments.Translators;
-using Utilities.Dynamics;
-using Microsoft.Extensions.Logging;
 using System.Text;
+using Utilities.Dynamics;
 
 namespace Punishments.Data;
 

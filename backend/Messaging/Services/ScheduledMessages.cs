@@ -1,14 +1,13 @@
-﻿using Discord.Net;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Enums;
 using Bot.Events;
 using Bot.Services;
+using Discord.Net;
 using Messaging.Data;
 using Messaging.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Net;
-
 using Timer = System.Timers.Timer;
 
 namespace Messaging.Services;

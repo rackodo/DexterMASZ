@@ -1,11 +1,11 @@
-using Discord;
-using Humanizer;
 using Bot.Abstractions;
 using Bot.Dynamics;
 using Bot.Enums;
 using Bot.Exceptions;
 using Bot.Extensions;
 using Bot.Services;
+using Discord;
+using Humanizer;
 using UserNotes.Events;
 using UserNotes.Models;
 using UserNotes.Translators;

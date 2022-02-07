@@ -1,9 +1,9 @@
-﻿using Launch;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Dynamics;
 using Bot.Models;
 using Bot.Services;
+using Launch;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
@@ -11,7 +11,7 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("========== Launching Dexter ==========");
 
-var skipStartup = ConsoleCreator.WaitForUser("skip update setting prompts", 10);
+var updateSettings = ConsoleCreator.WaitForUser("update settings", 10);
 
 var builder = WebApplication.CreateBuilder();
 
@@ -29,7 +29,7 @@ else
 {
 	ConsoleCreator.AddSubHeading("Found database settings for", $"{databaseSettings.User} // {databaseSettings.Database}");
 
-	if (!skipStartup)
+	if (updateSettings)
 		if (ConsoleCreator.WaitForUser($"edit {nameof(DatabaseSettings)}", 10))
 			databaseSettings = ConsoleCreator.CreateDatabaseSettings(true).Key;
 
@@ -69,7 +69,7 @@ ConsoleCreator.AddSubHeading("Querying database for", nameof(AppSettings));
 
 await using (var dataContext = new BotDatabase(dbBuilder.Options))
 {
-	await dataContext.Database.MigrateAsync();
+	await dataContext.Database.EnsureCreatedAsync();
 
 	var appSettingRepo = new SettingsRepository(dataContext, clientIdContainer, null);
 
@@ -98,7 +98,7 @@ await using (var dataContext = new BotDatabase(dbBuilder.Options))
 		ConsoleCreator.AddSubHeading("Found app settings for client",
 			databaseSettings.ClientId.ToString());
 
-		if (!skipStartup)
+		if (updateSettings)
 			if (ConsoleCreator.WaitForUser($"edit {nameof(AppSettings)}", 10))
 			{
 				settings = ConsoleCreator.CreateAppSettings(clientIdContainer, true);
@@ -229,7 +229,7 @@ using (var scope = app.Services.CreateScope())
 	foreach (var dataContext in cachedServices.GetInitializedClasses<DbContext>(scope.ServiceProvider))
 	{
 		ConsoleCreator.AddSubHeading("Adding migrations for", dataContext.GetType().Name);
-		await dataContext.Database.MigrateAsync();
+		await dataContext.Database.EnsureCreatedAsync();
 	}
 }
 

@@ -1,9 +1,9 @@
 ﻿using Bot.Abstractions;
 using Bot.Models;
-using Punishments.Enums;
-using Punishments.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Punishments.Enums;
+using Punishments.Models;
 
 namespace Punishments.Data;
 

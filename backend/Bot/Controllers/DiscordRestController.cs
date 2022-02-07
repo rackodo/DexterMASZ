@@ -1,4 +1,3 @@
-using Discord;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.DTOs;
@@ -7,6 +6,7 @@ using Bot.Exceptions;
 using Bot.Identities;
 using Bot.Models;
 using Bot.Services;
+using Discord;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bot.Controllers;

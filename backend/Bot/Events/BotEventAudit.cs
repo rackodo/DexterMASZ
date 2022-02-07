@@ -1,10 +1,10 @@
-﻿using Humanizer;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Enums;
 using Bot.Extensions;
 using Bot.Identities;
 using Bot.Models;
 using Bot.Services;
+using Humanizer;
 
 namespace Bot.Events;
 

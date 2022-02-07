@@ -1,12 +1,12 @@
-﻿using Discord;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Services;
-using UserMaps.Extensions;
-using UserMaps.Models;
+using Discord;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using UserMaps.Extensions;
+using UserMaps.Models;
 
 namespace UserMaps.Events;
 

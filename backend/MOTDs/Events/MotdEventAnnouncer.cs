@@ -1,12 +1,12 @@
-﻿using Discord;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Services;
-using MOTDs.Extensions;
-using MOTDs.Models;
+using Discord;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MOTDs.Extensions;
+using MOTDs.Models;
 
 namespace MOTDs.Events;
 

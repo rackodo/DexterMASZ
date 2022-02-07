@@ -1,5 +1,3 @@
-using Discord;
-using Discord.WebSocket;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
@@ -8,6 +6,8 @@ using Bot.Exceptions;
 using Bot.Extensions;
 using Bot.Identities;
 using Bot.Models;
+using Discord;
+using Discord.WebSocket;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,12 +1,12 @@
-﻿using Discord;
-using Humanizer;
-using Bot.Enums;
+﻿using Bot.Enums;
 using Bot.Extensions;
 using Bot.Services;
 using Bot.Translators;
+using Discord;
+using Humanizer;
+using Microsoft.Extensions.DependencyInjection;
 using MOTDs.Models;
 using MOTDs.Translators;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace MOTDs.Extensions;
 

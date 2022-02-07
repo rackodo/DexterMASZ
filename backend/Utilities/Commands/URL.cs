@@ -1,6 +1,6 @@
-﻿using Discord.Interactions;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
+using Discord.Interactions;
 
 namespace Utilities.Commands;
 
