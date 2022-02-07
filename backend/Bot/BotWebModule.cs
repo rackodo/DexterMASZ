@@ -17,11 +17,11 @@ namespace Bot;
 
 public class BotWebModule : WebModule
 {
-	public override string Maintainer => "Zaanposni";
+	public override string Creator => "Zaanposni";
 
 	public override string[] Contributors { get; } = { "Ferox" };
 
-	public override string[] Translators { get; } = { "Bricksmaster", "FlixProd" };
+	public override string[] Translators { get; } = { "Bricksmaster" };
 
 	public override string[] AddAuthorizationPolicy()
 	{

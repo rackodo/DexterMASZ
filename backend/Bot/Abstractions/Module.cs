@@ -9,7 +9,7 @@ namespace Bot.Abstractions;
 
 public abstract class Module
 {
-	public abstract string Maintainer { get; }
+	public abstract string Creator { get; }
 
 	public abstract string[] Contributors { get; }
 

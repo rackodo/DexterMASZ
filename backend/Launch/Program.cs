@@ -11,7 +11,7 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("========== Launching Dexter ==========");
 
-var updateSettings = ConsoleCreator.WaitForUser("update settings", 10);
+var updateSettings = ConsoleCreator.WaitForUser("update settings", 5);
 
 var builder = WebApplication.CreateBuilder();
 
@@ -69,7 +69,7 @@ ConsoleCreator.AddSubHeading("Querying database for", nameof(AppSettings));
 
 await using (var dataContext = new BotDatabase(dbBuilder.Options))
 {
-	await dataContext.Database.EnsureCreatedAsync();
+	await dataContext.Database.MigrateAsync();
 
 	var appSettingRepo = new SettingsRepository(dataContext, clientIdContainer, null);
 
@@ -120,15 +120,15 @@ foreach (var module in modules)
 {
 	ConsoleCreator.AddSubHeading("Imported", $"{module.GetType().Namespace}{(module is WebModule ? " (WEB)" : "")}");
 
-	Console.Write("    Maintained By:      ");
+	Console.Write("       Created By:      ");
 
 	Console.ForegroundColor = ConsoleColor.Magenta;
-	Console.WriteLine(module.Maintainer);
+	Console.WriteLine(module.Creator);
 	Console.ResetColor();
 
 	if (module.Contributors.Length > 0)
 	{
-		Console.Write("    Contributions From");
+		Console.Write("   Contributed By:      ");
 
 		Console.ForegroundColor = ConsoleColor.DarkMagenta;
 		Console.WriteLine(string.Join(", ", module.Contributors));
@@ -229,7 +229,7 @@ using (var scope = app.Services.CreateScope())
 	foreach (var dataContext in cachedServices.GetInitializedClasses<DbContext>(scope.ServiceProvider))
 	{
 		ConsoleCreator.AddSubHeading("Adding migrations for", dataContext.GetType().Name);
-		await dataContext.Database.EnsureCreatedAsync();
+		await dataContext.Database.MigrateAsync();
 	}
 }
 
