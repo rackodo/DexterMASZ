@@ -1118,7 +1118,7 @@ config.json
 webinterface/app/composer.lock
 .deployment/*
 .vscode/settings.json
-/backend/MASZ/Properties/launchSettings.json
+/backend/Dexter/Properties/launchSettings.json
 
 *.bak
 /package-lock.json

@@ -1,6 +1,6 @@
-﻿using MASZ.Bot.Dynamics;
-using MASZ.Bot.Enums;
-using MASZ.Bot.Models;
+﻿using Bot.Dynamics;
+using Bot.Enums;
+using Bot.Models;
 using System.Diagnostics;
 using System.Reflection;
 

@@ -1,15 +1,15 @@
 ﻿using Launch;
-using MASZ.Bot.Abstractions;
-using MASZ.Bot.Data;
-using MASZ.Bot.Dynamics;
-using MASZ.Bot.Models;
-using MASZ.Bot.Services;
+using Bot.Abstractions;
+using Bot.Data;
+using Bot.Dynamics;
+using Bot.Models;
+using Bot.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 Console.ForegroundColor = ConsoleColor.Cyan;
-Console.WriteLine("========== Launching MASZ ==========");
+Console.WriteLine("========== Launching Dexter ==========");
 
 var skipStartup = ConsoleCreator.WaitForUser("skip update setting prompts", 10);
 
@@ -79,7 +79,7 @@ await using (var dataContext = new BotDatabase(dbBuilder.Options))
 	{
 		ConsoleCreator.AddHeading("Running First Time Setup");
 
-		ConsoleCreator.AddSubHeading("Welcome to", "MASZ!");
+		ConsoleCreator.AddSubHeading("Welcome to", "Dexter!");
 		ConsoleCreator.AddSubHeading("Support Discord", "https://discord.gg/5zjpzw6h3S");
 
 		settings = ConsoleCreator.CreateAppSettings(clientIdContainer, false);
@@ -149,7 +149,7 @@ Console.ResetColor();
 
 // START WEB SERVER
 
-ConsoleCreator.AddHeading("Starting MASZ");
+ConsoleCreator.AddHeading("Starting Dexter");
 
 builder.WebHost.CaptureStartupErrors(true);
 
@@ -237,7 +237,7 @@ ConsoleCreator.AddSubHeading("Successfully added", "migrations to databases");
 
 // CONFIGURE
 
-ConsoleCreator.AddHeading("Building MASZ");
+ConsoleCreator.AddHeading("Building Dexter");
 
 foreach (var startup in modules)
 {
@@ -264,7 +264,7 @@ app.UseEndpoints(endpoints =>
 	endpoints.MapControllers();
 });
 
-ConsoleCreator.AddHeading("Running MASZ");
+ConsoleCreator.AddHeading("Running Dexter");
 
 try
 {

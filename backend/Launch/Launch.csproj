@@ -15,14 +15,14 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 
-		<ProjectReference Include="..\MASZ.AutoMods\MASZ.AutoMods.csproj" />
-		<ProjectReference Include="..\MASZ.GuildAudits\MASZ.GuildAudits.csproj" />
-		<ProjectReference Include="..\MASZ.Messaging\MASZ.Messaging.csproj" />
-		<ProjectReference Include="..\MASZ.MOTDs\MASZ.MOTDs.csproj" />
-		<ProjectReference Include="..\MASZ.Punishments\MASZ.Punishments.csproj" />
-		<ProjectReference Include="..\MASZ.UserMaps\MASZ.UserMaps.csproj" />
-		<ProjectReference Include="..\MASZ.UserNotes\MASZ.UserNotes.csproj" />
-		<ProjectReference Include="..\MASZ.Utilities\MASZ.Utilities.csproj" />
+		<ProjectReference Include="..\AutoMods\AutoMods.csproj" />
+		<ProjectReference Include="..\GuildAudits\GuildAudits.csproj" />
+		<ProjectReference Include="..\Messaging\Messaging.csproj" />
+		<ProjectReference Include="..\MOTDs\MOTDs.csproj" />
+		<ProjectReference Include="..\Punishments\Punishments.csproj" />
+		<ProjectReference Include="..\UserMaps\UserMaps.csproj" />
+		<ProjectReference Include="..\UserNotes\UserNotes.csproj" />
+		<ProjectReference Include="..\Utilities\Utilities.csproj" />
 	</ItemGroup>
 
 </Project>

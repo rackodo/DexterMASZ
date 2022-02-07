@@ -31,7 +31,7 @@
         "title": "Internal notification for say command.",
         "description": "The bot will now send a notification to the internal webhook when a moderator uses the say command.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/479"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/479"
       },
       {
         "title": "Add more parameters to the appsettings.",
@@ -41,19 +41,19 @@
         "title": "Added status command.",
         "description": "A status command has been added that displays the current state of the application, similiar to the insights tab.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/486"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/486"
       },
       {
         "title": "Added scheduled message announcements.",
         "description": "A scheduled message announcement has been added that allows you to send a message to a channel at a specific time. This is useful for announcing events.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/479"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/479"
       },
       {
         "title": "Added case label autocompletion.",
-        "description": "While creating or editing cases MASZ will now display choices for case labels based on already existing case labels.",
+        "description": "While creating or editing cases Dexter will now display choices for case labels based on already existing case labels.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/489"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/489"
       }
     ],
     "fixes": [
@@ -61,7 +61,7 @@
         "title": "Delete auditlog config on guild delete.",
         "description": "If you delete a guild and choose to delete its content, the guilds auditlog config will be deleted as well.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/482"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/482"
       },
       {
         "title": "Fixed duplicated guild tabs.",
@@ -71,13 +71,13 @@
         "title": "Fixed case template access permissions.",
         "description": "Fixed a bug that prevented users from accessing their own case templates.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/485"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/485"
       },
       {
         "title": "Fixed case template search.",
         "description": "Fixed a bug that caused case template searching to fail.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/485"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/485"
       },
       {
         "title": "Fixed case template creation permissions.",
@@ -93,7 +93,7 @@
       },
       {
         "title": "Fixed NRE in unban procedure.",
-        "description": "Fixed a caching issue during the unban procedure that occurred when a user was unbanned before MASZ tries to unban him."
+        "description": "Fixed a caching issue during the unban procedure that occurred when a user was unbanned before Dexter tries to unban him."
       },
       {
         "title": "Removed case bin.",
@@ -141,19 +141,19 @@
         "title": "Added reasoning for discord audit logs.",
         "description": "The reason of a punishment will now be displayed in discords audit log.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/469"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/469"
       },
       {
         "title": "Added import of existing bans on guild register.",
         "description": "You can now import existing bans on guild register. Those will not trigger announcements or dm notification but will be added to the database.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/475"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/475"
       },
       {
         "title": "Added more internal notifications.",
         "description": "Your internal webhook will now receive further notifications about automod auditlog or motd changes.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/474"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/474"
       },
       {
         "title": "Change content of website embed.",
@@ -169,7 +169,7 @@
         "title": "Fixed display of comment locked status.",
         "description": "A bug was fixed that caused the comment locked status to not be displayed correctly.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/468"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/468"
       },
       {
         "title": "Fixed display of creation type.",
@@ -179,7 +179,7 @@
         "title": "Fixed switch of guild in guild edit view.",
         "description": "A bug was fixed that caused the guild edit view to not refresh if the guild was switched via the taskbar.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/473"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/473"
       },
       {
         "title": "fix multiple endpoint matching.",
@@ -192,12 +192,12 @@
     ],
     "technical": [
       {
-        "title": "MASZ now uses \"Discord.NET\".",
-        "description": "MASZ now uses the library Discord.NET instead of DSharpPlus as the latter one had major caching issues."
+        "title": "Dexter now uses \"Discord.NET\".",
+        "description": "Dexter now uses the library Discord.NET instead of DSharpPlus as the latter one had major caching issues."
       },
       {
         "title": "Upgraded to .NET 6.",
-        "description": "MASZ now uses .NET 6 which is a LTS version."
+        "description": "Dexter now uses .NET 6 which is a LTS version."
       }
     ]
   },
@@ -217,19 +217,19 @@
         "title": "Use bot icon instead of default.",
         "description": "Your bot icon will now also replace the image on the login page as well as the websites favicon.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/454"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/454"
       },
       {
         "title": "Advanced modcase table filters.",
         "description": "You can now filter the modcase table by users, moderators, date values and more.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/455"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/455"
       },
       {
         "title": "Added unmute and unban command",
         "description": "A unmute and unban command has been added which offers you the possibility to delete or deactivate cases of the mentioned user.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/435"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/435"
       }
     ],
     "fixes": [
@@ -237,13 +237,13 @@
         "title": "Spaces and newlines in automoderation log.",
         "description": "Spaces and newlines will now be displayed in the automoderation log view.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/456"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/456"
       },
       {
         "title": "Modcase inactivity display.",
         "description": "A bug was fixed that showed a modcase to be inactive after reactivating it.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/457"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/457"
       }
     ]
   },
@@ -280,13 +280,13 @@
         "title": "Update warning.",
         "description": "An update warning in the toolbar has been added.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/444"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/444"
       },
       {
         "title": "Inactive cases.",
         "description": "Cases can now be toggled to be active or inactive, their status is shown in the caseview.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/434"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/434"
       },
       {
         "title": "Avatar command.",
@@ -300,7 +300,7 @@
     "fixes": [
       {
         "title": "Fixed X-Forwarded-For header.",
-        "description": "MASZ now correctly uses the X-Forwarded-For header for ip ratelimiting and logging."
+        "description": "Dexter now correctly uses the X-Forwarded-For header for ip ratelimiting and logging."
       },
       {
         "title": "Adjusted permissions in strict mode.",
@@ -316,7 +316,7 @@
       },
       {
         "title": "Fixed null value handling for site admins env var.",
-        "description": "MASZ now correctly works without any siteadmins defined."
+        "description": "Dexter now correctly works without any siteadmins defined."
       }
     ],
     "technical": [
@@ -340,7 +340,7 @@
     "breaking": [
       {
         "title": "New license.",
-        "description": "MASZ is now licensed under GPLv3.",
+        "description": "Dexter is now licensed under GPLv3.",
         "icon": "link",
         "link": "https://choosealicense.com/licenses/gpl-3.0/"
       },
@@ -354,7 +354,7 @@
         "title": "Thread automod support.",
         "description": "The bot will now try to join created threads which will allow automoderation in these threads.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/345"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/345"
       },
       {
         "title": "Added more punish commands.",
@@ -364,7 +364,7 @@
         "title": "Guild-levle AuditLog.",
         "description": "An auditlog on guildlevel has been added for various events (more to come). Enable this in your guilds config tab.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/blob/master/docs/guildauditlog.png"
+        "link": "https://github.com/zaanposni/discord-dexter/blob/master/docs/guildauditlog.png"
       },
       {
         "title": "Public file mode.",
@@ -410,7 +410,7 @@
         "title": "Fixed automod event linked case.",
         "description": "Fixed a bug where the case of an automoderation was incorrectly linked.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/439"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/439"
       },
       {
         "title": "Fixed automod config.",
@@ -453,19 +453,19 @@
         "title": "Link Automod.",
         "description": "Added a link automod that triggers on http/https links. You can also allow certain links.",
         "icon": "code",
-        "link": "https://github.com/zaanposni/discord-masz/issues/417"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/417"
       },
       {
         "title": "Duplicated characters Automod.",
         "description": "Added a automod that triggers on duplicated characters even with linebreaks. This also recognizes \"empty\" messages.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/417"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/417"
       },
       {
         "title": "Invite Automod filter.",
         "description": "Added a filter to the invite automod to allow certain guilds.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/417"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/417"
       }
     ],
     "fixes": [
@@ -477,13 +477,13 @@
         "title": "Error on modcase ban create.",
         "description": "Fixed a bug that caused api calls for ban modcases to fail.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/428"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/428"
       },
       {
         "title": "Display of last moderator.",
         "description": "Fixed a bug where the \"Last edit by moderator...\" field was visible even though there were no edit at all.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/427"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/427"
       },
       {
         "title": "Time display",
@@ -523,13 +523,13 @@
         "title": "Cleanup mode choices.",
         "description": "Added choices to cleanup command to improve UX.",
         "icon": "code",
-        "link": "https://github.com/zaanposni/discord-masz/pull/399"
+        "link": "https://github.com/zaanposni/discord-dexter/pull/399"
       },
       {
         "title": "Fixed errors in track command.",
         "description": "Command does not longer fail on valid unused invite.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/397"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/397"
       },
       {
         "title": "Added error message to report command.",
@@ -586,7 +586,7 @@
         "title": "Spam automoderation.",
         "description": "Added automoderation for spam. Trigger on x messages in y minutes.",
         "icon": "code",
-        "link": "https://github.com/zaanposni/discord-masz/pull/352"
+        "link": "https://github.com/zaanposni/discord-dexter/pull/352"
       },
       {
         "title": "Mentioning contributors.",
@@ -598,7 +598,7 @@
       },
       {
         "title": "Slash commands.",
-        "description": "MASZ is now supporting slash commands. Be sure to authorize your bot with the \"applications.commands\" scope."
+        "description": "Dexter is now supporting slash commands. Be sure to authorize your bot with the \"applications.commands\" scope."
       }
     ],
     "fixes": [
@@ -614,11 +614,11 @@
         "title": "Button misalignment.",
         "description": "Fixed a css bug that caused the buttons to be aligned incorrectly.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/discord-masz/issues/355"
+        "link": "https://github.com/zaanposni/discord-dexter/issues/355"
       },
       {
         "title": "Improved bot logging.",
-        "description": "The logging of the \"masz_discordbot\" container was improved. The library \"rich\" is used now to format logs."
+        "description": "The logging of the \"dexter_discordbot\" container was improved. The library \"rich\" is used now to format logs."
       }
     ],
     "technical": [
@@ -655,13 +655,13 @@
     "technical": [
       {
         "title": "API Wrapper.",
-        "description": "A python library to integrate the MASZ API in your project has been released.",
+        "description": "A python library to integrate the Dexter API in your project has been released.",
         "icon": "link",
-        "link": "https://github.com/zaanposni/masz-api-wrapper"
+        "link": "https://github.com/zaanposni/dexter-api-wrapper"
       },
       {
         "title": "Cookie service.",
-        "description": "MASZ has not been using cookies for quite some time, the code to read cookies has now been removed as well."
+        "description": "Dexter has not been using cookies for quite some time, the code to read cookies has now been removed as well."
       }
     ]
   },
@@ -676,11 +676,11 @@
       },
       {
         "title": "$cases command.",
-        "description": "The new $cases command allows users to view a list of their modcases and active punishments without logging in to MASZ."
+        "description": "The new $cases command allows users to view a list of their modcases and active punishments without logging in to Dexter."
       },
       {
         "title": "$view command.",
-        "description": "The new $view command allows users to view details of their modcase without logging in to MASZ."
+        "description": "The new $view command allows users to view details of their modcase without logging in to Dexter."
       }
     ],
     "fixes": [
@@ -985,7 +985,7 @@
     "title": "Version 1.7.2",
     "version": "v1.7.2",
     "changes": [
-      "Reworked readme description of MASZ.",
+      "Reworked readme description of Dexter.",
       "Reworked case list, now showing profil pictures too.",
       "No showing current user info in case view.",
       "Added discriminator to modcase model.",
@@ -1001,7 +1001,7 @@
     "version": "v1.7.1",
     "changes": [
       "Improved mobile frontend experience.",
-      "Added more precise specification of software requirements for masz.",
+      "Added more precise specification of software requirements for dexter.",
       "Removed unneeded apache files from old php setup.",
       "Now correctly reapplies muted role on member rejoin.",
       "Fixed a bug where banned guilds are not displayed correctly.",

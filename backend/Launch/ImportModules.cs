@@ -1,14 +1,14 @@
-﻿using MASZ.AutoMods;
-using MASZ.Bot;
-using MASZ.Bot.Abstractions;
-using MASZ.GuildAudits;
-using MASZ.Invites;
-using MASZ.Messaging;
-using MASZ.MOTDs;
-using MASZ.Punishments;
-using MASZ.UserMaps;
-using MASZ.UserNotes;
-using MASZ.Utilities;
+﻿using AutoMods;
+using Bot;
+using Bot.Abstractions;
+using GuildAudits;
+using Invites;
+using Messaging;
+using MOTDs;
+using Punishments;
+using UserMaps;
+using UserNotes;
+using Utilities;
 
 namespace Launch;
 

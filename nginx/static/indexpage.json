@@ -3,8 +3,8 @@
     {
         "imageSrc": "assets/img/decision.svg",
         "imageAlt": "Review",
-        "title": "How MASZ works",
-        "description": "A user spams in your chat. But you don't know whether you should mute or ban him? Is this his first time being offensive? Well, look up his profile and events on MASZ! See everything your moderators ever wrote about this user and punish him accordingly.",
+        "title": "How Dexter works",
+        "description": "A user spams in your chat. But you don't know whether you should mute or ban him? Is this his first time being offensive? Well, look up his profile and events on Dexter! See everything your moderators ever wrote about this user and punish him accordingly.",
         "buttonText": "",
         "buttonHref": "",
         "buttonIcon": ""
@@ -13,7 +13,7 @@
         "imageSrc": "assets/img/insight.svg",
         "imageAlt": "Transparency",
         "title": "Transparency",
-        "description": "By using MASZ your server moderation will become much more transparent for your members. There will be no more untraceable bans or incidents, users can either view an incident on the website or be informed via notifications.",
+        "description": "By using Dexter your server moderation will become much more transparent for your members. There will be no more untraceable bans or incidents, users can either view an incident on the website or be informed via notifications.",
         "buttonText": "",
         "buttonHref": "",
         "buttonIcon": ""
@@ -40,7 +40,7 @@
         "imageSrc": "assets/img/note_list.svg",
         "imageAlt": "A moderation case",
         "title": "Moderation cases",
-        "description": "The core of MASZ are moderation cases, a case represents a rule violation, an important note or similar. The server members and your moderators can be notified individually upon case creation.",
+        "description": "The core of Dexter are moderation cases, a case represents a rule violation, an important note or similar. The server members and your moderators can be notified individually upon case creation.",
         "buttonText": "",
         "buttonHref": "",
         "buttonIcon": ""
@@ -67,18 +67,18 @@
         "imageSrc": "assets/img/rocket.svg",
         "imageAlt": "Setup",
         "title": "Selfhosting",
-        "description": "The application can be selfhosted using Docker. Follow our step by step guide to setup your own MASZ instance.",
+        "description": "The application can be selfhosted using Docker. Follow our step by step guide to setup your own Dexter instance.",
         "buttonText": "Setup",
-        "buttonHref": "https://github.com/zaanposni/discord-masz#hosting",
+        "buttonHref": "https://github.com/zaanposni/discord-dexter#hosting",
         "buttonIcon": "fab fa-github"
     },
     {
         "imageSrc": "assets/img/server.svg",
-        "imageAlt": "How can I get MASZ?",
+        "imageAlt": "How can I get Dexter?",
         "title": "I cannot selfhost",
         "description": "For a small fee per month I will host you a server, get you a domain and provide technical support. Feel free to contact me in discord: zaanposni#9295 or via mail.",
         "buttonText": "Mail me",
-        "buttonHref": "mailto:me@zaanposni.com?subject=MASZ%20Hosting&body=Hey%20zaanposni%2C%0D%0A%0D%0AI%20would%20like%20to%20use%20MASZ.%0D%0ACan%20you%20host%20me%20an%20instance%3F%0D%0A%0D%0ABest%20regards.%0D%0A ",
+        "buttonHref": "mailto:me@zaanposni.com?subject=Dexter%20Hosting&body=Hey%20zaanposni%2C%0D%0A%0D%0AI%20would%20like%20to%20use%20Dexter.%0D%0ACan%20you%20host%20me%20an%20instance%3F%0D%0A%0D%0ABest%20regards.%0D%0A ",
         "buttonIcon": "far fa-envelope-open"
     },
     {
@@ -87,7 +87,7 @@
         "title": "Open Source",
         "description": "The source code can be found on GitHub. Contributions are welcome!",
         "buttonText": "GitHub",
-        "buttonHref": "https://github.com/zaanposni/discord-masz",
+        "buttonHref": "https://github.com/zaanposni/discord-dexter",
         "buttonIcon": "fab fa-github"
     }
 ]

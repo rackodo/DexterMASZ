@@ -16,11 +16,11 @@ To develop for Dexter, you will eventually need to become familiar with our proc
 
 1. [Our code of conduct](CODE_OF_CONDUCT.md), which stipulates explicitly that everyone must be gracious, respectful, and professional. This also documents our conflict resolution policy and encourages people to ask questions.
 
-2. [Setting up the development environment](https://github.com/FeroxFoxxo/DexterMASZ/wiki/Setting-Up-The-Development-Environment), which describes the steps you need to configure your computer to work with Dexter. Dexter mainly uses C#.
+2. [Setting up the development environment](https://github.com/FeroxFoxxo/DexterDexter/wiki/Setting-Up-The-Development-Environment), which describes the steps you need to configure your computer to work with Dexter. Dexter mainly uses C#.
 
-3. [Tree hygiene](https://github.com/FeroxFoxxo/DexterMASZ/wiki/Tree-Hygiene), which covers how to land a PR and how to do code review.
+3. [Tree hygiene](https://github.com/FeroxFoxxo/DexterDexter/wiki/Tree-Hygiene), which covers how to land a PR and how to do code review.
 
-4. [Our style guide](https://github.com/FeroxFoxxo/DexterMASZ/wiki/Style-Guide), which includes advice for designing for Dexter, and how to format code in the application.
+4. [Our style guide](https://github.com/FeroxFoxxo/DexterDexter/wiki/Style-Guide), which includes advice for designing for Dexter, and how to format code in the application.
 
-In addition to the above, there are many pages on [our Wiki](https://github.com/FeroxFoxxo/DexterMASZ/wiki/). For a curated list of pages see the sidebar
+In addition to the above, there are many pages on [our Wiki](https://github.com/FeroxFoxxo/DexterDexter/wiki/). For a curated list of pages see the sidebar
 on the wiki's home page. They are more or less listed in order of importance.

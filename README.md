@@ -14,8 +14,8 @@
          <a href="https://dev.azure.com/frostrixz/Dexter">
          <img alt="Azure Pipelines" src="https://dev.azure.com/frostrixz/Dexter/_apis/build/status/FeroxFoxxo.Dexter?branchName=master">
          </a>
-         <a href="https://github.com/FeroxFoxxo/DexterMASZ/blob/master/LICENSE">
-         <img alt="GitHub" src="https://img.shields.io/github/license/feroxfoxxo/dextermasz?label=License">
+         <a href="https://github.com/FeroxFoxxo/DexterDexter/blob/master/LICENSE">
+         <img alt="GitHub" src="https://img.shields.io/github/license/feroxfoxxo/dexterdexter?label=License">
          </a>
       </p>
       <h2>Built With</h2>
@@ -31,7 +31,7 @@
          This bot is an adaption from the version of Dexter, written in JavaScript, by <a href="https://github.com/Jakey-F">Jakey Floofle</a>. As such, some commands have been adaptions from their original sources.
       </p>
       <p>
-         This bot was originally built off of the <a href="https://github.com/zaanposni/discord-masz">MASZ bot</a>, but extends upon it by focusing on plugin support!
+         This bot was originally built off of the <a href="https://github.com/zaanposni/discord-masz">Dexter bot</a>, but extends upon it by focusing on plugin support!
       </p>
    </body>
 </html>
@@ -44,9 +44,9 @@
 
 ### Plugins
 
-#### MASZ
+#### Dexter
 
-These plugins have been ported from [https://github.com/zaanposni/discord-masz](MASZ), are part of their own plugin, and can be enabled/disabled.
+These plugins have been ported from [https://github.com/zaanposni/discord-masz](Dexter), are part of their own plugin, and can be enabled/disabled.
 
 ⭐ **Infractions and managed (temporary) punishments** - to moderate your server\
 ⭐ **Quicksearch** - to reliably search for any infractions or notes a user has\
@@ -63,7 +63,7 @@ These plugins have been ported from [https://github.com/FeroxFoxxo/Dexter](Dexte
 
 ![dashboard preview](/docs/dashboard.png)
 
-**Previews and examples can be found at:** [https://github.com/FeroxFoxxo/DexterMASZ/tree/master/docs](https://github.com/FeroxFoxxo/DexterMASZ/tree/master/docs)
+**Previews and examples can be found at:** [https://github.com/FeroxFoxxo/DexterDexter/tree/master/docs](https://github.com/FeroxFoxxo/DexterDexter/tree/master/docs)
 
 ### 🤝 Support Server
 
@@ -78,7 +78,7 @@ You should be using the official Dexter instance on your server.
 #### TL;DR;
 
 - Create a discord application at [https://discord.com/developers/applications](https://discord.com/developers/applications)
-- Set redirect urls on your discord application [as defined](https://github.com/FeroxFoxxo/DexterMASZ#discord-oauth).
+- Set redirect urls on your discord application [as defined](https://github.com/FeroxFoxxo/DexterDexter#discord-oauth).
 - Enable **Server Members** and **Message Content Intent** in your bot settings.
 - App will be hosted on `127.0.0.1:5565`.
 - Read further for more information on different deployment methods and further steps.
