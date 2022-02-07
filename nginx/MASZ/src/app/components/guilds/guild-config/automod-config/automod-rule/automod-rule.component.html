@@ -51,7 +51,7 @@
         <mat-step [stepControl]="filterForm" [optional]='true'>
           <form [formGroup]="filterForm">
             <ng-template matStepLabel>{{ 'AutoModConfig.Steps.Filter' | translate }}</ng-template>
-            <span>{{ 'AutoModConfig.TeamUsersExcluded' | translate }}</span><br/>
+            <span>{{ 'AutoModConfig.TeamMembersExcluded' | translate }}</span><br/>
             <mat-form-field appearance="fill">
                 <mat-label>{{ 'AutoModConfig.ExcludeRoles' | translate }}</mat-label>
                 <mat-select formControlName="excludeRoles" multiple>

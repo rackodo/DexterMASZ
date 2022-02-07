@@ -338,7 +338,7 @@
             "Done": "Выполнено"
         },
         "UpperLimit": "Верхний предел",
-        "TeamUsersExcluded": "Примечание: члены команды всегда исключаются.",
+        "TeamMembersExcluded": "Примечание: члены команды всегда исключаются.",
         "ExcludeRoles": "Исключить роли",
         "ExcludeChannels": "Исключить каналы",
         "SendInternalNotification": "Отправить внутреннее уведомление",

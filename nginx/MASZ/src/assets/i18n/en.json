@@ -338,7 +338,7 @@
             "Done": "Done"
         },
         "UpperLimit": "Upper limit",
-        "TeamUsersExcluded": "Note: team users are always excluded.",
+        "TeamMembersExcluded": "Note: team users are always excluded.",
         "ExcludeRoles": "Exclude roles",
         "ExcludeChannels": "Exclude channels",
         "SendInternalNotification": "Send internal notification",
