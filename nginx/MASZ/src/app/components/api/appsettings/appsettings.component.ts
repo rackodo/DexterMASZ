@@ -35,7 +35,11 @@ export class AppsettingsComponent implements OnInit {
     });
     this.settingsFormGroup = this._formBuilder.group({
       defaultLanguage: ['', Validators.required ],
+<<<<<<< HEAD
       auditLogWebhookUrl: ['',  Validators.pattern('https://discord(app)?\.com/api/webhooks/[0-9]+/.+') ],
+=======
+      auditLogWebhookURL: ['',  Validators.pattern('https://discord(app)?\.com/api/webhooks/[0-9]+/.+') ],
+>>>>>>> master
       publicFileMode: ['']
     });
 
