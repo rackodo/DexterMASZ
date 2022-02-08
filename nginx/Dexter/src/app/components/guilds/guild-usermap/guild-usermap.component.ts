@@ -16,7 +16,7 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './guild-usermap.component.html',
   styleUrls: ['./guild-usermap.component.css']
 })
-export class GuildUsermappingComponent implements OnInit {
+export class GuildUserMappingComponent implements OnInit {
 
   public newMapFormGroup!: FormGroup;
   public filteredUsersA!: Observable<DiscordUser[]>;
@@ -86,7 +86,7 @@ export class GuildUsermappingComponent implements OnInit {
     }, error => {
       console.error(error);
       this.loading = false;
-      this.toastr.error(this.translator.instant('UsermapTable.FailedToLoad'));
+      this.toastr.error(this.translator.instant('UserMapTable.FailedToLoad'));
     });
 
     const params = new HttpParams()
@@ -96,7 +96,7 @@ export class GuildUsermappingComponent implements OnInit {
       this.users.loading = false;
     }, error => {
       console.error(error);
-      this.toastr.error(this.translator.instant('UsermapTable.FailedToLoadUser'));
+      this.toastr.error(this.translator.instant('UserMapTable.FailedToLoadUser'));
     });
   }
 
@@ -145,11 +145,11 @@ export class GuildUsermappingComponent implements OnInit {
 
     this.api.postSimpleData(`/guilds/${this.guildId}/usermap`, data).subscribe(() => {
       this.reloadData();
-      this.toastr.success(this.translator.instant('UsermapTable.Created'));
+      this.toastr.success(this.translator.instant('UserMapTable.Created'));
       this.resetForm();
     }, error => {
       console.error(error);
-      this.toastr.error(this.translator.instant('UsermapTable.FailedToCreate'));
+      this.toastr.error(this.translator.instant('UserMapTable.FailedToCreate'));
     });
   }
 

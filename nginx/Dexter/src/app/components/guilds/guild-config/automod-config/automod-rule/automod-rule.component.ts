@@ -54,7 +54,6 @@ export class AutoModRuleComponent implements OnInit {
     this.actionForm = this._formBuilder.group({
       dmNotification: [''],
       automodAction: ['', Validators.required],
-      publicNotification: [''],
       punishmentType: [''],
       punishmentDuration: [''],
       channelNotificationBehavior: ['']
@@ -142,7 +141,6 @@ export class AutoModRuleComponent implements OnInit {
 
     this.actionForm.setValue({
       dmNotification: config.sendDmNotification,
-      publicNotification: config.sendPublicNotification,
       automodAction: config.autoModAction,
       punishmentType: config.punishmentType,
       punishmentDuration: config.punishmentDurationMinutes,
@@ -182,12 +180,12 @@ export class AutoModRuleComponent implements OnInit {
       "CustomWordFilter": this.eventForm.value.customWord !== "" ? this.eventForm.value.customWord : null,
       "Limit": this.eventForm.value.limit !== "" ? this.eventForm.value.limit : null,
       "SendDmNotification": this.actionForm.value.dmNotification !== "" ? this.actionForm.value.dmNotification : false,
-      "SendPublicNotification": this.actionForm.value.publicNotification !== "" ? this.actionForm.value.publicNotification : false,
       "ChannelNotificationBehavior": this.actionForm.value.channelNotificationBehavior !== "" ? this.actionForm.value.channelNotificationBehavior : 0
     }
 
     this.api.putSimpleData(`/guilds/${this.guildId}/automodconfig`, data).subscribe((data) => {
       this.tryingToSaveConfig = false;
+      this.toastr.success(this.translator.instant('AutoModConfig.SavedConfig'));
       this.toastr.success(this.translator.instant('AutoModConfig.SavedConfig'));
       this.applyConfig(data);
       stepper.selectedIndex = 0;

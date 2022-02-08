@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GuildUsermappingComponent } from './guild-usermap.component';
+import { GuildUserMappingComponent } from './guild-usermap.component';
 
-describe('GuildUsermappingComponent', () => {
-  let component: GuildUsermappingComponent;
-  let fixture: ComponentFixture<GuildUsermappingComponent>;
+describe('GuildUserMappingComponent', () => {
+  let component: GuildUserMappingComponent;
+  let fixture: ComponentFixture<GuildUserMappingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GuildUsermappingComponent ]
+      declarations: [ GuildUserMappingComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GuildUsermappingComponent);
+    fixture = TestBed.createComponent(GuildUserMappingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

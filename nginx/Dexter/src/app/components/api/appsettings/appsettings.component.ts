@@ -14,8 +14,8 @@ import { EnumManagerService } from 'src/app/services/enum-manager.service';
   templateUrl: './appsettings.component.html',
   styleUrls: ['./appsettings.component.css']
 })
-export class AppsettingsComponent implements OnInit {
 
+export class AppSettingsComponent implements OnInit {
   initRows: number = 2;
   settingsLoading: boolean = true;
   embedFormGroup!: FormGroup;
@@ -36,7 +36,6 @@ export class AppsettingsComponent implements OnInit {
     this.settingsFormGroup = this._formBuilder.group({
       defaultLanguage: ['', Validators.required ],
       auditLogWebhookUrl: ['',  Validators.pattern('https://discord(app)?\.com/api/webhooks/[0-9]+/.+') ],
-      publicFileMode: ['']
     });
 
     this.api.getSimpleData('/settings').subscribe((data: AppSettings) => {
@@ -48,7 +47,6 @@ export class AppsettingsComponent implements OnInit {
       this.settingsFormGroup.setValue({
         defaultLanguage: data.defaultLanguage,
         auditLogWebhookUrl: data.auditLogWebhookUrl,
-        publicFileMode: data.publicFileMode
       });
 
       this.settingsLoading = false;
@@ -85,15 +83,13 @@ export class AppsettingsComponent implements OnInit {
     let body = {
       defaultLanguage: this.settingsFormGroup.value?.defaultLanguage ?? 0,
       auditLogWebhookUrl: this.settingsFormGroup.value?.auditLogWebhookUrl ?? null,
-      publicFileMode: this.settingsFormGroup.value?.publicFileMode ?? false
     }
     this.api.putSimpleData('/settings/infrastructure', body, undefined, true, true).subscribe((data: AppSettings) => {
       this.toastr.success(this.translator.instant("AppSettings.Embed.Save.Message"));
       this.settingsLoading = false;
       this.settingsFormGroup.setValue({
         defaultLanguage: data.defaultLanguage,
-        auditLogWebhookUrl: data.auditLogWebhookUrl,
-        publicFileMode: data.publicFileMode
+        auditLogWebhookUrl: data.auditLogWebhookUrl
       });
     }, error => {
       this.settingsLoading = false;

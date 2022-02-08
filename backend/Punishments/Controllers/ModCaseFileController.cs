@@ -16,14 +16,12 @@ public class ModCaseFileController : AuthenticatedController
 {
 	private readonly ModCaseFileRepository _caseFileRepository;
 	private readonly ModCaseRepository _modCaseRepository;
-	private readonly SettingsRepository _settingsRepository;
 
 	public ModCaseFileController(IdentityManager identityManager, ModCaseFileRepository caseFileRepository,
-		ModCaseRepository modCaseRepository, SettingsRepository settingsRepository) :
-		base(identityManager, caseFileRepository, settingsRepository, modCaseRepository)
+		ModCaseRepository modCaseRepository) :
+		base(identityManager, caseFileRepository, modCaseRepository)
 	{
 		_caseFileRepository = caseFileRepository;
-		_settingsRepository = settingsRepository;
 		_modCaseRepository = modCaseRepository;
 	}
 
@@ -49,14 +47,9 @@ public class ModCaseFileController : AuthenticatedController
 	{
 		var identity = await SetupAuthentication();
 
-		var config = await _settingsRepository.GetAppSettings();
+		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
 
-		if (!config.PublicFileMode)
-		{
-			var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
-
-			await identity.RequirePermission(ApiActionPermission.View, modCase);
-		}
+		await identity.RequirePermission(ApiActionPermission.View, modCase);
 
 		var fileInfo = await _caseFileRepository.GetCaseFile(guildId, caseId, filename);
 

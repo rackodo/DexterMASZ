@@ -70,7 +70,6 @@ public class AutoModConfigRepository : Repository, DeleteGuildData
 		autoModConfig.Limit = newValue.Limit;
 		autoModConfig.CustomWordFilter = newValue.CustomWordFilter;
 		autoModConfig.SendDmNotification = newValue.SendDmNotification;
-		autoModConfig.SendPublicNotification = newValue.SendPublicNotification;
 		autoModConfig.ChannelNotificationBehavior = newValue.ChannelNotificationBehavior;
 
 		await _autoModDatabase.PutPunishmentsConfig(autoModConfig);

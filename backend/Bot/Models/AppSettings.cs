@@ -11,13 +11,10 @@ public class AppSettings
 	public string DiscordBotToken { get; set; }
 	public string ClientSecret { get; set; }
 	public string AbsolutePathToFileUpload { get; set; }
-	public string ServiceHostName { get; set; }
 	public string ServiceDomain { get; set; }
 	public string ServiceBaseUrl { get; set; }
 	public ulong[] SiteAdmins { get; set; }
 	public string AuditLogWebhookUrl { get; set; } = string.Empty;
-	public bool PublicFileMode { get; set; } = false;
-	public bool DemoModeEnabled { get; set; } = false;
 	public bool CorsEnabled { get; set; } = false;
 	[JsonIgnore] public string Lang { get; set; } = "en";
 	public string EmbedTitle { get; set; } = "Dexter - a discord moderation bot";

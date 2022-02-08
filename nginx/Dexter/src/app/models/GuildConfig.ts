@@ -3,12 +3,11 @@ export interface GuildConfig {
     guildId: string;
     modRoles: string[];
     adminRoles: string[];
-    mutedRoles: string[];
+    staffChannels: string[];
     modNotificationDM: boolean;
     strictModPermissionCheck: boolean;
     executeWhoIsOnJoin: boolean;
-    modPublicNotificationWebhook: string;
-    modInternalNotificationWebhook: string;
+    modNotificationWebhook: string;
     publishModeratorInfo: boolean;
     preferredLanguage: number;
 }

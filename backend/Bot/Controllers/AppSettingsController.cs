@@ -56,7 +56,6 @@ public class AppSettingsController : AuthenticatedController
 
 		toAdd.DefaultLanguage = newSettings.DefaultLanguage;
 		toAdd.AuditLogWebhookUrl = newSettings.AuditLogWebhookUrl ?? string.Empty;
-		toAdd.PublicFileMode = newSettings.PublicFileMode;
 
 		await _settingsRepository.UpdateAppSetting(toAdd);
 

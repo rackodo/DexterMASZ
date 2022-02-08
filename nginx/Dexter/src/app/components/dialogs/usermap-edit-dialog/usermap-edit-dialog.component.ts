@@ -7,7 +7,7 @@ import { UserMapDto } from 'src/app/models/UserMapDto';
   templateUrl: './usermap-edit-dialog.component.html',
   styleUrls: ['./usermap-edit-dialog.component.css']
 })
-export class UsermapEditDialogComponent implements OnInit {
+export class UserMapEditDialogComponent implements OnInit {
 
   public initRows = 1;
   constructor(@Inject(MAT_DIALOG_DATA) public settings: UserMapDto) { }

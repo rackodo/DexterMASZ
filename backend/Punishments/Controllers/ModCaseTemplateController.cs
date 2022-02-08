@@ -40,7 +40,6 @@ public class ModCaseTemplateController : AuthenticatedController
 			CaseLabels = templateDto.Labels,
 			CasePunishedUntil = templateDto.PunishedUntil,
 			CasePunishmentType = templateDto.PunishmentType,
-			SendPublicNotification = templateDto.SendPublicNotification,
 			AnnounceDm = templateDto.AnnounceDm,
 			HandlePunishment = templateDto.HandlePunishment
 		};

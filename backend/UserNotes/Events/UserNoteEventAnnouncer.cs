@@ -44,21 +44,21 @@ public class UserNoteEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(userNote.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.ModInternalNotificationWebhook))
+		if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending internal webhook for user note {userNote.GuildId}/{userNote.UserId} ({userNote.Id}) to {guildConfig.ModInternalNotificationWebhook}.");
+				$"Sending internal webhook for user note {userNote.GuildId}/{userNote.UserId} ({userNote.Id}) to {guildConfig.ModNotificationWebhook}.");
 
 			try
 			{
 				var user = await _discordRest.FetchUserInfo(userNote.UserId, CacheBehavior.Default);
 				var embed = await userNote.CreateUserNoteEmbed(action, actor, user, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.ModInternalNotificationWebhook, embed.Build());
+				await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, embed.Build());
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing user note {userNote.GuildId}/{userNote.UserId} ({userNote.Id}) to {guildConfig.ModInternalNotificationWebhook}.");
+					$"Error while announcing user note {userNote.GuildId}/{userNote.UserId} ({userNote.Id}) to {guildConfig.ModNotificationWebhook}.");
 			}
 		}
 	}

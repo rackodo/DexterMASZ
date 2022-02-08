@@ -160,8 +160,7 @@ public class AutoModEventRepository : Repository,
 
 			try
 			{
-				modCase = await _modCaseRepo.CreateModCase(modCase, true, modConfig.SendPublicNotification,
-					modConfig.SendDmNotification);
+				modCase = await _modCaseRepo.CreateModCase(modCase, true, modConfig.SendDmNotification);
 
 				modEvent.AssociatedCaseId = modCase.CaseId;
 			}

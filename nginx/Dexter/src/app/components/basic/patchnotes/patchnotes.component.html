@@ -12,11 +12,6 @@
                             <mat-icon title="Featured release">star</mat-icon>
                         </div>
                         <div>
-                            <mat-card-title class="mb-0">
-                                <div class="mat-h1 mb-0 font-weight-bold">
-                                    {{ note.version }}
-                                </div>
-                            </mat-card-title>
                             <mat-card-content>
                                 <div *ngIf="note.released_at" class="mat-caption mb-2" style="color: grey; line-height: 12px" title="release date">
                                     <app-date-display [date]="note.released_at"></app-date-display>

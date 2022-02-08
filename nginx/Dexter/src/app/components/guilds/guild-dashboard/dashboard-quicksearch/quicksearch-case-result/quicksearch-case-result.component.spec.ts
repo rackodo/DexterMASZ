@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuicksearchCaseResultComponent } from './quicksearch-case-result.component';
+import { QuickSearchCaseResultComponent } from './quicksearch-case-result.component';
 
-describe('QuicksearchCaseResultComponent', () => {
-  let component: QuicksearchCaseResultComponent;
-  let fixture: ComponentFixture<QuicksearchCaseResultComponent>;
+describe('QuickSearchCaseResultComponent', () => {
+  let component: QuickSearchCaseResultComponent;
+  let fixture: ComponentFixture<QuickSearchCaseResultComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QuicksearchCaseResultComponent ]
+      declarations: [ QuickSearchCaseResultComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QuicksearchCaseResultComponent);
+    fixture = TestBed.createComponent(QuickSearchCaseResultComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

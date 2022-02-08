@@ -43,20 +43,20 @@ public class UserMapEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(userMaps.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.ModInternalNotificationWebhook))
+		if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending internal webhook for user map {userMaps.GuildId}/{userMaps.UserA}-{userMaps.UserB} ({userMaps.Id}) to {guildConfig.ModInternalNotificationWebhook}.");
+				$"Sending internal webhook for user map {userMaps.GuildId}/{userMaps.UserA}-{userMaps.UserB} ({userMaps.Id}) to {guildConfig.ModNotificationWebhook}.");
 
 			try
 			{
 				var embed = await userMaps.CreateUserMapEmbed(action, actor, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.ModInternalNotificationWebhook, embed.Build());
+				await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, embed.Build());
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing user map {userMaps.GuildId}/{userMaps.UserA}-{userMaps.UserB} ({userMaps.Id}) to {guildConfig.ModInternalNotificationWebhook}.");
+					$"Error while announcing user map {userMaps.GuildId}/{userMaps.UserA}-{userMaps.UserB} ({userMaps.Id}) to {guildConfig.ModNotificationWebhook}.");
 			}
 		}
 	}

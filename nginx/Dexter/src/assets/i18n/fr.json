@@ -22,8 +22,8 @@
     "Automods": "Automods",
     "Invite": "Inviter",
     "Invites": "Invite",
-    "Usernotes": "Notes d'utilisateur",
-    "Usermaps": "Cartes utilisateur",
+    "UserNotes": "Notes d'utilisateur",
+    "userMaps": "Cartes utilisateur",
     "Comments": "commentaires",
     "Loading": "Chargement...",
     "NothingHere": "Rien ici.",
@@ -136,7 +136,6 @@
         "OK": "d'accord"
     },
     "CaseDeleteDialog": {
-        "SendPublicNotification": "Envoyer une notification publique",
         "ForceDelete": "Forcer la suppression",
         "Cancel": "Annuler",
         "Confirm": "Confirmer"
@@ -166,8 +165,8 @@
         "Confirm": "Confirmer",
         "FailedToLoadPermissions": "Échec du chargement des options de visibilité."
     },
-    "UsermapEditDialog": {
-        "EditUsermap": "Modifier la carte utilisateur",
+    "UserMapEditDialog": {
+        "EditUserMap": "Modifier la carte utilisateur",
         "Description": "La description",
         "Cancel": "Annuler",
         "Confirm": "Confirmer"
@@ -181,8 +180,8 @@
         "Cancel": "Annuler",
         "Confirm": "Confirmer"
     },
-    "UsernoteEditDialog": {
-        "EditUsernote": "Modifier la note d'utilisateur",
+    "UserNoteEditDialog": {
+        "EditUserNote": "Modifier la note d'utilisateur",
         "Description": "La description",
         "Cancel": "Annuler",
         "Confirm": "Confirmer"
@@ -348,7 +347,6 @@
         "SendDMNotification": "Envoyer une notification dm",
         "Action": "action",
         "ChannelNotificationBehavior": "Notification de chaîne",
-        "SendPublicNotification": "Envoyer une notification publique",
         "DurationInMinutes": "Durée en minutes",
         "YouAreDone": "Vous avez maintenant terminé.",
         "ConfigDeleted": "Configuration supprimée",
@@ -412,14 +410,14 @@
         "FailedToLoad": "Échec du chargement de motd.",
         "MessageFrom": "Message de {{name}}"
     },
-    "Quicksearch": {
-        "Placeholder": "Quicksearch utilisateurs, modcases, punitions, automodérations, ...",
+    "QuickSearch": {
+        "Placeholder": "QuickSearch utilisateurs, modcases, punitions, automodérations, ...",
         "NoMatches": "Rien ne correspond à votre recherche :(",
         "SearchFailed": "La recherche a échoué."
     },
     "GuildList": {
         "LoadingGuilds": "Chargement des guildes...",
-        "NoGuild": "Veuillez rejoindre une guilde ou être banni pour que je puisse afficher quelque chose :(",
+        "NoGuild": "Veuillez m'ajouter à une guilde ou m'inviter à en rejoindre une!",
         "AddGuild": "Ajouter une guilde"
     },
     "GuildOverview": {
@@ -428,32 +426,32 @@
             "Case": "Cas",
             "AutoMods": "AutoModérations",
             "Messages": "Messages",
-            "Usernote": "Notes d'utilisateur",
-            "Usermap": "Cartes utilisateur",
+            "UserNote": "Notes d'utilisateur",
+            "UserMap": "Cartes utilisateur",
             "Config": "Configuration"
         }
     },
-    "UsermapTable": {
+    "UserMapTable": {
         "User": "Membre",
         "Description": "La description",
         "CreateNewMap": "Créer une nouvelle carte utilisateur",
         "Search": "Recherche (utilisateur, identifiant, description...)",
-        "NoMatches": "Aucune usermap ne correspond à votre recherche.",
+        "NoMatches": "Aucune UserMap ne correspond à votre recherche.",
         "FailedToLoad": "Échec du chargement des cartes utilisateur.",
         "FailedToLoadUser": "Échec du chargement de la liste des membres.",
         "FailedToCreate": "Échec de la création de la carte utilisateur.",
-        "Created": "Usermap créé."
+        "Created": "UserMap créé."
     },
-    "UsermapCard": {
+    "UserMapCard": {
         "UpdatedPrefix": "Mis à jour:",
         "Edit": "Éditer",
         "Delete": "Effacer",
         "FailedToUpdate": "Échec de la mise à jour de la carte utilisateur.",
-        "Updated": "Usermap mis à jour.",
+        "Updated": "UserMap mis à jour.",
         "FailedToDelete": "Échec de la suppression de la carte utilisateur.",
         "Deleted": "Carte utilisateur supprimée."
     },
-    "UsernoteTable": {
+    "UserNoteTable": {
         "User": "Membre",
         "Description": "La description",
         "CreateNewNote": "Créer une nouvelle note d'utilisateur",
@@ -464,7 +462,7 @@
         "FailedToCreate": "Échec de la création de la note utilisateur.",
         "Created": "Note utilisateur créée."
     },
-    "UsernoteCard": {
+    "UserNoteCard": {
         "UpdatedPrefix": "Mis à jour:",
         "Edit": "Éditer",
         "Delete": "Effacer",
@@ -496,7 +494,6 @@
         "Upload": "Télécharger",
         "CreateCase": "Créer un cas",
         "UpdateCase": "Mettre à jour le cas",
-        "PublicNotification": "Envoyer une notification publique",
         "SaveAsTemplate": "Enregistrer en tant que modèle",
         "CreateCaseButton": "Créer un cas",
         "UpdateCaseButton": "Mettre à jour le cas",

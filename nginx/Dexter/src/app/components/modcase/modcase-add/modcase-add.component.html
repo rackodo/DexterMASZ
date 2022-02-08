@@ -144,13 +144,6 @@
             </mat-step>
             <mat-step [stepControl]="optionsFormGroup">
                 <ng-template matStepLabel>{{ 'ModCaseDialog.CreateCase' | translate }}</ng-template>
-                <form [formGroup]="optionsFormGroup">
-                    <mat-checkbox
-                        formControlName="sendNotification"
-                        [labelPosition]="'after'">
-                        {{ 'ModCaseDialog.PublicNotification' | translate }}
-                    </mat-checkbox>
-                </form>
                 <div *ngIf="!this.savingCase" class="stepper-actions">
                     <button mat-raised-button matStepperPrevious class="mr-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
                     <button mat-raised-button class="mr-2 mb-2" (click)="saveTemplate()" color="accent">{{ 'ModCaseDialog.SaveAsTemplate' | translate }}</button>

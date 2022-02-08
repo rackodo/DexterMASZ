@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UsermapEditDialogComponent } from './usermap-edit-dialog.component';
+import { UserMapEditDialogComponent } from './usermap-edit-dialog.component';
 
-describe('UsermapEditDialogComponent', () => {
-  let component: UsermapEditDialogComponent;
-  let fixture: ComponentFixture<UsermapEditDialogComponent>;
+describe('UserMapEditDialogComponent', () => {
+  let component: UserMapEditDialogComponent;
+  let fixture: ComponentFixture<UserMapEditDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UsermapEditDialogComponent ]
+      declarations: [ UserMapEditDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsermapEditDialogComponent);
+    fixture = TestBed.createComponent(UserMapEditDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

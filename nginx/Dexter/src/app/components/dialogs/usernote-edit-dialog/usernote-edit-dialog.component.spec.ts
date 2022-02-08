@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UsernoteEditDialogComponent } from './usernote-edit-dialog.component';
+import { UserNoteEditDialogComponent } from './usernote-edit-dialog.component';
 
-describe('UsernoteEditDialogComponent', () => {
-  let component: UsernoteEditDialogComponent;
-  let fixture: ComponentFixture<UsernoteEditDialogComponent>;
+describe('UserNoteEditDialogComponent', () => {
+  let component: UserNoteEditDialogComponent;
+  let fixture: ComponentFixture<UserNoteEditDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UsernoteEditDialogComponent ]
+      declarations: [ UserNoteEditDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsernoteEditDialogComponent);
+    fixture = TestBed.createComponent(UserNoteEditDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

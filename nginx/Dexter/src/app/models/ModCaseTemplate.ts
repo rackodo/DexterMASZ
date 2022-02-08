@@ -11,7 +11,6 @@ export interface ModCaseTemplate {
     casePunishment: string;
     casePunishmentType: number;
     casePunishedUntil?: Date;
-    sendPublicNotification: boolean;
     handlePunishment: boolean;
     announceDm: boolean;
 }

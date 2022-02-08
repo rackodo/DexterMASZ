@@ -22,8 +22,8 @@
     "Automods": "Automods",
     "Invite": "Invitación",
     "Invites": "Invita",
-    "Usernotes": "Notas de usuario",
-    "Usermaps": "Mapas de usuario",
+    "UserNotes": "Notas de usuario",
+    "userMaps": "Mapas de usuario",
     "Comments": "Comentarios",
     "Loading": "Cargando...",
     "NothingHere": "Nada aquí.",
@@ -136,7 +136,6 @@
         "OK": "OK"
     },
     "CaseDeleteDialog": {
-        "SendPublicNotification": "Enviar notificación pública",
         "ForceDelete": "Forzar eliminación",
         "Cancel": "Cancelar",
         "Confirm": "Confirmar"
@@ -166,8 +165,8 @@
         "Confirm": "Confirmar",
         "FailedToLoadPermissions": "No se pudieron cargar las opciones de visibilidad."
     },
-    "UsermapEditDialog": {
-        "EditUsermap": "Editar mapa de usuario",
+    "UserMapEditDialog": {
+        "EditUserMap": "Editar mapa de usuario",
         "Description": "Descripción",
         "Cancel": "Cancelar",
         "Confirm": "Confirmar"
@@ -181,8 +180,8 @@
         "Cancel": "Cancelar",
         "Confirm": "Confirmar"
     },
-    "UsernoteEditDialog": {
-        "EditUsernote": "Editar nota de usuario",
+    "UserNoteEditDialog": {
+        "EditUserNote": "Editar nota de usuario",
         "Description": "Descripción",
         "Cancel": "Cancelar",
         "Confirm": "Confirmar"
@@ -348,7 +347,6 @@
         "SendDMNotification": "Enviar notificación dm",
         "Action": "Acción",
         "ChannelNotificationBehavior": "Notificación de canal",
-        "SendPublicNotification": "Enviar notificación pública",
         "DurationInMinutes": "Duración en minutos",
         "YouAreDone": "Ya ha terminado.",
         "ConfigDeleted": "Configuración eliminada",
@@ -412,14 +410,14 @@
         "FailedToLoad": "No se pudo cargar motd.",
         "MessageFrom": "Mensaje de {{name}}"
     },
-    "Quicksearch": {
-        "Placeholder": "Usuarios de Quicksearch, modcases, castigos, automoderaciones, ...",
+    "QuickSearch": {
+        "Placeholder": "Usuarios de QuickSearch, modcases, castigos, automoderaciones, ...",
         "NoMatches": "Nada coincide con su búsqueda :(",
         "SearchFailed": "La búsqueda falló."
     },
     "GuildList": {
         "LoadingGuilds": "Cargando gremios ...",
-        "NoGuild": "Por favor únete a un gremio o haz que te expulsen para que pueda mostrar algo :(",
+        "NoGuild": "¡Agrégueme a un gremio o invíteme a uno!",
         "AddGuild": "Agregar gremio"
     },
     "GuildOverview": {
@@ -428,12 +426,12 @@
             "Case": "Casos",
             "AutoMods": "AutoModeraciones",
             "Messages": "Mensajes",
-            "Usernote": "Notas de usuario",
-            "Usermap": "Mapas de usuario",
+            "UserNote": "Notas de usuario",
+            "UserMap": "Mapas de usuario",
             "Config": "Config"
         }
     },
-    "UsermapTable": {
+    "UserMapTable": {
         "User": "Miembro",
         "Description": "Descripción",
         "CreateNewMap": "Crear nuevo mapa de usuario",
@@ -444,7 +442,7 @@
         "FailedToCreate": "No se pudo crear el mapa de usuario.",
         "Created": "Mapa de usuario creado."
     },
-    "UsermapCard": {
+    "UserMapCard": {
         "UpdatedPrefix": "Actualizado:",
         "Edit": "Editar",
         "Delete": "Borrar",
@@ -453,7 +451,7 @@
         "FailedToDelete": "No se pudo borrar el mapa de usuario.",
         "Deleted": "Mapa de usuario eliminado."
     },
-    "UsernoteTable": {
+    "UserNoteTable": {
         "User": "Miembro",
         "Description": "Descripción",
         "CreateNewNote": "Crear nueva nota de usuario",
@@ -464,7 +462,7 @@
         "FailedToCreate": "No se pudo crear la nota de usuario.",
         "Created": "Nota de usuario creada."
     },
-    "UsernoteCard": {
+    "UserNoteCard": {
         "UpdatedPrefix": "Actualizado:",
         "Edit": "Editar",
         "Delete": "Borrar",
@@ -496,7 +494,6 @@
         "Upload": "Subir",
         "CreateCase": "Crear caso",
         "UpdateCase": "Actualizar caso",
-        "PublicNotification": "Enviar notificación pública",
         "SaveAsTemplate": "Guardar como plantilla",
         "CreateCaseButton": "Crear caso",
         "UpdateCaseButton": "Actualizar caso",

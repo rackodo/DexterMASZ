@@ -74,14 +74,14 @@
                         </div>
                     </form>
                 </mat-step>
-                <mat-step [stepControl]="muteRolesGroup" [optional]='true'>
-                    <form [formGroup]="muteRolesGroup">
-                        <ng-template matStepLabel>{{ 'GuildDialog.StepMutedRoles' | translate }}</ng-template>
+                <mat-step [stepControl]="staffChannelsGroup" [optional]='true'>
+                    <form [formGroup]="staffChannelsGroup">
+                        <ng-template matStepLabel>{{ 'GuildDialog.StepStaffChannels' | translate }}</ng-template>
                         <mat-form-field appearance="fill">
-                            <mat-label>{{ 'GuildDialog.MutedRoles' | translate }}</mat-label>
-                            <mat-select formControlName="muteRoles" multiple>
-                                <mat-option *ngFor="let role of selectedGuildDetails.content?.roles"
-                                [value]="role.id" [style.color]="generateRoleColor(role)">{{role.name}}</mat-option>
+                            <mat-label>{{ 'GuildDialog.StaffChannels' | translate }}</mat-label>
+                            <mat-select formControlName="staffChannels" multiple>
+                                <mat-option *ngFor="let channel of selectedGuildDetails.content?.channels"
+                                [value]="channel.id">{{channel.name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <div class="stepper-actions">

@@ -22,8 +22,8 @@
     "Automods": "Automods",
     "Invite": "Einladung",
     "Invites": "Einladungen",
-    "Usernotes": "Nutzernotizen",
-    "Usermaps": "Benutzerbeziehungen",
+    "UserNotes": "Nutzernotizen",
+    "userMaps": "Benutzerbeziehungen",
     "Comments": "Kommentare",
     "Loading": "Lädt...",
     "NothingHere": "Nichts gefunden.",
@@ -136,7 +136,6 @@
         "OK": "OK"
     },
     "CaseDeleteDialog": {
-        "SendPublicNotification": "Sende öffentliche Benachrichtigung",
         "ForceDelete": "Permanent löschen",
         "Cancel": "Abbrechen",
         "Confirm": "Bestätigen"
@@ -166,8 +165,8 @@
         "Confirm": "Bestätigen",
         "FailedToLoadPermissions": "Sichtbarkeitseinstellungen konnten nicht geladen werden."
     },
-    "UsermapEditDialog": {
-        "EditUsermap": "Benutzerbeziehung aktualisieren",
+    "UserMapEditDialog": {
+        "EditUserMap": "Benutzerbeziehung aktualisieren",
         "Description": "Beschreibung",
         "Cancel": "Abbrechen",
         "Confirm": "Bestätigen"
@@ -181,8 +180,8 @@
         "Cancel": "Abbrechen",
         "Confirm": "Bestätigen"
     },
-    "UsernoteEditDialog": {
-        "EditUsernote": "Benutzernotiz aktualisieren",
+    "UserNoteEditDialog": {
+        "EditUserNote": "Benutzernotiz aktualisieren",
         "Description": "Beschreibung",
         "Cancel": "Abbrechen",
         "Confirm": "Bestätigen"
@@ -348,7 +347,6 @@
         "SendDMNotification": "Sende DM Benachrichtigung",
         "Action": "Aktion",
         "ChannelNotificationBehavior": "Kanalbenachrichtigung",
-        "SendPublicNotification": "Sende öffentliche Benachrichtigung",
         "DurationInMinutes": "Dauer in Minuten",
         "YouAreDone": "Du bist nun fertig.",
         "ConfigDeleted": "Konfiguration gelöscht.",
@@ -412,14 +410,14 @@
         "FailedToLoad": "Motd konnte nicht geladen werden.",
         "MessageFrom": "Nachricht von {{name}}"
     },
-    "Quicksearch": {
+    "QuickSearch": {
         "Placeholder": "Schnellsuche Benutzer, Vorfälle, Bestrafungen, AutoModsen, ...",
         "NoMatches": "Keine Einträge zur Suche gefunden :(",
         "SearchFailed": "Suche fehlgeschlagen."
     },
     "GuildList": {
         "LoadingGuilds": "Lade Gilden...",
-        "NoGuild": "Bitte betrete eine Gilde oder werde gebannt, damit ich dir etwas anzeigen kann :(",
+        "NoGuild": "Bitte füge mich einer Gilde hinzu oder lade mich zu einer ein!",
         "AddGuild": "Gilde hinzufügen"
     },
     "GuildOverview": {
@@ -428,12 +426,12 @@
             "Case": "Vorfälle",
             "AutoMods": "AutoModsen",
             "Messages": "Nachrichten",
-            "Usernote": "Benutzernotizen",
-            "Usermap": "Benutzerbeziehungen",
+            "UserNote": "Benutzernotizen",
+            "UserMap": "Benutzerbeziehungen",
             "Config": "Konfiguration"
         }
     },
-    "UsermapTable": {
+    "UserMapTable": {
         "User": "Mitglied",
         "Description": "Beschreibung",
         "CreateNewMap": "Neue Benutzerbeziehung erstellen",
@@ -444,7 +442,7 @@
         "FailedToCreate": "Benutzerbeziehung konnte nicht erstellt werden.",
         "Created": "Benutzerbeziehung erstellt."
     },
-    "UsermapCard": {
+    "UserMapCard": {
         "UpdatedPrefix": "Aktualisiert:",
         "Edit": "Bearbeiten",
         "Delete": "Löschen",
@@ -453,7 +451,7 @@
         "FailedToDelete": "Fehler beim Löschen der Benutzerbeziehung.",
         "Deleted": "Benutzerbeziehung gelöscht."
     },
-    "UsernoteTable": {
+    "UserNoteTable": {
         "User": "Mitglied",
         "Description": "Beschreibung",
         "CreateNewNote": "Neue Benutzernotiz erstellen",
@@ -464,7 +462,7 @@
         "FailedToCreate": "Benutzernotiz konnte nicht erstellt werden.",
         "Created": "Benutzernotiz erstellt."
     },
-    "UsernoteCard": {
+    "UserNoteCard": {
         "UpdatedPrefix": "Aktualisiert:",
         "Edit": "Bearbeiten",
         "Delete": "Löschen",
@@ -496,7 +494,6 @@
         "Upload": "Upload",
         "CreateCase": "Vorfallserstellung",
         "UpdateCase": "Vorfallsaktualisierung",
-        "PublicNotification": "Öffentliche Benachrichtigung",
         "SaveAsTemplate": "Als Vorlage speichern",
         "CreateCaseButton": "Vorfall erstellen",
         "UpdateCaseButton": "Vorfall aktualisieren",

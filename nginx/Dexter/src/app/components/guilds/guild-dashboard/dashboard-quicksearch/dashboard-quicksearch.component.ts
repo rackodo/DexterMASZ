@@ -11,7 +11,7 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './dashboard-quicksearch.component.html',
   styleUrls: ['./dashboard-quicksearch.component.css']
 })
-export class DashboardQuicksearchComponent implements OnInit {
+export class DashboardQuickSearchComponent implements OnInit {
 
   public guildId!: string;
   public showOverlay: boolean = false;
@@ -49,7 +49,7 @@ export class DashboardQuicksearchComponent implements OnInit {
         this.loading = false;
       }, error => {
         console.error(error);
-        this.toastr.error(this.translator.instant('Quicksearch.SearchFailed'));
+        this.toastr.error(this.translator.instant('QuickSearch.SearchFailed'));
         this.loading = false;
       });
     } else {

@@ -12,8 +12,8 @@
                     <span *ngIf="tab.component == 'messages'">{{ 'GuildOverview.Tabs.Messages' | translate }}</span>
                     <span *ngIf="tab.component == 'automods'">{{ 'GuildOverview.Tabs.AutoMods' | translate }}</span>
                     <span *ngIf="tab.component == 'config'">{{ 'GuildOverview.Tabs.Config' | translate }}</span>
-                    <span *ngIf="tab.component == 'usermap'">{{ 'GuildOverview.Tabs.Usermap' | translate }}</span>
-                    <span *ngIf="tab.component == 'usernote'">{{ 'GuildOverview.Tabs.Usernote' | translate }}</span>
+                    <span *ngIf="tab.component == 'usermap'">{{ 'GuildOverview.Tabs.UserMap' | translate }}</span>
+                    <span *ngIf="tab.component == 'usernote'">{{ 'GuildOverview.Tabs.UserNote' | translate }}</span>
                 </ng-template>
                 <ng-template matTabContent>
                     <app-guild-dashboard *ngIf="tab.component == 'dashboard'"></app-guild-dashboard>

@@ -58,8 +58,8 @@ mat-nav-list mat-expansion-panel mat-expansion-panel-header.mat-expanded {
 }
 
 .activatedNav {
-  background-color: rgb(169, 20, 9);
-  box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 20px 0px, rgba(169, 20, 9, 0.4) 0px 7px 10px -5px;
+  background-color: #177e89;
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 4px 20px 0px, rgba(23, 126, 137, 0.4) 0px 7px 10px -5px;
 }
 
 .navitem:not(.activatedNav):not(.nohover):hover {

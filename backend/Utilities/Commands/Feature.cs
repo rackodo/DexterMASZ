@@ -63,7 +63,7 @@ public class Feature : Command<Feature>
 				Translator.Get<UtilityFeaturesTranslator>().CmdFeaturesUnbanRequestsDescriptionNotGranted());
 
 		// Report command
-		if (HasInternalWebhookDefined(guildConfig))
+		if (HasWebhookDefined(guildConfig))
 			embed.AddField($"✅ {Translator.Get<UtilityFeaturesTranslator>().CmdFeaturesReportCommand()}",
 				Translator.Get<UtilityFeaturesTranslator>().CmdFeaturesReportCommandDescriptionGranted());
 		else
@@ -89,9 +89,9 @@ public class Feature : Command<Feature>
 		await Context.Interaction.RespondAsync(embed: embed.Build());
 	}
 
-	public static bool HasInternalWebhookDefined(GuildConfig guildConfig)
+	public static bool HasWebhookDefined(GuildConfig guildConfig)
 	{
-		return !string.IsNullOrEmpty(guildConfig.ModInternalNotificationWebhook);
+		return !string.IsNullOrEmpty(guildConfig.ModNotificationWebhook);
 	}
 
 	public static bool HasKickPermission(IGuildUser user)
@@ -128,6 +128,6 @@ public class Feature : Command<Feature>
 			   HasBanPermission(user) &&
 			   HasManagedRolePermission(user) &&
 			   HasManagedGuildPermission(user) &&
-			   HasInternalWebhookDefined(guildConfig);
+			   HasWebhookDefined(guildConfig);
 	}
 }

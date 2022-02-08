@@ -79,37 +79,7 @@ public class Unmute : Command<Unmute>
 	}
 
 	[ComponentInteraction("unmute-delete:*")]
-	public async Task DeleteMute(string userId)
-	{
-		var button = new ComponentBuilder()
-			.WithButton(Translator.Get<PunishmentTranslator>().PublicNotification(), $"unmute-conf-delete:1,{userId}")
-			.WithButton(Translator.Get<PunishmentTranslator>().NoPublicNotification(), $"unmute-conf-delete:0,{userId}",
-				ButtonStyle.Secondary)
-			.WithButton(Translator.Get<PunishmentTranslator>().Cancel(), "unmute-cancel", ButtonStyle.Danger);
-
-		if (Context.Interaction is SocketMessageComponent castInteraction)
-		{
-			var embed = castInteraction.Message.Embeds.FirstOrDefault().ToEmbedBuilder().WithColor(Color.Red);
-
-			embed.Fields = new List<EmbedFieldBuilder>
-			{
-				new EmbedFieldBuilder().WithName(Translator.Get<PunishmentTranslator>().Result())
-					.WithValue(Translator.Get<PunishmentTranslator>().WaitingForApproval()),
-
-				new EmbedFieldBuilder().WithName(Translator.Get<PunishmentTranslator>().PublicNotification())
-					.WithValue(Translator.Get<PunishmentTranslator>().ShouldSendPublicNotification())
-			};
-
-			await castInteraction.UpdateAsync(message =>
-			{
-				message.Embed = embed.Build();
-				message.Components = button.Build();
-			});
-		}
-	}
-
-	[ComponentInteraction("unmute-conf-delete:*,*")]
-	public async Task DeleteMuteConfirmation(string isPublic, string userId)
+	public async Task DeleteMuteConfirmation(string userId)
 	{
 		ModCaseRepository.AsUser(Identity);
 
@@ -117,7 +87,7 @@ public class Unmute : Command<Unmute>
 			.Where(x => x.PunishmentActive && x.PunishmentType == PunishmentType.Mute).ToList();
 
 		foreach (var modCase in modCases)
-			await ModCaseRepository.DeleteModCase(modCase.GuildId, modCase.CaseId, false, true, isPublic == "1");
+			await ModCaseRepository.DeleteModCase(modCase.GuildId, modCase.CaseId, false, true);
 
 		if (Context.Interaction is SocketMessageComponent castInteraction)
 		{

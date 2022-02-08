@@ -16,7 +16,6 @@ public class ModCaseTemplate
 	public string[] CaseLabels { get; set; }
 	public PunishmentType CasePunishmentType { get; set; }
 	public DateTime? CasePunishedUntil { get; set; }
-	public bool SendPublicNotification { get; set; }
 	public bool HandlePunishment { get; set; }
 	public bool AnnounceDm { get; set; }
 }

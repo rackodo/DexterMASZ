@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UsermapCardComponent } from './usermap-card.component';
+import { UserMapCardComponent } from './usermap-card.component';
 
-describe('UsermapCardComponent', () => {
-  let component: UsermapCardComponent;
-  let fixture: ComponentFixture<UsermapCardComponent>;
+describe('UserMapCardComponent', () => {
+  let component: UserMapCardComponent;
+  let fixture: ComponentFixture<UserMapCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UsermapCardComponent ]
+      declarations: [ UserMapCardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsermapCardComponent);
+    fixture = TestBed.createComponent(UserMapCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

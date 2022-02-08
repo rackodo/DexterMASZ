@@ -25,7 +25,7 @@ import { Network, DataSet, Node, Edge, Data, IdType } from 'vis';
   templateUrl: './userscan.component.html',
   styleUrls: ['./userscan.component.css']
 })
-export class UserscanComponent implements OnInit {
+export class UserScanComponent implements OnInit {
 
   @ViewChild('network') el!: ElementRef;
   timeout: any = null;
@@ -246,17 +246,17 @@ export class UserscanComponent implements OnInit {
         let noteNode = this.addNewNode(this.newNoteNode, [note]) as Node;
         this.addNewEdge(guildNode, noteNode, '', false, 'no', 250);
       }
-      for (let usermap of network.userMaps) {
-        if (usermap.userMap.guildId !== guild.id) continue;
-        let mapBaseNode = this.addNewNode(this.newBasicMapNode, [userId, usermap.userMap.guildId]) as Node;
+      for (let userMap of network.userMaps) {
+        if (userMap.userMap.guildId !== guild.id) continue;
+        let mapBaseNode = this.addNewNode(this.newBasicMapNode, [userId, userMap.userMap.guildId]) as Node;
         this.addNewEdge(guildNode, mapBaseNode);
-        if (usermap.userMap.userA !== userId) {
-          let userNode = this.addNewNode(this.newUserNode, [usermap.userA, usermap.userMap.userA]) as Node;
-          this.addNewEdge(mapBaseNode, userNode, usermap.userMap.reason, true, 'to');
+        if (userMap.userMap.userA !== userId) {
+          let userNode = this.addNewNode(this.newUserNode, [userMap.userA, userMap.userMap.userA]) as Node;
+          this.addNewEdge(mapBaseNode, userNode, userMap.userMap.reason, true, 'to');
         }
-        else if (usermap.userMap.userB !== userId) {
-          let userNode = this.addNewNode(this.newUserNode, [usermap.userB, usermap.userMap.userB]) as Node;
-          this.addNewEdge(mapBaseNode, userNode, usermap.userMap.reason, true, 'to');
+        else if (userMap.userMap.userB !== userId) {
+          let userNode = this.addNewNode(this.newUserNode, [userMap.userB, userMap.userMap.userB]) as Node;
+          this.addNewEdge(mapBaseNode, userNode, userMap.userMap.reason, true, 'to');
         }
       }
     }
@@ -405,8 +405,8 @@ export class UserscanComponent implements OnInit {
 
   newBasicMapNode(userId: string, guildId: string): Node {
     return {
-      id: `${userId}/${guildId}/usermaps`,
-      label: this.translator.instant('Usermaps'),
+      id: `${userId}/${guildId}/userMaps`,
+      label: this.translator.instant('userMaps'),
       group: `basics/sub`,
       shape: 'triangle',
       size: 15

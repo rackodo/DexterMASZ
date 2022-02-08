@@ -22,8 +22,8 @@
     "Automods": "AutoMod",
     "Invite": "Invitare",
     "Invites": "invita",
-    "Usernotes": "Note utente",
-    "Usermaps": "Mappe utente",
+    "UserNotes": "Note utente",
+    "userMaps": "Mappe utente",
     "Comments": "Commenti",
     "Loading": "Caricamento in corso...",
     "NothingHere": "Niente qui.",
@@ -136,7 +136,6 @@
         "OK": "ok"
     },
     "CaseDeleteDialog": {
-        "SendPublicNotification": "Invia notifica pubblica",
         "ForceDelete": "Forza l'eliminazione",
         "Cancel": "Annulla",
         "Confirm": "Confermare"
@@ -166,8 +165,8 @@
         "Confirm": "Confermare",
         "FailedToLoadPermissions": "Impossibile caricare le opzioni di visibilità."
     },
-    "UsermapEditDialog": {
-        "EditUsermap": "Modifica mappa utente",
+    "UserMapEditDialog": {
+        "EditUserMap": "Modifica mappa utente",
         "Description": "Descrizione",
         "Cancel": "Annulla",
         "Confirm": "Confermare"
@@ -181,8 +180,8 @@
         "Cancel": "Annulla",
         "Confirm": "Confermare"
     },
-    "UsernoteEditDialog": {
-        "EditUsernote": "Modifica nota utente",
+    "UserNoteEditDialog": {
+        "EditUserNote": "Modifica nota utente",
         "Description": "Descrizione",
         "Cancel": "Annulla",
         "Confirm": "Confermare"
@@ -348,7 +347,6 @@
         "SendDMNotification": "Invia notifica dm",
         "Action": "Azione",
         "ChannelNotificationBehavior": "Notifica del canale",
-        "SendPublicNotification": "Invia notifica pubblica",
         "DurationInMinutes": "Durata in minuti",
         "YouAreDone": "Ora hai finito.",
         "ConfigDeleted": "Configurazione eliminata",
@@ -412,14 +410,14 @@
         "FailedToLoad": "Impossibile caricare motd.",
         "MessageFrom": "Messaggio da {{name}}"
     },
-    "Quicksearch": {
-        "Placeholder": "Utenti Quicksearch, modcase, punizioni, automods, ...",
+    "QuickSearch": {
+        "Placeholder": "Utenti QuickSearch, modcase, punizioni, automods, ...",
         "NoMatches": "Niente corrisponde alla tua ricerca :(",
         "SearchFailed": "Ricerca non riuscita."
     },
     "GuildList": {
         "LoadingGuilds": "Caricamento gilde...",
-        "NoGuild": "Per favore unisciti a una gilda o vieni bannato così posso mostrare qualcosa :(",
+        "NoGuild": "Aggiungimi a una gilda o invitami a una!",
         "AddGuild": "Aggiungi gilda"
     },
     "GuildOverview": {
@@ -428,12 +426,12 @@
             "Case": "casi",
             "AutoMods": "AutoModerazione",
             "Messages": "Messaggi",
-            "Usernote": "Note utente",
-            "Usermap": "Mappe utente",
+            "UserNote": "Note utente",
+            "UserMap": "Mappe utente",
             "Config": "config"
         }
     },
-    "UsermapTable": {
+    "UserMapTable": {
         "User": "Membro",
         "Description": "Descrizione",
         "CreateNewMap": "Crea nuova mappa utente",
@@ -444,7 +442,7 @@
         "FailedToCreate": "Impossibile creare la mappa utente.",
         "Created": "Mappa utente creata."
     },
-    "UsermapCard": {
+    "UserMapCard": {
         "UpdatedPrefix": "Aggiornato:",
         "Edit": "Modificare",
         "Delete": "Elimina",
@@ -453,7 +451,7 @@
         "FailedToDelete": "Impossibile eliminare la mappa utente.",
         "Deleted": "Mappa utente eliminata."
     },
-    "UsernoteTable": {
+    "UserNoteTable": {
         "User": "Membro",
         "Description": "Descrizione",
         "CreateNewNote": "Crea nuova nota utente",
@@ -464,7 +462,7 @@
         "FailedToCreate": "Impossibile creare la nota utente.",
         "Created": "Nota utente creata."
     },
-    "UsernoteCard": {
+    "UserNoteCard": {
         "UpdatedPrefix": "Aggiornato:",
         "Edit": "Modificare",
         "Delete": "Elimina",
@@ -496,7 +494,6 @@
         "Upload": "Caricamento",
         "CreateCase": "Crea caso",
         "UpdateCase": "Aggiorna caso",
-        "PublicNotification": "Invia notifica pubblica",
         "SaveAsTemplate": "Salva come modello",
         "CreateCaseButton": "Crea caso",
         "UpdateCaseButton": "Aggiorna caso",

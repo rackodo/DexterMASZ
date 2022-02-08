@@ -125,15 +125,6 @@ public static class ConsoleCreator
 
 			Lang = Enum.GetName(
 				AskDefinedChoice<Language>("default language", "DEFAULT_LANGUAGE", !isEdit)),
-
-			PublicFileMode = AskDefinedChoice<Booleans>("stance on whether files should be public",
-				"ENABLE_PUBLIC_FILES", !isEdit) == Booleans.True,
-			CorsEnabled = AskDefinedChoice<Booleans>(
-				"stance on whether this is in a development environment",
-				"ENABLE_CORS", !isEdit) == Booleans.True,
-			DemoModeEnabled = AskDefinedChoice<Booleans>(
-				"stance on whether this is being used as a demonstration",
-				"ENABLE_DEMO_MODE", !isEdit) == Booleans.True
 		};
 
 		var admins =
@@ -155,16 +146,16 @@ public static class ConsoleCreator
 			"a domain or locally, as a test version", "DEPLOY_MODE", !isEdit))
 		{
 			case DeploymentType.Domain:
-				settings.ServiceHostName = Ask("service name", "META_SERVICE_NAME", !isEdit);
 				settings.ServiceDomain = Ask("(sub)domain", "META_SERVICE_DOMAIN", !isEdit);
 				settings.ServiceBaseUrl = $"https://{settings.ServiceDomain}";
+				settings.CorsEnabled = false;
 				AddSubHeading("Alert", "Be sure to redirect your reverse proxy correctly");
 				AddSubHeading("The docker container will be listening on local port", "5565");
 				break;
 			case DeploymentType.Local:
-				settings.ServiceHostName = Ask("service name", "META_SERVICE_NAME", !isEdit);
 				settings.ServiceDomain = "127.0.0.1:5565";
 				settings.ServiceBaseUrl = $"http://{settings.ServiceDomain}";
+				settings.CorsEnabled = true;
 				break;
 			default:
 				throw new NotImplementedException();

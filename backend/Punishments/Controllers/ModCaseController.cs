@@ -105,8 +105,7 @@ public class ModCaseController : AuthenticatedController
 
 	[HttpPost]
 	public async Task<IActionResult> CreateItem([FromRoute] ulong guildId, [FromBody] ModCaseForCreateDto modCaseDto,
-		[FromQuery] bool sendPublicNotification = true, [FromQuery] bool handlePunishment = true,
-		[FromQuery] bool sendDmNotification = true)
+		[FromQuery] bool handlePunishment = true, [FromQuery] bool sendDmNotification = true)
 	{
 		var identity = await SetupAuthentication();
 
@@ -130,8 +129,7 @@ public class ModCaseController : AuthenticatedController
 
 		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 
-		modCase = await _modCaseRepository.CreateModCase(modCase, handlePunishment, sendPublicNotification,
-			sendDmNotification);
+		modCase = await _modCaseRepository.CreateModCase(modCase, handlePunishment, sendDmNotification);
 
 		return StatusCode(201, modCase);
 	}

@@ -15,6 +15,7 @@ public class Warn : Command<Warn>
 {
 	public ModCaseRepository ModCaseRepository { get; set; }
 	public SettingsRepository SettingsRepository { get; set; }
+	public GuildConfigRepository GuildConfigRepository { get; set; }
 
 	[Require(RequireCheck.GuildModerator)]
 	[SlashCommand("warn", "Warn a user and create a mod case")]
@@ -25,15 +26,16 @@ public class Warn : Command<Warn>
 		[Summary("description", "The description of the mod case")]
 		string description = "",
 		[Summary("dm-notification", "Whether to send a dm notification")]
-		bool sendDmNotification = true,
-		[Summary("public-notification", "Whether to send a public webhook notification")]
-		bool sendPublicNotification = true)
+		bool sendDmNotification = true)
 	{
 		ModCaseRepository.AsUser(Identity);
+		GuildConfigRepository.AsUser(Identity);
 
-		await Context.Interaction.DeferAsync(ephemeral: !sendPublicNotification);
+		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Channel.Id);
 
-		ModCase modCase = new()
+		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
+
+		var modCase = new ModCase()
 		{
 			Title = title,
 			GuildId = Context.Guild.Id,
@@ -46,7 +48,7 @@ public class Warn : Command<Warn>
 			CreationType = CaseCreationType.ByCommand
 		};
 
-		var created = await ModCaseRepository.CreateModCase(modCase, true, sendPublicNotification, sendDmNotification);
+		var created = await ModCaseRepository.CreateModCase(modCase, true, sendDmNotification);
 
 		var config = await SettingsRepository.GetAppSettings();
 

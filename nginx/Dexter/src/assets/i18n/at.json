@@ -22,8 +22,8 @@
     "Automods": "Automods",
     "Invite": "Eiladung",
     "Invites": "Eiladungen",
-    "Usernotes": "Nutzanotizn",
-    "Usermaps": "Benutzanotizn",
+    "UserNotes": "Nutzanotizn",
+    "userMaps": "Benutzanotizn",
     "Comments": "Kommentare",
     "Loading": "Lodt...",
     "NothingHere": "Nix gfundn",
@@ -136,7 +136,6 @@
         "OK": "Basst"
     },
     "CaseDeleteDialog": {
-        "SendPublicNotification": "Tua a öffentliche Benochrichtigung sendn",
         "ForceDelete": "Fix fia imma leschn",
         "Cancel": "Obrechn",
         "Confirm": "Zuastimma"
@@ -166,8 +165,8 @@
         "Confirm": "Zuastima",
         "FailedToLoadPermissions": "De Sichtboarkeitseistellungen konntn ned glodn wean."
     },
-    "UsermapEditDialog": {
-        "EditUsermap": "Benutzabeziehungen aktualisian",
+    "UserMapEditDialog": {
+        "EditUserMap": "Benutzabeziehungen aktualisian",
         "Description": "Beschreibung",
         "Cancel": "Obrechn",
         "Confirm": "Zustima"
@@ -181,8 +180,8 @@
         "Cancel": "Obrechn",
         "Confirm": "Zustima"
     },
-    "UsernoteEditDialog": {
-        "EditUsernote": "Benutzanotiz aktualisian",
+    "UserNoteEditDialog": {
+        "EditUserNote": "Benutzanotiz aktualisian",
         "Description": "Beschreibung",
         "Cancel": "Obrechn",
         "Confirm": "Zustima"
@@ -348,7 +347,6 @@
         "SendDMNotification": "Schick a DM Benochrichtigung",
         "Action": "Aktion",
         "ChannelNotificationBehavior": "Kanalbenochrichtigung",
-        "SendPublicNotification": "Send a öffentliche Benochrichtigung",
         "DurationInMinutes": "Daua in Minutn",
         "YouAreDone": "Du bist jetzt fertig.",
         "ConfigDeleted": "Konfiguration glescht.",
@@ -412,14 +410,14 @@
         "FailedToLoad": "Motd konnt ned glodn wean.",
         "MessageFrom": "Nochricht vo {{name}}"
     },
-    "Quicksearch": {
+    "QuickSearch": {
         "Placeholder": "Schnösuche Benutza, Vorfälle, Bestrofungen, AutoModaration, ...",
         "NoMatches": "Kane Eiträg zua Suche gfundn :(",
         "SearchFailed": "Suche hod ned funktioniat."
     },
     "GuildList": {
         "LoadingGuilds": "Lod Güdn...",
-        "NoGuild": "Bitte tua a Güdn betrent oda wead ausgsperrt, damit i dia wos zeign ko :(",
+        "NoGuild": "Bitte tua a Güdn betrent oda wead ausgsperrt!",
         "AddGuild": "Güde hinzuafügn"
     },
     "GuildOverview": {
@@ -428,12 +426,12 @@
             "Case": "Vorfälle",
             "AutoMods": "AutoModarationen",
             "Messages": "Nachrichten",
-            "Usernote": "Benutzanotizn",
-            "Usermap": "Benutzabeziehungen",
+            "UserNote": "Benutzanotizn",
+            "UserMap": "Benutzabeziehungen",
             "Config": "Konfiguration"
         }
     },
-    "UsermapTable": {
+    "UserMapTable": {
         "User": "Mitglied",
         "Description": "Beschreibung",
         "CreateNewMap": "Neue Benutzabeziehung erstön",
@@ -444,7 +442,7 @@
         "FailedToCreate": "Benutzabeziehung konnte ned erstöt wean.",
         "Created": "Benutzabeziehung erstöt."
     },
-    "UsermapCard": {
+    "UserMapCard": {
         "UpdatedPrefix": "Aktualisiat:",
         "Edit": "Beoarbeitn",
         "Delete": "Löschn",
@@ -453,7 +451,7 @@
         "FailedToDelete": "Fehler beim Löschn vo da Benutzabeziehung.",
         "Deleted": "Benutzabeziehung glescht."
     },
-    "UsernoteTable": {
+    "UserNoteTable": {
         "User": "Mitglied",
         "Description": "Beschreibung",
         "CreateNewNote": "Neie Benutzanotiz erstöt",
@@ -464,7 +462,7 @@
         "FailedToCreate": "Benutzanotiz konnte ned erstöt wean.",
         "Created": "Benutzanotiz erstöt."
     },
-    "UsernoteCard": {
+    "UserNoteCard": {
         "UpdatedPrefix": "Aktualisiat:",
         "Edit": "Beoarbeitn",
         "Delete": "Löschn",
@@ -496,7 +494,6 @@
         "Upload": "Upload",
         "CreateCase": "Vorfoi erstön",
         "UpdateCase": "Vorfoi aktualisian",
-        "PublicNotification": "Öffentliche Benochrichtigung",
         "SaveAsTemplate": "Ois Vorlog speichan",
         "CreateCaseButton": "Vorfoi erstön",
         "UpdateCaseButton": "Vorfoi aktualisian",

@@ -44,16 +44,11 @@ public class AuditLogger : IHostedService, Event
 		QueueLog("System time: " + DateTime.Now);
 		QueueLog("System time (UTC): " + DateTime.UtcNow);
 		QueueLog($"Language: `{config.DefaultLanguage}`");
-		QueueLog($"Hostname: `{config.ServiceHostName}`");
 		QueueLog($"URL: `{config.ServiceBaseUrl}`");
 		QueueLog($"Domain: `{config.ServiceDomain}`");
 		QueueLog($"Client ID: `{config.ClientId}`");
 
 		QueueLog(config.CorsEnabled ? "CORS support: ⚠ `ENABLED`" : "CORS support: `DISABLED`");
-
-		QueueLog(config.DemoModeEnabled ? "Demo mode: ⚠ `ENABLED`" : "Demo mode: `DISABLED`");
-
-		QueueLog(config.PublicFileMode ? "Public file mode: ⚠ `ENABLED`" : "Public file mode: `DISABLED`");
 
 		QueueLog("======= /STARTUP ========");
 

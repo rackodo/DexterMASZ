@@ -239,9 +239,6 @@ export class ModCaseAddComponent implements OnInit {
       dmNotification: template.announceDm,
       handlePunishment: template.handlePunishment
     });
-    this.optionsFormGroup.setValue({
-      sendNotification: template.sendPublicNotification
-    });
     if (template.casePunishedUntil) {
       this.punishedUntilChangeForPicker.next(template.casePunishedUntil);
     }
@@ -264,7 +261,6 @@ export class ModCaseAddComponent implements OnInit {
     }
 
     const params = new HttpParams()
-      .set('sendPublicNotification', this.optionsFormGroup.value.sendNotification ? 'true' : 'false')
       .set('handlePunishment', this.punishmentFormGroup.value.handlePunishment ? 'true' : 'false')
       .set('sendDmNotification', this.punishmentFormGroup.value.dmNotification ? 'true' : 'false');
 
@@ -309,7 +305,6 @@ export class ModCaseAddComponent implements OnInit {
           labels: this.caseLabels,
           punishmentType: this.punishmentFormGroup.value.punishmentType,
           punishedUntil: this.punishedUntil?.toISOString(),
-          sendPublicNotification: this.optionsFormGroup.value.sendNotification ?? false,
           handlePunishment: this.punishmentFormGroup.value.handlePunishment ?? false,
           announceDm: this.punishmentFormGroup.value.dmNotification ?? false
         };

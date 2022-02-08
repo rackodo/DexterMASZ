@@ -50,21 +50,21 @@ public class AutoModEventAnnouncer : Event
 
 		translator.SetLanguage(guildConfig);
 
-		if (!string.IsNullOrEmpty(guildConfig.ModInternalNotificationWebhook))
+		if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending internal webhook for auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.ModInternalNotificationWebhook}.");
+				$"Sending webhook for auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.ModNotificationWebhook}.");
 
 			try
 			{
 				var embed = await modEvent.CreateInternalAutoModEmbed(guildConfig, author, channel,
 					scope.ServiceProvider, punishmentsConfig.PunishmentType);
-				await DiscordRest.ExecuteWebhook(guildConfig.ModInternalNotificationWebhook, embed.Build());
+				await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, embed.Build());
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.ModInternalNotificationWebhook}.");
+					$"Error while announcing auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.ModNotificationWebhook}.");
 			}
 		}
 
@@ -143,20 +143,20 @@ public class AutoModEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(config.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.ModInternalNotificationWebhook))
+		if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending internal webhook for config {config.GuildId}/{config.AutoModType} ({config.Id}) to {guildConfig.ModInternalNotificationWebhook}.");
+				$"Sending webhook for config {config.GuildId}/{config.AutoModType} ({config.Id}) to {guildConfig.ModNotificationWebhook}.");
 
 			try
 			{
 				var embed = await config.CreateAutoModConfigEmbed(actor, action, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.ModInternalNotificationWebhook, embed.Build());
+				await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, embed.Build());
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing config  {config.GuildId}/{config.AutoModType} ({config.Id}) to {guildConfig.ModInternalNotificationWebhook}.");
+					$"Error while announcing config  {config.GuildId}/{config.AutoModType} ({config.Id}) to {guildConfig.ModNotificationWebhook}.");
 			}
 		}
 	}

@@ -63,7 +63,7 @@ public class GuildConfigController : AuthenticatedController
 	{
 		var identity = await SetupAuthentication();
 
-		await identity.RequireSiteAdmin();
+		await identity.RequirePermission(DiscordPermission.Admin, guildConfigForCreateDto.GuildId);
 
 		try
 		{
@@ -87,8 +87,7 @@ public class GuildConfigController : AuthenticatedController
 			ModRoles = guildConfigForCreateDto.ModRoles,
 			AdminRoles = guildConfigForCreateDto.AdminRoles,
 			ModNotificationDm = guildConfigForCreateDto.ModNotificationDm,
-			ModPublicNotificationWebhook = guildConfigForCreateDto.ModPublicNotificationWebhook,
-			ModInternalNotificationWebhook = guildConfigForCreateDto.ModInternalNotificationWebhook,
+			ModNotificationWebhook = guildConfigForCreateDto.ModNotificationWebhook,
 			StrictModPermissionCheck = guildConfigForCreateDto.StrictModPermissionCheck,
 			ExecuteWhoIsOnJoin = guildConfigForCreateDto.ExecuteWhoIsOnJoin,
 			PublishModeratorInfo = guildConfigForCreateDto.PublishModeratorInfo,
@@ -108,29 +107,17 @@ public class GuildConfigController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Admin, guildId);
 
-		var config = await _settingsRepository.GetAppSettings();
-
-		if (config.DemoModeEnabled)
-			if (!await identity.IsSiteAdmin())
-				throw new DemoModeEnabledException();
-
 		var guildConfig = await _guildConfigRepo.GetGuildConfig(guildId);
 
 		guildConfig.ModRoles = newValue.ModRoles;
 		guildConfig.AdminRoles = newValue.AdminRoles;
 		guildConfig.ModNotificationDm = newValue.ModNotificationDm;
 
-		guildConfig.ModInternalNotificationWebhook = newValue.ModInternalNotificationWebhook;
+		guildConfig.ModNotificationWebhook = newValue.ModNotificationWebhook;
 
-		if (guildConfig.ModInternalNotificationWebhook != null)
-			guildConfig.ModInternalNotificationWebhook =
-				guildConfig.ModInternalNotificationWebhook.Replace("discord.com", "discordapp.com");
-
-		guildConfig.ModPublicNotificationWebhook = newValue.ModPublicNotificationWebhook;
-
-		if (guildConfig.ModPublicNotificationWebhook != null)
-			guildConfig.ModPublicNotificationWebhook =
-				guildConfig.ModPublicNotificationWebhook.Replace("discord.com", "discordapp.com");
+		if (guildConfig.ModNotificationWebhook != null)
+			guildConfig.ModNotificationWebhook =
+				guildConfig.ModNotificationWebhook.Replace("discord.com", "discordapp.com");
 
 		guildConfig.StrictModPermissionCheck = newValue.StrictModPermissionCheck;
 		guildConfig.ExecuteWhoIsOnJoin = newValue.ExecuteWhoIsOnJoin;

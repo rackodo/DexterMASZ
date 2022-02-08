@@ -79,37 +79,7 @@ public class Unban : Command<Unban>
 	}
 
 	[ComponentInteraction("unban-delete:*")]
-	public async Task DeleteBan(string userId)
-	{
-		var button = new ComponentBuilder()
-			.WithButton(Translator.Get<PunishmentTranslator>().PublicNotification(), $"unban-conf-delete:1,{userId}")
-			.WithButton(Translator.Get<PunishmentTranslator>().NoPublicNotification(), $"unban-conf-delete:0,{userId}",
-				ButtonStyle.Secondary)
-			.WithButton(Translator.Get<PunishmentTranslator>().Cancel(), "unban-cancel", ButtonStyle.Danger);
-
-		if (Context.Interaction is SocketMessageComponent castInteraction)
-		{
-			var embed = castInteraction.Message.Embeds.FirstOrDefault().ToEmbedBuilder().WithColor(Color.Red);
-
-			embed.Fields = new List<EmbedFieldBuilder>
-			{
-				new EmbedFieldBuilder().WithName(Translator.Get<PunishmentTranslator>().Result())
-					.WithValue(Translator.Get<PunishmentTranslator>().WaitingForApproval()),
-
-				new EmbedFieldBuilder().WithName(Translator.Get<PunishmentTranslator>().PublicNotification())
-					.WithValue(Translator.Get<PunishmentTranslator>().ShouldSendPublicNotification())
-			};
-
-			await castInteraction.UpdateAsync(message =>
-			{
-				message.Embed = embed.Build();
-				message.Components = button.Build();
-			});
-		}
-	}
-
-	[ComponentInteraction("unban-conf-delete:*,*")]
-	public async Task DeleteBanConfirmation(string isPublic, string userId)
+	public async Task DeleteBanConfirmation(string userId)
 	{
 		ModCaseRepository.AsUser(Identity);
 
@@ -117,7 +87,7 @@ public class Unban : Command<Unban>
 			.Where(x => x.PunishmentActive && x.PunishmentType == PunishmentType.Ban).ToList();
 
 		foreach (var modCase in modCases)
-			await ModCaseRepository.DeleteModCase(modCase.GuildId, modCase.CaseId, false, true, isPublic == "1");
+			await ModCaseRepository.DeleteModCase(modCase.GuildId, modCase.CaseId, false, true);
 
 		if (Context.Interaction is SocketMessageComponent castInteraction)
 		{

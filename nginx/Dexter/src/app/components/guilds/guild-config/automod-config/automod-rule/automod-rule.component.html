@@ -115,11 +115,6 @@
                 <mat-option *ngFor="let enum of punishmentTypes.content" [value]="enum.key">{{ enum.value }}</mat-option>
                 </mat-select>
               </mat-form-field><br/>
-              <mat-checkbox *ngIf="this.actionForm.value.automodAction >= 2"
-                formControlName="publicNotification"
-                [labelPosition]="'after'">
-                {{ 'AutoModConfig.SendPublicNotification' | translate }}
-              </mat-checkbox><br/>
               <mat-form-field *ngIf="this.actionForm.value.automodAction >= 2 && (this.actionForm.value.punishmentType === 1 || this.actionForm.value.punishmentType === 3)">
                 <mat-label>{{ 'AutoModConfig.DurationInMinutes' | translate }}</mat-label>
                 <input type="number" matInput formControlName="punishmentDuration">

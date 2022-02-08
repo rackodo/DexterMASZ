@@ -126,11 +126,6 @@ public static class AutoModEmbedCreator
 					$"{autoModConfig.PunishmentDurationMinutes}", true);
 
 			embed.AddField(
-				translator.Get<AutoModNotificationTranslator>().NotificationAutoModConfigSendPublic(),
-				autoModConfig.SendPublicNotification.GetCheckEmoji(),
-				true);
-
-			embed.AddField(
 				translator.Get<AutoModNotificationTranslator>().NotificationAutoModConfigSendDm(),
 				autoModConfig.SendDmNotification.GetCheckEmoji(),
 				true);

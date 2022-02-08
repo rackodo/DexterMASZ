@@ -31,14 +31,13 @@ public class PunishmentEventAnnouncer : Event
 
 	public void RegisterEvents()
 	{
-		_eventHandler.OnModCaseCreated += async (a, b, c, d) => await AnnounceModCase(a, b, c, d, RestAction.Created);
+		_eventHandler.OnModCaseCreated += async (a, b, c) => await AnnounceModCase(a, b, c, RestAction.Created);
 
-		_eventHandler.OnModCaseUpdated += async (a, b, c, d) => await AnnounceModCase(a, b, c, d, RestAction.Updated);
+		_eventHandler.OnModCaseUpdated += async (a, b, c) => await AnnounceModCase(a, b, c, RestAction.Updated);
 
-		_eventHandler.OnModCaseDeleted += async (a, b, c, d) => await AnnounceModCase(a, b, c, d, RestAction.Deleted);
+		_eventHandler.OnModCaseDeleted += async (a, b, c) => await AnnounceModCase(a, b, c, RestAction.Deleted);
 
-		_eventHandler.OnModCaseMarkedToBeDeleted +=
-			async (a, b, c, d) => await AnnounceModCase(a, b, c, d, RestAction.Deleted);
+		_eventHandler.OnModCaseMarkedToBeDeleted += async (a, b, c) => await AnnounceModCase(a, b, c, RestAction.Deleted);
 
 		_eventHandler.OnModCaseCommentCreated += async (a, b) => await AnnounceComment(a, b, RestAction.Created);
 
@@ -51,8 +50,7 @@ public class PunishmentEventAnnouncer : Event
 		_eventHandler.OnFileDeleted += async (a, b, c) => await AnnounceFile(a, b, c, RestAction.Deleted);
 	}
 
-	private async Task AnnounceModCase(ModCase modCase, IUser actor, bool announcePublic, bool announceDm,
-		RestAction action)
+	private async Task AnnounceModCase(ModCase modCase, IUser actor, bool announceDm, RestAction action)
 	{
 		using var scope = _serviceProvider.CreateScope();
 
@@ -66,6 +64,7 @@ public class PunishmentEventAnnouncer : Event
 
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(modCase.GuildId);
+
 		translator.SetLanguage(guildConfig);
 
 		if (announceDm && action != RestAction.Deleted)
@@ -116,39 +115,21 @@ public class PunishmentEventAnnouncer : Event
 			}
 		}
 
-		if (!string.IsNullOrEmpty(guildConfig.ModPublicNotificationWebhook) && announcePublic)
+		if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending public webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.ModPublicNotificationWebhook}.");
-
-			try
-			{
-				var embed = await modCase.CreateModCaseEmbed(action, actor, scope.ServiceProvider, caseUser, false);
-				await DiscordRest.ExecuteWebhook(guildConfig.ModPublicNotificationWebhook, embed.Build(),
-					$"<@{modCase.UserId}>");
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} public to {guildConfig.ModPublicNotificationWebhook}.");
-			}
-		}
-
-		if (!string.IsNullOrEmpty(guildConfig.ModInternalNotificationWebhook))
-		{
-			_logger.LogInformation(
-				$"Sending internal webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.ModInternalNotificationWebhook}.");
+				$"Sending webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.ModNotificationWebhook}.");
 
 			try
 			{
 				var embed = await modCase.CreateModCaseEmbed(action, actor, scope.ServiceProvider, caseUser);
-				await DiscordRest.ExecuteWebhook(guildConfig.ModInternalNotificationWebhook, embed.Build(),
+				await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, embed.Build(),
 					$"<@{modCase.UserId}>");
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} internal to {guildConfig.ModInternalNotificationWebhook}.");
+					$"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.ModNotificationWebhook}.");
 			}
 		}
 	}
@@ -163,20 +144,20 @@ public class PunishmentEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(comment.ModCase.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.ModInternalNotificationWebhook))
+		if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending internal webhook for comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.ModInternalNotificationWebhook}.");
+				$"Sending webhook for comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.ModNotificationWebhook}.");
 
 			try
 			{
 				var embed = await comment.CreateCommentEmbed(action, actor, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.ModInternalNotificationWebhook, embed.Build());
+				await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, embed.Build());
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.ModInternalNotificationWebhook}.");
+					$"Error while announcing comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.ModNotificationWebhook}.");
 			}
 		}
 	}
@@ -190,20 +171,20 @@ public class PunishmentEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(modCase.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.ModInternalNotificationWebhook))
+		if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending internal webhook for file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.ModInternalNotificationWebhook}.");
+				$"Sending webhook for file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.ModNotificationWebhook}.");
 
 			try
 			{
 				var embed = await file.CreateFileEmbed(modCase, action, actor, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.ModInternalNotificationWebhook, embed.Build());
+				await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, embed.Build());
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.ModInternalNotificationWebhook}.");
+					$"Error while announcing file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.ModNotificationWebhook}.");
 			}
 		}
 	}

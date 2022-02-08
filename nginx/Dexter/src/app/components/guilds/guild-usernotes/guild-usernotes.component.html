@@ -3,7 +3,7 @@
         <div class="d-flex flex-row flex-wrap align-items-end mb-4">
             <form [formGroup]="newNoteFormGroup" *ngIf="!this.users.loading">
                 <mat-form-field class="mr-2">
-                    <mat-label>{{ 'UsernoteTable.User' | translate }}</mat-label>
+                    <mat-label>{{ 'UserNoteTable.User' | translate }}</mat-label>
                     <input type="text"
                         placeholder="Pick one"
                         aria-label="User"
@@ -17,17 +17,17 @@
                     </mat-autocomplete>
                 </mat-form-field>
                 <mat-form-field class="mr-2">
-                    <mat-label>{{ 'UsernoteTable.Description' | translate }}</mat-label>
+                    <mat-label>{{ 'UserNoteTable.Description' | translate }}</mat-label>
                     <textarea matInput type="text" formControlName="description" rows="1"></textarea>
                 </mat-form-field>
                 <button mat-raised-button color="accent" (click)="createNote()"
                  [disabled]="!this.newNoteFormGroup.value.userid.trim() || !this.newNoteFormGroup.value.description.trim()">
-                    {{ 'UsernoteTable.CreateNewNote' | translate }}
+                    {{ 'UserNoteTable.CreateNewNote' | translate }}
                 </button>
             </form>
             <div class="flex-grow-1"></div>
             <mat-form-field>
-                <mat-label>{{ 'UsernoteTable.Search' | translate }}</mat-label>
+                <mat-label>{{ 'UserNoteTable.Search' | translate }}</mat-label>
                 <input matInput type="text" autocomplete="off" [attr.disabled]="this.loading ? '' : null"
                 [(ngModel)]="this.searchString" (ngModelChange)="searchChanged($event)">
             </mat-form-field>
@@ -43,7 +43,7 @@
             <div class="card-container rounded m-2 mb-3" *ngIf="(this.showUserNotes | async)?.length == 0">
                 <div class="card-container-body">
                     <span class="mat-h1">{{ 'NothingHere' | translate }}</span>
-                    <p class="card-text">{{ 'UsernoteTable.NoMatches' | translate }}</p>
+                    <p class="card-text">{{ 'UserNoteTable.NoMatches' | translate }}</p>
                 </div>
             </div>
         </div>

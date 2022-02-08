@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './quicksearch-case-result.component.html',
   styleUrls: ['./quicksearch-case-result.component.css']
 })
-export class QuicksearchCaseResultComponent implements OnInit {
+export class QuickSearchCaseResultComponent implements OnInit {
 
   @Input() caseEntry!: any;
   constructor() { }

@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './quicksearch-moderation-result.component.html',
   styleUrls: ['./quicksearch-moderation-result.component.css']
 })
-export class QuicksearchModerationResultComponent implements OnInit {
+export class QuickSearchModerationResultComponent implements OnInit {
 
   @Input() entry!: any;
   constructor() { }

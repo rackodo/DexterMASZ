@@ -24,7 +24,6 @@ public class AutoModConfig
 		Limit = dto.Limit;
 		CustomWordFilter = dto.CustomWordFilter;
 		SendDmNotification = dto.SendDmNotification;
-		SendPublicNotification = dto.SendPublicNotification;
 		ChannelNotificationBehavior = dto.ChannelNotificationBehavior;
 	}
 
@@ -40,6 +39,5 @@ public class AutoModConfig
 	public int? Limit { get; set; }
 	public string CustomWordFilter { get; set; }
 	public bool SendDmNotification { get; set; }
-	public bool SendPublicNotification { get; set; }
 	public AutoModChannelNotificationBehavior ChannelNotificationBehavior { get; set; }
 }

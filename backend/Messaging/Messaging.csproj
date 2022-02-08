@@ -9,6 +9,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Bot\Bot.csproj" />
+		<ProjectReference Include="..\MOTDs\MOTDs.csproj" />
 	</ItemGroup>
 
 </Project>

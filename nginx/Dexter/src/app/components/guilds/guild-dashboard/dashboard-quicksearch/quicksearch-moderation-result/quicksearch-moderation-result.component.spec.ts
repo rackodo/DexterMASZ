@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuicksearchModerationResultComponent } from './quicksearch-moderation-result.component';
+import { QuickSearchModerationResultComponent } from './quicksearch-moderation-result.component';
 
-describe('QuicksearchModerationResultComponent', () => {
-  let component: QuicksearchModerationResultComponent;
-  let fixture: ComponentFixture<QuicksearchModerationResultComponent>;
+describe('QuickSearchModerationResultComponent', () => {
+  let component: QuickSearchModerationResultComponent;
+  let fixture: ComponentFixture<QuickSearchModerationResultComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QuicksearchModerationResultComponent ]
+      declarations: [ QuickSearchModerationResultComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QuicksearchModerationResultComponent);
+    fixture = TestBed.createComponent(QuickSearchModerationResultComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

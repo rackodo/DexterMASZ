@@ -21,7 +21,7 @@ export class GuildEditComponent implements OnInit {
 
   public adminRolesGroup!: FormGroup;
   public modRolesGroup!: FormGroup;
-  public muteRolesGroup!: FormGroup;
+  public staffChannelsGroup!: FormGroup;
   public configGroup!: FormGroup;
 
   public allLanguages: ApiEnum[] = [];
@@ -37,8 +37,8 @@ export class GuildEditComponent implements OnInit {
     this.modRolesGroup = this._formBuilder.group({
       modRoles: ['', Validators.required]
     });
-    this.muteRolesGroup = this._formBuilder.group({
-      muteRoles: ['']
+    this.staffChannelsGroup = this._formBuilder.group({
+      staffChannels: ['']
     });
     this.configGroup = this._formBuilder.group({
       internal: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
@@ -84,10 +84,9 @@ export class GuildEditComponent implements OnInit {
     this.api.getSimpleData(`/guilds/${id}`).subscribe((data: GuildConfig) => {
       this.modRolesGroup.setValue({ modRoles: data.modRoles });
       this.adminRolesGroup.setValue({ adminRoles: data.adminRoles});
-      this.muteRolesGroup.setValue({ muteRoles: data.mutedRoles});
+      this.staffChannelsGroup.setValue({ muteRoles: data.staffChannels});
       this.configGroup.setValue({
-        internal: data.modInternalNotificationWebhook,
-        public: data.modPublicNotificationWebhook,
+        webhook: data.modNotificationWebhook,
         strictPermissionCheck: data.strictModPermissionCheck,
         executeWhoIsOnJoin: data.executeWhoIsOnJoin,
         publishModeratorInfo: data.publishModeratorInfo,
@@ -105,9 +104,8 @@ export class GuildEditComponent implements OnInit {
     const data = {
       modRoles: this.modRolesGroup.value.modRoles,
       adminRoles: this.adminRolesGroup.value.adminRoles,
-      mutedRoles: this.muteRolesGroup.value.muteRoles != '' ? this.muteRolesGroup.value.muteRoles : [],
-      modInternalNotificationWebhook: this.configGroup.value?.internal?.trim() ? this.configGroup?.value?.internal : null,
-      modPublicNotificationWebhook: this.configGroup.value?.public?.trim() ? this.configGroup?.value?.public : null,
+      staffChannels: this.staffChannelsGroup.value.staffChannels != '' ? this.staffChannelsGroup.value.staffChannels : [],
+      modNotificationWebhook: this.configGroup.value?.internal?.trim() ? this.configGroup?.value?.internal : null,
       strictModPermissionCheck: (this.configGroup.value?.strictPermissionCheck != '' ? this.configGroup.value?.strictPermissionCheck : false) ?? false,
       executeWhoIsOnJoin: (this.configGroup.value?.executeWhoIsOnJoin != '' ? this.configGroup.value?.executeWhoIsOnJoin : false) ?? false,
       publishModeratorInfo: (this.configGroup.value?.publishModeratorInfo != '' ? this.configGroup.value?.publishModeratorInfo : false) ?? false,

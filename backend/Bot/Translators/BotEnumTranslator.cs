@@ -139,16 +139,6 @@ public class BotEnumTranslator : Translator
 				Language.It => "La gilda è già registrata",
 				_ => "Guild is already registered"
 			},
-			ApiError.NotAllowedInDemoMode => PreferredLanguage switch
-			{
-				Language.De => "Diese Aktion ist in der Demo-Version nicht erlaubt",
-				Language.At => "De Aktion is in da Demo-Version ned erlaubt",
-				Language.Fr => "Cette action n'est pas autorisée en mode démo",
-				Language.Es => "Esta acción no está permitida en el modo de demostración.",
-				Language.Ru => "Это действие запрещено в демонстрационном режиме.",
-				Language.It => "Questa azione non è consentita in modalità demo",
-				_ => "This action is not allowed in demo mode"
-			},
 			ApiError.RoleNotFound => PreferredLanguage switch
 			{
 				Language.De => "Rolle nicht gefunden",

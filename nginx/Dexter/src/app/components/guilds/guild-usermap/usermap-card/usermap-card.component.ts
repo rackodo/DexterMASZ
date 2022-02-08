@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from 'src/app/components/dialogs/confirmation-dialog/confirmation-dialog.component';
-import { UsermapEditDialogComponent } from 'src/app/components/dialogs/usermap-edit-dialog/usermap-edit-dialog.component';
+import { UserMapEditDialogComponent } from 'src/app/components/dialogs/usermap-edit-dialog/usermap-edit-dialog.component';
 import { UserMapExpanded } from 'src/app/models/UserMapExpanded';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -12,7 +12,7 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './usermap-card.component.html',
   styleUrls: ['./usermap-card.component.css']
 })
-export class UsermapCardComponent implements OnInit {
+export class UserMapCardComponent implements OnInit {
 
   @Output() updateEvent = new EventEmitter<number>();
   @Output() deleteEvent = new EventEmitter<number>();
@@ -29,10 +29,10 @@ export class UsermapCardComponent implements OnInit {
       if (confirmed) {
         this.api.deleteData(`/guilds/${this.userMap.userMap.guildId}/usermap/${this.userMap.userMap.id}`).subscribe(() => {
           this.deleteEvent.emit(this.userMap.userMap.id);
-          this.toastr.success(this.translator.instant('UsermapCard.Deleted'));
+          this.toastr.success(this.translator.instant('UserMapCard.Deleted'));
         }, error => {
           console.error(error);
-          this.toastr.error(this.translator.instant('UsermapCard.FailedToDelete'));
+          this.toastr.error(this.translator.instant('UserMapCard.FailedToDelete'));
         })
       }
     });
@@ -42,19 +42,19 @@ export class UsermapCardComponent implements OnInit {
     let userMapDto: any = {
       reason: this.userMap.userMap.reason
     };
-    const editDialogRef = this.dialog.open(UsermapEditDialogComponent, {
+    const editDialogRef = this.dialog.open(UserMapEditDialogComponent, {
       data: userMapDto,
       minWidth: '400px'
     });
     editDialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         this.api.putSimpleData(`/guilds/${this.userMap.userMap.guildId}/usermap/${this.userMap.userMap.id}`, userMapDto).subscribe(() => {
-          this.toastr.success(this.translator.instant('UsermapCard.Updated'));
+          this.toastr.success(this.translator.instant('UserMapCard.Updated'));
           this.userMap.userMap.reason = userMapDto.reason.trim();
           this.updateEvent.emit(0);
         }, error => {
           console.error(error);
-          this.toastr.error(this.translator.instant('UsermapCard.FailedToUpdate'));
+          this.toastr.error(this.translator.instant('UserMapCard.FailedToUpdate'));
         });
       }
     });

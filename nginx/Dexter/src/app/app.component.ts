@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ActivatedRoute, ActivationEnd, NavigationEnd, Router, UrlSegment } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { AppUser } from './models/AppUser';
 import { ToastrService } from 'ngx-toastr';

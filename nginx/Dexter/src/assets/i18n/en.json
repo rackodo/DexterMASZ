@@ -22,8 +22,8 @@
     "Automods": "Automods",
     "Invite": "Invite",
     "Invites": "Invites",
-    "Usernotes": "Usernotes",
-    "Usermaps": "Usermaps",
+    "UserNotes": "UserNotes",
+    "userMaps": "userMaps",
     "Comments": "Comments",
     "Loading": "Loading...",
     "NothingHere": "Nothing here.",
@@ -64,10 +64,6 @@
             "AuditLogWebhookUrl": {
                 "Explained": "Use a private webhook accessible for siteadmins only since it may log sensitive information.",
                 "Field": "Auditlog webhook URL"
-            },
-            "PublicFileMode": {
-                "Explained": "Enable this to allow public access to all uploaded files.",
-                "Field": "Public file mode"
             }
         },
         "Embed": {
@@ -102,26 +98,6 @@
     "AdminStatsList": {
         "ShowMore": "Show more"
     },
-    "TokenOverview": {
-        "Description": "As a siteadmin you can use the Dexter Api to implement your own custom scripts and automate stuff on Dexter. Create an Api key below to authorize yourself against the Api while making web requests.",
-        "Documentation": "You can find a full documentation in the /docs directory.",
-        "Postman": "Just install postman and import the json file.",
-        "TokenHeader": "Include tokens in the \"Authorization\" header with a \"Bearer\" prefix.",
-        "PythonApiWrapper": "Try out the official python Api wrapper.",
-        "Warning": "Warning",
-        "TokenIsPowerful": "An Api key is very powerful and can control everything on Dexter!",
-        "CreateToken": "Create token",
-        "SaveSecurely": "Save this token securely.",
-        "Tokens": "Tokens",
-        "NoTokensFound": "No tokens found",
-        "ValidUntil": "Valid until:",
-        "CopiedClipboard": "Copied to clipboard.",
-        "Deleted": "Token deleted.",
-        "FailedToDelete": "Failed to delete token..",
-        "Created": "Token created.",
-        "FailedToCreate": "Failed to create token..",
-        "FailedToLoad": "Failed to load current token.."
-    },
     "AutoModCard": {
         "ViewCase": "View case",
         "Message": "Message"
@@ -136,7 +112,6 @@
         "OK": "OK"
     },
     "CaseDeleteDialog": {
-        "SendPublicNotification": "Send public notification",
         "ForceDelete": "Force delete",
         "Cancel": "Cancel",
         "Confirm": "Confirm"
@@ -152,12 +127,6 @@
         "Cancel": "Cancel",
         "Confirm": "Confirm"
     },
-    "NewTokenDialog": {
-        "NameToken": "Name your token.",
-        "Name": "Name",
-        "Cancel": "Cancel",
-        "Confirm": "Confirm"
-    },
     "TemplateCreateDialog": {
         "CreateTemplate": "Name your template.",
         "Name": "Name",
@@ -166,8 +135,8 @@
         "Confirm": "Confirm",
         "FailedToLoadPermissions": "Failed to load visibility options."
     },
-    "UsermapEditDialog": {
-        "EditUsermap": "Edit usermap",
+    "UserMapEditDialog": {
+        "EditUserMap": "Edit UserMap",
         "Description": "Description",
         "Cancel": "Cancel",
         "Confirm": "Confirm"
@@ -181,8 +150,8 @@
         "Cancel": "Cancel",
         "Confirm": "Confirm"
     },
-    "UsernoteEditDialog": {
-        "EditUsernote": "Edit usernote",
+    "UserNoteEditDialog": {
+        "EditUserNote": "Edit usernote",
         "Description": "Description",
         "Cancel": "Cancel",
         "Confirm": "Confirm"
@@ -348,7 +317,6 @@
         "SendDMNotification": "Send dm notification",
         "Action": "Action",
         "ChannelNotificationBehavior": "Channel notification",
-        "SendPublicNotification": "Send public notification",
         "DurationInMinutes": "Duration in minutes",
         "YouAreDone": "You are now done.",
         "ConfigDeleted": "Config deleted",
@@ -412,14 +380,14 @@
         "FailedToLoad": "Failed to load motd.",
         "MessageFrom": "Message from {{name}}"
     },
-    "Quicksearch": {
-        "Placeholder": "Quicksearch users, modcases, punishments, automods, ...",
+    "QuickSearch": {
+        "Placeholder": "QuickSearch users, modcases, punishments, automods, ...",
         "NoMatches": "Nothing matches your search :(",
         "SearchFailed": "Search failed."
     },
     "GuildList": {
         "LoadingGuilds": "Loading guilds...",
-        "NoGuild": "Please join a guild or get banned so I can display something :(",
+        "NoGuild": "Please add me to a guild, or invite me to one!",
         "AddGuild": "Add guild"
     },
     "GuildOverview": {
@@ -428,32 +396,32 @@
             "Case": "Cases",
             "AutoMods": "Automods",
             "Messages": "Messages",
-            "Usernote": "Usernotes",
-            "Usermap": "Usermaps",
+            "UserNote": "UserNotes",
+            "UserMap": "userMaps",
             "Config": "Config"
         }
     },
-    "UsermapTable": {
+    "UserMapTable": {
         "User": "User",
         "Description": "Description",
-        "CreateNewMap": "Create new usermap",
+        "CreateNewMap": "Create new UserMap",
         "Search": "Search (user, id, description...)",
-        "NoMatches": "No usermap matches your search.",
-        "FailedToLoad": "Failed to load usermaps.",
+        "NoMatches": "No UserMap matches your search.",
+        "FailedToLoad": "Failed to load userMaps.",
         "FailedToLoadUser": "Failed to load userlist.",
-        "FailedToCreate": "Failed to create usermap.",
-        "Created": "Usermap created."
+        "FailedToCreate": "Failed to create userMap.",
+        "Created": "UserMap created."
     },
-    "UsermapCard": {
+    "UserMapCard": {
         "UpdatedPrefix": "Updated:",
         "Edit": "Edit",
         "Delete": "Delete",
-        "FailedToUpdate": "Failed to update usermap.",
-        "Updated": "Usermap updated.",
-        "FailedToDelete": "Failed to delete usermap.",
-        "Deleted": "Usermap deleted."
+        "FailedToUpdate": "Failed to update userMap.",
+        "Updated": "UserMap updated.",
+        "FailedToDelete": "Failed to delete userMap.",
+        "Deleted": "UserMap deleted."
     },
-    "UsernoteTable": {
+    "UserNoteTable": {
         "User": "User",
         "Description": "Description",
         "CreateNewNote": "Create new usernote",
@@ -462,16 +430,16 @@
         "FailedToLoad": "Failed to load usernotes.",
         "FailedToLoadUser": "Failed to load userlist.",
         "FailedToCreate": "Failed to create usernote.",
-        "Created": "Usernote created."
+        "Created": "UserNote created."
     },
-    "UsernoteCard": {
+    "UserNoteCard": {
         "UpdatedPrefix": "Updated:",
         "Edit": "Edit",
         "Delete": "Delete",
         "FailedToUpdate": "Failed to update usernote.",
-        "Updated": "Usernote updated.",
+        "Updated": "UserNote updated.",
         "FailedToDelete": "Failed to delete usernote.",
-        "Deleted": "Usernote deleted."
+        "Deleted": "UserNote deleted."
     },
     "ModCaseDialog": {
         "SelectATemplate": "Select a template",
@@ -496,7 +464,6 @@
         "Upload": "Upload",
         "CreateCase": "Create case",
         "UpdateCase": "Update case",
-        "PublicNotification": "Send public notification",
         "SaveAsTemplate": "Save as template",
         "CreateCaseButton": "Create case",
         "UpdateCaseButton": "Update case",

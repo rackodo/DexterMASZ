@@ -6,7 +6,7 @@ import { UserMapExpanded } from 'src/app/models/UserMapExpanded';
   templateUrl: './quicksearch-usermaps-result.component.html',
   styleUrls: ['./quicksearch-usermaps-result.component.css']
 })
-export class QuicksearchUsermapsResultComponent implements OnInit {
+export class QuickSearchUserMapsResultComponent implements OnInit {
 
   @Input() usermaps!: UserMapExpanded[];
   @Input() searchedFor!: string;

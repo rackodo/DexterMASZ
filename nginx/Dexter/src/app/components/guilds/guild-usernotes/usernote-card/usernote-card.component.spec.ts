@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UsernoteCardComponent } from './usernote-card.component';
+import { UserNoteCardComponent } from './usernote-card.component';
 
-describe('UsernoteCardComponent', () => {
-  let component: UsernoteCardComponent;
-  let fixture: ComponentFixture<UsernoteCardComponent>;
+describe('UserNoteCardComponent', () => {
+  let component: UserNoteCardComponent;
+  let fixture: ComponentFixture<UserNoteCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UsernoteCardComponent ]
+      declarations: [ UserNoteCardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsernoteCardComponent);
+    fixture = TestBed.createComponent(UserNoteCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

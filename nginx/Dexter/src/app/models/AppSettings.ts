@@ -3,7 +3,6 @@ export interface AppSettings {
 	discordBotToken: string;
 	clientSecret: string;
 	absolutePathToFileUpload: string;
-	serviceHostName: string;
 	serviceDomain: string;
 	serviceBaseUrl: string;
 	siteAdmins: string[];
@@ -11,7 +10,5 @@ export interface AppSettings {
     embedContent: string;
     defaultLanguage: number;
     auditLogWebhookUrl: string;
-    publicFileMode: boolean;
-	demoModeEnabled: boolean;
 	corsEnabled: boolean;
 }

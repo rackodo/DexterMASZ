@@ -100,7 +100,7 @@ public class InviteTracker : Event
 				_logger.LogInformation(
 					$"User {user.Username}#{user.Discriminator} joined guild {user.Guild.Name} with ID: {user.Guild.Id} using invite {usedInvite.Code}");
 
-				if (guildConfig.ExecuteWhoIsOnJoin && !string.IsNullOrEmpty(guildConfig.ModInternalNotificationWebhook))
+				if (guildConfig.ExecuteWhoIsOnJoin && !string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
 				{
 					string message;
 
@@ -112,7 +112,7 @@ public class InviteTracker : Event
 						message = translator.Get<InviteNotificationTranslator>()
 							.NotificationAutoWhoisJoinWith(user, user.CreatedAt.DateTime, invite.UsedInvite);
 
-					await DiscordRest.ExecuteWebhook(guildConfig.ModInternalNotificationWebhook, null, message, AllowedMentions.None);
+					await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, null, message, AllowedMentions.None);
 				}
 
 				await scope.ServiceProvider.GetRequiredService<InviteRepository>().CreateInvite(invite);

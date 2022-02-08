@@ -20,7 +20,7 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './guild-usernotes.component.html',
   styleUrls: ['./guild-usernotes.component.css']
 })
-export class GuildUsernotesComponent implements OnInit {
+export class GuildUserNotesComponent implements OnInit {
 
   public newNoteFormGroup!: FormGroup;
   public filteredUsers!: Observable<DiscordUser[]>;
@@ -83,7 +83,7 @@ export class GuildUsernotesComponent implements OnInit {
     }, error => {
       console.error(error);
       this.loading = false;
-      this.toastr.error(this.translator.instant('UsernoteTable.FailedToLoad'));
+      this.toastr.error(this.translator.instant('UserNoteTable.FailedToLoad'));
     });
 
     const params = new HttpParams()
@@ -93,7 +93,7 @@ export class GuildUsernotesComponent implements OnInit {
       this.users.loading = false;
     }, error => {
       console.error(error);
-      this.toastr.error(this.translator.instant('UsernoteTable.FailedToLoadUser'));
+      this.toastr.error(this.translator.instant('UserNoteTable.FailedToLoadUser'));
     });
   }
 
@@ -140,10 +140,10 @@ export class GuildUsernotesComponent implements OnInit {
     this.api.putSimpleData(`/guilds/${this.guildId}/usernote`, data).subscribe(() => {
       this.reloadData();
       this.resetForm();
-      this.toastr.success(this.translator.instant('UsernoteTable.Created'));
+      this.toastr.success(this.translator.instant('UserNoteTable.Created'));
     }, error => {
       console.error(error);
-      this.toastr.error(this.translator.instant('UsernoteTable.FailedToCreate'));
+      this.toastr.error(this.translator.instant('UserNoteTable.FailedToCreate'));
     });
   }
 }

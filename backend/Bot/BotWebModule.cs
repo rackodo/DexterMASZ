@@ -4,14 +4,11 @@ using Bot.Middleware;
 using Bot.Models;
 using Bot.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace Bot;
 
@@ -25,7 +22,7 @@ public class BotWebModule : WebModule
 
 	public override string[] AddAuthorizationPolicy()
 	{
-		return new[] { "Cookies", "Tokens" };
+		return new[] { "Cookies" };
 	}
 
 	public override void ConfigureServices(ConfigurationManager configuration, IServiceCollection services)
@@ -67,18 +64,6 @@ public class BotWebModule : WebModule
 				options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 				options.CorrelationCookie.SameSite = SameSiteMode.Lax;
 				options.CorrelationCookie.HttpOnly = false;
-			});
-
-		services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-			.AddJwtBearer("Tokens", x =>
-			{
-				x.TokenValidationParameters = new TokenValidationParameters
-				{
-					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.DiscordBotToken)),
-					ValidateIssuer = false,
-					ValidateAudience = false
-				};
 			});
 
 		if (settings.CorsEnabled)

@@ -129,10 +129,10 @@ public class DiscordRestController : AuthenticatedController
 	}
 
 	[HttpGet("guilds")]
-	public async Task<IActionResult> GetAllGuilds()
+	public async Task<IActionResult> GetAdminGuilds()
 	{
 		var identity = await SetupAuthentication();
 
-		return Ok(identity.GetCurrentUserGuilds().Select(x => new DiscordGuild(x)));
+		return Ok(identity.GetCurrentUserGuilds().Where(guild => guild.IsAdmin).Select(x => new DiscordGuild(x)));
 	}
 }

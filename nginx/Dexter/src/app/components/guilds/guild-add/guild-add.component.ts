@@ -24,7 +24,7 @@ export class GuildAddComponent implements OnInit {
 
   public adminRolesGroup!: FormGroup;
   public modRolesGroup!: FormGroup;
-  public muteRolesGroup!: FormGroup;
+  public staffChannelsGroup!: FormGroup;
   public configGroup!: FormGroup;
   public queryGroup!: FormGroup;
 
@@ -41,15 +41,14 @@ export class GuildAddComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, private api: ApiService, private toastr: ToastrService, private authService: AuthService, private router: Router, private applicationInfoService: ApplicationInfoService, private translator: TranslateService, private enumManager: EnumManagerService) { }
 
   ngOnInit(): void {
-
     this.adminRolesGroup = this._formBuilder.group({
       adminRoles: ['', Validators.required]
     });
     this.modRolesGroup = this._formBuilder.group({
       modRoles: ['', Validators.required]
     });
-    this.muteRolesGroup = this._formBuilder.group({
-      muteRoles: ['']
+    this.staffChannelsGroup = this._formBuilder.group({
+      staffChannels: ['']
     });
     this.configGroup = this._formBuilder.group({
       internal: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
@@ -62,11 +61,9 @@ export class GuildAddComponent implements OnInit {
     this.queryGroup = this._formBuilder.group({
       importExistingBans: [''],
     });
-
     this.applicationInfoService.currentApplicationInfo.subscribe((data: DiscordApplication) => {
       this.clientId = data.id;
     });
-
     this.loadLanguages();
     this.reloadGuilds();
   }
@@ -143,9 +140,8 @@ export class GuildAddComponent implements OnInit {
       guildid:                        this.selectedGuild?.id,
       modRoles:                       this.modRolesGroup.value.modRoles,
       adminRoles:                     this.adminRolesGroup.value.adminRoles,
-      mutedRoles:                     this.muteRolesGroup.value.muteRoles           != '' ? this.muteRolesGroup.value.muteRoles                    : [],
-      modInternalNotificationWebhook: this.configGroup.value?.internal?.trim()      != '' ? this.configGroup?.value?.internal                      : null,
-      modPublicNotificationWebhook:   this.configGroup.value?.public?.trim()        != '' ? this.configGroup?.value?.public                        : null,
+      staffChannels:                  this.staffChannelsGroup.value.staffChannels,
+      modNotificationWebhook:         this.configGroup.value?.internal?.trim()      != '' ? this.configGroup?.value?.internal                      : null,
       strictModPermissionCheck:       this.configGroup.value?.strictPermissionCheck != '' ? this.configGroup.value?.strictPermissionCheck ?? false : false,
       executeWhoIsOnJoin:             this.configGroup.value?.executeWhoIsOnJoin    != '' ? this.configGroup.value?.executeWhoIsOnJoin    ?? false : false,
       publishModeratorInfo:           this.configGroup.value?.publishModeratorInfo  != '' ? this.configGroup.value?.publishModeratorInfo  ?? false : false,
@@ -169,7 +165,7 @@ export class GuildAddComponent implements OnInit {
     this.reloadGuilds();
     this.modRolesGroup.reset();
     this.adminRolesGroup.reset();
-    this.muteRolesGroup.reset();
+    this.staffChannelsGroup.reset();
     this.configGroup.reset();
   }
 }

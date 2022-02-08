@@ -7,7 +7,7 @@ import { UserNoteDto } from 'src/app/models/UserNoteDto';
   templateUrl: './usernote-edit-dialog.component.html',
   styleUrls: ['./usernote-edit-dialog.component.css']
 })
-export class UsernoteEditDialogComponent implements OnInit {
+export class UserNoteEditDialogComponent implements OnInit {
 
   public initRows = 1;
   constructor(@Inject(MAT_DIALOG_DATA) public settings: UserNoteDto) { }

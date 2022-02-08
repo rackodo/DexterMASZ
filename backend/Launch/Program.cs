@@ -249,7 +249,7 @@ foreach (var startup in modules)
 
 ConsoleCreator.AddSubHeading("Successfully post built", "application");
 
-if (settings.ServiceHostName.Contains("https"))
+if (settings.ServiceBaseUrl.Contains("https"))
 	app.UseHttpsRedirection();
 
 app.UseRouting();

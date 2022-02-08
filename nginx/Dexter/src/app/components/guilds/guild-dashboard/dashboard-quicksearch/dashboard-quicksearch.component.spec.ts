@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardQuicksearchComponent } from './dashboard-quicksearch.component';
+import { DashboardQuickSearchComponent } from './dashboard-quicksearch.component';
 
-describe('DashboardQuicksearchComponent', () => {
-  let component: DashboardQuicksearchComponent;
-  let fixture: ComponentFixture<DashboardQuicksearchComponent>;
+describe('DashboardQuickSearchComponent', () => {
+  let component: DashboardQuickSearchComponent;
+  let fixture: ComponentFixture<DashboardQuickSearchComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashboardQuicksearchComponent ]
+      declarations: [ DashboardQuickSearchComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardQuicksearchComponent);
+    fixture = TestBed.createComponent(DashboardQuickSearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

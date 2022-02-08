@@ -237,34 +237,6 @@ public class PunishmentTranslator : Translator
 		};
 	}
 
-	public string PublicNotification()
-	{
-		return PreferredLanguage switch
-		{
-			Language.De => "Öffentliche Benachrichtigung",
-			Language.At => "Öffentliche Benochrichtigung",
-			Language.Fr => "Avis public",
-			Language.Es => "Notificación pública",
-			Language.Ru => "Публичное уведомление",
-			Language.It => "Notifica pubblica",
-			_ => "Public notification"
-		};
-	}
-
-	public string ShouldSendPublicNotification()
-	{
-		return PreferredLanguage switch
-		{
-			Language.De => "Soll eine öffentliche Benachrichtigung gesendet werden?",
-			Language.At => "Soll a öffentliche Benochrichtung gsendet wean?",
-			Language.Fr => "Envoyer une notification publique ?",
-			Language.Es => "¿Enviar una notificación pública?",
-			Language.Ru => "Отправить публичное уведомление?",
-			Language.It => "Inviare una notifica pubblica?",
-			_ => "Send a public notification?"
-		};
-	}
-
 	public string Cancel()
 	{
 		return PreferredLanguage switch
@@ -276,20 +248,6 @@ public class PunishmentTranslator : Translator
 			Language.Ru => "Отмена",
 			Language.It => "Annulla",
 			_ => "Cancel"
-		};
-	}
-
-	public string NoPublicNotification()
-	{
-		return PreferredLanguage switch
-		{
-			Language.De => "Keine öffentliche Benachrichtigung",
-			Language.At => "Ka öffentliche Benochrichtung",
-			Language.Fr => "Aucune notification publique",
-			Language.Es => "Sin notificación pública",
-			Language.Ru => "Нет публичного уведомления",
-			Language.It => "Nessuna notifica pubblica",
-			_ => "No public notification"
 		};
 	}
 

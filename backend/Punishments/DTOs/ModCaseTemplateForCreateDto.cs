@@ -27,8 +27,6 @@ public class ModCaseTemplateForCreateDto
 
 	public DateTime? PunishedUntil { get; set; }
 
-	[Required] public bool SendPublicNotification { get; set; } = false;
-
 	[Required] public bool HandlePunishment { get; set; } = false;
 
 	[Required] public bool AnnounceDm { get; set; } = false;

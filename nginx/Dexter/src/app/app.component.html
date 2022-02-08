@@ -194,12 +194,6 @@
 
         <mat-divider *ngIf="this.currentUser?.modGuilds?.length || this.currentUser?.adminGuilds?.length"></mat-divider>
 
-        <a class="d-flex" (click)="open('tokens')" *ngIf="this.currentUser?.isAdmin">
-          <div [class.activatedNav]="activatedNav[1] === 'tokens'" class="rounded navitem">
-            <mat-icon aria-hidden="false" aria-label="tune icon">api</mat-icon>
-            <span>{{ 'Toolbar.Api' | translate }}</span>
-          </div>
-        </a>
         <a class="d-flex" (click)="open('settings')" *ngIf="this.currentUser?.isAdmin">
           <div [class.activatedNav]="activatedNav[1] === 'settings'" class="rounded navitem">
             <mat-icon aria-hidden="false" aria-label="tune icon">settings</mat-icon>

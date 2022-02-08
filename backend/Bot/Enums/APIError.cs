@@ -11,7 +11,6 @@ public enum ApiError
 	GuildUnregistered,
 	Unauthorized,
 	GuildAlreadyRegistered,
-	NotAllowedInDemoMode,
 	RoleNotFound,
 	ResourceAlreadyExists,
 	InvalidFilePath,

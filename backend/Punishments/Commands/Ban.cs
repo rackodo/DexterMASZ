@@ -15,6 +15,7 @@ public class Ban : Command<Ban>
 {
 	public ModCaseRepository ModCaseRepository { get; set; }
 	public SettingsRepository SettingsRepository { get; set; }
+	public GuildConfigRepository GuildConfigRepository { get; set; }
 
 	[Require(RequireCheck.GuildModerator, RequireCheck.GuildStrictModeBan)]
 	[SlashCommand("ban", "Ban a user and create a mod case")]
@@ -33,16 +34,17 @@ public class Ban : Command<Ban>
 		string description = "",
 		[Summary("dm-notification", "Whether to send a dm notification")]
 		bool sendDmNotification = true,
-		[Summary("public-notification", "Whether to send a public webhook notification")]
-		bool sendPublicNotification = true,
 		[Summary("execute-punishment", "Whether to execute the punishment or just register it.")]
 		bool executePunishment = true)
 	{
 		ModCaseRepository.AsUser(Identity);
+		GuildConfigRepository.AsUser(Identity);
 
-		await Context.Interaction.DeferAsync(ephemeral: !sendPublicNotification);
+		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Channel.Id);
 
-		ModCase modCase = new()
+		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
+
+		var modCase = new ModCase()
 		{
 			Title = title,
 			GuildId = Context.Guild.Id,
@@ -61,8 +63,7 @@ public class Ban : Command<Ban>
 		modCase.CreationType = CaseCreationType.ByCommand;
 
 		var created =
-			await ModCaseRepository.CreateModCase(modCase, executePunishment, sendPublicNotification,
-				sendDmNotification);
+			await ModCaseRepository.CreateModCase(modCase, executePunishment, sendDmNotification);
 
 		var url =
 			$"{(await SettingsRepository.GetAppSettings()).ServiceBaseUrl}/guilds/{created.GuildId}/cases/{created.CaseId}";

@@ -22,8 +22,8 @@
     "Automods": "Автомоды",
     "Invite": "Приглашать",
     "Invites": "Приглашает",
-    "Usernotes": "Примечания пользователя",
-    "Usermaps": "Карты пользователя",
+    "UserNotes": "Примечания пользователя",
+    "userMaps": "Карты пользователя",
     "Comments": "Комментарии",
     "Loading": "Загружается ...",
     "NothingHere": "Здесь ничего.",
@@ -136,7 +136,6 @@
         "OK": "Ok"
     },
     "CaseDeleteDialog": {
-        "SendPublicNotification": "Отправить публичное уведомление",
         "ForceDelete": "Принудительное удаление",
         "Cancel": "Отмена",
         "Confirm": "Подтверждать"
@@ -166,8 +165,8 @@
         "Confirm": "Подтверждать",
         "FailedToLoadPermissions": "Не удалось загрузить параметры видимости."
     },
-    "UsermapEditDialog": {
-        "EditUsermap": "Редактировать карту пользователя",
+    "UserMapEditDialog": {
+        "EditUserMap": "Редактировать карту пользователя",
         "Description": "Описание",
         "Cancel": "Отмена",
         "Confirm": "Подтверждать"
@@ -181,8 +180,8 @@
         "Cancel": "Отмена",
         "Confirm": "Подтверждать"
     },
-    "UsernoteEditDialog": {
-        "EditUsernote": "Редактировать заметку пользователя",
+    "UserNoteEditDialog": {
+        "EditUserNote": "Редактировать заметку пользователя",
         "Description": "Описание",
         "Cancel": "Отмена",
         "Confirm": "Подтверждать"
@@ -348,7 +347,6 @@
         "SendDMNotification": "Отправить уведомление dm",
         "Action": "Действие",
         "ChannelNotificationBehavior": "Уведомление канала",
-        "SendPublicNotification": "Отправить публичное уведомление",
         "DurationInMinutes": "Продолжительность в минутах",
         "YouAreDone": "Теперь все готово.",
         "ConfigDeleted": "Конфиг удален",
@@ -412,14 +410,14 @@
         "FailedToLoad": "Не удалось загрузить motd.",
         "MessageFrom": "Сообщение от {{name}}"
     },
-    "Quicksearch": {
-        "Placeholder": "Пользователи Quicksearch, модкейсы, наказания, автоматизация, ...",
+    "QuickSearch": {
+        "Placeholder": "Пользователи QuickSearch, модкейсы, наказания, автоматизация, ...",
         "NoMatches": "Ничего не найдено :(",
         "SearchFailed": "Поиск не удался."
     },
     "GuildList": {
         "LoadingGuilds": "Загрузка гильдий ...",
-        "NoGuild": "Пожалуйста, вступите в гильдию или получите бан, чтобы я мог что-нибудь показать :(",
+        "NoGuild": "Пожалуйста, добавьте меня в гильдию или пригласите в нее!",
         "AddGuild": "Добавить гильдию"
     },
     "GuildOverview": {
@@ -428,12 +426,12 @@
             "Case": "Случаи",
             "AutoMods": "Автомобили",
             "Messages": "Сообщения",
-            "Usernote": "Примечания пользователя",
-            "Usermap": "Карты пользователя",
+            "UserNote": "Примечания пользователя",
+            "UserMap": "Карты пользователя",
             "Config": "Конфиг"
         }
     },
-    "UsermapTable": {
+    "UserMapTable": {
         "User": "Член",
         "Description": "Описание",
         "CreateNewMap": "Создать новую карту пользователя",
@@ -444,7 +442,7 @@
         "FailedToCreate": "Не удалось создать карту пользователя.",
         "Created": "Карта пользователя создана."
     },
-    "UsermapCard": {
+    "UserMapCard": {
         "UpdatedPrefix": "Обновлено:",
         "Edit": "Редактировать",
         "Delete": "Удалить",
@@ -453,7 +451,7 @@
         "FailedToDelete": "Не удалось удалить карту пользователя.",
         "Deleted": "Карта пользователя удалена."
     },
-    "UsernoteTable": {
+    "UserNoteTable": {
         "User": "Член",
         "Description": "Описание",
         "CreateNewNote": "Создать новую заметку пользователя",
@@ -464,7 +462,7 @@
         "FailedToCreate": "Не удалось создать заметку пользователя.",
         "Created": "Заметка пользователя создана."
     },
-    "UsernoteCard": {
+    "UserNoteCard": {
         "UpdatedPrefix": "Обновлено:",
         "Edit": "Редактировать",
         "Delete": "Удалить",
@@ -496,7 +494,6 @@
         "Upload": "Загрузить",
         "CreateCase": "Создать дело",
         "UpdateCase": "Обновить дело",
-        "PublicNotification": "Отправить публичное уведомление",
         "SaveAsTemplate": "Сохранить как шаблон",
         "CreateCaseButton": "Создать дело",
         "UpdateCaseButton": "Обновить дело",

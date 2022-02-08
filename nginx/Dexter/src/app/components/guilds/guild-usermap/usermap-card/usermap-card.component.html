@@ -55,15 +55,15 @@
         <div class="flex-grow-1"></div>
         <div class="d-flex flex-column align-content-center flex-shrink-0">
             <span class="text-black-50" style="text-align: right;">
-                <app-date-display [date]="userMap.userMap.createdAt" [prefixKey]="'UsermapCard.UpdatedPrefix'"></app-date-display>
+                <app-date-display [date]="userMap.userMap.createdAt" [prefixKey]="'UserMapCard.UpdatedPrefix'"></app-date-display>
             </span>
             <div class="flex-grow-1"></div>
             <!-- Button -->
             <button mat-raised-button color="accent" class="mt-2" (click)="editMap()">
-                {{ 'UsermapCard.Edit' | translate }}
+                {{ 'UserMapCard.Edit' | translate }}
             </button>
             <button mat-raised-button color="primary" class="mt-2" (click)="deleteMap()" *ngIf="this.showDeleteButton">
-                {{ 'UsermapCard.Delete' | translate }}
+                {{ 'UserMapCard.Delete' | translate }}
             </button>
         </div>
     </div>
