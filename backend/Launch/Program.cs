@@ -80,7 +80,7 @@ await using (var dataContext = new BotDatabase(dbBuilder.Options))
 		ConsoleCreator.AddHeading("Running First Time Setup");
 
 		ConsoleCreator.AddSubHeading("Welcome to", "Dexter!");
-		ConsoleCreator.AddSubHeading("Support Discord", "https://discord.gg/5zjpzw6h3S");
+		ConsoleCreator.AddSubHeading("Support Discord", "https://discord.gg/DBS664yjWN");
 
 		settings = ConsoleCreator.CreateAppSettings(clientIdContainer, false);
 

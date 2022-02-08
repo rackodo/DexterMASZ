@@ -99,14 +99,7 @@ public class IdentityManager : Event
 	{
 		try
 		{
-			if (httpContext.Request.Headers.ContainsKey("Authorization"))
-			{
-				return "/api/" + httpContext.Request.Headers["Authorization"];
-			}
-			else
-			{
-				return httpContext.Request.Cookies["dexter_access_token"];
-			}
+			return httpContext.Request.Cookies["dexter_access_token"];
 		}
 		catch (KeyNotFoundException)
 		{
@@ -117,45 +110,15 @@ public class IdentityManager : Event
 	public async Task<Identity> RegisterNewIdentity(HttpContext httpContext)
 	{
 		var key = GetKeyByContext(httpContext);
-		Identity identity = null;
 
-		if (httpContext.Request.Headers.ContainsKey("Authorization"))
-		{
-			_logger.LogInformation("Registering new TokenIdentity.");
+		_logger.LogInformation("Registering new DiscordIdentity.");
+		var token = await httpContext.GetTokenAsync("Cookies", "access_token");
 
-			string fullToken = httpContext.Request.Headers["Authorization"];
-			var token = string.Empty;
+		var rest = _serviceProvider.GetRequiredService<DiscordRest>();
+		var user = await rest.FetchCurrentUserInfo(token, CacheBehavior.IgnoreButCacheOnError);
+		var guilds = await rest.FetchGuildsOfCurrentUser(token, CacheBehavior.IgnoreButCacheOnError);
 
-			try
-			{
-				token = fullToken.Split(' ')[1];  // exclude "Bearer" prefix
-			}
-			catch (Exception e)
-			{
-				_logger.LogError("Error while parsing token: " + e.Message);
-			}
-
-			try
-			{
-				using var scope = _serviceProvider.CreateScope();
-
-				var registeredToken = await scope.ServiceProvider.GetRequiredService<TokenRepository>().GetToken();
-
-				identity = new TokenIdentity(token, _serviceProvider, registeredToken);
-			}
-			catch (ResourceNotFoundException) { }
-		}
-		else
-		{
-			_logger.LogInformation("Registering new DiscordIdentity.");
-			var token = await httpContext.GetTokenAsync("Cookies", "access_token");
-
-			var rest = _serviceProvider.GetRequiredService<DiscordRest>();
-			var user = await rest.FetchCurrentUserInfo(token, CacheBehavior.IgnoreButCacheOnError);
-			var guilds = await rest.FetchGuildsOfCurrentUser(token, CacheBehavior.IgnoreButCacheOnError);
-
-			identity = new DiscordOAuthIdentity(token, _serviceProvider, user, guilds);
-		}
+		var identity = new DiscordOAuthIdentity(token, _serviceProvider, user, guilds);
 
 		if (identity is null)
 			return null;

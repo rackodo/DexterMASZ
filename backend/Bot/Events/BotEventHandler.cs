@@ -19,10 +19,6 @@ public class BotEventHandler : InternalEventHandler
 
 	public readonly AsyncEvent<Func<int, DateTime, Task>> InternalCachingDoneEvent = new();
 
-	internal readonly AsyncEvent<Func<ApiToken, Task>> TokenCreatedEvent = new();
-
-	internal readonly AsyncEvent<Func<ApiToken, Task>> TokenDeletedEvent = new();
-
 	public event Func<Task> OnBotLaunched
 	{
 		add => BotLaunchedEvent.Add(value);
@@ -63,17 +59,5 @@ public class BotEventHandler : InternalEventHandler
 	{
 		add => InternalCachingDoneEvent.Add(value);
 		remove => InternalCachingDoneEvent.Remove(value);
-	}
-
-	public event Func<ApiToken, Task> OnTokenCreated
-	{
-		add => TokenCreatedEvent.Add(value);
-		remove => TokenCreatedEvent.Remove(value);
-	}
-
-	public event Func<ApiToken, Task> OnTokenDeleted
-	{
-		add => TokenDeletedEvent.Add(value);
-		remove => TokenDeletedEvent.Remove(value);
 	}
 }

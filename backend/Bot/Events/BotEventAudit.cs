@@ -29,22 +29,6 @@ public class BotEventAudit : Event
 
 		_eventHandler.OnInternalCachingDone += OnInternalCachingDoneAudit;
 		_eventHandler.OnIdentityRegistered += OnIdentityRegisteredAudit;
-
-		_eventHandler.OnTokenCreated += OnTokenCreated;
-		_eventHandler.OnTokenDeleted += OnTokenDeleted;
-	}
-
-	private Task OnTokenDeleted(ApiToken token)
-	{
-		_auditLogger.QueueLog($"**Token** `{token.Name.Truncate(1500)}` (`#{token.Id}`) has been deleted.");
-		return Task.CompletedTask;
-	}
-
-	private Task OnTokenCreated(ApiToken token)
-	{
-		_auditLogger.QueueLog($"**Token** `{token.Name.Truncate(1500)}` (`#{token.Id}`) has been created and expires " +
-							  $"{token.ValidUntil.ToDiscordTs(DiscordTimestampFormats.RelativeTime)}.");
-		return Task.CompletedTask;
 	}
 
 	private Task OnIdentityRegisteredAudit(Identity identity)

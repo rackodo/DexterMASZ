@@ -21,7 +21,7 @@ public class AuthenticationController : BaseController
 	public IActionResult Login([FromQuery] string returnUrl)
 	{
 		if (string.IsNullOrEmpty(returnUrl))
-			returnUrl = "/guilds";
+			returnUrl = "/";
 
 		var properties = new AuthenticationProperties
 		{

@@ -159,26 +159,6 @@ public class BotEnumTranslator : Translator
 				Language.It => "Ruolo non trovato",
 				_ => "Role not found"
 			},
-			ApiError.TokenCannotManageThisResource => PreferredLanguage switch
-			{
-				Language.De => "Tokens können diese Ressource nicht verwalten",
-				Language.At => "Tokns kennan de Ressourcen ned vawoitn",
-				Language.Fr => "Les jetons ne peuvent pas gérer cette ressource",
-				Language.Es => "Los tokens no pueden administrar este recurso",
-				Language.Ru => "Лексемы не могут управлять этим ресурсом",
-				Language.It => "I token non possono gestire questa risorsa",
-				_ => "Tokens cannot manage this resource"
-			},
-			ApiError.TokenAlreadyRegistered => PreferredLanguage switch
-			{
-				Language.De => "Token ist bereits registriert",
-				Language.At => "Tokn is bereits registriat",
-				Language.Fr => "Le jeton est déjà enregistré",
-				Language.Es => "El token ya está registrado",
-				Language.Ru => "Токен уже зарегистрирован",
-				Language.It => "Il token è già registrato",
-				_ => "Token is already registered"
-			},
 			ApiError.CannotBeSameUser => PreferredLanguage switch
 			{
 				Language.De => "Beide Benutzer sind gleich.",

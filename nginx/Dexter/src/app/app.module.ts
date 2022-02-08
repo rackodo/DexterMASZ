@@ -32,7 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IndexComponent } from './components/basic/index/index.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { AuthService } from './services/auth.service';
-import { ApiInterceptor } from './services/ApiInterceptor';
+import { ApiInterceptor } from './services/api-interceptor';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { AuthGuard } from './guards/auth.guard';
@@ -107,7 +107,6 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
 import { TimezoneService } from './services/timezone.service';
 import { CookieTrackerService } from './services/cookie-tracker.service';
 import { DatePickerComponent } from './components/basic/date-picker/date-picker.component';
-import { UpdateWarningComponent } from './components/api/adminstats/update-warning/update-warning.component';
 import { AuditlogConfigComponent } from './components/guilds/guild-config/auditlog-config/auditlog-config.component';
 import { AuditlogConfigRuleComponent } from './components/guilds/guild-config/auditlog-config/auditlog-config-rule/auditlog-config-rule.component';
 import { MultiSelectComponent } from './components/basic/multi-select/multi-select.component';
@@ -184,7 +183,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     FloorPipePipe,
     DateFormatPipe,
     DatePickerComponent,
-    UpdateWarningComponent,
     AuditlogConfigComponent,
     AuditlogConfigRuleComponent,
     MultiSelectComponent,

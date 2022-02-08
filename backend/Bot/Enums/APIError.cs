@@ -18,8 +18,6 @@ public enum ApiError
 	NoGuildsRegistered,
 	InvalidAuditLogEvent,
 	NotFoundInCache,
-	TokenCannotManageThisResource,
-	TokenAlreadyRegistered,
 
 	// USER MAPS
 	CannotBeSameUser,

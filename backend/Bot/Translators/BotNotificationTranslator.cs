@@ -5,7 +5,7 @@ namespace Bot.Translators;
 
 public class BotNotificationTranslator : Translator
 {
-	public string NotificationRegisterWelcomeToMasz()
+	public string NotificationRegisterWelcomeToDexter()
 	{
 		return PreferredLanguage switch
 		{
@@ -146,18 +146,18 @@ public class BotNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				"Bitte wende dich an den [Dexter Support Server](https://discord.gg/5zjpzw6h3S) für weitere Fragen.",
+				"Bitte wende dich an den [Dexter Support Server](https://discord.gg/DBS664yjWN) für weitere Fragen.",
 			Language.At =>
-				"Bitte wend di on den [Dexter Support Server](https://discord.gg/5zjpzw6h3S) fia weitare Frogn.",
+				"Bitte wend di on den [Dexter Support Server](https://discord.gg/DBS664yjWN) fia weitare Frogn.",
 			Language.Fr =>
-				"Veuillez vous référer au [serveur de support Dexter] (https://discord.gg/5zjpzw6h3S) pour d'autres questions.",
+				"Veuillez vous référer au [serveur de support Dexter] (https://discord.gg/DBS664yjWN) pour d'autres questions.",
 			Language.Es =>
-				"Consulte el [servidor de soporte Dexter] (https://discord.gg/5zjpzw6h3S) si tiene más preguntas.",
+				"Consulte el [servidor de soporte Dexter] (https://discord.gg/DBS664yjWN) si tiene más preguntas.",
 			Language.Ru =>
-				"Дополнительные вопросы можно найти на [сервере поддержки Dexter] (https://discord.gg/5zjpzw6h3S).",
+				"Дополнительные вопросы можно найти на [сервере поддержки Dexter] (https://discord.gg/DBS664yjWN).",
 			Language.It =>
-				"Fare riferimento al [Server di supporto Dexter] (https://discord.gg/5zjpzw6h3S) per ulteriori domande.",
-			_ => "Please refer to the [Dexter Support Server](https://discord.gg/5zjpzw6h3S) for further questions."
+				"Fare riferimento al [Server di supporto Dexter] (https://discord.gg/DBS664yjWN) per ulteriori domande.",
+			_ => "Please refer to the [Dexter Support Server](https://discord.gg/DBS664yjWN) for further questions."
 		};
 	}
 }

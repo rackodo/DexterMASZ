@@ -7,7 +7,7 @@ public class ConsoleLogger : ILogger
 	private const string DNetClientPrefix = "Discord.WebSocket.DiscordSocketClient";
 	private const string DNetPrefix = "Discord.";
 	private const LogLevel Level = LogLevel.Information;
-	private const string MaszPrefix = "Dexter.";
+	private const string DexterPrefix = "Dexter.";
 
 	private string _categoryName;
 
@@ -58,7 +58,7 @@ public class ConsoleLogger : ILogger
 				break;
 		}
 
-		if (_categoryName.StartsWith(MaszPrefix))
+		if (_categoryName.StartsWith(DexterPrefix))
 			_categoryName = _categoryName.Split('.').Last()
 				.Replace("RequestLoggingMiddleware", "ReqLog")
 				.Replace("Command", "Cmd")

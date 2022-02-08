@@ -21,7 +21,7 @@ public class AppSettings
 	public bool CorsEnabled { get; set; } = false;
 	[JsonIgnore] public string Lang { get; set; } = "en";
 	public string EmbedTitle { get; set; } = "Dexter - a discord moderation bot";
-	public string EmbedContent { get; set; } = "Dexter is a moderation bot for Discord Moderators. Keep track of all moderation events on your server, search reliably for infractions or setup automod to be one step ahead of trolls and rule breakers.";
+	public string EmbedContent { get; set; } = "Dexter is a moderation bot. Keep track of all moderation events on your server, search reliably for infractions or setup automod to be one step ahead of rule breakers.";
 
 	[NotMapped]
 	public Language DefaultLanguage
@@ -59,7 +59,7 @@ public class AppSettings
 		return
 			"<html>" +
 				"<head>" +
-					"<meta property=\"og:site_name\" content=\"Dexter by zaanposni\" />" +
+					"<meta property=\"og:site_name\" content=\"Dexter by FeroxFoxxo\" />" +
 					"<meta property=\"og:title\" content=\"" + EmbedTitle + "\" />" +
 					"<meta property=\"og:url\" content=\"" + url + "\" />" +
 					(string.IsNullOrWhiteSpace(EmbedContent) ? "" : "<meta property=\"og:description\" content=\"" + EmbedContent + "\" />") +

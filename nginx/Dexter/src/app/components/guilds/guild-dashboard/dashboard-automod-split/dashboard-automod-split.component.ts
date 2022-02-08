@@ -5,9 +5,7 @@ import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective, Color, Label } from 'ng2-charts';
 import { ToastrService } from 'ngx-toastr';
 import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
-import { AutoModType } from 'src/app/models/AutoModType';
 import { AutoModSplit } from 'src/app/models/AutoModSplit';
-import { ContentLoading } from 'src/app/models/ContentLoading';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 

@@ -15,8 +15,6 @@ public class BotDatabase : DataContext<BotDatabase>, DataContextCreate
 
 	public DbSet<GuildConfig> GuildConfigs { get; set; }
 
-	private DbSet<ApiToken> ApiTokens { get; set; }
-
 	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
 		IServiceCollection serviceCollection)
 	{
@@ -71,27 +69,5 @@ public class BotDatabase : DataContext<BotDatabase>, DataContextCreate
 	public async Task<int> CountAllGuildConfigs()
 	{
 		return await GuildConfigs.AsQueryable().CountAsync();
-	}
-
-	public async Task SaveToken(ApiToken token)
-	{
-		await ApiTokens.AddAsync(token);
-		await SaveChangesAsync();
-	}
-
-	public async Task DeleteToken(ApiToken token)
-	{
-		ApiTokens.Remove(token);
-		await SaveChangesAsync();
-	}
-
-	public async Task<int> CountAllApiTokens()
-	{
-		return await ApiTokens.AsQueryable().CountAsync();
-	}
-
-	public async Task<ApiToken> GetApiToken()
-	{
-		return await ApiTokens.AsQueryable().FirstOrDefaultAsync();
 	}
 }

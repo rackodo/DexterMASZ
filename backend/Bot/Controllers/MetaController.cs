@@ -42,16 +42,4 @@ public class MetaController : BaseController
 	{
 		return Ok(new DiscordApplication(await _discordRest.GetCurrentApplicationInfo()));
 	}
-
-	[HttpGet("versions")]
-	public async Task<IActionResult> GetReleases()
-	{
-		var restClient = new RestClient("https://dexterindex.zaanposni.com/");
-		var request = new RestRequest("/api/v1/versions");
-		request.AddQueryParameter("name", "dexter_backend");
-
-		var response = await restClient.ExecuteAsync(request);
-
-		return Ok(response.Content);
-	}
 }
