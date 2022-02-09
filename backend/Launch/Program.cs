@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
+const bool migrateDatabases = false;
+
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("========== Launching Dexter ==========");
 
@@ -69,7 +71,12 @@ ConsoleCreator.AddSubHeading("Querying database for", nameof(AppSettings));
 
 await using (var dataContext = new BotDatabase(dbBuilder.Options))
 {
-	await dataContext.Database.MigrateAsync();
+#pragma warning disable CS0162
+	if (migrateDatabases)
+		await dataContext.Database.MigrateAsync();
+	else
+		await dataContext.Database.EnsureCreatedAsync();
+#pragma warning restore CS0162
 
 	var appSettingRepo = new SettingsRepository(dataContext, clientIdContainer, null);
 
@@ -229,7 +236,13 @@ using (var scope = app.Services.CreateScope())
 	foreach (var dataContext in cachedServices.GetInitializedClasses<DbContext>(scope.ServiceProvider))
 	{
 		ConsoleCreator.AddSubHeading("Adding migrations for", dataContext.GetType().Name);
-		await dataContext.Database.MigrateAsync();
+
+#pragma warning disable CS0162
+		if (migrateDatabases)
+			await dataContext.Database.MigrateAsync();
+		else
+			await dataContext.Database.EnsureCreatedAsync();
+#pragma warning restore CS0162
 	}
 }
 
