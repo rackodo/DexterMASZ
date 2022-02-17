@@ -47,7 +47,7 @@
 ⭐ **Infractions and managed (temporary) punishments** - to moderate your server\
 ⭐ **Quicksearch** - to reliably search for any infractions or notes a user has\
 ⭐ **Automoderation** - to give trolls no chance\
-⭐ **Ban appeals and webhook notifications** - to moderate your server transparently
+⭐ **Ban appeals and webhook notifications** - to moderate your server transparently\
 ⭐ **Music Player** - for playing/pausing/resuming etc music from spotify and youtube.
 
 ### 👀 Preview
