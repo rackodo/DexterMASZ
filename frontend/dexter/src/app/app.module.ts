@@ -41,7 +41,7 @@ import { NotFoundComponent } from './components/errors/not-found/not-found.compo
 import { CookieModule } from 'ngx-cookie';
 import { PatchnotesComponent } from './components/basic/patchnotes/patchnotes.component';
 import { GuidelinesComponent } from './components/basic/guidelines/guidelines.component';
-import { DonateComponent } from './components/basic/donate/donate.component';
+import { LegalComponent } from './components/basic/legal/legal.component';
 import { EpiclistComponent } from './components/basic/epiclist/epiclist.component';
 import { CommonModule } from '@angular/common';
 import { GuildOverviewComponent } from './components/guilds/guild-overview/guild-overview.component';
@@ -122,11 +122,11 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     IndexComponent,
+    LegalComponent,
     GuildCardComponent,
     NotFoundComponent,
     PatchnotesComponent,
     GuidelinesComponent,
-    DonateComponent,
     EpiclistComponent,
     GuildOverviewComponent,
     GuildAddComponent,

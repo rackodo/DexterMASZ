@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 15.0.26124.0
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Launch", "Launch\Launch.csproj", "{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bot", "Bot\Bot.csproj", "{3019FB0E-186D-4440-8166-0996C36231BE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoMods", "AutoMods\AutoMods.csproj", "{2370CDDE-7E32-4EDB-8A12-07F69BC67CA9}"
@@ -21,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserNotes", "UserNotes\User
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserMaps", "UserMaps\UserMaps.csproj", "{C6CE7B09-E263-4453-BD0B-19B8075FF8A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Launch", "Launch\Launch.csproj", "{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messaging", "Messaging\Messaging.csproj", "{8BE049C2-1FA3-4264-8806-7EC8488A228E}"
 EndProject
 Global
@@ -35,6 +35,18 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|x64.Build.0 = Debug|Any CPU
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|x86.Build.0 = Debug|Any CPU
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|x64.ActiveCfg = Release|Any CPU
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|x64.Build.0 = Release|Any CPU
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|x86.ActiveCfg = Release|Any CPU
+		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|x86.Build.0 = Release|Any CPU
 		{3019FB0E-186D-4440-8166-0996C36231BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3019FB0E-186D-4440-8166-0996C36231BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3019FB0E-186D-4440-8166-0996C36231BE}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -143,18 +155,6 @@ Global
 		{C6CE7B09-E263-4453-BD0B-19B8075FF8A3}.Release|x64.Build.0 = Release|Any CPU
 		{C6CE7B09-E263-4453-BD0B-19B8075FF8A3}.Release|x86.ActiveCfg = Release|Any CPU
 		{C6CE7B09-E263-4453-BD0B-19B8075FF8A3}.Release|x86.Build.0 = Release|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|x64.Build.0 = Debug|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Debug|x86.Build.0 = Debug|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|x64.ActiveCfg = Release|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|x64.Build.0 = Release|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|x86.ActiveCfg = Release|Any CPU
-		{EF9E2DD1-AEB2-495F-BD80-C6C2FA667053}.Release|x86.Build.0 = Release|Any CPU
 		{8BE049C2-1FA3-4264-8806-7EC8488A228E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8BE049C2-1FA3-4264-8806-7EC8488A228E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BE049C2-1FA3-4264-8806-7EC8488A228E}.Debug|x64.ActiveCfg = Debug|Any CPU

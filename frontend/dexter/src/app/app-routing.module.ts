@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminStatsComponent } from './components/api/adminstats/adminstats.component';
 import { AppSettingsComponent } from './components/api/appsettings/appsettings.component';
-import { DonateComponent } from './components/basic/donate/donate.component';
 import { GuidelinesComponent } from './components/basic/guidelines/guidelines.component';
+import { LegalComponent } from './components/basic/legal/legal.component';
 import { IndexComponent } from './components/basic/index/index.component';
 import { PatchnotesComponent } from './components/basic/patchnotes/patchnotes.component';
 import { NotFoundComponent } from './components/errors/not-found/not-found.component';
@@ -32,8 +32,8 @@ const routes: Routes = [
   { path: 'settings', component: AppSettingsComponent, canActivate: [AuthGuard] },
   { path: 'patchnotes', component: PatchnotesComponent },
   { path: 'oauthfailed', component: OauthFailedComponent },
-  { path: 'donate', component: DonateComponent },
   { path: 'guidelines', component: GuidelinesComponent },
+  { path: 'legal', component: LegalComponent },
   { path: 'login',  component: IndexComponent, pathMatch: 'full' },
   { path: '',  redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent }

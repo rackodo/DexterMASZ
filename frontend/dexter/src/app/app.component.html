@@ -206,13 +206,7 @@
             <span>{{ 'Toolbar.Patchnotes' | translate }}</span>
           </div>
         </a>
-        <a class="d-flex" (click)="open('donate')">
-          <div [class.activatedNav]="activatedNav[1] === 'donate'" class="rounded navitem">
-            <mat-icon aria-hidden="false" aria-label="tune icon">forum</mat-icon>
-            <span>{{ 'Toolbar.Community' | translate }}</span>
-          </div>
-        </a>
-
+		
         <ng-container *ngIf="applicationInfo?.termsOfServiceUrl; else elseTemplateToS">
           <a class="d-flex" href="{{ applicationInfo?.termsOfServiceUrl }}" target="_blank">
             <div [class.activatedNav]="activatedNav[1] === 'guidelines'" class="rounded navitem">
@@ -230,21 +224,39 @@
           </a>
         </ng-template>
 
-        <a class="d-flex" target="_blank" [attr.href]="applicationInfo?.privacyPolicyUrl ?? 'legal.html'">
-          <div class="rounded navitem">
-            <mat-icon aria-hidden="false" aria-label="legal notes">gavel</mat-icon>
-            <span>{{ 'Toolbar.Legal' | translate }}</span>
-          </div>
-        </a>
+        <ng-container *ngIf="applicationInfo?.privacyPolicyUrl; else elseTemplatePP">
+          <a class="d-flex" href="{{ applicationInfo?.privacyPolicyUrl }}" target="_blank">
+            <div [class.activatedNav]="activatedNav[1] === 'legal'" class="rounded navitem">
+              <mat-icon aria-hidden="false" aria-label="legal notes">gavel</mat-icon>
+              <span>{{ 'Toolbar.Legal' | translate }}</span>
+            </div>
+          </a>
+        </ng-container>
+        <ng-template #elseTemplatePP>
+          <a class="d-flex" (click)="open('legal')">
+            <div [class.activatedNav]="activatedNav[1] === 'legal'" class="rounded navitem">
+              <mat-icon aria-hidden="false" aria-label="legal notes">gavel</mat-icon>
+              <span>{{ 'Toolbar.Legal' | translate }}</span>
+            </div>
+          </a>
+        </ng-template>
 
         <span class="flex-grow-1"></span>
 
-        <a class="d-flex" href="https://github.com/zaanposni/discord-dexter" target="_blank" rel="noreferrer">
+        <div class="d-flex">
           <div class="rounded navitem text-black-50">
             <mat-icon aria-hidden="false" aria-label="github link" svgIcon="githublogo"></mat-icon>
-            <span>© Dexter by zaanposni</span>
+            <span>
+				<a href="https://github.com/zaanposni/discord-masz" target="_blank" rel="noreferrer">
+					© Dexter by feroxfoxxo
+				</a>
+				<br>
+				<a href="https://github.com/zaanposni/discord-masz" target="_blank" rel="noreferrer">
+					© MASZ by zaanposni
+				</a>
+			</span>
           </div>
-        </a>
+        </div>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
