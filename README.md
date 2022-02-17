@@ -67,7 +67,7 @@ You should be using the official Dexter instance on your server.
 #### TL;DR;
 
 - Create a discord application at [https://discord.com/developers/applications](https://discord.com/developers/applications)
-- Set redirect urls on your discord application [as defined](https://github.com/FeroxFoxxo/DexterDexter#discord-oauth).
+- Set redirect urls on your discord application [as defined](https://github.com/FeroxFoxxo/DexterMASZ#discord-oauth).
 - Enable **Server Members** and **Message Content Intent** in your bot settings.
 - App will be hosted on `127.0.0.1:5565`.
 - Read further for more information on different deployment methods and further steps.
