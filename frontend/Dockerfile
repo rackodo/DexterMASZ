@@ -1,7 +1,7 @@
 FROM node:14.15 AS compile-frontend
 WORKDIR /angular
 
-COPY MASZ/ .
+COPY dexter/ .
 
 RUN npm install -g @angular/cli
 RUN npm install
