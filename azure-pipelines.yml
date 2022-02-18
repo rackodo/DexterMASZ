@@ -18,7 +18,8 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    command: 'build'
+    command: 'build'    
+    projects: '**/*.sln'
     arguments: '-c Release -o deploy'
 - task: Docker@2
   inputs:
