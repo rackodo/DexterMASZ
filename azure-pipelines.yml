@@ -4,20 +4,32 @@ trigger:
 pool: Dexter
 
 steps:
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    version: 6.0.x
+    performMultiLevelLookup: true
+    includePreviewVersions: true
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
     command: 'restore'
     projects: '**/*.sln'
-  
 - task: DotNetCoreCLI@2
-  displayName: Publish
+  displayName: Build
   inputs:
-    command: publish
-    publishWebProjects: true
-    projects: '**/*.sln'
-    arguments: '-r linux-x64 --output $(Build.ArtifactStagingDirectory) --self-contained'
-
+    command: 'build'
+    arguments: '-c Release -o deploy'
+- task: Docker@2
+  inputs:
+    command: 'build'
+    Dockerfile: 'backend/Dockerfile'
+    buildContext: '$(Build.ArtifactStagingDirectory)'
+- task: Docker@2
+  inputs:
+    command: 'build'
+    Dockerfile: 'frontend/Dockerfile'
+    buildContext: '$(Build.ArtifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
   displayName: Send Artifact
   inputs:
