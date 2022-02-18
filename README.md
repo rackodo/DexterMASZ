@@ -9,13 +9,10 @@
       <h4 align="center">Used to help moderate the server and provides useful tools. Made with love <3</h4>
       <p align="center">
          <a href="https://discord.gg/DBS664yjWN">
-         <img alt="Discord" src="https://img.shields.io/discord/613441321751019550?color=%237289DA&label=Discord">
-         </a>
-         <a href="https://dev.azure.com/frostrixz/Dexter">
-         <img alt="Azure Pipelines" src="https://dev.azure.com/frostrixz/Dexter/_apis/build/status/FeroxFoxxo.Dexter?branchName=master">
+         <img alt="Discord" src="https://img.shields.io/discord/613441321751019550?color=%237289DA&label=Discord&style=for-the-badge">
          </a>
          <a href="https://github.com/FeroxFoxxo/DexterMASZ/blob/master/LICENSE">
-         <img alt="GitHub" src="https://img.shields.io/github/license/feroxfoxxo/dextermasz?label=License">
+         <img alt="GitHub" src="https://img.shields.io/github/license/feroxfoxxo/dextermasz?label=License&style=for-the-badge">
          </a>
       </p>
       <h2>Built With</h2>
