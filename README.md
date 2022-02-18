@@ -3,7 +3,7 @@
       <h1 align="center" style="position: relative;">
          <img src="https://cdn.discordapp.com/attachments/781077443338960926/807479083297931264/DexLove.png" width="200" style="border-radius: 50%;" align="center">
          <br>
-         Dexter .NET
+         Dexter Masz
       </h1>
       <h3 align="center">The official USFurries Discord bot!</h3>
       <h4 align="center">Used to help moderate the server and provides useful tools. Made with love <3</h4>
@@ -14,8 +14,8 @@
          <a href="https://dev.azure.com/frostrixz/Dexter">
          <img alt="Azure Pipelines" src="https://dev.azure.com/frostrixz/Dexter/_apis/build/status/FeroxFoxxo.Dexter?branchName=master">
          </a>
-         <a href="https://github.com/FeroxFoxxo/DexterDexter/blob/master/LICENSE">
-         <img alt="GitHub" src="https://img.shields.io/github/license/feroxfoxxo/dexterdexter?label=License">
+         <a href="https://github.com/FeroxFoxxo/DexterMASZ/blob/master/LICENSE">
+         <img alt="GitHub" src="https://img.shields.io/github/license/feroxfoxxo/dextermasz?label=License">
          </a>
       </p>
       <h2>Built With</h2>
@@ -31,7 +31,7 @@
          This bot is an adaption from the version of Dexter, written in JavaScript, by <a href="https://github.com/Jakey-F">Jakey Floofle</a>. As such, some commands have been adaptions from their original sources.
       </p>
       <p>
-         This bot was originally built off of the <a href="https://github.com/zaanposni/discord-masz">Dexter bot</a>, but extends upon it by focusing on plugin support!
+         This bot was originally built off of <a href="https://github.com/zaanposni/discord-masz">MASZ</a>, but extends upon it by focusing on plugin support!
       </p>
    </body>
 </html>
@@ -44,26 +44,15 @@
 
 ### Plugins
 
-#### Dexter
-
-These plugins have been ported from [https://github.com/zaanposni/discord-masz](Dexter), are part of their own plugin, and can be enabled/disabled.
-
 ⭐ **Infractions and managed (temporary) punishments** - to moderate your server\
 ⭐ **Quicksearch** - to reliably search for any infractions or notes a user has\
 ⭐ **Automoderation** - to give trolls no chance\
-⭐ **Ban appeals and webhook notifications** - to moderate your server transparently
-
-#### Dexter
-
-These plugins have been ported from [https://github.com/FeroxFoxxo/Dexter](Dexter), and can be enabled/disabled.
-
+⭐ **Ban appeals and webhook notifications** - to moderate your server transparently\
 ⭐ **Music Player** - for playing/pausing/resuming etc music from spotify and youtube.
 
 ### 👀 Preview
 
-![dashboard preview](/docs/dashboard.png)
-
-**Previews and examples can be found at:** [https://github.com/FeroxFoxxo/DexterDexter/tree/master/docs](https://github.com/FeroxFoxxo/DexterDexter/tree/master/docs)
+![dashboard preview](https://raw.githubusercontent.com/zaanposni/discord-masz/master/docs/dashboard.png)
 
 ### 🤝 Support Server
 
@@ -78,7 +67,7 @@ You should be using the official Dexter instance on your server.
 #### TL;DR;
 
 - Create a discord application at [https://discord.com/developers/applications](https://discord.com/developers/applications)
-- Set redirect urls on your discord application [as defined](https://github.com/FeroxFoxxo/DexterDexter#discord-oauth).
+- Set redirect urls on your discord application [as defined](https://github.com/FeroxFoxxo/DexterMASZ#discord-oauth).
 - Enable **Server Members** and **Message Content Intent** in your bot settings.
 - App will be hosted on `127.0.0.1:5565`.
 - Read further for more information on different deployment methods and further steps.
@@ -113,13 +102,13 @@ Create your own OAuth application [here](https://discord.com/developers/applicat
 Also set the redirect paths in the tab `OAuth2`.\
 Be sure to set the following (choose localhost or domain depending on your deployment):
 
-![redirect example](/docs/redirects.png)
+![redirect example](https://raw.githubusercontent.com/zaanposni/discord-masz/master/docs/redirects.png)
 
 ### Bot Intents
 
 Enable **Server Members** and **Message Content Intent** in your bot settings.
 
-![intents example](/docs/intents.png)
+![intents example](https://raw.githubusercontent.com/zaanposni/discord-masz/master/docs/intents.png)
 
 ### Enabling Restricted Features For Inbuilt Plugins
 
