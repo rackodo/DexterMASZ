@@ -14,7 +14,7 @@ RUN rm -rf /usr/share/nginx/html/*
 
 COPY static/ /var/www/data/static/
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=compile-frontend /angular/dist/masz/ /var/www/data/
+COPY --from=compile-frontend /angular/dist/dexter/ /var/www/data/
 
 # Set timezone
 ENV TZ=Europe/Berlin
