@@ -1,8 +1,7 @@
 trigger:
 - main
 
-pool:
-  vmImage: 'linux-latest'
+pool: Dexter
 
 variables:
   solution: '**/*.sln'
