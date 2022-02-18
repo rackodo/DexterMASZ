@@ -19,8 +19,8 @@ steps:
   displayName: Publish
   inputs:
     command: publish
-    publishWebProjects: False
-    zipAfterPublish: False
+    publishWebProjects: true
+    projects: '**/*.sln'
     arguments: '-r linux-x64 --output $(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
