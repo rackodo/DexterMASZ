@@ -19,9 +19,8 @@ stages:
       displayName: Build backend
       inputs:
         command: build
-        repository: $(imageRepository)
-        containerRegistry: $(dockerRegistryServiceConnection)
         dockerfile: '$(Build.SourcesDirectory)/backend/Dockerfile'
+        arguments: '--output $(Build.ArtifactsStagingDirectory)'
         tags: |
           $(tag)
     - task: Docker@2
@@ -29,5 +28,6 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
+        arguments: '--output $(Build.ArtifactsStagingDirectory)'
         tags: |
           $(tag)
