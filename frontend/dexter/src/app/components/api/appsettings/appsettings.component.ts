@@ -102,5 +102,4 @@ export class AppSettingsComponent implements OnInit {
 
   get settingsDefaultLanguage() { return this.settingsFormGroup.get('defaultLanguage'); }
   get settingsAuditLogWebhookURL() { return this.settingsFormGroup.get('auditLogWebhookUrl'); }
-  get settingsPublicFileMode() { return this.settingsFormGroup.get('publicFileMode'); }
 }
