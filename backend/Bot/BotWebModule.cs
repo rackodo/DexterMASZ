@@ -64,7 +64,6 @@ public class BotWebModule : WebModule
 				options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 				options.CorrelationCookie.SameSite = SameSiteMode.Lax;
 				options.CorrelationCookie.HttpOnly = false;
-				options.
 			});
 
 		if (settings.CorsEnabled)
