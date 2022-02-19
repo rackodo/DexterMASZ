@@ -29,3 +29,8 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
         tags: |
           $(tag)
+    - task: PublishBuildArtifacts@1
+      displayName: Send Artifact
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+        artifactName: 'Dexter'
