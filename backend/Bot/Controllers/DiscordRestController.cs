@@ -133,9 +133,9 @@ public class DiscordRestController : AuthenticatedController
 	{
 		var identity = await SetupAuthentication();
 
-		var guilds = identity.GetCurrentUserGuilds().Where(
-			guild => guild.IsAdmin
-		).ToList();
+		var botGuildJoined = _discordRest.GetGuilds();
+
+		var guilds = identity.GetCurrentUserGuilds();
 
 		foreach (var guild in guilds.ToArray())
 			try
@@ -143,7 +143,10 @@ public class DiscordRestController : AuthenticatedController
 				await _guildConfigRepo.GetGuildConfig(guild.Id);
 				guilds.Remove(guild);
 			}
-			catch (UnregisteredGuildException) { }
+			catch (UnregisteredGuildException) {
+				if (!guild.IsAdmin || !(botGuildJoined.Contains(guild.Id) && await identity.IsSiteAdmin()))
+					guilds.Remove(guild);
+			}
 
 		return Ok(guilds.Select(x => new DiscordGuild(x)));
 	}

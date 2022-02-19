@@ -104,6 +104,11 @@ public class DiscordRest : IHostedService, Event
 		_cache[cacheKey.GetValue()] = cacheApiResponse;
 	}
 
+	public ulong[] GetGuilds()
+	{
+		return _client.Guilds.Select(g => g.Id).ToArray();
+	}
+
 	public async Task<List<IBan>> GetGuildBans(ulong guildId, CacheBehavior cacheBehavior)
 	{
 		var cacheKey = CacheKey.GuildBans(guildId);
