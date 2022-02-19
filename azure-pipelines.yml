@@ -19,8 +19,9 @@ stages:
       displayName: Build backend
       inputs:
         command: build
+        repository: $(imageRepository)
+        containerRegistry: $(dockerRegistryServiceConnection)
         dockerfile: '$(Build.SourcesDirectory)/backend/Dockerfile'
-        buildContext: '$(Build.ArtifactStagingDirectory)'
         tags: |
           $(tag)
     - task: Docker@2
@@ -28,11 +29,5 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
-        buildContext: '$(Build.ArtifactStagingDirectory)'
         tags: |
           $(tag)
-    - task: PublishBuildArtifacts@1
-      displayName: Send Artifact
-      inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-        artifactName: 'Dexter'
