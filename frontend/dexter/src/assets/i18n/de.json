@@ -196,6 +196,8 @@
         "Invite": "Einladen",
         "Back": "Zurück",
         "Next": "Nächster Schritt",
+        "StepStaffChannels": "Wählen Sie Mitarbeiter-Bot-Kanäle aus",
+        "StaffChannels": "Personalkanäle",
         "StepAdminRoles": "Auswahl der Adminrollen",
         "AdminRoles": "Adminrollen",
         "StepModeratorRoles": "Auswahl der Moderatorrollen",

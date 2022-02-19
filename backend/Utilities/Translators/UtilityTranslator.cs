@@ -11,7 +11,6 @@ public class UtilityTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Avatar URL",
-			Language.At => "Avadar URL",
 			Language.Fr => "l'URL d'avatar",
 			Language.Es => "URL de avatar",
 			Language.Ru => "URL аватара",
@@ -25,7 +24,6 @@ public class UtilityTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Status",
-			Language.At => "Status",
 			Language.Fr => "Statut",
 			Language.Es => "Estado",
 			Language.Ru => "Статус",
@@ -38,7 +36,6 @@ public class UtilityTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Bot",
-			Language.At => "Bot",
 			Language.Fr => "Bot",
 			Language.Es => "Bot",
 			Language.Ru => "Бот",
@@ -51,7 +48,6 @@ public class UtilityTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Datenbank",
-			Language.At => "Datenbank",
 			Language.Fr => "Base de données",
 			Language.Es => "Base de datos",
 			Language.Ru => "База данных",
@@ -64,7 +60,6 @@ public class UtilityTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Interner Cache",
-			Language.At => "Interner Cache",
 			Language.Fr => "Cache interne",
 			Language.Es => "Cache interno",
 			Language.Ru => "Внутренний кеш",
@@ -77,7 +72,6 @@ public class UtilityTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Momentan angemeldete Benutzer",
-			Language.At => "Momentan angemeldete Benutzer",
 			Language.Fr => "Utilisateurs actuellement connectés",
 			Language.Es => "Usuarios actualmente conectados",
 			Language.Ru => "Пользователи, в настоящее время в системе",
@@ -90,7 +84,6 @@ public class UtilityTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Letzter Abmeldungszeitpunkt: {time}.",
-			Language.At => $"Letzter Abmeldungszeitpunkt: {time}.",
 			Language.Fr => $"Dernière déconnexion à {time}.",
 			Language.Es => $"Última desconexión en {time}.",
 			Language.Ru => $"Последнее отключение: {time}.",
@@ -103,7 +96,6 @@ public class UtilityTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"{count} Nachrichten in {channel.Mention} gelöscht.",
-			Language.At => $"{count} Nochrichtn in {channel.Mention} glescht.",
 			Language.Fr => $"{count} messages supprimés dans {channel.Mention}.",
 			Language.Es => $"Se eliminaron {count} mensajes en {channel.Mention}.",
 			Language.Ru => $"Удалено {count} сообщений в {channel.Mention}.",

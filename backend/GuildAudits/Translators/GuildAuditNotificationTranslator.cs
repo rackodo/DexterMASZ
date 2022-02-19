@@ -11,7 +11,6 @@ public class GuildAuditNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Rolle(n) erwähnen",
-			Language.At => "Rolle(n) erwähnan",
 			Language.Fr => "Mentionner le(s) rôle(s)",
 			Language.Es => "Mencionar rol (s)",
 			Language.Ru => "Упоминание ролей",
@@ -25,7 +24,6 @@ public class GuildAuditNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Gildenprüfung",
-			Language.At => "Gildenprüfung",
 			Language.Fr => "Audit De Guilde",
 			Language.Es => "Auditoría Del Gremio",
 			Language.Ru => "Аудит гильдии",
@@ -40,8 +38,6 @@ public class GuildAuditNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Gildenspezifischer Audit-Log für Ereignis **{eventName}** wurde von {actor.Mention} eingerichtet.",
-			Language.At =>
-				$"Güdnspezifischa Audit-Log fias Ereignis **{eventName}** wuad vo {actor.Mention} eingrichtet.",
 			Language.Fr =>
 				$"Le journal d'audit au niveau de la guilde pour l'événement **{eventName}** a été mis en place par {actor.Mention}.",
 			Language.Es =>
@@ -59,7 +55,6 @@ public class GuildAuditNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Gildenspezifischer Audit-Log für Ereignis **{eventName}** wurde von {actor.Mention} bearbeitet.",
-			Language.At => $"Güdnspezifischa Audit-Log fias Ereignis **{eventName}** wuad vo {actor.Mention} beoarbeit.",
 			Language.Fr =>
 				$"Le journal d'audit au niveau de la guilde pour l'événement **{eventName}** a été modifié par {actor.Mention}.",
 			Language.Es =>
@@ -77,7 +72,6 @@ public class GuildAuditNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Gildenspezifischer Audit-Log für Ereignis **{eventName}** wurde von {actor.Mention} gelöscht.",
-			Language.At => $"Güdnspezifischa Audit-Log fias Ereignis **{eventName}** wuad vo {actor.Mention} glescht.",
 			Language.Fr =>
 				$"Le journal d'audit au niveau de la guilde pour l'événement **{eventName}** a été supprimé par {actor.Mention}.",
 			Language.Es =>

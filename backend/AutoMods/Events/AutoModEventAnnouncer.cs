@@ -50,21 +50,21 @@ public class AutoModEventAnnouncer : Event
 
 		translator.SetLanguage(guildConfig);
 
-		if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
+		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending webhook for auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.ModNotificationWebhook}.");
+				$"Sending webhook for auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.StaffWebhook}.");
 
 			try
 			{
 				var embed = await modEvent.CreateInternalAutoModEmbed(guildConfig, author, channel,
 					scope.ServiceProvider, punishmentsConfig.PunishmentType);
-				await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, embed.Build());
+				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build());
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.ModNotificationWebhook}.");
+					$"Error while announcing auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.StaffWebhook}.");
 			}
 		}
 
@@ -143,20 +143,20 @@ public class AutoModEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(config.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
+		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending webhook for config {config.GuildId}/{config.AutoModType} ({config.Id}) to {guildConfig.ModNotificationWebhook}.");
+				$"Sending webhook for config {config.GuildId}/{config.AutoModType} ({config.Id}) to {guildConfig.StaffWebhook}.");
 
 			try
 			{
 				var embed = await config.CreateAutoModConfigEmbed(actor, action, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, embed.Build());
+				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build());
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing config  {config.GuildId}/{config.AutoModType} ({config.Id}) to {guildConfig.ModNotificationWebhook}.");
+					$"Error while announcing config  {config.GuildId}/{config.AutoModType} ({config.Id}) to {guildConfig.StaffWebhook}.");
 			}
 		}
 	}

@@ -68,9 +68,13 @@ public class GuildConfigRepository : Repository, AddAdminStats
 			if (guild.Roles.All(r => r.Id != role))
 				throw new RoleNotFoundException(role);
 
-		if (guildConfig.ModNotificationWebhook != null)
-			guildConfig.ModNotificationWebhook =
-				guildConfig.ModNotificationWebhook.Replace("discord.com", "discordapp.com");
+		if (guildConfig.AdminWebhook != null)
+			guildConfig.AdminWebhook =
+				guildConfig.AdminWebhook.Replace("discord.com", "discordapp.com");
+
+		if (guildConfig.StaffWebhook != null)
+			guildConfig.StaffWebhook =
+				guildConfig.StaffWebhook.Replace("discord.com", "discordapp.com");
 
 		await _context.SaveGuildConfig(guildConfig);
 
@@ -94,9 +98,13 @@ public class GuildConfigRepository : Repository, AddAdminStats
 			if (guild.Roles.All(r => r.Id != role))
 				throw new RoleNotFoundException(role);
 
-		if (guildConfig.ModNotificationWebhook != null)
-			guildConfig.ModNotificationWebhook =
-				guildConfig.ModNotificationWebhook.Replace("discord.com", "discordapp.com");
+		if (guildConfig.AdminWebhook != null)
+			guildConfig.AdminWebhook =
+				guildConfig.AdminWebhook.Replace("discord.com", "discordapp.com");
+
+		if (guildConfig.StaffWebhook != null)
+			guildConfig.StaffWebhook =
+				guildConfig.StaffWebhook.Replace("discord.com", "discordapp.com");
 
 		await _context.InternalUpdateGuildConfig(guildConfig);
 

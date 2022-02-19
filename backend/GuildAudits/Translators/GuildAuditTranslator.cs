@@ -10,7 +10,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Erstellt",
-			Language.At => "Erstöt",
 			Language.Fr => "Créé",
 			Language.Es => "Creado",
 			Language.Ru => "Созданный",
@@ -24,7 +23,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Information nicht im Cache.",
-			Language.At => "Info ned im Cache.",
 			Language.Fr => "Informations non mises en cache.",
 			Language.Es => "Información no almacenada en caché.",
 			Language.Ru => "Информация не кешируется.",
@@ -38,7 +36,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Alt",
-			Language.At => "Alt",
 			Language.Fr => "Ancien",
 			Language.Es => "Viejo",
 			Language.Ru => "Старый",
@@ -52,7 +49,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Neu",
-			Language.At => "Neu",
 			Language.Fr => "Nouveau",
 			Language.Es => "Nuevo",
 			Language.Ru => "Новый",
@@ -66,7 +62,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Leer",
-			Language.At => "Leer",
 			Language.Fr => "Vide",
 			Language.Es => "Vacío",
 			Language.Ru => "Пустой",
@@ -80,7 +75,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Nachricht gesendet",
-			Language.At => "Nochricht gsendet",
 			Language.Fr => "Message envoyé",
 			Language.Es => "Mensaje enviado",
 			Language.Ru => "Сообщение отправлено",
@@ -94,7 +88,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Nachricht aktualisiert",
-			Language.At => "Nochricht aktualisiert",
 			Language.Fr => "Message modifié",
 			Language.Es => "Mensaje editado",
 			Language.Ru => "Сообщение отредактировано",
@@ -108,7 +101,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Zuvor",
-			Language.At => "Davoa",
 			Language.Fr => "Avant",
 			Language.Es => "Antes",
 			Language.Ru => "До",
@@ -122,7 +114,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Nachricht gelöscht",
-			Language.At => "Nochricht gelöscht",
 			Language.Fr => "Message supprimé",
 			Language.Es => "Mensaje borrado",
 			Language.Ru => "Сообщение удалено",
@@ -136,7 +127,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Inhalt",
-			Language.At => "Inhalt",
 			Language.Fr => "Teneur",
 			Language.Es => "Contenido",
 			Language.Ru => "Содержание",
@@ -150,7 +140,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Nutzer gebannt",
-			Language.At => "Nutza ausgsperrt",
 			Language.Fr => "Utilisateur banni",
 			Language.Es => "Usuario baneado",
 			Language.Ru => "Пользователь забанен",
@@ -164,7 +153,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Nutzer entbannt",
-			Language.At => "Nutza nimma ausgsperrt",
 			Language.Fr => "Utilisateur non banni",
 			Language.Es => "Usuario no prohibido",
 			Language.Ru => "Пользователь разблокирован",
@@ -178,7 +166,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Einladung erstellt",
-			Language.At => "Eiladung erstöt",
 			Language.Fr => "Invitation créée",
 			Language.Es => "Invitación creada",
 			Language.Ru => "Приглашение создано",
@@ -192,7 +179,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "URL",
-			Language.At => "URL",
 			Language.Fr => "URL",
 			Language.Es => "URL",
 			Language.Ru => "URL",
@@ -206,7 +192,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Maximale Nutzungen",
-			Language.At => "Maximale Vawednungen",
 			Language.Fr => "Utilisations maximales",
 			Language.Es => "Usos máximos",
 			Language.Ru => "Макс использует",
@@ -220,7 +205,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Ablaufdatum",
-			Language.At => "Oblaufdatum",
 			Language.Fr => "Date d'expiration",
 			Language.Es => "Fecha de caducidad",
 			Language.Ru => "Срок хранения",
@@ -234,7 +218,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Zielkanal",
-			Language.At => "Zielkanal",
 			Language.Fr => "Canal cible",
 			Language.Es => "Canal objetivo",
 			Language.Ru => "Целевой канал",
@@ -248,7 +231,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Einladung gelöscht",
-			Language.At => "Eiladung glescht",
 			Language.Fr => "Invitation supprimée",
 			Language.Es => "Invitación eliminada",
 			Language.Ru => "Приглашение удалено",
@@ -262,7 +244,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Mitglied beigetreten",
-			Language.At => "Mitglied beitretn",
 			Language.Fr => "Membre rejoint",
 			Language.Es => "Miembro se unió",
 			Language.Ru => "Участник присоединился",
@@ -276,7 +257,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Registriert",
-			Language.At => "Registriat",
 			Language.Fr => "Inscrit",
 			Language.Es => "Registrado",
 			Language.Ru => "Зарегистрировано",
@@ -290,7 +270,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Mitglied entfernt",
-			Language.At => "Mitglied entfernt",
 			Language.Fr => "Membre supprimé",
 			Language.Es => "Miembro eliminado",
 			Language.Ru => "Участник удален",
@@ -304,7 +283,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Thread erstellt",
-			Language.At => "Thread erstöt",
 			Language.Fr => "Fil créé",
 			Language.Es => "Hilo creado",
 			Language.Ru => "Тема создана",
@@ -318,7 +296,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Elternkanal",
-			Language.At => "Eltankanal",
 			Language.Fr => "Parent",
 			Language.Es => "Padre",
 			Language.Ru => "Родитель",
@@ -332,7 +309,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Ersteller",
-			Language.At => "Erstölla",
 			Language.Fr => "Créateur",
 			Language.Es => "Creador",
 			Language.Ru => "Создатель",
@@ -346,7 +322,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Benutzername aktualisiert",
-			Language.At => "Benutzanom aktualisiat",
 			Language.Fr => "Nom d'utilisateur mis à jour",
 			Language.Es => "Nombre de usuario actualizado",
 			Language.Ru => "Имя пользователя обновлено",
@@ -360,7 +335,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Avatar aktualisiert",
-			Language.At => "Avatar aktualisiat",
 			Language.Fr => "Avatar mis à jour",
 			Language.Es => "Avatar actualizado",
 			Language.Ru => "Аватар обновлен",
@@ -374,7 +348,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Nickname aktualisiert",
-			Language.At => "Nickname aktualisiat",
 			Language.Fr => "Pseudo mis à jour",
 			Language.Es => "Se actualizó el apodo",
 			Language.Ru => "Псевдоним обновлен",
@@ -388,7 +361,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Rollen aktualisiert",
-			Language.At => "Rollen aktualisiat",
 			Language.Fr => "Rôles mis à jour",
 			Language.Es => "Funciones actualizadas",
 			Language.Ru => "Роли обновлены",
@@ -402,7 +374,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Hinzugefügt",
-			Language.At => "Hinzugfügt",
 			Language.Fr => "Ajoutée",
 			Language.Es => "Adicional",
 			Language.Ru => "Добавлен",
@@ -416,7 +387,6 @@ public class GuildAuditTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Entfernt",
-			Language.At => "Entfernt",
 			Language.Fr => "Supprimé",
 			Language.Es => "Remoto",
 			Language.Ru => "Удаленный",

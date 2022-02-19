@@ -10,10 +10,9 @@ public class BotNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Willkommen bei Dexter!",
-			Language.At => "Servus bei Dexter!",
 			Language.Fr => "Bienvenue à Dexter !",
 			Language.Es => "¡Bienvenido a Dexter!",
-			Language.Ru => "Добро пожаловать в МАСЗ!",
+			Language.Ru => "Добро пожаловать в Dexter!",
 			Language.It => "Benvenuto in Dexter!",
 			_ => "Welcome to Dexter!"
 		};
@@ -24,7 +23,6 @@ public class BotNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Datei hochgeladen",
-			Language.At => "Datei hochglodn",
 			Language.Fr => "Fichier téléchargé",
 			Language.Es => "Archivo subido",
 			Language.Ru => "Файл загружен",
@@ -38,7 +36,6 @@ public class BotNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Datei gelöscht",
-			Language.At => "Datei glescht",
 			Language.Fr => "Fichier supprimé",
 			Language.Es => "Archivo eliminado",
 			Language.Ru => "Файл удален",
@@ -52,7 +49,6 @@ public class BotNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Datei aktualisiert",
-			Language.At => "Datei aktualisiert",
 			Language.Fr => "Fichier mis à jour",
 			Language.Es => "Archivo actualizado",
 			Language.Ru => "Файл обновлен",
@@ -67,8 +63,6 @@ public class BotNotificationTranslator : Translator
 		{
 			Language.De =>
 				"Vielen Dank für deine Registrierung.\nIm Folgenden wirst du einige nützliche Tipps zum Einrichten und Verwenden von **Dexter** erhalten.",
-			Language.At =>
-				"Donksche fia dei Registrierung.\nDu siachst glei ei poar nützliche Tipps zum Eirichtn und Vawendn vo **Dexter**.",
 			Language.Fr =>
 				"Merci d'avoir enregistré votre guilde.\nDans ce qui suit, vous apprendrez quelques conseils utiles pour configurer et utiliser **Dexter**.",
 			Language.Es =>
@@ -88,8 +82,6 @@ public class BotNotificationTranslator : Translator
 		{
 			Language.De =>
 				"Benutze den `/features` Befehl um zu sehen welche Features von **Dexter** dein aktuelles Setup unterstützt.",
-			Language.At =>
-				"Nutz den `/features` Beföhl um nochzumschauen wöchane Features dei aktuelles **Dexter**  Setup untastützn tuad.",
 			Language.Fr =>
 				"Utilisez la commande `/features` pour tester si votre configuration de guilde actuelle prend en charge toutes les fonctionnalités de **Dexter**.",
 			Language.Es =>
@@ -107,7 +99,6 @@ public class BotNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Dexter wird `{language}` als Standard-Sprache für diese Gilde verwenden, wenn möglich.",
-			Language.At => $"Dei Dexter wiad `{language}` ois Standard-Sproch fia die Güde nehma, wenns geht.",
 			Language.Fr =>
 				$"Dexter utilisera `{language}` comme langue par défaut pour cette guilde dans la mesure du possible.",
 			Language.Es =>
@@ -126,8 +117,6 @@ public class BotNotificationTranslator : Translator
 		{
 			Language.De =>
 				"Zeitzonen können kompliziert sein.\nDexter benutzt ein Discord-Feature um Zeitstempel in der lokalen Zeitzone deines Computers/Handys anzuzeigen.",
-			Language.At =>
-				"De Zeitzonen kennan a weng schwer san.\nDexter nutzt a Discord-Feature um Zeitstempl in da lokalen Zeitzon vo deim PC/Handy ozumzeign.",
 			Language.Fr =>
 				"Les fuseaux horaires peuvent être déroutants.\nDexter utilise une fonction Discord pour afficher les horodatages dans le fuseau horaire local de votre ordinateur/téléphone.",
 			Language.Es =>
@@ -147,8 +136,6 @@ public class BotNotificationTranslator : Translator
 		{
 			Language.De =>
 				"Bitte wende dich an den [Dexter Support Server](https://discord.gg/DBS664yjWN) für weitere Fragen.",
-			Language.At =>
-				"Bitte wend di on den [Dexter Support Server](https://discord.gg/DBS664yjWN) fia weitare Frogn.",
 			Language.Fr =>
 				"Veuillez vous référer au [serveur de support Dexter] (https://discord.gg/DBS664yjWN) pour d'autres questions.",
 			Language.Es =>

@@ -23,7 +23,7 @@ public class Report : Command<Report>
 
 		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
 
-		if (string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
+		if (string.IsNullOrEmpty(guildConfig.AdminWebhook))
 		{
 			await Context.Interaction.RespondAsync(Translator.Get<BotTranslator>().NoWebhookConfigured(),
 				ephemeral: true);
@@ -54,7 +54,7 @@ public class Report : Command<Report>
 
 		try
 		{
-			await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, null, sb.ToString(), AllowedMentions.None);
+			await DiscordRest.ExecuteWebhook(guildConfig.AdminWebhook, null, sb.ToString(), AllowedMentions.None);
 		}
 		catch (Exception e)
 		{

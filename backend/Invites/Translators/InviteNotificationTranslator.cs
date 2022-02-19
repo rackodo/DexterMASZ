@@ -13,8 +13,6 @@ public class InviteNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"{user.Mention} (registriert {registered.ToDiscordTs()}) ist mit dem Invite `{invite}` beigetreten.",
-			Language.At =>
-				$"{user.Mention} (registriat {registered.ToDiscordTs()}) is mit da Eiladung `{invite}` beigetretn.",
 			Language.Fr =>
 				$"{user.Mention} (enregistré {registered.ToDiscordTs()}) rejoint avec l'invitation `{invite}`.",
 			Language.Es =>
@@ -34,8 +32,6 @@ public class InviteNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"{user.Mention} (registriert {registered.ToDiscordTs()}) ist mit dem Invite `{invite}` von <@{by}> (am {createdAt.ToDiscordTs()}) beigetreten.",
-			Language.At =>
-				$"{user.Mention} (registriert {registered.ToDiscordTs()}) is mit da Eiladung `{invite}` vo <@{by}> (am {createdAt.ToDiscordTs()}) beigetretn.",
 			Language.Fr =>
 				$"{user.Mention} (enregistré {registered.ToDiscordTs()}) rejoint avec invite `{invite}` (créé {createdAt.ToDiscordTs()}) par <@{by}>.",
 			Language.Es =>

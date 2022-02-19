@@ -31,7 +31,6 @@ public class AppSettings
 				"it" => Language.It,
 				"fr" => Language.Fr,
 				"es" => Language.Es,
-				"at" => Language.At,
 				"ru" => Language.Ru,
 				_ => Language.En
 			};
@@ -44,7 +43,6 @@ public class AppSettings
 				Language.It => "it",
 				Language.Fr => "fr",
 				Language.Es => "es",
-				Language.At => "at",
 				Language.Ru => "ru",
 				_ => "en"
 			};

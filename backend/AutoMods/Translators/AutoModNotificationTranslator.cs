@@ -11,7 +11,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"{user.Mention} hat die automod ausgelöst.",
-			Language.At => $"{user.Mention} hot de automodaration ausglest.",
 			Language.Fr => $"{user.Mention} a déclenché l'automodération.",
 			Language.Es => $"{user.Mention} activó la automoderación.",
 			Language.Ru => $"{user.Mention} запустил автомодерацию.",
@@ -25,7 +24,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"{user.Username}#{user.Discriminator} hat die automod ausgelöst.",
-			Language.At => $"{user.Username}#{user.Discriminator} hot de automodaration ausglest.",
 			Language.Fr => $"{user.Username}#{user.Discriminator} a déclenché la modération automatique.",
 			Language.Es => $"{user.Username}#{user.Discriminator} desencadenó la automoderación.",
 			Language.Ru => $"{user.Username}#{user.Discriminator} запускает автомодерацию.",
@@ -40,8 +38,6 @@ public class AutoModNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Hallo {user.Mention},\n\nDu hast die automoderation in {channel.Mention} ausgelöst.\nGrund: **{reason}**\nAktion: {action}",
-			Language.At =>
-				$"Servus {user.Mention},\n\nDu host de automodaration in {channel.Mention} ausglest. Grund: **{reason}**\nAktion: {action}",
 			Language.Fr =>
 				$"Salut {user.Mention},\n\nVous avez déclenché l'automodération dans {channel.Mention}.\nRaison : **{reason}**\nAction : {action}",
 			Language.Es =>
@@ -61,8 +57,6 @@ public class AutoModNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"{user.Mention} du hast die automoderation ausgelöst. Grund: **{reason}**. Deine Nachricht wurde gelöscht.",
-			Language.At =>
-				$"{user.Mention} du host de automodaration ausglest. Grund: **{reason}**. Dei Nochricht wuad glescht.",
 			Language.Fr =>
 				$"{user.Mention} vous avez déclenché l'automodération. Raison : **{reason}**. Votre message a été supprimé.",
 			Language.Es =>
@@ -80,7 +74,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Auto mod konfiguration für **{eventType}** von {actor.Mention} erstellt.",
-			Language.At => $"Auto mod konfiguration fia **{eventType}** vo {actor.Mention} erstöt.",
 			Language.Fr => $"Mode automatique config créé pour **{eventType}** par {actor.Mention}.",
 			Language.Es => $"Modo automático config creado para **{eventType}** por {actor.Mention}.",
 			Language.Ru => $"Конфигурация авто мода, созданный для **{eventType}** пользователем {actor.Mention}.",
@@ -94,7 +87,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Auto mod konfiguration für **{eventType}** von {actor.Mention} bearbeitet.",
-			Language.At => $"Auto mod konfiguration fia **{eventType}** is vo {actor.Mention} beorbeit woan.",
 			Language.Fr => $"Mode automatique config mis à jour pour **{eventType}** par {actor.Mention}.",
 			Language.Es => $"Modo automático config actualizado para **{eventType}** por {actor.Mention}.",
 			Language.Ru => $"Конфигурация авто мода обновлен для **{eventType}** пользователем {actor.Mention}.",
@@ -108,7 +100,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Auto mod konfiguration für **{eventType}** von {actor.Mention} gelöscht.",
-			Language.At => $"Auto mod konfiguration fia **{eventType}** vo {actor.Mention} glescht.",
 			Language.Fr => $"Mode automatique config supprimé pour **{eventType}** par {actor.Mention}.",
 			Language.Es => $"Modo automático config eliminado para **{eventType}** por {actor.Mention}.",
 			Language.Ru => $"Конфигурация авто мода удален для **{eventType}** пользователем {actor.Mention}.",
@@ -122,7 +113,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Limit",
-			Language.At => "Limit",
 			Language.Fr => "Limite",
 			Language.Es => "Límite",
 			Language.Ru => "Предел",
@@ -136,7 +126,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Zeitlimit",
-			Language.At => "Zeitlimit",
 			Language.Fr => "Limite de temps",
 			Language.Es => "Límite de tiempo",
 			Language.Ru => "Лимит времени",
@@ -150,7 +139,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Ignorierte Rollen",
-			Language.At => "Ignoriate Rolln",
 			Language.Fr => "Rôles ignorés",
 			Language.Es => "Roles ignorados",
 			Language.Ru => "Игнорируемые роли",
@@ -164,7 +152,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Ignorierte Kanäle",
-			Language.At => "Ignoriate Kanäle",
 			Language.Fr => "Canaux ignorés",
 			Language.Es => "Canales ignorados",
 			Language.Ru => "Игнорируемые каналы",
@@ -178,7 +165,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Dauer",
-			Language.At => "Daua",
 			Language.Fr => "Durée",
 			Language.Es => "Duración",
 			Language.Ru => "Продолжительность",
@@ -192,7 +178,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Nachricht löschen",
-			Language.At => "Nochricht leschn",
 			Language.Fr => "Supprimer le message",
 			Language.Es => "Borrar mensaje",
 			Language.Ru => "Удаленное сообщение",
@@ -206,7 +191,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Sende öffentliche Nachricht",
-			Language.At => "Schick a öffentliche Nochricht",
 			Language.Fr => "Envoyer une notification publique",
 			Language.Es => "Enviar notificación pública",
 			Language.Ru => "Отправить публичное уведомление",
@@ -220,7 +204,6 @@ public class AutoModNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Sende DM Nachricht",
-			Language.At => "Schick a Direktnachricht",
 			Language.Fr => "Envoyer une notification DM",
 			Language.Es => "Enviar notificación DM",
 			Language.Ru => "Отправить уведомление в прямом эфире",

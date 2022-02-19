@@ -196,6 +196,8 @@
         "Invite": "Inviter",
         "Back": "Arrière",
         "Next": "Prochain",
+        "StepStaffChannels": "Sélectionnez les canaux de bot du personnel",
+        "StaffChannels": "Canaux du personnel",
         "StepAdminRoles": "Sélectionnez les rôles d'administrateur",
         "AdminRoles": "Rôles d'administrateur",
         "StepModeratorRoles": "Sélectionnez les rôles de modérateur",

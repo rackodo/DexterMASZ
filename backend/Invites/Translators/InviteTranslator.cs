@@ -12,7 +12,6 @@ public class InviteTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Die Einladung ist nicht von dieser Gilde.",
-			Language.At => "Die Eiladung is ned vo dera Güde.",
 			Language.Fr => "L'invitation n'est pas de cette guilde.",
 			Language.Es => "La invitación no es de este gremio.",
 			Language.Ru => "Приглашение не из этой гильдии.",
@@ -26,7 +25,6 @@ public class InviteTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Konnte die Einladung nicht in der Datenbank oder in dieser Gilde finden.",
-			Language.At => "Konnt de Eiladung ned in da Datnbank vo da Güde findn.",
 			Language.Fr => "Impossible de trouver l'invitation dans la base de données ou dans cette guilde.",
 			Language.Es => "No se pudo encontrar la invitación en la base de datos o en este gremio.",
 			Language.Ru => "Не удалось найти инвайт в базе данных или в этой гильдии.",
@@ -40,7 +38,6 @@ public class InviteTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Konnte die Einladung nicht abrufen.",
-			Language.At => "Konnt die Eiladung ned orufn.",
 			Language.Fr => "Échec de la récupération de l'invitation.",
 			Language.Es => "No se pudo recuperar la invitación.",
 			Language.Ru => "Не удалось получить приглашение.",
@@ -54,7 +51,6 @@ public class InviteTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"`{inviteCode}` erstellt am {createdAt.ToDiscordTs()}.",
-			Language.At => $"`{inviteCode}` erstöt vo {createdAt.ToDiscordTs()}.",
 			Language.Fr => $"`{inviteCode}` créé à {createdAt.ToDiscordTs()}.",
 			Language.Es => $"`{inviteCode}` creado en {createdAt.ToDiscordTs()}.",
 			Language.Ru => $"`{inviteCode}` создан в {createdAt.ToDiscordTs()}.",
@@ -68,7 +64,6 @@ public class InviteTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"`{inviteCode}` erstellt von {createdBy.Mention}.",
-			Language.At => $"`{inviteCode}` erstöt vo {createdBy.Mention}.",
 			Language.Fr => $"`{inviteCode}` créé par {createdBy.Mention}.",
 			Language.Es => $"`{inviteCode}` creado por {createdBy.Mention}.",
 			Language.Ru => $"`{inviteCode}` создан {createdBy.Mention}.",
@@ -82,7 +77,6 @@ public class InviteTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"`{inviteCode}` erstellt von {createdBy.Mention} am {createdAt.ToDiscordTs()}.",
-			Language.At => $"`{inviteCode}` erstöt vo {createdBy.Mention} om {createdAt.ToDiscordTs()}.",
 			Language.Fr => $"`{inviteCode}` créé par {createdBy.Mention} à {createdAt.ToDiscordTs()}.",
 			Language.Es => $"`{inviteCode}` creado por {createdBy.Mention} en {createdAt.ToDiscordTs()}.",
 			Language.Ru => $"`{inviteCode}` создан {createdBy.Mention} в {createdAt.ToDiscordTs()}.",
@@ -96,7 +90,6 @@ public class InviteTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Diese Einladung wurde noch nicht von Dexter gespeichert.",
-			Language.At => "Die Eiladung wuad no ned vo Dexter gspeichat.",
 			Language.Fr => "Cette invitation n'a pas encore été suivie par Dexter.",
 			Language.Es => "Dexter aún no ha realizado el seguimiento de esta invitación.",
 			Language.Ru => "Это приглашение еще не отслежено Dexter.",
@@ -110,7 +103,6 @@ public class InviteTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Benutzte Einladung `{inviteCode}`.",
-			Language.At => $"Benutze Eilodung `{inviteCode}`.",
 			Language.Fr => $"Invitation utilisée `{inviteCode}`.",
 			Language.Es => $"Invitación usada `{inviteCode}`.",
 			Language.Ru => $"Использовал инвайт `{inviteCode}`.",
@@ -124,7 +116,6 @@ public class InviteTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Von <@{user}>.",
-			Language.At => $"Vo <@{user}>",
 			Language.Fr => $"Par <@{user}>.",
 			Language.Es => $"Por <@{user}>.",
 			Language.Ru => $"Автор <@{user}>.",
@@ -138,7 +129,6 @@ public class InviteTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Benutzt von [{count}]",
-			Language.At => $"Benutzt vo [{count}]",
 			Language.Fr => $"Utilisé par [{count}]",
 			Language.Es => $"Usado por [{count}]",
 			Language.Ru => $"Используется [{count}]",

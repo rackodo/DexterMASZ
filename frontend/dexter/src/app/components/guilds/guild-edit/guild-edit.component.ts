@@ -84,7 +84,7 @@ export class GuildEditComponent implements OnInit {
     this.api.getSimpleData(`/guilds/${id}`).subscribe((data: GuildConfig) => {
       this.modRolesGroup.setValue({ modRoles: data.modRoles });
       this.adminRolesGroup.setValue({ adminRoles: data.adminRoles});
-      this.staffChannelsGroup.setValue({ muteRoles: data.staffChannels});
+      this.staffChannelsGroup.setValue({ staffChannels: data.staffChannels});
       this.configGroup.setValue({
         webhook: data.modNotificationWebhook,
         strictPermissionCheck: data.strictModPermissionCheck,

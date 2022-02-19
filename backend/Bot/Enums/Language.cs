@@ -7,6 +7,5 @@ public enum Language
 	Fr,
 	Es,
 	It,
-	At,
 	Ru
 }

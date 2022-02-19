@@ -13,7 +13,6 @@ public class PunishmentEnumTranslator : Translator
 			LockedCommentStatus.None => PreferredLanguage switch
 			{
 				Language.De => "Unbestimmt",
-				Language.At => "Unbekonnt",
 				Language.Fr => "Rien",
 				Language.Es => "Ninguna",
 				Language.Ru => "Никто",
@@ -23,7 +22,6 @@ public class PunishmentEnumTranslator : Translator
 			LockedCommentStatus.Locked => PreferredLanguage switch
 			{
 				Language.De => "Gesperrt",
-				Language.At => "Gsperrt",
 				Language.Fr => "Fermé à clé",
 				Language.Es => "Bloqueado",
 				Language.Ru => "Заблокировано",
@@ -33,7 +31,6 @@ public class PunishmentEnumTranslator : Translator
 			LockedCommentStatus.Unlocked => PreferredLanguage switch
 			{
 				Language.De => "Entsperrt",
-				Language.At => "Entsperrt",
 				Language.Fr => "Débloqué",
 				Language.Es => "Desbloqueado",
 				Language.Ru => "Разблокирован",
@@ -51,7 +48,6 @@ public class PunishmentEnumTranslator : Translator
 			MarkedToDeleteStatus.None => PreferredLanguage switch
 			{
 				Language.De => "Unbestimmt",
-				Language.At => "Unbekonnt",
 				Language.Fr => "Rien",
 				Language.Es => "Ninguna",
 				Language.Ru => "Никто",
@@ -61,7 +57,6 @@ public class PunishmentEnumTranslator : Translator
 			MarkedToDeleteStatus.Marked => PreferredLanguage switch
 			{
 				Language.De => "Zu löschen markiert",
-				Language.At => "Zum löschn markiat",
 				Language.Fr => "Marqué à supprimer",
 				Language.Es => "Marcado para eliminar",
 				Language.Ru => "Отмечено для удаления",
@@ -71,7 +66,6 @@ public class PunishmentEnumTranslator : Translator
 			MarkedToDeleteStatus.Unmarked => PreferredLanguage switch
 			{
 				Language.De => "Nicht zu löschen markiert",
-				Language.At => "Ned zum löschn markiat",
 				Language.Fr => "Non marqué pour supprimer",
 				Language.Es => "No marcado para eliminar",
 				Language.Ru => "Не отмечен для удаления",
@@ -89,7 +83,6 @@ public class PunishmentEnumTranslator : Translator
 			PunishmentActiveStatus.None => PreferredLanguage switch
 			{
 				Language.De => "Unbestimmt",
-				Language.At => "Unbekonnt",
 				Language.Fr => "Rien",
 				Language.Es => "Ninguna",
 				Language.Ru => "Никто",
@@ -99,7 +92,6 @@ public class PunishmentEnumTranslator : Translator
 			PunishmentActiveStatus.Active => PreferredLanguage switch
 			{
 				Language.De => "Aktiv",
-				Language.At => "Aktiv",
 				Language.Fr => "actif",
 				Language.Es => "Activo",
 				Language.Ru => "Активный",
@@ -109,7 +101,6 @@ public class PunishmentEnumTranslator : Translator
 			PunishmentActiveStatus.Inactive => PreferredLanguage switch
 			{
 				Language.De => "Inaktiv",
-				Language.At => "Inaktiv",
 				Language.Fr => "Inactif",
 				Language.Es => "Inactivo",
 				Language.Ru => "Неактивный",
@@ -127,7 +118,6 @@ public class PunishmentEnumTranslator : Translator
 			CaseCreationType.Default => PreferredLanguage switch
 			{
 				Language.De => "Default",
-				Language.At => "Default",
 				Language.Fr => "Défaut",
 				Language.Es => "Defecto",
 				Language.Ru => "Дефолт",
@@ -137,7 +127,6 @@ public class PunishmentEnumTranslator : Translator
 			CaseCreationType.AutoMod => PreferredLanguage switch
 			{
 				Language.De => "Automoderiert.",
-				Language.At => "Automodariat.",
 				Language.Fr => "Le cas est automodéré.",
 				Language.Es => "El caso está autoderado.",
 				Language.Ru => "Корпус автоматический.",
@@ -147,7 +136,6 @@ public class PunishmentEnumTranslator : Translator
 			CaseCreationType.Imported => PreferredLanguage switch
 			{
 				Language.De => "Importiert.",
-				Language.At => "Importiat",
 				Language.Fr => "Le cas est importé.",
 				Language.Es => "El caso es importado.",
 				Language.Ru => "Корпус импортный.",
@@ -157,7 +145,6 @@ public class PunishmentEnumTranslator : Translator
 			CaseCreationType.ByCommand => PreferredLanguage switch
 			{
 				Language.De => "Durch Befehl erstellt.",
-				Language.At => "Durch an Beföh erstöt.",
 				Language.Fr => "Cas créé par commande.",
 				Language.Es => "Caso creado por comando.",
 				Language.Ru => "Дело создано командой.",
@@ -175,7 +162,6 @@ public class PunishmentEnumTranslator : Translator
 			PunishmentType.Mute => PreferredLanguage switch
 			{
 				Language.De => "Stummschaltung",
-				Language.At => "Stummschoitung",
 				Language.Fr => "Muet",
 				Language.Es => "Silencio",
 				Language.Ru => "Немой",
@@ -185,7 +171,6 @@ public class PunishmentEnumTranslator : Translator
 			PunishmentType.Ban => PreferredLanguage switch
 			{
 				Language.De => "Bann",
-				Language.At => "Rauswuaf",
 				Language.Fr => "Interdire",
 				Language.Es => "Prohibición",
 				Language.Ru => "Запретить",
@@ -195,7 +180,6 @@ public class PunishmentEnumTranslator : Translator
 			PunishmentType.Kick => PreferredLanguage switch
 			{
 				Language.De => "Kick",
-				Language.At => "Tritt",
 				Language.Fr => "Coup",
 				Language.Es => "Patear",
 				Language.Ru => "Пинать",
@@ -205,7 +189,6 @@ public class PunishmentEnumTranslator : Translator
 			PunishmentType.Warn => PreferredLanguage switch
 			{
 				Language.De => "Verwarnung",
-				Language.At => "Verwoarnt",
 				Language.Fr => "Avertir",
 				Language.Es => "Advertir",
 				Language.Ru => "Предупреждать",

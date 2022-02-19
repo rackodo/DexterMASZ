@@ -21,7 +21,11 @@ public class GuildConfigForCreateDto
 
 	[Url(ErrorMessage = "Webhook needs to be a valid url")]
 	[RegularExpression(@"https://(.*\.)?discord(app)?.com/api/webhooks/[0-9]+/.+", ErrorMessage = "Must be a valid webhook url")]
-	public string ModNotificationWebhook { get; set; }
+	public string AdminWebhook { get; set; }
+
+	[Url(ErrorMessage = "Webhook needs to be a valid url")]
+	[RegularExpression(@"https://(.*\.)?discord(app)?.com/api/webhooks/[0-9]+/.+", ErrorMessage = "Must be a valid webhook url")]
+	public string StaffWebhook { get; set; }
 
 	[Required(ErrorMessage = "ExecuteWhoIsOnJoin field is required")]
 	public bool ExecuteWhoIsOnJoin { get; set; }

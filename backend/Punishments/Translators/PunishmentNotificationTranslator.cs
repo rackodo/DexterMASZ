@@ -13,7 +13,6 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Kommentar erstellt",
-			Language.At => "Kommentoa erstöt",
 			Language.Fr => "Commentaire créé",
 			Language.Es => "Comentario creado",
 			Language.Ru => "Комментарий создан",
@@ -27,7 +26,6 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Kommentar aktualisiert",
-			Language.At => "kommentoa aktualisiert",
 			Language.Fr => "Commentaire mis à jour",
 			Language.Es => "Comentario actualizado",
 			Language.Ru => "Комментарий обновлен",
@@ -41,7 +39,6 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Kommentar gelöscht",
-			Language.At => "kommentoa glescht",
 			Language.Fr => "Commentaire supprimé",
 			Language.Es => "Comentario borrado",
 			Language.Ru => "Комментарий удален",
@@ -55,7 +52,6 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Ein **Kommentar** wurde von <@{actor.Id}> erstellt.",
-			Language.At => $"A **Kommentoa** wuad vo <@{actor.Id}> erstöt.",
 			Language.Fr => $"Un **commentaire** a été créé par <@{actor.Id}>.",
 			Language.Es => $"<@{actor.Id}> ha creado un **comentario**.",
 			Language.Ru => $"**комментарий** был создан <@{actor.Id}>.",
@@ -69,7 +65,6 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Ein **Kommentar** wurde von <@{actor.Id}> aktualisiert.",
-			Language.At => $"A **Kommentoa** is vo <@{actor.Id}> aktualisiert woan.",
 			Language.Fr => $"Un **commentaire** a été mis à jour par <@{actor.Id}>.",
 			Language.Es => $"<@{actor.Id}> ha actualizado un **comentario **.",
 			Language.Ru => $"**комментарий ** был обновлен пользователем <@{actor.Id}>.",
@@ -83,7 +78,6 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Ein **Kommentar** wurde von <@{actor.Id}> gelöscht.",
-			Language.At => $"A **Kommentoa** wuad vo <@{actor.Id}> glescht.",
 			Language.Fr => $"Un **commentaire** a été supprimé par <@{actor.Id}>.",
 			Language.Es => $"<@{actor.Id}> ha eliminado un **comentario **.",
 			Language.Ru => $"**комментарий** был удален <@{actor.Id}>.",
@@ -98,7 +92,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Eine **Datei** wurde von <@{actor.Id}> ({actor.Username}#{actor.Discriminator}) hochgeladen.",
-			Language.At => $"A **Datei** woad vo <@{actor.Id}> ({actor.Username}#{actor.Discriminator}) hochglodn.",
 			Language.Fr =>
 				$"Un **fichier** a été téléchargé par <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
 			Language.Es => $"<@{actor.Id}> ({actor.Username}#{actor.Discriminator} ha subido un **archivo**).",
@@ -114,7 +107,6 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Eine **Datei** wurde von <@{actor.Id}> ({actor.Username}#{actor.Discriminator}) gelöscht.",
-			Language.At => $"A **Datei** is vo <@{actor.Id}> ({actor.Username}#{actor.Discriminator}) glescht woan.",
 			Language.Fr => $"Un **fichier** a été supprimé par <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
 			Language.Es => $"<@{actor.Id}> ({actor.Username}#{actor.Discriminator}) ha eliminado un **archivo**.",
 			Language.Ru => $"**файл** был удален <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
@@ -129,8 +121,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Eine **Datei** wurde von <@{actor.Id}> ({actor.Username}#{actor.Discriminator}) aktualisiert.",
-			Language.At =>
-				$"A **Datei** is vo <@{actor.Id}> ({actor.Username}#{actor.Discriminator}) aktualisiert woan.",
 			Language.Fr =>
 				$"Un **fichier** a été mis à jour par <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
 			Language.Es => $"<@{actor.Id}> ({actor.Username}#{actor.Discriminator}) ha actualizado un **archivo**.",
@@ -146,8 +136,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Die Moderatoren von `{guild.Name}` haben dich verwarnt.\nFür weitere Informationen besuche: {serviceBaseUrl}",
-			Language.At =>
-				$"Die Moderatoan vo `{guild.Name}` hom di verwoarnt.\nFia weitere Infos schau bei {serviceBaseUrl} noch.",
 			Language.Fr =>
 				$"Les modérateurs de la guilde `{guild.Name}` vous ont prévenu.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
 			Language.Es =>
@@ -167,8 +155,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Die Moderatoren von `{guild.Name}` haben dich stummgeschalten.\nFür weitere Informationen besuche: {serviceBaseUrl}",
-			Language.At =>
-				$"Die Moderatoan vo `{guild.Name}` hom di stummgschoit.\nFia weitere Infos schau bei {serviceBaseUrl} noch.",
 			Language.Fr =>
 				$"Les modérateurs de la guilde `{guild.Name}` vous ont mis en sourdine.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
 			Language.Es =>
@@ -188,8 +174,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Die Moderatoren von `{guild.Name}` haben dich gebannt.\nFür weitere Informationen besuche: {serviceBaseUrl}",
-			Language.At =>
-				$"Die Moderatoan vo `{guild.Name}` hom di vom Serva ausgsperrt.\nFia weitere Infos schau bei {serviceBaseUrl} noch",
 			Language.Fr =>
 				$"Les modérateurs de la guilde `{guild.Name}` vous ont banni.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
 			Language.Es =>
@@ -209,8 +193,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Die Moderatoren von `{guild.Name}` haben dich kickt.\nFür weitere Informationen besuche: {serviceBaseUrl}",
-			Language.At =>
-				$"Die Moderatoan vo `{guild.Name}` hom di rausgschmissn.\nFia weitere Infos schau bei {serviceBaseUrl} noch.",
 			Language.Fr =>
 				$"Les modérateurs de la guilde `{guild.Name}` vous ont viré.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
 			Language.Es =>
@@ -229,7 +211,6 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Bestrafung für vorfall #{caseId} durch Moderator {modId} ausgeführt: \"{reason}\"",
-			Language.At => $"Bestrofun fian vorfoi #{caseId} vom Modarator {modId} ausgführt: \"{reason}\"",
 			Language.Fr => $"Punition pour mod case #{caseId} par le modérateur {modId} exécutée : \"{reason}\"",
 			Language.Es => $"Castigo por mod case # {caseId} por el moderador {modId} ejecutado: \"{reason} \"",
 			Language.Ru => $"Наказание за mod case # {caseId} модератором {modId} выполнено: \"{reason} \"",
@@ -243,7 +224,6 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Bestrafung für vorfall #{caseId} rückgängig gemacht: \"{reason}\"",
-			Language.At => $"Bestrofung fian vorfoi #{caseId} is rückgängig gmocht woan: \"{reason}\"",
 			Language.Fr => $"Punition pour mod case #{caseId} annulée : \"{reason}\"",
 			Language.Es => $"Castigo por mod case # {caseId} deshecho: \"{reason} \"",
 			Language.Ru => $"Наказание за mod case # {caseId} отменено: \"{reason} \"",
@@ -259,8 +239,6 @@ public class PunishmentNotificationTranslator : Translator
 			{
 				Language.De =>
 					$"Die moderatoren von `{guild.Name}` haben dich temporär gebannt bis {modCase.PunishedUntil.Value.ToDiscordTs()}.\nFür weitere Informationen besuche: {serviceBaseUrl}",
-				Language.At =>
-					$"Die moderatoan vo `{guild.Name}` hom di bis am {modCase.PunishedUntil.Value.ToDiscordTs()} vom Serva ausgsperrt.\nFia weitere Infos schau bei {serviceBaseUrl} noch.",
 				Language.Fr =>
 					$"Les modérateurs de la guilde `{guild.Name}` vous ont temporairement banni jusqu'à {modCase.PunishedUntil.Value.ToDiscordTs()}.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
 				Language.Es =>
@@ -282,8 +260,6 @@ public class PunishmentNotificationTranslator : Translator
 			{
 				Language.De =>
 					$"Die moderatoren von `{guild.Name}` haben dich temporär stummgeschalten bis {modCase.PunishedUntil.Value.ToDiscordTs()}.\nFür weitere Informationen besuche: {serviceBaseUrl}",
-				Language.At =>
-					$"Die moderatoan vo `{guild.Name}` hom di bis am {modCase.PunishedUntil.Value.ToDiscordTs()} stummgschoit.\nFia weitere Infos schau bei {serviceBaseUrl} noch",
 				Language.Fr =>
 					$"Les modérateurs de la guilde `{guild.Name}` vous ont temporairement mis en sourdine jusqu'à {modCase.PunishedUntil.Value.ToDiscordTs()}.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
 				Language.Es =>
@@ -304,8 +280,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde erstellt.",
-			Language.At =>
-				$"A **vorfoi** fia <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) is erstöt woan.",
 			Language.Fr =>
 				$"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été créé.",
 			Language.Es =>
@@ -324,8 +298,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) erstellt.",
-			Language.At =>
-				$"A **vorfoi** fia <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) woad fo <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) erstöt.",
 			Language.Fr =>
 				$"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été créé par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
 			Language.Es =>
@@ -345,8 +317,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde aktualisiert.",
-			Language.At =>
-				$"A **vorfoi** fia <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) is aktualisiert woan.",
 			Language.Fr =>
 				$"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été mis à jour.",
 			Language.Es =>
@@ -365,8 +335,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) aktualisiert.",
-			Language.At =>
-				$"A **vorfoi** fia <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) is fo <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) aktualisiert woan.",
 			Language.Fr =>
 				$"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été mis à jour par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
 			Language.Es =>
@@ -386,8 +354,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde gelöscht.",
-			Language.At =>
-				$"A **vorfoi** fia <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) is glescht woan",
 			Language.Fr =>
 				$"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été supprimé.",
 			Language.Es =>
@@ -406,8 +372,6 @@ public class PunishmentNotificationTranslator : Translator
 		{
 			Language.De =>
 				$"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) gelöscht.",
-			Language.At =>
-				$"A **vorfoi** fia <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) is vo <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) glescht woan.",
 			Language.Fr =>
 				$"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été supprimé par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
 			Language.Es =>

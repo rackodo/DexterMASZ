@@ -11,7 +11,6 @@ public class MotdNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Neue MotD wurde von {actor.Mention} erstellt.",
-			Language.At => $"A neiche MotD wuad vo {actor.Mention} erstöt. ",
 			Language.Fr => $"Le nouveau MotD a été créé par {actor.Mention}.",
 			Language.Es => $"El nuevo MotD ha sido creado por {actor.Mention}.",
 			Language.Ru => $"Новый MotD был создан {actor.Mention}.",
@@ -25,7 +24,6 @@ public class MotdNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"MotD wurde von {actor.Mention} bearbeitet.",
-			Language.At => $"MotD is vo {actor.Mention} beorbeit woan.",
 			Language.Fr => $"MotD a été édité par {actor.Mention}.",
 			Language.Es => $"MotD ha sido editado por {actor.Mention}.",
 			Language.Ru => $"MotD редактировал {actor.Mention}.",
@@ -39,7 +37,6 @@ public class MotdNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Anzeigen",
-			Language.At => "Ozeign",
 			Language.Fr => "Montrer",
 			Language.Es => "Show",
 			Language.Ru => "Показывать",

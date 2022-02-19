@@ -196,6 +196,8 @@
         "Invite": "Приглашать",
         "Back": "Назад",
         "Next": "Следующий",
+        "StepStaffChannels": "Выберите каналы штатных ботов",
+        "StaffChannels": "Каналы персонала",
         "StepAdminRoles": "Выберите роли администратора",
         "AdminRoles": "Роли администратора",
         "StepModeratorRoles": "Выберите роли модератора",

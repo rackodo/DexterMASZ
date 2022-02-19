@@ -13,7 +13,6 @@ public class MessagingEnumTranslator : Translator
 			ScheduledMessageFailureReason.Unknown => PreferredLanguage switch
 			{
 				Language.De => "Unbekannter Fehler",
-				Language.At => "Unbekannter Fehler",
 				Language.Fr => "Erreur inconnue",
 				Language.Es => "Error desconocido",
 				Language.Ru => "Неизвестная ошибка",
@@ -23,7 +22,6 @@ public class MessagingEnumTranslator : Translator
 			ScheduledMessageFailureReason.ChannelNotFound => PreferredLanguage switch
 			{
 				Language.De => "Kanal nicht gefunden",
-				Language.At => "Kanal nicht gefunden",
 				Language.Fr => "Canal introuvable",
 				Language.Es => "Canal no encontrado",
 				Language.Ru => "Канал не найден",
@@ -33,7 +31,6 @@ public class MessagingEnumTranslator : Translator
 			ScheduledMessageFailureReason.InsufficientPermission => PreferredLanguage switch
 			{
 				Language.De => "Unzureichende Berechtigung",
-				Language.At => "Unzureichende Berechtigung",
 				Language.Fr => "Permission insuffisante",
 				Language.Es => "Permiso insuficiente",
 				Language.Ru => "Недостаточно прав",
@@ -50,7 +47,6 @@ public class MessagingEnumTranslator : Translator
 			ScheduledMessageStatus.Pending => PreferredLanguage switch
 			{
 				Language.De => "Ausstehend",
-				Language.At => "Ausstehend",
 				Language.Fr => "En attente",
 				Language.Es => "Pendiente",
 				Language.Ru => "Ожидается",
@@ -60,7 +56,6 @@ public class MessagingEnumTranslator : Translator
 			ScheduledMessageStatus.Sent => PreferredLanguage switch
 			{
 				Language.De => "Gesendet",
-				Language.At => "Gesendet",
 				Language.Fr => "Envoyé",
 				Language.Es => "Enviado",
 				Language.Ru => "Отправлено",
@@ -70,7 +65,6 @@ public class MessagingEnumTranslator : Translator
 			ScheduledMessageStatus.Failed => PreferredLanguage switch
 			{
 				Language.De => "Fehlgeschlagen",
-				Language.At => "Fehlgeschlagen",
 				Language.Fr => "Échec",
 				Language.Es => "Falló",
 				Language.Ru => "Не удалось отправить",

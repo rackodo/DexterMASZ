@@ -46,20 +46,20 @@ public class GuildAuditEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(config.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
+		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending internal webhook for guild audit log {config.GuildId}/{config.GuildAuditEvent} ({config.Id}) to {guildConfig.ModNotificationWebhook}.");
+				$"Sending internal webhook for guild audit log {config.GuildId}/{config.GuildAuditEvent} ({config.Id}) to {guildConfig.StaffWebhook}.");
 
 			try
 			{
 				var embed = await config.CreateGuildAuditEmbed(actor, action, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, embed.Build());
+				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build());
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing guild audit log {config.GuildId}/{config.GuildAuditEvent} ({config.Id}) to {guildConfig.ModNotificationWebhook}.");
+					$"Error while announcing guild audit log {config.GuildId}/{config.GuildAuditEvent} ({config.Id}) to {guildConfig.StaffWebhook}.");
 			}
 		}
 	}

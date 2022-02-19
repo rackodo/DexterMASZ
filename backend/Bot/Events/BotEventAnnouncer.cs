@@ -28,10 +28,10 @@ public class BotEventAnnouncer : Event
 
 	private async Task AnnounceTipsInNewGuild(GuildConfig guildConfig)
 	{
-		if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
+		if (!string.IsNullOrEmpty(guildConfig.AdminWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending Dexter.Internal tips webhook to {guildConfig.ModNotificationWebhook} for guild {guildConfig.GuildId}.");
+				$"Sending Dexter.Internal tips webhook to {guildConfig.AdminWebhook} for guild {guildConfig.GuildId}.");
 
 			try
 			{
@@ -39,12 +39,12 @@ public class BotEventAnnouncer : Event
 
 				var embed = await guildConfig.CreateTipsEmbedForNewGuilds(scope.ServiceProvider);
 
-				await DiscordRest.ExecuteWebhook(guildConfig.ModNotificationWebhook, embed.Build());
+				await DiscordRest.ExecuteWebhook(guildConfig.AdminWebhook, embed.Build());
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing tips to {guildConfig.ModNotificationWebhook} for guild {guildConfig.GuildId}.");
+					$"Error while announcing tips to {guildConfig.AdminWebhook} for guild {guildConfig.GuildId}.");
 			}
 		}
 	}

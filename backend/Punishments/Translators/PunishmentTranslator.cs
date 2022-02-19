@@ -11,7 +11,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Bestrafung",
-			Language.At => "Bestrofung",
 			Language.Fr => "Châtiment",
 			Language.Es => "Castigo",
 			Language.Ru => "Наказание",
@@ -25,7 +24,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Bestrafung bis",
-			Language.At => "Bestroft bis",
 			Language.Fr => "Puni jusqu'à",
 			Language.Es => "Castigado hasta",
 			Language.Ru => "Наказан до",
@@ -39,7 +37,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Vorfälle",
-			Language.At => "Vorfälle",
 			Language.Fr => "Cas",
 			Language.Es => "Casos",
 			Language.Ru => "Случаи",
@@ -53,7 +50,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Es gibt keine Fälle für diesen Benutzer.",
-			Language.At => "Es gibt kane Fälle fia diesn Benutza.",
 			Language.Fr => "Il n'y a pas de cas pour cet utilisateur.",
 			Language.Es => "No hay casos para este usuario.",
 			Language.Ru => "Для этого пользователя нет случаев.",
@@ -67,7 +63,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Fall-ID",
-			Language.At => "Case ID",
 			Language.Fr => "ID de cas",
 			Language.Es => "Identificación del caso",
 			Language.Ru => "Идентификатор дела",
@@ -81,7 +76,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Aktive Bestrafungen",
-			Language.At => "Aktive Bestrofungen",
 			Language.Fr => "Punitions actives",
 			Language.Es => "Castigos activos",
 			Language.Ru => "Активные наказания",
@@ -95,7 +89,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Importiert",
-			Language.At => "Importiat",
 			Language.Fr => "Importé",
 			Language.Es => "Importado",
 			Language.Ru => "Импортный",
@@ -109,7 +102,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Importiert aus bestehenden Sperren",
-			Language.At => "Importiat aus vorhondane Sperren",
 			Language.Fr => "Importé à partir des interdictions existantes",
 			Language.Es => "Importado de prohibiciones existentes",
 			Language.Ru => "Импортировано из существующих банов",
@@ -123,7 +115,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Fall `#{caseId}` erstellt: {caseLink}",
-			Language.At => $"Foi `#{caseId}` erstöt: {caseLink}",
 			Language.Fr => $"Cas `#{caseId}` créé : {caseLink}",
 			Language.Es => $"Caso `# {caseId}` creado: {caseLink}",
 			Language.Ru => $"Обращение `# {caseId}` создано: {caseLink}",
@@ -137,7 +128,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Interner Benachrichtigungsversand an Moderatoren für Meldebefehl fehlgeschlagen.",
-			Language.At => "Interna Benochrichtigungsvasond on de Modaratoan fian Mödebefehl fehlgschlogn.",
 			Language.Fr => "Échec de l'envoi de la notification interne aux modérateurs pour la commande de rapport.",
 			Language.Es => "No se pudo enviar una notificación interna a los moderadores para el comando de informe.",
 			Language.Ru => "Не удалось отправить внутреннее уведомление модераторам для команды отчета.",
@@ -151,7 +141,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Meldung gesendet.",
-			Language.At => "Mödung gsendt.",
 			Language.Fr => "Rapport envoyé.",
 			Language.Es => "Reporte enviado.",
 			Language.Ru => "Отчет отправлен.",
@@ -166,8 +155,6 @@ public class PunishmentTranslator : Translator
 		{
 			Language.De =>
 				$"{user.Mention} meldete eine Nachricht von {message.Author.Mention} in {channel.Mention}.\n{message.GetJumpUrl()}",
-			Language.At =>
-				$"{user.Mention} mödet a Nochricht vo {message.Author.Mention} in {channel.Mention}.\n{message.GetJumpUrl()}",
 			Language.Fr =>
 				$"{user.Mention} a signalé un message de {message.Author.Mention} dans {channel.Mention}.\n{message.GetJumpUrl()}",
 			Language.Es =>
@@ -186,7 +173,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Du darfst diesen Fall nicht ansehen.",
-			Language.At => "Du derfst da den Foi ned oschaun.",
 			Language.Fr => "Vous n'êtes pas autorisé à voir ce cas.",
 			Language.Es => "No se le permite ver este caso.",
 			Language.Ru => "Вам не разрешено просматривать это дело.",
@@ -200,7 +186,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Ergebnis",
-			Language.At => "Ergebnis",
 			Language.Fr => "Résultat",
 			Language.Es => "Resultado",
 			Language.Ru => "Результат",
@@ -214,7 +199,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Warte auf Bestätigung.",
-			Language.At => "Woat auf a Bestätigung",
 			Language.Fr => "En attente d'approbation.",
 			Language.Es => "A la espera de la aprobación.",
 			Language.Ru => "Ожидание подтверждения.",
@@ -228,7 +212,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Abgebrochen",
-			Language.At => "Wuad obbrochn",
 			Language.Fr => "Annulé",
 			Language.Es => "Cancelado",
 			Language.Ru => "Отменено",
@@ -242,7 +225,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Abbrechen",
-			Language.At => "Obbrechn",
 			Language.Fr => "Annuler",
 			Language.Es => "Cancelar",
 			Language.Ru => "Отмена",
@@ -256,7 +238,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Erstellt am.",
-			Language.At => "Erstöt am.",
 			Language.Fr => "Créé à.",
 			Language.Es => "Creado en.",
 			Language.Ru => "Создано в.",
@@ -270,7 +251,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Keine aktiven Mod-Fälle wurden gefunden.",
-			Language.At => "Kane aktiven Mod-Fälle san gfundn woan.",
 			Language.Fr => "Aucun modcase actif n'a été trouvé.",
 			Language.Es => "No se han encontrado casos de modulación activos.",
 			Language.Ru => "Активных модкейсов не обнаружено.",
@@ -285,8 +265,6 @@ public class PunishmentTranslator : Translator
 		{
 			Language.De =>
 				$"Es wurden `{caseCount}` aktive Fälle gefunden. Möchtest du alle deaktivieren oder löschen, um den Benutzer nicht mehr stummgeschaltet zu lassen?",
-			Language.At =>
-				$"Es san `{caseCount}` aktive Fälle gfundn woan. Möchtest olle deaktivian oda löschn, damit da Nutza nimma stummgschoitn bleibt?",
 			Language.Fr =>
 				$"`{caseCount}` cas actifs trouvés. Voulez-vous les désactiver ou les supprimer tous pour réactiver le son de l'utilisateur ?",
 			Language.Es =>
@@ -305,7 +283,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Sperrungen gelöscht",
-			Language.At => "Sperrungen san glescht woan",
 			Language.Fr => "Muets supprimés",
 			Language.Es => "Silenciados eliminados",
 			Language.Ru => "Без звука удалено",
@@ -319,7 +296,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Sperrungen deaktiviert",
-			Language.At => "Sperrungen san deaktiviert woan",
 			Language.Fr => "Muet désactivé",
 			Language.Es => "Silencios desactivados",
 			Language.Ru => "Отключение звука отключено",
@@ -333,7 +309,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Sperrungen löschen",
-			Language.At => "Sperrungen löschn",
 			Language.Fr => "Supprimer les sourdines",
 			Language.Es => "Eliminar silencios",
 			Language.Ru => "Удалить отключение звука",
@@ -347,7 +322,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Sperrungen deaktivieren",
-			Language.At => "Sperrungen deaktivian",
 			Language.Fr => "Désactiver les sourdines",
 			Language.Es => "Silenciar desactivados",
 			Language.Ru => "Отключить отключение звука",
@@ -362,8 +336,6 @@ public class PunishmentTranslator : Translator
 		{
 			Language.De =>
 				$"Es wurden `{caseCount}` aktive Fälle gefunden. Möchtest du alle deaktivieren oder löschen, um den Benutzer entsperren zu lassen?",
-			Language.At =>
-				$"Es san `{caseCount}` aktive Fälle gfundn woan. Möchtest olle deaktivian oda löschn, damit da Nutza entsperrt bleibt?",
 			Language.Fr =>
 				$"`{caseCount}` cas actifs trouvés. Voulez-vous les désactiver ou les supprimer tous pour annuler l'interdiction de l'utilisateur ?",
 			Language.Es =>
@@ -381,7 +353,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Sperrungen gelöscht",
-			Language.At => "Sperrungen glescht",
 			Language.Fr => "Interdictions supprimées",
 			Language.Es => "Prohibiciones eliminadas",
 			Language.Ru => "Баны удалены",
@@ -395,7 +366,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Sperrungen deaktiviert",
-			Language.At => "Sperrungen deaktiviat",
 			Language.Fr => "Interdictions désactivées",
 			Language.Es => "Prohibiciones desactivadas",
 			Language.Ru => "Баны отключены",
@@ -409,7 +379,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Sperrungen löschen",
-			Language.At => "Sperrungen löschn",
 			Language.Fr => "Supprimer les bannissements",
 			Language.Es => "Eliminar prohibiciones",
 			Language.Ru => "Удалить баны",
@@ -423,7 +392,6 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Sperrungen deaktivieren",
-			Language.At => "Sperrungen deaktivian",
 			Language.Fr => "Désactiver les interdictions",
 			Language.Es => "Prohibiciones de desactivación",
 			Language.Ru => "Деактивировать баны",

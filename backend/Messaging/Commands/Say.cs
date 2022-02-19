@@ -47,10 +47,10 @@ public class Say : Command<Say>
 			{
 				var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
 
-				if (!string.IsNullOrEmpty(guildConfig.ModNotificationWebhook))
+				if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
 				{
 					await DiscordRest.ExecuteWebhook(
-						guildConfig.ModNotificationWebhook,
+						guildConfig.StaffWebhook,
 						null,
 						Translator.Get<MessagingTranslator>().SaySent(
 							Context.User,

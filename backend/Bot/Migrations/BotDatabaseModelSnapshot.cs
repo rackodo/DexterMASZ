@@ -72,14 +72,14 @@ namespace Bot.Migrations
                     b.Property<string>("AdminRoles")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("AdminWebhook")
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("ExecuteWhoIsOnJoin")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("ModNotificationDm")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("ModNotificationWebhook")
-                        .HasColumnType("longtext");
 
                     b.Property<string>("ModRoles")
                         .HasColumnType("longtext");
@@ -91,6 +91,9 @@ namespace Bot.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("StaffChannels")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("StaffWebhook")
                         .HasColumnType("longtext");
 
                     b.Property<bool>("StrictModPermissionCheck")

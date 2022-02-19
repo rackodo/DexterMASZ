@@ -91,7 +91,7 @@ public class Feature : Command<Feature>
 
 	public static bool HasWebhookDefined(GuildConfig guildConfig)
 	{
-		return !string.IsNullOrEmpty(guildConfig.ModNotificationWebhook);
+		return !string.IsNullOrEmpty(guildConfig.StaffWebhook) && !string.IsNullOrEmpty(guildConfig.AdminWebhook);
 	}
 
 	public static bool HasKickPermission(IGuildUser user)

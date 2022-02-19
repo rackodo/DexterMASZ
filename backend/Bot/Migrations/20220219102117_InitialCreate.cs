@@ -64,7 +64,9 @@ namespace Bot.Migrations
                     StaffChannels = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ModNotificationDm = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    ModNotificationWebhook = table.Column<string>(type: "longtext", nullable: true)
+                    StaffWebhook = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AdminWebhook = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     StrictModPermissionCheck = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ExecuteWhoIsOnJoin = table.Column<bool>(type: "tinyint(1)", nullable: false),

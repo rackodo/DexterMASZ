@@ -10,7 +10,6 @@ public class AutoModTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Auto Mod",
-			Language.At => "Auto Mod",
 			Language.Fr => "Mode Automatique",
 			Language.Es => "Modo Automático",
 			Language.Ru => "Авто Мод",

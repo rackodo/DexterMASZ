@@ -133,6 +133,18 @@ public class DiscordRestController : AuthenticatedController
 	{
 		var identity = await SetupAuthentication();
 
-		return Ok(identity.GetCurrentUserGuilds().Where(guild => guild.IsAdmin).Select(x => new DiscordGuild(x)));
+		var guilds = identity.GetCurrentUserGuilds().Where(
+			guild => guild.IsAdmin
+		).ToList();
+
+		foreach (var guild in guilds.ToArray())
+			try 
+			{
+				await _guildConfigRepo.GetGuildConfig(guild.Id);
+				guilds.Remove(guild);
+			}
+			catch (UnregisteredGuildException) { }
+
+		return Ok(guilds.Select(x => new DiscordGuild(x)));
 	}
 }

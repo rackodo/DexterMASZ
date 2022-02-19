@@ -11,7 +11,6 @@ public class UserMapTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Benutzerbeziehung zwischen {userMap.UserA} und {userMap.UserB}.",
-			Language.At => $"Benutzabeziehung zwischa {userMap.UserA} und {userMap.UserB}.",
 			Language.Fr => $"Usermap entre {userMap.UserA} et {userMap.UserB}.",
 			Language.Es => $"Usermap entre {userMap.UserA} y {userMap.UserB}.",
 			Language.Ru => $"Usermap между {userMap.UserA} и {userMap.UserB}.",
@@ -25,7 +24,6 @@ public class UserMapTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Benutzerbeziehung",
-			Language.At => "Benutzabeziehung",
 			Language.Fr => "Usermap",
 			Language.Es => "Usermap",
 			Language.Ru => "Usermap",
@@ -39,7 +37,6 @@ public class UserMapTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Benutzerbeziehungen",
-			Language.At => "Benutzabeziehungen",
 			Language.Fr => "Usermaps",
 			Language.Es => "Usermaps",
 			Language.Ru => "Usermaps",
@@ -53,7 +50,6 @@ public class UserMapTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Benutzerkarten-ID",
-			Language.At => "NutzaMapID",
 			Language.Fr => "Identifiant de la carte utilisateur",
 			Language.Es => "ID de mapa de usuario",
 			Language.Ru => "идентификатор пользовательской карты",
