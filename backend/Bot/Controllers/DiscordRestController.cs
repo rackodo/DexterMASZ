@@ -138,7 +138,7 @@ public class DiscordRestController : AuthenticatedController
 		).ToList();
 
 		foreach (var guild in guilds.ToArray())
-			try 
+			try
 			{
 				await _guildConfigRepo.GetGuildConfig(guild.Id);
 				guilds.Remove(guild);

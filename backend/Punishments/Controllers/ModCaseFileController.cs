@@ -1,5 +1,4 @@
 using Bot.Abstractions;
-using Bot.Data;
 using Bot.DTOs;
 using Bot.Enums;
 using Bot.Exceptions;

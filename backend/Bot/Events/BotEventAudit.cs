@@ -4,7 +4,6 @@ using Bot.Extensions;
 using Bot.Identities;
 using Bot.Models;
 using Bot.Services;
-using Humanizer;
 
 namespace Bot.Events;
 

@@ -3,7 +3,6 @@ using Bot.Data;
 using Bot.Models;
 using Bot.Services;
 using Microsoft.AspNetCore.Mvc;
-using RestSharp;
 
 namespace Bot.Controllers;
 

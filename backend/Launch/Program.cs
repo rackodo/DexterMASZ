@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 const bool updateSettings = false;
-const bool migrateDatabases = true;
+const bool migrateDatabases = false;
 
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("========== Launching Dexter ==========");
