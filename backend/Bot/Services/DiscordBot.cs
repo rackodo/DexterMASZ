@@ -91,7 +91,7 @@ public class DiscordBot : IHostedService, Event
 
 		await _client.LoginAsync(TokenType.Bot, config.DiscordBotToken);
 		await _client.StartAsync();
-		await _client.SetGameAsync(config.ServiceBaseUrl, type: ActivityType.Watching);
+		await _client.SetGameAsync(config.ServiceDomain, type: ActivityType.Watching);
 	}
 
 	public async Task StopAsync(CancellationToken cancellationToken)
