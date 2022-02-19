@@ -7,9 +7,13 @@ using Launch;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using System.Runtime.InteropServices;
 
 const bool updateSettings = false;
-const bool migrateDatabases = false;
+var migrateDatabases = true;
+
+if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+	migrateDatabases = true;
 
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("========== Launching Dexter ==========");
