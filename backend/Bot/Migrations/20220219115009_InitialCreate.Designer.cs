@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bot.Migrations
 {
     [DbContext(typeof(BotDatabase))]
-    [Migration("20220219102117_InitialCreate")]
+    [Migration("20220219115009_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,6 +75,9 @@ namespace Bot.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("AdminWebhook")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("BotChannels")
                         .HasColumnType("longtext");
 
                     b.Property<bool>("ExecuteWhoIsOnJoin")

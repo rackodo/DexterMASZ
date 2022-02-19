@@ -14,6 +14,9 @@ public class GuildConfigForPutDto
 	[Required(ErrorMessage = "StaffChannels field is required")]
 	public ulong[] StaffChannels { get; set; }
 
+	[Required(ErrorMessage = "BotChannels field is required")]
+	public ulong[] BotChannels { get; set; }
+
 	public bool ModNotificationDm { get; set; }
 
 	[Url(ErrorMessage = "Webhook needs to be a valid url")]

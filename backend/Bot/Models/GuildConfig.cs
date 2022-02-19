@@ -9,6 +9,7 @@ public class GuildConfig
 	public ulong[] ModRoles { get; set; }
 	public ulong[] AdminRoles { get; set; }
 	public ulong[] StaffChannels { get; set; }
+	public ulong[] BotChannels { get; set; }
 	public bool ModNotificationDm { get; set; }
 	public string StaffWebhook { get; set; }
 	public string AdminWebhook { get; set; }

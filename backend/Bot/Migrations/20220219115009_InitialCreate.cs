@@ -63,6 +63,8 @@ namespace Bot.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     StaffChannels = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    BotChannels = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ModNotificationDm = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     StaffWebhook = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),

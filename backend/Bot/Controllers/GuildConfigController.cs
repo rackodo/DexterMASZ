@@ -88,6 +88,7 @@ public class GuildConfigController : AuthenticatedController
 			AdminRoles = guildConfigForCreateDto.AdminRoles,
 			ModNotificationDm = guildConfigForCreateDto.ModNotificationDm,
 			StaffChannels = guildConfigForCreateDto.StaffChannels,
+			BotChannels = guildConfigForCreateDto.BotChannels,
 			StaffWebhook = guildConfigForCreateDto.StaffWebhook,
 			AdminWebhook = guildConfigForCreateDto.AdminWebhook,
 			StrictModPermissionCheck = guildConfigForCreateDto.StrictModPermissionCheck,
@@ -113,7 +114,9 @@ public class GuildConfigController : AuthenticatedController
 
 		guildConfig.ModRoles = newValue.ModRoles;
 		guildConfig.AdminRoles = newValue.AdminRoles;
+
 		guildConfig.StaffChannels = newValue.StaffChannels;
+		guildConfig.BotChannels = newValue.BotChannels;
 
 		guildConfig.ModNotificationDm = newValue.ModNotificationDm;
 

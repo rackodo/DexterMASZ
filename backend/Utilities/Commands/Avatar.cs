@@ -35,6 +35,6 @@ public class Avatar : Command<Avatar>
 			// ignored
 		}
 
-		await Context.Interaction.RespondAsync(embed: embed.Build(), ephemeral: true);
+		await Context.Interaction.RespondAsync(embed: embed.Build());
 	}
 }

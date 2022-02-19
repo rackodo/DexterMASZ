@@ -22,10 +22,10 @@ import { EnumManagerService } from 'src/app/services/enum-manager.service';
 })
 export class GuildAddComponent implements OnInit {
 
-  public adminRolesGroup!: FormGroup;
-  public modRolesGroup!: FormGroup;
-  public staffChannelsGroup!: FormGroup;
+  public rolesGroup!: FormGroup;
+  public channelsGroup!: FormGroup;
   public configGroup!: FormGroup;
+
   public queryGroup!: FormGroup;
 
   public guilds!: ContentLoading<DiscordGuild[]>;
@@ -41,14 +41,13 @@ export class GuildAddComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, private api: ApiService, private toastr: ToastrService, private authService: AuthService, private router: Router, private applicationInfoService: ApplicationInfoService, private translator: TranslateService, private enumManager: EnumManagerService) { }
 
   ngOnInit(): void {
-    this.adminRolesGroup = this._formBuilder.group({
-      adminRoles: ['', Validators.required]
-    });
-    this.modRolesGroup = this._formBuilder.group({
+    this.rolesGroup = this._formBuilder.group({
+      adminRoles: ['', Validators.required],
       modRoles: ['', Validators.required]
     });
-    this.staffChannelsGroup = this._formBuilder.group({
-      staffChannels: ['']
+    this.channelsGroup = this._formBuilder.group({
+      staffChannels: [''],
+      botChannels: ['']
     });
     this.configGroup = this._formBuilder.group({
       staff: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
@@ -138,9 +137,10 @@ export class GuildAddComponent implements OnInit {
   registerGuild() {
     const data = {
       guildid:                        this.selectedGuild?.id,
-      modRoles:                       this.modRolesGroup.value.modRoles,
-      adminRoles:                     this.adminRolesGroup.value.adminRoles,
-      staffChannels:                  this.staffChannelsGroup.value.staffChannels,
+      modRoles:                       this.rolesGroup.value.modRoles,
+      adminRoles:                     this.rolesGroup.value.adminRoles,
+      staffChannels:                  this.channelsGroup.value.staffChannels,
+      botChannels:                    this.channelsGroup.value.botChannels,
       staffWebhook:         		  this.configGroup.value?.staff?.trim()         != '' ? this.configGroup?.value?.staff           		       : null,
 	  adminWebhook:         		  this.configGroup.value?.admin?.trim()         != '' ? this.configGroup?.value?.admin           		       : null,
       strictModPermissionCheck:       this.configGroup.value?.strictPermissionCheck != '' ? this.configGroup.value?.strictPermissionCheck ?? false : false,
@@ -164,9 +164,8 @@ export class GuildAddComponent implements OnInit {
     this.selectedGuild = undefined;
     this.selectedGuildDetails = { loading: true, content: undefined };
     this.reloadGuilds();
-    this.modRolesGroup.reset();
-    this.adminRolesGroup.reset();
-    this.staffChannelsGroup.reset();
+    this.rolesGroup.reset();
+    this.channelsGroup.reset();
     this.configGroup.reset();
   }
 }

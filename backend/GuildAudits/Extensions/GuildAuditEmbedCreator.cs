@@ -20,9 +20,6 @@ public static class GuildAuditEmbedCreator
 
 		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
 
-		if (actor != null)
-			embed.WithThumbnailUrl(actor.GetAvatarOrDefaultUrl());
-
 		embed.WithTitle(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditTitle() + ": " +
 				translator.Get<GuildAuditEnumTranslator>().Enum(config.GuildAuditEvent));
 

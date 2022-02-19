@@ -68,9 +68,6 @@ public static class AutoModEmbedCreator
 
 		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
 
-		if (actor != null)
-			embed.WithThumbnailUrl(actor.GetAvatarOrDefaultUrl());
-
 		embed.WithTitle(translator.Get<AutoModTranslator>().AutoMod() + ": " +
 						translator.Get<AutoModEnumTranslator>().Enum(autoModConfig.AutoModType));
 

@@ -43,9 +43,16 @@
                 </mat-card-actions>
             </mat-card>
             <mat-vertical-stepper [linear]="true" #stepper color="accent" *ngIf="!this.selectedGuildDetails?.loading && this.selectedGuildDetails?.content">
-                <mat-step [stepControl]="adminRolesGroup">
-                    <form [formGroup]="adminRolesGroup">
-                        <ng-template matStepLabel>{{ 'GuildDialog.StepAdminRoles' | translate }}</ng-template>
+                <mat-step [stepControl]="rolesGroup">
+                    <form [formGroup]="rolesGroup">
+                        <ng-template matStepLabel>{{ 'GuildDialog.StepRoles' | translate }}</ng-template>
+                        <mat-form-field appearance="fill">
+                            <mat-label>{{ 'GuildDialog.ModeratorRoles' | translate }}</mat-label>
+                            <mat-select formControlName="modRoles" multiple>
+                                <mat-option *ngFor="let role of selectedGuildDetails.content?.roles"
+                                [value]="role.id" [style.color]="generateRoleColor(role)">{{role.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
                         <mat-form-field appearance="fill">
                             <mat-label>{{ 'GuildDialog.AdminRoles' | translate }}</mat-label>
                             <mat-select formControlName="adminRoles" multiple>
@@ -54,32 +61,24 @@
                             </mat-select>
                         </mat-form-field>
                         <div class="stepper-actions">
-                            <button mat-raised-button matStepperNext color="accent">{{ 'GuildDialog.Next' | translate }}</button>
-                        </div>
-                    </form>
-                </mat-step>
-                <mat-step [stepControl]="modRolesGroup">
-                    <form [formGroup]="modRolesGroup">
-                        <ng-template matStepLabel>{{ 'GuildDialog.StepModeratorRoles' | translate }}</ng-template>
-                        <mat-form-field appearance="fill">
-                            <mat-label>{{ 'GuildDialog.ModeratorRoles' | translate }}</mat-label>
-                            <mat-select formControlName="modRoles" multiple>
-                                <mat-option *ngFor="let role of selectedGuildDetails.content?.roles"
-                                [value]="role.id" [style.color]="generateRoleColor(role)">{{role.name}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <div class="stepper-actions">
                             <button mat-raised-button matStepperPrevious class="mr-2" color="accent">{{ 'GuildDialog.Back' | translate }}</button>
                             <button mat-raised-button matStepperNext color="accent">{{ 'GuildDialog.Next' | translate }}</button>
                         </div>
                     </form>
                 </mat-step>
-                <mat-step [stepControl]="staffChannelsGroup" [optional]='true'>
-                    <form [formGroup]="staffChannelsGroup">
-                        <ng-template matStepLabel>{{ 'GuildDialog.StepStaffChannels' | translate }}</ng-template>
+                <mat-step [stepControl]="channelsGroup" [optional]='true'>
+                    <form [formGroup]="channelsGroup">
+                        <ng-template matStepLabel>{{ 'GuildDialog.StepChannels' | translate }}</ng-template>
                         <mat-form-field appearance="fill">
                             <mat-label>{{ 'GuildDialog.StaffChannels' | translate }}</mat-label>
                             <mat-select formControlName="staffChannels" multiple>
+                                <mat-option *ngFor="let channel of selectedGuildDetails.content?.channels"
+                                [value]="channel.id">{{channel.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>{{ 'GuildDialog.BotChannels' | translate }}</mat-label>
+                            <mat-select formControlName="botChannels" multiple>
                                 <mat-option *ngFor="let channel of selectedGuildDetails.content?.channels"
                                 [value]="channel.id">{{channel.name}}</mat-option>
                             </mat-select>

@@ -19,9 +19,8 @@ import { EnumManagerService } from 'src/app/services/enum-manager.service';
 })
 export class GuildEditComponent implements OnInit {
 
-  public adminRolesGroup!: FormGroup;
-  public modRolesGroup!: FormGroup;
-  public staffChannelsGroup!: FormGroup;
+  public rolesGroup!: FormGroup;
+  public channelsGroup!: FormGroup;
   public configGroup!: FormGroup;
 
   public allLanguages: ApiEnum[] = [];
@@ -31,14 +30,13 @@ export class GuildEditComponent implements OnInit {
   constructor(private api: ApiService, private route: ActivatedRoute, private router: Router, private toastr: ToastrService, private _formBuilder: FormBuilder, private translator: TranslateService, private enumManager: EnumManagerService) { }
 
   ngOnInit(): void {
-    this.adminRolesGroup = this._formBuilder.group({
-      adminRoles: ['', Validators.required]
-    });
-    this.modRolesGroup = this._formBuilder.group({
+    this.rolesGroup = this._formBuilder.group({
+      adminRoles: ['', Validators.required],
       modRoles: ['', Validators.required]
     });
-    this.staffChannelsGroup = this._formBuilder.group({
-      staffChannels: ['']
+    this.channelsGroup = this._formBuilder.group({
+      staffChannels: [''],
+      botChannels: ['']
     });
     this.configGroup = this._formBuilder.group({
       staff: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
@@ -49,12 +47,12 @@ export class GuildEditComponent implements OnInit {
       preferredLanguage: [''],
     });
 
-      this.route.paramMap.subscribe(params => {
-        const guildId = params.get("guildid");
-        this.loadLanguages();
-        this.loadGuild(guildId);
-        this.loadConfig(guildId);
-      });
+    this.route.paramMap.subscribe(params => {
+      const guildId = params.get("guildid");
+      this.loadLanguages();
+      this.loadGuild(guildId);
+      this.loadConfig(guildId);
+    });
   }
 
   generateRoleColor(role: DiscordRole): string {
@@ -82,9 +80,14 @@ export class GuildEditComponent implements OnInit {
   loadConfig(id: string|null) {
     this.currentGuildConfig = { loading: true, content: {} as GuildConfig };
     this.api.getSimpleData(`/guilds/${id}`).subscribe((data: GuildConfig) => {
-      this.modRolesGroup.setValue({ modRoles: data.modRoles });
-      this.adminRolesGroup.setValue({ adminRoles: data.adminRoles});
-      this.staffChannelsGroup.setValue({ staffChannels: data.staffChannels});
+      this.rolesGroup.setValue({
+	    modRoles: data.modRoles,
+	    adminRoles: data.adminRoles
+	  });
+      this.channelsGroup.setValue({
+	    staffChannels: data.staffChannels,
+	    botChannels: data.botChannels
+	  });
       this.configGroup.setValue({
         staff: data.staffWebhook,
         admin: data.adminWebhook,
@@ -103,9 +106,10 @@ export class GuildEditComponent implements OnInit {
 
   updateGuild() {
     const data = {
-      modRoles: this.modRolesGroup.value.modRoles,
-      adminRoles: this.adminRolesGroup.value.adminRoles,
-      staffChannels: this.staffChannelsGroup.value.staffChannels != '' ? this.staffChannelsGroup.value.staffChannels : [],
+      modRoles: this.rolesGroup.value.modRoles,
+      adminRoles: this.rolesGroup.value.adminRoles,
+      staffChannels: this.channelsGroup.value.staffChannels != '' ? this.channelsGroup.value.staffChannels : [],
+      botChannels: this.channelsGroup.value.botChannels != '' ? this.channelsGroup.value.botChannels : [],
       staffWebhook: this.configGroup.value?.staff?.trim() ? this.configGroup?.value?.staff : null,
       adminWebhook: this.configGroup.value?.admin?.trim() ? this.configGroup?.value?.admin : null,
       strictModPermissionCheck: (this.configGroup.value?.strictPermissionCheck != '' ? this.configGroup.value?.strictPermissionCheck : false) ?? false,

@@ -4,6 +4,7 @@ export interface GuildConfig {
     modRoles: string[];
     adminRoles: string[];
     staffChannels: string[];
+    botChannels: string[];
     modNotificationDM: boolean;
     strictModPermissionCheck: boolean;
     executeWhoIsOnJoin: boolean;

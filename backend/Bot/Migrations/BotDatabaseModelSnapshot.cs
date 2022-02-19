@@ -75,6 +75,9 @@ namespace Bot.Migrations
                     b.Property<string>("AdminWebhook")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("BotChannels")
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("ExecuteWhoIsOnJoin")
                         .HasColumnType("tinyint(1)");
 
