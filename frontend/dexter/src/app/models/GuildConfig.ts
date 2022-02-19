@@ -7,7 +7,8 @@ export interface GuildConfig {
     modNotificationDM: boolean;
     strictModPermissionCheck: boolean;
     executeWhoIsOnJoin: boolean;
-    modNotificationWebhook: string;
+    staffWebhook: string;
+    adminWebhook: string;
     publishModeratorInfo: boolean;
     preferredLanguage: number;
 }

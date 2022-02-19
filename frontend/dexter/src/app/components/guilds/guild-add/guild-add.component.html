@@ -94,12 +94,12 @@
                     <form [formGroup]="configGroup">
                         <ng-template matStepLabel>{{ 'GuildDialog.StepFurtherConfiguration' | translate }}</ng-template>
                         <mat-form-field class="w-100">
-                            <mat-label>{{ 'GuildDialog.InternalStaffWebhook' | translate }}</mat-label>
-                            <input type="email" matInput formControlName="internal" placeholder="https://discord.com/...">
+                            <mat-label>{{ 'GuildDialog.StaffWebhook' | translate }}</mat-label>
+                            <input type="email" matInput formControlName="staff" placeholder="https://discord.com/...">
                         </mat-form-field>
                         <mat-form-field class="w-100">
-                            <mat-label>{{ 'GuildDialog.PublicWebhook' | translate }}</mat-label>
-                            <input type="email" matInput formControlName="public" placeholder="https://discord.com/...">
+                            <mat-label>{{ 'GuildDialog.AdminWebhook' | translate }}</mat-label>
+                            <input type="email" matInput formControlName="admin" placeholder="https://discord.com/...">
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{ 'GuildDialog.Language' | translate }}</mat-label>

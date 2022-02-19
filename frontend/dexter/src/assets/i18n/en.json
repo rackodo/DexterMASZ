@@ -23,7 +23,7 @@
     "Invite": "Invite",
     "Invites": "Invites",
     "UserNotes": "UserNotes",
-    "userMaps": "userMaps",
+    "UserMaps": "UserMaps",
     "Comments": "Comments",
     "Loading": "Loading...",
     "NothingHere": "Nothing here.",
@@ -175,8 +175,8 @@
         "StepMutedRoles": "Select muted roles",
         "MutedRoles": "Muted roles",
         "StepFurtherConfiguration": "Select further configuration",
-        "InternalStaffWebhook": "Internal staff notification webhook",
-        "PublicWebhook": "Public user notification webhook",
+        "StaffWebhook": "Staff Webhook",
+        "AdminWebhook": "Admin Webhook",
         "Language": "Language",
         "StrictPermissionCheckbox": "Strict permission check",
         "StrictPermissionDetails": "A moderator needs kick/ban permissions on discord to create kick/ban modcases",
@@ -399,7 +399,7 @@
             "AutoMods": "Automods",
             "Messages": "Messages",
             "UserNote": "UserNotes",
-            "UserMap": "userMaps",
+            "UserMap": "UserMaps",
             "Config": "Config"
         }
     },
@@ -408,19 +408,19 @@
         "Description": "Description",
         "CreateNewMap": "Create new UserMap",
         "Search": "Search (user, id, description...)",
-        "NoMatches": "No UserMap matches your search.",
-        "FailedToLoad": "Failed to load userMaps.",
+        "NoMatches": "No usermap matches your search.",
+        "FailedToLoad": "Failed to load usermaps.",
         "FailedToLoadUser": "Failed to load userlist.",
-        "FailedToCreate": "Failed to create userMap.",
+        "FailedToCreate": "Failed to create usermap.",
         "Created": "UserMap created."
     },
     "UserMapCard": {
         "UpdatedPrefix": "Updated:",
         "Edit": "Edit",
         "Delete": "Delete",
-        "FailedToUpdate": "Failed to update userMap.",
+        "FailedToUpdate": "Failed to update usermap.",
         "Updated": "UserMap updated.",
-        "FailedToDelete": "Failed to delete userMap.",
+        "FailedToDelete": "Failed to delete usermap.",
         "Deleted": "UserMap deleted."
     },
     "UserNoteTable": {

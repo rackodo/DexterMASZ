@@ -41,12 +41,12 @@ export class GuildEditComponent implements OnInit {
       staffChannels: ['']
     });
     this.configGroup = this._formBuilder.group({
-      internal: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
-      public: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
+      staff: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
+      admin: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
       strictPermissionCheck: [''],
       executeWhoIsOnJoin: [''],
       publishModeratorInfo: [''],
-      preferredLanguage: ['']
+      preferredLanguage: [''],
     });
 
       this.route.paramMap.subscribe(params => {
@@ -86,7 +86,8 @@ export class GuildEditComponent implements OnInit {
       this.adminRolesGroup.setValue({ adminRoles: data.adminRoles});
       this.staffChannelsGroup.setValue({ staffChannels: data.staffChannels});
       this.configGroup.setValue({
-        webhook: data.modNotificationWebhook,
+        staff: data.staffWebhook,
+        admin: data.adminWebhook,
         strictPermissionCheck: data.strictModPermissionCheck,
         executeWhoIsOnJoin: data.executeWhoIsOnJoin,
         publishModeratorInfo: data.publishModeratorInfo,
@@ -105,7 +106,8 @@ export class GuildEditComponent implements OnInit {
       modRoles: this.modRolesGroup.value.modRoles,
       adminRoles: this.adminRolesGroup.value.adminRoles,
       staffChannels: this.staffChannelsGroup.value.staffChannels != '' ? this.staffChannelsGroup.value.staffChannels : [],
-      modNotificationWebhook: this.configGroup.value?.internal?.trim() ? this.configGroup?.value?.internal : null,
+      staffWebhook: this.configGroup.value?.staff?.trim() ? this.configGroup?.value?.staff : null,
+      adminWebhook: this.configGroup.value?.admin?.trim() ? this.configGroup?.value?.admin : null,
       strictModPermissionCheck: (this.configGroup.value?.strictPermissionCheck != '' ? this.configGroup.value?.strictPermissionCheck : false) ?? false,
       executeWhoIsOnJoin: (this.configGroup.value?.executeWhoIsOnJoin != '' ? this.configGroup.value?.executeWhoIsOnJoin : false) ?? false,
       publishModeratorInfo: (this.configGroup.value?.publishModeratorInfo != '' ? this.configGroup.value?.publishModeratorInfo : false) ?? false,

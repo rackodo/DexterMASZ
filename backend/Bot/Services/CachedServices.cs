@@ -39,7 +39,7 @@ public class CachedServices
 
 		Services.Add(type.FullName, classes.ToArray());
 
-		return Services[type.FullName];
+		return classes.ToArray();
 	}
 
 	public List<T> GetInitializedClasses<T>(IServiceProvider serviceProvider) where T : class
