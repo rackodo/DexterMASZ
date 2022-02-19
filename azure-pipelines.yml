@@ -20,7 +20,7 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/backend/Dockerfile'
-        arguments: '--output $(Build.ArtifactsStagingDirectory)'
+        arguments: '--output $(Build.ArtifactStagingDirectory)'
         tags: |
           $(tag)
     - task: Docker@2
@@ -28,6 +28,11 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
-        arguments: '--output $(Build.ArtifactsStagingDirectory)'
+        arguments: '--output $(Build.ArtifactStagingDirectory)'
         tags: |
           $(tag)
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'Dexter'
+        publishLocation: 'Container'
