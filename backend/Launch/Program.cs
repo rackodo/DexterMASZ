@@ -7,11 +7,14 @@ using Launch;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using System.Runtime.InteropServices;
 
 const bool migrateDatabases = true;
 
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("========== Launching Dexter ==========");
+
+var updateSettings = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && ConsoleCreator.WaitForUser("update settings", 5);
 
 var builder = WebApplication.CreateBuilder();
 
@@ -28,6 +31,10 @@ if (hasUpdatedDbSettings)
 else
 {
 	ConsoleCreator.AddSubHeading("Found database settings for", $"{databaseSettings.User} // {databaseSettings.Database}");
+
+	if (updateSettings)
+		if (ConsoleCreator.WaitForUser($"edit {nameof(DatabaseSettings)}", 10))
+			databaseSettings = ConsoleCreator.CreateDatabaseSettings(true).Key;
 
 	Console.WriteLine();
 }
@@ -98,6 +105,16 @@ await using (var dataContext = new BotDatabase(dbBuilder.Options))
 	{
 		ConsoleCreator.AddSubHeading("Found app settings for client",
 			databaseSettings.ClientId.ToString());
+
+		if (updateSettings)
+			if (ConsoleCreator.WaitForUser($"edit {nameof(AppSettings)}", 10))
+			{
+				settings = ConsoleCreator.CreateAppSettings(clientIdContainer, true);
+
+				await appSettingRepo.UpdateAppSetting(settings);
+
+				Console.WriteLine();
+			}
 	}
 }
 
