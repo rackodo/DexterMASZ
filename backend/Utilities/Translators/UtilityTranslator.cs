@@ -31,6 +31,18 @@ public class UtilityTranslator : Translator
 			_ => "Status",
 		};
 	}
+	public string UserProfile()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Benutzerprofil für",
+			Language.Fr => "Profil utilisateur pour",
+			Language.Es => "Perfil de usuario para",
+			Language.Ru => "Профиль пользователя для",
+			Language.It => "Profilo utente per",
+			_ => "User Profile For",
+		};
+	}
 	public string Bot()
 	{
 		return PreferredLanguage switch

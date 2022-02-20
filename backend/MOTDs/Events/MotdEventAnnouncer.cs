@@ -40,20 +40,20 @@ public class MotdEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(motd.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.AdminWebhook))
+		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
 		{
 			_logger.LogInformation(
-				$"Sending internal webhook for motd {motd.GuildId} ({motd.Id}) to {guildConfig.AdminWebhook}.");
+				$"Sending internal webhook for motd {motd.GuildId} ({motd.Id}) to {guildConfig.StaffWebhook}.");
 
 			try
 			{
 				var embed = await motd.CreateMotdEmbed(actor, action, _serviceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.AdminWebhook, embed.Build());
+				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build());
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
-					$"Error while announcing motd {motd.GuildId} ({motd.Id}) to {guildConfig.AdminWebhook}.");
+					$"Error while announcing motd {motd.GuildId} ({motd.Id}) to {guildConfig.StaffWebhook}.");
 			}
 		}
 	}

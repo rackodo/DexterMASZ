@@ -126,7 +126,7 @@ public class Track : Command<Track>
 
 		embed.AddField(Translator.Get<InviteTranslator>().UsedBy(usages.GetValueOrDefault()), usedBy.ToString());
 		embed.WithFooter($"Invite: {inviteCode}");
-		embed.WithTimestamp(DateTime.UtcNow);
+		embed.WithCurrentTimestamp();
 		embed.WithColor(Color.Gold);
 
 		await Context.Interaction.ModifyOriginalResponseAsync(message =>

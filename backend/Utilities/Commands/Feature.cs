@@ -23,7 +23,7 @@ public class Feature : Command<Feature>
 		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
 
 		EmbedBuilder embed = new();
-		embed.WithTimestamp(DateTime.UtcNow);
+		embed.WithCurrentTimestamp();
 
 		StringBuilder missingBasicPermissions = new();
 

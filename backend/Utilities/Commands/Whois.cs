@@ -7,6 +7,7 @@ using Bot.Translators;
 using Discord;
 using Discord.Interactions;
 using Utilities.Dynamics;
+using Utilities.Translators;
 
 namespace Utilities.Commands;
 
@@ -23,10 +24,9 @@ public class WhoIs : Command<WhoIs>
 
 		var embed = new EmbedBuilder()
 			.WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {user.Id}")
-			.WithTimestamp(DateTime.UtcNow)
+			.WithTitle($"{Translator.Get<UtilityTranslator>().UserProfile()} {user.Username}#{user.Discriminator}")
+			.WithCurrentTimestamp()
 			.WithColor(Color.Blue)
-			.WithDescription(user.Mention)
-			.WithAuthor(user)
 			.WithThumbnailUrl(user.GetAvatarOrDefaultUrl(size: 1024))
 			.AddField(Translator.Get<BotTranslator>().Registered(), user.CreatedAt.DateTime.ToDiscordTs(), true);
 
