@@ -133,9 +133,9 @@ public class UserMapRepository : Repository,
 			}
 
 			if (userMaps.Count > 5)
-				userMapsInfo.Append("[...]");
+				userMapsInfo.Append("...");
 
-			embed.AddField($"{translator.Get<UserMapTranslator>().UserMaps()} [{userMaps.Count}]",
+			embed.AddField($"{translator.Get<UserMapTranslator>().UserMaps()} ({userMaps.Count})",
 				userMapsInfo.ToString());
 		}
 	}

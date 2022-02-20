@@ -10,12 +10,12 @@ public class UtilityTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Avatar URL",
-			Language.Fr => "l'URL d'avatar",
-			Language.Es => "URL de avatar",
-			Language.Ru => "URL аватара",
-			Language.It => "l'URL dell'avatar",
-			_ => "Avatar URL"
+			Language.De => "Holen Sie sich die Avatar-URL",
+			Language.Fr => "Obtenir l'URL de l'avatar",
+			Language.Es => "Obtener URL de avatar",
+			Language.Ru => "Получить URL-адрес аватара",
+			Language.It => "Ottieni l'URL dell'avatar",
+			_ => "Get Avatar URL"
 		};
 	}
 

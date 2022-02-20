@@ -80,7 +80,7 @@ public class InviteRepository : Repository,
 			filteredInvites = filteredInvites.FindAll(x => x.JoinedAt >= user.JoinedAt.Value.UtcDateTime);
 
 		if (user.JoinedAt != null)
-			embed.AddField(translator.Get<BotTranslator>().Joined(), user.JoinedAt.Value.DateTime.ToDiscordTs(), true);
+			embed.AddField(translator.Get<BotTranslator>().Joined(), user.JoinedAt.Value.DateTime.ToDiscordTs());
 
 		if (filteredInvites.Count > 0)
 		{
@@ -94,7 +94,7 @@ public class InviteRepository : Repository,
 					joinedInfo.AppendLine(translator.Get<InviteTranslator>().ByUser(usedInvite.InviteIssuerId));
 			}
 
-			embed.AddField(translator.Get<InviteTranslator>().UsedInvite(), joinedInfo, true);
+			embed.AddField(translator.Get<InviteTranslator>().UsedInvite(), joinedInfo);
 		}
 	}
 

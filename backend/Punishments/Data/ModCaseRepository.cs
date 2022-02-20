@@ -192,7 +192,7 @@ public class ModCaseRepository : Repository,
 			}
 
 			if (cases.Count > 5)
-				caseInfo.Append("[...]");
+				caseInfo.Append("...");
 
 			embed.AddField($"{translator.Get<PunishmentTranslator>().Cases()} [{cases.Count}]", caseInfo.ToString());
 
@@ -213,9 +213,9 @@ public class ModCaseRepository : Repository,
 				}
 
 				if (activeCases.Count > 5)
-					activeInfo.Append("[...]");
+					activeInfo.Append("...");
 
-				embed.AddField($"{translator.Get<PunishmentTranslator>().ActivePunishments()} [{activeCases.Count}]",
+				embed.AddField($"{translator.Get<PunishmentTranslator>().ActivePunishments()} ({activeCases.Count})",
 					activeInfo.ToString());
 			}
 		}
