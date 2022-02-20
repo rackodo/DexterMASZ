@@ -219,11 +219,6 @@ public class ModCaseRepository : Repository,
 					activeInfo.ToString());
 			}
 		}
-		else
-		{
-			embed.AddField($"{translator.Get<PunishmentTranslator>().Cases()} [0]",
-				translator.Get<PunishmentTranslator>().NoCases());
-		}
 	}
 
 	public async Task<ModCase> ImportModCase(ModCase modCase)
