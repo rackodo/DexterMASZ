@@ -194,18 +194,6 @@
 
         <mat-divider *ngIf="this.currentUser?.modGuilds?.length || this.currentUser?.adminGuilds?.length"></mat-divider>
 
-        <a class="d-flex" (click)="open('tokens')" *ngIf="this.currentUser?.isAdmin">
-          <div [class.activatedNav]="activatedNav[1] === 'tokens'" class="rounded navitem">
-            <mat-icon aria-hidden="false" aria-label="tune icon">api</mat-icon>
-            <span>{{ 'Toolbar.API' | translate }}</span>
-          </div>
-        </a>
-        <a class="d-flex" (click)="open('adminstats')" *ngIf="this.currentUser?.isAdmin">
-          <div [class.activatedNav]="activatedNav[1] === 'adminstats'" class="rounded navitem">
-            <mat-icon class="flex-shrink-0" aria-hidden="false" aria-label="tune icon">insights</mat-icon>
-            <span class="flex-grow-1">{{ 'Toolbar.Insights' | translate }}</span>
-          </div>
-        </a>
         <a class="d-flex" (click)="open('settings')" *ngIf="this.currentUser?.isAdmin">
           <div [class.activatedNav]="activatedNav[1] === 'settings'" class="rounded navitem">
             <mat-icon aria-hidden="false" aria-label="tune icon">settings</mat-icon>
@@ -218,13 +206,6 @@
             <span>{{ 'Toolbar.Patchnotes' | translate }}</span>
           </div>
         </a>
-        <a class="d-flex" (click)="open('donate')">
-          <div [class.activatedNav]="activatedNav[1] === 'donate'" class="rounded navitem">
-            <mat-icon aria-hidden="false" aria-label="tune icon">forum</mat-icon>
-            <span>{{ 'Toolbar.Community' | translate }}</span>
-          </div>
-        </a>
-
         <ng-container *ngIf="applicationInfo?.termsOfServiceUrl; else elseTemplateToS">
           <a class="d-flex" href="{{ applicationInfo?.termsOfServiceUrl }}" target="_blank">
             <div [class.activatedNav]="activatedNav[1] === 'guidelines'" class="rounded navitem">
