@@ -49,6 +49,9 @@ public class InviteRepository : Repository,
 
 		foreach (var invite in (await GetInvitedForUser(userId)).Where(invite => modGuilds.Contains(invite.GuildId.ToString())))
 		{
+			if (invite.InviteIssuerId == 0)
+				continue;
+
 			invited.Add(new UserInviteExpanded(
 				invite,
 				await _discordRest.FetchUserInfo(invite.JoinedUserId, CacheBehavior.OnlyCache),
@@ -59,6 +62,9 @@ public class InviteRepository : Repository,
 		var invitedBy = new List<UserInviteExpanded>();
 		foreach (var invite in (await GetUsedInvitesForUser(userId)).Where(invite => modGuilds.Contains(invite.GuildId.ToString())))
 		{
+			if (invite.InviteIssuerId == 0)
+				continue;
+
 			invitedBy.Add(new UserInviteExpanded(
 				invite,
 				await _discordRest.FetchUserInfo(invite.JoinedUserId, CacheBehavior.OnlyCache),

@@ -9,10 +9,10 @@ public class DiscordUser
 	public DiscordUser(IUser user)
 	{
 		if (user is null)
-			throw new ResourceNotFoundException("User for DiscordUserView is equal to null!");
+			throw new ResourceNotFoundException("User for IUser is equal to null!");
 
 		if (user.Id is 0)
-			throw new ResourceNotFoundException("User for DiscordUserView has an ID of 0!");
+			throw new ResourceNotFoundException("User for IUser has an ID of 0!");
 
 		Id = user.Id;
 		Username = user.Username;
