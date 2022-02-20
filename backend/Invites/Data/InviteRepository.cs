@@ -79,22 +79,23 @@ public class InviteRepository : Repository,
 		if (user is { JoinedAt: { } })
 			filteredInvites = filteredInvites.FindAll(x => x.JoinedAt >= user.JoinedAt.Value.UtcDateTime);
 
-		StringBuilder joinedInfo = new();
-
 		if (user.JoinedAt != null)
-			joinedInfo.AppendLine(user.JoinedAt.Value.DateTime.ToDiscordTs());
+			embed.AddField(translator.Get<BotTranslator>().Joined(), user.JoinedAt.Value.DateTime.ToDiscordTs(), true);
 
 		if (filteredInvites.Count > 0)
 		{
-			var usedInvite = filteredInvites.First();
-			joinedInfo.AppendLine(translator.Get<InviteTranslator>().UsedInvite(usedInvite.UsedInvite));
+			StringBuilder joinedInfo = new();
 
-			if (usedInvite.InviteIssuerId != 0)
-				joinedInfo.AppendLine(translator.Get<InviteTranslator>().ByUser(usedInvite.InviteIssuerId));
+			foreach (var usedInvite in filteredInvites)
+			{
+				joinedInfo.AppendLine($"`{usedInvite.UsedInvite}`.");
+
+				if (usedInvite.InviteIssuerId != 0)
+					joinedInfo.AppendLine(translator.Get<InviteTranslator>().ByUser(usedInvite.InviteIssuerId));
+			}
+
+			embed.AddField(translator.Get<InviteTranslator>().UsedInvite(), joinedInfo, true);
 		}
-
-		if (!string.IsNullOrEmpty(joinedInfo.ToString()))
-			embed.AddField(translator.Get<BotTranslator>().Joined(), joinedInfo.ToString(), true);
 	}
 
 	public async Task<int> CountInvites()

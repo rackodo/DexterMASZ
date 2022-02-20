@@ -11,10 +11,10 @@ public class UserNoteTranslator : Translator
 		{
 			Language.De => "Benutzernotiz",
 			Language.Fr => "Note de l'utilisateur",
-			Language.Es => "Usernote",
-			Language.Ru => "Usernote",
-			Language.It => "Nota utente",
-			_ => "Usernote"
+			Language.Es => "UserNote",
+			Language.Ru => "UserNote",
+			Language.It => "Nota Utente",
+			_ => "UserNote"
 		};
 	}
 
@@ -23,11 +23,11 @@ public class UserNoteTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Benutzernotiz-ID",
-			Language.Fr => "Identifiant de note d'utilisateur",
-			Language.Es => "ID de nota de usuario",
+			Language.Fr => "Identifiant de Note d'utilisateur",
+			Language.Es => "ID de Nota de Usuario",
 			Language.Ru => "идентификатор пользовательской заметки",
-			Language.It => "ID nota utente",
-			_ => "Usernote ID"
+			Language.It => "ID Nota Utente",
+			_ => "UserNote ID"
 		};
 	}
 }

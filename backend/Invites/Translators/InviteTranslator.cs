@@ -98,16 +98,16 @@ public class InviteTranslator : Translator
 		};
 	}
 
-	public string UsedInvite(string inviteCode)
+	public string UsedInvite()
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"Benutzte Einladung `{inviteCode}`.",
-			Language.Fr => $"Invitation utilisée `{inviteCode}`.",
-			Language.Es => $"Invitación usada `{inviteCode}`.",
-			Language.Ru => $"Использовал инвайт `{inviteCode}`.",
-			Language.It => $"Invito usato `{inviteCode}`.",
-			_ => $"Used invite `{inviteCode}`."
+			Language.De => $"Benutzte Einladung",
+			Language.Fr => $"Invitation utilisée",
+			Language.Es => $"Invitación usada",
+			Language.Ru => $"Использовал инвайт",
+			Language.It => $"Invito usato",
+			_ => $"Used invite"
 		};
 	}
 
