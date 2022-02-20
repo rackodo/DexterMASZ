@@ -21,9 +21,6 @@ public static class MotdEmbedCreator
 
 		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
 
-		if (actor != null)
-			embed.WithThumbnailUrl(actor.GetAvatarOrDefaultUrl());
-
 		embed.WithTitle(translator.Get<MotdTranslator>().MessageOfTheDay());
 
 		switch (action)
