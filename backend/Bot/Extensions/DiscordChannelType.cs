@@ -22,7 +22,7 @@ public static class DiscordChannelType
 			{ } channelType when channelType.Contains(typeof(ICategoryChannel)) => ChannelType.Category,
 			{ } channelType when channelType.Contains(typeof(INewsChannel)) => ChannelType.News,
 			{ } channelType when channelType.Contains(typeof(IStageChannel)) => ChannelType.Stage,
-			_ => throw new NotImplementedException()
+			_ => ChannelType.Category
 		};
 	}
 }
