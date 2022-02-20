@@ -75,7 +75,7 @@ public class ScheduledMessages : Event
 
 			try
 			{
-				await channel.SendMessageAsync(message.Content);
+				await channel.SendMessageAsync(message.Content, allowedMentions: Discord.AllowedMentions.None);
 				await repo.SetMessageAsSent(message.Id);
 				_logger.LogInformation($"Sent scheduled message {message.Id} for {message.GuildId}/{message.ChannelId} by {message.CreatorId}/{message.LastEditedById}.");
 			}

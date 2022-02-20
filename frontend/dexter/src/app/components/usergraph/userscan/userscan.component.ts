@@ -406,7 +406,7 @@ export class UserScanComponent implements OnInit {
   newBasicMapNode(userId: string, guildId: string): Node {
     return {
       id: `${userId}/${guildId}/userMaps`,
-      label: this.translator.instant('userMaps'),
+      label: this.translator.instant('UserMaps'),
       group: `basics/sub`,
       shape: 'triangle',
       size: 15
