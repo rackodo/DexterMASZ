@@ -9,7 +9,7 @@
       <mat-nav-list class="h-100 d-flex flex-column">
         <a class="d-flex crs-ptr" (click)="open('guilds')">
           <div class="rounded navitem nohover">
-            <img class="rounded-circle" width="24px" height="24px" alt="icon" [attr.src]="applicationInfo?.iconUrl ?? 'favicon.ico'"/>
+            <img class="rounded-circle" width="24px" height="24px" alt="icon" [attr.src]="applicationInfo?.iconUrl ?? 'favicon.ico'" />
             <span>{{ applicationInfo?.name ?? 'Dexter' }}</span>
           </div>
         </a>
@@ -36,7 +36,7 @@
           <mat-expansion-panel-header>
             <a class="d-flex">
               <div class="rounded navitem nohover">
-                <img width="24px" height="24px" src="{{ this.currentUser?.discordUser?.imageUrl }}" alt="user icon" class="rounded-circle"/>
+                <img width="24px" height="24px" src="{{ this.currentUser?.discordUser?.imageUrl }}" alt="user icon" class="rounded-circle" />
                 <span>{{ this.currentUser?.discordUser?.username }}#{{ this.currentUser?.discordUser?.discriminator }}</span>
               </div>
             </a>
@@ -65,7 +65,7 @@
             <span>{{ 'Guilds.All' | translate }}</span>
             <div class="flex-grow-1"></div>
             <mat-icon class="align-self-end mr-2" aria-hidden="false" aria-label="group icon"
-             (click)="open('guilds', 'new'); $event.stopPropagation()" *ngIf="this.currentUser.isAdmin">
+                      (click)="open('guilds', 'new'); $event.stopPropagation()" *ngIf="this.currentUser.isAdmin">
               add
             </mat-icon>
           </div>
@@ -83,7 +83,7 @@
             </a>
           </mat-expansion-panel-header>
           <a class="d-flex" (click)="open('guilds', guild.id)" *ngFor="let guild of this.currentUser.adminGuilds">
-            <div [class.activatedNav]="activatedNav[1] === 'guilds' && activatedNav[2] === guild.id.toString()" class="d-flex flex-row rounded navitem no-p">
+            <div [class.activatedNav]="activatedNav[1] === 'guilds' && activatedNav[2] === guild.id" class="d-flex flex-row rounded navitem no-p">
               <app-guild-icon [guild]="guild" [showBorder]="false"></app-guild-icon>
               <span class="text-break">{{ guild.name }}</span>
               <div class="flex-grow-1"></div>
@@ -91,7 +91,7 @@
                 edit
               </mat-icon>
               <mat-icon class="align-self-end mr-2" aria-hidden="false" aria-label="group icon"
-                *ngIf="this.currentUser.isAdmin" (click)="deleteGuild(guild); $event.stopPropagation()">
+                        *ngIf="this.currentUser.isAdmin" (click)="deleteGuild(guild); $event.stopPropagation()">
                 delete
               </mat-icon>
             </div>
@@ -110,7 +110,7 @@
             </a>
           </mat-expansion-panel-header>
           <a class="d-flex" (click)="open('guilds', guild.id)" *ngFor="let guild of this.currentUser.modGuilds">
-            <div [class.activatedNav]="activatedNav[1] === 'guilds' && activatedNav[2] === guild.id.toString()" class="d-flex flex-row rounded navitem no-p">
+            <div [class.activatedNav]="activatedNav[1] === 'guilds' && activatedNav[2] === guild.id" class="d-flex flex-row rounded navitem no-p">
               <app-guild-icon [guild]="guild" [showBorder]="false"></app-guild-icon>
               <span class="text-break" [class.pr-2]="!this.currentUser.isAdmin">{{ guild.name }}</span>
               <div class="flex-grow-1"></div>
@@ -138,7 +138,7 @@
             </a>
           </mat-expansion-panel-header>
           <a class="d-flex" (click)="open('guilds', guild.id)" *ngFor="let guild of this.currentUser.userGuilds">
-            <div [class.activatedNav]="activatedNav[1] === 'guilds' && activatedNav[2] === guild.id.toString()" class="d-flex flex-row rounded navitem no-p">
+            <div [class.activatedNav]="activatedNav[1] === 'guilds' && activatedNav[2] === guild.id" class="d-flex flex-row rounded navitem no-p">
               <app-guild-icon [guild]="guild" [showBorder]="false"></app-guild-icon>
               <span class="text-break" [class.pr-2]="!this.currentUser.isAdmin">{{ guild.name }}</span>
               <div class="flex-grow-1"></div>
@@ -166,7 +166,7 @@
             </a>
           </mat-expansion-panel-header>
           <a class="d-flex" (click)="open('guilds', guild.id)" *ngFor="let guild of this.currentUser.bannedGuilds">
-            <div [class.activatedNav]="activatedNav[1] === 'guilds' && activatedNav[2] === guild.id.toString()" class="d-flex flex-row rounded navitem no-p">
+            <div [class.activatedNav]="activatedNav[1] === 'guilds' && activatedNav[2] === guild.id" class="d-flex flex-row rounded navitem no-p">
               <app-guild-icon [guild]="guild" [showBorder]="false"></app-guild-icon>
               <span class="text-break" [class.pr-2]="!this.currentUser.isAdmin">{{ guild.name }}</span>
               <div class="flex-grow-1"></div>
@@ -185,7 +185,7 @@
         <mat-divider></mat-divider>
 
         <a class="d-flex" (click)="open('scanning')"
-         *ngIf="this.currentUser?.modGuilds?.length || this.currentUser?.adminGuilds?.length || this.currentUser?.isAdmin">
+           *ngIf="this.currentUser?.modGuilds?.length || this.currentUser?.adminGuilds?.length || this.currentUser?.isAdmin">
           <div [class.activatedNav]="activatedNav[1] === 'userscan' || activatedNav[1] === 'scanning'" class="rounded navitem">
             <mat-icon aria-hidden="false" aria-label="tune icon">person_search</mat-icon>
             <span>{{ 'Toolbar.Scanning' | translate }}</span>
@@ -194,6 +194,18 @@
 
         <mat-divider *ngIf="this.currentUser?.modGuilds?.length || this.currentUser?.adminGuilds?.length"></mat-divider>
 
+        <a class="d-flex" (click)="open('tokens')" *ngIf="this.currentUser?.isAdmin">
+          <div [class.activatedNav]="activatedNav[1] === 'tokens'" class="rounded navitem">
+            <mat-icon aria-hidden="false" aria-label="tune icon">api</mat-icon>
+            <span>{{ 'Toolbar.API' | translate }}</span>
+          </div>
+        </a>
+        <a class="d-flex" (click)="open('adminstats')" *ngIf="this.currentUser?.isAdmin">
+          <div [class.activatedNav]="activatedNav[1] === 'adminstats'" class="rounded navitem">
+            <mat-icon class="flex-shrink-0" aria-hidden="false" aria-label="tune icon">insights</mat-icon>
+            <span class="flex-grow-1">{{ 'Toolbar.Insights' | translate }}</span>
+          </div>
+        </a>
         <a class="d-flex" (click)="open('settings')" *ngIf="this.currentUser?.isAdmin">
           <div [class.activatedNav]="activatedNav[1] === 'settings'" class="rounded navitem">
             <mat-icon aria-hidden="false" aria-label="tune icon">settings</mat-icon>
@@ -206,7 +218,13 @@
             <span>{{ 'Toolbar.Patchnotes' | translate }}</span>
           </div>
         </a>
-		
+        <a class="d-flex" (click)="open('donate')">
+          <div [class.activatedNav]="activatedNav[1] === 'donate'" class="rounded navitem">
+            <mat-icon aria-hidden="false" aria-label="tune icon">forum</mat-icon>
+            <span>{{ 'Toolbar.Community' | translate }}</span>
+          </div>
+        </a>
+
         <ng-container *ngIf="applicationInfo?.termsOfServiceUrl; else elseTemplateToS">
           <a class="d-flex" href="{{ applicationInfo?.termsOfServiceUrl }}" target="_blank">
             <div [class.activatedNav]="activatedNav[1] === 'guidelines'" class="rounded navitem">
@@ -247,14 +265,14 @@
           <div class="rounded navitem text-black-50">
             <mat-icon aria-hidden="false" aria-label="github link" svgIcon="githublogo"></mat-icon>
             <span>
-				<a href="https://github.com/FeroxFoxxo/DexterMASZ" target="_blank" rel="noreferrer">
-					© Dexter by feroxfoxxo
-				</a>
-				<br>
-				<a href="https://github.com/zaanposni/discord-masz" target="_blank" rel="noreferrer">
-					© MASZ by zaanposni
-				</a>
-			</span>
+              <a href="https://github.com/FeroxFoxxo/DexterMASZ" target="_blank" rel="noreferrer">
+                © Dexter by feroxfoxxo
+              </a>
+              <br>
+              <a href="https://github.com/zaanposni/discord-masz" target="_blank" rel="noreferrer">
+                © MASZ by zaanposni
+              </a>
+            </span>
           </div>
         </div>
       </mat-nav-list>

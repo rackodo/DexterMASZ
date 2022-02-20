@@ -11,7 +11,7 @@ using Punishments.Data;
 namespace Punishments.Migrations
 {
     [DbContext(typeof(PunishmentDatabase))]
-    [Migration("20220209070740_InitialCreate")]
+    [Migration("20220220004815_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
