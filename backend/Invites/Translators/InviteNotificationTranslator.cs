@@ -7,41 +7,55 @@ namespace Invites.Translators;
 
 public class InviteNotificationTranslator : Translator
 {
-	public string NotificationAutoWhoisJoinWith(IUser user, DateTime registered, string invite)
+	public string Registered()
 	{
 		return PreferredLanguage switch
 		{
-			Language.De =>
-				$"{user.Mention} (registriert {registered.ToDiscordTs()}) ist mit dem Invite `{invite}` beigetreten.",
-			Language.Fr =>
-				$"{user.Mention} (enregistré {registered.ToDiscordTs()}) rejoint avec l'invitation `{invite}`.",
-			Language.Es =>
-				$"{user.Mention} (registrado {registered.ToDiscordTs()}) se unió con la invitación `{invite}`.",
-			Language.Ru =>
-				$"{user.Mention} (зарегистрированный {registered.ToDiscordTs()}) присоединился с приглашением `{invite}`.",
-			Language.It =>
-				$"{user.Mention} (registrato {registered.ToDiscordTs()}) si è unito con l'invito `{invite}`.",
-			_ => $"{user.Mention} (registered {registered.ToDiscordTs()}) joined with invite `{invite}`."
+			Language.De => "Registriert",
+			Language.Fr => "Enregistré",
+			Language.Es => "Registrado",
+			Language.Ru => "зарегистрированный",
+			Language.It => "Registrato",
+			_ => "Registered"
 		};
 	}
 
-	public string NotificationAutoWhoisJoinWithAndFrom(IUser user, ulong by, DateTime createdAt, DateTime registered,
-		string invite)
+	public string Invite()
 	{
 		return PreferredLanguage switch
 		{
-			Language.De =>
-				$"{user.Mention} (registriert {registered.ToDiscordTs()}) ist mit dem Invite `{invite}` von <@{by}> (am {createdAt.ToDiscordTs()}) beigetreten.",
-			Language.Fr =>
-				$"{user.Mention} (enregistré {registered.ToDiscordTs()}) rejoint avec invite `{invite}` (créé {createdAt.ToDiscordTs()}) par <@{by}>.",
-			Language.Es =>
-				$"{user.Mention} (registrado {registered.ToDiscordTs()}) se unió con la invitación `{invite}` (creado {createdAt.ToDiscordTs()}) por <@{by}>.",
-			Language.Ru =>
-				$"{user.Mention} (зарегистрированный {registered.ToDiscordTs()}) присоединился с помощью приглашения `{invite}` (created {createdAt.ToDiscordTs()}) пользователем <@{by}>.",
-			Language.It =>
-				$"{user.Mention} (registrato {registered.ToDiscordTs()}) si è unito all'invito `{invite}` (creato {createdAt.ToDiscordTs()}) da <@{by}>.",
-			_ =>
-				$"{user.Mention} (registered {registered.ToDiscordTs()}) joined with invite `{invite}` (created {createdAt.ToDiscordTs()}) by <@{by}>."
+			Language.De => "Invite",
+			Language.Fr => "L'invitation",
+			Language.Es => "La Invitación",
+			Language.Ru => "Приглашать",
+			Language.It => "L'invito",
+			_ => "Invite"
+		};
+	}
+
+	public string Created()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Erstellt",
+			Language.Fr => "Créé",
+			Language.Es => "Creada",
+			Language.Ru => "Созданный",
+			Language.It => "Creata",
+			_ => "Created"
+		};
+	}
+
+	public string By()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Durch",
+			Language.Fr => "Par",
+			Language.Es => "Por",
+			Language.Ru => "К",
+			Language.It => "Di",
+			_ => "By"
 		};
 	}
 }

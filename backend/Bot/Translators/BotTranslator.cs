@@ -56,6 +56,19 @@ public class BotTranslator : Translator
 		};
 	}
 
+	public string MessageUrl()
+	{
+		return PreferredLanguage switch
+		{
+			Enums.Language.De => "Nachrichten-URL",
+			Enums.Language.Fr => "URL des messages",
+			Enums.Language.Es => "URL del mensaje",
+			Enums.Language.Ru => "URL-адрес сообщения",
+			Enums.Language.It => "URL del messaggio",
+			_ => "Message Url"
+		};
+	}
+
 	public string User()
 	{
 		return PreferredLanguage switch

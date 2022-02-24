@@ -89,8 +89,8 @@ public class GuildConfigController : AuthenticatedController
 			ModNotificationDm = guildConfigForCreateDto.ModNotificationDm,
 			StaffChannels = guildConfigForCreateDto.StaffChannels,
 			BotChannels = guildConfigForCreateDto.BotChannels,
-			StaffWebhook = guildConfigForCreateDto.StaffWebhook,
-			AdminWebhook = guildConfigForCreateDto.AdminWebhook,
+			StaffAnnouncements = guildConfigForCreateDto.StaffAnnouncements,
+			StaffLogs = guildConfigForCreateDto.StaffLogs,
 			StrictModPermissionCheck = guildConfigForCreateDto.StrictModPermissionCheck,
 			ExecuteWhoIsOnJoin = guildConfigForCreateDto.ExecuteWhoIsOnJoin,
 			PublishModeratorInfo = guildConfigForCreateDto.PublishModeratorInfo,
@@ -120,17 +120,8 @@ public class GuildConfigController : AuthenticatedController
 
 		guildConfig.ModNotificationDm = newValue.ModNotificationDm;
 
-		guildConfig.AdminWebhook = newValue.AdminWebhook;
-
-		if (guildConfig.AdminWebhook != null)
-			guildConfig.AdminWebhook =
-				guildConfig.AdminWebhook.Replace("discord.com", "discordapp.com");
-
-		guildConfig.StaffWebhook = newValue.StaffWebhook;
-
-		if (guildConfig.StaffWebhook != null)
-			guildConfig.StaffWebhook =
-				guildConfig.StaffWebhook.Replace("discord.com", "discordapp.com");
+		guildConfig.StaffAnnouncements = newValue.StaffAnnouncements;
+		guildConfig.StaffLogs = newValue.StaffLogs;
 
 		guildConfig.StrictModPermissionCheck = newValue.StrictModPermissionCheck;
 		guildConfig.ExecuteWhoIsOnJoin = newValue.ExecuteWhoIsOnJoin;

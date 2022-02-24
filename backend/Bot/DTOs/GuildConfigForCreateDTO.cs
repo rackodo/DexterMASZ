@@ -20,15 +20,14 @@ public class GuildConfigForCreateDto
 	[Required(ErrorMessage = "BotChannels field is required")]
 	public ulong[] BotChannels { get; set; }
 
+	[Required(ErrorMessage = "ModNotificationDm field is required")]
 	public bool ModNotificationDm { get; set; }
 
-	[Url(ErrorMessage = "Webhook needs to be a valid url")]
-	[RegularExpression(@"https://(.*\.)?discord(app)?.com/api/webhooks/[0-9]+/.+", ErrorMessage = "Must be a valid webhook url")]
-	public string AdminWebhook { get; set; }
+	[Required(ErrorMessage = "StaffLogs field is required")]
+	public ulong StaffLogs { get; set; }
 
-	[Url(ErrorMessage = "Webhook needs to be a valid url")]
-	[RegularExpression(@"https://(.*\.)?discord(app)?.com/api/webhooks/[0-9]+/.+", ErrorMessage = "Must be a valid webhook url")]
-	public string StaffWebhook { get; set; }
+	[Required(ErrorMessage = "StaffAnnouncements field is required")]
+	public ulong StaffAnnouncements { get; set; }
 
 	[Required(ErrorMessage = "ExecuteWhoIsOnJoin field is required")]
 	public bool ExecuteWhoIsOnJoin { get; set; }

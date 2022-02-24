@@ -53,7 +53,7 @@ export class MotdConfigComponent implements OnInit {
       if (event.keyCode != 13) {
         $this.updateMotd();
       }
-    }, 500);
+    }, 1000);
   }
 
   onToggle(event: any) {

@@ -76,12 +76,10 @@ ConsoleCreator.AddSubHeading("Querying database for", nameof(AppSettings));
 
 await using (var dataContext = new BotDatabase(dbBuilder.Options))
 {
-#pragma warning disable CS0162
 	if (migrateDatabases)
 		await dataContext.Database.MigrateAsync();
 	else
 		await dataContext.Database.EnsureCreatedAsync();
-#pragma warning restore CS0162
 
 	var appSettingRepo = new SettingsRepository(dataContext, clientIdContainer, null);
 
@@ -244,12 +242,10 @@ using (var scope = app.Services.CreateScope())
 	{
 		ConsoleCreator.AddSubHeading("Adding migrations for", dataContext.GetType().Name);
 
-#pragma warning disable CS0162
 		if (migrateDatabases)
 			await dataContext.Database.MigrateAsync();
 		else
 			await dataContext.Database.EnsureCreatedAsync();
-#pragma warning restore CS0162
 	}
 }
 

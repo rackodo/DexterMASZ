@@ -136,6 +136,19 @@ public class PunishmentTranslator : Translator
 		};
 	}
 
+	public string ReportCreated()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Bericht Erstellt",
+			Language.Fr => "Rapport Créé",
+			Language.Es => "Informe Creado",
+			Language.Ru => "Отчет создан",
+			Language.It => "Rapporto Creato",
+			_ => "Report Created"
+		};
+	}
+
 	public string ReportSent()
 	{
 		return PreferredLanguage switch
@@ -154,17 +167,17 @@ public class PunishmentTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"{user.Mention} meldete eine Nachricht von {message.Author.Mention} in {channel.Mention}.\n{message.GetJumpUrl()}",
+				$"{user.Mention} meldete eine Nachricht von {message.Author.Mention} in {channel.Mention}.",
 			Language.Fr =>
-				$"{user.Mention} a signalé un message de {message.Author.Mention} dans {channel.Mention}.\n{message.GetJumpUrl()}",
+				$"{user.Mention} a signalé un message de {message.Author.Mention} dans {channel.Mention}.",
 			Language.Es =>
-				$"{user.Mention} informó un mensaje de {message.Author.Mention} en {channel.Mention}.\n{message.GetJumpUrl()}",
+				$"{user.Mention} informó un mensaje de {message.Author.Mention} en {channel.Mention}.",
 			Language.Ru =>
-				$"{user.Mention} сообщил о сообщении от {message.Author.Mention} в {channel.Mention}.\n{message.GetJumpUrl()}",
+				$"{user.Mention} сообщил о сообщении от {message.Author.Mention} в {channel.Mention}.",
 			Language.It =>
-				$"{user.Mention} ha segnalato un messaggio da {message.Author.Mention} in {channel.Mention}.\n{message.GetJumpUrl()}",
+				$"{user.Mention} ha segnalato un messaggio da {message.Author.Mention} in {channel.Mention}.",
 			_ =>
-				$"{user.Mention} reported a message from {message.Author.Mention} in {channel.Mention}.\n{message.GetJumpUrl()}"
+				$"{user.Mention} reported a message from {message.Author.Mention} in {channel.Mention}."
 		};
 	}
 

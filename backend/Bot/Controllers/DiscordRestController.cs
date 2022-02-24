@@ -143,7 +143,8 @@ public class DiscordRestController : AuthenticatedController
 				await _guildConfigRepo.GetGuildConfig(guild.Id);
 				guilds.Remove(guild);
 			}
-			catch (UnregisteredGuildException) {
+			catch (UnregisteredGuildException)
+			{
 				if (!guild.IsAdmin && !(botGuildJoined.Contains(guild.Id) && await identity.IsSiteAdmin()))
 					guilds.Remove(guild);
 			}

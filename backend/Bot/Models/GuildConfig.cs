@@ -11,8 +11,8 @@ public class GuildConfig
 	public ulong[] StaffChannels { get; set; }
 	public ulong[] BotChannels { get; set; }
 	public bool ModNotificationDm { get; set; }
-	public string StaffWebhook { get; set; }
-	public string AdminWebhook { get; set; }
+	public ulong StaffLogs { get; set; }
+	public ulong StaffAnnouncements { get; set; }
 	public bool StrictModPermissionCheck { get; set; }
 	public bool ExecuteWhoIsOnJoin { get; set; }
 	public bool PublishModeratorInfo { get; set; } = true;

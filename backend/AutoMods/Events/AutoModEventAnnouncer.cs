@@ -6,9 +6,11 @@ using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Exceptions;
+using Bot.Extensions;
 using Bot.Models;
 using Bot.Services;
 using Discord;
+using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -20,14 +22,16 @@ public class AutoModEventAnnouncer : Event
 	private readonly AutoModEventHandler _eventHandler;
 	private readonly ILogger<AutoModEventAnnouncer> _logger;
 	private readonly IServiceProvider _serviceProvider;
+	private readonly DiscordSocketClient _client;
 
-	public AutoModEventAnnouncer(IServiceProvider serviceProvider, AutoModEventHandler eventHandler,
-		ILogger<AutoModEventAnnouncer> logger, DiscordRest discordRest)
+	public AutoModEventAnnouncer(DiscordRest discordRest, AutoModEventHandler eventHandler,
+		ILogger<AutoModEventAnnouncer> logger, IServiceProvider serviceProvider, DiscordSocketClient client)
 	{
-		_serviceProvider = serviceProvider;
+		_discordRest = discordRest;
 		_eventHandler = eventHandler;
 		_logger = logger;
-		_discordRest = discordRest;
+		_serviceProvider = serviceProvider;
+		_client = client;
 	}
 
 	public void RegisterEvents()
@@ -50,22 +54,20 @@ public class AutoModEventAnnouncer : Event
 
 		translator.SetLanguage(guildConfig);
 
-		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
-		{
-			_logger.LogInformation(
-				$"Sending webhook for auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.StaffWebhook}.");
+		_logger.LogInformation(
+			$"Sending webhook for auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.StaffLogs}.");
 
-			try
-			{
-				var embed = await modEvent.CreateInternalAutoModEmbed(guildConfig, author, channel,
-					scope.ServiceProvider, punishmentsConfig.PunishmentType);
-				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build());
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.StaffWebhook}.");
-			}
+		try
+		{
+			var embed = await modEvent.CreateInternalAutoModEmbed(guildConfig, author, channel,
+				scope.ServiceProvider, punishmentsConfig.PunishmentType);
+
+			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e,
+				$"Error while announcing auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.StaffLogs}.");
 		}
 
 		if (punishmentsConfig.SendDmNotification)
@@ -143,21 +145,11 @@ public class AutoModEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(config.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
-		{
-			_logger.LogInformation(
-				$"Sending webhook for config {config.GuildId}/{config.AutoModType} ({config.Id}) to {guildConfig.StaffWebhook}.");
+		_logger.LogInformation(
+			$"Sending webhook for config {config.GuildId}/{config.AutoModType} ({config.Id}) to {guildConfig.StaffLogs}.");
 
-			try
-			{
-				var embed = await config.CreateAutoModConfigEmbed(actor, action, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build());
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing config  {config.GuildId}/{config.AutoModType} ({config.Id}) to {guildConfig.StaffWebhook}.");
-			}
-		}
+		var embed = await config.CreateAutoModConfigEmbed(actor, action, scope.ServiceProvider);
+
+		await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
 	}
 }

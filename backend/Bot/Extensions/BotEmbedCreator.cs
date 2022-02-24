@@ -20,9 +20,6 @@ public static class BotEmbedCreator
 			.WithTitle(translator.Get<BotNotificationTranslator>().NotificationRegisterWelcomeToDexter())
 			.WithDescription(translator.Get<BotNotificationTranslator>().NotificationRegisterDescriptionThanks())
 			.AddField(
-				$"⭐ {translator.Get<BotTranslator>().Features()}",
-				translator.Get<BotNotificationTranslator>().NotificationRegisterUseFeaturesCommand()
-			).AddField(
 				$"🌎 {translator.Get<BotTranslator>().Language()}",
 				translator.Get<BotNotificationTranslator>()
 					.NotificationRegisterDefaultLanguageUsed(guildConfig.PreferredLanguage.ToString())

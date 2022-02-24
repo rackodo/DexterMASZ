@@ -1,20 +1,20 @@
 using Bot.Abstractions;
 using Bot.Data;
-using Bot.Services;
-using Bot.Translators;
+using Bot.Extensions;
 using Discord;
 using Discord.Interactions;
-using Humanizer;
+using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
+using Punishments.Extensions;
 using Punishments.Translators;
-using System.Text;
 
 namespace Punishments.Commands;
 
 public class Report : Command<Report>
 {
 	public GuildConfigRepository GuildConfigRepository { get; set; }
-	public DiscordRest DiscordRest { get; set; }
+	public DiscordSocketClient Client { get; set; }
+	public IServiceProvider Services { get; set; }
 
 	[MessageCommand("Report to moderators")]
 	public async Task ReportCommand(IMessage msg)
@@ -23,38 +23,11 @@ public class Report : Command<Report>
 
 		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
 
-		if (string.IsNullOrEmpty(guildConfig.AdminWebhook))
-		{
-			await Context.Interaction.RespondAsync(Translator.Get<BotTranslator>().NoWebhookConfigured(),
-				ephemeral: true);
-			return;
-		}
-
-		StringBuilder sb = new();
-		sb.AppendLine(Translator.Get<PunishmentTranslator>()
-			.ReportContent(Context.User, msg, msg.Channel as ITextChannel));
-
-		if (!string.IsNullOrEmpty(msg.Content))
-		{
-			sb.Append("```\n");
-			sb.Append(msg.Content.Truncate(1024));
-			sb.Append("\n``` ");
-		}
-
-		if (msg.Attachments.Count > 0)
-		{
-			sb.AppendLine(Translator.Get<BotTranslator>().Attachments());
-
-			foreach (var attachment in msg.Attachments.Take(5))
-				sb.Append($"- <{attachment.Url}>\n");
-
-			if (msg.Attachments.Count > 5)
-				sb.AppendLine(Translator.Get<BotTranslator>().AndXMore(msg.Attachments.Count - 5));
-		}
-
 		try
 		{
-			await DiscordRest.ExecuteWebhook(guildConfig.AdminWebhook, null, sb.ToString(), AllowedMentions.None);
+			var embed = await msg.CreateReportEmbed(Context.User, Services);
+
+			await Client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
 		}
 		catch (Exception e)
 		{

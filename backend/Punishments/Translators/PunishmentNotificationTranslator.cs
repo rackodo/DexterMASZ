@@ -274,25 +274,7 @@ public class PunishmentNotificationTranslator : Translator
 		return string.Empty;
 	}
 
-	public string NotificationModCaseCreatePublic(ModCase modCase)
-	{
-		return PreferredLanguage switch
-		{
-			Language.De =>
-				$"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde erstellt.",
-			Language.Fr =>
-				$"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été créé.",
-			Language.Es =>
-				$"Se ha creado un **mod case** para <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}).",
-			Language.Ru =>
-				$"**ModCase** для <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) был создан.",
-			Language.It =>
-				$"È stato creato un **mod case** per <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}).",
-			_ => $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) has been created."
-		};
-	}
-
-	public string NotificationModCaseCreateInternal(ModCase modCase, IUser moderator)
+	public string NotificationModCase(ModCase modCase, IUser moderator)
 	{
 		return PreferredLanguage switch
 		{
@@ -311,25 +293,7 @@ public class PunishmentNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationModCaseUpdatePublic(ModCase modCase)
-	{
-		return PreferredLanguage switch
-		{
-			Language.De =>
-				$"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde aktualisiert.",
-			Language.Fr =>
-				$"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été mis à jour.",
-			Language.Es =>
-				$"Se ha actualizado **mod case** para <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}).",
-			Language.Ru =>
-				$"**Modcase** для <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) был обновлен.",
-			Language.It =>
-				$"È stato aggiornato un **mod case** per <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}).",
-			_ => $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) has been updated."
-		};
-	}
-
-	public string NotificationModCaseUpdateInternal(ModCase modCase, IUser moderator)
+	public string NotificationModCaseUpdate(ModCase modCase, IUser moderator)
 	{
 		return PreferredLanguage switch
 		{
@@ -348,25 +312,7 @@ public class PunishmentNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationModCaseDeletePublic(ModCase modCase)
-	{
-		return PreferredLanguage switch
-		{
-			Language.De =>
-				$"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde gelöscht.",
-			Language.Fr =>
-				$"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été supprimé.",
-			Language.Es =>
-				$"Se ha eliminado un **mod case** para <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}).",
-			Language.Ru =>
-				$"**Modcase** для <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) был удален.",
-			Language.It =>
-				$"Un **mod case** per <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) è stato eliminato.",
-			_ => $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) has been deleted."
-		};
-	}
-
-	public string NotificationModCaseDeleteInternal(ModCase modCase, IUser moderator)
+	public string NotificationModCaseDelete(ModCase modCase, IUser moderator)
 	{
 		return PreferredLanguage switch
 		{

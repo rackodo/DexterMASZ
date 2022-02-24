@@ -1,8 +1,9 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
-using Bot.Services;
+using Bot.Extensions;
 using Discord;
+using Discord.WebSocket;
 using GuildAudits.Extensions;
 using GuildAudits.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,13 +16,15 @@ public class GuildAuditEventAnnouncer : Event
 	private readonly GuildAuditEventHandler _eventHandler;
 	private readonly ILogger<GuildAuditEventAnnouncer> _logger;
 	private readonly IServiceProvider _serviceProvider;
+	private readonly DiscordSocketClient _client;
 
 	public GuildAuditEventAnnouncer(GuildAuditEventHandler eventHandler, ILogger<GuildAuditEventAnnouncer> logger,
-		IServiceProvider serviceProvider)
+		IServiceProvider serviceProvider, DiscordSocketClient client)
 	{
 		_eventHandler = eventHandler;
 		_logger = logger;
 		_serviceProvider = serviceProvider;
+		_client = client;
 	}
 
 	public void RegisterEvents()
@@ -46,21 +49,19 @@ public class GuildAuditEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(config.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
-		{
-			_logger.LogInformation(
-				$"Sending internal webhook for guild audit log {config.GuildId}/{config.GuildAuditEvent} ({config.Id}) to {guildConfig.StaffWebhook}.");
+		_logger.LogInformation(
+			$"Sending internal webhook for guild audit log {config.GuildId}/{config.GuildAuditEvent} ({config.Id}) to {guildConfig.StaffLogs}.");
 
-			try
-			{
-				var embed = await config.CreateGuildAuditEmbed(actor, action, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build());
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing guild audit log {config.GuildId}/{config.GuildAuditEvent} ({config.Id}) to {guildConfig.StaffWebhook}.");
-			}
+		try
+		{
+			var embed = await config.CreateGuildAuditEmbed(actor, action, scope.ServiceProvider);
+
+			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e,
+				$"Error while announcing guild audit log {config.GuildId}/{config.GuildAuditEvent} ({config.Id}) to {guildConfig.StaffLogs}.");
 		}
 	}
 }

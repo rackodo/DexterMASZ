@@ -1,8 +1,9 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
-using Bot.Services;
+using Bot.Extensions;
 using Discord;
+using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using UserMaps.Extensions;
@@ -15,13 +16,15 @@ public class UserMapEventAnnouncer : Event
 	private readonly UserMapEventHandler _eventHandler;
 	private readonly ILogger<UserMapEventAnnouncer> _logger;
 	private readonly IServiceProvider _serviceProvider;
+	private readonly DiscordSocketClient _client;
 
 	public UserMapEventAnnouncer(UserMapEventHandler eventHandler, ILogger<UserMapEventAnnouncer> logger,
-		IServiceProvider serviceProvider)
+		IServiceProvider serviceProvider, DiscordSocketClient client)
 	{
 		_eventHandler = eventHandler;
 		_logger = logger;
 		_serviceProvider = serviceProvider;
+		_client = client;
 	}
 
 	public void RegisterEvents()
@@ -43,21 +46,19 @@ public class UserMapEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(userMaps.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
-		{
-			_logger.LogInformation(
-				$"Sending internal webhook for user map {userMaps.GuildId}/{userMaps.UserA}-{userMaps.UserB} ({userMaps.Id}) to {guildConfig.StaffWebhook}.");
+		_logger.LogInformation(
+			$"Sending internal webhook for user map {userMaps.GuildId}/{userMaps.UserA}-{userMaps.UserB} ({userMaps.Id}) to {guildConfig.StaffLogs}.");
 
-			try
-			{
-				var embed = await userMaps.CreateUserMapEmbed(action, actor, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build());
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing user map {userMaps.GuildId}/{userMaps.UserA}-{userMaps.UserB} ({userMaps.Id}) to {guildConfig.StaffWebhook}.");
-			}
+		try
+		{
+			var embed = await userMaps.CreateUserMapEmbed(action, actor, scope.ServiceProvider);
+
+			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e,
+				$"Error while announcing user map {userMaps.GuildId}/{userMaps.UserA}-{userMaps.UserB} ({userMaps.Id}) to {guildConfig.StaffLogs}.");
 		}
 	}
 }

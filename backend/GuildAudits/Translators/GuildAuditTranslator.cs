@@ -74,12 +74,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Nachricht gesendet",
-			Language.Fr => "Message envoyé",
-			Language.Es => "Mensaje enviado",
+			Language.De => "Nachricht Gesendet",
+			Language.Fr => "Message Envoyé",
+			Language.Es => "Mensaje Enviado",
 			Language.Ru => "Сообщение отправлено",
-			Language.It => "Messaggio inviato",
-			_ => "Message sent"
+			Language.It => "Messaggio Inviato",
+			_ => "Message Sent"
 		};
 	}
 
@@ -87,12 +87,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Nachricht aktualisiert",
-			Language.Fr => "Message modifié",
-			Language.Es => "Mensaje editado",
+			Language.De => "Nachricht Aktualisiert",
+			Language.Fr => "Message Modifié",
+			Language.Es => "Mensaje Editado",
 			Language.Ru => "Сообщение отредактировано",
-			Language.It => "Messaggio modificato",
-			_ => "Message edited"
+			Language.It => "Messaggio Modificato",
+			_ => "Message Edited"
 		};
 	}
 
@@ -118,7 +118,7 @@ public class GuildAuditTranslator : Translator
 			Language.Es => "Mensaje borrado",
 			Language.Ru => "Сообщение удалено",
 			Language.It => "Messaggio cancellato",
-			_ => "Message deleted"
+			_ => "Message Deleted"
 		};
 	}
 
@@ -139,12 +139,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Nutzer gebannt",
-			Language.Fr => "Utilisateur banni",
-			Language.Es => "Usuario baneado",
+			Language.De => "Nutzer Gebannt",
+			Language.Fr => "Utilisateur Banni",
+			Language.Es => "Usuario Baneado",
 			Language.Ru => "Пользователь забанен",
-			Language.It => "Utente bannato",
-			_ => "User banned"
+			Language.It => "Utente Bannato",
+			_ => "User Banned"
 		};
 	}
 
@@ -152,12 +152,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Nutzer entbannt",
-			Language.Fr => "Utilisateur non banni",
-			Language.Es => "Usuario no prohibido",
+			Language.De => "Nutzer Entbannt",
+			Language.Fr => "Utilisateur Non Banni",
+			Language.Es => "Usuario No Prohibido",
 			Language.Ru => "Пользователь разблокирован",
-			Language.It => "Utente non bannato",
-			_ => "User unbanned"
+			Language.It => "Utente Non Bannato",
+			_ => "User Unbanned"
 		};
 	}
 
@@ -165,12 +165,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Einladung erstellt",
-			Language.Fr => "Invitation créée",
-			Language.Es => "Invitación creada",
+			Language.De => "Einladung Erstellt",
+			Language.Fr => "Invitation Créée",
+			Language.Es => "Invitación Creada",
 			Language.Ru => "Приглашение создано",
-			Language.It => "Invito creato",
-			_ => "Invite created"
+			Language.It => "Invito Creato",
+			_ => "Invite Created"
 		};
 	}
 
@@ -230,12 +230,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Einladung gelöscht",
-			Language.Fr => "Invitation supprimée",
-			Language.Es => "Invitación eliminada",
+			Language.De => "Einladung Gelöscht",
+			Language.Fr => "Invitation Supprimée",
+			Language.Es => "Invitación Eliminada",
 			Language.Ru => "Приглашение удалено",
-			Language.It => "Invito cancellato",
-			_ => "Invite deleted"
+			Language.It => "Invito Cancellato",
+			_ => "Invite Deleted"
 		};
 	}
 
@@ -243,12 +243,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Mitglied beigetreten",
-			Language.Fr => "Membre rejoint",
-			Language.Es => "Miembro se unió",
+			Language.De => "Mitglied Beigetreten",
+			Language.Fr => "Membre Rejoint",
+			Language.Es => "Miembro Se Unió",
 			Language.Ru => "Участник присоединился",
-			Language.It => "Membro iscritto",
-			_ => "User joined"
+			Language.It => "Membro Iscritto",
+			_ => "User Joined"
 		};
 	}
 
@@ -269,12 +269,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Mitglied entfernt",
-			Language.Fr => "Membre supprimé",
-			Language.Es => "Miembro eliminado",
+			Language.De => "Mitglied Entfernt",
+			Language.Fr => "Membre Supprimé",
+			Language.Es => "Miembro Eliminado",
 			Language.Ru => "Участник удален",
-			Language.It => "Membro rimosso",
-			_ => "User removed"
+			Language.It => "Membro Rimosso",
+			_ => "User Removed"
 		};
 	}
 
@@ -282,12 +282,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Thread erstellt",
-			Language.Fr => "Fil créé",
-			Language.Es => "Hilo creado",
+			Language.De => "Thread Erstellt",
+			Language.Fr => "Fil Créé",
+			Language.Es => "Hilo Creado",
 			Language.Ru => "Тема создана",
-			Language.It => "Discussione creata",
-			_ => "Thread created"
+			Language.It => "Discussione Creata",
+			_ => "Thread Created"
 		};
 	}
 
@@ -321,12 +321,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Benutzername aktualisiert",
-			Language.Fr => "Nom d'utilisateur mis à jour",
-			Language.Es => "Nombre de usuario actualizado",
+			Language.De => "Benutzername Aktualisiert",
+			Language.Fr => "Nom D'utilisateur Mis à Jour",
+			Language.Es => "Nombre de Usuario Actualizado",
 			Language.Ru => "Имя пользователя обновлено",
-			Language.It => "Nome utente aggiornato",
-			_ => "Username updated"
+			Language.It => "Nome Utente Aggiornato",
+			_ => "Username Updated"
 		};
 	}
 
@@ -334,12 +334,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Avatar aktualisiert",
-			Language.Fr => "Avatar mis à jour",
-			Language.Es => "Avatar actualizado",
+			Language.De => "Avatar Aktualisiert",
+			Language.Fr => "Avatar Mis à Jour",
+			Language.Es => "Avatar Actualizado",
 			Language.Ru => "Аватар обновлен",
-			Language.It => "Avatar aggiornato",
-			_ => "Avatar updated"
+			Language.It => "Avatar Aggiornato",
+			_ => "Avatar Updated"
 		};
 	}
 
@@ -347,12 +347,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Nickname aktualisiert",
-			Language.Fr => "Pseudo mis à jour",
-			Language.Es => "Se actualizó el apodo",
+			Language.De => "Nickname Aktualisiert",
+			Language.Fr => "Pseudo Mis à Jour",
+			Language.Es => "Se Actualizó el Apodo",
 			Language.Ru => "Псевдоним обновлен",
-			Language.It => "Nickname aggiornato",
-			_ => "Nickname updated"
+			Language.It => "Nickname Aggiornato",
+			_ => "Nickname Updated"
 		};
 	}
 
@@ -360,12 +360,12 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Rollen aktualisiert",
-			Language.Fr => "Rôles mis à jour",
-			Language.Es => "Funciones actualizadas",
+			Language.De => "Rollen Aktualisiert",
+			Language.Fr => "Rôles Mis à Jour",
+			Language.Es => "Funciones Actualizadas",
 			Language.Ru => "Роли обновлены",
-			Language.It => "Ruoli aggiornati",
-			_ => "Roles updated"
+			Language.It => "Ruoli Aggiornati",
+			_ => "Roles Updated"
 		};
 	}
 

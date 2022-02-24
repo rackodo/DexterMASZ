@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Bot.Middleware;
 
-internal class SwaggerAuthorizedMiddleware
+public class SwaggerAuthorizedMiddleware
 {
 	private readonly RequestDelegate _next;
 	private readonly IdentityManager _identityManager;

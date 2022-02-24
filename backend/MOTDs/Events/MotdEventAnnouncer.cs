@@ -1,8 +1,9 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
-using Bot.Services;
+using Bot.Extensions;
 using Discord;
+using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MOTDs.Extensions;
@@ -15,13 +16,15 @@ public class MotdEventAnnouncer : Event
 	private readonly MotdEventHandler _eventHandler;
 	private readonly ILogger<MotdEventAnnouncer> _logger;
 	private readonly IServiceProvider _serviceProvider;
+	private readonly DiscordSocketClient _client;
 
 	public MotdEventAnnouncer(MotdEventHandler eventHandler, ILogger<MotdEventAnnouncer> logger,
-		IServiceProvider serviceProvider)
+		IServiceProvider serviceProvider, DiscordSocketClient client)
 	{
 		_eventHandler = eventHandler;
 		_logger = logger;
 		_serviceProvider = serviceProvider;
+		_client = client;
 	}
 
 	public void RegisterEvents()
@@ -40,21 +43,19 @@ public class MotdEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(motd.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
-		{
-			_logger.LogInformation(
-				$"Sending internal webhook for motd {motd.GuildId} ({motd.Id}) to {guildConfig.StaffWebhook}.");
+		_logger.LogInformation(
+			$"Sending internal webhook for motd {motd.GuildId} ({motd.Id}) to {guildConfig.StaffAnnouncements}.");
 
-			try
-			{
-				var embed = await motd.CreateMotdEmbed(actor, action, _serviceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build());
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing motd {motd.GuildId} ({motd.Id}) to {guildConfig.StaffWebhook}.");
-			}
+		try
+		{
+			var embed = await motd.CreateMotdEmbed(actor, action, _serviceProvider);
+
+			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e,
+				$"Error while announcing motd {motd.GuildId} ({motd.Id}) to {guildConfig.StaffAnnouncements}.");
 		}
 	}
 }

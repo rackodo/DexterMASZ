@@ -76,24 +76,6 @@ public class BotNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationRegisterUseFeaturesCommand()
-	{
-		return PreferredLanguage switch
-		{
-			Language.De =>
-				"Benutze den `/features` Befehl um zu sehen welche Features von **Dexter** dein aktuelles Setup unterstützt.",
-			Language.Fr =>
-				"Utilisez la commande `/features` pour tester si votre configuration de guilde actuelle prend en charge toutes les fonctionnalités de **Dexter**.",
-			Language.Es =>
-				"Usa el comando `/ features` para probar si la configuración de tu gremio actual es compatible con todas las características de **Dexter**.",
-			Language.Ru =>
-				"Используйте команду `/ features`, чтобы проверить, поддерживает ли ваша текущая настройка гильдии все функции **Dexter**.",
-			Language.It =>
-				"Usa il comando `/features` per verificare se l'attuale configurazione della gilda supporta tutte le funzionalità di **Dexter**.",
-			_ => "Use the `/features` command to test if your current guild setup supports all features of **Dexter**."
-		};
-	}
-
 	public string NotificationRegisterDefaultLanguageUsed(string language)
 	{
 		return PreferredLanguage switch

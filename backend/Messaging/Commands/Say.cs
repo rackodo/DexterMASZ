@@ -2,11 +2,13 @@ using Bot.Abstractions;
 using Bot.Attributes;
 using Bot.Data;
 using Bot.Enums;
-using Bot.Services;
+using Bot.Extensions;
 using Bot.Translators;
 using Discord;
 using Discord.Interactions;
 using Discord.Net;
+using Discord.WebSocket;
+using Messaging.Extensions;
 using Messaging.Translators;
 using Microsoft.Extensions.Logging;
 using System.Net;
@@ -16,6 +18,8 @@ namespace Messaging.Commands;
 public class Say : Command<Say>
 {
 	public GuildConfigRepository GuildConfigRepository { get; set; }
+	public IServiceProvider ServiceProvider { get; set; }
+	public DiscordSocketClient Client { get; set; }
 
 	[Require(RequireCheck.GuildModerator)]
 	[SlashCommand("say", "Let the bot send a message.")]
@@ -47,19 +51,9 @@ public class Say : Command<Say>
 			{
 				var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
 
-				if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
-				{
-					await DiscordRest.ExecuteWebhook(
-						guildConfig.StaffWebhook,
-						null,
-						Translator.Get<MessagingTranslator>().SaySent(
-							Context.User,
-							createdMessage,
-							channel
-						),
-						AllowedMentions.None
-					);
-				}
+				var embed = await createdMessage.CreateMessageSentEmbed(channel, Context.User, ServiceProvider);
+
+				await Client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
 			}
 			catch (Exception ex)
 			{

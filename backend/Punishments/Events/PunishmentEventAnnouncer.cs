@@ -1,9 +1,11 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
+using Bot.Extensions;
 using Bot.Models;
 using Bot.Services;
 using Discord;
+using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Punishments.Enums;
@@ -19,14 +21,16 @@ public class PunishmentEventAnnouncer : Event
 	private readonly PunishmentEventHandler _eventHandler;
 	private readonly ILogger<PunishmentEventAnnouncer> _logger;
 	private readonly IServiceProvider _serviceProvider;
+	private readonly DiscordSocketClient _client;
 
-	public PunishmentEventAnnouncer(PunishmentEventHandler eventHandler, DiscordRest discordRest,
-		ILogger<PunishmentEventAnnouncer> logger, IServiceProvider serviceProvider)
+	public PunishmentEventAnnouncer(DiscordRest discordRest, PunishmentEventHandler eventHandler,
+		ILogger<PunishmentEventAnnouncer> logger, IServiceProvider serviceProvider, DiscordSocketClient client)
 	{
-		_eventHandler = eventHandler;
 		_discordRest = discordRest;
+		_eventHandler = eventHandler;
 		_logger = logger;
 		_serviceProvider = serviceProvider;
+		_client = client;
 	}
 
 	public void RegisterEvents()
@@ -115,22 +119,19 @@ public class PunishmentEventAnnouncer : Event
 			}
 		}
 
-		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
-		{
-			_logger.LogInformation(
-				$"Sending webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffWebhook}.");
+		_logger.LogInformation(
+			$"Sending webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
 
-			try
-			{
-				var embed = await modCase.CreateModCaseEmbed(action, actor, scope.ServiceProvider, caseUser);
-				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build(),
-					$"<@{modCase.UserId}>");
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffWebhook}.");
-			}
+		try
+		{
+			var embed = await modCase.CreateModCaseEmbed(action, actor, scope.ServiceProvider, caseUser);
+
+			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e,
+				$"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
 		}
 	}
 
@@ -144,21 +145,19 @@ public class PunishmentEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(comment.ModCase.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
-		{
-			_logger.LogInformation(
-				$"Sending webhook for comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.StaffWebhook}.");
+		_logger.LogInformation(
+			$"Sending webhook for comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.StaffLogs}.");
 
-			try
-			{
-				var embed = await comment.CreateCommentEmbed(action, actor, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build());
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.StaffWebhook}.");
-			}
+		try
+		{
+			var embed = await comment.CreateCommentEmbed(action, actor, scope.ServiceProvider);
+
+			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e,
+				$"Error while announcing comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.StaffLogs}.");
 		}
 	}
 
@@ -171,21 +170,19 @@ public class PunishmentEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(modCase.GuildId);
 
-		if (!string.IsNullOrEmpty(guildConfig.StaffWebhook))
-		{
-			_logger.LogInformation(
-				$"Sending webhook for file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.StaffWebhook}.");
+		_logger.LogInformation(
+			$"Sending webhook for file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.StaffLogs}.");
 
-			try
-			{
-				var embed = await file.CreateFileEmbed(modCase, action, actor, scope.ServiceProvider);
-				await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, embed.Build());
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.StaffWebhook}.");
-			}
+		try
+		{
+			var embed = await file.CreateFileEmbed(modCase, action, actor, scope.ServiceProvider);
+
+			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e,
+				$"Error while announcing file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.StaffLogs}.");
 		}
 	}
 }

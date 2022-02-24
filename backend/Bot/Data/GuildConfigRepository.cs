@@ -68,14 +68,6 @@ public class GuildConfigRepository : Repository, AddAdminStats
 			if (guild.Roles.All(r => r.Id != role))
 				throw new RoleNotFoundException(role);
 
-		if (guildConfig.AdminWebhook != null)
-			guildConfig.AdminWebhook =
-				guildConfig.AdminWebhook.Replace("discord.com", "discordapp.com");
-
-		if (guildConfig.StaffWebhook != null)
-			guildConfig.StaffWebhook =
-				guildConfig.StaffWebhook.Replace("discord.com", "discordapp.com");
-
 		await _context.SaveGuildConfig(guildConfig);
 
 		_eventHandler.GuildRegisteredEvent.Invoke(guildConfig, importExistingBans);
@@ -97,14 +89,6 @@ public class GuildConfigRepository : Repository, AddAdminStats
 		foreach (var role in guildConfig.AdminRoles)
 			if (guild.Roles.All(r => r.Id != role))
 				throw new RoleNotFoundException(role);
-
-		if (guildConfig.AdminWebhook != null)
-			guildConfig.AdminWebhook =
-				guildConfig.AdminWebhook.Replace("discord.com", "discordapp.com");
-
-		if (guildConfig.StaffWebhook != null)
-			guildConfig.StaffWebhook =
-				guildConfig.StaffWebhook.Replace("discord.com", "discordapp.com");
 
 		await _context.InternalUpdateGuildConfig(guildConfig);
 

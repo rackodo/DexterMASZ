@@ -27,7 +27,7 @@ public class AuditLogger : IHostedService, Event
 
 	public void RegisterEvents()
 	{
-		_client.Ready += OnBotReady;
+		_client.Connected += OnBotReady;
 		_client.Disconnected += OnDisconnect;
 	}
 

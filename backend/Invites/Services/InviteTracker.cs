@@ -8,6 +8,7 @@ using Discord.Net;
 using Discord.WebSocket;
 using Invites.Data;
 using Invites.Events;
+using Invites.Extensions;
 using Invites.Models;
 using Invites.Translators;
 using Microsoft.Extensions.DependencyInjection;
@@ -100,19 +101,11 @@ public class InviteTracker : Event
 				_logger.LogInformation(
 					$"User {user.Username}#{user.Discriminator} joined guild {user.Guild.Name} with ID: {user.Guild.Id} using invite {usedInvite.Code}");
 
-				if (guildConfig.ExecuteWhoIsOnJoin && !string.IsNullOrEmpty(guildConfig.StaffWebhook))
+				if (guildConfig.ExecuteWhoIsOnJoin)
 				{
-					string message;
+					var embed = await invite.CreateInviteEmbed(user, _serviceProvider);
 
-					if (invite.InviteIssuerId != 0 && invite.InviteCreatedAt != null)
-						message = translator.Get<InviteNotificationTranslator>().NotificationAutoWhoisJoinWithAndFrom(user,
-							invite.InviteIssuerId, invite.InviteCreatedAt.Value, user.CreatedAt.DateTime,
-							invite.UsedInvite);
-					else
-						message = translator.Get<InviteNotificationTranslator>()
-							.NotificationAutoWhoisJoinWith(user, user.CreatedAt.DateTime, invite.UsedInvite);
-
-					await DiscordRest.ExecuteWebhook(guildConfig.StaffWebhook, null, message, AllowedMentions.None);
+					await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
 				}
 
 				await scope.ServiceProvider.GetRequiredService<InviteRepository>().CreateInvite(invite);

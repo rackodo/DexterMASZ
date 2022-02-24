@@ -15,18 +15,13 @@ namespace Punishments.Extensions;
 public static class PunishmentEmbedCreator
 {
 	public static async Task<EmbedBuilder> CreateModCaseEmbed(this ModCase modCase, RestAction action, IUser actor,
-		IServiceProvider provider, IUser suspect = null, bool isInternal = true)
+		IServiceProvider provider, IUser suspect = null)
 	{
 		var translator = provider.GetRequiredService<Translation>();
 
 		await translator.SetLanguage(modCase.GuildId);
 
-		EmbedBuilder embed;
-
-		if (isInternal)
-			embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
-		else
-			embed = await EmbedCreator.CreateBasicEmbed(action, provider);
+		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
 
 		if (suspect != null)
 			embed.WithThumbnailUrl(suspect.GetAvatarOrDefaultUrl());
@@ -41,28 +36,16 @@ public static class PunishmentEmbedCreator
 		switch (action)
 		{
 			case RestAction.Updated:
-				if (isInternal)
-					embed.WithDescription(translator.Get<PunishmentNotificationTranslator>()
-						.NotificationModCaseUpdateInternal(modCase, actor));
-				else
-					embed.WithDescription(translator.Get<PunishmentNotificationTranslator>()
-						.NotificationModCaseUpdatePublic(modCase));
+				embed.WithDescription(translator.Get<PunishmentNotificationTranslator>()
+					.NotificationModCaseUpdate(modCase, actor));
 				break;
 			case RestAction.Deleted:
-				if (isInternal)
-					embed.WithDescription(translator.Get<PunishmentNotificationTranslator>()
-						.NotificationModCaseDeleteInternal(modCase, actor));
-				else
-					embed.WithDescription(translator.Get<PunishmentNotificationTranslator>()
-						.NotificationModCaseDeletePublic(modCase));
+				embed.WithDescription(translator.Get<PunishmentNotificationTranslator>()
+					.NotificationModCaseDelete(modCase, actor));
 				break;
 			case RestAction.Created:
-				if (isInternal)
-					embed.WithDescription(translator.Get<PunishmentNotificationTranslator>()
-						.NotificationModCaseCreateInternal(modCase, actor));
-				else
-					embed.WithDescription(translator.Get<PunishmentNotificationTranslator>()
-						.NotificationModCaseCreatePublic(modCase));
+				embed.WithDescription(translator.Get<PunishmentNotificationTranslator>()
+					.NotificationModCase(modCase, actor));
 				break;
 		}
 
@@ -87,12 +70,54 @@ public static class PunishmentEmbedCreator
 		return embed;
 	}
 
+	public static async Task<EmbedBuilder> CreateReportEmbed(this IMessage message, IUser user, IServiceProvider provider)
+	{
+		if (message is not ITextChannel channel)
+			return null;
+
+		var translation = provider.GetRequiredService<Translation>();
+
+		await translation.SetLanguage(channel.GuildId);
+
+		var embed = await EmbedCreator.CreateBasicEmbed(RestAction.Created, provider);
+
+		embed.WithTitle(translation.Get<PunishmentTranslator>().ReportCreated())
+		.WithAuthor(user)
+		.WithThumbnailUrl(message.Author.GetAvatarOrDefaultUrl())
+		.WithDescription(translation.Get<PunishmentTranslator>().ReportContent(user, message, channel))
+		.AddField(
+			translation.Get<BotTranslator>().Channel(),
+			channel.Mention,
+			true
+		).AddField(
+			translation.Get<BotTranslator>().Message(),
+			message,
+			true
+		).AddField(
+			translation.Get<BotTranslator>().MessageUrl(),
+			message.GetJumpUrl())
+		.WithFooter($"{translation.Get<BotTranslator>().GuildId()}: {channel.GuildId}");
+
+		if (message.Attachments.Count > 0)
+		{
+			StringBuilder sb = new();
+
+			foreach (var attachment in message.Attachments.Take(5))
+				sb.Append($"- <{attachment.Url}>\n");
+
+			if (message.Attachments.Count > 5)
+				sb.AppendLine(translation.Get<BotTranslator>().AndXMore(message.Attachments.Count - 5));
+
+			embed.AddField(translation.Get<BotTranslator>().Attachments(), sb.ToString());
+		}
+
+		return embed;
+	}
+
 	public static async Task<EmbedBuilder> CreateFileEmbed(this UploadedFile file, ModCase modCase, RestAction action,
 		IUser actor, IServiceProvider provider)
 	{
 		var translator = provider.GetService<Translation>();
-
-		if (translator == null) return null;
 
 		await translator.SetLanguage(modCase.GuildId);
 

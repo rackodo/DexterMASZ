@@ -1,7 +1,7 @@
 ﻿using Bot.Abstractions;
 using Bot.Extensions;
 using Bot.Models;
-using Bot.Services;
+using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -12,13 +12,15 @@ public class BotEventAnnouncer : Event
 	private readonly BotEventHandler _eventHandler;
 	private readonly ILogger<BotEventAnnouncer> _logger;
 	private readonly IServiceProvider _serviceProvider;
+	private readonly DiscordSocketClient _client;
 
 	public BotEventAnnouncer(BotEventHandler eventHandler, ILogger<BotEventAnnouncer> logger,
-		IServiceProvider serviceProvider)
+		IServiceProvider serviceProvider, DiscordSocketClient client)
 	{
 		_eventHandler = eventHandler;
 		_logger = logger;
 		_serviceProvider = serviceProvider;
+		_client = client;
 	}
 
 	public void RegisterEvents()
@@ -28,24 +30,18 @@ public class BotEventAnnouncer : Event
 
 	private async Task AnnounceTipsInNewGuild(GuildConfig guildConfig)
 	{
-		if (!string.IsNullOrEmpty(guildConfig.AdminWebhook))
+		try
 		{
-			_logger.LogInformation(
-				$"Sending Dexter.Internal tips webhook to {guildConfig.AdminWebhook} for guild {guildConfig.GuildId}.");
+			using var scope = _serviceProvider.CreateScope();
 
-			try
-			{
-				using var scope = _serviceProvider.CreateScope();
+			var embed = await guildConfig.CreateTipsEmbedForNewGuilds(scope.ServiceProvider);
 
-				var embed = await guildConfig.CreateTipsEmbedForNewGuilds(scope.ServiceProvider);
-
-				await DiscordRest.ExecuteWebhook(guildConfig.AdminWebhook, embed.Build());
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing tips to {guildConfig.AdminWebhook} for guild {guildConfig.GuildId}.");
-			}
+			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e,
+				$"Error while announcing tips to {guildConfig.StaffAnnouncements} for guild {guildConfig.GuildId}.");
 		}
 	}
 }
