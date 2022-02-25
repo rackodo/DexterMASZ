@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bot.Migrations
 {
     [DbContext(typeof(BotDatabase))]
-    [Migration("20220219214539_InitialCreate")]
+    [Migration("20220225103441_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,9 +74,6 @@ namespace Bot.Migrations
                     b.Property<string>("AdminRoles")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("AdminWebhook")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("BotChannels")
                         .HasColumnType("longtext");
 
@@ -95,11 +92,14 @@ namespace Bot.Migrations
                     b.Property<bool>("PublishModeratorInfo")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<ulong>("StaffAnnouncements")
+                        .HasColumnType("bigint unsigned");
+
                     b.Property<string>("StaffChannels")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("StaffWebhook")
-                        .HasColumnType("longtext");
+                    b.Property<ulong>("StaffLogs")
+                        .HasColumnType("bigint unsigned");
 
                     b.Property<bool>("StrictModPermissionCheck")
                         .HasColumnType("tinyint(1)");
