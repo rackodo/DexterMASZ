@@ -1121,4 +1121,4 @@ webinterface/app/composer.lock
 /backend/Dexter/Properties/launchSettings.json
 
 *.bak
-/package-lock.json
+nginx/Dexter/package-lock.json
