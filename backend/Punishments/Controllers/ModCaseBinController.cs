@@ -36,7 +36,7 @@ public class ModCaseBinController : AuthenticatedController
 
 		await identity.RequireSiteAdmin();
 
-		await _modCaseRepository.DeleteModCase(guildId, caseId, true, true, false);
+		await _modCaseRepository.DeleteModCase(guildId, caseId, true, true);
 
 		return Ok();
 	}

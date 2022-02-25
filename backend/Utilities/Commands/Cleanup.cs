@@ -16,15 +16,21 @@ public class Cleanup : Command<Cleanup>
 	[Require(RequireCheck.GuildModerator)]
 	[SlashCommand("cleanup", "Cleanup specific data from the server and/or channel.")]
 	public async Task CleanupCommand(
-		[Summary("mode", "which data you want to delete")]
+		[Summary("mode", "The data you wish to clean up.")]
 		CleanupMode cleanupMode,
-		[Summary("channel", "where to delete, defaults to current.")]
+		[Summary("user", "The user to filter the cleanup to.")]
+		IUser filterUser = null,
+		[Summary("channel", "The channel to delete in, defaults to current.")]
 		ITextChannel channel = null,
-		[Summary("count", "how many messages to scan for your mode.")]
-		long count = 100,
-		[Summary("user", "additional filter on this user")]
-		IUser filterUser = null)
+		[Summary("count", "The amount of messages to delete, defaults to 100.")]
+		long count = 100)
 	{
+		if (cleanupMode == CleanupMode.Messages && filterUser == null)
+		{
+			await Context.Interaction.RespondAsync("I can't clean up all these messages! Please provide a filter...", ephemeral: true);
+			return;
+		}
+
 		if (channel is null)
 			if (Context.Channel is ITextChannel txtChannel)
 			{
@@ -134,7 +140,7 @@ public class Cleanup : Command<Cleanup>
 			}
 			else if (toDelete.Count > 0)
 			{
-				await toDelete[0].DeleteAsync();
+				await toDelete.First().DeleteAsync();
 				toDelete.Clear();
 			}
 		}

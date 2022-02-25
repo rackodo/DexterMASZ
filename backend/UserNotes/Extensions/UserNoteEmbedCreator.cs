@@ -19,7 +19,7 @@ public static class UserNoteEmbedCreator
 
 		await translator.SetLanguage(userNote.GuildId);
 
-		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
+		var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
 
 		if (target != null)
 			embed.WithThumbnailUrl(target.GetAvatarOrDefaultUrl());

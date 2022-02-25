@@ -19,7 +19,7 @@ public static class MotdEmbedCreator
 
 		await translator.SetLanguage(motd.GuildId);
 
-		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
+		var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
 
 		embed.WithTitle(translator.Get<MotdTranslator>().MessageOfTheDay());
 

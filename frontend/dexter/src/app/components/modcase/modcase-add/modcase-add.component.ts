@@ -87,7 +87,6 @@ export class ModCaseAddComponent implements OnInit {
     });
     this.punishmentFormGroup = this._formBuilder.group({
       punishmentType: ['', Validators.required],
-      dmNotification: [false],
       handlePunishment: [false]
     });
     this.filesFormGroup = this._formBuilder.group({
@@ -107,7 +106,6 @@ export class ModCaseAddComponent implements OnInit {
         this.punishmentFormGroup.controls['handlePunishment'].setValue(false);
       } else {
         this.punishmentFormGroup.controls['handlePunishment'].setValue(true);
-        this.punishmentFormGroup.controls['dmNotification'].setValue(true);
       }
     });
 
@@ -236,7 +234,6 @@ export class ModCaseAddComponent implements OnInit {
     this.caseLabels = template.caseLabels;
     this.punishmentFormGroup.setValue({
       punishmentType: template.casePunishmentType,
-      dmNotification: template.announceDm,
       handlePunishment: template.handlePunishment
     });
     if (template.casePunishedUntil) {
@@ -261,8 +258,7 @@ export class ModCaseAddComponent implements OnInit {
     }
 
     const params = new HttpParams()
-      .set('handlePunishment', this.punishmentFormGroup.value.handlePunishment ? 'true' : 'false')
-      .set('sendDmNotification', this.punishmentFormGroup.value.dmNotification ? 'true' : 'false');
+      .set('handlePunishment', this.punishmentFormGroup.value.handlePunishment ? 'true' : 'false');
 
     this.api.postSimpleData(`/guilds/${this.guildId}/cases`, data, params, true, true).subscribe(data => {
       const caseId = data.caseId;

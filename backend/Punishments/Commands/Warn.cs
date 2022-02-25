@@ -25,8 +25,8 @@ public class Warn : Command<Warn>
 		[Summary("user", "User to punish")] IUser user,
 		[Summary("description", "The description of the mod case")]
 		string description = "",
-		[Summary("dm-notification", "Whether to send a dm notification")]
-		bool sendDmNotification = true)
+		[Summary("Severity Level", "Whether or not this is a higher severity case")]
+		bool highSeverity = false)
 	{
 		ModCaseRepository.AsUser(Identity);
 		GuildConfigRepository.AsUser(Identity);
@@ -45,10 +45,11 @@ public class Warn : Command<Warn>
 			PunishmentType = PunishmentType.Warn,
 			PunishmentActive = true,
 			PunishedUntil = null,
+			HighSeverity = highSeverity,
 			CreationType = CaseCreationType.ByCommand
 		};
 
-		var created = await ModCaseRepository.CreateModCase(modCase, true, sendDmNotification);
+		var created = await ModCaseRepository.CreateModCase(modCase, true);
 
 		var config = await SettingsRepository.GetAppSettings();
 

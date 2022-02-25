@@ -7,21 +7,28 @@ namespace Bot.Extensions;
 
 public static class EmbedCreator
 {
-	public static async Task<EmbedBuilder> CreateBasicEmbed(RestAction action, IServiceProvider provider,
+	public static EmbedBuilder CreateColoredEmbed(Color color, Type type)
+	{
+		var ns = type.Namespace.Split('.');
+
+		return new EmbedBuilder()
+			.WithCurrentTimestamp()
+			.WithColor(color)
+			.WithFooter(ns.First() + ns.Last());
+	}
+
+	public static async Task<EmbedBuilder> CreateActionEmbed(RestAction action, IServiceProvider provider,
 		IUser author = null)
 	{
-		EmbedBuilder embed = new()
-		{
-			Timestamp = DateTime.Now
-		};
-
-		embed.Color = action switch
-		{
-			RestAction.Updated => Color.Orange,
-			RestAction.Deleted => Color.Red,
-			RestAction.Created => Color.Green,
-			_ => embed.Color
-		};
+		var embed = new EmbedBuilder()
+			.WithCurrentTimestamp()
+			.WithColor(action switch
+			{
+				RestAction.Updated => Color.Orange,
+				RestAction.Deleted => Color.Red,
+				RestAction.Created => Color.Green,
+				_ => Color.Blue
+			});
 
 		if (author != null)
 			embed.WithAuthor(author);

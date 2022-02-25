@@ -70,24 +70,21 @@ public class AutoModEventAnnouncer : Event
 				$"Error while announcing auto mod event {modEvent.GuildId}/{modEvent.Id} to {guildConfig.StaffLogs}.");
 		}
 
-		if (punishmentsConfig.SendDmNotification)
-		{
-			_logger.LogInformation(
-				$"Sending dm notification for auto mod event {modEvent.GuildId}/{modEvent.Id} to {author.Id}.");
+		_logger.LogInformation(
+			$"Sending dm notification for auto mod event {modEvent.GuildId}/{modEvent.Id} to {author.Id}.");
 
-			try
-			{
-				var reason = translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModType);
-				var action = translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModAction);
-				await _discordRest.SendDmMessage(author.Id,
-					translator.Get<AutoModNotificationTranslator>()
-						.NotificationAutoModDm(author, channel, reason, action));
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing auto mod event {modEvent.GuildId}/{modEvent.Id} in dm to {author.Id}.");
-			}
+		try
+		{
+			var reason = translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModType);
+			var action = translator.Get<AutoModEnumTranslator>().Enum(modEvent.AutoModAction);
+			await _discordRest.SendDmMessage(author.Id,
+				translator.Get<AutoModNotificationTranslator>()
+					.NotificationAutoModDm(author, channel, reason, action));
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e,
+				$"Error while announcing auto mod event {modEvent.GuildId}/{modEvent.Id} in dm to {author.Id}.");
 		}
 
 		if (modEvent.AutoModAction is AutoModAction.ContentDeleted or AutoModAction.ContentDeletedAndCaseCreated &&

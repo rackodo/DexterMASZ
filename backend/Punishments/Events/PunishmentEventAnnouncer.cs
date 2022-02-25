@@ -35,13 +35,13 @@ public class PunishmentEventAnnouncer : Event
 
 	public void RegisterEvents()
 	{
-		_eventHandler.OnModCaseCreated += async (a, b, c) => await AnnounceModCase(a, b, c, RestAction.Created);
+		_eventHandler.OnModCaseCreated += async (a, b) => await AnnounceModCase(a, b, RestAction.Created);
 
-		_eventHandler.OnModCaseUpdated += async (a, b, c) => await AnnounceModCase(a, b, c, RestAction.Updated);
+		_eventHandler.OnModCaseUpdated += async (a, b) => await AnnounceModCase(a, b, RestAction.Updated);
 
-		_eventHandler.OnModCaseDeleted += async (a, b, c) => await AnnounceModCase(a, b, c, RestAction.Deleted);
+		_eventHandler.OnModCaseDeleted += async (a, b) => await AnnounceModCase(a, b, RestAction.Deleted);
 
-		_eventHandler.OnModCaseMarkedToBeDeleted += async (a, b, c) => await AnnounceModCase(a, b, c, RestAction.Deleted);
+		_eventHandler.OnModCaseMarkedToBeDeleted += async (a, b) => await AnnounceModCase(a, b, RestAction.Deleted);
 
 		_eventHandler.OnModCaseCommentCreated += async (a, b) => await AnnounceComment(a, b, RestAction.Created);
 
@@ -54,7 +54,7 @@ public class PunishmentEventAnnouncer : Event
 		_eventHandler.OnFileDeleted += async (a, b, c) => await AnnounceFile(a, b, c, RestAction.Deleted);
 	}
 
-	private async Task AnnounceModCase(ModCase modCase, IUser actor, bool announceDm, RestAction action)
+	private async Task AnnounceModCase(ModCase modCase, IUser actor, RestAction action)
 	{
 		using var scope = _serviceProvider.CreateScope();
 
@@ -71,7 +71,7 @@ public class PunishmentEventAnnouncer : Event
 
 		translator.SetLanguage(guildConfig);
 
-		if (announceDm && action != RestAction.Deleted)
+		if (action != RestAction.Deleted)
 		{
 			_logger.LogInformation(
 				$"Sending dm notification to {modCase.UserId} for case {modCase.GuildId}/{modCase.CaseId}");

@@ -25,8 +25,6 @@ public class Kick : Command<Kick>
 		[Summary("user", "User to punish")] IUser user,
 		[Summary("description", "The description of the modcase")]
 		string description = "",
-		[Summary("dm-notification", "Whether to send a dm notification")]
-		bool sendDmNotification = true,
 		[Summary("execute-punishment", "Whether to execute the punishment or just register it.")]
 		bool executePunishment = true)
 	{
@@ -51,8 +49,7 @@ public class Kick : Command<Kick>
 		};
 
 		var created =
-			await ModCaseRepository.CreateModCase(modCase, executePunishment,
-				sendDmNotification);
+			await ModCaseRepository.CreateModCase(modCase, executePunishment);
 
 		var config = await SettingsRepository.GetAppSettings();
 

@@ -58,20 +58,20 @@ public class PunishmentEventAudit : Event
 		return Task.CompletedTask;
 	}
 
-	private Task OnModCaseDeleted(ModCase modCase, IUser actor, bool announceDm)
+	private Task OnModCaseDeleted(ModCase modCase, IUser actor)
 	{
 		_auditLogger.QueueLog($"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> deleted.");
 		return Task.CompletedTask;
 	}
 
-	private Task OnModCaseUpdated(ModCase modCase, IUser actor, bool announceDm)
+	private Task OnModCaseUpdated(ModCase modCase, IUser actor)
 	{
 		_auditLogger.QueueLog(
 			$"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> by <@{modCase.LastEditedByModId}> updated.");
 		return Task.CompletedTask;
 	}
 
-	private Task OnModCaseCreated(ModCase modCase, IUser actor, bool announceDm)
+	private Task OnModCaseCreated(ModCase modCase, IUser actor)
 	{
 		_auditLogger.QueueLog(
 			$"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> by <@{modCase.ModId}> created.");

@@ -16,7 +16,7 @@ public static class BotEmbedCreator
 
 		await translator.SetLanguage(guildConfig.GuildId);
 
-		var embed = (await EmbedCreator.CreateBasicEmbed(RestAction.Created, provider))
+		var embed = (await EmbedCreator.CreateActionEmbed(RestAction.Created, provider))
 			.WithTitle(translator.Get<BotNotificationTranslator>().NotificationRegisterWelcomeToDexter())
 			.WithDescription(translator.Get<BotNotificationTranslator>().NotificationRegisterDescriptionThanks())
 			.AddField(

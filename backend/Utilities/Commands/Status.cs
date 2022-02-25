@@ -17,7 +17,7 @@ public class Status : Command<Status>
 	public StatusRepository StatusRepository { get; set; }
 
 	[Require(RequireCheck.SiteAdmin)]
-	[SlashCommand("status", "See the current status of your application.")]
+	[SlashCommand("status", "See the current status of the bot.")]
 	public async Task StatusCommand()
 	{
 		await Context.Interaction.DeferAsync(ephemeral: true);

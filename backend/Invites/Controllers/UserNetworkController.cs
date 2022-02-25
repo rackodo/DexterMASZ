@@ -32,9 +32,9 @@ public class UserNetworkController : AuthenticatedController
 		if (invites == null || invites.Count == 0)
 			return NotFound();
 
-		await identity.RequirePermission(DiscordPermission.Moderator, invites[0].GuildId);
+		await identity.RequirePermission(DiscordPermission.Moderator, invites.First().GuildId);
 
-		DiscordGuild guild = new(_discordRest.FetchGuildInfo(invites[0].GuildId, CacheBehavior.Default));
+		DiscordGuild guild = new(_discordRest.FetchGuildInfo(invites.First().GuildId, CacheBehavior.Default));
 
 		List<UserInviteExpanded> inviteViews = new();
 

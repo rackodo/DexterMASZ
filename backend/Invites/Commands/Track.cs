@@ -39,10 +39,10 @@ public class Track : Command<Track>
 
 		if (invites.Count > 0)
 		{
-			createdAt = invites[0].InviteCreatedAt;
+			createdAt = invites.First().InviteCreatedAt;
 
-			if (invites[0].InviteIssuerId != 0)
-				creator = await DiscordRest.FetchUserInfo(invites[0].InviteIssuerId, CacheBehavior.Default);
+			if (invites.First().InviteIssuerId != 0)
+				creator = await DiscordRest.FetchUserInfo(invites.First().InviteIssuerId, CacheBehavior.Default);
 
 			const int count = 0;
 

@@ -219,6 +219,11 @@ public class ModCaseRepository : Repository,
 					activeInfo.ToString());
 			}
 		}
+		else
+		{
+			embed.AddField($"{translator.Get<PunishmentTranslator>().Cases().First()}",
+				translator.Get<PunishmentTranslator>().NoCases());
+		}
 	}
 
 	public async Task<ModCase> ImportModCase(ModCase modCase)
@@ -283,7 +288,7 @@ public class ModCaseRepository : Repository,
 		return result.OrderByDescending(x => x.Count).ToList();
 	}
 
-	public async Task<ModCase> CreateModCase(ModCase modCase, bool handlePunishment, bool sendDmNotification)
+	public async Task<ModCase> CreateModCase(ModCase modCase, bool handlePunishment)
 	{
 		var currentReportedUser = await _discordRest.FetchUserInfo(modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
 
@@ -362,7 +367,7 @@ public class ModCaseRepository : Repository,
 
 			await _punishmentDatabase.SaveModCase(modCase);
 
-			_eventHandler.ModCaseCreatedEvent.Invoke(modCase, Identity, sendDmNotification);
+			_eventHandler.ModCaseCreatedEvent.Invoke(modCase, Identity);
 
 			if (!handlePunishment || (!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick))
 				return modCase;
@@ -388,7 +393,7 @@ public class ModCaseRepository : Repository,
 		return modCase;
 	}
 
-	public async Task<ModCase> DeleteModCase(ulong guildId, int caseId, bool forceDelete = false, bool handlePunishment = true, bool sendNotification = true)
+	public async Task<ModCase> DeleteModCase(ulong guildId, int caseId, bool forceDelete = false, bool handlePunishment = true)
 	{
 		var modCase = await GetModCase(guildId, caseId);
 
@@ -408,7 +413,7 @@ public class ModCaseRepository : Repository,
 			_logger.LogInformation($"Force deleting modCase {guildId}/{caseId}.");
 			await _punishmentDatabase.DeleteSpecificModCase(modCase);
 
-			_eventHandler.ModCaseDeletedEvent.Invoke(modCase, Identity, sendNotification);
+			_eventHandler.ModCaseDeletedEvent.Invoke(modCase, Identity);
 		}
 		else
 		{
@@ -419,7 +424,7 @@ public class ModCaseRepository : Repository,
 			_logger.LogInformation($"Marking mod case {guildId}/{caseId} as deleted.");
 			await _punishmentDatabase.UpdateModCase(modCase);
 
-			_eventHandler.ModCaseMarkedToBeDeletedEvent.Invoke(modCase, Identity, sendNotification);
+			_eventHandler.ModCaseMarkedToBeDeletedEvent.Invoke(modCase, Identity);
 		}
 
 		if (!handlePunishment) return modCase;
@@ -437,7 +442,7 @@ public class ModCaseRepository : Repository,
 		return modCase;
 	}
 
-	public async Task<ModCase> UpdateModCase(ModCase modCase, bool handlePunishment, bool sendNotification)
+	public async Task<ModCase> UpdateModCase(ModCase modCase, bool handlePunishment)
 	{
 		var currentReportedUser = await _discordRest.FetchUserInfo(modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
 
@@ -506,7 +511,7 @@ public class ModCaseRepository : Repository,
 
 			await _punishmentDatabase.UpdateModCase(modCase);
 
-			_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity, sendNotification);
+			_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity);
 
 			if (!handlePunishment || (!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick))
 				return modCase;
@@ -603,7 +608,7 @@ public class ModCaseRepository : Repository,
 
 		await _punishmentDatabase.UpdateModCase(modCase);
 
-		_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity, false);
+		_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity);
 
 		return modCase;
 	}
@@ -617,7 +622,7 @@ public class ModCaseRepository : Repository,
 
 		await _punishmentDatabase.UpdateModCase(modCase);
 
-		_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity, false);
+		_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity);
 
 		return modCase;
 	}
@@ -665,7 +670,7 @@ public class ModCaseRepository : Repository,
 
 		await _punishmentDatabase.UpdateModCase(modCase);
 
-		_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity, false);
+		_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity);
 
 		try
 		{
@@ -690,7 +695,7 @@ public class ModCaseRepository : Repository,
 
 		await _punishmentDatabase.UpdateModCase(modCase);
 
-		_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity, false);
+		_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity);
 
 		try
 		{
@@ -715,7 +720,7 @@ public class ModCaseRepository : Repository,
 
 			await _punishmentDatabase.UpdateModCase(modCase);
 
-			_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity, false);
+			_eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity);
 
 			try
 			{

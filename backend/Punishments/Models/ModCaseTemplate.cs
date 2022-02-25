@@ -17,5 +17,5 @@ public class ModCaseTemplate
 	public PunishmentType CasePunishmentType { get; set; }
 	public DateTime? CasePunishedUntil { get; set; }
 	public bool HandlePunishment { get; set; }
-	public bool AnnounceDm { get; set; }
+	public bool? HighSeverity { get; set; } = false;
 }

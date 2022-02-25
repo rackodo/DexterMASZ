@@ -163,7 +163,7 @@ export class UserScanComponent implements OnInit {
 
   onDoubleClick(params: any) {
     if (params?.nodes?.length === 1) {
-      let node = this.data.nodes.find(x => x.id === params?.nodes[0]) as any;
+      let node = this.data.nodes.find(x => x.id === params?.nodes.First()) as any;
       if (node?.searchFor) {
         this.search = node?.searchFor;
         this.executeSearch();

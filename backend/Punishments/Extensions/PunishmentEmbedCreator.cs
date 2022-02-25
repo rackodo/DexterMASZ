@@ -21,8 +21,8 @@ public static class PunishmentEmbedCreator
 
 		await translator.SetLanguage(modCase.GuildId);
 
-		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
-
+		var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
+		
 		if (suspect != null)
 			embed.WithThumbnailUrl(suspect.GetAvatarOrDefaultUrl());
 
@@ -121,7 +121,8 @@ public static class PunishmentEmbedCreator
 
 		await translator.SetLanguage(modCase.GuildId);
 
-		var embed = (await EmbedCreator.CreateBasicEmbed(action, provider, actor))
+		var embed = (await EmbedCreator.CreateActionEmbed(action, provider, actor))
+			.WithThumbnailUrl(actor.GetAvatarOrDefaultUrl())
 			.WithFooter($"UserId: {actor.Id} | CaseId: {modCase.CaseId}")
 			.AddField($"**{translator.Get<BotTranslator>().Filename()}**", file.Name.Truncate(1000));
 
@@ -158,7 +159,7 @@ public static class PunishmentEmbedCreator
 
 		await translator.SetLanguage(comment.ModCase.GuildId);
 
-		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
+		var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
 
 		switch (action)
 		{

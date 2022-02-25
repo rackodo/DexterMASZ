@@ -21,15 +21,15 @@ public class PunishmentEventHandler : InternalEventHandler
 
 	internal readonly AsyncEvent<Func<ModCaseComment, IUser, Task>> ModCaseCommentUpdatedEvent = new();
 
-	internal readonly AsyncEvent<Func<ModCase, IUser, bool, Task>> ModCaseCreatedEvent = new();
+	internal readonly AsyncEvent<Func<ModCase, IUser, Task>> ModCaseCreatedEvent = new();
 
-	internal readonly AsyncEvent<Func<ModCase, IUser, bool, Task>> ModCaseDeletedEvent = new();
+	internal readonly AsyncEvent<Func<ModCase, IUser, Task>> ModCaseDeletedEvent = new();
 
-	internal readonly AsyncEvent<Func<ModCase, IUser, bool, Task>> ModCaseMarkedToBeDeletedEvent = new();
+	internal readonly AsyncEvent<Func<ModCase, IUser, Task>> ModCaseMarkedToBeDeletedEvent = new();
 
 	internal readonly AsyncEvent<Func<ModCase, Task>> ModCaseRestoredEvent = new();
 
-	internal readonly AsyncEvent<Func<ModCase, IUser, bool, Task>> ModCaseUpdatedEvent = new();
+	internal readonly AsyncEvent<Func<ModCase, IUser, Task>> ModCaseUpdatedEvent = new();
 
 	public event Func<ModCaseComment, IUser, Task> OnModCaseCommentCreated
 	{
@@ -49,25 +49,25 @@ public class PunishmentEventHandler : InternalEventHandler
 		remove => ModCaseCommentDeletedEvent.Remove(value);
 	}
 
-	public event Func<ModCase, IUser, bool, Task> OnModCaseCreated
+	public event Func<ModCase, IUser, Task> OnModCaseCreated
 	{
 		add => ModCaseCreatedEvent.Add(value);
 		remove => ModCaseCreatedEvent.Remove(value);
 	}
 
-	public event Func<ModCase, IUser, bool, Task> OnModCaseUpdated
+	public event Func<ModCase, IUser, Task> OnModCaseUpdated
 	{
 		add => ModCaseUpdatedEvent.Add(value);
 		remove => ModCaseUpdatedEvent.Remove(value);
 	}
 
-	public event Func<ModCase, IUser, bool, Task> OnModCaseDeleted
+	public event Func<ModCase, IUser, Task> OnModCaseDeleted
 	{
 		add => ModCaseDeletedEvent.Add(value);
 		remove => ModCaseDeletedEvent.Remove(value);
 	}
 
-	public event Func<ModCase, IUser, bool, Task> OnModCaseMarkedToBeDeleted
+	public event Func<ModCase, IUser, Task> OnModCaseMarkedToBeDeleted
 	{
 		add => ModCaseMarkedToBeDeletedEvent.Add(value);
 		remove => ModCaseMarkedToBeDeletedEvent.Remove(value);

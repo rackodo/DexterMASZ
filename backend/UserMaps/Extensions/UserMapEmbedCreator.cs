@@ -19,7 +19,7 @@ public static class UserMapEmbedCreator
 
 		await translator.SetLanguage(userMaps.GuildId);
 
-		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
+		var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
 
 		embed.AddField($"**{translator.Get<BotTranslator>().Description()}**", userMaps.Reason.Truncate(1000))
 			.WithTitle($"{translator.Get<UserMapTranslator>().UserMap()} #{userMaps.Id}")

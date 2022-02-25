@@ -58,8 +58,7 @@ public class ModCaseController : AuthenticatedController
 
 	[HttpDelete("{caseId}")]
 	public async Task<IActionResult> DeleteSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId,
-		[FromQuery] bool sendNotification = true, [FromQuery] bool handlePunishment = true,
-		[FromQuery] bool forceDelete = false)
+		[FromQuery] bool handlePunishment = true, [FromQuery] bool forceDelete = false)
 	{
 		var identity = await SetupAuthentication();
 
@@ -69,15 +68,14 @@ public class ModCaseController : AuthenticatedController
 			modCase);
 
 		var deletedCase =
-			await _modCaseRepository.DeleteModCase(guildId, caseId, forceDelete, handlePunishment, sendNotification);
+			await _modCaseRepository.DeleteModCase(guildId, caseId, forceDelete, handlePunishment);
 
 		return Ok(deletedCase);
 	}
 
 	[HttpPut("{caseId}")]
 	public async Task<IActionResult> PutSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId,
-		[FromBody] ModCaseForPutDto newValue, [FromQuery] bool sendNotification = true,
-		[FromQuery] bool handlePunishment = true)
+		[FromBody] ModCaseForPutDto newValue, [FromQuery] bool handlePunishment = true)
 	{
 		var identity = await SetupAuthentication();
 
@@ -98,14 +96,14 @@ public class ModCaseController : AuthenticatedController
 		modCase.PunishedUntil = newValue.PunishedUntil;
 		modCase.LastEditedByModId = identity.GetCurrentUser().Id;
 
-		modCase = await _modCaseRepository.UpdateModCase(modCase, handlePunishment, sendNotification);
+		modCase = await _modCaseRepository.UpdateModCase(modCase, handlePunishment);
 
 		return Ok(modCase);
 	}
 
 	[HttpPost]
 	public async Task<IActionResult> CreateItem([FromRoute] ulong guildId, [FromBody] ModCaseForCreateDto modCaseDto,
-		[FromQuery] bool handlePunishment = true, [FromQuery] bool sendDmNotification = true)
+		[FromQuery] bool handlePunishment = true)
 	{
 		var identity = await SetupAuthentication();
 
@@ -129,7 +127,7 @@ public class ModCaseController : AuthenticatedController
 
 		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 
-		modCase = await _modCaseRepository.CreateModCase(modCase, handlePunishment, sendDmNotification);
+		modCase = await _modCaseRepository.CreateModCase(modCase, handlePunishment);
 
 		return StatusCode(201, modCase);
 	}

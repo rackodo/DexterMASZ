@@ -69,7 +69,6 @@ public class AutoModConfigRepository : Repository, DeleteGuildData
 		autoModConfig.TimeLimitMinutes = newValue.TimeLimitMinutes;
 		autoModConfig.Limit = newValue.Limit;
 		autoModConfig.CustomWordFilter = newValue.CustomWordFilter;
-		autoModConfig.SendDmNotification = newValue.SendDmNotification;
 		autoModConfig.ChannelNotificationBehavior = newValue.ChannelNotificationBehavior;
 
 		await _autoModDatabase.PutPunishmentsConfig(autoModConfig);

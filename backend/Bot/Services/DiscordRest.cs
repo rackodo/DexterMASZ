@@ -463,7 +463,7 @@ public class DiscordRest : IHostedService, Event
 		}
 		catch (Exception e)
 		{
-			_logger.LogError(e, $"Failed to un-ban user '{userId}' from guild '{guildId}'.");
+			_logger.LogError(e, $"Failed to unban user '{userId}' from guild '{guildId}'.");
 			return false;
 		}
 

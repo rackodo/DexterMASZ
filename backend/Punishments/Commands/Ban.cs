@@ -32,8 +32,6 @@ public class Ban : Command<Ban>
 		long punishedForHours = 0,
 		[Summary("description", "The description of the mod case")]
 		string description = "",
-		[Summary("dm-notification", "Whether to send a dm notification")]
-		bool sendDmNotification = true,
 		[Summary("execute-punishment", "Whether to execute the punishment or just register it.")]
 		bool executePunishment = true)
 	{
@@ -63,7 +61,7 @@ public class Ban : Command<Ban>
 		modCase.CreationType = CaseCreationType.ByCommand;
 
 		var created =
-			await ModCaseRepository.CreateModCase(modCase, executePunishment, sendDmNotification);
+			await ModCaseRepository.CreateModCase(modCase, executePunishment);
 
 		var url =
 			$"{(await SettingsRepository.GetAppSettings()).ServiceBaseUrl}/guilds/{created.GuildId}/cases/{created.CaseId}";

@@ -52,7 +52,6 @@ export class AutoModRuleComponent implements OnInit {
       excludeChannels: ['']
     });
     this.actionForm = this._formBuilder.group({
-      dmNotification: [''],
       automodAction: ['', Validators.required],
       punishmentType: [''],
       punishmentDuration: [''],
@@ -140,7 +139,6 @@ export class AutoModRuleComponent implements OnInit {
     this.filterForm.setValue({ excludeRoles: config.ignoreRoles, excludeChannels: config.ignoreChannels });
 
     this.actionForm.setValue({
-      dmNotification: config.sendDmNotification,
       automodAction: config.autoModAction,
       punishmentType: config.punishmentType,
       punishmentDuration: config.punishmentDurationMinutes,
@@ -179,7 +177,6 @@ export class AutoModRuleComponent implements OnInit {
       "TimeLimitMinutes": this.eventForm.value.timeLimit !== "" ? this.eventForm.value.timeLimit : null,
       "CustomWordFilter": this.eventForm.value.customWord !== "" ? this.eventForm.value.customWord : null,
       "Limit": this.eventForm.value.limit !== "" ? this.eventForm.value.limit : null,
-      "SendDmNotification": this.actionForm.value.dmNotification !== "" ? this.actionForm.value.dmNotification : false,
       "ChannelNotificationBehavior": this.actionForm.value.channelNotificationBehavior !== "" ? this.actionForm.value.channelNotificationBehavior : 0
     }
 

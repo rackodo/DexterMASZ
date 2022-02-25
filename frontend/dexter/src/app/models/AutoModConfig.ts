@@ -15,7 +15,6 @@ export interface AutoModConfig {
     timeLimitMinutes?: number;
     limit?: number;
     customWordFilter?: string;
-    sendDmNotification: boolean;
     channelNotificationBehavior: ChannelNotificationBehavior;
 }
 

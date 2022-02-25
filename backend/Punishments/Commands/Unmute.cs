@@ -22,8 +22,8 @@ public class Unmute : Command<Unmute>
 	public SettingsRepository SettingsRepository { get; set; }
 
 	[Require(RequireCheck.GuildModerator, RequireCheck.GuildStrictModeMute)]
-	[SlashCommand("unmute", "Un-mute a user by deactivating all his mod cases.")]
-	public async Task UnmuteCommand([Summary("user", "User to un-mute")] IUser user)
+	[SlashCommand("unmute", "unmute a user by deactivating all his mod cases.")]
+	public async Task UnmuteCommand([Summary("user", "User to unmute")] IUser user)
 	{
 		ModCaseRepository.AsUser(Identity);
 

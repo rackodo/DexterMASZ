@@ -195,7 +195,7 @@ public class PunishmentHandler : Event
 
 			_logger.LogInformation($"Muted user {user.Id} rejoined guild {user.Guild.Id}");
 
-			await ModifyPunishment(modCases[0], RestAction.Created);
+			await ModifyPunishment(modCases.First(), RestAction.Created);
 		}
 		catch (ResourceNotFoundException)
 		{

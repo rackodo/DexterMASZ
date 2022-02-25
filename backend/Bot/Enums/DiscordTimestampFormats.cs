@@ -4,6 +4,11 @@ namespace Bot.Enums;
 
 public enum DiscordTimestampFormats
 {
+	ShortTime = 't',
+	LongTime = 'T',
+	ShortDate = 'd',
+	LongDate = 'D',
 	ShortDateTime = 'f',
-	RelativeTime = 'R'
+	LongDateTime = 'F',
+	RelativeTime = 'R',
 }

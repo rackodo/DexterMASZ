@@ -75,7 +75,6 @@ export class ModCaseEditComponent implements OnInit {
     });
     this.punishmentFormGroup = this._formBuilder.group({
       punishmentType: ['', Validators.required],
-      dmNotification: [''],
       handlePunishment: ['']
     });
     this.optionsFormGroup = this._formBuilder.group({
@@ -178,7 +177,6 @@ export class ModCaseEditComponent implements OnInit {
     this.caseLabels = modCase.labels;
     this.punishmentFormGroup.setValue({
       punishmentType: modCase.punishmentType,
-      dmNotification: false,
       handlePunishment: false
     });
     if (modCase.punishedUntil) {
@@ -201,8 +199,7 @@ export class ModCaseEditComponent implements OnInit {
     };
     const params = new HttpParams()
       .set('sendNotification', this.optionsFormGroup.value.sendNotification ? 'true' : 'false')
-      .set('handlePunishment', this.punishmentFormGroup.value.handlePunishment ? 'true' : 'false')
-      .set('sendDmNotification', this.punishmentFormGroup.value.dmNotification ? 'true' : 'false');
+      .set('handlePunishment', this.punishmentFormGroup.value.handlePunishment ? 'true' : 'false');
 
       this.api.putSimpleData(`/guilds/${this.guildId}/cases/${this.caseId}`, data, params, true, true).subscribe((data) => {
         const caseId = data.caseId;

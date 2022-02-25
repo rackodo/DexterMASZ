@@ -344,7 +344,6 @@
         "SendInternalNotificationHover": "Siempre se envía una notificación interna.",
         "LogEntry": "Entrada de registro",
         "LogEntryHover": "Siempre se genera una entrada de registro.",
-        "SendDMNotification": "Enviar notificación dm",
         "Action": "Acción",
         "ChannelNotificationBehavior": "Notificación de canal",
         "DurationInMinutes": "Duración en minutos",

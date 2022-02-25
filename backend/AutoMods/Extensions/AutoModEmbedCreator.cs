@@ -23,7 +23,7 @@ public static class AutoModEmbedCreator
 
 		await translator.SetLanguage(autoModEvent.GuildId);
 
-		var embed = await EmbedCreator.CreateBasicEmbed(RestAction.Created, provider);
+		var embed = await EmbedCreator.CreateActionEmbed(RestAction.Created, provider);
 
 		embed.WithTitle(translator.Get<AutoModTranslator>().AutoMod())
 			.WithAuthor(user)
@@ -66,7 +66,7 @@ public static class AutoModEmbedCreator
 
 		await translator.SetLanguage(autoModConfig.GuildId);
 
-		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
+		var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
 
 		embed.WithTitle(translator.Get<AutoModTranslator>().AutoMod() + ": " +
 						translator.Get<AutoModEnumTranslator>().Enum(autoModConfig.AutoModType));
@@ -89,8 +89,6 @@ public static class AutoModEmbedCreator
 					.NotificationAutoModConfigInternalDelete(autoModTypeName, actor));
 		}
 
-		// config info
-
 		if (autoModConfig.Limit != null)
 			embed.AddField(translator.Get<AutoModNotificationTranslator>().NotificationAutoModConfigLimit(),
 				$"{autoModConfig.Limit}", true);
@@ -99,8 +97,6 @@ public static class AutoModEmbedCreator
 			embed.AddField(translator.Get<AutoModNotificationTranslator>().NotificationAutoModConfigTimeLimit(),
 				$"{autoModConfig.TimeLimitMinutes}", true);
 
-		// uid info
-
 		if (autoModConfig.IgnoreRoles.Length > 0)
 			embed.AddField(translator.Get<AutoModNotificationTranslator>().NotificationAutoModConfigIgnoredRoles(),
 				string.Join(" ", autoModConfig.IgnoreRoles.Select(x => $"<@&{x}>")), true);
@@ -108,8 +104,6 @@ public static class AutoModEmbedCreator
 		if (autoModConfig.IgnoreChannels.Length > 0)
 			embed.AddField(translator.Get<AutoModNotificationTranslator>().NotificationAutoModConfigIgnoredChannels(),
 				string.Join(" ", autoModConfig.IgnoreChannels.Select(x => $"<#{x}>")), true);
-
-		// punishment info
 
 		if (autoModConfig.PunishmentType != null &&
 			autoModConfig.AutoModAction is AutoModAction.CaseCreated or AutoModAction.ContentDeletedAndCaseCreated)
@@ -121,11 +115,6 @@ public static class AutoModEmbedCreator
 				embed.AddField(
 					$"⏰ {translator.Get<AutoModNotificationTranslator>().NotificationAutoModConfigDuration()}",
 					$"{autoModConfig.PunishmentDurationMinutes}", true);
-
-			embed.AddField(
-				translator.Get<AutoModNotificationTranslator>().NotificationAutoModConfigSendDm(),
-				autoModConfig.SendDmNotification.GetCheckEmoji(),
-				true);
 		}
 
 		embed.AddField(

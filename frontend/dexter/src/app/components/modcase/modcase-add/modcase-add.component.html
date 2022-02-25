@@ -103,11 +103,6 @@
                         <mat-option *ngFor="let enum of punishmentOptions.content" [value]="enum.key">{{ enum.value }}</mat-option>
                         </mat-select>
                     </mat-form-field><br/>
-                    <mat-checkbox
-                        formControlName="dmNotification"
-                        [labelPosition]="'after'">
-                        {{ 'ModCaseDialog.SendDmNotification' | translate }}
-                    </mat-checkbox><br/>
                     <mat-checkbox *ngIf="this.punishmentFormGroup.value.punishmentType >= 1"
                         formControlName="handlePunishment"
                         [labelPosition]="'after'">

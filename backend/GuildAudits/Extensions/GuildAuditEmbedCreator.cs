@@ -18,7 +18,7 @@ public static class GuildAuditEmbedCreator
 
 		await translator.SetLanguage(config.GuildId);
 
-		var embed = await EmbedCreator.CreateBasicEmbed(action, provider, actor);
+		var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
 
 		embed.WithTitle(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditTitle() + ": " +
 				translator.Get<GuildAuditEnumTranslator>().Enum(config.GuildAuditEvent));

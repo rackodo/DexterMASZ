@@ -32,9 +32,9 @@ public class Mute : Command<Mute>
 		long punishedForHours = 0,
 		[Summary("description", "The description of the modcase")]
 		string description = "",
-		[Summary("dm-notification", "Whether to send a dm notification")]
-		bool sendDmNotification = true,
-		[Summary("execute-punishment", "Whether to execute the punishment or just register it.")]
+		[Summary("Severity Level", "Whether or not this is a higher severity case")]
+		bool highSeverity = false,
+		[Summary("execute-punishment", "Whether to execute the punishment or just register it")]
 		bool executePunishment = true)
 	{
 		ModCaseRepository.AsUser(Identity);
@@ -53,6 +53,7 @@ public class Mute : Command<Mute>
 			Description = string.IsNullOrEmpty(description) ? title : description,
 			PunishmentType = PunishmentType.Mute,
 			PunishmentActive = executePunishment,
+			HighSeverity = highSeverity,
 			PunishedUntil = DateTime.UtcNow.AddHours(punishedForHours)
 		};
 
@@ -63,7 +64,7 @@ public class Mute : Command<Mute>
 		modCase.CreationType = CaseCreationType.ByCommand;
 
 		var created =
-			await ModCaseRepository.CreateModCase(modCase, executePunishment, sendDmNotification);
+			await ModCaseRepository.CreateModCase(modCase, executePunishment);
 
 		var config = await SettingsRepository.GetAppSettings();
 
