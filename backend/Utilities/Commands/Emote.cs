@@ -12,7 +12,7 @@ public class Emote : Command<Emote>
 
 	[SlashCommand("emote", "Gets the full image of an emote.")]
 	public async Task EmoteCommand(
-		[Summary("emote", "The Discord emote you wish to be enlargened!")]string emoji)
+		[Summary("emote", "The Discord emote you wish to be enlargened!")] string emoji)
 	{
 		EmbedBuilder embed;
 

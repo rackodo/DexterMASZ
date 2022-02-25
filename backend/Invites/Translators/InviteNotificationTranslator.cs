@@ -1,7 +1,5 @@
 ﻿using Bot.Abstractions;
 using Bot.Enums;
-using Bot.Extensions;
-using Discord;
 
 namespace Invites.Translators;
 

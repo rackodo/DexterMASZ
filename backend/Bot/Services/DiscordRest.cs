@@ -5,7 +5,6 @@ using Bot.Exceptions;
 using Bot.Models;
 using Discord;
 using Discord.Rest;
-using Discord.Webhook;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -448,7 +447,7 @@ public class DiscordRest : IHostedService, Event
 		return true;
 	}
 
-	public async Task<bool> UnBanUser(ulong guildId, ulong userId, string reason = null)
+	public async Task<bool> UnbanUser(ulong guildId, ulong userId, string reason = null)
 	{
 		try
 		{
@@ -463,7 +462,7 @@ public class DiscordRest : IHostedService, Event
 		}
 		catch (Exception e)
 		{
-			_logger.LogError(e, $"Failed to unban user '{userId}' from guild '{guildId}'.");
+			_logger.LogError(e, $"Failed to Unban user '{userId}' from guild '{guildId}'.");
 			return false;
 		}
 
@@ -649,13 +648,6 @@ public class DiscordRest : IHostedService, Event
 			return;
 
 		await channel.SendMessageAsync(content);
-	}
-
-	public static async Task ExecuteWebhook(string url, Embed embed = null, string content = null,
-		AllowedMentions allowedMentions = null)
-	{
-		await new DiscordWebhookClient(url).SendMessageAsync(content,
-			embeds: embed != null ? new[] { embed } : null, allowedMentions: allowedMentions);
 	}
 
 	public Dictionary<string, CacheApiResponse> GetCache()

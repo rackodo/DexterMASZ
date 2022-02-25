@@ -18,10 +18,10 @@ namespace DexterSlash.Commands.MusicCommands
 
 			var player = AudioService.TryGetPlayer(Context, "play song");
 
-			if (Uri.TryCreate(search, UriKind.Absolute, out Uri uriResult))
+			if (Uri.TryCreate(search, UriKind.Absolute, out var uriResult))
 			{
-				string baseUrl = uriResult.Host;
-				string abUrl = uriResult.AbsoluteUri;
+				var baseUrl = uriResult.Host;
+				var abUrl = uriResult.AbsoluteUri;
 				/*
 				if (baseUrl.Contains("youtube") || baseUrl.Contains("youtu.be"))
 				{
@@ -81,7 +81,7 @@ namespace DexterSlash.Commands.MusicCommands
 
 					var spotifyAPI = new SpotifyClient(config.WithToken(response.AccessToken));
 
-					string id = abUrl.Split('/').Last().Split('?').First();
+					var id = abUrl.Split('/').Last().Split('?').First();
 
 					if (abUrl.Contains("playlist"))
 					{
@@ -130,11 +130,11 @@ namespace DexterSlash.Commands.MusicCommands
 
 		public async Task SearchPlaylist(string[] playlist, DexterPlayer player)
 		{
-			bool wasEmpty = player.Queue.Count == 0 && player.State != PlayerState.Playing;
+			var wasEmpty = player.Queue.Count == 0 && player.State != PlayerState.Playing;
 
 			List<LavalinkTrack> tracks = new ();
 
-			foreach (string search in playlist)
+			foreach (var search in playlist)
 			{
 				var track = await AudioService.GetTrackAsync(search, SearchMode.YouTube);
 
@@ -183,7 +183,7 @@ namespace DexterSlash.Commands.MusicCommands
 
 				var options = new List<string>();
 
-				for (int i = 0; i < topResults.Count; i++)
+				for (var i = 0; i < topResults.Count; i++)
 				{
 					if (options.Contains(topResults[i].Title))
 						continue;

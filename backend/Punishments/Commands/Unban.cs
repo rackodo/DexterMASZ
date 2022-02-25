@@ -21,9 +21,9 @@ public class Unban : Command<Unban>
 	public ModCaseRepository ModCaseRepository { get; set; }
 	public SettingsRepository SettingsRepository { get; set; }
 
-	[Require(RequireCheck.GuildModerator, RequireCheck.GuildStrictModeBan)]
-	[SlashCommand("unban", "unban a user by deactivating all his mod cases.")]
-	public async Task UnbanCommand([Summary("user", "User to unban")] IUser user)
+	[Require(RequireCheck.GuildAdmin, RequireCheck.GuildStrictModeBan)]
+	[SlashCommand("Unban", "Unban a user by deactivating all his mod cases.")]
+	public async Task UnbanCommand([Summary("user", "User to Unban")] IUser user)
 	{
 		ModCaseRepository.AsUser(Identity);
 
@@ -70,15 +70,15 @@ public class Unban : Command<Unban>
 			Translator.Get<PunishmentTranslator>().WaitingForApproval());
 
 		var button = new ComponentBuilder()
-			.WithButton(Translator.Get<PunishmentTranslator>().DeleteBans(), $"unban-delete:{user.Id}")
-			.WithButton(Translator.Get<PunishmentTranslator>().DeactivateBans(), $"unban-deactivate:{user.Id}",
+			.WithButton(Translator.Get<PunishmentTranslator>().DeleteBans(), $"Unban-delete:{user.Id}")
+			.WithButton(Translator.Get<PunishmentTranslator>().DeactivateBans(), $"Unban-deactivate:{user.Id}",
 				ButtonStyle.Secondary)
-			.WithButton(Translator.Get<PunishmentTranslator>().Cancel(), "unban-cancel", ButtonStyle.Danger);
+			.WithButton(Translator.Get<PunishmentTranslator>().Cancel(), "Unban-cancel", ButtonStyle.Danger);
 
 		await Context.Interaction.RespondAsync(embed: embed.Build(), components: button.Build());
 	}
 
-	[ComponentInteraction("unban-delete:*")]
+	[ComponentInteraction("Unban-delete:*")]
 	public async Task DeleteBanConfirmation(string userId)
 	{
 		ModCaseRepository.AsUser(Identity);
@@ -108,7 +108,7 @@ public class Unban : Command<Unban>
 		}
 	}
 
-	[ComponentInteraction("unban-deactivate:*")]
+	[ComponentInteraction("Unban-deactivate:*")]
 	public async Task DeactivateBan(string userId)
 	{
 		ModCaseRepository.AsUser(Identity);
@@ -136,7 +136,7 @@ public class Unban : Command<Unban>
 		}
 	}
 
-	[ComponentInteraction("unban-cancel")]
+	[ComponentInteraction("Unban-cancel")]
 	public async Task UnbanCancel()
 	{
 		if (Context.Interaction is SocketMessageComponent castInteraction)

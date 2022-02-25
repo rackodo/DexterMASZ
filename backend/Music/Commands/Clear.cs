@@ -14,7 +14,7 @@ namespace DexterSlash.Commands.MusicCommands
 		{
 			var player = AudioService.TryGetPlayer(Context, "clear queue");
 
-			string vcName = $"**{Context.Guild.GetVoiceChannel(player.VoiceChannelId.Value).Name}**";
+			var vcName = $"**{Context.Guild.GetVoiceChannel(player.VoiceChannelId.Value).Name}**";
 
 			try
 			{

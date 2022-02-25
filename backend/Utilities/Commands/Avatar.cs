@@ -32,7 +32,6 @@ public class Avatar : Command<Avatar>
 		}
 		catch
 		{
-			// ignored
 		}
 
 		await Context.Interaction.RespondAsync(embed: embed.Build());

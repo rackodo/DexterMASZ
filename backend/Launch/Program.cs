@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System.Runtime.InteropServices;
 
-const bool updateSettings = false;
+var updateSettings = false;
 var migrateDatabases = true;
 
 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
@@ -33,13 +33,9 @@ if (hasUpdatedDbSettings)
 else
 {
 	ConsoleCreator.AddSubHeading("Found database settings for", $"{databaseSettings.User} // {databaseSettings.Database}");
-
-#pragma warning disable CS0162
 	if (updateSettings)
 		if (ConsoleCreator.WaitForUser($"edit {nameof(DatabaseSettings)}", 10))
 			databaseSettings = ConsoleCreator.CreateDatabaseSettings(true).Key;
-#pragma warning restore CS0162
-
 	Console.WriteLine();
 }
 
@@ -107,8 +103,6 @@ await using (var dataContext = new BotDatabase(dbBuilder.Options))
 	{
 		ConsoleCreator.AddSubHeading("Found app settings for client",
 			databaseSettings.ClientId.ToString());
-
-#pragma warning disable CS0162
 		if (updateSettings)
 			if (ConsoleCreator.WaitForUser($"edit {nameof(AppSettings)}", 10))
 			{
@@ -118,7 +112,6 @@ await using (var dataContext = new BotDatabase(dbBuilder.Options))
 
 				Console.WriteLine();
 			}
-#pragma warning restore CS0162
 	}
 }
 

@@ -17,7 +17,7 @@ public static class InviteEmbedCreator
 
 		await translation.SetLanguage(invite.GuildId);
 
-		var embed = await EmbedCreator.CreateBasicEmbed(RestAction.Created, provider);
+		var embed = await EmbedCreator.CreateActionEmbed(RestAction.Created, provider);
 
 		embed.WithTitle(translation.Get<InviteTranslator>().UsedInvite())
 		.WithAuthor(user)

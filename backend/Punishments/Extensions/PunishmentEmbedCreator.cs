@@ -22,7 +22,7 @@ public static class PunishmentEmbedCreator
 		await translator.SetLanguage(modCase.GuildId);
 
 		var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
-		
+
 		if (suspect != null)
 			embed.WithThumbnailUrl(suspect.GetAvatarOrDefaultUrl());
 
@@ -79,7 +79,7 @@ public static class PunishmentEmbedCreator
 
 		await translation.SetLanguage(channel.GuildId);
 
-		var embed = await EmbedCreator.CreateBasicEmbed(RestAction.Created, provider);
+		var embed = await EmbedCreator.CreateActionEmbed(RestAction.Created, provider);
 
 		embed.WithTitle(translation.Get<PunishmentTranslator>().ReportCreated())
 		.WithAuthor(user)

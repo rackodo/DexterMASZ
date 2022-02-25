@@ -107,7 +107,7 @@ public class GuildAuditEnumTranslator : Translator
 				Language.Es => "Miembro no prohibido",
 				Language.Ru => "Участник разблокирован",
 				Language.It => "Membro non bannato",
-				_ => "User unbanned"
+				_ => "User Unbanned"
 			},
 			GuildAuditEvent.InviteCreated => PreferredLanguage switch
 			{

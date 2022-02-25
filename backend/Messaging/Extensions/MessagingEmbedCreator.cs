@@ -17,7 +17,7 @@ public static class MessagingEmbedCreator
 
 		await translation.SetLanguage(channel.GuildId);
 
-		var embed = await EmbedCreator.CreateBasicEmbed(RestAction.Created, provider);
+		var embed = await EmbedCreator.CreateActionEmbed(RestAction.Created, provider);
 
 		embed.WithTitle(translation.Get<MessagingTranslator>().MessageSent())
 		.WithAuthor(user)

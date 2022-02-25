@@ -28,7 +28,7 @@ namespace DexterSlash.Commands.MusicCommands
 			if (seekPosition.Contains(':'))
 			{
 
-				string[] times = Array.Empty<string>();
+				var times = Array.Empty<string>();
 				int h = 0, m = 0, s;
 
 				if (seekPosition.Contains(':'))
@@ -64,7 +64,7 @@ namespace DexterSlash.Commands.MusicCommands
 			}
 
 			if (!result.HasValue)
-				if (TimeSpan.TryParse(seekPosition, out TimeSpan newTime))
+				if (TimeSpan.TryParse(seekPosition, out var newTime))
 					result = newTime;
 				else
 				{

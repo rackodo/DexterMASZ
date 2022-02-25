@@ -16,7 +16,7 @@ namespace DexterSlash.Commands.MusicCommands
 
 		public async Task QueueEmbed(string parsedPageNumber, string name)
 		{
-			if (int.TryParse(parsedPageNumber, out int pageNumber))
+			if (int.TryParse(parsedPageNumber, out var pageNumber))
 			{
 				var player = AudioService.TryGetPlayer(Context, "display queue");
 

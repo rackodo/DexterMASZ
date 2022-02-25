@@ -14,7 +14,7 @@ namespace DexterSlash.Commands.MusicCommands
 			var player = AudioService.TryGetPlayer(Context, "skip song");
 
 			var curTrack = player.CurrentTrack;
-			bool emptyQueue = player.Queue.Count == 0;
+			var emptyQueue = player.Queue.Count == 0;
 
 			if (curTrack == null)
 			{
@@ -45,9 +45,9 @@ namespace DexterSlash.Commands.MusicCommands
 			}
 			else
 			{
-				int actualSkipCount = 0;
+				var actualSkipCount = 0;
 
-				for (int i = 0; i < skipCount; i++)
+				for (var i = 0; i < skipCount; i++)
 				{
 					try
 					{
@@ -61,7 +61,7 @@ namespace DexterSlash.Commands.MusicCommands
 					}
 				}
 
-				string s = actualSkipCount == 1 ? "" : "s";
+				var s = actualSkipCount == 1 ? "" : "s";
 
 				await CreateEmbed(EmojiEnum.Love)
 					.WithTitle("Songs have been skipped!")

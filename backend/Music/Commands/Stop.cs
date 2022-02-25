@@ -13,7 +13,7 @@ namespace DexterSlash.Commands.MusicCommands
 		{
 			var player = AudioService.TryGetPlayer(Context, "stop songs");
 
-			string vcName = $"**{Context.Guild.GetVoiceChannel(player.VoiceChannelId.Value).Name}**";
+			var vcName = $"**{Context.Guild.GetVoiceChannel(player.VoiceChannelId.Value).Name}**";
 
 			try
 			{

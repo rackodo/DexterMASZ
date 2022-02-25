@@ -2,6 +2,7 @@
 using Bot.Data;
 using Bot.Extensions;
 using Discord;
+using Discord.Webhook;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -99,8 +100,8 @@ public class AuditLogger : IHostedService, Event
 				var config = await settingsRepository.GetAppSettings();
 
 				if (!string.IsNullOrEmpty(_currentMessage.ToString()))
-					await DiscordRest.ExecuteWebhook(config.AuditLogWebhookUrl, null, _currentMessage.ToString(),
-						AllowedMentions.None);
+					await new DiscordWebhookClient(config.AuditLogWebhookUrl).SendMessageAsync(_currentMessage.ToString(),
+						allowedMentions: AllowedMentions.None);
 			}
 			catch (Exception e)
 			{
