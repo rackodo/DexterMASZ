@@ -22,20 +22,14 @@ public class Mute : Command<Mute>
 	public async Task MuteCommand(
 		[Summary("title", "The title of the modcase")]
 		string title,
-		[Summary("user", "User to punish")] IUser user,
-		[Choice("None", 0)]
-		[Choice("1 Hour", 1)]
-		[Choice("1 Day", 24)]
-		[Choice("1 Week", 168)]
-		[Choice("1 Month", 672)]
-		[Summary("hours", "How long the punishment should be")]
-		long punishedForHours = 0,
+		[Summary("user", "User to punish")]
+		IUser user,
+		[Summary("time", "The time to punish the user for")]
+		TimeSpan time = default,
 		[Summary("description", "The description of the modcase")]
 		string description = "",
 		[Summary("Severity Level", "Whether or not this is a higher severity case")]
-		bool highSeverity = false,
-		[Summary("execute-punishment", "Whether to execute the punishment or just register it")]
-		bool executePunishment = true)
+		bool highSeverity = false)
 	{
 		ModCaseRepository.AsUser(Identity);
 		GuildConfigRepository.AsUser(Identity);
@@ -52,19 +46,15 @@ public class Mute : Command<Mute>
 			ModId = Identity.GetCurrentUser().Id,
 			Description = string.IsNullOrEmpty(description) ? title : description,
 			PunishmentType = PunishmentType.Mute,
-			PunishmentActive = executePunishment,
+			PunishmentActive = true,
 			HighSeverity = highSeverity,
-			PunishedUntil = DateTime.UtcNow.AddHours(punishedForHours)
+			PunishedUntil = time == default ? null : DateTime.UtcNow + time
 		};
-
-		// Remove duration for permanent mute
-		if (punishedForHours == 0)
-			modCase.PunishedUntil = null;
 
 		modCase.CreationType = CaseCreationType.ByCommand;
 
 		var created =
-			await ModCaseRepository.CreateModCase(modCase, executePunishment);
+			await ModCaseRepository.CreateModCase(modCase);
 
 		var config = await SettingsRepository.GetAppSettings();
 

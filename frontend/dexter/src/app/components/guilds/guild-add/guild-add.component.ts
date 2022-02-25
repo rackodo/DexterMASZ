@@ -110,6 +110,7 @@ export class GuildAddComponent implements OnInit {
     this.selectedGuildDetails = { loading: true, content: undefined };
     this.api.getSimpleData(`/discord/guilds/${id}`).subscribe((data: DiscordGuild) => {
       data.roles = data.roles.sort((a, b) => (a.position < b.position) ? 1 : -1);
+      data.channels = data.channels.sort((a, b) => (a.position < b.position) ? 1 : -1);
       this.selectedGuildDetails = { loading: false, content: data };
     }, error => {
       console.error(error);

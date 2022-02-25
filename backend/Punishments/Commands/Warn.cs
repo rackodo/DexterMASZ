@@ -49,7 +49,7 @@ public class Warn : Command<Warn>
 			CreationType = CaseCreationType.ByCommand
 		};
 
-		var created = await ModCaseRepository.CreateModCase(modCase, true);
+		var created = await ModCaseRepository.CreateModCase(modCase);
 
 		var config = await SettingsRepository.GetAppSettings();
 

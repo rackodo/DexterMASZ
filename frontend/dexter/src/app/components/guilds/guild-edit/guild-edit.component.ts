@@ -63,6 +63,7 @@ export class GuildEditComponent implements OnInit {
     this.currentGuild = { loading: true, content: {} as DiscordGuild };
     this.api.getSimpleData(`/discord/guilds/${id}`).subscribe((data: DiscordGuild) => {
       data.roles = data.roles.sort((a, b) => (a.position < b.position) ? 1 : -1);
+      data.channels = data.channels.sort((a, b) => (a.position < b.position) ? 1 : -1);
       this.currentGuild = { loading: false, content: data };
     }, error => {
       console.error(error);

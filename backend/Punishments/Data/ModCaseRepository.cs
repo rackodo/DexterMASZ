@@ -288,7 +288,7 @@ public class ModCaseRepository : Repository,
 		return result.OrderByDescending(x => x.Count).ToList();
 	}
 
-	public async Task<ModCase> CreateModCase(ModCase modCase, bool handlePunishment)
+	public async Task<ModCase> CreateModCase(ModCase modCase)
 	{
 		var currentReportedUser = await _discordRest.FetchUserInfo(modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
 
@@ -369,7 +369,7 @@ public class ModCaseRepository : Repository,
 
 			_eventHandler.ModCaseCreatedEvent.Invoke(modCase, Identity);
 
-			if (!handlePunishment || (!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick))
+			if ((!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick))
 				return modCase;
 
 			if (modCase.PunishedUntil == null || modCase.PunishedUntil > DateTime.UtcNow)

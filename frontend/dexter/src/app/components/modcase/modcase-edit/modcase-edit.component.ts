@@ -75,10 +75,8 @@ export class ModCaseEditComponent implements OnInit {
     });
     this.punishmentFormGroup = this._formBuilder.group({
       punishmentType: ['', Validators.required],
-      handlePunishment: ['']
     });
     this.optionsFormGroup = this._formBuilder.group({
-      sendNotification: ['']
     });
 
     this.optionsFormGroup.controls['sendNotification'].setValue(true);
@@ -86,11 +84,6 @@ export class ModCaseEditComponent implements OnInit {
     this.punishmentFormGroup.get('punishmentType')?.valueChanges.subscribe((val: PunishmentType) => {
       if (val !== PunishmentType.Ban && val !== PunishmentType.Mute) {
         this.punishedUntil = undefined;
-      }
-      if (val === PunishmentType.Warn) {
-        this.punishmentFormGroup.controls['handlePunishment'].setValue(false);
-      } else {
-        this.punishmentFormGroup.controls['handlePunishment'].setValue(true);
       }
     });
 
@@ -177,14 +170,10 @@ export class ModCaseEditComponent implements OnInit {
     this.caseLabels = modCase.labels;
     this.punishmentFormGroup.setValue({
       punishmentType: modCase.punishmentType,
-      handlePunishment: false
     });
     if (modCase.punishedUntil) {
       this.punishedUntilChangeForPicker.next(modCase.punishedUntil);
     }
-    this.optionsFormGroup.setValue({
-      sendNotification: false
-    });
   }
 
   public updateCase() {
@@ -197,10 +186,8 @@ export class ModCaseEditComponent implements OnInit {
       punishmentType: this.punishmentFormGroup.value.punishmentType,
       punishedUntil: this.punishedUntil?.toISOString(),
     };
-    const params = new HttpParams()
-      .set('sendNotification', this.optionsFormGroup.value.sendNotification ? 'true' : 'false')
-      .set('handlePunishment', this.punishmentFormGroup.value.handlePunishment ? 'true' : 'false');
-
+    const params = new HttpParams();
+	
       this.api.putSimpleData(`/guilds/${this.guildId}/cases/${this.caseId}`, data, params, true, true).subscribe((data) => {
         const caseId = data.caseId;
         this.router.navigate(['guilds', this.guildId, 'cases', caseId]);

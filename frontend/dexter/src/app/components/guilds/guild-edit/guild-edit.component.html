@@ -54,14 +54,14 @@
                         <mat-form-field appearance="fill">
                             <mat-label>{{ 'GuildDialog.StaffLogs' | translate }}</mat-label>
                             <mat-select formControlName="staffLogs" multiple>
-                                <mat-option *ngFor="let channel of selectedGuildDetails.content?.channels"
+                                <mat-option *ngFor="let channel of currentGuild.content?.channels"
                                 [value]="channel.id">{{channel.name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="fill">
                             <mat-label>{{ 'GuildDialog.StaffAnnouncements' | translate }}</mat-label>
                             <mat-select formControlName="staffAnnouncements" multiple>
-                                <mat-option *ngFor="let channel of selectedGuildDetails.content?.channels"
+                                <mat-option *ngFor="let channel of currentGuild.content?.channels"
                                 [value]="channel.id">{{channel.name}}</mat-option>
                             </mat-select>
                         </mat-form-field>

@@ -24,9 +24,7 @@ public class Kick : Command<Kick>
 		string title,
 		[Summary("user", "User to punish")] IUser user,
 		[Summary("description", "The description of the modcase")]
-		string description = "",
-		[Summary("execute-punishment", "Whether to execute the punishment or just register it.")]
-		bool executePunishment = true)
+		string description = "")
 	{
 		ModCaseRepository.AsUser(Identity);
 		GuildConfigRepository.AsUser(Identity);
@@ -43,13 +41,13 @@ public class Kick : Command<Kick>
 			ModId = Identity.GetCurrentUser().Id,
 			Description = string.IsNullOrEmpty(description) ? title : description,
 			PunishmentType = PunishmentType.Kick,
-			PunishmentActive = executePunishment,
+			PunishmentActive = true,
 			PunishedUntil = null,
 			CreationType = CaseCreationType.ByCommand
 		};
 
 		var created =
-			await ModCaseRepository.CreateModCase(modCase, executePunishment);
+			await ModCaseRepository.CreateModCase(modCase);
 
 		var config = await SettingsRepository.GetAppSettings();
 

@@ -86,26 +86,15 @@ export class ModCaseAddComponent implements OnInit {
       description: ['', Validators.required]
     });
     this.punishmentFormGroup = this._formBuilder.group({
-      punishmentType: ['', Validators.required],
-      handlePunishment: [false]
+      punishmentType: ['', Validators.required]
     });
     this.filesFormGroup = this._formBuilder.group({
       files: ['']
     });
-    this.optionsFormGroup = this._formBuilder.group({
-      sendNotification: [false]
-    });
-
-    this.optionsFormGroup.controls['sendNotification'].setValue(true);
 
     this.punishmentFormGroup.get('punishmentType')?.valueChanges.subscribe((val: PunishmentType) => {
       if (val !== PunishmentType.Ban && val !== PunishmentType.Mute) {
         this.punishedUntil = undefined;
-      }
-      if (val === PunishmentType.Warn) {
-        this.punishmentFormGroup.controls['handlePunishment'].setValue(false);
-      } else {
-        this.punishmentFormGroup.controls['handlePunishment'].setValue(true);
       }
     });
 
@@ -233,8 +222,7 @@ export class ModCaseAddComponent implements OnInit {
     });
     this.caseLabels = template.caseLabels;
     this.punishmentFormGroup.setValue({
-      punishmentType: template.casePunishmentType,
-      handlePunishment: template.handlePunishment
+      punishmentType: template.casePunishmentType
     });
     if (template.casePunishedUntil) {
       this.punishedUntilChangeForPicker.next(template.casePunishedUntil);
@@ -300,9 +288,7 @@ export class ModCaseAddComponent implements OnInit {
           description: this.infoFormGroup.value.description,
           labels: this.caseLabels,
           punishmentType: this.punishmentFormGroup.value.punishmentType,
-          punishedUntil: this.punishedUntil?.toISOString(),
-          handlePunishment: this.punishmentFormGroup.value.handlePunishment ?? false,
-          announceDm: this.punishmentFormGroup.value.dmNotification ?? false
+          punishedUntil: this.punishedUntil?.toISOString()
         };
 
         const params = new HttpParams()

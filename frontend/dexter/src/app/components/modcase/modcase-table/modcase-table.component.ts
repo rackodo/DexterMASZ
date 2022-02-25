@@ -87,7 +87,6 @@ export class ModCaseTableComponent implements OnInit {
       this.selectedPunishmentActiveStatusChanged(value);
     });
 
-
     this.enumManager.getEnum(ApiEnumTypes.CASECREATIONTYPE).subscribe(data => {
       this.caseCreationTypes.next(data);
     });
