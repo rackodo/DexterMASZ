@@ -47,11 +47,11 @@ export class GuildAddComponent implements OnInit {
     });
     this.channelsGroup = this._formBuilder.group({
       staffChannels: [''],
-      botChannels: ['']
+      botChannels: [''],
+      staffLogs: [''],
+      staffAnnouncements: ['']
     });
     this.configGroup = this._formBuilder.group({
-      staff: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
-      admin: ['', Validators.pattern("^https://discord(app)?\.com/api/webhooks/.+$")],
       strictPermissionCheck: [''],
       executeWhoIsOnJoin: [''],
       publishModeratorInfo: [''],
@@ -141,12 +141,12 @@ export class GuildAddComponent implements OnInit {
       adminRoles:                     this.rolesGroup.value.adminRoles,
       staffChannels:                  this.channelsGroup.value.staffChannels,
       botChannels:                    this.channelsGroup.value.botChannels,
-      staffWebhook:         		  this.configGroup.value?.staff?.trim()         != '' ? this.configGroup?.value?.staff           		       : null,
-	  adminWebhook:         		  this.configGroup.value?.admin?.trim()         != '' ? this.configGroup?.value?.admin           		       : null,
-      strictModPermissionCheck:       this.configGroup.value?.strictPermissionCheck != '' ? this.configGroup.value?.strictPermissionCheck ?? false : false,
-      executeWhoIsOnJoin:             this.configGroup.value?.executeWhoIsOnJoin    != '' ? this.configGroup.value?.executeWhoIsOnJoin    ?? false : false,
-      publishModeratorInfo:           this.configGroup.value?.publishModeratorInfo  != '' ? this.configGroup.value?.publishModeratorInfo  ?? false : false,
-      preferredLanguage:              this.configGroup.value?.preferredLanguage     != '' ? this.configGroup.value?.preferredLanguage     ?? null  : null
+      staffLogs:             		  this.channelsGroup.value?.staffLogs?.trim()           != '' ? this.channelsGroup?.value?.staffLogs           		       : null,
+	  staffAnnouncements:             this.channelsGroup.value?.staffAnnouncements?.trim()  != '' ? this.channelsGroup?.value?.announcements           		       : null,
+      strictModPermissionCheck:       this.configGroup.value?.strictPermissionCheck 		!= '' ? this.configGroup.value?.strictPermissionCheck ?? false : false,
+      executeWhoIsOnJoin:             this.configGroup.value?.executeWhoIsOnJoin    		!= '' ? this.configGroup.value?.executeWhoIsOnJoin    ?? false : false,
+      publishModeratorInfo:           this.configGroup.value?.publishModeratorInfo  		!= '' ? this.configGroup.value?.publishModeratorInfo  ?? false : false,
+      preferredLanguage:              this.configGroup.value?.preferredLanguage     		!= '' ? this.configGroup.value?.preferredLanguage     ?? null  : null
     };
     let params = new HttpParams()
                       .set("importExistingBans", this.queryGroup.value?.importExistingBans ? 'true' : 'false');

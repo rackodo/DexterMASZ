@@ -83,6 +83,20 @@
                                 [value]="channel.id">{{channel.name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>{{ 'GuildDialog.StaffLogs' | translate }}</mat-label>
+                            <mat-select formControlName="staffLogs" multiple>
+                                <mat-option *ngFor="let channel of selectedGuildDetails.content?.channels"
+                                [value]="channel.id">{{channel.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>{{ 'GuildDialog.StaffAnnouncements' | translate }}</mat-label>
+                            <mat-select formControlName="staffAnnouncements" multiple>
+                                <mat-option *ngFor="let channel of selectedGuildDetails.content?.channels"
+                                [value]="channel.id">{{channel.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
                         <div class="stepper-actions">
                             <button mat-raised-button matStepperPrevious class="mr-2" color="accent">{{ 'GuildDialog.Back' | translate }}</button>
                             <button mat-raised-button matStepperNext color="accent">{{ 'GuildDialog.Next' | translate }}</button>
@@ -92,14 +106,6 @@
                 <mat-step [stepControl]="configGroup" [optional]='true'>
                     <form [formGroup]="configGroup">
                         <ng-template matStepLabel>{{ 'GuildDialog.StepFurtherConfiguration' | translate }}</ng-template>
-                        <mat-form-field class="w-100">
-                            <mat-label>{{ 'GuildDialog.StaffWebhook' | translate }}</mat-label>
-                            <input type="email" matInput formControlName="staff" placeholder="https://discord.com/...">
-                        </mat-form-field>
-                        <mat-form-field class="w-100">
-                            <mat-label>{{ 'GuildDialog.AdminWebhook' | translate }}</mat-label>
-                            <input type="email" matInput formControlName="admin" placeholder="https://discord.com/...">
-                        </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{ 'GuildDialog.Language' | translate }}</mat-label>
                             <mat-select formControlName="preferredLanguage">
