@@ -94,7 +94,7 @@
                         <div class="d-flex flex-row">
 							<mat-form-field appearance="fill">
 								<mat-label>{{ 'GuildDialog.StaffLogs' | translate }}</mat-label>
-								<mat-select formControlName="staffLogs" multiple>
+								<mat-select formControlName="staffLogs">
 									<mat-option *ngFor="let channel of selectedGuildDetails.content?.channels"
 									[value]="channel.id">{{channel.name}}</mat-option>
 								</mat-select>
@@ -103,7 +103,7 @@
                         <div class="d-flex flex-row">
 							<mat-form-field appearance="fill">
 								<mat-label>{{ 'GuildDialog.StaffAnnouncements' | translate }}</mat-label>
-								<mat-select formControlName="staffAnnouncements" multiple>
+								<mat-select formControlName="staffAnnouncements">
 									<mat-option *ngFor="let channel of selectedGuildDetails.content?.channels"
 									[value]="channel.id">{{channel.name}}</mat-option>
 								</mat-select>
