@@ -142,12 +142,12 @@ export class GuildAddComponent implements OnInit {
       adminRoles:                     this.rolesGroup.value.adminRoles,
       staffChannels:                  this.channelsGroup.value.staffChannels,
       botChannels:                    this.channelsGroup.value.botChannels,
-      staffLogs:             		  this.channelsGroup.value?.staffLogs?.trim()           != '' ? this.channelsGroup?.value?.staffLogs           		       : null,
-	  staffAnnouncements:             this.channelsGroup.value?.staffAnnouncements?.trim()  != '' ? this.channelsGroup?.value?.announcements           		       : null,
-      strictModPermissionCheck:       this.configGroup.value?.strictPermissionCheck 		!= '' ? this.configGroup.value?.strictPermissionCheck ?? false : false,
-      executeWhoIsOnJoin:             this.configGroup.value?.executeWhoIsOnJoin    		!= '' ? this.configGroup.value?.executeWhoIsOnJoin    ?? false : false,
-      publishModeratorInfo:           this.configGroup.value?.publishModeratorInfo  		!= '' ? this.configGroup.value?.publishModeratorInfo  ?? false : false,
-      preferredLanguage:              this.configGroup.value?.preferredLanguage     		!= '' ? this.configGroup.value?.preferredLanguage     ?? null  : null
+      staffLogs:             		  this.channelsGroup.value?.staffLogs               != '' ? this.channelsGroup?.value?.staffLogs           		       : null,
+	  staffAnnouncements:             this.channelsGroup.value?.staffAnnouncements      != '' ? this.channelsGroup?.value?.announcements           		       : null,
+      strictModPermissionCheck:       this.configGroup.value?.strictPermissionCheck     != '' ? this.configGroup.value?.strictPermissionCheck ?? false : false,
+      executeWhoIsOnJoin:             this.configGroup.value?.executeWhoIsOnJoin    	!= '' ? this.configGroup.value?.executeWhoIsOnJoin    ?? false : false,
+      publishModeratorInfo:           this.configGroup.value?.publishModeratorInfo  	!= '' ? this.configGroup.value?.publishModeratorInfo  ?? false : false,
+      preferredLanguage:              this.configGroup.value?.preferredLanguage     	!= '' ? this.configGroup.value?.preferredLanguage     ?? null  : null
     };
     let params = new HttpParams()
                       .set("importExistingBans", this.queryGroup.value?.importExistingBans ? 'true' : 'false');
