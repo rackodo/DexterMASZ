@@ -644,7 +644,7 @@ public class GuildAuditer : Event
 		StringBuilder description = new();
 		description.AppendLine($"> **{translator.Get<BotTranslator>().Channel()}:** {thread.Name} - {thread.Mention}");
 		description.AppendLine(
-			$"> **{translator.Get<GuildAuditTranslator>().Parent()}:** {thread.ParentChannel.Name} - {thread.ParentChannel.Mention}");
+			$"> **{translator.Get<GuildAuditTranslator>().Parent()}:** {thread.ParentChannel.Name} - <#{thread.ParentChannel.Id}>");
 		description.AppendLine($"> **{translator.Get<GuildAuditTranslator>().Creator()}:** <@{thread.Owner}>");
 
 		var embed = new EmbedBuilder()

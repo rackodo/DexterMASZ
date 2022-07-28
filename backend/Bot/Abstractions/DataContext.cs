@@ -14,6 +14,7 @@ public abstract class DataContext<TContext> : DbContext where TContext : DbConte
 	{
 		configurationBuilder.Properties<ulong[]>().HaveConversion<UlongArrayConverter>();
 		configurationBuilder.Properties<string[]>().HaveConversion<StringArrayConverter>();
+		configurationBuilder.Properties<float[]>().HaveConversion<FloatArrayConverter>();
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,12 +25,16 @@ public abstract class DataContext<TContext> : DbContext where TContext : DbConte
 
 		UlongArrayComparer ulongArrayComparer = new();
 
+		FloatArrayComparer floatArrayComparer = new();
+
 		foreach (var entityType in modelBuilder.Model.GetEntityTypes())
 			foreach (var property in entityType.GetProperties())
 				if (property.ClrType == typeof(ulong[]))
 					property.SetValueComparer(ulongArrayComparer);
 				else if (property.ClrType == typeof(string[]))
 					property.SetValueComparer(stringArrayComparer);
+				else if (property.ClrType == typeof(float[]))
+					property.SetValueComparer(floatArrayComparer);
 
 		OverrideModelCreating(modelBuilder);
 	}
@@ -57,6 +62,29 @@ public class UlongArrayComparer : ValueComparer<ulong[]>
 			(c1, c2) => c1.SequenceEqual(c2),
 			c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
 			c => (ulong[])c.Clone()
+		)
+	{
+	}
+}
+
+public class FloatArrayConverter : ValueConverter<float[], string>
+{
+	public FloatArrayConverter()
+		:base(
+			v => string.Join(',', v.Select(n => $"{n:G6}")),
+			v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(float.Parse).ToArray()
+			)
+	{
+	}
+}
+
+public class FloatArrayComparer : ValueComparer<float[]>
+{
+	public FloatArrayComparer()
+		: base(
+			(c1, c2) => c1.SequenceEqual(c2),
+			c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+			c => (float[])c.Clone()
 		)
 	{
 	}

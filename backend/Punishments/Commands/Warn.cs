@@ -25,7 +25,7 @@ public class Warn : Command<Warn>
 		[Summary("user", "User to punish")] IUser user,
 		[Summary("description", "The description of the mod case")]
 		string description = "",
-		[Summary("Severity Level", "Whether or not this is a higher severity case")]
+		[Summary("severity-level", "Whether or not this is a higher severity case")]
 		bool highSeverity = false)
 	{
 		ModCaseRepository.AsUser(Identity);

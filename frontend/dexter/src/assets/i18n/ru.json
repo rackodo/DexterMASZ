@@ -35,10 +35,18 @@
         "Community": "Сообщество",
         "Terms": "Условия",
         "Legal": "Юридический",
+        "Store": "Магазин",
+        "Profile": "Профиль",
         "Api": "Api",
         "Insights": "Insights",
         "Settings": "Настройки",
         "Scanning": "Сканирование"
+    },
+    "Profile": {
+      "Tabs": {
+        "Overview": "Обзор",
+        "Rankcard": "Настроить карточку уровня"
+      }
     },
     "Guilds": {
         "Guilds": "Гильдии",

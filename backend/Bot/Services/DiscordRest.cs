@@ -128,7 +128,11 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			var guild = _client.GetGuild(guildId);
-			bans = (await guild.GetBansAsync()).Select(x => x as IBan).ToList();
+			bans = await guild.GetBansAsync()
+				.Select(x => x as IBan)
+				.Where(x => x is not null)
+				.ToListAsync();
+			Console.WriteLine(string.Join(", ", bans));
 		}
 		catch (Exception e)
 		{

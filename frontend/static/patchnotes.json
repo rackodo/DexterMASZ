@@ -30,5 +30,25 @@
         "link": "https://github.com/zaanposni/discord-dexter/issues/485"
       }
     ]
+  },
+  {
+    "title": "Leveling Update",
+    "version": "v1.0.1",
+    "released_at": "2022-07-20",
+    "contributors": [
+      {
+        "name": "EnderFloof",
+        "link": "https://https://github.com/EnderDoom77",
+        "icon": "https://avatars.githubusercontent.com/u/37478624?v=4"
+      }
+    ],
+    "breaking": [],
+    "features": [
+      {
+        "title": "Added Rankcard Customizer.",
+        "description": "A new tab has been added to the set of default upon login. The Profile tab includes options to alter the user's profile, among which is the Rankcard Customization tab, which allows users to customize their rank cards online with a preview!"
+      }
+    ],
+    "fixes": []
   }
 ]

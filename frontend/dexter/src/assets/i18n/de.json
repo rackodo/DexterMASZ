@@ -35,10 +35,18 @@
         "Community": "Community",
         "Terms": "Nutzungsbedingungen",
         "Legal": "Rechtliches",
+        "Store": "Geschäft",
+        "Profile": "Profil",
         "Api": "Api",
         "Insights": "Statistiken",
         "Settings": "Einstellungen",
         "Scanning": "Untersuchung"
+    },
+    "Profile": {
+      "Tabs": {
+        "Overview": "Übersicht",
+        "Rankcard": "Rangkarte anpassen"
+      }
     },
     "Guilds": {
         "Guilds": "Gilden",

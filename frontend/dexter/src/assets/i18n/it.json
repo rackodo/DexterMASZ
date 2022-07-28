@@ -34,11 +34,19 @@
         "Patchnotes": "Patchnote",
         "Community": "Comunità",
         "Terms": "Termini",
-        "Legal": "legale",
+        "Legal": "Legale",
+        "Store": "Mercato",
+        "Profile": "Profilo",
         "Api": "Api",
         "Insights": "Approfondimenti",
         "Settings": "Impostazioni",
         "Scanning": "Scansione"
+    },
+    "Profile": {
+      "Tabs": {
+        "Overview": "Panoramica",
+        "Rankcard": "Personalizzare la scheda livello"
+      }
     },
     "Guilds": {
         "Guilds": "Gilde",

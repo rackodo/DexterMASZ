@@ -17,6 +17,9 @@ import { ModCaseEditComponent } from './components/modcase/modcase-edit/modcase-
 import { ModCaseViewComponent } from './components/modcase/modcase-view/modcase-view.component';
 import { UserScanComponent } from './components/usergraph/userscan/userscan.component';
 import { AuthGuard } from './guards/auth.guard';
+import { StoreDashboardComponent } from './components/profiles/store/store-dashboard/store-dashboard.component';
+import { ProfileDashboardComponent } from './components/profiles/profile-dashboard/profile-dashboard.component';
+import { GuildLeaderboardComponent } from './components/guilds/guild-leaderboard/guild-leaderboard.component';
 
 const routes: Routes = [
   { path: 'guilds', component: GuildListComponent, canActivate: [AuthGuard] },
@@ -32,6 +35,9 @@ const routes: Routes = [
   { path: 'settings', component: AppSettingsComponent, canActivate: [AuthGuard] },
   { path: 'patchnotes', component: PatchnotesComponent },
   { path: 'oauthfailed', component: OauthFailedComponent },
+  { path: 'store', component: StoreDashboardComponent },
+  { path: 'profile', component: ProfileDashboardComponent },
+  { path: 'guilds/:guildid/leaderboard', component: GuildLeaderboardComponent},
   { path: 'guidelines', component: GuidelinesComponent },
   { path: 'legal', component: LegalComponent },
   { path: 'login',  component: IndexComponent, pathMatch: 'full' },

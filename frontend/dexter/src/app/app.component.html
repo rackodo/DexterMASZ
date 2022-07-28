@@ -194,6 +194,22 @@
 
         <mat-divider *ngIf="this.currentUser?.modGuilds?.length || this.currentUser?.adminGuilds?.length"></mat-divider>
 
+        <a class="d-flex" (click)="open('store')" *ngIf="loggedIn">
+          <div [class.activatedNav]="activatedNav[1] === 'store'" class="rounded navitem">
+            <mat-icon aria-hidden="false" aria-label="dexium icon" svgIcon="shards"></mat-icon>
+            <span>{{ 'Toolbar.Store' | translate }}</span>
+          </div>
+        </a>
+
+        <a class="d-flex" (click)="open('profile')" *ngIf="loggedIn">
+          <div [class.activatedNav]="activatedNav[1] === 'profile'" class="rounded navitem">
+            <mat-icon aria-hidden="false" aria-label="profile icon">person</mat-icon>
+            <span>{{ 'Toolbar.Profile' | translate }}</span>
+          </div>
+        </a>
+
+        <mat-divider *ngIf="loggedIn"></mat-divider>
+
         <a class="d-flex" (click)="open('adminstats')" *ngIf="this.currentUser?.isAdmin">
           <div [class.activatedNav]="activatedNav[1] === 'adminstats'" class="rounded navitem">
             <mat-icon class="flex-shrink-0" aria-hidden="false" aria-label="tune icon">insights</mat-icon>
@@ -228,7 +244,6 @@
             </div>
           </a>
         </ng-template>
-
         <ng-container *ngIf="applicationInfo?.privacyPolicyUrl; else elseTemplatePP">
           <a class="d-flex" href="{{ applicationInfo?.privacyPolicyUrl }}" target="_blank">
             <div [class.activatedNav]="activatedNav[1] === 'legal'" class="rounded navitem">

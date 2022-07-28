@@ -1,0 +1,146 @@
+<div class="d-flex flex-column justify-content-center align-items-center">
+  <div class="must-login-container" *ngIf="user === undefined">
+    <h1><mat-icon>warning</mat-icon> PREVIEW MODE <mat-icon>warning</mat-icon></h1>
+    <p>You're currently not logged in, none of the changes you make will be saved. Use the navigation bar on the left to log in.</p>
+  </div>
+  <div class="d-flex flex-column justify-content-center align-items-center align-self-center mt-4">
+      <div class="mat-display-2 font-weight-bold text-center">Rankcard Customization</div>
+  </div>
+  <div class="rankcard-preview">
+    <app-rankcard-preview class="rankcard-preview" [model]="model" [username]="username" [defaultBgOptions]="defaultBgOptions"></app-rankcard-preview>
+  </div>
+  <hr class="separator">
+  <h2>Color Palette</h2>
+  <table class="form-color-table">
+    <tr class="form-color-header">
+      <th>Attribute</th>
+      <th class="color-picker-header">Color</th>
+      <th class="alpha-slider-header">Opacity</th>
+      <th class="argb-display-header">ARGB</th>
+    </tr>
+    <tr class="form-item-container">
+      <td>XP Color</td>
+      <td><input type="color" #xpColorSelector (input)="updateColorFromEvent('xpColor', $event)" class="color-picker"></td>
+      <td><mat-slider [displayWith]="formatOpacity" [(ngModel)]="xpColorOpacity" min="0" max="1" step="0.001" thumbSlider="true" #xpColorSlider (input)="updateAlpha('xpColor', $event.value ?? 1)" class="alpha-slider"></mat-slider></td>
+      <td>#{{model.xpColor.toString(16).padStart(8, '0')}}</td>
+    </tr>
+    <tr class="form-item-container">
+      <td>Off-Color</td>
+      <td><input type="color" #offColorSelector (input)="updateColorFromEvent('offColor', $event)" class="color-picker"></td>
+      <td><mat-slider [displayWith]="formatOpacity" [(ngModel)]="offColorOpacity" min="0" max="1" step="0.001" thumbSlider="true" #offColorSlider (input)="updateAlpha('offColor', $event.value ?? 1)" class="alpha-slider"></mat-slider></td>
+      <td>#{{model.offColor.toString(16).padStart(8, '0')}}</td>
+    </tr>
+    <tr class="form-item-container">
+      <td>Level Background Color</td>
+      <td><input type="color" #levelBgColorSelector (input)="updateColorFromEvent('levelBgColor', $event)" class="color-picker"></td>
+      <td><mat-slider [displayWith]="formatOpacity" [(ngModel)]="levelBgOpacity" min="0" max="1" step="0.001" thumbSlider="true" #levelBgColorSlider (input)="updateAlpha('levelBgColor', $event.value ?? 1)" class="alpha-slider"></mat-slider></td>
+      <td>#{{model.levelBgColor.toString(16).padStart(8, '0')}}</td>
+    </tr>
+    <tr class="form-item-container">
+      <td>Title Background Color</td>
+      <td><input type="color" #titleBgColorSelector (input)="updateColorFromEvent('titleBgColor', $event)" class="color-picker"></td>
+      <td><mat-slider [displayWith]="formatOpacity" [(ngModel)]="titleBgOpacity" min="0" max="1" step="0.001" thumbSlider="true" #titleBgColorSlider (input)="updateAlpha('titleBgColor', $event.value ?? 1)" class="alpha-slider"></mat-slider></td>
+      <td>#{{model.titleBgColor.toString(16).padStart(8, '0')}}</td>
+    </tr>
+  </table>
+  <hr class="separator"/>
+  <h2>Profile Picture Options</h2>
+  <table class="form-toggle-table">
+    <tr class="form-item-container">
+      <td>Show Picture</td>
+      <td class="switch-holder">
+        <label class="switch">
+          <input type="checkbox" #displayPfpCheckbox (input)="toggleCheckbox('displayPfp', $event)">
+          <span class="slider round"></span>
+        </label>
+      </td>
+    </tr>
+    <tr class="form-item-container">
+      <td>Draw Background</td>
+      <td class="switch-holder">
+        <label class="switch">
+          <input type="checkbox" #pfpBackgroundCheckbox (input)="toggleCheckbox('pfpBackground', $event)">
+          <span class="slider round"></span>
+        </label>
+      </td>
+    </tr>
+    <tr class="form-item-container">
+      <td>Clip to Circle</td>
+      <td class="switch-holder">
+        <label class="switch">
+          <input type="checkbox" #clipPfpCheckbox (input)="toggleCheckbox('clipPfp', $event)">
+          <span class="slider round"></span>
+        </label>
+      </td>
+    </tr>
+  </table>
+  <hr class="separator"/>
+  <h2>Experience Options</h2>
+  <table class="form-toggle-table">
+    <tr class="form-item-container">
+      <td>Show Hybrid Levels</td>
+      <td class="switch-holder">
+        <label class="switch">
+          <input type="checkbox" #showHybridCheckbox (input)="toggleCheckbox('showHybrid', $event)">
+          <span class="slider round"></span>
+        </label>
+      </td>
+    </tr>
+    <tr class="form-item-container">
+      <td>Inset Main XP</td>
+      <td class="switch-holder">
+        <label class="switch">
+          <input type="checkbox" #insetMainXPCheckbox (input)="toggleCheckbox('insetMainXP', $event)">
+          <span class="slider round"></span>
+        </label>
+      </td>
+    </tr>
+  </table>
+  <hr class="separator">
+  <h2>Background Options</h2>
+  <div class="background-selector d-flex flex-row justify-content-center align-items-stretch w-100">
+    <div class="background-option" [class.selected]="backgroundMode == SOLID" (click)="setBackgroundMode(SOLID)">
+      <h3>Solid Color</h3>
+      <input type="color" #backgroundColorSelector (input)="setSolidBackgroundColor()" class="color-picker color-chooser">
+      <div class="color-preview" [style]="'background-color: ' + backgroundColorSelector.value"></div>
+    </div>
+    <div class="vertical-separator"></div>
+    <div class="background-option" [class.selected]="backgroundMode == CUSTOM" (click)="setBackgroundMode(CUSTOM)">
+      <h3>Custom Image</h3>
+      <div class="droptarget" (drop)="handleFileDrop($event)" (dragover)="handleFileDragOver($event)">
+        <mat-icon>move_to_inbox</mat-icon>
+        <p>Drop Image Files Here</p>
+        <p>or</p>
+        <button mat-button (click)="triggerFileChooser()" class="upload-img-button">
+          <mat-icon class="file-chooser-icon">add_photo_alternate</mat-icon> Browse for File
+        </button>
+        <input id="file-chooser" #fileInput type="file" style="visibility: hidden" accept="image/*" (change)="changeFileInput()">
+      </div>
+      <button mat-button (click)="triggerURLDialog()" class="upload-img-button">
+        <mat-icon class="file-chooser-icon">insert_link</mat-icon> Image from URL
+      </button>
+      <img class="img-preview" [src]="customLink" aria-label="custom image preview">
+    </div>
+    <div class="vertical-separator"></div>
+    <div class="background-option" [class.selected]="backgroundMode == DEFAULT" (click)="setBackgroundMode(DEFAULT)">
+      <h3>Default Image</h3>
+      <a class="combo-box">
+        <div class="rounded navitem w-100 d-flex flex-row">
+          <mat-icon aria-hidden="false" aria-label="tune icon">image</mat-icon>
+          <mat-select [(value)]="defaultImageChoice" #backgroundDefaultSelector (selectionChange)="setDefaultBackgroundImage()">
+            <mat-option *ngFor="let opt of defaultBgOptions" [value]="opt">{{ opt | beautifyFileName }}</mat-option>
+          </mat-select>
+        </div>
+      </a>
+      <img class="img-preview" [src]="defaultBgToUrl(defaultImageChoice)">
+    </div>
+  </div>
+  <div class="submit-button-container">
+    <button mat-fab [disabled]="!changesPresent || applyingChanges || user === undefined" class="submit-button" aria-label="save changes" (click)="(uploadChanges())">
+      <mat-icon>{{applyingChanges ? "timelapse" : "save"}}</mat-icon>
+    </button>
+    <p *ngIf="user === undefined" class="submit-label label-critical">You must log in before you can save changes.</p>
+    <p *ngIf="user !== undefined" class="submit-label">{{applyingChanges ? "Saving Changes..." : (changesPresent ? "Save Changes" : "No Changes to Save")}}</p>
+  </div>
+  <div style="height: 100px;"></div>
+</div>

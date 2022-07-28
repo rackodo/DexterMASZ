@@ -9,6 +9,7 @@ using Punishments;
 using UserMaps;
 using UserNotes;
 using Utilities;
+using Levels;
 
 namespace Launch;
 
@@ -28,7 +29,8 @@ public static class ImportModules
 			new UserMapModule(),
 			new UserNoteModule(),
 			new UtilityModule(),
-			new MessagingModule()
+			new MessagingModule(),
+			new LevelsModule(),
 		};
 	}
 }

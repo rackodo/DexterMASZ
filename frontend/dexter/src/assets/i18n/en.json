@@ -35,10 +35,18 @@
         "Community": "Community",
         "Terms": "Terms",
         "Legal": "Legal",
+        "Store": "Store",
+        "Profile": "Profile",
         "Api": "Api",
         "Insights": "Insights",
         "Settings": "Settings",
         "Scanning": "Scanning"
+    },
+    "Profile": {
+      "Tabs": {
+        "Overview": "Overview",
+        "Rankcard": "Customize Rankcard"
+      }
     },
     "Guilds": {
         "Guilds": "Guilds",

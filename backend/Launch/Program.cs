@@ -246,6 +246,8 @@ ConsoleCreator.AddSubHeading("Successfully added", "migrations to databases");
 
 // CONFIGURE
 
+app.UseAuthentication();
+
 ConsoleCreator.AddHeading("Building Dexter");
 
 foreach (var startup in modules)
@@ -262,8 +264,6 @@ if (settings.ServiceBaseUrl.Contains("https"))
 	app.UseHttpsRedirection();
 
 app.UseRouting();
-
-app.UseAuthentication();
 
 if (authorizationPolicies.Any())
 	app.UseAuthorization();

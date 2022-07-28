@@ -35,10 +35,18 @@
         "Community": "Communauté",
         "Terms": "termes",
         "Legal": "Légal",
+        "Store": "Boutique",
+        "Profile": "Profil",
         "Api": "Api",
         "Insights": "Connaissances",
         "Settings": "Paramètres",
         "Scanning": "Balayage"
+    },
+    "Profile": {
+      "Tabs": {
+        "Overview": "Aperçu",
+        "Rankcard": "Personnaliser la carte de niveau"
+      }
     },
     "Guilds": {
         "Guilds": "Guildes",

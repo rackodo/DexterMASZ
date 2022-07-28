@@ -28,7 +28,7 @@ public class Mute : Command<Mute>
 		TimeSpan time = default,
 		[Summary("description", "The description of the modcase")]
 		string description = "",
-		[Summary("Severity Level", "Whether or not this is a higher severity case")]
+		[Summary("severity-level", "Whether or not this is a higher severity case")]
 		bool highSeverity = false)
 	{
 		ModCaseRepository.AsUser(Identity);

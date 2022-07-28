@@ -1,0 +1,41 @@
+<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="240" height="240" stroke="currentColor" stroke-linejoin="round">
+  <path stroke-width="0.5"
+    d="
+      M 6 14
+      v -8
+      l 5.657 -5.657
+      v 8
+      z
+      m 1.5 -3.621
+      l 2.657 -2.657
+      v -3.757
+      l -2.657 2.657
+      z
+    "/>
+    <path stroke-width="0.5"
+    d="
+      M 4.5 14
+      l -2.828 -2.828
+      v -4
+      l 2.828 2.828
+      z
+      m -0.75 -1.811
+      v -1.879
+      l -1.328 -1.328
+      v 1.879
+      z
+    "/>
+    <path stroke-width="0.5"
+    d="
+      M 8 14
+      l 2.828 -2.828
+      h 4
+      l -2.828 2.828
+      z
+      m 1.811 -0.75
+      h 1.879
+      l 1.328 -1.328
+      h -1.879
+      z
+    "/>
+</svg>

@@ -113,6 +113,14 @@ import { AppSettingsComponent } from './components/api/appsettings/appsettings.c
 import { GuildMessagesComponent } from './components/guilds/guild-messages/guild-messages.component';
 import { GuildMessageCardComponent } from './components/guilds/guild-messages/guild-message-card/guild-message-card.component';
 import { ScheduledMessageEditDialogComponent } from './components/dialogs/scheduled-message-edit-dialog/scheduled-message-edit-dialog.component';
+import { ProfileDashboardComponent } from './components/profiles/profile-dashboard/profile-dashboard.component';
+import { StoreDashboardComponent } from './components/profiles/store/store-dashboard/store-dashboard.component';
+import { ProfileOverviewComponent } from './components/profiles/profile-overview/profile-overview.component';
+import { RankcardCustomizerComponent } from './components/profiles/rankcard-customizer/rankcard-customizer.component';
+import { RankcardPreviewComponent } from './components/profiles/rankcard-customizer/rankcard-preview/rankcard-preview.component';
+import { ImageUrlDialogComponent } from './components/dialogs/image-url-dialog/image-url-dialog.component';
+import { BeautifyFileNamePipe } from './pipes/beautify-file-name.pipe';
+import { GuildLeaderboardComponent } from './components/guilds/guild-leaderboard/guild-leaderboard.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -185,7 +193,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppSettingsComponent,
     GuildMessagesComponent,
     GuildMessageCardComponent,
-    ScheduledMessageEditDialogComponent
+    ScheduledMessageEditDialogComponent,
+    ProfileDashboardComponent,
+    StoreDashboardComponent,
+    ProfileOverviewComponent,
+    RankcardCustomizerComponent,
+    RankcardPreviewComponent,
+    ImageUrlDialogComponent,
+    BeautifyFileNamePipe,
+    GuildLeaderboardComponent
   ],
   imports: [
     CommonModule,

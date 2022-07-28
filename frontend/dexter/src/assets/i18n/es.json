@@ -35,10 +35,18 @@
         "Community": "Comunidad",
         "Terms": "Condiciones",
         "Legal": "Legal",
+        "Store": "Tienda",
+        "Profile": "Perfil",
         "Api": "Api",
         "Insights": "Perspectivas",
         "Settings": "Ajustes",
         "Scanning": "Exploración"
+    },
+    "Profile": {
+      "Tabs": {
+        "Overview": "Visión general",
+        "Rankcard": "Personalizar carta de nivel"
+      }
     },
     "Guilds": {
         "Guilds": "Gremios",
@@ -87,7 +95,7 @@
         "NextCache": "Siguiente caché",
         "Tokens": "Tokens",
         "CurrentlyLoggedIn": "Conectado actualmente",
-        "DiscordCache": "Caché de discordia",
+        "DiscordCache": "Caché de Discord",
         "ClearCache": "Limpiar cache",
         "FailedToLoad": "Error al cargar adminstats.",
         "FailedToLoadLocalVersion": "No se pudo cargar la versión instalada.",

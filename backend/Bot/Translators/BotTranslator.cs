@@ -49,7 +49,7 @@ public class BotTranslator : Translator
 		{
 			Enums.Language.De => "ID",
 			Enums.Language.Fr => "identifiant",
-			Enums.Language.Es => "IDENTIFICACIÓN",
+			Enums.Language.Es => "ID",
 			Enums.Language.Ru => "Я БЫ",
 			Enums.Language.It => "ID",
 			_ => "ID"
@@ -88,7 +88,7 @@ public class BotTranslator : Translator
 		{
 			Enums.Language.De => "NutzerId",
 			Enums.Language.Fr => "Identifiant d'utilisateur",
-			Enums.Language.Es => "User ID",
+			Enums.Language.Es => "ID del Usuario",
 			Enums.Language.Ru => "ID пользователя",
 			Enums.Language.It => "ID utente",
 			_ => "User ID"
@@ -114,7 +114,7 @@ public class BotTranslator : Translator
 		{
 			Enums.Language.De => "KanalId",
 			Enums.Language.Fr => "Identifiant de la chaine",
-			Enums.Language.Es => "Canal ID",
+			Enums.Language.Es => "ID del Canal",
 			Enums.Language.Ru => "ChannelId",
 			Enums.Language.It => "Canale ID",
 			_ => "ChannelId"
@@ -127,7 +127,7 @@ public class BotTranslator : Translator
 		{
 			Enums.Language.De => "Nicht gefunden.",
 			Enums.Language.Fr => "Pas trouvé.",
-			Enums.Language.Es => "Extraviado.",
+			Enums.Language.Es => "No encontrado.",
 			Enums.Language.Ru => "Не найден.",
 			Enums.Language.It => "Non trovato.",
 			_ => "Not found."
@@ -192,7 +192,7 @@ public class BotTranslator : Translator
 		{
 			Enums.Language.De => "bis",
 			Enums.Language.Fr => "jusqu'à",
-			Enums.Language.Es => "Hasta que",
+			Enums.Language.Es => "Hasta",
 			Enums.Language.Ru => "до",
 			Enums.Language.It => "fino a",
 			_ => "until"
@@ -300,6 +300,19 @@ public class BotTranslator : Translator
 			Enums.Language.Ru => "Разрешены только текстовые каналы.",
 			Enums.Language.It => "Sono consentiti solo canali di testo.",
 			_ => "Only text channels are allowed."
+		};
+	}
+
+	public string OnlyBotChannel()
+	{
+		return PreferredLanguage switch
+		{
+			Enums.Language.De => "Nur Botkanäle sind erlaubt",
+			Enums.Language.Fr => "Seuls les canaux de bots sont autorisés",
+			Enums.Language.Es => "Solo se permiten calanes de bots.",
+			Enums.Language.Ru => "Разрешены только бот-каналы.",
+			Enums.Language.It => "Sono consentiti solo canali bot.",
+			_ => "Only bot channels are allowed."
 		};
 	}
 

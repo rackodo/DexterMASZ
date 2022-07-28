@@ -1,0 +1,12 @@
+<h1 *ngIf="data.title" mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content class="d-flex flex-column">
+  <mat-form-field appearance="fill">
+    <mat-label>URL</mat-label>
+    <input matInput [(ngModel)]="data.url">
+  </mat-form-field>
+  <img *ngIf="data.url" [src]="data.url" class="preview" aria-label="image preview">
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.url" cdkFocusInitial>Submit</button>
+</div>

@@ -1,0 +1,24 @@
+<div class="container" [style]="imageNameToCss(model.background)">
+  <img *ngIf="!isNameColor(model.background)" class="background" [src]="imageNameToUrl(model.background)">
+  <div class="titlebar" [style]="'background-color: ' + uintColorToCss(model.titleBgColor)">
+    <div class="relcontainer">
+      <p class="title-level">
+        <span class="label-sm" [style]="'color: ' + uintColorToCss(model.offColor)">LEVEL</span>
+        <span class="label-lg" [style]="'color: ' + uintColorToCss(model.xpColor)">{{totalXp.level}}</span>
+        <span class="label-md" [style]="'color: ' + uintColorToCss(model.xpColor)">({{rawToSuffixForm(totalXp.xp)}} XP)</span>
+      </p>
+      <p class="title-username">
+        <span class="label-md" [style]="'color: ' + uintColorToCss(model.offColor)">{{username}}</span>
+      </p>
+    </div>
+  </div>
+  <div class="pfp-bg">
+    <div class="pfp"></div>
+  </div>
+  <div class="levels">
+    <div class="xp xp-main" [style]="'background-color: ' + uintColorToCss(model.levelBgColor)"></div>
+    <div class="xp xp-hybrid" [style]="'background-color: ' + uintColorToCss(model.levelBgColor)"></div>
+    <div class="xp xp-hybrid shift-right" [style]="'background-color: ' + uintColorToCss(model.levelBgColor)"></div>
+  </div>
+  <h1 style="font-size: 2em; width: 100%; text-align: center; position: absolute; top: 50%">WIP</h1>
+</div>
