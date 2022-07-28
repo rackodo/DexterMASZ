@@ -37,7 +37,7 @@
 
 ⭐ **A website and a discord bot** - to use Dexter\
 ⭐ **Localization** - timezones and languages are fully customizable\
-⭐ **Userscan** - quickly spot relations between users with a included visualization
+⭐ **Userscan** - quickly spot relations between users with an included visualization
 
 ### Plugins
 
