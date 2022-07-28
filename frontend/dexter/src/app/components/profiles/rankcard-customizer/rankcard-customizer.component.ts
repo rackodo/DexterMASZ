@@ -61,7 +61,10 @@ export class RankcardCustomizerComponent implements AfterViewInit {
     })
 
     RankcardCustomizerComponent.getDefaultBgOptions(this.api).subscribe((data: string[]) => {
-      this.defaultBgOptions = data;
+      this.defaultBgOptions = [];
+      for (let opt of data) {
+        this.defaultBgOptions.push(this.defaultBgToUrl(opt));
+      }
     })
   }
 
@@ -103,20 +106,19 @@ export class RankcardCustomizerComponent implements AfterViewInit {
     "offColor": 0xffffffffn,
     "levelBgColor": 0xff202225n,
     "titleBgColor": 0xff202225n,
-    "background": "default",
+    "background": RankcardCustomizerComponent.defaultBgToUrl("default.jpg"),
     "rankcardFlags": RankcardFlags.DisplayPfp | RankcardFlags.PfpBackground | RankcardFlags.ClipPfp | RankcardFlags.ShowHybrid
-  }
-
-  defaultBgOptions : string[] = ["default.jpg"]
-
-  static getDefaultBgOptions(api : ApiService) : Observable<string[]> {
-    return api.getSimpleData("/levels/default/images", true)
   }
 
   defaultBgToUrl = RankcardCustomizerComponent.defaultBgToUrl;
   static defaultBgToUrl(name : string) : string {
     return `${API_URL}/levels/default/images/${name}`;
   }
+
+  static getDefaultBgOptions(api : ApiService) : Observable<string[]> {
+    return api.getSimpleData("/levels/default/images", true)
+  }
+  defaultBgOptions : string[] = [this.defaultBgToUrl("default.jpg")]
 
   formatOpacity(val: number) : string {
     return (val * 100).toFixed(1) + "%"
@@ -331,9 +333,6 @@ export class RankcardCustomizerComponent implements AfterViewInit {
 
     this.applyingChanges = true;
 
-    if (this.backgroundMode == this.DEFAULT) {
-      this.model.background = this.defaultBgToUrl(this.model.background);
-    }
     this.api.postSimpleData("/levels/rankcard", this.prepareModel(this.model)).subscribe(() => {
       this.changesPresent = false;
       this.applyingChanges = false;
@@ -344,10 +343,6 @@ export class RankcardCustomizerComponent implements AfterViewInit {
       this.changesPresent = true;
       this.toastr.error(err.message);
     })
-
-    if (this.backgroundMode == this.DEFAULT) {
-      this.model.background = this.defaultImageChoice;
-    }
   }
 
 }

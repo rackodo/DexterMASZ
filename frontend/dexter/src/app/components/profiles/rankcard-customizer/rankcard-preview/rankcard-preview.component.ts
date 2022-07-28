@@ -54,9 +54,6 @@ export class RankcardPreviewComponent implements OnInit {
     if (this.isNameColor(name)) {
       return "";
     }
-    if (this.defaultBgOptions.includes(name)) {
-      name = RankcardCustomizerComponent.defaultBgToUrl(name);
-    }
     return name;
   }
 

@@ -11,6 +11,10 @@ export class BeautifyFileNamePipe implements PipeTransform {
     if (dotIndex > -1) {
       value = value.substring(0, dotIndex);
     }
+    let slashIndex = value.lastIndexOf("/");
+    if (slashIndex > -1) {
+      value = value.substring(slashIndex + 1);
+    }
 
     return value;
   }

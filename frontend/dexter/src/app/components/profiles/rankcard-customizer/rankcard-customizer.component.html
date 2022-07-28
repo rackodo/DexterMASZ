@@ -114,12 +114,12 @@
         <button mat-button (click)="triggerFileChooser()" class="upload-img-button">
           <mat-icon class="file-chooser-icon">add_photo_alternate</mat-icon> Browse for File
         </button>
-        <input id="file-chooser" #fileInput type="file" style="visibility: hidden" accept="image/*" (change)="changeFileInput()">
+        <input id="file-chooser" #fileInput type="file" style="display: none" accept="image/*" (change)="changeFileInput()">
       </div>
       <button mat-button (click)="triggerURLDialog()" class="upload-img-button">
         <mat-icon class="file-chooser-icon">insert_link</mat-icon> Image from URL
       </button>
-      <img class="img-preview" [src]="customLink" aria-label="custom image preview">
+      <img *ngIf="customLink" class="img-preview" [src]="customLink" aria-label="custom image preview">
     </div>
     <div class="vertical-separator"></div>
     <div class="background-option" [class.selected]="backgroundMode == DEFAULT" (click)="setBackgroundMode(DEFAULT)">
@@ -132,7 +132,7 @@
           </mat-select>
         </div>
       </a>
-      <img class="img-preview" [src]="defaultBgToUrl(defaultImageChoice)">
+      <img class="img-preview" [src]="defaultImageChoice">
     </div>
   </div>
   <div class="submit-button-container">
