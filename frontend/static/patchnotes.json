@@ -34,7 +34,7 @@
   {
     "title": "Leveling Update",
     "version": "v1.0.1",
-    "released_at": "2022-07-20",
+    "released_at": "2022-07-28",
     "contributors": [
       {
         "name": "EnderFloof",
@@ -45,8 +45,16 @@
     "breaking": [],
     "features": [
       {
+        "title": "Levels System",
+        "description": "Added support for a leveling system in the new DexterSlash"
+      },
+      {
         "title": "Added Rankcard Customizer.",
-        "description": "A new tab has been added to the set of default upon login. The Profile tab includes options to alter the user's profile, among which is the Rankcard Customization tab, which allows users to customize their rank cards online with a preview!"
+        "description": "A new Profile tab has been added to the nav index upon login. The Profile tab includes options to alter the user's profile, among which is the Rankcard Customization tab, which allows users to customize their rank cards online with a preview!"
+      },
+      {
+        "title": "Early Leaderboard",
+        "description": "Added the infrastructure and a minimalistic implementation for a leaderboard"
       }
     ],
     "fixes": []
