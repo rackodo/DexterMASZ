@@ -2,6 +2,7 @@
 using Levels.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Levels.Migrations
 {
     [DbContext(typeof(LevelsDatabase))]
-    partial class LevelsDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20220728133948_CapitalizedRankcardFlags")]
+    partial class CapitalizedRankcardFlags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
