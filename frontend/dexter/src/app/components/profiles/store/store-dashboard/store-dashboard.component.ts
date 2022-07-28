@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StoreDashboardComponent implements OnInit {
 
+  coming_soon_date = new Date("2023-01-01");
   constructor() { }
 
   ngOnInit(): void {

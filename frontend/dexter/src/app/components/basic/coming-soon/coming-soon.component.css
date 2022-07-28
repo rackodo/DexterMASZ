@@ -1,0 +1,22 @@
+.title {
+  color: hsl(207, 100%, 50%);
+}
+
+.subtitle {
+  color: hsl(207, 100%, 85%);
+  font-size: 1.5em;
+}
+
+.date {
+  font-size: 1.5em;
+}
+
+.description {
+  color: white;
+  text-align: center;
+}
+
+img {
+  margin: 1em 0;
+  max-width: 80%;
+}

@@ -121,6 +121,7 @@ import { RankcardPreviewComponent } from './components/profiles/rankcard-customi
 import { ImageUrlDialogComponent } from './components/dialogs/image-url-dialog/image-url-dialog.component';
 import { BeautifyFileNamePipe } from './pipes/beautify-file-name.pipe';
 import { GuildLeaderboardComponent } from './components/guilds/guild-leaderboard/guild-leaderboard.component';
+import { ComingSoonComponent } from './components/basic/coming-soon/coming-soon.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -201,7 +202,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RankcardPreviewComponent,
     ImageUrlDialogComponent,
     BeautifyFileNamePipe,
-    GuildLeaderboardComponent
+    GuildLeaderboardComponent,
+    ComingSoonComponent
   ],
   imports: [
     CommonModule,
