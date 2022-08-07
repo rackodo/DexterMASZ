@@ -167,9 +167,10 @@ input:checked + .slider:before {
 
 /*Background Selector*/
 
-/*.background-selector {
-  EMPTY RULESET
-}*/
+.bg-tab-group {
+  width: 100%;
+  max-width: 600px;
+}
 
 .background-option {
   display: flex;
@@ -178,18 +179,18 @@ input:checked + .slider:before {
   align-items: center;
   text-align: center;
   padding: 1em 0;
-  width: calc(33.333% - 1px - 1.333em);
+  width: 100%;
   border-radius: 1em;
   transition: background-color .2s;
 }
 
-.background-option:hover {
+/*.background-option:hover {
   background-color: #5b5b5b60;
 }
 
 .background-option.selected {
   background-color: #8a8a8a60 !important;
-}
+}*/
 
 .vertical-separator {
   width: 1px;
@@ -239,7 +240,7 @@ input:checked + .slider:before {
 
 .color-preview {
   width: calc(100% - 24px);
-  min-height: 50%;
+  height: 400px;
   margin: 12px;
 }
 
@@ -269,21 +270,33 @@ input:checked + .slider:before {
 }
 
 @media (min-width: 576px){
+  .bg-tab-group {
+    width: 100%;
+  }
   .rankcard-preview {
     --preview-width: 450;
   }
 }
 @media (min-width: 768px){
+  .bg-tab-group {
+    width: 90%;
+  }
   .rankcard-preview {
     --preview-width: 500;
   }
 }
 @media (min-width: 992px){
+  .bg-tab-group {
+    width: 90%;
+  }
   .rankcard-preview {
     --preview-width: 600;
   }
 }
 @media (min-width: 1200px) {
+  .bg-tab-group {
+    width: 75%;
+  }
   .rankcard-preview {
     --preview-width: 700;
   }

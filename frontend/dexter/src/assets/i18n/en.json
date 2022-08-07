@@ -333,6 +333,9 @@
         "FailedToLoadGuild": "Failed to load guild info.",
         "FailedToLoadChannels": "Failed to load guildchannel info."
     },
+    "LevelsConfig": {
+      "Levels": "Levels"
+    },
     "GuildMessages": {
         "Explained": "Use scheduled messages to manage and coordinate announcement to your community or staff.",
         "NameField": "Name",

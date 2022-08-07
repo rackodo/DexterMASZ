@@ -1,0 +1,167 @@
+<div class="d-flex flex-column">
+  <span class="mat-h1 font-weight-bold mb-2">{{ 'LevelsConfig.Levels' | translate }}</span>
+  <form [formGroup]="formGroup" (ngSubmit)="saveConfig()">
+    <div class="settings-group">
+      <h3 class="settings-title">Experience Settings</h3>
+      <div class="settings-tab">
+        <mat-form-field class="narrow-field">
+          <mat-label>Experience Interval</mat-label>
+          <input matInput type="number" formControlName="xpInterval">
+          <span matSuffix>seconds</span>
+          <mat-error *ngFor="let err of allErrors(formGroup.get('xpInterval'))">{{err}}</mat-error>
+        </mat-form-field>
+
+        <div class="range mt-4">
+          <span class="label">Text XP awarded per interval</span>
+          <mat-form-field>
+            <mat-label>min</mat-label>
+            <input matInput type="number" formControlName="minTextXp" required>
+            <mat-error *ngFor="let err of allErrors(formGroup.get('minTextXp'))">{{err}}</mat-error>
+          </mat-form-field>
+          <span class="range-separator">-</span>
+          <mat-form-field>
+            <mat-label>max</mat-label>
+            <input matInput type="number" formControlName="maxTextXp" required>
+            <mat-error *ngFor="let err of allErrors(formGroup.get('maxTextXp'))">{{err}}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="range mt-2">
+          <span class="label">Voice XP awarded per interval</span>
+          <mat-form-field>
+            <mat-label>min</mat-label>
+            <input matInput type="number" formControlName="minVoiceXp" required>
+            <mat-error *ngFor="let err of allErrors(formGroup.get('minVoiceXp'))">{{err}}</mat-error>
+          </mat-form-field>
+          <span class="range-separator">-</span>
+          <mat-form-field>
+            <mat-label>max</mat-label>
+            <input matInput type="number" formControlName="maxVoiceXp" required>
+            <mat-error *ngFor="let err of allErrors(formGroup.get('maxVoiceXp'))">{{err}}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="fill" class="wide-field mt-4">
+          <mat-label>Channels with Disabled XP</mat-label>
+          <mat-select formControlName="disabledXpChannels" multiple>
+            <mat-option *ngFor="let channel of this.guildChannels" [value]="channel.id" >#{{channel.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <p class="settings-desc mt-4">
+          Voice channels award XP when there are at least a configurable number of non-bot, non-deafened (and optionally non-muted) users in the channel.
+          Regardless of these settings, only users who are not muted or deafened will be granted experience.
+        </p>
+
+        <mat-checkbox formControlName="voiceXpCountMutedMembers">Count Muted Members</mat-checkbox>
+        <mat-form-field class="narrow-field">
+          <mat-label>Minimum Required Users in VC</mat-label>
+          <input matInput type="number" formControlName="voiceXpRequiredMembers" required>
+          <mat-error *ngFor="let err of allErrors(formGroup.get('voiceXpCountMutedMembers'))">{{err}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <h3 class="settings-title">Level Up Announcements</h3>
+      <div class="settings-tab">
+        <p class="settings-desc">
+          This field sets the appearance of level-up announcements for your guild. Use the templates {{'{'}}USER{{'}'}} and {{'{'}}LEVEL{{'}'}} to mention the user and the level they've reached respectively.
+        </p>
+        <mat-form-field appearance="fill" class="wide-field mt-2">
+          <mat-label>Level Up Announcement Template</mat-label>
+          <textarea matInput #levelUpTemplateInput formControlName="levelUpTemplate" [maxLength]="TEMPLATE_CHARACTER_LIMIT"></textarea>
+          <mat-hint align="end">{{levelUpTemplateInput.value.length}}/{{TEMPLATE_CHARACTER_LIMIT}}</mat-hint>
+          <mat-error *ngFor="let err of allErrors(formGroup.get('levelUpTemplate'))">{{err}}</mat-error>
+        </mat-form-field>
+        <p class="settings-desc mt-4">
+          The following options allow you to set a specific channel where text and voice level-ups will be announced.
+          If you wish this not to happen, leave them as "None".
+          Note that none of the options below are mutually exclusive. One level up may trigger two separate level-up messages being sent if you enable both options for a given type (text or voice).
+        </p>
+        <mat-form-field appearance="fill" class="wide-field mt-2">
+          <mat-label>Text Level Up Announcement Channel</mat-label>
+          <mat-select formControlName="textLevelUpChannel">
+            <mat-option [value]="'0'">None</mat-option>
+            <mat-option *ngFor="let channel of this.guildChannels" [value]="channel.id" >#{{channel.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="wide-field mt-2">
+          <mat-label>Voice Level Up Announcement Channel</mat-label>
+          <mat-select formControlName="voiceLevelUpChannel">
+            <mat-option [value]="'0'">None</mat-option>
+            <mat-option *ngFor="let channel of this.guildChannels" [value]="channel.id" >#{{channel.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p class="settings-desc mt-4">
+          The following options allow you to have a level-up announced in the channel where the XP for the level-up was obtained.
+        </p>
+        <mat-checkbox formControlName="sendTextLevelUps">Send Text Level-Ups</mat-checkbox>
+        <mat-checkbox formControlName="sendVoiceLevelUps">Send Voice Level-Ups</mat-checkbox>
+
+        <p class="settings-desc mt-4">Announcement Overrides allow you to change the message displayed for a level up at specific levels.</p>
+        <div class="expandable-list">
+          <div *ngFor="let key of overrideKeys" class="list-item mb-4">
+            <span class="item-label">Level {{key}}</span>
+            <mat-form-field appearance="fill">
+              <mat-label>Announcement Template Override</mat-label>
+              <textarea matInput [(ngModel)]="levelUpMessageOverrides[key]" [maxlength]="TEMPLATE_CHARACTER_LIMIT" [ngModelOptions]="{standalone: true}" required></textarea>
+              <mat-hint align="end">{{levelUpMessageOverrides[key].length}}/{{TEMPLATE_CHARACTER_LIMIT}}</mat-hint>
+              <mat-error *ngIf="!levelUpMessageOverrides[key]">Field can't be empty.</mat-error>
+            </mat-form-field>
+            <button mat-mini-fab color="warn" aria-label="Remove element from list" (click)="removeItemOverride(key)">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+          <button mat-button (click)="addItemOverrides()" class="add-button">Add Override</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <h3 class="settings-title">Ranked Roles</h3>
+      <div class="settings-tab">
+        <mat-checkbox formControlName="handleRoles">Handle Ranked Roles</mat-checkbox>
+        <p class="settings-desc mt-2">
+          The following configuration allows you to set a role replacement policy; wherein one ranked role (deemed the "replaced" role) can be substituted by another outside the progression system ("mark" role).
+          Whenever a user is found that should receive the replaced role but has the mark role; they'll instead keep the mark role. This is particularly useful for disabling nickname permissions for users beyond the level where they attain them.
+        </p>
+        <mat-form-field appearance="fill" class="wide-field mb-2">
+          <mat-label>Mark Role</mat-label>
+          <mat-select formControlName="nicknameDisabledRole">
+            <mat-option [value]="'0'">None</mat-option>
+            <mat-option *ngFor="let role of guildRoles" [value]="role.id"><span [style.color]="generateRoleColor(role)">@{{role.name}}</span></mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="wide-field mb-2">
+          <mat-label>Replaced Role</mat-label>
+          <mat-select formControlName="nicknameDisabledReplacement">
+            <mat-option [value]="'0'">None</mat-option>
+            <mat-option *ngFor="let role of guildRoles" [value]="role.id"><span [style.color]="generateRoleColor(role)">@{{role.name}}</span></mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p class="settings-desc">Granted roles are sets of roles granted once specific levels are reached. It is worth noting that the bot corrects a user's roles (adding or removing any ranked roles) after every level-up; so manually altering roles might prove ineffective.</p>
+        <div class="expandable-list">
+          <div *ngFor="let key of levelsKeys" class="list-item mb-2">
+            <span class="item-label">Level {{key}}</span>
+            <mat-form-field appearance="fill">
+              <mat-label>Roles Granted</mat-label>
+              <mat-select [(ngModel)]="levels[key]" [ngModelOptions]="{standalone: true}" multiple>
+                <mat-option *ngFor="let role of guildRoles" [value]="role.id"><span [style.color]="generateRoleColor(role)">@{{role.name}}</span></mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-mini-fab color="warn" aria-label="Remove element from list" (click)="removeItemRoles(key)">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+          <button mat-button (click)="addItemRoles()" class="add-button">Add Granted Roles</button>
+        </div>
+      </div>
+    </div>
+
+    <button mat-button type="submit" class="submit-button">
+      <mat-icon>save</mat-icon>&nbsp;Save Changes
+    </button>
+
+  </form>
+</div>

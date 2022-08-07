@@ -199,7 +199,7 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, DataContextCreate
 		{
 			return;
 		}
-		GuildLevelConfigs.Update(guildLevelConfig);
+		//GuildLevelConfigs.Update(guildLevelConfig);
 		await SaveChangesAsync();
 	}
 

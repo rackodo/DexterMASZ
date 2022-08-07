@@ -27,6 +27,7 @@ public class LevelsEventAnnouncer : Event
 	public void RegisterEvents()
 	{
 		_eventHandler.OnUserLevelUp += AnnounceLevelUp;
+		_eventHandler.OnUserLevelUp += HandleLevelRoles;
 	}
 
 	private async Task AnnounceLevelUp(GuildUserLevel guildUserLevel, int level, IGuildUser guildUser, IChannel? channel)
@@ -40,28 +41,85 @@ public class LevelsEventAnnouncer : Event
 			try
 			{
 				var config = await scope.ServiceProvider.GetRequiredService<GuildLevelConfigRepository>().GetOrCreateConfig(guildUserLevel.GuildId);
-				ITextChannel? txtAnnouncementChannel = null;
-				if (channel is IVoiceChannel && config.SendVoiceLevelUps)
+				IMessageChannel? levelUpChannel = null;
+				IMessageChannel? announcementChannel = null;
+				if (channel is IVoiceChannel vc)
 				{
-					if (config.VoiceLevelUpChannel == 0) return;
-					txtAnnouncementChannel = (ITextChannel)_client.GetChannel(config.VoiceLevelUpChannel);
+					if (config.VoiceLevelUpChannel != 0)
+						announcementChannel = (IMessageChannel)_client.GetChannel(config.VoiceLevelUpChannel);
+					levelUpChannel = config.SendVoiceLevelUps ? vc : null;
 				}
-				if (channel is ITextChannel c && config.SendTextLevelUps)
+				else if (channel is ITextChannel tc)
 				{
-					txtAnnouncementChannel = c;
+					if (config.TextLevelUpChannel != 0)
+						announcementChannel = (IMessageChannel)_client.GetChannel(config.TextLevelUpChannel);
+					levelUpChannel = config.SendTextLevelUps ? tc : null;
 				}
 
-				if (txtAnnouncementChannel is null) return;
 				string template = config.LevelUpMessageOverrides.GetValueOrDefault(level, config.LevelUpTemplate);
+				if (string.IsNullOrEmpty(template)) return;
 				string msg = template
 					.Replace("{USER}", guildUser.Mention)
 					.Replace("{LEVEL}", level.ToString());
-				await txtAnnouncementChannel.SendMessageAsync(msg);
+				
+				foreach (var c in new IMessageChannel?[] { levelUpChannel, announcementChannel })
+				{
+					if (c is null) continue;
+					await c.SendMessageAsync(msg);
+				}
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e, $"Error while announcing level up to {channel.Id} for guild {guildUser.GuildId}.");
 			}
+		}
+	}
+
+	private async Task HandleLevelRoles(GuildUserLevel guildUserLevel, int level, IGuildUser guildUser, IChannel? channel)
+	{
+		using var scope = _serviceProvider.CreateScope();
+
+		try
+		{
+			var config = await scope.ServiceProvider.GetRequiredService<GuildLevelConfigRepository>().GetOrCreateConfig(guildUserLevel.GuildId);
+			if (!config.HandleRoles)
+				return;
+
+			var toAdd = new HashSet<ulong>();
+			var toRemove = new HashSet<ulong>();
+			var currRoles = guildUser.RoleIds;
+
+			foreach (var entry in config.Levels)
+			{
+				if (level < entry.Key)
+				{
+					Array.ForEach(entry.Value, (v) => toRemove.Add(v));
+					continue;
+				}
+				else
+				{
+					Array.ForEach(entry.Value, (v) => toAdd.Add(v));
+				}
+			}
+
+			if (config.NicknameDisabledRole != default && currRoles.Contains(config.NicknameDisabledRole) && toAdd.Contains(config.NicknameDisabledReplacement))
+				toAdd.Remove(config.NicknameDisabledReplacement);
+
+			var guild = guildUser.Guild;
+			var guildRoles = guild.Roles;
+			var guildRoleIds = guild.Roles.Select(x => x.Id);
+
+			toAdd.IntersectWith(guildRoleIds);
+			toRemove.IntersectWith(guildRoleIds);
+
+			toRemove.IntersectWith(currRoles);
+			toAdd.ExceptWith(currRoles);
+
+			Task.WaitAll(guildUser.AddRolesAsync(toAdd), guildUser.RemoveRolesAsync(toRemove));
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e, $"Error while handling roles on level up for user {guildUser.Id} in guild {guildUser.GuildId}.");
 		}
 	}
 }

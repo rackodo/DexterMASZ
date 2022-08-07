@@ -363,6 +363,9 @@
         "FailedToLoadGuild": "No se pudo cargar la información del gremio.",
         "FailedToLoadChannels": "No se pudo cargar la información del canal del gremio."
     },
+    "LevelsConfig": {
+      "Levels": "Niveles"
+    },
     "GuildMessages": {
         "Explained": "Utiliza los mensajes programados para gestionar y coordinar anuncios a tu comunidad o personal.",
         "NameField": "Nombre",

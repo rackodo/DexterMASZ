@@ -1,0 +1,14 @@
+<h1 *ngIf="data.title" mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content class="d-flex flex-column">
+  <mat-form-field appearance="fill">
+    <mat-label>{{data.label ?? 'Value'}}</mat-label>
+    <input matInput [formControl]="controller" type="number">
+    <mat-error *ngIf="controller.errors?.['min']">Must be at least {{controller.errors?.min.min}}</mat-error>
+    <mat-error *ngIf="controller.errors?.['max']">Must be at most {{controller.errors?.max.max}}</mat-error>
+    <mat-error *ngIf="controller.errors?.['forbid']">{{controller.errors?.forbid.forbid}}</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="controller.value" cdkFocusInitial>Submit</button>
+</div>

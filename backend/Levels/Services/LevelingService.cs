@@ -82,7 +82,7 @@ public class LevelingService : Event
 		foreach (var config in configs)
 		{
 			_logger.LogInformation($"Registering XP Timer for Guild {config.Id}");
-			guildCooldowns.Add(config.Id, new GuildCooldowns(config.Id, config.XPInterval));
+			guildCooldowns.Add(config.Id, new GuildCooldowns(config.Id, config.XpInterval));
 		}
 
 		return Task.CompletedTask;
@@ -113,7 +113,7 @@ public class LevelingService : Event
 		var configrepo = scope.ServiceProvider.GetRequiredService<GuildLevelConfigRepository>();
 
 		GuildLevelConfig config = await configrepo.GetOrCreateConfig(guild.Id);
-		if (config.DisabledXPChannels.Contains(message.Channel.Id))
+		if (config.DisabledXpChannels.Contains(message.Channel.Id))
 			return;
 
 		gcds.textUsers.Add(message.Author.Id);
@@ -122,7 +122,7 @@ public class LevelingService : Event
 			await _client.Rest.GetGuildUserAsync(guild.Id, message.Author.Id);
 
 		var levelrepo = scope.ServiceProvider.GetRequiredService<GuildUserLevelRepository>();
-		await GrantXP(_random.Next(config.MinimumTextXPGiven, config.MaximumTextXPGiven + 1),
+		await GrantXP(_random.Next(config.MinimumTextXpGiven, config.MaximumTextXpGiven + 1),
 			XPType.Text, await levelrepo.GetOrCreateLevel(user), config, user, guildChannel, scope);
 	}
 
@@ -145,7 +145,7 @@ public class LevelingService : Event
 
 			foreach (IVoiceChannel vchannel in await guild.GetVoiceChannelsAsync())
 			{
-				if (config.DisabledXPChannels.Contains(vchannel.Id)) continue;
+				if (config.DisabledXpChannels.Contains(vchannel.Id)) continue;
 
 				int nonbotusers = 0;
 				List<IGuildUser> toLevel = new();
@@ -156,7 +156,7 @@ public class LevelingService : Event
 					if (uservc.IsBot || uservc.IsDeafened || uservc.IsSelfDeafened) continue;
 					if (uservc.IsMuted || uservc.IsSelfMuted || uservc.IsSuppressed)
 					{
-						if (config.VoiceXPCountMutedMembers) nonbotusers++;
+						if (config.VoiceXpCountMutedMembers) nonbotusers++;
 						continue;
 					}
 					toLevel.Add(uservc);
@@ -165,7 +165,7 @@ public class LevelingService : Event
 
 				foreach (IGuildUser u in toLevel)
 				{
-					await GrantXP(_random.Next(config.MinimumVoiceXPGiven, config.MaximumVoiceXPGiven + 1),
+					await GrantXP(_random.Next(config.MinimumVoiceXpGiven, config.MaximumVoiceXpGiven + 1),
 						XPType.Voice,
 						await levelrepo.GetOrCreateLevel(u.GuildId, u.Id),
 						config,
@@ -182,13 +182,13 @@ public class LevelingService : Event
 	{
 		if (!guildCooldowns.ContainsKey(guildLevelConfig.Id))
 		{
-			guildCooldowns.Add(guildLevelConfig.Id, new GuildCooldowns(guildLevelConfig.Id, guildLevelConfig.XPInterval));
+			guildCooldowns.Add(guildLevelConfig.Id, new GuildCooldowns(guildLevelConfig.Id, guildLevelConfig.XpInterval));
 		}
 		else
 		{
 			GuildCooldowns gcds = guildCooldowns[guildLevelConfig.Id];
-			if (gcds.refreshInterval == guildLevelConfig.XPInterval) return Task.CompletedTask;
-			gcds.refreshInterval = guildLevelConfig.XPInterval;
+			if (gcds.refreshInterval == guildLevelConfig.XpInterval) return Task.CompletedTask;
+			gcds.refreshInterval = guildLevelConfig.XpInterval;
 			guildCooldowns[guildLevelConfig.Id].nextRefresh = DateTimeOffset.Now.ToUnixTimeSeconds() + gcds.refreshInterval;
 		}
 		return Task.CompletedTask;

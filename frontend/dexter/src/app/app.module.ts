@@ -122,6 +122,8 @@ import { ImageUrlDialogComponent } from './components/dialogs/image-url-dialog/i
 import { BeautifyFileNamePipe } from './pipes/beautify-file-name.pipe';
 import { GuildLeaderboardComponent } from './components/guilds/guild-leaderboard/guild-leaderboard.component';
 import { ComingSoonComponent } from './components/basic/coming-soon/coming-soon.component';
+import { LevelsConfigComponent } from './components/guilds/guild-config/levels-config/levels-config.component';
+import { NumberInputDialogComponent } from './components/dialogs/number-input-dialog/number-input-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -203,7 +205,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ImageUrlDialogComponent,
     BeautifyFileNamePipe,
     GuildLeaderboardComponent,
-    ComingSoonComponent
+    ComingSoonComponent,
+    LevelsConfigComponent,
+    NumberInputDialogComponent
   ],
   imports: [
     CommonModule,

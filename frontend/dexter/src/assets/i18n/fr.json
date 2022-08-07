@@ -363,6 +363,9 @@
         "FailedToLoadGuild": "Échec du chargement des informations de guilde.",
         "FailedToLoadChannels": "Échec du chargement des informations du canal de guilde."
     },
+    "LevelsConfig": {
+      "Levels": "Niveaus"
+    },
     "GuildMessages": {
         "Explained": "Utilisez les messages programmés pour gérer et coordonner les annonces à votre communauté ou à votre personnel.",
         "NameField": "Nom",

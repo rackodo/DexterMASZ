@@ -363,6 +363,9 @@
         "FailedToLoadGuild": "Impossibile caricare le informazioni sulla gilda.",
         "FailedToLoadChannels": "Impossibile caricare le informazioni sul canale di gilda."
     },
+    "LevelsConfig": {
+      "Levels": "Livelli"
+    },
     "GuildMessages": {
         "Explained": "Utilizza i messaggi programmati per gestire e coordinare gli annunci alla tua comunità o al tuo personale.",
         "NameField": "Nome",

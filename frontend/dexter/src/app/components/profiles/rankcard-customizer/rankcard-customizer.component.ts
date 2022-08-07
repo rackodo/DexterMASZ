@@ -128,6 +128,9 @@ export class RankcardCustomizerComponent implements AfterViewInit {
   readonly CUSTOM = 1;
   readonly DEFAULT = 2;
   backgroundMode = this.DEFAULT;
+  bgOptTabs = [this.SOLID, this.CUSTOM, this.DEFAULT]
+  bgOptTabNames = ["Solid Color", "Custom Image", "Default Image"]
+  bgOptTabIcons = ["format_color_fill", "add_to_photos", "insert_photo"]
   changesPresent = false;
   applyingChanges = false;
 
