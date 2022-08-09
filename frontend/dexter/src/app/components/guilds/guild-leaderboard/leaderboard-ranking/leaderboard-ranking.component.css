@@ -1,0 +1,5 @@
+.load-more-btn {
+  width: 100%;
+  background-color: var(--primary);
+  margin: 1em 0;
+}

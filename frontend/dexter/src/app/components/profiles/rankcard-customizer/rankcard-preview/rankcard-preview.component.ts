@@ -10,9 +10,9 @@ import { RankcardCustomizerComponent } from '../rankcard-customizer.component';
 })
 export class RankcardPreviewComponent implements OnInit {
 
-  @Input() txtXp : ExperienceModel = {xp: 82n, level: 0n, xp_level: 100n, xp_residual: 82n};
-  @Input() vcXp : ExperienceModel = {xp: 105n, level: 1n, xp_level: 150n, xp_residual: 5n};
-  @Input() totalXp : ExperienceModel = {xp: 187n, level: 1n, xp_level: 150n, xp_residual: 87n};
+  @Input() txtXp : ExperienceModel = {xp: 82n, level: 0n, xpLevel: 100n, xpResidual: 82n};
+  @Input() vcXp : ExperienceModel = {xp: 105n, level: 1n, xpLevel: 150n, xpResidual: 5n};
+  @Input() totalXp : ExperienceModel = {xp: 187n, level: 1n, xpLevel: 150n, xpResidual: 87n};
 
   @Input() model : UserRankcardConfig = {
     "id": 0n,

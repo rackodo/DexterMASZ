@@ -1,4 +1,18 @@
-<h1>WIP Leaderboard</h1>
-<ol>
-  <li *ngFor="let user of loadedUsers">{{user.userId}} - TXT={{user.textXp.xp}} VC={{user.voiceXp.xp}} TOTAL={{user.totalXp.xp}} </li>
-</ol>
+<div style="height: 100px;" class="dp-on-big-screen"></div>
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="d-flex flex-column justify-content-center align-items-left cw-75-100">
+        <!-- only list for cases and automods -->
+        <mat-tab-group mat-stretch-tabs class="flex-grow-1" [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)">
+            <mat-tab *ngFor="let ord of orders; let i = index">
+                <ng-template mat-tab-label>
+                    <mat-icon class="mr-1">{{ icons[i] }}</mat-icon>
+                    <span>{{ord | uppercase }}</span>
+                </ng-template>
+                <ng-template matTabContent>
+                    <app-leaderboard-ranking [style]="'--theme: #' + themes[i]" [order]="ord"></app-leaderboard-ranking>
+                </ng-template>
+            </mat-tab>
+            <!-- dash board optional tab? -->
+        </mat-tab-group>
+    </div>
+</div>

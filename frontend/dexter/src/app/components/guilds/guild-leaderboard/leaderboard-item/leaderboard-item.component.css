@@ -1,0 +1,105 @@
+* {
+  --bg-brightness: 20%;
+  --fg-brightness: 30%;
+  --accent-brightness: 40%;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  max-width: 100%!important;
+  height: calc(2em + 6px);
+  background-color: hsl(0, 0%, var(--fg-brightness));
+  margin: 4px 0;
+  border-radius: 4px;
+  font-size: 2em;
+}
+
+.pfp {
+  height: 100%;
+  clip-path: circle(50% at center);
+}
+
+.rank {
+  background-color: hsl(0, 0%, var(--accent-brightness));
+  height: 1.5em;
+  padding-top: 0.25em;
+  width: 1.5em;
+  text-align: center;
+  border-radius: 100%;
+}
+
+.rank > span {
+  height: 100%;
+  line-height: 100%;
+  vertical-align: middle;
+}
+
+.name {
+
+}
+
+.xp {
+
+}
+
+.side-right {
+  position: absolute;
+  right: 3px;
+  display: inherit;
+  flex-direction: inherit;
+  align-items: inherit;
+}
+
+/*XP Circle*/
+
+.xpbar-container {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+}
+.xpbar-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  font-size: 0.75em;
+  color: var(--theme);
+}
+.xpbar-inner {
+  position: absolute;
+  z-index: 6;
+  top: 50%;
+  left: 50%;
+  height: 1.6em;
+  width: 1.6em;
+  margin: -0.8em 0 0 -0.8em;
+  background-color: #5a5a5a;
+  border-radius: 100%;
+}
+.xpbar {
+  position: absolute;
+  height: 2em;
+  width: 2em;
+  background-color: #5a5a5a;
+  border-radius: 100%;
+}
+.xpbar-left {
+  clip: rect(0, 1em, 2em, 0);
+}
+.xpbar-right {
+  clip: rect(0, 2em, 2em, 1em);
+}
+.progress {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  clip: rect(0, 1em, 2em, 0);
+  font-size: 1em!important;
+  background-color: var(--theme);
+}

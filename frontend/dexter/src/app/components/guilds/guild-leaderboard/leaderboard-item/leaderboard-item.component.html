@@ -1,0 +1,20 @@
+<div *ngIf="user" class="container">
+  <img class="pfp mr-2" [src]="user.user.imageUrl">
+  <div class="rank mr-2"><span [style.color]="'#'+rankColor()">{{index+1}}</span></div>
+  <div class="name mr-4">{{user.user.username}}#{{user.user.discriminator}}</div>
+  <div class="side-right">
+    <div class="xp mr-2">{{record.xp | unitFormat}} XP</div>
+    <div class="xpbar-container">
+      <div class="xpbar-inner"></div>
+      <div class="xpbar-text">{{record.level}}</div>
+      <div class="xpbar-circle">
+        <div class="xpbar xpbar-left">
+          <div class="progress" [style.transform]="'rotate('+calcLeftRot()+'deg)'"></div>
+        </div>
+        <div class="xpbar xpbar-right">
+          <div class="progress" [style.transform]="'rotate('+calcRightRot()+'deg)'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -157,10 +157,10 @@ public static class Rankcard
 
 		if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.ShowHybrid))
 		{
-			levelsData.Add(new RankcardLevelData(ul.Textxp > ul.Voicexp ? ul.Textxp : ul.Voicexp, mainHybridLevel, ul.Config!, true));
-			levelsData.Add(new RankcardLevelData(ul.Textxp > ul.Voicexp ? ul.Voicexp : ul.Textxp, secondaryHybridLevel, ul.Config!, true));
+			levelsData.Add(new RankcardLevelData(ul.TextXp > ul.VoiceXp ? ul.TextXp : ul.VoiceXp, mainHybridLevel, ul.Config!, true));
+			levelsData.Add(new RankcardLevelData(ul.TextXp > ul.VoiceXp ? ul.VoiceXp : ul.TextXp, secondaryHybridLevel, ul.Config!, true));
 
-			if (ul.Textxp > ul.Voicexp)
+			if (ul.TextXp > ul.VoiceXp)
 			{
 				levelsData[1].rank = txtrank;
 				levelsData[1].xpType = "Txt";

@@ -17,12 +17,14 @@ public class LevelsXPController : AuthenticatedController
 {
 	private readonly GuildUserLevelRepository _levelsRepository;
 	private readonly GuildLevelConfigRepository _levelsConfigRepository;
+	private readonly DiscordRest _rest;
 
-	public LevelsXPController(IdentityManager identityManager, GuildUserLevelRepository levelsRepository, GuildLevelConfigRepository levelsConfigRepository) :
+	public LevelsXPController(IdentityManager identityManager, GuildUserLevelRepository levelsRepository, GuildLevelConfigRepository levelsConfigRepository, DiscordRest rest) :
 		base(identityManager, levelsRepository, levelsConfigRepository)
 	{
 		_levelsRepository = levelsRepository;
 		_levelsConfigRepository = levelsConfigRepository;
+		_rest = rest;
 	}
 
 	[HttpGet("guilds/{guildId}/users/{userId}")]
@@ -37,13 +39,15 @@ public class LevelsXPController : AuthenticatedController
 	private async Task<GuildUserLevelDTO> levelToDTO(GuildUserLevel level)
 	{
 		GuildLevelConfig guildLevelConfig = await _levelsConfigRepository.GetOrCreateConfig(level.GuildId);
-		return levelToDTO(level, guildLevelConfig);
+		return await levelToDTO(level, guildLevelConfig);
 	}
 
-	private GuildUserLevelDTO levelToDTO(GuildUserLevel level, GuildLevelConfig config)
+	private async Task<GuildUserLevelDTO> levelToDTO(GuildUserLevel level, GuildLevelConfig config)
     {
+		var user = await _rest.FetchUserInfo(level.UserId, Bot.Enums.CacheBehavior.Default);
+
 		var calc = new CalculatedGuildUserLevel(level, config);
-		return calc.ToDTO();
+		return calc.ToDTO(new Bot.Models.DiscordUser(user));
 	}
 
 	const int MAX_PAGE_SIZE = 500;
@@ -66,6 +70,9 @@ public class LevelsXPController : AuthenticatedController
 		var allRecords = _levelsRepository.GetAllLevelsInGuild(guildId).OrderByDescending(func).AsQueryable();
 		var selRecords = PagedList<GuildUserLevel>.ToPagedList(allRecords, page, pageSize);
 
-		return Ok(selRecords.Select(l => levelToDTO(l, guildLevelConfig)));
+		return Ok(selRecords.AsParallel().Select(async l => await levelToDTO(l, guildLevelConfig))
+			.Select(t => t.Result)
+			.Where(r => r != null)
+			.ToList());
     }
 }

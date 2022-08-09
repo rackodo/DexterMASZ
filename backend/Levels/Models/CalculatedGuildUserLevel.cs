@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using Bot.Models;
+using Discord;
 using Levels.DTOs;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,8 +14,8 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 		Token = guildUserLevel.Token;
 		UserId = guildUserLevel.UserId;
 		GuildId = guildUserLevel.GuildId;
-		Textxp = guildUserLevel.TextXp;
-		Voicexp = guildUserLevel.VoiceXp;
+		TextXp = guildUserLevel.TextXp;
+		VoiceXp = guildUserLevel.VoiceXp;
 		Config = config;
 	}
 
@@ -36,7 +37,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 		return XPFromLevel(level, Config);
 	}
 
-	public new long Textxp { 
+	public new long TextXp { 
 		get
 		{
 			return base.TextXp;
@@ -49,7 +50,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 		}
 	}
 
-	public new long Voicexp
+	public new long VoiceXp
 	{
 		get
 		{
@@ -73,7 +74,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 		get
 		{
 			if (_textLevel is null)
-				_textLevel = LevelFromXP(Textxp);
+				_textLevel = LevelFromXP(TextXp);
 			return _textLevel;
 		}
 	}
@@ -83,7 +84,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 		get
 		{
 			if (_voiceLevel is null)
-				_voiceLevel = LevelFromXP(Voicexp);
+				_voiceLevel = LevelFromXP(VoiceXp);
 			return _voiceLevel;
 		}
 	}
@@ -93,14 +94,14 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 		get
 		{
 			if (_totalLevel is null)
-				_totalLevel = LevelFromXP(Textxp + Voicexp);
+				_totalLevel = LevelFromXP(TextXp + VoiceXp);
 			return _totalLevel;
 		}
 	}
 
-	public GuildUserLevelDTO ToDTO()
+	public GuildUserLevelDTO ToDTO(DiscordUser user)
 	{
-		return new GuildUserLevelDTO(GuildId, UserId, Text.toDTO(), Voice.toDTO(), Total.toDTO());
+		return new GuildUserLevelDTO(GuildId, UserId, Text.toDTO(), Voice.toDTO(), Total.toDTO(), user);
 	}
 }
 

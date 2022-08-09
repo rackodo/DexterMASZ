@@ -124,6 +124,9 @@ import { GuildLeaderboardComponent } from './components/guilds/guild-leaderboard
 import { ComingSoonComponent } from './components/basic/coming-soon/coming-soon.component';
 import { LevelsConfigComponent } from './components/guilds/guild-config/levels-config/levels-config.component';
 import { NumberInputDialogComponent } from './components/dialogs/number-input-dialog/number-input-dialog.component';
+import { LeaderboardItemComponent } from './components/guilds/guild-leaderboard/leaderboard-item/leaderboard-item.component';
+import { LeaderboardRankingComponent } from './components/guilds/guild-leaderboard/leaderboard-ranking/leaderboard-ranking.component';
+import { UnitFormatPipe } from './pipes/unit-format.pipe';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -207,7 +210,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     GuildLeaderboardComponent,
     ComingSoonComponent,
     LevelsConfigComponent,
-    NumberInputDialogComponent
+    NumberInputDialogComponent,
+    LeaderboardItemComponent,
+    LeaderboardRankingComponent,
+    UnitFormatPipe
   ],
   imports: [
     CommonModule,
