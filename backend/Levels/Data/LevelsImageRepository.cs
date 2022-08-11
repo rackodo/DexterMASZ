@@ -4,15 +4,9 @@ using Bot.Exceptions;
 using Bot.Models;
 using Bot.Services;
 using Levels.Events;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Levels.Data;
 

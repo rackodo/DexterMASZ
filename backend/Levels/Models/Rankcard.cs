@@ -1,12 +1,7 @@
 ﻿using Bot.Extensions;
 using Discord;
 using Levels.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.Fonts;
@@ -14,10 +9,8 @@ using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using Image = SixLabors.ImageSharp.Image;
 using Color = SixLabors.ImageSharp.Color;
-using Path = SixLabors.ImageSharp.Drawing.Path;
 using IOPath = System.IO.Path;
 using SixLabors.ImageSharp.Drawing.Processing;
-using Microsoft.Extensions.DependencyInjection;
 using Bot.Data;
 
 namespace Levels.Models;
@@ -125,11 +118,11 @@ public static class Rankcard
 	public static async Task<Image> RenderRankCard(IUser user, CalculatedGuildUserLevel ul, UserRankcardConfig rankcardConfig, GuildUserLevelRepository levelsRepo, SettingsRepository configRepo)
 	{
 		var appconfig = await configRepo.GetAppSettings();
-		string fontPath = IOPath.Join(appconfig.AbsolutePathToFileUpload, "Media", "Fonts", "rankcardfont.ttf");
+		var fontPath = IOPath.Join(appconfig.AbsolutePathToFileUpload, "Media", "Fonts", "rankcardfont.ttf");
 
 		FontCollection fontCollection = new();
 		fontCollection.Add(fontPath);
-		FontFamily fontfamily = fontCollection.Families.First();
+		var fontfamily = fontCollection.Families.First();
 
 		Font fontTitle = new(fontfamily, 55);
 		Font fontDefault = new(fontfamily, 40);
@@ -140,11 +133,11 @@ public static class Rankcard
 
 		string totallevelstr;
 
-		List<GuildUserLevel> allUsers = levelsRepo.GetAllLevelsInGuild(ul.GuildId).ToList();
+		var allUsers = levelsRepo.GetAllLevelsInGuild(ul.GuildId).ToList();
 		allUsers.Sort((a, b) => b.TextXp.CompareTo(a.TextXp));
-		int txtrank = allUsers.FindIndex(ul => ul.UserId == user.Id) + 1;
+		var txtrank = allUsers.FindIndex(ul => ul.UserId == user.Id) + 1;
 		allUsers.Sort((a, b) => b.VoiceXp.CompareTo(a.VoiceXp));
-		int vcrank = allUsers.FindIndex(ul => ul.UserId == user.Id) + 1;
+		var vcrank = allUsers.FindIndex(ul => ul.UserId == user.Id) + 1;
 
 		levelsData.Add(new RankcardLevelData(ul.TotalXP, mainLevel, ul.Config!));
 
@@ -180,9 +173,9 @@ public static class Rankcard
 		Func<IImageProcessingContext, IImageProcessingContext> bgTransform;
 		Func<IImageProcessingContext, IImageProcessingContext> pfpTransform;
 
-		Color xpColor = Graphics.ColorFromArgb(rankcardConfig.XpColor);
-		Color offColor = Graphics.ColorFromArgb(rankcardConfig.OffColor);
-		Color lvlBgColor = Graphics.ColorFromArgb(rankcardConfig.LevelBgColor);
+		var xpColor = Graphics.ColorFromArgb(rankcardConfig.XpColor);
+		var offColor = Graphics.ColorFromArgb(rankcardConfig.OffColor);
+		var lvlBgColor = Graphics.ColorFromArgb(rankcardConfig.LevelBgColor);
 
 		Image? bg = null;
 		try
@@ -190,7 +183,7 @@ public static class Rankcard
 			if (rankcardConfig.Background.StartsWith("http"))
 				throw new FileLoadException();
 
-			string fileName = BackgroundPath(rankcardConfig.Background ?? "default");
+			var fileName = BackgroundPath(rankcardConfig.Background ?? "default");
 			bg = Image.Load(File.ReadAllBytes(fileName));
 			bg.Mutate(ctx => ctx.Resize(mainRect.Size));
 			bgTransform = g => g.DrawImage(bg, 1);
@@ -241,7 +234,7 @@ public static class Rankcard
 		{
 			try
 			{
-				byte[] dataArr = await client.GetByteArrayAsync(user.GetAvatarOrDefaultUrl(size: 512));
+				var dataArr = await client.GetByteArrayAsync(user.GetAvatarOrDefaultUrl(size: 512));
 				pfp = Image.Load(dataArr);
 				pfp.Mutate(ctx => ctx.Resize(rectPfp.Size));
 
@@ -265,7 +258,7 @@ public static class Rankcard
 		Image result = new Image<Rgba32>(widthmain + pfpside, height);
 		result.Mutate(g =>
 		{
-			FontRectangle offset = TextMeasurer.Measure(totallevel.ToString(), new TextOptions(fontTitle));
+			var offset = TextMeasurer.Measure(totallevel.ToString(), new TextOptions(fontTitle));
 			const int margin = 5;
 
 			g = bgTransform(g);
@@ -312,17 +305,17 @@ public static class Rankcard
 
 	private static IImageProcessingContext DrawLevels(this IImageProcessingContext g, Font fontTitle, Font fontDefault, Font fontMini, IEnumerable<RankcardLevelData> levels, UserRankcardConfig prefs)
 	{
-		Color xpColor = Graphics.ColorFromArgb(prefs.XpColor);
-		Color offColor = Graphics.ColorFromArgb(prefs.OffColor);
+		var xpColor = Graphics.ColorFromArgb(prefs.XpColor);
+		var offColor = Graphics.ColorFromArgb(prefs.OffColor);
 
-		foreach (RankcardLevelData ld in levels)
+		foreach (var ld in levels)
 		{
 			if (ld is null) continue;
-			Rectangle barRect = ld.rects.Bar(1);
-			IPath levelPath = Graphics.RoundedRect(ld.rects.fullRect, ld.rects.fullRect.Height / 3);
-			IPath barWholePath = Graphics.RoundedRect(barRect, barRect.Height / 2);
-			IPath barXPGPath = Graphics.RoundedRect(ld.rects.Bar(ld.Percent), barRect.Height / 2);
-			IPath barInnerClipPath = Graphics.RoundedRect(new Rectangle(barRect.X + 2, barRect.Y + 2, barRect.Width - 4, barRect.Height - 4), barRect.Height / 2 - 2);
+			var barRect = ld.rects.Bar(1);
+			var levelPath = Graphics.RoundedRect(ld.rects.fullRect, ld.rects.fullRect.Height / 3);
+			var barWholePath = Graphics.RoundedRect(barRect, barRect.Height / 2);
+			var barXPGPath = Graphics.RoundedRect(ld.rects.Bar(ld.Percent), barRect.Height / 2);
+			var barInnerClipPath = Graphics.RoundedRect(new Rectangle(barRect.X + 2, barRect.Y + 2, barRect.Width - 4, barRect.Height - 4), barRect.Height / 2 - 2);
 			var levelRenderArea = levelPath.Clip(barWholePath);
 
 			g = g.Fill(Graphics.ColorFromArgb(0xe0000000), barWholePath)
@@ -341,7 +334,7 @@ public static class Rankcard
 			if (ld.rects.nextLevel != default)
 				g = g.DrawTextInRect((ld.Level + 1).ToString(), ld.rects.nextLevel, fontTitle, xpColor, HorizontalAlignment.Center, VerticalAlignment.Center);
 
-			Rectangle textXPTarget = ld.rects.expText;
+			var textXPTarget = ld.rects.expText;
 			if (!ld.isHybrid && prefs.RankcardFlags.HasFlag(RankcardFlags.InsetMainXP))
 			{
 				ld.isHybrid = true;
@@ -350,7 +343,7 @@ public static class Rankcard
 
 			if (ld.isHybrid)
 			{
-				Color overXPColor = xpColor.GetBrightness() < 0.5 ? Color.White : Color.Black;
+				var overXPColor = xpColor.GetBrightness() < 0.5 ? Color.White : Color.Black;
 				g = g.DrawTextInRect(ld.XpExpr, textXPTarget, fontDefault, xpColor, HorizontalAlignment.Center, VerticalAlignment.Bottom)
 				.Clip(barXPGPath,
 					gclip => gclip.DrawTextInRect(ld.XpExpr, textXPTarget, fontDefault, overXPColor, HorizontalAlignment.Center, VerticalAlignment.Bottom));

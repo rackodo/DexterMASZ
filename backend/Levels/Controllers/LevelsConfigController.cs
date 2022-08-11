@@ -97,7 +97,7 @@ public class LevelsConfigController : AuthenticatedController
 			return BadRequest("Leveling coefficients must have between 2 and 10 elements!");
 
 		config.Coefficients[0] = 0;
-		for (int i = 1; i < config.Coefficients.Length; i++)
+		for (var i = 1; i < config.Coefficients.Length; i++)
 		{
 			var n = config.Coefficients[i];
 			if (n <= 0) return BadRequest("Found non-positive coefficients in configuration.");
@@ -112,8 +112,8 @@ public class LevelsConfigController : AuthenticatedController
 			return BadRequest("Invalid range for Voice Experience, minimum exceeds maximum.");
 
 		if (config.NicknameDisabledReplacement != default) {
-			bool found = false;
-			foreach (ulong[] roleIds in config.Levels.Values)
+			var found = false;
+			foreach (var roleIds in config.Levels.Values)
 			{
 				if (roleIds.Contains(config.NicknameDisabledReplacement))
 				{

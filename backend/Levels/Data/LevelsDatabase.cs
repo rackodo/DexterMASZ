@@ -1,15 +1,9 @@
 ﻿using Bot.Abstractions;
-using Discord;
 using Levels.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Levels.Data;
 
@@ -73,7 +67,7 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, DataContextCreate
 		{
 			return null;
 		}
-		string token = GuildUserLevel.GenerateToken(guildid, userid);
+		var token = GuildUserLevel.GenerateToken(guildid, userid);
 		return GuildUserLevels.Find(token);
 	}
 
@@ -112,7 +106,7 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, DataContextCreate
 		{
 			return 0;
 		}
-		GuildUserLevel[] range = GuildUserLevels.AsQueryable().Where(x => x.GuildId == guildid).ToArray();
+		var range = GuildUserLevels.AsQueryable().Where(x => x.GuildId == guildid).ToArray();
 		GuildUserLevels.RemoveRange(range);
 		await SaveChangesAsync();
 		return range.Length;

@@ -4,11 +4,6 @@ using Bot.Services;
 using Discord;
 using Levels.Events;
 using Levels.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Levels.Data;
 
@@ -32,8 +27,8 @@ public class GuildLevelConfigRepository : Repository
 
 	public async Task<GuildLevelConfig> GetOrCreateConfig(ulong guildId)
 	{
-		GuildLevelConfig? config = _database.GetGuildLevelConfig(guildId);
-		bool created = false;
+		var config = _database.GetGuildLevelConfig(guildId);
+		var created = false;
 		if (config is null)
 		{
 			created = true;

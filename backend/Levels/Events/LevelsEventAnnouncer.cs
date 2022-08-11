@@ -56,9 +56,9 @@ public class LevelsEventAnnouncer : Event
 					levelUpChannel = config.SendTextLevelUps ? tc : null;
 				}
 
-				string template = config.LevelUpMessageOverrides.GetValueOrDefault(level, config.LevelUpTemplate);
+				var template = config.LevelUpMessageOverrides.GetValueOrDefault(level, config.LevelUpTemplate);
 				if (string.IsNullOrEmpty(template)) return;
-				string msg = template
+				var msg = template
 					.Replace("{USER}", guildUser.Mention)
 					.Replace("{LEVEL}", level.ToString());
 				

@@ -10,19 +10,19 @@ public static class Graphics
 {
 	public static Color ColorFromArgb(this uint code)
 	{
-		byte b = (byte) (code % 256);
+		var b = (byte) (code % 256);
 		code >>= 8;
-		byte g = (byte) (code % 256);
+		var g = (byte) (code % 256);
 		code >>= 8;
-		byte r = (byte) (code % 256);
+		var r = (byte) (code % 256);
 		code >>= 8;
-		byte a = (byte) code;
+		var a = (byte) code;
 		return Color.FromRgba(r, g, b, a);
 	}
 
 	public static IImageProcessingContext DrawTextInRect(this IImageProcessingContext context, string text, RectangleF rect, Font font, Color color = default, HorizontalAlignment horAlignment = HorizontalAlignment.Left, VerticalAlignment verAlignment = VerticalAlignment.Top)
 	{
-		TextOptions opts = new TextOptions(font)
+		var opts = new TextOptions(font)
 		{
 			HorizontalAlignment = horAlignment,
 			VerticalAlignment = verAlignment,

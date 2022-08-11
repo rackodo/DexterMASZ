@@ -5,11 +5,6 @@ using Levels.Data;
 using Levels.DTOs;
 using Levels.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Levels.Controllers;
 
@@ -31,7 +26,7 @@ public class LevelsRankcardController : AuthenticatedController
 	[HttpGet("{userId}")]
 	public IActionResult GetRankcardConfig([FromRoute] ulong userId)
 	{
-		UserRankcardConfig config = _levelsRankcardRepository.GetOrDefaultRankcard(userId);
+		var config = _levelsRankcardRepository.GetOrDefaultRankcard(userId);
 
 		var result = new UserRankcardConfigDTO(
 			id: config.Id,
