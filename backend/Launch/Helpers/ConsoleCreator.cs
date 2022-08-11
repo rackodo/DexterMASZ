@@ -1,6 +1,7 @@
-﻿using Bot.Dynamics;
-using Bot.Enums;
+﻿using Bot.Enums;
 using Bot.Models;
+using Launch.Enums;
+using Launch.Models;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -81,28 +82,13 @@ public static class ConsoleCreator
 		var (user, updatedUser) = AskAndSet("database login username", "MYSQL_USER", !isEdit);
 		var (pass, updatedPass) = AskAndSet("database login password", "MYSQL_PASSWORD", !isEdit);
 
-		KeyValuePair<ulong, bool> clientId;
-
-		while (true)
-		{
-			var client =
-				AskAndSet("Discord OAuth Client ID", "DISCORD_OAUTH_CLIENT_ID", !isEdit);
-
-			if (ulong.TryParse(client.Key, out var id))
-			{
-				clientId = new(id, client.Value);
-				break;
-			}
-		}
-
 		var hasChanged = false;
 
-		if (updatedHost || updatedPort || updatedDatabase || updatedUser || updatedPass || clientId.Value)
+		if (updatedHost || updatedPort || updatedDatabase || updatedUser || updatedPass)
 			hasChanged = true;
 
 		return new(new DatabaseSettings
 		{
-			ClientId = clientId.Key,
 			Database = database,
 			Host = host,
 			Port = port,
@@ -111,11 +97,11 @@ public static class ConsoleCreator
 		}, hasChanged);
 	}
 
-	public static AppSettings CreateAppSettings(ClientIdContainer clientIdContainer, bool isEdit)
+	public static AppSettings CreateAppSettings(ulong clientId, bool isEdit)
 	{
 		var settings = new AppSettings
 		{
-			ClientId = clientIdContainer.ClientId,
+			ClientId = clientId,
 			ClientSecret = Ask("Discord OAuth Client Secret", "DISCORD_OAUTH_CLIENT_SECRET", !isEdit),
 
 			DiscordBotToken = Ask("Discord bot token", "DISCORD_BOT_TOKEN", !isEdit),
@@ -147,14 +133,14 @@ public static class ConsoleCreator
 		{
 			case DeploymentType.Domain:
 				settings.ServiceDomain = Ask("(sub)domain", "META_SERVICE_DOMAIN", !isEdit);
-				settings.ServiceBaseUrl = $"https://{settings.ServiceDomain}";
+				settings.EncryptionType = AskDefinedChoice<EncryptionType>("is https", "META_SERVICE_HTTPS", !isEdit);
 				settings.CorsEnabled = false;
 				AddSubHeading("Alert", "Be sure to redirect your reverse proxy correctly");
 				AddSubHeading("The docker container will be listening on local port", "5565");
 				break;
 			case DeploymentType.Local:
 				settings.ServiceDomain = "127.0.0.1:5565";
-				settings.ServiceBaseUrl = $"http://{settings.ServiceDomain}";
+				settings.EncryptionType = EncryptionType.HTTP;
 				settings.CorsEnabled = true;
 				break;
 			default:

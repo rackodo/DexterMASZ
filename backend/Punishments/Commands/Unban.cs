@@ -49,7 +49,7 @@ public class Unban : Command<Unban>
 				truncate = 30;
 
 			interactionString.Append($"- [#{modCase.CaseId} - {modCase.Title.Truncate(truncate)}]");
-			interactionString.Append($"({config.ServiceBaseUrl}/guilds/{modCase.GuildId}/cases/{modCase.CaseId})");
+			interactionString.Append($"({config.GetServiceUrl()}/guilds/{modCase.GuildId}/cases/{modCase.CaseId})");
 
 			if (modCase.PunishedUntil != null)
 				interactionString.Append(

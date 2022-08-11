@@ -34,9 +34,10 @@ public static class EmbedCreator
 			embed.WithAuthor(author);
 
 		var config = await provider.GetRequiredService<SettingsRepository>().GetAppSettings();
+		var url = config.GetServiceUrl();
 
-		if (!string.IsNullOrEmpty(config.ServiceBaseUrl))
-			embed.Url = config.ServiceBaseUrl;
+		if (!string.IsNullOrEmpty(url))
+			embed.Url = url;
 
 		return embed;
 	}

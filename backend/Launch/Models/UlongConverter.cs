@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Launch;
+namespace Launch.Models;
 
 public class UlongConverter : JsonConverter
 {

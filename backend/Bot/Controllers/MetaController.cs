@@ -31,7 +31,7 @@ public class MetaController : BaseController
 
 		return new ContentResult()
 		{
-			Content = appSettings.GetEmbedData(appSettings.ServiceBaseUrl),
+			Content = appSettings.GetEmbedData(appSettings.GetServiceUrl()),
 			ContentType = "text/html"
 		};
 	}

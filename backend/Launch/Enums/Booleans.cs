@@ -1,4 +1,4 @@
-﻿namespace Launch;
+﻿namespace Launch.Enums;
 
 public enum Booleans
 {

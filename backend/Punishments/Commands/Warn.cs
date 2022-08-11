@@ -53,7 +53,7 @@ public class Warn : Command<Warn>
 
 		var config = await SettingsRepository.GetAppSettings();
 
-		var url = $"{config.ServiceBaseUrl}/guilds/{created.GuildId}/cases/{created.CaseId}";
+		var url = $"{config.GetServiceUrl}/guilds/{created.GuildId}/cases/{created.CaseId}";
 
 		await Context.Interaction.ModifyOriginalResponseAsync((MessageProperties msg) =>
 		{

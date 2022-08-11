@@ -188,7 +188,7 @@ public class ModCaseRepository : Repository,
 			foreach (var modCase in cases.Take(5))
 			{
 				caseInfo.Append($"[{modCase.CaseId} - {modCase.Title.Truncate(50)}]");
-				caseInfo.Append($"({config.ServiceBaseUrl}/guilds/{modCase.GuildId}/cases/{modCase.CaseId})\n");
+				caseInfo.Append($"({config.GetServiceUrl()}/guilds/{modCase.GuildId}/cases/{modCase.CaseId})\n");
 			}
 
 			if (cases.Count > 5)
@@ -209,7 +209,7 @@ public class ModCaseRepository : Repository,
 							$"({translator.Get<BotTranslator>().Until()} {modCase.PunishedUntil.Value.ToDiscordTs()}) ");
 
 					activeInfo.Append($"[{modCase.CaseId} - {modCase.Title.Truncate(50)}]");
-					activeInfo.Append($"({config.ServiceBaseUrl}/guilds/{modCase.GuildId}/cases/{modCase.CaseId})\n");
+					activeInfo.Append($"({config.GetServiceUrl()}/guilds/{modCase.GuildId}/cases/{modCase.CaseId})\n");
 				}
 
 				if (activeCases.Count > 5)

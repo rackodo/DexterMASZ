@@ -38,6 +38,6 @@ public class Leaderboard : Command<Leaderboard>
 			return;
 
 		var settings = await SettingsRepository!.GetAppSettings();
-		await RespondAsync($"{settings.ServiceBaseUrl.Replace("5565", "4200")}/guilds/{Context.Guild.Id}/leaderboard");
+		await RespondAsync($"{settings.GetServiceUrl().Replace("5565", "4200")}/guilds/{Context.Guild.Id}/leaderboard");
 	}
 }

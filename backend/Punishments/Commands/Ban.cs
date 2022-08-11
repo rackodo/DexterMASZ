@@ -54,7 +54,7 @@ public class Ban : Command<Ban>
 			await ModCaseRepository.CreateModCase(modCase);
 
 		var url =
-			$"{(await SettingsRepository.GetAppSettings()).ServiceBaseUrl}/guilds/{created.GuildId}/cases/{created.CaseId}";
+			$"{(await SettingsRepository.GetAppSettings()).GetServiceUrl()}/guilds/{created.GuildId}/cases/{created.CaseId}";
 
 		await Context.Interaction.ModifyOriginalResponseAsync((MessageProperties msg) =>
 		{

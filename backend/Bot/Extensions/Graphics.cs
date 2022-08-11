@@ -3,12 +3,6 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.Processing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GraphicsPath = SixLabors.ImageSharp.Drawing.Path;
 
 namespace Bot.Extensions;
 

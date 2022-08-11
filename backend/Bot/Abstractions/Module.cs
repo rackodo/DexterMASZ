@@ -9,11 +9,7 @@ namespace Bot.Abstractions;
 
 public abstract class Module
 {
-	public abstract string Creator { get; }
-
 	public abstract string[] Contributors { get; }
-
-	public abstract string[] Translators { get; }
 
 	public virtual void AddLogging(ILoggingBuilder loggingBuilder)
 	{

@@ -31,7 +31,7 @@ public class StatusController : BaseController
 			{
 				status = "OK",
 				lang = config.DefaultLanguage,
-				name = config.ServiceBaseUrl,
+				name = config.GetServiceUrl(),
 				server_time = DateTime.Now.ToString(CultureInfo.InvariantCulture),
 				server_time_utc = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)
 			});
