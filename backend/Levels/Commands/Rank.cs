@@ -48,15 +48,31 @@ public class Rank : Command<Rank>
 		var calclevel = new CalculatedGuildUserLevel(level, guildlevelconfig);
 
 		_ = DeferAsync();
+		string path = "";
 
-		var appconfig = await SettingsRepository!.GetAppSettings();
-		string path = Storage(user, appconfig.AbsolutePathToFileUpload);
-		using (var rankcardimg = await Models.Rankcard.RenderRankCard(user, calclevel, rankcardconfig, GuildUserLevelRepository, SettingsRepository))
+		try
 		{
-			await rankcardimg.SaveAsPngAsync(path);
+			var appconfig = await SettingsRepository!.GetAppSettings();
+			path = Storage(user, appconfig.AbsolutePathToFileUpload);
+			using (var rankcardimg = await Models.Rankcard.RenderRankCard(user, calclevel, rankcardconfig, GuildUserLevelRepository, SettingsRepository))
+			{
+				await rankcardimg.SaveAsPngAsync(path);
+			}
+			await FollowupWithFileAsync(path);
 		}
-		await FollowupAsync($"Level {calclevel.Total.Level}: {calclevel.Total.Xp} XP");
-		await Context.Channel.SendFileAsync(path);
-		File.Delete(path);
+		catch (Exception ex)
+		{
+			await FollowupAsync("There was an error while rendering your rankcard!", new Embed[]
+			{
+				new EmbedBuilder()
+					.WithTitle("An error has occurred!")
+					.WithDescription("An exception took place while handling rankcard rendering! \n" +
+						$"{ex.GetType().Name}: {ex.Message}")
+					.Build()
+			});
+		}
+
+		if (File.Exists(path))
+			File.Delete(path);
 	}
 }
