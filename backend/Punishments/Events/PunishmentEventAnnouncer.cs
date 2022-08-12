@@ -87,26 +87,26 @@ public class PunishmentEventAnnouncer : Event
 					case PunishmentType.Mute:
 						if (modCase.PunishedUntil.HasValue)
 							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmMuteTemp(modCase, guild, settings.ServiceBaseUrl);
+								.NotificationModCaseDmMuteTemp(modCase, guild, settings.GetServiceUrl());
 						else
 							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmMutePerm(guild, settings.ServiceBaseUrl);
+								.NotificationModCaseDmMutePerm(guild, settings.GetServiceUrl());
 						break;
 					case PunishmentType.Kick:
 						message = translator.Get<PunishmentNotificationTranslator>()
-							.NotificationModCaseDmKick(guild, settings.ServiceBaseUrl);
+							.NotificationModCaseDmKick(guild, settings.GetServiceUrl());
 						break;
 					case PunishmentType.Ban:
 						if (modCase.PunishedUntil.HasValue)
 							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmBanTemp(modCase, guild, settings.ServiceBaseUrl);
+								.NotificationModCaseDmBanTemp(modCase, guild, settings.GetServiceUrl());
 						else
 							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmBanPerm(guild, settings.ServiceBaseUrl);
+								.NotificationModCaseDmBanPerm(guild, settings.GetServiceUrl());
 						break;
 					case PunishmentType.Warn:
 						message = translator.Get<PunishmentNotificationTranslator>()
-							.NotificationModCaseDmWarn(guild, settings.ServiceBaseUrl);
+							.NotificationModCaseDmWarn(guild, settings.GetServiceUrl());
 						break;
 				}
 

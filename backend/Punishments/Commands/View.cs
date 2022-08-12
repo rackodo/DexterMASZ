@@ -42,7 +42,7 @@ public class View : Command<View>
 			var config = await SettingsRepository.GetAppSettings();
 
 			var embed = new EmbedBuilder()
-				.WithUrl($"{config.ServiceBaseUrl}/guilds/{modCase.GuildId}/cases/{modCase.CaseId}")
+				.WithUrl($"{config.GetServiceUrl()}/guilds/{modCase.GuildId}/cases/{modCase.CaseId}")
 				.WithTimestamp(modCase.CreatedAt)
 				.WithColor(Color.Blue)
 				.WithTitle($"#{modCase.CaseId} {modCase.Title.Truncate(200)}")

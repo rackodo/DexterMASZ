@@ -3,11 +3,6 @@ using Bot.Services;
 using Discord;
 using Levels.Events;
 using Levels.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Levels.Data;
 
@@ -31,7 +26,7 @@ public class GuildUserLevelRepository : Repository
 
 	public async Task<GuildUserLevel> GetOrCreateLevel(ulong guildid, ulong userid)
 	{
-		GuildUserLevel? level = _database.GetGuildUserLevel(guildid, userid);
+		var level = _database.GetGuildUserLevel(guildid, userid);
 		if (level is null)
 		{
 			level = new GuildUserLevel(guildid, userid);

@@ -1,18 +1,8 @@
 ﻿using Bot.Abstractions;
-using Bot.DTOs;
 using Bot.Exceptions;
 using Bot.Models;
-using Bot.Services;
 using Levels.Data;
-using Levels.DTOs;
-using Levels.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Levels.Controllers;
 

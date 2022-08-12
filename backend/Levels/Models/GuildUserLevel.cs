@@ -1,7 +1,6 @@
 ﻿using Discord;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Levels.Models;
 
@@ -38,13 +37,13 @@ public class GuildUserLevel
 	public static string GenerateToken(ulong guildid, ulong userid)
 	{
 		var chars = new char[22];
-		for (int i = 10; i >= 0; i--)
+		for (var i = 10; i >= 0; i--)
 		{
 			chars[i] = (char) ('0' + (guildid & 0x3f));
 			guildid >>= 6;
 		}
 
-		for (int i = 21; i >= 11; i--)
+		for (var i = 21; i >= 11; i--)
 		{
 			chars[i] = (char) ('0' + (userid & 0x3f));
 			userid >>= 6;
@@ -55,21 +54,21 @@ public class GuildUserLevel
 
 	public static int LevelFromXP(long xp, GuildLevelConfig config, out long residualxp, out long levelxp)
 	{
-		int min = 0;
-		int max = 100;
+		var min = 0;
+		var max = 100;
 		while (xp > XPFromLevel(max, config))
 		{
 			min = max;
 			max <<= 1;
 		}
 
-		int attempts = 200;
+		var attempts = 200;
 		while (attempts-- > 0)
 		{
-			int middle = (min + max) / 2;
+			var middle = (min + max) / 2;
 
-			long xpmiddle = XPFromLevel(middle, config);
-			long xpmaxmiddle = XPFromLevel(middle + 1, config);
+			var xpmiddle = XPFromLevel(middle, config);
+			var xpmaxmiddle = XPFromLevel(middle + 1, config);
 
 			if (xp >= xpmaxmiddle)
 			{
@@ -96,7 +95,7 @@ public class GuildUserLevel
 	{
 		float xp = 0;
 		long mult = 1;
-		foreach (float v in config.Coefficients)
+		foreach (var v in config.Coefficients)
 		{
 			xp += v * mult;
 			mult *= level;

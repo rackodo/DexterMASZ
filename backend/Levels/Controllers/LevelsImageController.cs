@@ -1,18 +1,10 @@
 ﻿using Bot.Abstractions;
 using Bot.DTOs;
 using Bot.Exceptions;
-using Bot.Models;
 using Bot.Services;
 using Levels.Data;
-using Levels.DTOs;
-using Levels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Levels.Controllers;
 
@@ -43,7 +35,7 @@ public class LevelsImageController : AuthenticatedController
 		return Ok();
 	}
 
-	const int MAXIMUM_FILE_SIZE = 10485760; //10 MiB
+	private const int MAXIMUM_FILE_SIZE = 10485760; //10 MiB
 	[Authorize]
 	[HttpPost("")]
 	[RequestSizeLimit(MAXIMUM_FILE_SIZE)]
@@ -67,7 +59,7 @@ public class LevelsImageController : AuthenticatedController
 		var currentBg = _levelsRankcardRepository.GetOrDefaultRankcard(userId).Background;
 		var otherImages = await _levelsImageRepository.GetUserFiles(userId);
 
-		foreach(string fileName in otherImages)
+		foreach(var fileName in otherImages)
 		{
 			if (path.EndsWith(fileName)) continue;
 			if (currentBg.EndsWith(fileName)) continue;

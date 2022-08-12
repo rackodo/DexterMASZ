@@ -1,4 +1,4 @@
-﻿namespace Launch;
+﻿namespace Launch.Models;
 
 public class DatabaseSettings
 {
@@ -7,5 +7,4 @@ public class DatabaseSettings
 	public string Database { get; set; }
 	public string User { get; set; }
 	public string Pass { get; set; }
-	public ulong ClientId { get; set; }
 }

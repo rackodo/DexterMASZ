@@ -3,6 +3,7 @@
     "Launch": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "http://127.0.0.1:5565",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

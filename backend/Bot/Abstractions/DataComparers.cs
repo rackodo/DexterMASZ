@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
-using System.Collections;
 using System.Runtime.Serialization;
 
 namespace Bot.Abstractions;
@@ -30,7 +29,7 @@ public class DictionaryDataComparer<TKey, TValue> : ValueComparer<Dictionary<TKe
     {
 		if (d1.Keys.Except(d2.Keys).Any()) return false;
 
-		foreach (KeyValuePair<TKey, TValue> kvp in d1)
+		foreach (var kvp in d1)
 		{
 			if (!kvp.Value.Equals(d1[kvp.Key]))
 				return false;

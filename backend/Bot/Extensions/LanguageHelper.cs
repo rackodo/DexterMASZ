@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bot.Extensions;
+﻿namespace Bot.Extensions;
 
 public static class LanguageHelper
 {
@@ -35,7 +29,7 @@ public static class LanguageHelper
 	public static string ToUnit(this long v, Dictionary<long, string> units = null)
 	{
 		if (units is null) units = BasicUnits;
-		foreach (KeyValuePair<long, string> kvp in units)
+		foreach (var kvp in units)
 		{
 			if (v >= kvp.Key)
 			{

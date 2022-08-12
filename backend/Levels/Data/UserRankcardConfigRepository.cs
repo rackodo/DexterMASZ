@@ -3,11 +3,6 @@ using Bot.Services;
 using Discord;
 using Levels.Events;
 using Levels.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Levels.Data;
 
@@ -29,7 +24,7 @@ public class UserRankcardConfigRepository : Repository
 	public UserRankcardConfig GetOrDefaultRankcard(IUser user) => GetOrDefaultRankcard(user.Id);
 	public UserRankcardConfig GetOrDefaultRankcard(ulong userid)
 	{
-		UserRankcardConfig? config = _database.GetUserRankcardConfig(userid);
+		var config = _database.GetUserRankcardConfig(userid);
 		if (config is null)
 			return new UserRankcardConfig(userid);
 		return config;
@@ -42,7 +37,7 @@ public class UserRankcardConfigRepository : Repository
 
 	public async Task<UserRankcardConfig> GetOrCreateRankcard(ulong userid)
 	{
-		UserRankcardConfig? config = _database.GetUserRankcardConfig(userid);
+		var config = _database.GetUserRankcardConfig(userid);
 		if (config is null)
 		{
 			config = new UserRankcardConfig(userid);

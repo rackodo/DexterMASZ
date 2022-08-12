@@ -1,18 +1,10 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
-using Bot.Translators;
 using Discord;
 using Discord.Interactions;
 using Levels.Data;
 using Levels.Models;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Image = SixLabors.ImageSharp.Image;
 
 namespace Levels.Commands;
 

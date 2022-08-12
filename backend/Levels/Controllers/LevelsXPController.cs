@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Services;
 using Levels.Data;
 using Levels.DTOs;
@@ -38,7 +33,7 @@ public class LevelsXPController : AuthenticatedController
 
 	private async Task<GuildUserLevelDTO> levelToDTO(GuildUserLevel level)
 	{
-		GuildLevelConfig guildLevelConfig = await _levelsConfigRepository.GetOrCreateConfig(level.GuildId);
+		var guildLevelConfig = await _levelsConfigRepository.GetOrCreateConfig(level.GuildId);
 		return await levelToDTO(level, guildLevelConfig);
 	}
 
@@ -65,7 +60,7 @@ public class LevelsXPController : AuthenticatedController
 			_ => (l) => l.TotalXP
 		};
 
-		GuildLevelConfig guildLevelConfig = await _levelsConfigRepository.GetOrCreateConfig(guildId);
+		var guildLevelConfig = await _levelsConfigRepository.GetOrCreateConfig(guildId);
 
 		var allRecords = _levelsRepository.GetAllLevelsInGuild(guildId).OrderByDescending(func).AsQueryable();
 		var selRecords = PagedList<GuildUserLevel>.ToPagedList(allRecords, page, pageSize);

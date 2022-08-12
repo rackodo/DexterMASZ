@@ -1,5 +1,4 @@
 ﻿using Bot.Abstractions;
-using Bot.Dynamics;
 using Bot.Models;
 using Bot.Services;
 
@@ -8,18 +7,18 @@ namespace Bot.Data;
 public class SettingsRepository : Repository
 {
 	private readonly BotDatabase _botDatabase;
-	private readonly ClientIdContainer _clientIdContainer;
+	private readonly ulong _clientId;
 
-	public SettingsRepository(BotDatabase botDatabase, ClientIdContainer clientIdContainer,
+	public SettingsRepository(BotDatabase botDatabase, AppSettings appSettings,
 		DiscordRest discordRest) : base(discordRest)
 	{
 		_botDatabase = botDatabase;
-		_clientIdContainer = clientIdContainer;
+		_clientId = appSettings.ClientId;
 	}
 
 	public async Task<AppSettings> GetAppSettings()
 	{
-		return await _botDatabase.GetAppSettings(_clientIdContainer.ClientId);
+		return await _botDatabase.GetAppSettings(_clientId);
 	}
 
 	public async Task AddAppSetting(AppSettings appSettings)

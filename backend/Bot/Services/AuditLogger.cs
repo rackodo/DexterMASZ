@@ -45,7 +45,7 @@ public class AuditLogger : IHostedService, Event
 		QueueLog("System time: " + DateTime.Now);
 		QueueLog("System time (UTC): " + DateTime.UtcNow);
 		QueueLog($"Language: `{config.DefaultLanguage}`");
-		QueueLog($"URL: `{config.ServiceBaseUrl}`");
+		QueueLog($"URL: `{config.GetServiceUrl()}`");
 		QueueLog($"Domain: `{config.ServiceDomain}`");
 		QueueLog($"Client ID: `{config.ClientId}`");
 

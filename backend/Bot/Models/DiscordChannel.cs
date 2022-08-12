@@ -1,5 +1,4 @@
 using Bot.Exceptions;
-using Bot.Extensions;
 using Discord;
 
 namespace Bot.Models;
