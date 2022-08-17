@@ -40,8 +40,8 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 		} 
 		set
 		{
-			if (_textLevel is not null) _textLevel.SetXp(value, Config!);
-			if (_totalLevel is not null) _totalLevel.SetXp(value + base.VoiceXp, Config!);
+			_textLevel?.SetXp(value, Config!);
+			_totalLevel?.SetXp(value + base.VoiceXp, Config!);
 			base.TextXp = value;
 		}
 	}
@@ -54,8 +54,8 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 		}
 		set
 		{
-			if (_voiceLevel is not null) _voiceLevel.SetXp(value, Config!);
-			if (_totalLevel is not null) _totalLevel.SetXp(value + base.TextXp, Config!);
+			_voiceLevel?.SetXp(value, Config!);
+			_totalLevel?.SetXp(value + base.TextXp, Config!);
 			base.VoiceXp = value;
 		}
 	}

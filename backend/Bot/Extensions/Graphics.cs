@@ -62,13 +62,13 @@ public static class Graphics
 		var path = new PathBuilder();
 
 		path.SetOrigin(Point.Empty)
-		.AddBezier(p1, c1, p2)
+		.AddQuadraticBezier(p1, c1, p2)
 		//.AddLine(p2, p3)
-		.AddBezier(p3, c2, p4)
+		.AddQuadraticBezier(p3, c2, p4)
 		//.AddLine(p4, p5)
-		.AddBezier(p5, c3, p6)
+		.AddQuadraticBezier(p5, c3, p6)
 		//.AddLine(p6, p7)
-		.AddBezier(p7, c4, p8)
+		.AddQuadraticBezier(p7, c4, p8)
 		//.AddLine(p8, p1)
 		.CloseFigure();
 
