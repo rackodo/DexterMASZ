@@ -133,7 +133,7 @@ public static class ConsoleHelper
 		{
 			case DeploymentType.Domain:
 				settings.ServiceDomain = Ask("(sub)domain", "META_SERVICE_DOMAIN");
-				settings.EncryptionType = AskDefinedChoice<EncryptionType>("is https", "META_SERVICE_HTTPS");
+				settings.EncryptionType = AskDefinedChoice<EncryptionType>("encryption type", "META_SERVICE_HTTPS");
 				settings.CorsEnabled = false;
 				AddSubHeading("Alert", "Be sure to redirect your reverse proxy correctly");
 				AddSubHeading("The docker container will be listening on local port", "5565");
