@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using System.Reflection;
+using Module = Bot.Abstractions.Module;
 
 namespace Launch;
 
@@ -21,6 +23,10 @@ public class Initialize
 			Console.WriteLine("============= Launching =============");
 
 			var builder = WebApplication.CreateBuilder();
+
+			ConsoleHelper.AddHeading("Get Modules");
+			var modules = GetModules();
+			Console.ResetColor();
 
 			var cachedServices = new CachedServices();
 
@@ -60,10 +66,6 @@ public class Initialize
 				Console.ResetColor();
 				return;
 			}
-
-			ConsoleHelper.AddHeading("Get Modules");
-			var modules = GetModules();
-			Console.ResetColor();
 
 			ConsoleHelper.AddHeading("Importing Modules");
 			InitializeModules(modules, database, cachedServices, appSettings, builder);
@@ -131,7 +133,7 @@ public class Initialize
 	private static async Task TryAddMigrations(CachedServices cachedServices,
 		WebApplicationBuilder builder, Action<DbContextOptionsBuilder> database)
 	{
-		foreach (var type in cachedServices.GetClassTypes<DataContextCreate>())
+		foreach (var type in cachedServices.GetClassTypes<DataContextInitialize>())
 			type.GetMethod("AddContextToServiceProvider")?.Invoke(null, new object[] { database, builder.Services });
 
 		var app = builder.Build();
@@ -209,12 +211,12 @@ public class Initialize
 			{
 				ConsoleHelper.AddSubHeading("Found app settings for client", clientId.ToString());
 
-				settings = ConsoleHelper.CreateAppSettings(clientId);
-
 				if (ConsoleHelper.ShouldEdit)
+				{
+					settings = ConsoleHelper.CreateAppSettings(clientId);
 					await appSettingRepo.UpdateAppSetting(settings);
-
-				Console.WriteLine();
+					Console.WriteLine();
+				}
 			}
 		}
 

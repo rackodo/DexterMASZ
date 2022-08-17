@@ -1,5 +1,11 @@
-﻿namespace Bot.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
-public interface DataContextCreate
+namespace Bot.Abstractions;
+
+public interface DataContextCreate : DataContextInitialize
 {
+	public static abstract void AddContextToServiceProvider(
+		Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection);
 }

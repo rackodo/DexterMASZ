@@ -7,6 +7,12 @@ namespace Bot.Data;
 
 public class BotDatabase : DataContext<BotDatabase>, DataContextCreate
 {
+	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection)
+	{
+		serviceCollection.AddDbContext<BotDatabase>(optionsAction);
+	}
+
 	public BotDatabase(DbContextOptions<BotDatabase> options) : base(options)
 	{
 	}

@@ -8,6 +8,12 @@ namespace Messaging.Data;
 
 public class MessagingDatabase : DataContext<MessagingDatabase>, DataContextCreate
 {
+	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection)
+	{
+		serviceCollection.AddDbContext<MessagingDatabase>(optionsAction);
+	}
+
 	public MessagingDatabase(DbContextOptions<MessagingDatabase> options) : base(options)
 	{
 	}

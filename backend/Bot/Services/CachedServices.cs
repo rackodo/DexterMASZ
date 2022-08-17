@@ -13,9 +13,12 @@ public class CachedServices
 	{
 		Services = new Dictionary<string, Type[]>();
 
-		Dependents = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(a => a.GetReferencedAssemblies().Select(assemblyName => assemblyName.FullName)
-				.Contains(Assembly.GetExecutingAssembly().FullName)).ToList();
+		var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+		Dependents = assemblies
+			.Where(a => a.GetReferencedAssemblies()
+			.Select(assemblyName => assemblyName.FullName)
+			.Contains(Assembly.GetExecutingAssembly().FullName)).ToList();
 
 		Dependents.Add(Assembly.GetExecutingAssembly());
 	}
@@ -24,9 +27,11 @@ public class CachedServices
 	{
 		var type = typeof(T);
 
-		if (type.FullName == null) return Type.EmptyTypes;
+		if (type.FullName == null)
+			return Type.EmptyTypes;
 
-		if (Services.ContainsKey(type.FullName)) return Services[type.FullName];
+		if (Services.ContainsKey(type.FullName))
+			return Services[type.FullName];
 
 		List<Type> classes = new();
 
@@ -34,7 +39,7 @@ public class CachedServices
 			classes.AddRange(
 				assembly.GetTypes()
 					.Where(c => c.IsClass && (!c.IsAbstract && c.IsSubclassOf(type) ||
-											  !c.IsInterface && c.GetInterfaces().Contains(type)))
+											  (!c.IsInterface && c.GetInterfaces().Contains(type))))
 			);
 
 		Services.Add(type.FullName, classes.ToArray());

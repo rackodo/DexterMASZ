@@ -9,6 +9,12 @@ namespace Punishments.Data;
 
 public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCreate
 {
+	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection)
+	{
+		serviceCollection.AddDbContext<PunishmentDatabase>(optionsAction);
+	}
+
 	public PunishmentDatabase(DbContextOptions<PunishmentDatabase> options) : base(options)
 	{
 	}

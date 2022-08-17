@@ -7,6 +7,12 @@ namespace MOTDs.Data;
 
 public class MotdDatabase : DataContext<MotdDatabase>, DataContextCreate
 {
+	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection)
+	{
+		serviceCollection.AddDbContext<MotdDatabase>(optionsAction);
+	}
+
 	public MotdDatabase(DbContextOptions<MotdDatabase> options) : base(options)
 	{
 	}

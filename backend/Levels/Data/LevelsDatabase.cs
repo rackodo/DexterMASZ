@@ -9,6 +9,12 @@ namespace Levels.Data;
 
 public class LevelsDatabase : DataContext<LevelsDatabase>, DataContextCreate
 {
+	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection)
+	{
+		serviceCollection.AddDbContext<LevelsDatabase>(optionsAction);
+	}
+
 	public LevelsDatabase(DbContextOptions<LevelsDatabase> options) : base(options)
 	{
 	}

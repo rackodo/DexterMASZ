@@ -1,4 +1,5 @@
 ﻿using Bot.Abstractions;
+using Bot.Data;
 using GuildAudits.Enums;
 using GuildAudits.Models;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,12 @@ namespace GuildAudits.Data;
 
 public class GuildAuditDatabase : DataContext<GuildAuditDatabase>, DataContextCreate
 {
+	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection)
+	{
+		serviceCollection.AddDbContext<GuildAuditDatabase>(optionsAction);
+	}
+
 	public GuildAuditDatabase(DbContextOptions<GuildAuditDatabase> options) : base(options)
 	{
 	}

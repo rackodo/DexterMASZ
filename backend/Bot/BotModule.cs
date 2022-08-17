@@ -24,8 +24,9 @@ public class BotModule : Module
 	public override void AddPreServices(IServiceCollection services, CachedServices cachedServices,
 		Action<DbContextOptionsBuilder> dbOption)
 	{
-		foreach (var type in cachedServices.GetClassTypes<DataContextCreate>())
-			type.GetMethod("AddContextToServiceProvider")?.Invoke(null, new object[] { dbOption, services });
+		foreach (var type in cachedServices.GetClassTypes<DataContextInitialize>())
+			type.GetMethod("AddContextToServiceProvider")
+				.Invoke(null, new object[] { dbOption, services });
 
 		foreach (var type in cachedServices.GetClassTypes<Repository>())
 			services.AddScoped(type);

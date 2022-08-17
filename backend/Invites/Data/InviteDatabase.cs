@@ -7,6 +7,12 @@ namespace Invites.Data;
 
 public class InviteDatabase : DataContext<InviteDatabase>, DataContextCreate
 {
+	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection)
+	{
+		serviceCollection.AddDbContext<InviteDatabase>(optionsAction);
+	}
+
 	public InviteDatabase(DbContextOptions<InviteDatabase> options) : base(options)
 	{
 	}

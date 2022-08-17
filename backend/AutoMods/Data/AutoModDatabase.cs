@@ -9,6 +9,12 @@ namespace AutoMods.Data;
 
 public class AutoModDatabase : DataContext<AutoModDatabase>, DataContextCreate
 {
+	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection)
+	{
+		serviceCollection.AddDbContext<AutoModDatabase>(optionsAction);
+	}
+
 	public AutoModDatabase(DbContextOptions<AutoModDatabase> options) : base(options)
 	{
 	}

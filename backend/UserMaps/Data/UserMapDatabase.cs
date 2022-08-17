@@ -7,6 +7,12 @@ namespace UserMaps.Data;
 
 public class UserMapDatabase : DataContext<UserMapDatabase>, DataContextCreate
 {
+	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection)
+	{
+		serviceCollection.AddDbContext<UserMapDatabase>(optionsAction);
+	}
+
 	public UserMapDatabase(DbContextOptions<UserMapDatabase> options) : base(options)
 	{
 	}

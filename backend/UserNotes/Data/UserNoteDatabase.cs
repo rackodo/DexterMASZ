@@ -7,6 +7,12 @@ namespace UserNotes.Data;
 
 public class UserNoteDatabase : DataContext<UserNoteDatabase>, DataContextCreate
 {
+	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection)
+	{
+		serviceCollection.AddDbContext<UserNoteDatabase>(optionsAction);
+	}
+
 	public UserNoteDatabase(DbContextOptions<UserNoteDatabase> options) : base(options)
 	{
 	}
