@@ -106,6 +106,15 @@ public class Initialize
 
 	private static bool ShouldEdit(IWebHostEnvironment env)
 	{
+		try
+		{
+			var _ = Console.KeyAvailable;
+		}
+		catch (InvalidOperationException)
+		{
+			return false;
+		}
+
 		if (!env.IsDevelopment())
 			return ConsoleCreator.WaitForUser($"edit settings", 10);
 		else
