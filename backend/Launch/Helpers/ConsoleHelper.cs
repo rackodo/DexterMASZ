@@ -198,7 +198,7 @@ public static class ConsoleHelper
 				if (enumType is not null && Enum.IsDefined(type, enumType))
 					return (T)enumType;
 
-			if (ShouldEdit)
+			if (!ShouldEdit)
 				if (!string.IsNullOrEmpty(GetEnvironmentalVariable(envVar)))
 					SetEnvironmentalVariable(envVar, "");
 
