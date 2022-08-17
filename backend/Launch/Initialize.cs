@@ -26,22 +26,22 @@ public class Initialize
 
 			builder.Services.AddSingleton(cachedServices);
 
-			var isEdit = ShouldEdit(builder.Environment);
+			ShouldEdit(builder.Environment);
 
-			ConsoleCreator.AddHeading("Getting Client Id");
-			var clientId = GetClientId(isEdit);
+			ConsoleHelper.AddHeading("Getting Client Id");
+			var clientId = GetClientId();
 			Console.ResetColor();
 
-			ConsoleCreator.AddHeading("Getting Database Info");
-			var database = GetDatabaseOptions(isEdit);
+			ConsoleHelper.AddHeading("Getting Database Info");
+			var database = GetDatabaseOptions();
 			Console.ResetColor();
 
 			AppSettings appSettings;
 
 			try
 			{
-				ConsoleCreator.AddHeading("Getting App Settings");
-				appSettings = await GetAppSettings(isEdit, clientId, database);
+				ConsoleHelper.AddHeading("Getting App Settings");
+				appSettings = await GetAppSettings(clientId, database);
 				Console.ResetColor();
 
 				builder.Services.AddSingleton(appSettings);
@@ -50,10 +50,10 @@ public class Initialize
 			{
 				Console.WriteLine();
 
-				ConsoleCreator.AddSubHeading("Failed to get app settings",
+				ConsoleHelper.AddSubHeading("Failed to get app settings",
 					$"{e.Message} (MySqlException)");
 
-				ConsoleCreator.AddHeading("Trying to add migrations, in the case of an error!");
+				ConsoleHelper.AddHeading("Trying to add migrations, in the case of an error!");
 
 				await TryAddMigrations(cachedServices, builder, database);
 
@@ -61,35 +61,35 @@ public class Initialize
 				return;
 			}
 
-			ConsoleCreator.AddHeading("Get Modules");
+			ConsoleHelper.AddHeading("Get Modules");
 			var modules = GetModules();
 			Console.ResetColor();
 
-			ConsoleCreator.AddHeading("Importing Modules");
+			ConsoleHelper.AddHeading("Importing Modules");
 			InitializeModules(modules, database, cachedServices, appSettings, builder);
 			Console.ResetColor();
 
-			ConsoleCreator.AddHeading("Get Authorization Policies");
+			ConsoleHelper.AddHeading("Get Authorization Policies");
 			var authorizationPolicies = GetAuthorizationPolicies(modules);
 			Console.ResetColor();
 
-			ConsoleCreator.AddHeading("Initializing Web Modules");
+			ConsoleHelper.AddHeading("Initializing Web Modules");
 			InitializeWeb(cachedServices, builder, authorizationPolicies);
 			Console.ResetColor();
 
-			ConsoleCreator.AddHeading("Building Application");
+			ConsoleHelper.AddHeading("Building Application");
 			var app = builder.Build();
 			Console.ResetColor();
 
-			ConsoleCreator.AddHeading("Adding Migrations");
+			ConsoleHelper.AddHeading("Adding Migrations");
 			await AddMigrations(cachedServices, app);
 			Console.ResetColor();
 
-			ConsoleCreator.AddHeading("Configuring App");
+			ConsoleHelper.AddHeading("Configuring App");
 			ConfigureApp(modules, cachedServices, appSettings, authorizationPolicies, app);
 			Console.ResetColor();
 
-			ConsoleCreator.AddHeading("Running App");
+			ConsoleHelper.AddHeading("Running App");
 
 			await app.RunAsync();
 		}
@@ -102,32 +102,29 @@ public class Initialize
 		Console.ResetColor();
 	}
 
-	private static bool ShouldEdit(IWebHostEnvironment env)
+	private static void ShouldEdit(IWebHostEnvironment env)
 	{
 		try
 		{
 			var _ = Console.KeyAvailable;
 		}
 		catch (InvalidOperationException)
-		{
-			return false;
-		}
+		{}
 
 		if (!env.IsDevelopment())
-			return ConsoleCreator.WaitForUser($"edit settings", 10);
-		else
-			return false;
+			if (ConsoleHelper.WaitForUser($"edit settings", 10))
+				ConsoleHelper.ShouldEdit = true;
 	}
 
-	private static ulong GetClientId(bool isEdit)
+	private static ulong GetClientId()
 	{
 		while (true)
 		{
 			var client =
-				ConsoleCreator.AskAndSet("Discord OAuth Client ID", "DISCORD_OAUTH_CLIENT_ID", !isEdit);
+				ConsoleHelper.AskAndSet("Discord OAuth Client ID", "DISCORD_OAUTH_CLIENT_ID");
 			if (ulong.TryParse(client.Key, out var clientId))
 			{
-				ConsoleCreator.AddSubHeading("Found Client ID", clientId.ToString());
+				ConsoleHelper.AddSubHeading("Found Client ID", clientId.ToString());
 				return clientId;
 			}
 		}
@@ -145,19 +142,19 @@ public class Initialize
 
 		await AddMigrations(cachedServices, app);
 
-		ConsoleCreator.AddHeading("Exiting Application");
+		ConsoleHelper.AddHeading("Exiting Application");
 	}
 
-	private static Action<DbContextOptionsBuilder> GetDatabaseOptions(bool isEdit)
+	private static Action<DbContextOptionsBuilder> GetDatabaseOptions()
 	{
-		var (databaseSettings, hasUpdatedDbSettings) = ConsoleCreator.CreateDatabaseSettings(isEdit);
+		var (databaseSettings, hasUpdatedDbSettings) = ConsoleHelper.CreateDatabaseSettings();
 
 		if (hasUpdatedDbSettings)
-			ConsoleCreator.AddSubHeading("You are finished creating the database settings for", databaseSettings.User);
+			ConsoleHelper.AddSubHeading("You are finished creating the database settings for", databaseSettings.User);
 		else
-			ConsoleCreator.AddSubHeading("Found database settings for", $"{databaseSettings.User} // {databaseSettings.Database}");
+			ConsoleHelper.AddSubHeading("Found database settings for", $"{databaseSettings.User} // {databaseSettings.Database}");
 
-		ConsoleCreator.AddSubHeading("Successfully created", "MySQL database provider");
+		ConsoleHelper.AddSubHeading("Successfully created", "MySQL database provider");
 
 		var connectionString = $"Server={databaseSettings.Host};Port={databaseSettings.Port};" +
 			$"Database={databaseSettings.Database};Uid={databaseSettings.User};Pwd={databaseSettings.Pass};";
@@ -175,11 +172,11 @@ public class Initialize
 		);
 	}
 
-	private static async Task<AppSettings> GetAppSettings(bool isEdit, ulong clientId, Action<DbContextOptionsBuilder> dbOptions)
+	private static async Task<AppSettings> GetAppSettings(ulong clientId, Action<DbContextOptionsBuilder> dbOptions)
 	{
 		AppSettings settings;
 
-		ConsoleCreator.AddSubHeading("Querying database for", nameof(AppSettings));
+		ConsoleHelper.AddSubHeading("Querying database for", nameof(AppSettings));
 
 		var dbBuilder = new DbContextOptionsBuilder<BotDatabase>();
 
@@ -195,28 +192,28 @@ public class Initialize
 
 			if (settings is null)
 			{
-				ConsoleCreator.AddHeading("Running First Time Setup");
+				ConsoleHelper.AddHeading("Running First Time Setup");
 
-				ConsoleCreator.AddSubHeading("Welcome to", "Dexter!");
-				ConsoleCreator.AddSubHeading("Support Discord", "https://discord.gg/DBS664yjWN");
+				ConsoleHelper.AddSubHeading("Welcome to", "Dexter!");
+				ConsoleHelper.AddSubHeading("Support Discord", "https://discord.gg/DBS664yjWN");
 
-				settings = ConsoleCreator.CreateAppSettings(clientId, true);
+				settings = ConsoleHelper.CreateAppSettings(clientId);
 
 				await appSettingRepo.AddAppSetting(settings);
 
-				ConsoleCreator.AddSubHeading("You are finished creating the app settings for client", clientId.ToString());
+				ConsoleHelper.AddSubHeading("You are finished creating the app settings for client", clientId.ToString());
 
-				ConsoleCreator.AddSubHeading("You can now access the panel at", settings.GetServiceUrl());
+				ConsoleHelper.AddSubHeading("You can now access the panel at", settings.GetServiceUrl());
 
-				ConsoleCreator.AddSubHeading("You can always change these settings", "by pressing any key on next reboot");
+				ConsoleHelper.AddSubHeading("You can always change these settings", "by pressing any key on next reboot");
 			}
 			else
 			{
-				ConsoleCreator.AddSubHeading("Found app settings for client", clientId.ToString());
+				ConsoleHelper.AddSubHeading("Found app settings for client", clientId.ToString());
 
-				settings = ConsoleCreator.CreateAppSettings(clientId, isEdit);
+				settings = ConsoleHelper.CreateAppSettings(clientId);
 
-				if (isEdit)
+				if (ConsoleHelper.ShouldEdit)
 					await appSettingRepo.UpdateAppSetting(settings);
 
 				Console.WriteLine();
@@ -232,7 +229,7 @@ public class Initialize
 
 		foreach (var module in modules)
 		{
-			ConsoleCreator.AddSubHeading("Imported", $"{module.GetType().Namespace}{(module is WebModule ? " (WEB)" : "")}");
+			ConsoleHelper.AddSubHeading("Imported", $"{module.GetType().Namespace}{(module is WebModule ? " (WEB)" : "")}");
 
 			if (module.Contributors.Length > 0)
 			{
@@ -261,7 +258,7 @@ public class Initialize
 					authorizationPolicies = authorizationPolicies.Union(authorizationPolicy).ToList();
 			}
 
-		ConsoleCreator.AddSubHeading("Successfully added", "authentication policies");
+		ConsoleHelper.AddSubHeading("Successfully added", "authentication policies");
 
 		return authorizationPolicies;
 	}
@@ -274,22 +271,22 @@ public class Initialize
 			foreach (var startup in modules)
 				startup.AddLogging(builder.Logging);
 
-			ConsoleCreator.AddSubHeading("Successfully initialized", "logging");
+			ConsoleHelper.AddSubHeading("Successfully initialized", "logging");
 
 			foreach (var startup in modules)
 				startup.AddPreServices(builder.Services, cachedServices, dbOptions);
 
-			ConsoleCreator.AddSubHeading("Successfully initialized", "pre-services");
+			ConsoleHelper.AddSubHeading("Successfully initialized", "pre-services");
 
 			foreach (var startup in modules)
 				startup.AddServices(builder.Services, cachedServices, appSettings);
 
-			ConsoleCreator.AddSubHeading("Successfully initialized", "services");
+			ConsoleHelper.AddSubHeading("Successfully initialized", "services");
 
 			foreach (var startup in modules)
 				startup.ConfigureServices(builder.Configuration, builder.Services);
 
-			ConsoleCreator.AddSubHeading("Successfully configured", "services");
+			ConsoleHelper.AddSubHeading("Successfully configured", "services");
 		}
 		catch (Exception ex)
 		{
@@ -324,18 +321,18 @@ public class Initialize
 				.RequireAuthenticatedUser().Build();
 		});
 
-		ConsoleCreator.AddSubHeading("Started authorization policies for", string.Join(',', authorizationPolicies));
+		ConsoleHelper.AddSubHeading("Started authorization policies for", string.Join(',', authorizationPolicies));
 	}
 
 	private static async Task AddMigrations(CachedServices cachedServices, WebApplication app)
 	{
-		ConsoleCreator.AddSubHeading("Heads up!", "This might take a while on a first install...\n");
+		ConsoleHelper.AddSubHeading("Heads up!", "This might take a while on a first install...\n");
 
 		using (var scope = app.Services.CreateScope())
 		{
 			foreach (var dataContext in cachedServices.GetInitializedClasses<DbContext>(scope.ServiceProvider))
 			{
-				ConsoleCreator.AddSubHeading("Adding migrations for", dataContext.GetType().Name);
+				ConsoleHelper.AddSubHeading("Adding migrations for", dataContext.GetType().Name);
 
 				await dataContext.Database.MigrateAsync();
 			}
@@ -343,7 +340,7 @@ public class Initialize
 
 		Console.WriteLine();
 
-		ConsoleCreator.AddSubHeading("Successfully added", "migrations to databases");
+		ConsoleHelper.AddSubHeading("Successfully added", "migrations to databases");
 	}
 
 	private static void ConfigureApp(List<Module> modules, CachedServices cachedServices, AppSettings appSettings,
@@ -359,7 +356,7 @@ public class Initialize
 				module.PostWebBuild(app, appSettings);
 		}
 
-		ConsoleCreator.AddSubHeading("Successfully post built", "application");
+		ConsoleHelper.AddSubHeading("Successfully post built", "application");
 
 		if (appSettings.EncryptionType == EncryptionType.HTTPS)
 			app.UseHttpsRedirection();

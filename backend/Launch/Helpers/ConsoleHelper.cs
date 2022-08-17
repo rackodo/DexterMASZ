@@ -7,9 +7,10 @@ using System.Reflection;
 
 namespace Launch;
 
-public static class ConsoleCreator
+public static class ConsoleHelper
 {
 	public const int HeadingPadding = 36;
+	public static bool ShouldEdit = false;
 
 	public static void AddHeading(string name)
 	{
@@ -74,13 +75,13 @@ public static class ConsoleCreator
 		Console.ResetColor();
 	}
 
-	public static KeyValuePair<DatabaseSettings, bool> CreateDatabaseSettings(bool isEdit)
+	public static KeyValuePair<DatabaseSettings, bool> CreateDatabaseSettings()
 	{
-		var (host, updatedHost) = AskAndSet("database server host", "MYSQL_HOST", !isEdit);
-		var (port, updatedPort) = AskAndSet("database server port", "MYSQL_PORT", !isEdit);
-		var (database, updatedDatabase) = AskAndSet("database name", "MYSQL_DATABASE", !isEdit);
-		var (user, updatedUser) = AskAndSet("database login username", "MYSQL_USER", !isEdit);
-		var (pass, updatedPass) = AskAndSet("database login password", "MYSQL_PASSWORD", !isEdit);
+		var (host, updatedHost) = AskAndSet("database server host", "MYSQL_HOST");
+		var (port, updatedPort) = AskAndSet("database server port", "MYSQL_PORT");
+		var (database, updatedDatabase) = AskAndSet("database name", "MYSQL_DATABASE");
+		var (user, updatedUser) = AskAndSet("database login username", "MYSQL_USER");
+		var (pass, updatedPass) = AskAndSet("database login password", "MYSQL_PASSWORD");
 
 		var hasChanged = false;
 
@@ -97,31 +98,30 @@ public static class ConsoleCreator
 		}, hasChanged);
 	}
 
-	public static AppSettings CreateAppSettings(ulong clientId, bool isEdit)
+	public static AppSettings CreateAppSettings(ulong clientId)
 	{
 		var settings = new AppSettings
 		{
 			ClientId = clientId,
-			ClientSecret = Ask("Discord OAuth Client Secret", "DISCORD_OAUTH_CLIENT_SECRET", !isEdit),
+			ClientSecret = Ask("Discord OAuth Client Secret", "DISCORD_OAUTH_CLIENT_SECRET"),
 
-			DiscordBotToken = Ask("Discord bot token", "DISCORD_BOT_TOKEN", !isEdit),
+			DiscordBotToken = Ask("Discord bot token", "DISCORD_BOT_TOKEN"),
 			AuditLogWebhookUrl = Ask(
 				"audit log webhook url, recommended to be in a private channel for site admins " +
-				"as it may log sensitive information, or leave empty to disable", "AUDIT_LOG_WEBHOOK_URL", !isEdit, true),
+				"as it may log sensitive information, or leave empty to disable", "AUDIT_LOG_WEBHOOK_URL", true),
 
 			Lang = Enum.GetName(
-				AskDefinedChoice<Language>("default language", "DEFAULT_LANGUAGE", !isEdit)),
+				AskDefinedChoice<Language>("default language", "DEFAULT_LANGUAGE")),
 		};
 
 		var admins =
-			Ask("site administrator ids, recommended as just one, but can be split by ','",
-				"DISCORD_SITE_ADMINS", !isEdit);
+			Ask("site administrator ids, recommended as just one, but can be split by ','", "DISCORD_SITE_ADMINS");
 
 		if (!string.IsNullOrEmpty(admins))
 			settings.SiteAdmins = admins.Split(',').Select(ulong.Parse).ToArray();
 
 		var directoryPath = Ask("directory for files to be saved (leave empty for current)",
-			"ABSOLUTE_PATH_TO_FILE_UPLOAD", !isEdit, true);
+			"ABSOLUTE_PATH_TO_FILE_UPLOAD", true);
 
 		if (string.IsNullOrEmpty(directoryPath))
 			directoryPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -129,11 +129,11 @@ public static class ConsoleCreator
 		settings.AbsolutePathToFileUpload = directoryPath;
 
 		switch (AskDefinedChoice<DeploymentType>("stance on whether this is being deployed on " +
-			"a domain or locally, as a test version", "DEPLOY_MODE", !isEdit))
+			"a domain or locally, as a test version", "DEPLOY_MODE"))
 		{
 			case DeploymentType.Domain:
-				settings.ServiceDomain = Ask("(sub)domain", "META_SERVICE_DOMAIN", !isEdit);
-				settings.EncryptionType = AskDefinedChoice<EncryptionType>("is https", "META_SERVICE_HTTPS", !isEdit);
+				settings.ServiceDomain = Ask("(sub)domain", "META_SERVICE_DOMAIN");
+				settings.EncryptionType = AskDefinedChoice<EncryptionType>("is https", "META_SERVICE_HTTPS");
 				settings.CorsEnabled = false;
 				AddSubHeading("Alert", "Be sure to redirect your reverse proxy correctly");
 				AddSubHeading("The docker container will be listening on local port", "5565");
@@ -150,9 +150,9 @@ public static class ConsoleCreator
 		return settings;
 	}
 
-	public static KeyValuePair<string, bool> AskAndSet(string name, string envVar, bool useEnvVars)
+	public static KeyValuePair<string, bool> AskAndSet(string name, string envVar)
 	{
-		var option = Ask(name, envVar, useEnvVars);
+		var option = Ask(name, envVar);
 
 		if (GetEnvironmentalVariable(envVar) != option)
 		{
@@ -163,11 +163,11 @@ public static class ConsoleCreator
 			return new(option, false);
 	}
 
-	public static string Ask(string name, string envVar, bool useEnvVars, bool ignoreIfEmpty = false)
+	public static string Ask(string name, string envVar, bool ignoreIfEmpty = false)
 	{
 		string option;
 
-		if (useEnvVars)
+		if (ShouldEdit)
 		{
 			option = GetEnvironmentalVariable(envVar);
 
@@ -181,27 +181,29 @@ public static class ConsoleCreator
 		option = Console.ReadLine();
 
 		if (option == string.Empty && !ignoreIfEmpty)
-			return Ask(name, envVar, useEnvVars, ignoreIfEmpty);
+			return Ask(name, envVar, ignoreIfEmpty);
 		else
 			return option;
 	}
 
-	public static T AskDefinedChoice<T>(string name, string envVar, bool useEnvVars) where T : Enum
+	public static T AskDefinedChoice<T>(string name, string envVar) where T : Enum
 	{
 		var type = typeof(T);
 
 		while (true)
 		{
-			if (Enum.TryParse(type, Ask(name, envVar, useEnvVars, true), true, out var enumType))
+			var choice = Ask(name, envVar, true);
+
+			if (Enum.TryParse(type, choice, true, out var enumType))
 				if (enumType is not null && Enum.IsDefined(type, enumType))
 					return (T)enumType;
 
-			if (useEnvVars)
+			if (ShouldEdit)
 				if (!string.IsNullOrEmpty(GetEnvironmentalVariable(envVar)))
 					SetEnvironmentalVariable(envVar, "");
 
 			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine($"Please enter a valid {name}!");
+			Console.WriteLine($"Please enter a valid {name}! Instead got: {choice}.");
 
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.WriteLine($"Options: {string.Join(", ", (T[])Enum.GetValues(type))}");
