@@ -15,12 +15,6 @@ public class BotDatabase : DataContext<BotDatabase>, DataContextCreate
 
 	public DbSet<GuildConfig> GuildConfigs { get; set; }
 
-	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
-		IServiceCollection serviceCollection)
-	{
-		serviceCollection.AddDbContext<BotDatabase>(optionsAction);
-	}
-
 	public async Task<AppSettings> GetAppSettings(ulong clientId)
 	{
 		return await AppSettings.FindAsync(clientId);

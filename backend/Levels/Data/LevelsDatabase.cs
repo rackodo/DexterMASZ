@@ -32,11 +32,6 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, DataContextCreate
 	public DbSet<GuildLevelConfig>? GuildLevelConfigs { get; set; }
 	public DbSet<UserRankcardConfig>? UserRankcardConfigs { get; set; }
 
-	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction, IServiceCollection serviceCollection)
-	{
-		serviceCollection.AddDbContext<LevelsDatabase>(optionsAction);
-	}
-
 	private static bool CheckNullAndReport([NotNullWhen(false)] object? o, string name)
 	{
 		if (o is null)

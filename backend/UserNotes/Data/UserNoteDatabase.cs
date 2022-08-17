@@ -13,12 +13,6 @@ public class UserNoteDatabase : DataContext<UserNoteDatabase>, DataContextCreate
 
 	public DbSet<UserNote> UserNotes { get; set; }
 
-	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
-		IServiceCollection serviceCollection)
-	{
-		serviceCollection.AddDbContext<UserNoteDatabase>(optionsAction);
-	}
-
 	public async Task<List<UserNote>> SelectLatestUserNotes(DateTime timeLimit, int limit)
 	{
 		return await UserNotes.AsQueryable().Where(x => x.UpdatedAt > timeLimit).OrderByDescending(x => x.UpdatedAt)

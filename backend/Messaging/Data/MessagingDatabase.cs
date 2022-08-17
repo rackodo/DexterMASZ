@@ -14,12 +14,6 @@ public class MessagingDatabase : DataContext<MessagingDatabase>, DataContextCrea
 
 	public DbSet<ScheduledMessage> ScheduledMessages { get; set; }
 
-	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
-		IServiceCollection serviceCollection)
-	{
-		serviceCollection.AddDbContext<MessagingDatabase>(optionsAction);
-	}
-
 	public async Task<ScheduledMessage> GetMessage(int id)
 	{
 		return await ScheduledMessages.AsQueryable().Where(x => x.Id == id).FirstOrDefaultAsync();

@@ -17,12 +17,6 @@ public class AutoModDatabase : DataContext<AutoModDatabase>, DataContextCreate
 
 	public DbSet<AutoModEvent> AutoModEvents { get; set; }
 
-	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
-		IServiceCollection serviceCollection)
-	{
-		serviceCollection.AddDbContext<AutoModDatabase>(optionsAction);
-	}
-
 	public async Task<List<AutoModConfig>> SelectAllPunishmentsConfigsForGuild(ulong guildId)
 	{
 		return await AutoModConfigs.AsQueryable().Where(x => x.GuildId == guildId).ToListAsync();

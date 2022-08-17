@@ -1,11 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Bot.Abstractions;
 
 public abstract class DataContext<TContext> : DbContext where TContext : DbContext
 {
+	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
+		IServiceCollection serviceCollection)
+	{
+		serviceCollection.AddDbContext<TContext>(optionsAction);
+	}
+
 	protected DataContext(DbContextOptions<TContext> options) : base(options)
 	{
 	}
