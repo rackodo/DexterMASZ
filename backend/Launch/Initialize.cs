@@ -152,20 +152,12 @@ public class Initialize
 
 	private static Action<DbContextOptionsBuilder> GetDatabaseOptions(bool isEdit)
 	{
-		var (databaseSettings, hasUpdatedDbSettings) = ConsoleCreator.CreateDatabaseSettings(false);
+		var (databaseSettings, hasUpdatedDbSettings) = ConsoleCreator.CreateDatabaseSettings(isEdit);
 
 		if (hasUpdatedDbSettings)
-		{
 			ConsoleCreator.AddSubHeading("You are finished creating the database settings for", databaseSettings.User);
-		}
 		else
-		{
 			ConsoleCreator.AddSubHeading("Found database settings for", $"{databaseSettings.User} // {databaseSettings.Database}");
-
-			if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-				if (ConsoleCreator.WaitForUser($"edit {nameof(DatabaseSettings)}", 10))
-					databaseSettings = ConsoleCreator.CreateDatabaseSettings(isEdit).Key;
-		}
 
 		ConsoleCreator.AddSubHeading("Successfully created", "MySQL database provider");
 
@@ -210,7 +202,7 @@ public class Initialize
 				ConsoleCreator.AddSubHeading("Welcome to", "Dexter!");
 				ConsoleCreator.AddSubHeading("Support Discord", "https://discord.gg/DBS664yjWN");
 
-				settings = ConsoleCreator.CreateAppSettings(clientId, isEdit);
+				settings = ConsoleCreator.CreateAppSettings(clientId, true);
 
 				await appSettingRepo.AddAppSetting(settings);
 
@@ -224,15 +216,12 @@ public class Initialize
 			{
 				ConsoleCreator.AddSubHeading("Found app settings for client", clientId.ToString());
 
-				if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-					if (ConsoleCreator.WaitForUser($"edit {nameof(AppSettings)}", 10))
-					{
-						settings = ConsoleCreator.CreateAppSettings(clientId, true);
+				settings = ConsoleCreator.CreateAppSettings(clientId, isEdit);
 
-						await appSettingRepo.UpdateAppSetting(settings);
+				if (isEdit)
+					await appSettingRepo.UpdateAppSetting(settings);
 
-						Console.WriteLine();
-					}
+				Console.WriteLine();
 			}
 		}
 
