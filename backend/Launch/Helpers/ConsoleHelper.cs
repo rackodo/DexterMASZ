@@ -167,7 +167,7 @@ public static class ConsoleHelper
 	{
 		string option;
 
-		if (ShouldEdit)
+		if (!ShouldEdit)
 		{
 			option = GetEnvironmentalVariable(envVar);
 
