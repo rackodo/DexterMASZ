@@ -15,7 +15,7 @@ using Bot.Data;
 
 namespace Levels.Models;
 
-public static class Rankcard
+public static partial class Rankcard
 {
 	public static readonly Size RankCardSize = new(widthmain + pfpside, height);
 
@@ -173,11 +173,11 @@ public static class Rankcard
 		Func<IImageProcessingContext, IImageProcessingContext> bgTransform;
 		Func<IImageProcessingContext, IImageProcessingContext> pfpTransform;
 
-		var xpColor = Graphics.ColorFromArgb(rankcardConfig.XpColor);
-		var offColor = Graphics.ColorFromArgb(rankcardConfig.OffColor);
-		var lvlBgColor = Graphics.ColorFromArgb(rankcardConfig.LevelBgColor);
+		var xpColor = rankcardConfig.XpColor.ColorFromArgb();
+		var offColor = rankcardConfig.OffColor.ColorFromArgb();
+		var lvlBgColor = rankcardConfig.LevelBgColor.ColorFromArgb();
 
-		Image? bg = null;
+		Image bg = null;
 		try
 		{
 			if (rankcardConfig.Background.StartsWith("http"))
@@ -191,13 +191,13 @@ public static class Rankcard
 		catch (FileNotFoundException)
 		{
 			Color bgc;
-			if (Regex.IsMatch(rankcardConfig.Background, @"^(#|0x)?[0-9A-F]{6}$", RegexOptions.IgnoreCase))
+			if (RankCardBackground().IsMatch(rankcardConfig.Background))
 			{
-				bgc = Graphics.ColorFromArgb(0xff000000 | uint.Parse(rankcardConfig.Background[^6..], System.Globalization.NumberStyles.HexNumber));
+				bgc = (0xff000000 | uint.Parse(rankcardConfig.Background[^6..], System.Globalization.NumberStyles.HexNumber)).ColorFromArgb();
 			}
 			else
 			{
-				bgc = Graphics.ColorFromArgb(0xff000000 | rankcardConfig.XpColor);
+				bgc = (0xff000000 | rankcardConfig.XpColor).ColorFromArgb();
 			}
 			bgTransform = g => g.BackgroundColor(bgc);
 		}
@@ -225,11 +225,11 @@ public static class Rankcard
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.WriteLine(e);
 				Console.ForegroundColor = ConsoleColor.White;
-				bgTransform = g => g.BackgroundColor(Graphics.ColorFromArgb(0xff000000 | rankcardConfig.XpColor));
+				bgTransform = g => g.BackgroundColor((0xff000000 | rankcardConfig.XpColor).ColorFromArgb());
 			}
 		}
 
-		Image? pfp = null;
+		Image pfp = null;
 		using (HttpClient client = new())
 		{
 			try
@@ -240,7 +240,7 @@ public static class Rankcard
 
 				if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.ClipPfp))
 				{
-					pfpTransform = g => g.Clip(new PathBuilder().AddEllipticalArc(rectPfp, 0, 0, 360).Build(),
+					pfpTransform = g => g.Clip(new PathBuilder().AddArc(rectPfp, 0, 0, 360).Build(),
 						clipg => clipg.DrawImage(pfp, new Point(rectPfp.Left, rectPfp.Top), 1)
 					);
 				}
@@ -272,16 +272,14 @@ public static class Rankcard
 			
 			g = g.DrawLevels(fontTitle, fontDefault, fontMini, levelsData, rankcardConfig);
 
-			if (bg is not null)
-				bg.Dispose();
+			bg?.Dispose();
 
 			const int pfpmargin = 3;
 			if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.PfpBackground))
-				g = pfpTransform(g.Fill(Graphics.ColorFromArgb(0xff3f3f3f)
+				g = pfpTransform(g.Fill(0xff3f3f3f.ColorFromArgb()
 					, new EllipsePolygon(rectPfp.X + rectPfp.Width / 2, rectPfp.Y + rectPfp.Height / 2, rectPfp.Width + 2 * pfpmargin, rectPfp.Height + 2 * pfpmargin)));
 
-			if (pfp is not null)
-				pfp.Dispose();
+			pfp?.Dispose();
 
 			g = g.DrawTextInRect($"{user.Username}#{user.Discriminator}", rectName, fontDefault, offColor,
 				HorizontalAlignment.Right, VerticalAlignment.Center);
@@ -305,8 +303,8 @@ public static class Rankcard
 
 	private static IImageProcessingContext DrawLevels(this IImageProcessingContext g, Font fontTitle, Font fontDefault, Font fontMini, IEnumerable<RankcardLevelData> levels, UserRankcardConfig prefs)
 	{
-		var xpColor = Graphics.ColorFromArgb(prefs.XpColor);
-		var offColor = Graphics.ColorFromArgb(prefs.OffColor);
+		var xpColor = prefs.XpColor.ColorFromArgb();
+		var offColor = prefs.OffColor.ColorFromArgb();
 
 		foreach (var ld in levels)
 		{
@@ -318,10 +316,10 @@ public static class Rankcard
 			var barInnerClipPath = Graphics.RoundedRect(new Rectangle(barRect.X + 2, barRect.Y + 2, barRect.Width - 4, barRect.Height - 4), barRect.Height / 2 - 2);
 			var levelRenderArea = levelPath.Clip(barWholePath);
 
-			g = g.Fill(Graphics.ColorFromArgb(0xe0000000), barWholePath)
+			g = g.Fill(0xe0000000.ColorFromArgb(), barWholePath)
 			.Clip(barInnerClipPath,
 				gclip => gclip.Fill(xpColor, barXPGPath))
-			.Fill(Graphics.ColorFromArgb(prefs.LevelBgColor), levelRenderArea)
+			.Fill(prefs.LevelBgColor.ColorFromArgb(), levelRenderArea)
 			.DrawTextInRect(ld.xpType, ld.rects.typeLabel, fontTitle, offColor, HorizontalAlignment.Center, VerticalAlignment.Center);
 			
 			if (ld.rects.rankLabel != default)
@@ -356,4 +354,7 @@ public static class Rankcard
 
 		return g;
 	}
+
+	[RegexGenerator("^(#|0x)?[0-9A-F]{6}$", RegexOptions.IgnoreCase)]
+	private static partial Regex RankCardBackground();
 }
