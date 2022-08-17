@@ -106,14 +106,12 @@ public class Initialize
 	{
 		try
 		{
-			var _ = Console.KeyAvailable;
+			if (!env.IsDevelopment())
+				if (ConsoleHelper.WaitForUser($"edit settings", 10))
+					ConsoleHelper.ShouldEdit = true;
 		}
 		catch (InvalidOperationException)
 		{}
-
-		if (!env.IsDevelopment())
-			if (ConsoleHelper.WaitForUser($"edit settings", 10))
-				ConsoleHelper.ShouldEdit = true;
 	}
 
 	private static ulong GetClientId()
