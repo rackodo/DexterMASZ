@@ -13,12 +13,6 @@ public class InviteDatabase : DataContext<InviteDatabase>, DataContextCreate
 
 	public DbSet<UserInvite> UserInvites { get; set; }
 
-	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
-		IServiceCollection serviceCollection)
-	{
-		serviceCollection.AddDbContext<InviteDatabase>(optionsAction);
-	}
-
 	public async Task<List<UserInvite>> GetInvitedUsersByUser(ulong userId)
 	{
 		return await UserInvites.AsQueryable().Where(x => x.InviteIssuerId == userId).ToListAsync();

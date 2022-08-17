@@ -19,12 +19,6 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 
 	public DbSet<ModCase> ModCases { get; set; }
 
-	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
-		IServiceCollection serviceCollection)
-	{
-		serviceCollection.AddDbContext<PunishmentDatabase>(optionsAction);
-	}
-
 	public override void OverrideModelCreating(ModelBuilder builder)
 	{
 		builder.Entity<ModCaseComment>()

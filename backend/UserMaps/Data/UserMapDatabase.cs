@@ -13,12 +13,6 @@ public class UserMapDatabase : DataContext<UserMapDatabase>, DataContextCreate
 
 	public DbSet<UserMap> UserMaps { get; set; }
 
-	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
-		IServiceCollection serviceCollection)
-	{
-		serviceCollection.AddDbContext<UserMapDatabase>(optionsAction);
-	}
-
 	public async Task<List<UserMap>> SelectLatestUserMaps(DateTime timeLimit, int limit)
 	{
 		return await UserMaps.AsQueryable().Where(x => x.CreatedAt > timeLimit).OrderByDescending(x => x.CreatedAt)

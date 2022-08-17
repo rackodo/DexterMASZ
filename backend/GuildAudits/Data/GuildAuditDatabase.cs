@@ -14,12 +14,6 @@ public class GuildAuditDatabase : DataContext<GuildAuditDatabase>, DataContextCr
 
 	public DbSet<GuildAuditConfig> GuildAuditConfigs { get; set; }
 
-	public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
-		IServiceCollection serviceCollection)
-	{
-		serviceCollection.AddDbContext<GuildAuditDatabase>(optionsAction);
-	}
-
 	public async Task DeleteAllAuditLogConfigsForGuild(ulong guildId)
 	{
 		var events = await GuildAuditConfigs.AsQueryable().Where(x => x.GuildId == guildId).ToListAsync();
