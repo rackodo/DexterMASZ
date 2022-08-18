@@ -20,13 +20,12 @@ public class Initialize
 		try
 		{
 			Console.ForegroundColor = ConsoleColor.Cyan;
-			Console.WriteLine("============= Launching =============");
+			Console.WriteLine("============ Launching =============");
 
 			var builder = WebApplication.CreateBuilder();
 
 			ConsoleHelper.AddHeading("Get Modules");
 			var modules = GetModules();
-			Console.ResetColor();
 
 			var cachedServices = new CachedServices();
 
@@ -36,11 +35,9 @@ public class Initialize
 
 			ConsoleHelper.AddHeading("Getting Client Id");
 			var clientId = GetClientId();
-			Console.ResetColor();
 
 			ConsoleHelper.AddHeading("Getting Database Info");
 			var database = GetDatabaseOptions();
-			Console.ResetColor();
 
 			AppSettings appSettings;
 
@@ -48,7 +45,6 @@ public class Initialize
 			{
 				ConsoleHelper.AddHeading("Getting App Settings");
 				appSettings = await GetAppSettings(clientId, database);
-				Console.ResetColor();
 
 				builder.Services.AddSingleton(appSettings);
 			}
@@ -62,34 +58,27 @@ public class Initialize
 				ConsoleHelper.AddHeading("Trying to add migrations, in the case of an error!");
 
 				await TryAddMigrations(cachedServices, builder, database);
-
-				Console.ResetColor();
 				return;
 			}
 
 			ConsoleHelper.AddHeading("Importing Modules");
 			InitializeModules(modules, database, cachedServices, appSettings, builder);
-			Console.ResetColor();
 
 			ConsoleHelper.AddHeading("Get Authorization Policies");
 			var authorizationPolicies = GetAuthorizationPolicies(modules);
-			Console.ResetColor();
 
 			ConsoleHelper.AddHeading("Initializing Web Modules");
 			InitializeWeb(cachedServices, builder, authorizationPolicies);
-			Console.ResetColor();
 
 			ConsoleHelper.AddHeading("Building Application");
 			var app = builder.Build();
-			Console.ResetColor();
+			ConsoleHelper.AddSubHeading("Successfully built", app.GetType().Name);
 
 			ConsoleHelper.AddHeading("Adding Migrations");
 			await AddMigrations(cachedServices, app);
-			Console.ResetColor();
 
 			ConsoleHelper.AddHeading("Configuring App");
 			ConfigureApp(modules, cachedServices, appSettings, authorizationPolicies, app);
-			Console.ResetColor();
 
 			ConsoleHelper.AddHeading("Running App");
 
