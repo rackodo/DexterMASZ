@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/nightly/sdk:7.0 AS build-env
+FROM mcr.microsoft.com/dotnet/nightly/sdk:6.0 AS build-env
 WORKDIR /app
 
 # Copy everything and build
@@ -6,7 +6,7 @@ COPY ./ ./
 RUN dotnet publish -c Release -o ./bin
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:7.0
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:6.0
 WORKDIR /app/bin
 COPY --from=build-env /app/bin/ .
 
