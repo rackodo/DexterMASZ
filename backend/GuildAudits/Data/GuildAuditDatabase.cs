@@ -1,5 +1,4 @@
 ﻿using Bot.Abstractions;
-using Bot.Data;
 using GuildAudits.Enums;
 using GuildAudits.Models;
 using Microsoft.EntityFrameworkCore;
