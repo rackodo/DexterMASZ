@@ -25,6 +25,7 @@ public static partial class Rankcard
 	private const int levelWidth = 950;
 	private const int levelHeight = 125;
 	private const int defMargin = 25;
+
 	private static readonly Rectangle mainRect = new(0, 0, widthmain + pfpside, height);
 	private static readonly Rectangle titleRect = new(defMargin, defMargin, widthmain - 2 * defMargin + pfpside, labelHeight);
 	private static readonly LevelRect mainLevel = new(height - 2 * levelHeight - 2 * defMargin);
@@ -40,6 +41,7 @@ public static partial class Rankcard
 	private const int typeLabelWidth = 175;
 	private const int hybridLabelWidth = 125;
 	private const int labelMiniMargin = 10;
+
 	private static readonly Rectangle rectLevelLabel = new(defMargin, defMargin, miniLabelWidth + labelIntrusionPixels, labelHeight);
 	private static readonly Rectangle rectLevelText = new(defMargin + miniLabelWidth, defMargin, widthmain / 2 - defMargin - miniLabelWidth, labelHeight);
 
@@ -191,7 +193,7 @@ public static partial class Rankcard
 		catch (FileNotFoundException)
 		{
 			Color bgc;
-			if (RankCardBackground().IsMatch(rankcardConfig.Background))
+			if (Regex.IsMatch(rankcardConfig.Background, @"^(#|0x)?[0-9A-F]{6}$", RegexOptions.IgnoreCase))
 			{
 				bgc = (0xff000000 | uint.Parse(rankcardConfig.Background[^6..], System.Globalization.NumberStyles.HexNumber)).ColorFromArgb();
 			}
@@ -207,7 +209,6 @@ public static partial class Rankcard
 			try
 			{
 				var req = new HttpRequestMessage(HttpMethod.Get, rankcardConfig.Background);
-				//req.Headers.Add("Cookie", $"dexter_access_token=CfDJ8GovyKJyMhBEggK_51F19rNfPbYkIIjGhFyLj8l9ljgF5vQiGXaP9QQ-TCwPuLprmGuwukTA78KujaxbnceOlykINod-k2ZBeEeEltXu-iacTERy3FkYZRg_B2L-ufJwG8VsyR5Iwnja4ToQJiT93r_okr7F7FAbHwkHQ338QjXhs7NbTzXIy4aejSHHPbHbog4dc1abMlqTWx8d6AIX1CxDAuM4DcHhs_yNxk1oJiV21kOLOpCpq9aJKJNALKo6pjWQDuYhiZrXaHV742MiagZZRmDPkYUjppufIDDhYGgVbe7ECwV3DbX5yymXdz9UK5Nbl-q00TRD6wZxm-ddhf-IBnUTTNBv-9_FOPa17CKfSmscN7drS5i4D6PMfmCcZwTzooIpm5UOxhgQXH0AC3lSIjTl3OuwgZaXby9WqN7OG1dU__IavVUehCt9DmK75VseZtCE-uIu4i4UmzmNZPbGf8TlO7ac4Mgb0HwnXt_iUTXs7bzUGxU8_bQpWLLyWYJPlnVbNRTKYoBRJhxwwQ5NBL7yuTg3eAdPde3FGjmBNDC7NVwKsTWZ6Ps45tasR3dcuMeRwXS0pSADH879oIp0OK5oWIwhy4wa3tNJXKn95c3gFCL7MIxfE7dgPRmueM_Yb8EpjGTx8Gv6KkLdNoSzGtXaDOyu9YJ6mVUV__a0naETy9XPIABwveH7T-BO8ZL9N6Yw_RWtqKLzTjEnWH4TqB-gFgWWRwqjhIeNXW73-sw8zcVJjnkAQv4_VSqWYy7UJBy2ZO_F8VoZ01HbeC4h2hV9tMF36mip7UEv1b1yV0N-HoMIawxhDnqebYOScJVHnQlHdZE1zE1hsS2yyY5raPjQvNAVBtpvCex25ARnrVru0v0CzonCH2fpGxLbCqgqdPwH3wWseuEdOMRw1mK0PIQWVm6VFcn-1972h_75K3Wy3WyhYFCmxo7tfYQXwLuqPcodh8XOzrC9XLUJ4y0lONeX5M2N-e6PRmDZEV8VmVdlaRM4kM9B4s1vs4Mz-znKonidwhvGZSuRlJuIAx4");
 				var resp = await client.SendAsync(req);
 				if (!resp.IsSuccessStatusCode)
 				{
@@ -287,20 +288,6 @@ public static partial class Rankcard
 		return result;
 	}
 
-	/*
-	private readonly static float[] lineartransform = new float[] { 0, 0, 0, 0, 1 };
-	public static ColorMatrix ToColorMatrix(this Color color)
-	{
-		return new ColorMatrix(new float[][] {
-				new float[] {color.R / 255f, 0, 0, 0, 0},
-				new float[] {0, color.G / 255f, 0, 0, 0},
-				new float[] {0, 0, color.B / 255f, 0, 0},
-				new float[] {0, 0, 0, color.A / 255f, 0},
-				lineartransform
-				});
-	}
-	*/
-
 	private static IImageProcessingContext DrawLevels(this IImageProcessingContext g, Font fontTitle, Font fontDefault, Font fontMini, IEnumerable<RankcardLevelData> levels, UserRankcardConfig prefs)
 	{
 		var xpColor = prefs.XpColor.ColorFromArgb();
@@ -354,7 +341,4 @@ public static partial class Rankcard
 
 		return g;
 	}
-
-	[RegexGenerator("^(#|0x)?[0-9A-F]{6}$", RegexOptions.IgnoreCase)]
-	private static partial Regex RankCardBackground();
 }

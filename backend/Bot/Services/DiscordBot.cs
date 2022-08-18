@@ -150,7 +150,7 @@ public class DiscordBot : IHostedService, Event
 
 	private async Task ReadyHandler()
 	{
-		_logger.LogInformation("Client connected.");
+		_logger.LogInformation("Client ready.");
 		_isRunning = true;
 
 		try
@@ -274,7 +274,7 @@ public class DiscordBot : IHostedService, Event
 
 	private Task GuildCreatedHandler(SocketGuild guild)
 	{
-		_logger.LogInformation($"I joined guild '{guild.Name}' with ID: '{guild.Id}'");
+		_logger.LogInformation($"Joined guild '{guild.Name}' with ID: '{guild.Id}'");
 		return Task.CompletedTask;
 	}
 

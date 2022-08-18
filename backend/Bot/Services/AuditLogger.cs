@@ -87,7 +87,15 @@ public class AuditLogger : IHostedService, Event
 
 	public async Task ExecuteWebhook()
 	{
-		if (_currentMessage.Length > 0)
+		var msg = new StringBuilder();
+
+		lock (_currentMessage)
+		{
+			msg = _currentMessage;
+			_currentMessage.Clear();
+		}
+
+		if (msg.Length > 0)
 		{
 			_logger.LogInformation("Executing audit log webhook.");
 
@@ -99,16 +107,14 @@ public class AuditLogger : IHostedService, Event
 
 				var config = await settingsRepository.GetAppSettings();
 
-				if (!string.IsNullOrEmpty(_currentMessage.ToString()))
-					await new DiscordWebhookClient(config.AuditLogWebhookUrl).SendMessageAsync(_currentMessage.ToString(),
+				if (!string.IsNullOrEmpty(msg.ToString()))
+					await new DiscordWebhookClient(config.AuditLogWebhookUrl).SendMessageAsync(msg.ToString(),
 						allowedMentions: AllowedMentions.None);
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e, "Error executing audit log webhook. ");
 			}
-
-			_currentMessage.Clear();
 		}
 	}
 
