@@ -59,7 +59,7 @@ public class BotWebModule : WebModule
 				options.AccessDeniedPath = "/oauthfailed";
 				options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 				options.CorrelationCookie.SameSite = SameSiteMode.Lax;
-				options.CorrelationCookie.HttpOnly = false;
+				options.CorrelationCookie.HttpOnly = true;
 			});
 
 		if (settings.CorsEnabled)
