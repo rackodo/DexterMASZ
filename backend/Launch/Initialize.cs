@@ -5,10 +5,13 @@ using Bot.Models;
 using Bot.Services;
 using Launch.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Module = Bot.Abstractions.Module;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace Launch;
 
@@ -292,6 +295,14 @@ public class Initialize
 		builder.WebHost.UseUrls("http://0.0.0.0:80/");
 
 		builder.Services.AddMemoryCache();
+		
+		builder.Services.AddDataProtection().UseCryptographicAlgorithms(
+			new AuthenticatedEncryptorConfiguration
+			{
+				EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+				ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+			}
+		);
 
 		var controller = builder.Services.AddControllers()
 			.AddNewtonsoftJson(x =>
