@@ -65,16 +65,7 @@ public class AuditLogger : IHostedService, Event
 
 	public async void QueueLog(string message)
 	{
-		using var scope = _serviceProvider.CreateScope();
-
-		var settingsRepository = scope.ServiceProvider.GetRequiredService<SettingsRepository>();
-
-		var config = await settingsRepository.GetAppSettings();
-
 		message = DateTime.UtcNow.ToDiscordTs() + " " + message[..Math.Min(message.Length, 1950)];
-
-		if (string.IsNullOrEmpty(config.AuditLogWebhookUrl))
-			return;
 
 		if (_currentMessage.Length + message.Length <= 1998)
 			_currentMessage.AppendLine(message);
@@ -87,6 +78,15 @@ public class AuditLogger : IHostedService, Event
 
 	public async Task ExecuteWebhook()
 	{
+		using var scope = _serviceProvider.CreateScope();
+
+		var settingsRepository = scope.ServiceProvider.GetRequiredService<SettingsRepository>();
+
+		var config = await settingsRepository.GetAppSettings();
+
+		if (string.IsNullOrEmpty(config.AuditLogWebhookUrl))
+			return;
+
 		var msg = new StringBuilder();
 
 		lock (_currentMessage)
@@ -101,12 +101,6 @@ public class AuditLogger : IHostedService, Event
 
 			try
 			{
-				using var scope = _serviceProvider.CreateScope();
-
-				var settingsRepository = scope.ServiceProvider.GetRequiredService<SettingsRepository>();
-
-				var config = await settingsRepository.GetAppSettings();
-
 				if (!string.IsNullOrEmpty(msg.ToString()))
 					await new DiscordWebhookClient(config.AuditLogWebhookUrl).SendMessageAsync(msg.ToString(),
 						allowedMentions: AllowedMentions.None);
