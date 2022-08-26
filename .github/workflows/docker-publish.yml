@@ -42,4 +42,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "🚀 Published backend with `${{ env.SIZE_BACKEND }}`.\n🚀 Published frontend with `${{ env.SIZE_FRONTEND }}`."
+          args: "🚀 Published backend with `${{ env.SIZE_BACKEND }}`.\n🚀 Published frontend with `${{ env.SIZE_FRONTEND }}`.\nNotifying <@{{ secrets.ROLE_PING }}>"
