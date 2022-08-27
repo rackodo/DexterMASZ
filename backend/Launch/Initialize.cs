@@ -70,7 +70,7 @@ public class Initialize
 			var authorizationPolicies = GetAuthorizationPolicies(modules);
 
 			ConsoleHelper.AddHeading("Initializing Web Modules");
-			InitializeWeb(cachedServices, builder, authorizationPolicies);
+			InitializeWeb(cachedServices, builder, authorizationPolicies, appSettings);
 
 			ConsoleHelper.AddHeading("Building Application");
 			var app = builder.Build();
@@ -288,11 +288,11 @@ public class Initialize
 	}
 
 	private static void InitializeWeb(CachedServices cachedServices, WebApplicationBuilder builder,
-		List<string> authorizationPolicies)
+		List<string> authorizationPolicies, AppSettings settings)
 	{
 		builder.WebHost.CaptureStartupErrors(true);
 
-		builder.WebHost.UseUrls("http://0.0.0.0:80/");
+		builder.WebHost.UseUrls(settings.GetServiceUrl());
 
 		builder.Services.AddMemoryCache();
 		

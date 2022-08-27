@@ -20,7 +20,6 @@ public static class ImportModules
 		return new List<Module>
 		{
 			new BotModule(),
-			new BotWebModule(),
 			new AutoModModule(),
 			new GuildAuditModule(),
 			new InviteModule(),
