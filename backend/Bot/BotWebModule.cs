@@ -39,6 +39,7 @@ public class BotWebModule : WebModule
 				options.ExpireTimeSpan = new TimeSpan(7, 0, 0, 0);
 				options.Cookie.MaxAge = new TimeSpan(7, 0, 0, 0);
 				options.Cookie.Name = "dexter_access_token";
+				options.Cookie.SameSite = SameSiteMode.Lax;
 				options.Cookie.HttpOnly = settings.EncryptionType == EncryptionType.HTTPS;
 				options.Events.OnRedirectToLogin = context =>
 				{
