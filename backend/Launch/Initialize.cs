@@ -292,7 +292,7 @@ public class Initialize
 	{
 		builder.WebHost.CaptureStartupErrors(true);
 
-		builder.WebHost.UseUrls(settings.GetServiceUrl());
+		builder.WebHost.UseUrls($"http://{settings.ServiceDomain}");
 
 		builder.Services.AddMemoryCache();
 		
