@@ -68,6 +68,8 @@ public class BotModule : Module
 		services.AddHostedService(s => s.GetRequiredService<DiscordBot>());
 		services.AddHostedService(s => s.GetRequiredService<AuditLogger>());
 		services.AddHostedService(s => s.GetRequiredService<DiscordRest>());
+
+		services.AddSingleton<FilesHandler>();
 	}
 
 	public override void PostBuild(IServiceProvider services, CachedServices cachedServices)

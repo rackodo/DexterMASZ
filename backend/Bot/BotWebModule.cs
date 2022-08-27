@@ -1,5 +1,6 @@
 ﻿using AspNetCoreRateLimit;
 using Bot.Abstractions;
+using Bot.Enums;
 using Bot.Middleware;
 using Bot.Models;
 using Bot.Services;
@@ -30,8 +31,6 @@ public class BotWebModule : WebModule
 
 	public override void AddServices(IServiceCollection services, CachedServices cachedServices, AppSettings settings)
 	{
-		services.AddSingleton<FilesHandler>();
-
 		services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 			.AddCookie("Cookies", options =>
 			{
@@ -40,7 +39,7 @@ public class BotWebModule : WebModule
 				options.ExpireTimeSpan = new TimeSpan(7, 0, 0, 0);
 				options.Cookie.MaxAge = new TimeSpan(7, 0, 0, 0);
 				options.Cookie.Name = "dexter_access_token";
-				options.Cookie.HttpOnly = false;
+				options.Cookie.HttpOnly = settings.EncryptionType == EncryptionType.HTTPS;
 				options.Events.OnRedirectToLogin = context =>
 				{
 					context.Response.Headers["Location"] = context.RedirectUri;
@@ -59,7 +58,7 @@ public class BotWebModule : WebModule
 				options.AccessDeniedPath = "/oauthfailed";
 				options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 				options.CorrelationCookie.SameSite = SameSiteMode.Lax;
-				options.CorrelationCookie.HttpOnly = true;
+				options.CorrelationCookie.HttpOnly = settings.EncryptionType == EncryptionType.HTTPS;
 			});
 
 		if (settings.CorsEnabled)
