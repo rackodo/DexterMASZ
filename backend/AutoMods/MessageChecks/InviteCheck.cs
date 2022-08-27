@@ -26,7 +26,7 @@ public static class InviteChecker
 
 		List<string> alreadyChecked = new();
 
-		foreach (Match usedInvite in matches)
+		foreach (var usedInvite in matches.Cast<Match>())
 			try
 			{
 				var inviteCode = usedInvite.Groups.Values.Last().ToString().Trim();

@@ -5,13 +5,13 @@ using Bot.Models;
 using Bot.Services;
 using Launch.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Module = Bot.Abstractions.Module;
-using Microsoft.AspNetCore.DataProtection;
 
 namespace Launch;
 
@@ -104,7 +104,7 @@ public class Initialize
 					ConsoleHelper.ShouldEdit = true;
 		}
 		catch (InvalidOperationException)
-		{}
+		{ }
 	}
 
 	private static ulong GetClientId()
@@ -295,7 +295,7 @@ public class Initialize
 		builder.WebHost.UseUrls($"http://{settings.ServiceDomain}");
 
 		builder.Services.AddMemoryCache();
-		
+
 		builder.Services.AddDataProtection().UseCryptographicAlgorithms(
 			new AuthenticatedEncryptorConfiguration
 			{

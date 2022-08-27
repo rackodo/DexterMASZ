@@ -49,13 +49,13 @@ public class LevelingService : Event
 	public async Task GrantXP(int xp, XPType xptype, GuildUserLevel level, GuildLevelConfig config, IGuildUser user, IGuildChannel channel, IServiceScope scope)
 	{
 		// REQUEST ITEMS FROM THE INVENTORY DATABASE TO RECALCULATE XP
-		
+
 		var grantedxp = 0;
 		if (xptype.HasFlag(XPType.Text))
 		{
 			level.TextXp += xp;
 			grantedxp += xp;
-		} 
+		}
 		else if (xptype.HasFlag(XPType.Voice))
 		{
 			level.VoiceXp += xp;
@@ -95,7 +95,7 @@ public class LevelingService : Event
 
 	private async Task ProcessMessage(IMessage message)
 	{
-		if (message.Channel is not IGuildChannel guildChannel) 
+		if (message.Channel is not IGuildChannel guildChannel)
 			return;
 
 		if (message.Author.IsBot)
@@ -141,7 +141,7 @@ public class LevelingService : Event
 
 			var config = await configrepo.GetOrCreateConfig(cds.guildId);
 			IGuild guild = _client.GetGuild(cds.guildId);
-			if (guild is null) guild = await _client.Rest.GetGuildAsync(cds.guildId);
+			guild ??= await _client.Rest.GetGuildAsync(cds.guildId);
 
 			foreach (var vchannel in await guild.GetVoiceChannelsAsync())
 			{
@@ -202,21 +202,21 @@ public class LevelingService : Event
 		}
 		return Task.CompletedTask;
 	}
-}
 
-class GuildCooldowns
-{
-	public GuildCooldowns(ulong guildId, int refreshInterval)
+	private class GuildCooldowns
 	{
-		this.guildId = guildId;
-		this.refreshInterval = refreshInterval;
+		public GuildCooldowns(ulong guildId, int refreshInterval)
+		{
+			this.guildId = guildId;
+			this.refreshInterval = refreshInterval;
 
-		nextRefresh = DateTimeOffset.Now.ToUnixTimeSeconds() + refreshInterval;
-		textUsers = new HashSet<ulong>();
-	} 
+			nextRefresh = DateTimeOffset.Now.ToUnixTimeSeconds() + refreshInterval;
+			textUsers = new HashSet<ulong>();
+		}
 
-	public ulong guildId;
-	public HashSet<ulong> textUsers;
-	public long nextRefresh;
-	public int refreshInterval;
+		public ulong guildId;
+		public HashSet<ulong> textUsers;
+		public long nextRefresh;
+		public int refreshInterval;
+	}
 }

@@ -33,11 +33,12 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 		return XPFromLevel(level, Config);
 	}
 
-	public new long TextXp { 
+	public new long TextXp
+	{
 		get
 		{
 			return base.TextXp;
-		} 
+		}
 		set
 		{
 			_textLevel?.SetXp(value, Config!);
@@ -65,8 +66,9 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 	private LevelData? _totalLevel = null;
 
 	public GuildLevelConfig? Config { get; set; } = null;
-	
-	public LevelData Text { 
+
+	public LevelData Text
+	{
 		get
 		{
 			if (_textLevel is null)
@@ -138,7 +140,7 @@ public class LevelData : IComparable<LevelData>
 	{
 		_xp = xp;
 		Recalculate(config);
-	} 
+	}
 
 	private int _level;
 	private long _xp;

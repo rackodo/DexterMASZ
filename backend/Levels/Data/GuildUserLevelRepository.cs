@@ -1,22 +1,17 @@
 ﻿using Bot.Abstractions;
 using Bot.Services;
 using Discord;
-using Levels.Events;
 using Levels.Models;
 
 namespace Levels.Data;
 
 public class GuildUserLevelRepository : Repository
 {
-	private DiscordRest _discordRest;
-	private LevelsDatabase _database;
-	private LevelsEventHandler _eventHandler;
+	private readonly LevelsDatabase _database;
 
-	public GuildUserLevelRepository(DiscordRest discordRest, LevelsDatabase database, LevelsEventHandler eventHandler) : base(discordRest)
+	public GuildUserLevelRepository(DiscordRest discordRest, LevelsDatabase database) : base(discordRest)
 	{
-		_discordRest = discordRest;
 		_database = database;
-		_eventHandler = eventHandler;
 	}
 
 	public async Task<GuildUserLevel> GetOrCreateLevel(IGuildUser guildUser)

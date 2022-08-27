@@ -1,6 +1,7 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Extensions;
+using Bot.Models;
 using Discord;
 using Discord.Webhook;
 using Discord.WebSocket;
@@ -18,6 +19,8 @@ public class AuditLogger : IHostedService, Event
 	private readonly ILogger<AuditLogger> _logger;
 	private readonly IServiceProvider _serviceProvider;
 
+	private string _webhookUrl;
+
 	public AuditLogger(ILogger<AuditLogger> logger, IServiceProvider serviceProvider, DiscordSocketClient client)
 	{
 		_logger = logger;
@@ -34,41 +37,39 @@ public class AuditLogger : IHostedService, Event
 
 	public async Task StartAsync(CancellationToken _)
 	{
-		using var scope = _serviceProvider.CreateScope();
+		var config = await GetConfig();
+		_webhookUrl = config.AuditLogWebhookUrl;
 
-		var settingsRepository = scope.ServiceProvider.GetRequiredService<SettingsRepository>();
+		await QueueLog("======= STARTUP =======");
+		await QueueLog("`Dexter` started!");
+		await QueueLog("System time: " + DateTime.Now);
+		await QueueLog("System time (UTC): " + DateTime.UtcNow);
+		await QueueLog($"Language: `{config.DefaultLanguage}`");
+		await QueueLog($"URL: `{config.GetServiceUrl()}`");
+		await QueueLog($"Domain: `{config.ServiceDomain}`");
+		await QueueLog($"Client ID: `{config.ClientId}`");
 
-		var config = await settingsRepository.GetAppSettings();
+		await QueueLog(config.CorsEnabled ? "CORS support: ⚠ `ENABLED`" : "CORS support: `DISABLED`");
 
-		QueueLog("======= STARTUP =======");
-		QueueLog("`Dexter` started!");
-		QueueLog("System time: " + DateTime.Now);
-		QueueLog("System time (UTC): " + DateTime.UtcNow);
-		QueueLog($"Language: `{config.DefaultLanguage}`");
-		QueueLog($"URL: `{config.GetServiceUrl()}`");
-		QueueLog($"Domain: `{config.ServiceDomain}`");
-		QueueLog($"Client ID: `{config.ClientId}`");
-
-		QueueLog(config.CorsEnabled ? "CORS support: ⚠ `ENABLED`" : "CORS support: `DISABLED`");
-
-		QueueLog("======= /STARTUP ========");
-
-		await ExecuteWebhook();
+		await QueueLog("======= /STARTUP ========", true);
 	}
 
 	public async Task StopAsync(CancellationToken _)
 	{
-		QueueLog("======= LOGOUT ========");
-
-		await ExecuteWebhook();
+		await QueueLog("======= LOGOUT ========", true);
 	}
 
-	public async void QueueLog(string message)
+	public async Task QueueLog(string message, bool shouldExecute = false)
 	{
 		message = DateTime.UtcNow.ToDiscordTs() + " " + message[..Math.Min(message.Length, 1950)];
 
 		if (_currentMessage.Length + message.Length <= 1998)
+		{
 			_currentMessage.AppendLine(message);
+
+			if (shouldExecute)
+				await ExecuteWebhook();
+		}
 		else
 		{
 			await ExecuteWebhook();
@@ -76,15 +77,18 @@ public class AuditLogger : IHostedService, Event
 		}
 	}
 
-	public async Task ExecuteWebhook()
+	public async Task<AppSettings> GetConfig()
 	{
 		using var scope = _serviceProvider.CreateScope();
 
 		var settingsRepository = scope.ServiceProvider.GetRequiredService<SettingsRepository>();
 
-		var config = await settingsRepository.GetAppSettings();
+		return await settingsRepository.GetAppSettings();
+	}
 
-		if (string.IsNullOrEmpty(config.AuditLogWebhookUrl))
+	private async Task ExecuteWebhook()
+	{
+		if (string.IsNullOrEmpty(_webhookUrl))
 			return;
 
 		var msg = new StringBuilder();
@@ -102,7 +106,7 @@ public class AuditLogger : IHostedService, Event
 			try
 			{
 				if (!string.IsNullOrEmpty(msg.ToString()))
-					await new DiscordWebhookClient(config.AuditLogWebhookUrl).SendMessageAsync(msg.ToString(),
+					await new DiscordWebhookClient(_webhookUrl).SendMessageAsync(msg.ToString(),
 						allowedMentions: AllowedMentions.None);
 			}
 			catch (Exception e)
@@ -114,13 +118,11 @@ public class AuditLogger : IHostedService, Event
 
 	private async Task OnDisconnect(Exception _)
 	{
-		QueueLog("Bot **disconnected** from discord sockets.");
-		await ExecuteWebhook();
+		await QueueLog("Bot **disconnected** from discord sockets.", true);
 	}
 
 	private async Task OnBotReady()
 	{
-		QueueLog($"Bot **connected** to `{_client.Guilds.Count} guild(s)` with `{_client.Latency}ms` latency.");
-		await ExecuteWebhook();
+		await QueueLog($"Bot **connected** to `{_client.Guilds.Count} guild(s)` with `{_client.Latency}ms` latency.", true);
 	}
 }

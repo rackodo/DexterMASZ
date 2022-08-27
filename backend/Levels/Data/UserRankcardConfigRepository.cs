@@ -8,9 +8,9 @@ namespace Levels.Data;
 
 public class UserRankcardConfigRepository : Repository
 {
-	private DiscordRest _discordRest;
-	private LevelsDatabase _database;
-	private LevelsEventHandler _eventHandler;
+	private readonly DiscordRest _discordRest;
+	private readonly LevelsDatabase _database;
+	private readonly LevelsEventHandler _eventHandler;
 
 	public UserRankcardConfigRepository(DiscordRest discordRest, LevelsDatabase database, LevelsEventHandler eventHandler) : base(discordRest)
 	{

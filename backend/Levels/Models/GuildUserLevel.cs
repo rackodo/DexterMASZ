@@ -39,13 +39,13 @@ public class GuildUserLevel
 		var chars = new char[22];
 		for (var i = 10; i >= 0; i--)
 		{
-			chars[i] = (char) ('0' + (guildid & 0x3f));
+			chars[i] = (char)('0' + (guildid & 0x3f));
 			guildid >>= 6;
 		}
 
 		for (var i = 21; i >= 11; i--)
 		{
-			chars[i] = (char) ('0' + (userid & 0x3f));
+			chars[i] = (char)('0' + (userid & 0x3f));
 			userid >>= 6;
 		}
 

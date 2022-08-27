@@ -52,14 +52,15 @@ public class LevelsImageController : AuthenticatedController
 		try
 		{
 			path = await _levelsImageRepository.UploadFile(userId, uploadedFile.File);
-		} catch (BadImageFormatException e)
+		}
+		catch (BadImageFormatException e)
 		{
 			return StatusCode(415, e.Message);
 		}
 		var currentBg = _levelsRankcardRepository.GetOrDefaultRankcard(userId).Background;
 		var otherImages = await _levelsImageRepository.GetUserFiles(userId);
 
-		foreach(var fileName in otherImages)
+		foreach (var fileName in otherImages)
 		{
 			if (path.EndsWith(fileName)) continue;
 			if (currentBg.EndsWith(fileName)) continue;

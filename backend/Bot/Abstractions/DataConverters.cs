@@ -17,6 +17,6 @@ public class JSONDataConverter<T> : ValueConverter<T, string> where T : ISeriali
 public class DictionaryDataConverter<TKey, TValue> : JSONDataConverter<Dictionary<TKey, TValue>>
 {
 	public DictionaryDataConverter() : base()
-    {
-    }
+	{
+	}
 }

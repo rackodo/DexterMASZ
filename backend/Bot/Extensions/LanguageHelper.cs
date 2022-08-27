@@ -28,7 +28,8 @@ public static class LanguageHelper
 
 	public static string ToUnit(this long v, Dictionary<long, string> units = null)
 	{
-		if (units is null) units = BasicUnits;
+		units ??= BasicUnits;
+
 		foreach (var kvp in units)
 		{
 			if (v >= kvp.Key)

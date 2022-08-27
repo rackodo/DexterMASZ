@@ -30,41 +30,36 @@ public class BotEventAudit : Event
 		_eventHandler.OnIdentityRegistered += OnIdentityRegisteredAudit;
 	}
 
-	private Task OnIdentityRegisteredAudit(Identity identity)
+	private async Task OnIdentityRegisteredAudit(Identity identity)
 	{
 		if (identity is not DiscordOAuthIdentity dOauth)
-			return Task.CompletedTask;
+			return;
 
 		var currentUser = dOauth.GetCurrentUser();
 		var userDefinition = $"`{currentUser.Username}#{currentUser.Discriminator}` (`{currentUser.Id}`)";
-		_auditLogger.QueueLog($"{userDefinition} **logged in** using OAuth.");
+		await _auditLogger.QueueLog($"{userDefinition} **logged in** using OAuth.");
 
-		return Task.CompletedTask;
+		return;
 	}
 
-	private Task OnGuildDeletedAudit(GuildConfig guildConfig)
+	private async Task OnGuildDeletedAudit(GuildConfig guildConfig)
 	{
-		_auditLogger.QueueLog($"**Guild** `{guildConfig.GuildId}` deleted.");
-		return Task.CompletedTask;
+		await _auditLogger.QueueLog($"**Guild** `{guildConfig.GuildId}` deleted.");
 	}
 
-	private Task OnGuildUpdatedAudit(GuildConfig guildConfig)
+	private async Task OnGuildUpdatedAudit(GuildConfig guildConfig)
 	{
-		_auditLogger.QueueLog($"**Guild** `{guildConfig.GuildId}` updated.");
-		return Task.CompletedTask;
+		await _auditLogger.QueueLog($"**Guild** `{guildConfig.GuildId}` updated.");
 	}
 
-	private Task OnGuildRegisteredAudit(GuildConfig guildConfig, bool importExistingBans)
+	private async Task OnGuildRegisteredAudit(GuildConfig guildConfig, bool importExistingBans)
 	{
-		_auditLogger.QueueLog($"**Guild** `{guildConfig.GuildId}` registered.");
-		return Task.CompletedTask;
+		await _auditLogger.QueueLog($"**Guild** `{guildConfig.GuildId}` registered.");
 	}
 
 	private async Task OnInternalCachingDoneAudit(int _, DateTime nextCache)
 	{
-		_auditLogger.QueueLog($"Internal cache refreshed with `{_discordRest.GetCache().Keys.Count}` entries. " +
-							  $"Next cache refresh {nextCache.ToDiscordTs(DiscordTimestampFormats.RelativeTime)}.");
-
-		await _auditLogger.ExecuteWebhook();
+		await _auditLogger.QueueLog($"Internal cache refreshed with `{_discordRest.GetCache().Keys.Count}` entries. " +
+			$"Next cache refresh {nextCache.ToDiscordTs(DiscordTimestampFormats.RelativeTime)}.", true);
 	}
 }

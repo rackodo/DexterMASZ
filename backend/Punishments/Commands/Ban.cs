@@ -36,7 +36,7 @@ public class Ban : Command<Ban>
 
 		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
 
-		var modCase = new ModCase()
+		var modCase = new ModCase
 		{
 			Title = title,
 			GuildId = Context.Guild.Id,
@@ -45,10 +45,9 @@ public class Ban : Command<Ban>
 			Description = string.IsNullOrEmpty(description) ? title : description,
 			PunishmentType = PunishmentType.Ban,
 			PunishmentActive = true,
-			PunishedUntil = time == default ? null : DateTime.UtcNow + time
+			PunishedUntil = time == default ? null : DateTime.UtcNow + time,
+			CreationType = CaseCreationType.ByCommand
 		};
-
-		modCase.CreationType = CaseCreationType.ByCommand;
 
 		var created =
 			await ModCaseRepository.CreateModCase(modCase);

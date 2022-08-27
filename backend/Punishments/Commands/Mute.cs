@@ -38,7 +38,7 @@ public class Mute : Command<Mute>
 
 		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
 
-		var modCase = new ModCase()
+		var modCase = new ModCase
 		{
 			Title = title,
 			GuildId = Context.Guild.Id,
@@ -48,10 +48,9 @@ public class Mute : Command<Mute>
 			PunishmentType = PunishmentType.Mute,
 			PunishmentActive = true,
 			HighSeverity = highSeverity,
-			PunishedUntil = time == default ? null : DateTime.UtcNow + time
+			PunishedUntil = time == default ? null : DateTime.UtcNow + time,
+			CreationType = CaseCreationType.ByCommand
 		};
-
-		modCase.CreationType = CaseCreationType.ByCommand;
 
 		var created =
 			await ModCaseRepository.CreateModCase(modCase);

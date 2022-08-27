@@ -71,7 +71,7 @@ public class UlongArrayComparer : ValueComparer<ulong[]>
 public class FloatArrayConverter : ValueConverter<float[], string>
 {
 	public FloatArrayConverter()
-		:base(
+		: base(
 			v => string.Join(',', v.Select(n => $"{n:G6}")),
 			v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(float.Parse).ToArray()
 			)

@@ -1,6 +1,5 @@
 ﻿using AspNetCoreRateLimit;
 using Bot.Abstractions;
-using Bot.Enums;
 using Bot.Loggers;
 using Bot.Middleware;
 using Bot.Models;

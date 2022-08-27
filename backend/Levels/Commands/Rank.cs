@@ -16,10 +16,10 @@ public class Rank : Command<Rank>
 	public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
 	public SettingsRepository? SettingsRepository { get; set; }
 
-	private static string Storage(IUser user, string root) => Path.Combine(root, "Media", "Cache", $"Rankcard{user.Id}.png"); 
+	private static string Storage(IUser user, string root) => Path.Combine(root, "Media", "Cache", $"Rankcard{user.Id}.png");
 
 	[SlashCommand("rank", "Display your rankcard and experience information.", runMode: RunMode.Async)]
-	public async Task RankCommand([Summary("user", "Target user to get rank from.")]IUser? user = null)
+	public async Task RankCommand([Summary("user", "Target user to get rank from.")] IUser? user = null)
 	{
 		if (Context.Channel is not IGuildChannel)
 		{
@@ -31,8 +31,7 @@ public class Rank : Command<Rank>
 		if (!await EnsureBotChannel(guildconfig))
 			return;
 
-		if (user is null)
-			user = Context.User;
+		user ??= Context.User;
 
 		var rankcardconfig = UserRankcardConfigRepository!.GetOrDefaultRankcard(user);
 		var level = await GuildUserLevelRepository!.GetOrCreateLevel(Context.Guild.Id, user.Id);
@@ -40,7 +39,7 @@ public class Rank : Command<Rank>
 		var calclevel = new CalculatedGuildUserLevel(level, guildlevelconfig);
 
 		_ = DeferAsync();
-		string path = "";
+		var path = "";
 
 		try
 		{

@@ -3,13 +3,13 @@ using Bot;
 using Bot.Abstractions;
 using GuildAudits;
 using Invites;
+using Levels;
 using Messaging;
 using MOTDs;
 using Punishments;
 using UserMaps;
 using UserNotes;
 using Utilities;
-using Levels;
 
 namespace Launch;
 

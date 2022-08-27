@@ -14,6 +14,8 @@ public class LevelsXPController : AuthenticatedController
 	private readonly GuildLevelConfigRepository _levelsConfigRepository;
 	private readonly DiscordRest _rest;
 
+	private const int MAX_PAGE_SIZE = 500;
+
 	public LevelsXPController(IdentityManager identityManager, GuildUserLevelRepository levelsRepository, GuildLevelConfigRepository levelsConfigRepository, DiscordRest rest) :
 		base(identityManager, levelsRepository, levelsConfigRepository)
 	{
@@ -38,17 +40,16 @@ public class LevelsXPController : AuthenticatedController
 	}
 
 	private async Task<GuildUserLevelDTO> levelToDTO(GuildUserLevel level, GuildLevelConfig config)
-    {
+	{
 		var user = await _rest.FetchUserInfo(level.UserId, Bot.Enums.CacheBehavior.Default);
 
 		var calc = new CalculatedGuildUserLevel(level, config);
 		return calc.ToDTO(new Bot.Models.DiscordUser(user));
 	}
 
-	const int MAX_PAGE_SIZE = 500;
 	[HttpGet("guilds/{guildId}/users")]
 	public async Task<IActionResult> GetLeaderboard([FromRoute] ulong guildId, [FromQuery] string order = "total", [FromQuery] int page = 1, [FromQuery] int pageSize = 100)
-    {
+	{
 		Console.WriteLine($"Received Leaderboard req for guild {guildId}, page {page} with size {pageSize}");
 		if (pageSize < 1) pageSize = 1;
 		else if (pageSize > MAX_PAGE_SIZE) pageSize = MAX_PAGE_SIZE;
@@ -69,5 +70,5 @@ public class LevelsXPController : AuthenticatedController
 			.Select(t => t.Result)
 			.Where(r => r != null)
 			.ToList());
-    }
+	}
 }

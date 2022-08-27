@@ -19,7 +19,7 @@ public class AppSettings
 	[JsonIgnore] public string Lang { get; set; } = "en";
 	public string EmbedTitle { get; set; } = "Dexter - a discord moderation bot";
 	public string EmbedContent { get; set; } = "Dexter is a moderation bot. Keep track of all moderation events on your server, search reliably for infractions or setup automod to be one step ahead of rule breakers.";
-	
+
 	public string GetServiceUrl() =>
 		$"http{(EncryptionType == EncryptionType.HTTPS ? "s" : "")}://{ServiceDomain}";
 

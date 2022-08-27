@@ -9,13 +9,11 @@ namespace Levels.Data;
 
 public class GuildLevelConfigRepository : Repository
 {
-	private DiscordRest _discordRest;
-	private LevelsDatabase _database;
-	private LevelsEventHandler _eventHandler;
+	private readonly LevelsDatabase _database;
+	private readonly LevelsEventHandler _eventHandler;
 
 	public GuildLevelConfigRepository(DiscordRest discordRest, LevelsDatabase database, LevelsEventHandler eventHandler) : base(discordRest)
 	{
-		_discordRest = discordRest;
 		_database = database;
 		_eventHandler = eventHandler;
 	}

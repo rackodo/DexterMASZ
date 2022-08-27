@@ -64,7 +64,7 @@ public class LevelsConfigController : AuthenticatedController
 		}
 
 		var existing = await _levelsConfigRepository.GetOrCreateConfig(guildId);
-		
+
 		existing.Coefficients = config.Coefficients;
 		existing.XpInterval = config.XpInterval;
 		existing.MinimumTextXpGiven = config.MinimumTextXpGiven;
@@ -111,7 +111,8 @@ public class LevelsConfigController : AuthenticatedController
 		if (config.MaximumVoiceXpGiven < config.MinimumVoiceXpGiven)
 			return BadRequest("Invalid range for Voice Experience, minimum exceeds maximum.");
 
-		if (config.NicknameDisabledReplacement != default) {
+		if (config.NicknameDisabledReplacement != default)
+		{
 			var found = false;
 			foreach (var roleIds in config.Levels.Values)
 			{

@@ -23,7 +23,7 @@ public static class LinkCheck
 
 		if (string.IsNullOrEmpty(config.CustomWordFilter)) return count > config.Limit;
 
-		foreach (Match link in foundLinks)
+		foreach (var link in foundLinks.Cast<Match>())
 			if (config.CustomWordFilter.Split('\n').Any(filtered => Regex.Match(link.Value, filtered).Success))
 				count--;
 

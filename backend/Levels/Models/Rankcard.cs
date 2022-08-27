@@ -1,17 +1,17 @@
-﻿using Bot.Extensions;
+﻿using Bot.Data;
+using Bot.Extensions;
 using Discord;
 using Levels.Data;
-using System.Text.RegularExpressions;
+using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
-using SixLabors.Fonts;
-using SixLabors.ImageSharp.Processing;
-using SixLabors.ImageSharp.PixelFormats;
-using Image = SixLabors.ImageSharp.Image;
-using Color = SixLabors.ImageSharp.Color;
-using IOPath = System.IO.Path;
 using SixLabors.ImageSharp.Drawing.Processing;
-using Bot.Data;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using System.Text.RegularExpressions;
+using Color = SixLabors.ImageSharp.Color;
+using Image = SixLabors.ImageSharp.Image;
+using IOPath = System.IO.Path;
 
 namespace Levels.Models;
 
@@ -270,7 +270,7 @@ public static partial class Rankcard
 			.DrawTextInRect(totallevelstr,
 				new Rectangle(rectLevelText.X + (int)offset.Width + margin, rectLevelText.Y, widthmain / 2 - miniLabelWidth - margin - (int)offset.Width, labelHeight),
 				fontDefault, xpColor, HorizontalAlignment.Left, VerticalAlignment.Bottom);
-			
+
 			g = g.DrawLevels(fontTitle, fontDefault, fontMini, levelsData, rankcardConfig);
 
 			bg?.Dispose();
@@ -308,10 +308,10 @@ public static partial class Rankcard
 				gclip => gclip.Fill(xpColor, barXPGPath))
 			.Fill(prefs.LevelBgColor.ColorFromArgb(), levelRenderArea)
 			.DrawTextInRect(ld.xpType, ld.rects.typeLabel, fontTitle, offColor, HorizontalAlignment.Center, VerticalAlignment.Center);
-			
+
 			if (ld.rects.rankLabel != default)
 				g = g.DrawTextInRect("RANK", ld.rects.rankLabel, fontMini, offColor, HorizontalAlignment.Right, VerticalAlignment.Bottom);
-			
+
 			if (ld.rects.rankText != default)
 				g = g.DrawTextInRect($"#{ld.rank}", ld.rects.rankText, fontTitle, offColor, HorizontalAlignment.Left, VerticalAlignment.Bottom);
 

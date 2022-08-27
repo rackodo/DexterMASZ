@@ -10,12 +10,10 @@ namespace Levels.Controllers;
 public class LevelsImageServerController : BaseController
 {
 	private readonly LevelsImageRepository _levelsImageRepository;
-	private readonly UserRankcardConfigRepository _levelsRankcardRepository;
 
-	public LevelsImageServerController(LevelsImageRepository levelsImageRepository, UserRankcardConfigRepository levelsRankcardRepository)
+	public LevelsImageServerController(LevelsImageRepository levelsImageRepository)
 	{
 		_levelsImageRepository = levelsImageRepository;
-		_levelsRankcardRepository = levelsRankcardRepository;
 	}
 
 	[HttpGet("{userId}/images/{fileName}")]

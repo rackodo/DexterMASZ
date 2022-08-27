@@ -11,15 +11,11 @@ namespace Levels.Controllers;
 [Route("api/v1/levels/rankcard")]
 public class LevelsRankcardController : AuthenticatedController
 {
-	private readonly GuildUserLevelRepository _levelsRepository;
-	private readonly GuildLevelConfigRepository _levelsConfigRepository;
 	private readonly UserRankcardConfigRepository _levelsRankcardRepository;
 
-	public LevelsRankcardController(IdentityManager identityManager, GuildUserLevelRepository levelsRepository, GuildLevelConfigRepository levelsConfigRepository, UserRankcardConfigRepository levelsRankcardRepository) :
-		base(identityManager, levelsRepository, levelsConfigRepository, levelsRankcardRepository)
+	public LevelsRankcardController(IdentityManager identityManager, GuildLevelConfigRepository levelsConfigRepository, UserRankcardConfigRepository levelsRankcardRepository) :
+		base(identityManager, levelsConfigRepository, levelsRankcardRepository)
 	{
-		_levelsRepository = levelsRepository;
-		_levelsConfigRepository = levelsConfigRepository;
 		_levelsRankcardRepository = levelsRankcardRepository;
 	}
 

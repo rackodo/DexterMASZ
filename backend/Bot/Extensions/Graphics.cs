@@ -10,13 +10,13 @@ public static class Graphics
 {
 	public static Color ColorFromArgb(this uint code)
 	{
-		var b = (byte) (code % 256);
+		var b = (byte)(code % 256);
 		code >>= 8;
-		var g = (byte) (code % 256);
+		var g = (byte)(code % 256);
 		code >>= 8;
-		var r = (byte) (code % 256);
+		var r = (byte)(code % 256);
 		code >>= 8;
-		var a = (byte) code;
+		var a = (byte)code;
 		return Color.FromRgba(r, g, b, a);
 	}
 

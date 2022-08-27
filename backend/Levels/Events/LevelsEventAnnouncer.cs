@@ -61,7 +61,7 @@ public class LevelsEventAnnouncer : Event
 				var msg = template
 					.Replace("{USER}", guildUser.Mention)
 					.Replace("{LEVEL}", level.ToString());
-				
+
 				foreach (var c in new IMessageChannel?[] { levelUpChannel, announcementChannel })
 				{
 					if (c is null) continue;

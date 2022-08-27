@@ -137,7 +137,7 @@ public class LevelsImageRepository : Repository
 			throw new InvalidPathException();
 
 		var fileName = await FilesHandler.SaveFile(file, uploadDir);
-	
+
 		return Path.Combine(uploadDir, fileName);
 	}
 

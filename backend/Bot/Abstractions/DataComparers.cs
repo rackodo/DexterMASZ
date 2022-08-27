@@ -15,18 +15,19 @@ public class JSONDataComparer<T> : ValueComparer<T> where T : ISerializable
 	}
 }
 
-public class DictionaryDataComparer<TKey, TValue> : ValueComparer<Dictionary<TKey, TValue>> {
+public class DictionaryDataComparer<TKey, TValue> : ValueComparer<Dictionary<TKey, TValue>>
+{
 
 	public DictionaryDataComparer() : base(
 		(v1, v2) => AreDictionariesEqual(v1, v2),
 		v => v.GetHashCode(),
 		v => v.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
 		)
-    {
-    }
+	{
+	}
 
 	private static bool AreDictionariesEqual(Dictionary<TKey, TValue> d1, Dictionary<TKey, TValue> d2)
-    {
+	{
 		if (d1.Keys.Except(d2.Keys).Any()) return false;
 
 		foreach (var kvp in d1)
@@ -37,5 +38,5 @@ public class DictionaryDataComparer<TKey, TValue> : ValueComparer<Dictionary<TKe
 		}
 
 		return true;
-    }
+	}
 }
