@@ -150,10 +150,10 @@ public class BotModule : WebModule
 		if (settings.CorsEnabled)
 			app.UseCors("AngularDevCors");
 
+		app.UseDeveloperExceptionPage();
+
 		if (app.Environment.IsDevelopment())
 		{
-			app.UseDeveloperExceptionPage();
-
 			app.UseSwagger();
 			app.UseSwaggerUI(options =>
 			{
