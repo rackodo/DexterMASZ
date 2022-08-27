@@ -113,7 +113,6 @@ export class AppComponent implements OnInit{
   login() {
     this.loggedIn = true;
       this.auth.getUserProfile().subscribe((data: AppUser) => {
-        console.log(`Logged in as ${data.discordUser.username}#${data.discordUser.discriminator}`);
         this.loggedIn = true;
         this.currentUser = data;
       }, () => {
