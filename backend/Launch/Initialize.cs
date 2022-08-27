@@ -356,10 +356,7 @@ public class Initialize
 		}
 
 		ConsoleHelper.AddSubHeading("Successfully post built", "application");
-
-		if (appSettings.EncryptionType == EncryptionType.HTTPS)
-			app.UseHttpsRedirection();
-
+		
 		app.UseRouting();
 
 		if (authorizationPolicies.Any())
