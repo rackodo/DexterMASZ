@@ -19,11 +19,11 @@
     "Punishments": "Punishments",
     "Bans": "Bans",
     "Mutes": "Mutes",
-    "Automods": "Automods",
+    "Automods": "Auto Mods",
     "Invite": "Invite",
     "Invites": "Invites",
-    "UserNotes": "UserNotes",
-    "UserMaps": "UserMaps",
+    "UserNotes": "User Notes",
+    "UserMaps": "User Maps",
     "Comments": "Comments",
     "Loading": "Loading...",
     "NothingHere": "Nothing here.",
@@ -391,7 +391,7 @@
         "MessageFrom": "Message from {{name}}"
     },
     "QuickSearch": {
-        "Placeholder": "QuickSearch users, modcases, punishments, automods, ...",
+        "Placeholder": "Quickly search users, modcases, punishments, automods, ...",
         "NoMatches": "Nothing matches your search :(",
         "SearchFailed": "Search failed."
     },
@@ -404,10 +404,10 @@
         "Tabs": {
             "Dashboard": "Dashboard",
             "Case": "Cases",
-            "AutoMods": "AutoMods",
+            "AutoMods": "Auto Mods",
             "Messages": "Messages",
-            "UserNote": "UserNotes",
-            "UserMap": "UserMaps",
+            "UserNote": "User Notes",
+            "UserMap": "User Maps",
             "Config": "Config"
         }
     },
