@@ -92,8 +92,7 @@ public class BotModule : WebModule
 				options.ExpireTimeSpan = new TimeSpan(7, 0, 0, 0);
 				options.Cookie.MaxAge = new TimeSpan(7, 0, 0, 0);
 				options.Cookie.Name = "dexter_access_token";
-				options.Cookie.SameSite = SameSiteMode.Lax;
-				options.Cookie.HttpOnly = settings.EncryptionType == EncryptionType.HTTPS;
+				options.Cookie.HttpOnly = false;
 				options.Events.OnRedirectToLogin = context =>
 				{
 					context.Response.Headers["Location"] = context.RedirectUri;
@@ -112,7 +111,7 @@ public class BotModule : WebModule
 				options.AccessDeniedPath = "/oauthfailed";
 				options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 				options.CorrelationCookie.SameSite = SameSiteMode.Lax;
-				options.CorrelationCookie.HttpOnly = settings.EncryptionType == EncryptionType.HTTPS;
+				options.CorrelationCookie.HttpOnly = false;
 			});
 
 		if (settings.CorsEnabled)
