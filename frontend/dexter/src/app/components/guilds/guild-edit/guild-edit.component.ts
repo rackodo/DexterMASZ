@@ -37,8 +37,8 @@ export class GuildEditComponent implements OnInit {
     this.channelsGroup = this._formBuilder.group({
       staffChannels: [''],
       botChannels: [''],
-      staffLogs: [''],
-      staffAnnouncements: ['']
+      staffLogs: '',
+      staffAnnouncements: ''
     });
     this.configGroup = this._formBuilder.group({
       strictPermissionCheck: [''],
@@ -111,13 +111,19 @@ export class GuildEditComponent implements OnInit {
       adminRoles: this.rolesGroup.value.adminRoles,
       staffChannels: this.channelsGroup.value.staffChannels != '' ? this.channelsGroup.value.staffChannels : [],
       botChannels: this.channelsGroup.value.botChannels != '' ? this.channelsGroup.value.botChannels : [],
-      staffLogs: this.configGroup.value?.staffLogs != '' ? this.configGroup?.value?.staffLogs : null,
-      staffAnnouncements: this.configGroup.value?.staffAnnouncements != '' ? this.configGroup?.value?.staffAnnouncements : null,
+      staffLogs: this.channelsGroup.value?.staffLogs,
+      staffAnnouncements: this.channelsGroup.value?.staffAnnouncements,
       strictModPermissionCheck: (this.configGroup.value?.strictPermissionCheck != '' ? this.configGroup.value?.strictPermissionCheck : false) ?? false,
       executeWhoIsOnJoin: (this.configGroup.value?.executeWhoIsOnJoin != '' ? this.configGroup.value?.executeWhoIsOnJoin : false) ?? false,
       publishModeratorInfo: (this.configGroup.value?.publishModeratorInfo != '' ? this.configGroup.value?.publishModeratorInfo : false) ?? false,
       preferredLanguage: this.configGroup.value?.preferredLanguage != '' ? this.configGroup.value?.preferredLanguage : 0
     }
+	
+	console.log(this.channelsGroup);
+	console.log(this.channelsGroup.value);
+	console.log(this.channelsGroup.value?.staffLogs);
+	console.log(data);
+	console.log(data.staffLogs);
 
     this.api.putSimpleData(`/guilds/${this.currentGuild?.content?.id}`, data).subscribe(() => {
       this.toastr.success(this.translator.instant('GuildDialog.GuildUpdated'));
