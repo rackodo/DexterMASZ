@@ -19,8 +19,6 @@ public class AuditLogger : IHostedService, Event
 	private readonly ILogger<AuditLogger> _logger;
 	private readonly IServiceProvider _serviceProvider;
 
-	private string _webhookUrl;
-
 	public AuditLogger(ILogger<AuditLogger> logger, IServiceProvider serviceProvider, DiscordSocketClient client)
 	{
 		_logger = logger;
@@ -38,7 +36,6 @@ public class AuditLogger : IHostedService, Event
 	public async Task StartAsync(CancellationToken _)
 	{
 		var config = await GetConfig();
-		_webhookUrl = config.AuditLogWebhookUrl;
 
 		await QueueLog("======= STARTUP =======");
 		await QueueLog("`Dexter` started!");
@@ -88,31 +85,34 @@ public class AuditLogger : IHostedService, Event
 
 	private async Task ExecuteWebhook()
 	{
-		if (string.IsNullOrEmpty(_webhookUrl))
+		var config = await GetConfig();
+
+		if (string.IsNullOrEmpty(config.AuditLogWebhookUrl))
 			return;
 
-		var msg = new StringBuilder();
+		StringBuilder msg;
 
 		lock (_currentMessage)
 		{
-			msg = _currentMessage;
+			if (_currentMessage.Length <= 0)
+				return;
+
+			msg = new StringBuilder(_currentMessage.Length);
+			msg.Append(_currentMessage);
 			_currentMessage.Clear();
 		}
 
-		if (msg.Length > 0)
-		{
-			_logger.LogInformation("Executing audit log webhook.");
+		_logger.LogInformation("Executing audit log webhook.");
 
-			try
-			{
-				if (!string.IsNullOrEmpty(msg.ToString()))
-					await new DiscordWebhookClient(_webhookUrl).SendMessageAsync(msg.ToString(),
-						allowedMentions: AllowedMentions.None);
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e, "Error executing audit log webhook. ");
-			}
+		try
+		{
+			if (!string.IsNullOrEmpty(msg.ToString()))
+				await new DiscordWebhookClient(config.AuditLogWebhookUrl).SendMessageAsync(msg.ToString(),
+					allowedMentions: AllowedMentions.None);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e, "Error executing audit log webhook. ");
 		}
 	}
 
