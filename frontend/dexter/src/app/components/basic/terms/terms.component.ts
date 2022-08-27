@@ -11,7 +11,6 @@ import { ApiService } from 'src/app/services/api.service';
 export class TermsComponent implements OnInit {
 
   public terms: ContentLoading<Guideline[]> = { loading: true, content: [] };
-  public terms: ContentLoading<Guideline[]> = { loading: true, content: [] };
 
   constructor(private api: ApiService) { }
 
@@ -21,13 +20,6 @@ export class TermsComponent implements OnInit {
 
   private reload() {
     this.terms = { loading: true, content: [] };
-    this.terms = { loading: true, content: [] };
-    this.api.getSimpleData('/static/terms.json', false).subscribe((data) => {
-      this.terms.content = data;
-      this.terms.loading = false;
-    }, () => {
-      this.terms.loading = false;
-    });
     this.api.getSimpleData('/static/terms.json', false).subscribe((data) => {
       this.terms.content = data;
       this.terms.loading = false;
