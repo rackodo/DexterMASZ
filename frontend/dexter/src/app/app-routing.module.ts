@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminStatsComponent } from './components/api/adminstats/adminstats.component';
 import { AppSettingsComponent } from './components/api/appsettings/appsettings.component';
-import { GuidelinesComponent } from './components/basic/guidelines/guidelines.component';
+import { TermsComponent } from './components/basic/terms/terms.component';
 import { LegalComponent } from './components/basic/legal/legal.component';
 import { IndexComponent } from './components/basic/index/index.component';
 import { PatchnotesComponent } from './components/basic/patchnotes/patchnotes.component';
@@ -38,7 +38,7 @@ const routes: Routes = [
   { path: 'store', component: StoreDashboardComponent },
   { path: 'profile', component: ProfileDashboardComponent },
   { path: 'guilds/:guildid/leaderboard', component: GuildLeaderboardComponent},
-  { path: 'guidelines', component: GuidelinesComponent },
+  { path: 'terms', component: TermsComponent },
   { path: 'legal', component: LegalComponent },
   { path: 'login',  component: IndexComponent, pathMatch: 'full' },
   { path: '',  redirectTo: 'login', pathMatch: 'full' },

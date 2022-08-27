@@ -40,7 +40,7 @@ import { GuildCardComponent } from './components/guilds/guild-card/guild-card.co
 import { NotFoundComponent } from './components/errors/not-found/not-found.component';
 import { CookieModule } from 'ngx-cookie';
 import { PatchnotesComponent } from './components/basic/patchnotes/patchnotes.component';
-import { GuidelinesComponent } from './components/basic/guidelines/guidelines.component';
+import { TermsComponent } from './components/basic/terms/terms.component';
 import { LegalComponent } from './components/basic/legal/legal.component';
 import { EpiclistComponent } from './components/basic/epiclist/epiclist.component';
 import { CommonModule } from '@angular/common';
@@ -140,7 +140,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     GuildCardComponent,
     NotFoundComponent,
     PatchnotesComponent,
-    GuidelinesComponent,
+    TermsComponent,
     EpiclistComponent,
     GuildOverviewComponent,
     GuildAddComponent,

@@ -16,7 +16,7 @@ export class AuthService {
   private currentUserSubject = new ReplaySubject<any>();
   currentUser$ = this.currentUserSubject.asObservable();
   private init = false;
-  private loginBlacklist = ['/patchnotes', '/oauthfailed', '/guidelines', '/legal'];
+  private loginBlacklist = ['/patchnotes', '/oauthfailed', '/terms', '/legal'];
 
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService, private toastr: ToastrService) { }
 

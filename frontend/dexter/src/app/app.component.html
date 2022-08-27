@@ -230,15 +230,15 @@
         </a>
         <ng-container *ngIf="applicationInfo?.termsOfServiceUrl; else elseTemplateToS">
           <a class="d-flex" href="{{ applicationInfo?.termsOfServiceUrl }}" target="_blank">
-            <div [class.activatedNav]="activatedNav[1] === 'guidelines'" class="rounded navitem">
+            <div [class.activatedNav]="activatedNav[1] === 'terms'" class="rounded navitem">
               <mat-icon aria-hidden="false" aria-label="tune icon">policy</mat-icon>
               <span>{{ 'Toolbar.Terms' | translate }}</span>
             </div>
           </a>
         </ng-container>
         <ng-template #elseTemplateToS>
-          <a class="d-flex" (click)="open('guidelines')">
-            <div [class.activatedNav]="activatedNav[1] === 'guidelines'" class="rounded navitem">
+          <a class="d-flex" (click)="open('terms')">
+            <div [class.activatedNav]="activatedNav[1] === 'terms'" class="rounded navitem">
               <mat-icon aria-hidden="false" aria-label="tune icon">policy</mat-icon>
               <span>{{ 'Toolbar.Terms' | translate }}</span>
             </div>
