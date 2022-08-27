@@ -119,12 +119,6 @@ export class GuildEditComponent implements OnInit {
       preferredLanguage: this.configGroup.value?.preferredLanguage != '' ? this.configGroup.value?.preferredLanguage : 0
     }
 	
-	console.log(this.channelsGroup);
-	console.log(this.channelsGroup.value);
-	console.log(this.channelsGroup.value?.staffLogs);
-	console.log(data);
-	console.log(data.staffLogs);
-
     this.api.putSimpleData(`/guilds/${this.currentGuild?.content?.id}`, data).subscribe(() => {
       this.toastr.success(this.translator.instant('GuildDialog.GuildUpdated'));
       this.router.navigate(['guilds']);
