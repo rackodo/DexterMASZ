@@ -80,7 +80,7 @@ public class Initialize
 			await AddMigrations(cachedServices, app);
 
 			ConsoleHelper.AddHeading("Configuring App");
-			ConfigureApp(modules, cachedServices, appSettings, authorizationPolicies, app);
+			ConfigureApp(modules, cachedServices, appSettings, app);
 
 			ConsoleHelper.AddHeading("Running App");
 
@@ -342,11 +342,8 @@ public class Initialize
 		ConsoleHelper.AddSubHeading("Successfully added", "migrations to databases");
 	}
 
-	private static void ConfigureApp(List<Module> modules, CachedServices cachedServices, AppSettings appSettings,
-		List<string> authorizationPolicies, WebApplication app)
+	private static void ConfigureApp(List<Module> modules, CachedServices cachedServices, AppSettings appSettings, WebApplication app)
 	{
-		app.UseAuthentication();
-
 		foreach (var startup in modules)
 		{
 			startup.PostBuild(app.Services, cachedServices);
@@ -359,8 +356,8 @@ public class Initialize
 		
 		app.UseRouting();
 
-		if (authorizationPolicies.Any())
-			app.UseAuthorization();
+		app.UseAuthentication();
+		app.UseAuthorization();
 
 		app.UseEndpoints(endpoints =>
 		{
