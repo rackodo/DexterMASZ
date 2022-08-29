@@ -1,6 +1,6 @@
 namespace GuildAudits.Enums;
 
-public enum GuildAuditEvent
+public enum GuildAuditLogEvent
 {
 	MessageSent,
 	MessageUpdated,
@@ -15,5 +15,10 @@ public enum GuildAuditEvent
 	BanRemoved,
 	InviteCreated,
 	InviteDeleted,
-	ThreadCreated
+	ThreadCreated,
+	VoiceJoined,
+	VoiceLeft,
+	VoiceMoved,
+	ReactionAdded,
+	ReactionRemoved
 }

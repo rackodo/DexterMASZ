@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { DiscordChannel } from 'src/app/models/DiscordChannel';
-import { GuildAuditConfig } from 'src/app/models/GuildAuditConfig';
+import { GuildAuditLogConfig } from 'src/app/models/GuildAuditLogConfig';
 import { GuildAuditRuleDefinition } from 'src/app/models/GuildAuditRuleDefinition';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -18,15 +18,21 @@ export class AuditlogConfigComponent implements OnInit {
   types: GuildAuditRuleDefinition[] = [
     {
       type: 0,
-      key: 'MessageSent'
+      key: 'MessageSent',
+      channelFilter: true,
+      roleFilter: true
     },
     {
       type: 1,
-      key: 'MessageUpdated'
+      key: 'MessageUpdated',
+      channelFilter: true,
+      roleFilter: true
     },
     {
       type: 2,
-      key: 'MessageDeleted'
+      key: 'MessageDeleted',
+      channelFilter: true,
+      roleFilter: true
     },
     {
       type: 3,
@@ -34,15 +40,18 @@ export class AuditlogConfigComponent implements OnInit {
     },
     {
       type: 4,
-      key: 'AvatarUpdated'
+      key: 'AvatarUpdated',
+      roleFilter: true
     },
     {
       type: 5,
-      key: 'NicknameUpdated'
+      key: 'NicknameUpdated',
+      roleFilter: true
     },
     {
       type: 6,
-      key: 'UserRolesUpdated'
+      key: 'UserRolesUpdated',
+	  roleFilter: true
     },
     {
       type: 7,
@@ -62,22 +71,50 @@ export class AuditlogConfigComponent implements OnInit {
     },
     {
       type: 11,
-      key: 'InviteCreated'
+      key: 'InviteCreated',
+      channelFilter: true
     },
     {
       type: 12,
-      key: 'InviteDeleted'
+      key: 'InviteDeleted',
+      channelFilter: true
     },
     {
       type: 13,
-      key: 'ThreadCreated'
+      key: 'ThreadCreated',
+      channelFilter: true
+    },
+    {
+      type: 14,
+      key: 'VoiceJoined',
+      channelFilter: true
+    },
+    {
+      type: 15,
+      key: 'VoiceLeft',
+      channelFilter: true
+    },
+    {
+      type: 16,
+      key: 'VoiceMoved',
+      channelFilter: true
+    },
+    {
+      type: 17,
+      key: 'ReactionAdded',
+      channelFilter: true
+    },
+    {
+      type: 18,
+      key: 'ReactionRemoved',
+      channelFilter: true
     }
   ];
 
   public guildId!: string;
   public guildInfo!: DiscordGuild;
   public guildChannels!: DiscordChannel[];
-  public initialConfigs!: Promise<GuildAuditConfig[]>;
+  public initialConfigs!: Promise<GuildAuditLogConfig[]>;
 
   constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, private translator: TranslateService) { }
 
@@ -93,13 +130,13 @@ export class AuditlogConfigComponent implements OnInit {
       data.roles = data.roles.sort((a, b) => (a.position < b.position) ? 1 : -1);
       this.guildInfo = data;
     }, () => {
-      this.toastr.error(this.translator.instant('GuildAuditConfig.FailedToLoadGuild'));
+      this.toastr.error(this.translator.instant('GuildAuditLogConfig.FailedToLoadGuild'));
     });
 
     this.api.getSimpleData(`/discord/guilds/${this.guildId}/channels`).subscribe((data: DiscordChannel[]) => {
       this.guildChannels = data.filter(x => x.type === 0).sort((a, b) => (a.position > b.position) ? 1 : -1);
     }, () => {
-      this.toastr.error(this.translator.instant('GuildAuditConfig.FailedToLoadChannels'));
+      this.toastr.error(this.translator.instant('GuildAuditLogConfig.FailedToLoadChannels'));
     });
 
     this.initialConfigs = this.api.getSimpleData(`/guilds/${this.guildId}/auditlog`).toPromise();

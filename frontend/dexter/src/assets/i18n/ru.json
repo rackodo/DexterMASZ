@@ -189,7 +189,7 @@
     "GuildCreated": "Гильдия создана",
     "GuildUpdated": "Гильдия обновлена"
   },
-  "GuildAuditConfig": {
+  "GuildAuditLogConfig": {
     "TargetChannel": "Целевой канал",
     "ComingSoon": "Скоро",
     "PingRoles": "Роли связи",

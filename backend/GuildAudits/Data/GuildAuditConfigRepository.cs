@@ -33,7 +33,7 @@ public class GuildAuditConfigRepository : Repository, DeleteGuildData
 		return await _guildAuditDatabase.SelectAllAuditLogConfigsForGuild(guildId);
 	}
 
-	public async Task<GuildAuditConfig> GetConfigsByGuildAndType(ulong guildId, GuildAuditEvent type)
+	public async Task<GuildAuditConfig> GetConfigsByGuildAndType(ulong guildId, GuildAuditLogEvent type)
 	{
 		var config = await _guildAuditDatabase.SelectAuditLogConfigForGuildAndType(guildId, type);
 
@@ -45,7 +45,7 @@ public class GuildAuditConfigRepository : Repository, DeleteGuildData
 
 	public async Task<GuildAuditConfig> UpdateConfig(GuildAuditConfig newValue)
 	{
-		if (!Enum.IsDefined(typeof(GuildAuditEvent), newValue.GuildAuditEvent))
+		if (!Enum.IsDefined(typeof(GuildAuditLogEvent), newValue.GuildAuditLogEvent))
 			throw new InvalidAuditLogEventException();
 
 		var action = RestAction.Updated;
@@ -53,7 +53,7 @@ public class GuildAuditConfigRepository : Repository, DeleteGuildData
 
 		try
 		{
-			auditLogConfig = await GetConfigsByGuildAndType(newValue.GuildId, newValue.GuildAuditEvent);
+			auditLogConfig = await GetConfigsByGuildAndType(newValue.GuildId, newValue.GuildAuditLogEvent);
 		}
 		catch (ResourceNotFoundException)
 		{
@@ -62,9 +62,12 @@ public class GuildAuditConfigRepository : Repository, DeleteGuildData
 		}
 
 		auditLogConfig.GuildId = newValue.GuildId;
-		auditLogConfig.GuildAuditEvent = newValue.GuildAuditEvent;
+		auditLogConfig.GuildAuditLogEvent = newValue.GuildAuditLogEvent;
 		auditLogConfig.ChannelId = newValue.ChannelId;
 		auditLogConfig.PingRoles = newValue.PingRoles;
+		auditLogConfig.IgnoreChannels = newValue.IgnoreChannels;
+		auditLogConfig.IgnoreRoles = newValue.IgnoreRoles;
+
 
 		await _guildAuditDatabase.PutAuditLogConfig(auditLogConfig);
 
@@ -76,7 +79,7 @@ public class GuildAuditConfigRepository : Repository, DeleteGuildData
 		return auditLogConfig;
 	}
 
-	public async Task<GuildAuditConfig> DeleteConfigForGuild(ulong guildId, GuildAuditEvent type)
+	public async Task<GuildAuditConfig> DeleteConfigForGuild(ulong guildId, GuildAuditLogEvent type)
 	{
 		var config = await GetConfigsByGuildAndType(guildId, type);
 

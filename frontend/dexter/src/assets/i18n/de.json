@@ -189,7 +189,7 @@
     "GuildCreated": "Gilde erstellt",
     "GuildUpdated": "Gilde aktualisiert"
   },
-  "GuildAuditConfig": {
+  "GuildAuditLogConfig": {
     "TargetChannel": "Zielkanal",
     "ComingSoon": "Demnächst",
     "PingRoles": "Ping-Rollen",

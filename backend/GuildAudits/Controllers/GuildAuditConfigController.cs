@@ -31,7 +31,7 @@ public class GuildAuditConfigController : AuthenticatedController
 	}
 
 	[HttpDelete("{type}")]
-	public async Task<IActionResult> DeleteItem([FromRoute] ulong guildId, [FromRoute] GuildAuditEvent type)
+	public async Task<IActionResult> DeleteItem([FromRoute] ulong guildId, [FromRoute] GuildAuditLogEvent type)
 	{
 		var identity = await SetupAuthentication();
 
@@ -41,7 +41,7 @@ public class GuildAuditConfigController : AuthenticatedController
 	}
 
 	[HttpGet("{type}")]
-	public async Task<IActionResult> GetItem([FromRoute] ulong guildId, [FromRoute] GuildAuditEvent type)
+	public async Task<IActionResult> GetItem([FromRoute] ulong guildId, [FromRoute] GuildAuditLogEvent type)
 	{
 		var identity = await SetupAuthentication();
 

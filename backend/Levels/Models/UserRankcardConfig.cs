@@ -23,7 +23,7 @@ public class UserRankcardConfig
 	public uint OffColor { get; set; } = 0xffffffff;
 	public uint LevelBgColor { get; set; } = 0xff202225;
 	public uint TitleBgColor { get; set; } = 0xff202225;
-	public string Background { get; set; } = "#555555";
+	public string Background { get; set; } = "default";
 	public RankcardFlags RankcardFlags { get; set; } = RankcardFlags.DisplayPfp | RankcardFlags.PfpBackground | RankcardFlags.ClipPfp | RankcardFlags.ShowHybrid;
 }
 

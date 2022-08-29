@@ -31,6 +31,122 @@ public class GuildAuditTranslator : Translator
 		};
 	}
 
+	public string ChannelBefore()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Kanal vorher",
+			Language.Fr => "Canaliser avant",
+			Language.Es => "Canal antes",
+			Language.Ru => "Канал до",
+			Language.It => "Canale prima",
+			_ => "Channel before",
+		};
+	}
+	public string ChannelAfter()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Kanal nachher",
+			Language.Fr => "Canaliser après",
+			Language.Es => "Canal después",
+			Language.Ru => "Канал после",
+			Language.It => "Canale dopo",
+			_ => "Channel after",
+		};
+	}
+
+	public string Emote()
+	{
+		return PreferredLanguage switch
+		{
+			 Language.De => "Emote",
+			 Language.Fr => "Émoticône",
+			 Language.Es => "Emoción",
+			 Language.Ru => "Эмоция",
+			 Language.It => "Emote",
+			_ => "Emote",
+		};
+	}
+
+	public string Pinned()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Gepinnt",
+			Language.Fr => "Épinglé",
+			Language.Es => "Fijado",
+			Language.Ru => "Закрепленный",
+			Language.It => "In evidenza",
+			_ => "Pinned",
+		};
+	}
+
+	public string ReactionAdded()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Reaktion hinzugefügt",
+			Language.Fr => "Réaction ajoutée",
+			Language.Es => "Reacción añadida",
+			Language.Ru => "Реакция добавлена",
+			Language.It => "Risposta aggiunta",
+			_ => "Reaction added",
+		};
+	}
+
+	public string ReactionRemoved()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Reaktion entfernt",
+			Language.Fr => "Réaction supprimée",
+			Language.Es => "Reacción eliminada",
+			Language.Ru => "Реакция удалена",
+			Language.It => "Risposta rimossa",
+			_ => "Reaction removed",
+		};
+	}
+
+	public string VoiceJoined()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Sprachkanal betreten",
+			Language.Fr => "Canal vocal rejoint",
+			Language.Es => "Canal de voz unido",
+			Language.Ru => "Голосовой канал присоединился",
+			Language.It => "Canale vocale unito",
+			_ => "Voice channel joined",
+		};
+	}
+
+	public string VoiceLeft()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Sprachkanal verlassen",
+			Language.Fr => "Canal vocal quitté",
+			Language.Es => "Canal de voz abandonado",
+			Language.Ru => "Голосовой канал покинул",
+			Language.It => "Canale vocale lasciato",
+			_ => "Voice channel left",
+		};
+	}
+
+	public string MovedVoiceChannel()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Sprachkanal gewechselt",
+			Language.Fr => "Canal vocal changé",
+			Language.Es => "Canal de voz cambiado",
+			Language.Ru => "Переключен голосовой канал",
+			Language.It => "Canale vocale cambiato",
+			_ => "Switched voice channel",
+		};
+	}
+
 	public string Old()
 	{
 		return PreferredLanguage switch

@@ -3,7 +3,6 @@ using Bot.Data;
 using Bot.Exceptions;
 using Bot.Models;
 using Bot.Services;
-using Levels.Events;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net.Mime;

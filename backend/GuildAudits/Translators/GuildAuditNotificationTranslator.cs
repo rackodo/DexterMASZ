@@ -6,7 +6,7 @@ namespace GuildAudits.Translators;
 
 public class GuildAuditNotificationTranslator : Translator
 {
-	public string NotificationGuildAuditMentionRoles()
+	public string NotificationGuildAuditLogMentionRoles()
 	{
 		return PreferredLanguage switch
 		{
@@ -16,6 +16,31 @@ public class GuildAuditNotificationTranslator : Translator
 			Language.Ru => "Упоминание ролей",
 			Language.It => "Menzione ruolo/i",
 			_ => "Mention role(s)"
+		};
+	}
+
+	public string NotificationGuildAuditLogExcludeRoles()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Ausgenommene Rollen",
+			Language.Fr => "Exclure les rôles",
+			Language.Es => "Excluir roles",
+			Language.Ru => "Исключить роли",
+			Language.It => "Escludi ruoli",
+			_ => "Exclude roles",
+		};
+	}
+	public string NotificationGuildAuditLogExcludeChannels()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Ausgenommene Kanäle",
+			Language.Fr => "Exclure les chaînes",
+			Language.Es => "Excluir canales",
+			Language.Ru => "Исключить каналы",
+			Language.It => "Escludi canali",
+			_ => "Exclude channels",
 		};
 	}
 
