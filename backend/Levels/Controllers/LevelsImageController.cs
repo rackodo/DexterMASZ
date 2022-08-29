@@ -37,7 +37,7 @@ public class LevelsImageController : AuthenticatedController
 
 	private const int MAXIMUM_FILE_SIZE = 10485760; //10 MiB
 	[Authorize]
-	[HttpPost("")]
+	[HttpPost]
 	[RequestSizeLimit(MAXIMUM_FILE_SIZE)]
 	public async Task<IActionResult> PostImage([FromRoute] ulong userId, [FromForm] UploadedFileDto uploadedFile)
 	{

@@ -29,24 +29,33 @@ public class LevelsImageRepository : Repository
 
 	private static readonly string[] AllowedExtensions = { ".png", ".jpg", ".jpeg" };
 
-	public async Task<UploadedFile> GetUserFile(ulong userId, string fileName)
-	{
-		return await GetSpecificFile(userId.ToString(), fileName, $"User {userId} has no image file with filename \"{fileName}\"");
-	}
-
-	public async Task<UploadedFile> GetDefaultFile(string fileName)
-	{
-		return await GetSpecificFile("_DEFAULT", fileName, $"No default image file with filename \"{fileName}\"");
-	}
-
-	private async Task<UploadedFile> GetSpecificFile(string dir, string fileName, string notFoundDescription = "")
+	public async Task<string> GetUserUploadDir(ulong userId)
 	{
 		var config = await _configRepo.GetAppSettings();
 
+		return Path.Join(config.AbsolutePathToFileUpload, "RankBackgrounds", userId.ToString());
+	}
+
+	public static string GetDefaultBackgroundDir() =>
+		Path.Join(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Images", "Leveling", "Backgrounds");
+
+	public async Task<List<string>> GetUserFiles(ulong userId) =>
+		GetFilesInLevelsDirectory(await GetUserUploadDir(userId));
+
+	public static List<string> GetDefaultFiles() =>
+		GetFilesInLevelsDirectory(GetDefaultBackgroundDir());
+
+	public async Task<UploadedFile> GetUserFile(ulong userId, string fileName) =>
+		GetSpecificFile(await GetUserUploadDir(userId), fileName, $"User {userId} has no image file with filename \"{fileName}\"");
+
+	public UploadedFile GetDefaultFile(string fileName) =>
+		GetSpecificFile(GetDefaultBackgroundDir(), fileName, $"No default image file with filename \"{fileName}\"");
+
+	private UploadedFile GetSpecificFile(string dir, string fileName, string notFoundDescription = "")
+	{
 		byte[] fileData;
 
-		var filePath = Path.Join(config.AbsolutePathToFileUpload, "levels", dir,
-			FilesHandler.RemoveSpecialCharacters(fileName));
+		var filePath = Path.Join(dir, FilesHandler.RemoveSpecialCharacters(fileName));
 
 		var fullFilePath = Path.GetFullPath(filePath);
 
@@ -84,22 +93,8 @@ public class LevelsImageRepository : Repository
 		};
 	}
 
-	public async Task<List<string>> GetUserFiles(ulong userId)
+	private static List<string> GetFilesInLevelsDirectory(string uploadDir)
 	{
-		return await GetFilesInLevelsDirectory(userId.ToString());
-	}
-
-	public async Task<List<string>> GetDefaultFiles()
-	{
-		return await GetFilesInLevelsDirectory("_DEFAULT");
-	}
-
-	private async Task<List<string>> GetFilesInLevelsDirectory(string dir)
-	{
-		var config = await _configRepo.GetAppSettings();
-
-		var uploadDir = Path.Join(config.AbsolutePathToFileUpload, "levels", dir);
-
 		var fullPath = Path.GetFullPath(uploadDir);
 
 		// https://stackoverflow.com/a/1321535/9850709
@@ -116,11 +111,10 @@ public class LevelsImageRepository : Repository
 
 	public async Task<string> UploadFile(ulong userId, IFormFile file)
 	{
-		var config = await _configRepo.GetAppSettings();
-
-		var uploadDir = Path.Join(config.AbsolutePathToFileUpload, "levels", userId.ToString());
+		var uploadDir = await GetUserUploadDir(userId);
 
 		var ext = Path.GetExtension(file.FileName);
+
 		if (!AllowedExtensions.Contains(ext))
 		{
 			throw new BadImageFormatException($"Received file with invalid extension \"{ext}\". " +
@@ -140,12 +134,9 @@ public class LevelsImageRepository : Repository
 
 	public async Task DeleteFile(ulong userId, string fileName)
 	{
-		var config = await _configRepo.GetAppSettings();
+		var uploadDir = await GetUserUploadDir(userId);
 
-		var info = await GetUserFile(userId, fileName);
-
-		var filePath = Path.Join(config.AbsolutePathToFileUpload, "levels", userId.ToString(),
-			FilesHandler.RemoveSpecialCharacters(fileName));
+		var filePath = Path.Join(uploadDir, FilesHandler.RemoveSpecialCharacters(fileName));
 
 		var fullFilePath = Path.GetFullPath(filePath);
 

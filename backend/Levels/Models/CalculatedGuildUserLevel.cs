@@ -71,8 +71,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 	{
 		get
 		{
-			if (_textLevel is null)
-				_textLevel = LevelFromXP(TextXp);
+			_textLevel ??= LevelFromXP(TextXp);
 			return _textLevel;
 		}
 	}
@@ -81,8 +80,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 	{
 		get
 		{
-			if (_voiceLevel is null)
-				_voiceLevel = LevelFromXP(VoiceXp);
+			_voiceLevel ??= LevelFromXP(VoiceXp);
 			return _voiceLevel;
 		}
 	}
@@ -91,8 +89,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 	{
 		get
 		{
-			if (_totalLevel is null)
-				_totalLevel = LevelFromXP(TextXp + VoiceXp);
+			_totalLevel ??= LevelFromXP(TextXp + VoiceXp);
 			return _totalLevel;
 		}
 	}

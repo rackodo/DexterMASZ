@@ -22,15 +22,13 @@ public class MotdEventAudit : Event
 		_eventHandler.OnGuildMotdUpdated += OnGuildMotdUpdated;
 	}
 
-	private Task OnGuildMotdCreated(GuildMotd motd, IUser actor)
+	private async Task OnGuildMotdCreated(GuildMotd motd, IUser actor)
 	{
-		_auditLogger.QueueLog($"**Motd** for guild `{motd.GuildId}` created by {actor.Mention}.");
-		return Task.CompletedTask;
+		await _auditLogger.QueueLog($"**Motd** for guild `{motd.GuildId}` created by {actor.Mention}.");
 	}
 
-	private Task OnGuildMotdUpdated(GuildMotd motd, IUser actor)
+	private async Task OnGuildMotdUpdated(GuildMotd motd, IUser actor)
 	{
-		_auditLogger.QueueLog($"**Motd** for guild `{motd.GuildId}` updated by {actor.Mention}.");
-		return Task.CompletedTask;
+		await _auditLogger.QueueLog($"**Motd** for guild `{motd.GuildId}` updated by {actor.Mention}.");
 	}
 }

@@ -30,51 +30,44 @@ public class PunishmentEventAudit : Event
 		_punishmentEventHandler.OnModCaseCreated += OnModCaseCreated;
 	}
 
-	private Task OnFileUploaded(UploadedFile fileInfo, ModCase modCase, IUser actor)
+	private async Task OnFileUploaded(UploadedFile fileInfo, ModCase modCase, IUser actor)
 	{
-		_auditLogger.QueueLog(
+		await _auditLogger.QueueLog(
 			$"**File** `{fileInfo.Name}` uploaded to case {modCase.GuildId}/{modCase.CaseId} by <@{actor.Id}>.");
-		return Task.CompletedTask;
 	}
 
-	private Task OnModCaseCommentDeleted(ModCaseComment modCaseComment, IUser actor)
+	private async Task OnModCaseCommentDeleted(ModCaseComment modCaseComment, IUser actor)
 	{
-		_auditLogger.QueueLog(
+		await _auditLogger.QueueLog(
 			$"**Comment** `{modCaseComment.ModCase.GuildId}/{modCaseComment.ModCase.CaseId}/{modCaseComment.Id}` by <@{modCaseComment.UserId}> deleted.");
-		return Task.CompletedTask;
 	}
 
-	private Task OnModCaseCommentUpdated(ModCaseComment modCaseComment, IUser actor)
+	private async Task OnModCaseCommentUpdated(ModCaseComment modCaseComment, IUser actor)
 	{
-		_auditLogger.QueueLog(
+		await _auditLogger.QueueLog(
 			$"**Comment** `{modCaseComment.ModCase.GuildId}/{modCaseComment.ModCase.CaseId}/{modCaseComment.Id}` by <@{modCaseComment.UserId}> updated.");
-		return Task.CompletedTask;
 	}
 
-	private Task OnModCaseCommentCreated(ModCaseComment modCaseComment, IUser actor)
+	private async Task OnModCaseCommentCreated(ModCaseComment modCaseComment, IUser actor)
 	{
-		_auditLogger.QueueLog(
+		await _auditLogger.QueueLog(
 			$"**Comment** `{modCaseComment.ModCase.GuildId}/{modCaseComment.ModCase.CaseId}/{modCaseComment.Id}` by <@{modCaseComment.UserId}> created.");
-		return Task.CompletedTask;
 	}
 
-	private Task OnModCaseDeleted(ModCase modCase, IUser actor)
+	private async Task OnModCaseDeleted(ModCase modCase, IUser actor)
 	{
-		_auditLogger.QueueLog($"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> deleted.");
-		return Task.CompletedTask;
+		await _auditLogger.QueueLog($"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> deleted.");
 	}
 
-	private Task OnModCaseUpdated(ModCase modCase, IUser actor)
+	private async Task OnModCaseUpdated(ModCase modCase, IUser actor)
 	{
-		_auditLogger.QueueLog(
+		await _auditLogger.QueueLog(
 			$"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> by <@{modCase.LastEditedByModId}> updated.");
-		return Task.CompletedTask;
 	}
 
-	private Task OnModCaseCreated(ModCase modCase, IUser actor)
+	private async Task OnModCaseCreated(ModCase modCase, IUser actor)
 	{
-		_auditLogger.QueueLog(
+		await _auditLogger.QueueLog(
 			$"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> by <@{modCase.ModId}> created.");
-		return Task.CompletedTask;
 	}
 }

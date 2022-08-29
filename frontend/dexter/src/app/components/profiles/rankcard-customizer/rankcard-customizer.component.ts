@@ -106,7 +106,7 @@ export class RankcardCustomizerComponent implements AfterViewInit {
     "offColor": 0xffffffffn,
     "levelBgColor": 0xff202225n,
     "titleBgColor": 0xff202225n,
-    "background": RankcardCustomizerComponent.defaultBgToUrl("default.jpg"),
+    "background": RankcardCustomizerComponent.defaultBgToUrl("default.png"),
     "rankcardFlags": RankcardFlags.DisplayPfp | RankcardFlags.PfpBackground | RankcardFlags.ClipPfp | RankcardFlags.ShowHybrid
   }
 
@@ -118,7 +118,7 @@ export class RankcardCustomizerComponent implements AfterViewInit {
   static getDefaultBgOptions(api : ApiService) : Observable<string[]> {
     return api.getSimpleData("/levels/default/images", true)
   }
-  defaultBgOptions : string[] = [this.defaultBgToUrl("default.jpg")]
+  defaultBgOptions : string[] = [this.defaultBgToUrl("default.png")]
 
   formatOpacity(val: number) : string {
     return (val * 100).toFixed(1) + "%"

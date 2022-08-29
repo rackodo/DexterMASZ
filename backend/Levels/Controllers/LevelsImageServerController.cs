@@ -37,12 +37,12 @@ public class LevelsImageServerController : BaseController
 	}
 
 	[HttpGet("default/images/{fileName}")]
-	public async Task<IActionResult> GetDefaultImage([FromRoute] string fileName)
+	public IActionResult GetDefaultImage([FromRoute] string fileName)
 	{
 		UploadedFile? fileInfo;
 		try
 		{
-			fileInfo = await _levelsImageRepository.GetDefaultFile(fileName);
+			fileInfo = _levelsImageRepository.GetDefaultFile(fileName);
 		}
 		catch (ResourceNotFoundException e)
 		{
@@ -65,8 +65,8 @@ public class LevelsImageServerController : BaseController
 	}
 
 	[HttpGet("default/images")]
-	public async Task<IActionResult> GetDefaultImages()
+	public IActionResult GetDefaultImages()
 	{
-		return Ok(await _levelsImageRepository.GetDefaultFiles());
+		return Ok(LevelsImageRepository.GetDefaultFiles());
 	}
 }

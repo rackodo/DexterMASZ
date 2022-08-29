@@ -12,28 +12,28 @@ using System.Text.RegularExpressions;
 using Color = SixLabors.ImageSharp.Color;
 using Image = SixLabors.ImageSharp.Image;
 using IOPath = System.IO.Path;
+using Path = System.IO.Path;
 
 namespace Levels.Models;
 
 public static partial class Rankcard
 {
-	public static readonly Size RankCardSize = new(widthmain + pfpside, height);
+	public static readonly Size RankCardSize = new(widthmain + pfpside + 25, height);
 
 	private const int widthmain = 1000;
 	private const int height = 450;
-	private const int pfpside = 350;
+	private const int pfpside = 310;
 	private const int levelWidth = 950;
 	private const int levelHeight = 125;
 	private const int defMargin = 25;
 
-	private static readonly Rectangle mainRect = new(0, 0, widthmain + pfpside, height);
-	private static readonly Rectangle titleRect = new(defMargin, defMargin, widthmain - 2 * defMargin + pfpside, labelHeight);
+	private static readonly Rectangle mainRect = new(new Point(0, 0), RankCardSize);
+	private static readonly Rectangle titleRect = new(defMargin, defMargin, RankCardSize.Width - 2 * defMargin, labelHeight);
 	private static readonly LevelRect mainLevel = new(height - 2 * levelHeight - 2 * defMargin);
-	private static readonly LevelRect secondaryLevel = new(height - levelHeight - defMargin);
 	private static readonly LevelRect mainHybridLevel = new(height - levelHeight - defMargin, LevelRect.LevelBarType.HybridMain);
 	private static readonly LevelRect secondaryHybridLevel = new(height - levelHeight - defMargin, LevelRect.LevelBarType.HybridSecondary);
-	private static readonly Rectangle rectName = new(defMargin, defMargin, widthmain - 2 * defMargin + pfpside, labelHeight);
-	private static readonly Rectangle rectPfp = new(widthmain, height - pfpside, pfpside, pfpside);
+	private static readonly Rectangle rectName = new(defMargin, defMargin, RankCardSize.Width - 2 * defMargin, labelHeight);
+	private static readonly Rectangle rectPfp = new(widthmain, height - pfpside - 25, pfpside, pfpside);
 
 	private const int miniLabelWidth = 80;
 	private const int labelIntrusionPixels = 0;
@@ -170,8 +170,6 @@ public static partial class Rankcard
 				levelsData[2].xpType = "Txt";
 			}
 		}
-
-		string BackgroundPath(string filename) => IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Images", "Leveling", "Backgrounds", filename + ".png");
 		
 		Func<IImageProcessingContext, IImageProcessingContext> bgTransform;
 		Func<IImageProcessingContext, IImageProcessingContext> pfpTransform;
@@ -186,7 +184,7 @@ public static partial class Rankcard
 			if (rankcardConfig.Background.StartsWith("http"))
 				throw new FileLoadException();
 
-			var fileName = BackgroundPath(rankcardConfig.Background ?? "default");
+			var fileName = Path.Join(LevelsImageRepository.GetDefaultBackgroundDir(), (rankcardConfig.Background ?? "default") + ".png");
 			bg = Image.Load(File.ReadAllBytes(fileName));
 			bg.Mutate(ctx => ctx.Resize(mainRect.Size));
 			bgTransform = g => g.DrawImage(bg, 1);
@@ -207,6 +205,8 @@ public static partial class Rankcard
 		catch (FileLoadException)
 		{
 			using HttpClient client = new();
+
+			Console.WriteLine(rankcardConfig.Background);
 			try
 			{
 				var req = new HttpRequestMessage(HttpMethod.Get, rankcardConfig.Background);
@@ -257,7 +257,7 @@ public static partial class Rankcard
 			}
 		}
 
-		Image result = new Image<Rgba32>(widthmain + pfpside, height);
+		Image result = new Image<Rgba32>(RankCardSize.Width, RankCardSize.Height);
 		result.Mutate(g =>
 		{
 			var offset = TextMeasurer.Measure(totallevel.ToString(), new TextOptions(fontTitle));

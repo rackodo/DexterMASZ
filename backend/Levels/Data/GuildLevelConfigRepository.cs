@@ -53,7 +53,7 @@ public class GuildLevelConfigRepository : Repository
 	public async Task UpdateConfig(GuildLevelConfig guildLevelConfig)
 	{
 		_eventHandler.GuildLevelConfigCreatedEvent.Invoke(guildLevelConfig);
-		await _database.UpdateGuildLevelConfig(guildLevelConfig);
+		await _database.UpdateGuildLevelConfig();
 	}
 
 	public async Task DeleteConfig(GuildLevelConfig guildLevelConfig)

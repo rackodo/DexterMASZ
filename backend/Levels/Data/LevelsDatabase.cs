@@ -188,7 +188,7 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, DataContextCreate
 		return GuildLevelConfigs.ToArray();
 	}
 
-	public async Task UpdateGuildLevelConfig(GuildLevelConfig guildLevelConfig)
+	public async Task UpdateGuildLevelConfig()
 	{
 		if (CheckNullAndReport(GuildLevelConfigs, "GuildLevelsConfigs"))
 		{
