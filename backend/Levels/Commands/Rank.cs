@@ -16,7 +16,7 @@ public class Rank : Command<Rank>
 	public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
 	public SettingsRepository? SettingsRepository { get; set; }
 
-	private static string Storage(IUser user, string root) => Path.Combine(root, "Media", "Cache", $"Rankcard{user.Id}.png");
+	private static string Storage(IUser user, string root) => Path.Combine(root, "Cache", $"Rankcard{user.Id}.png");
 
 	[SlashCommand("rank", "Display your rankcard and experience information.", runMode: RunMode.Async)]
 	public async Task RankCommand([Summary("user", "Target user to get rank from.")] IUser? user = null)
@@ -44,7 +44,10 @@ public class Rank : Command<Rank>
 		try
 		{
 			var appconfig = await SettingsRepository!.GetAppSettings();
-			path = Storage(user, appconfig.AbsolutePathToFileUpload);
+			path = Storage(user, AppDomain.CurrentDomain.BaseDirectory);
+
+			Directory.CreateDirectory(Path.GetDirectoryName(path));
+
 			using (var rankcardimg = await Models.Rankcard.RenderRankCard(user, calclevel, rankcardconfig, GuildUserLevelRepository, SettingsRepository))
 			{
 				await rankcardimg.SaveAsPngAsync(path);

@@ -13,16 +13,13 @@ namespace Levels.Data;
 public class LevelsImageRepository : Repository
 {
 	private readonly SettingsRepository _configRepo;
-	private readonly LevelsEventHandler _eventHandler;
 	private readonly ILogger<LevelsImageRepository> _logger;
 	private readonly GuildUserLevelRepository _levelsRepository;
 
-	public LevelsImageRepository(SettingsRepository configRepo,
-		LevelsEventHandler eventHandler, ILogger<LevelsImageRepository> logger,
+	public LevelsImageRepository(SettingsRepository configRepo, ILogger<LevelsImageRepository> logger,
 		GuildUserLevelRepository modCaseRepository, DiscordRest discordRest) : base(discordRest)
 	{
 		_configRepo = configRepo;
-		_eventHandler = eventHandler;
 		_logger = logger;
 		_levelsRepository = modCaseRepository;
 

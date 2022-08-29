@@ -171,7 +171,8 @@ public static partial class Rankcard
 			}
 		}
 
-		string BackgroundPath(string filename) => IOPath.Combine(appconfig.AbsolutePathToFileUpload, "Media", "Images", "Leveling", "Backgrounds", filename + ".png");
+		string BackgroundPath(string filename) => IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Images", "Leveling", "Backgrounds", filename + ".png");
+		
 		Func<IImageProcessingContext, IImageProcessingContext> bgTransform;
 		Func<IImageProcessingContext, IImageProcessingContext> pfpTransform;
 
