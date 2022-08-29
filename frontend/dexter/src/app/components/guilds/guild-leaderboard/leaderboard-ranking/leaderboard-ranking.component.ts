@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -27,7 +28,8 @@ export class LeaderboardRankingComponent implements OnInit {
   ngOnInit(): void {
     this.guildId = this.route.snapshot.paramMap.get("guildid") ?? "0";
 
-    this.page = Number(this.route.snapshot.queryParamMap.get("page")) ?? 1;
+    this.page = Number(this.route.snapshot.queryParamMap.get("page"));
+    if (this.page < 1) this.page = 1;
     if (this.guildId == "0") return;
 
     this.loadMoreUsersAfter();
@@ -54,7 +56,7 @@ export class LeaderboardRankingComponent implements OnInit {
   loadMoreUsersAfter() {
     if (!this.canLoadMoreUsersAfter) return;
 
-    let newPage = this.page - 1 + (this.loadedUsers.length / this.DEFAULT_PAGE_SIZE);
+    let newPage = this.page + (this.loadedUsers.length / this.DEFAULT_PAGE_SIZE);
     this.requestPage(newPage).subscribe(data => {
       console.log(`loaded ${data.length} new users: ${JSON.stringify(data)}`)
       if (data.length < this.DEFAULT_PAGE_SIZE) this.canLoadMoreUsersAfter = false;
@@ -65,9 +67,4 @@ export class LeaderboardRankingComponent implements OnInit {
       this.loading = false;
     })
   }
-
-  getPfpUrl(userId: string): string {
-    return "";
-  }
-
 }
