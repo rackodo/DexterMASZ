@@ -120,7 +120,7 @@ public static partial class Rankcard
 	public static async Task<Image> RenderRankCard(IUser user, CalculatedGuildUserLevel ul, UserRankcardConfig rankcardConfig, GuildUserLevelRepository levelsRepo, SettingsRepository configRepo)
 	{
 		var appconfig = await configRepo.GetAppSettings();
-		var fontPath = IOPath.Join(appconfig.AbsolutePathToFileUpload, "Media", "Fonts", "rankcardfont.ttf");
+		var fontPath = IOPath.Join(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Fonts", "rankcardfont.ttf");
 
 		FontCollection fontCollection = new();
 		fontCollection.Add(fontPath);
