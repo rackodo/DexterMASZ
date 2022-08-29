@@ -1,652 +1,618 @@
 {
-    "Forms": {
-        "FieldRequired": "Dieses Feld ist erforderlich.",
-        "MaxLength": "Dieses Feld darf maximal {{length}} Zeichen lang sein.",
-        "InvalidWebhookURL": "Dies ist keine gültige Webhook-URL."
-    },
-    "Select": {
-        "Select": "Auswählen",
-        "Search": "Suchen"
-    },
-    "Version": "Version",
-    "LoginWithDiscord": {
-        "Button": "Mit Discord anmelden",
-        "Loading": "Du wirst angemeldet..."
-    },
-    "Case": "Vorfall",
-    "Cases": "Vorfälle",
-    "Punishment": "Bestrafung",
-    "Punishments": "Bestrafungen",
-    "Bans": "Banns",
-    "Mutes": "Stummschaltungen",
-    "Automods": "Automods",
-    "Invite": "Einladung",
-    "Invites": "Einladungen",
-    "UserNotes": "Nutzernotizen",
-    "UserMaps": "Benutzerbeziehungen",
-    "Comments": "Kommentare",
-    "Loading": "Lädt...",
-    "NothingHere": "Nichts gefunden.",
-    "AcceptTermsOnLogin": "Beim Anmelden stimmen Sie unseren Nutzungsbedingungen und Richtlinien zu.",
-    "Toolbar": {
-        "Login": "Anmelden",
-        "Logout": "Abmelden",
-        "Patchnotes": "Patchnotizen",
-        "Community": "Community",
-        "Terms": "Nutzungsbedingungen",
-        "Legal": "Rechtliches",
-        "Store": "Geschäft",
-        "Profile": "Profil",
-        "Api": "Api",
-        "Insights": "Statistiken",
-        "Settings": "Einstellungen",
-        "Scanning": "Untersuchung"
-    },
-    "Profile": {
-      "Tabs": {
-        "Overview": "Übersicht",
-        "Rankcard": "Rangkarte anpassen"
+  "Forms": {
+    "FieldRequired": "Dieses Feld ist erforderlich.",
+    "MaxLength": "Dieses Feld muss höchstens {{length}}-Zeichen lang sein.",
+    "InvalidWebhookURL": "Dies ist keine gültige Webhook-URL."
+  },
+  "Select": {
+    "Select": "Auswählen",
+    "Search": "Suchen"
+  },
+  "Version": "Version",
+  "LoginWithDiscord": {
+    "Button": "Melden Sie sich mit Discord an",
+    "Loading": "Melden Sie sich mit Discord an..."
+  },
+  "Case": "Fall",
+  "Cases": "Etuis",
+  "Punishment": "Strafe",
+  "Punishments": "Strafen",
+  "Bans": "Verbote",
+  "Mutes": "Schaltet",
+  "Automods": "Automatische Mods",
+  "Invite": "Einladen",
+  "Invites": "Lädt",
+  "UserMaps": "Benutzerkarten",
+  "Comments": "Kommentare",
+  "Loading": "Laden...",
+  "NothingHere": "Nichts hier.",
+  "AcceptTermsOnLogin": "Indem Sie sich einloggen, akzeptieren Sie unsere Nutzungsbedingungen.",
+  "Toolbar": {
+    "Login": "Einloggen",
+    "Logout": "Abmeldung",
+    "Patchnotes": "Patchnotes",
+    "Community": "Gemeinschaft",
+    "Terms": "Bedingungen",
+    "Legal": "Rechtlich",
+    "Store": "Abspeichern",
+    "Profile": "Profil",
+    "Api": "API",
+    "Insights": "Einblicke",
+    "Settings": "Einstellungen",
+    "Scanning": "Abtastung"
+  },
+  "Profile": {
+    "Tabs": {
+      "Overview": "Überblick",
+      "Rankcard": "Rankcard anpassen"
+    }
+  },
+  "Guilds": {
+    "Guilds": "Gilden",
+    "All": "Alle Gilden",
+    "Admin": "Admin-Gilden",
+    "Moderator": "Moderatorengilden",
+    "User": "Gilden",
+    "Banned": "Aus Gilden verbannt"
+  },
+  "Dexter": {
+    "GuildDeleted": "Gilde gelöscht.",
+    "FailedToDeleteGuild": "Gilde konnte nicht gelöscht werden.",
+    "PleaseLoginFirst": "Bitte loggen Sie sich zuerst ein."
+  },
+  "AppSettings": {
+    "Title": "Einstellungen",
+    "Infrastrcture": {
+      "Title": "Infrastruktur",
+      "DefaultLanguage": {
+        "Explained": "Dexter wird diese Sprache nach Möglichkeit als Standardsprache verwenden. Möglicherweise ist jedoch nur eine englische Version für bestimmte Texte verfügbar. DiscordGuild-spezifische Einstellungen überschreiben diese Einstellung.",
+        "Field": "Standardsprache"
+      },
+      "AuditLogWebhookUrl": {
+        "Explained": "Verwenden Sie einen privaten Webhook, auf den Siteadmins nur zugreifen können, da er möglicherweise vertrauliche Informationen protokolliert.",
+        "Field": "Auditlog-Webhook-URL"
       }
     },
-    "Guilds": {
-        "Guilds": "Gilden",
-        "All": "Alle Gilden",
-        "Admin": "Admingilden",
-        "Moderator": "Moderatorengilden",
-        "User": "Gilden",
-        "Banned": "Gesperrt von Gilden"
-    },
-    "Dexter": {
-        "GuildDeleted": "Gilde gelöscht.",
-        "FailedToDeleteGuild": "Gilde konnte nicht gelöscht werden.",
-        "PleaseLoginFirst": "Bitte melde dich zuerst an."
-    },
-    "AppSettings": {
-        "Title": "Einstellungen",
-        "Infrastrcture": {
-            "Title": "Infrastruktur",
-            "DefaultLanguage": {
-                "Explained": "Dexter wird diese Sprache als Standard verwenden, wenn möglich. Jedoch ist es möglich, dass nur eine englische Version verfügbar ist für bestimmte Texte. Gilden-spezifische Einstellungen überschreiben diese Einstellung.",
-                "Field": "Standard-Sprache"
-            },
-            "AuditLogWebhookUrl": {
-                "Explained": "Verwenden Sie einen privaten Webhook, der nur für Siteadmins zugänglich ist, da es sensible Informationen protokollieren könnte.",
-                "Field": "Auditlog Webhook URL"
-            },
-            "PublicFileMode": {
-                "Explained": "Aktivieren Sie dies, um den öffentlichen Zugriff auf alle hochgeladenen Dateien zu ermöglichen.",
-                "Field": "Öffentlicher Dateimodus"
-            }
-        },
-        "Embed": {
-            "Title": "Discord Einbettung",
-            "Content": "Diese Einstellung ändert den Inhalt der Einbettung, wenn deine Dexter-Instanz in Discord verknüpft ist.",
-            "TakeToUpdate": "Bitte beachte, dass es bis zu einer Stunde dauern kann, bis das Embed in Discord aktualisiert wird.",
-            "Save": {
-                "Button": "Speichern",
-                "Message": "Gespeichert."
-            }
-        }
-    },
-    "AdminStats": {
-        "Bot": "Bot",
-        "Database": "Datenbank",
-        "InternalCache": "Interner Speicher",
-        "NextCache": "Speicherentleerung",
-        "Tokens": "Schlüssel",
-        "CurrentlyLoggedIn": "Moment eingeloggt",
-        "DiscordCache": "Discordspeicher",
-        "ClearCache": "Speicher leeren",
-        "FailedToLoad": "Statistiken konnten nicht geladen werden.",
-        "FailedToLoadLocalVersion": "Lokale Versionsinfo konnten nicht geladen werden.",
-        "FailedToLoadAvailableVersions": "Verfügbare Versionen konnten nicht geladen werden.",
-        "FailedToClear": "Speicher konnte nicht geleert werden.",
-        "Cleared": "Speicher geleert.",
-        "Insights": "Statistiken",
-        "UpdateAvailableHeadline": "Update verfügbar",
-        "Published": "Veröffentlicht:",
-        "UpdateAvailableText": "Update {{tag}} ist verfügbar. Bitte aktualisiere deinen Bot."
-    },
-    "AdminStatsList": {
-        "ShowMore": "Mehr anzeigen"
-    },
-    "TokenOverview": {
-        "Description": "Als Seitenadministrator können Sie die Dexter Api nutzen, um ihre eigene Skripte und Automatisierungen in Dexter zu implementieren. Erstellen Sie einen Api-Schlüssel, um sich gegenüber der Api zu authentifizieren, während Sie Web-Anfragen tätigen.",
-        "Documentation": "Sie finden die vollständige Dokumentation im /docs-Verzeichnis.",
-        "Postman": "Installieren Sie Postman und importieren Sie die JSON-Datei.",
-        "TokenHeader": "Fügen Sie Tokens in den \"Authorization\"-Header mit einem \"Bearer\"-Präfix ein.",
-        "PythonApiWrapper": "Probieren Sie den offiziellen Python-Api-Wrapper aus.",
-        "Warning": "Warnung",
-        "TokenIsPowerful": "Ein Api-Schlüssel ist sehr mächtig und kann alles auf Dexter steuern!",
-        "CreateToken": "Schlüssel erstellen",
-        "SaveSecurely": "Sichern Sie diesen Schlüssel.",
-        "Tokens": "Schlüssel",
-        "NoTokensFound": "Keine Schlüssel gefunden",
-        "ValidUntil": "Gültig bis:",
-        "CopiedClipboard": "In Zwischenablage kopiert.",
-        "Deleted": "Schlüssel gelöscht.",
-        "FailedToDelete": "Schlüssel konnte nicht gelöscht werden.",
-        "Created": "Schlüssel erstellt.",
-        "FailedToCreate": "Schlüssel konnte nicht erstellt werden.",
-        "FailedToLoad": "Schlüssel konnten nicht geladen werden."
-    },
-    "AutoModCard": {
-        "ViewCase": "Vorfall anzeigen",
-        "Message": "Nachricht"
-    },
-    "AutoModTable": {
-        "FailedToLoad": "AutoModsen konnten nicht geladen werden.",
-        "NoMatches": "Es gibt keine moderierten Ereignisse.",
-        "LoadMoreEvents": "Mehr Einträge laden"
-    },
-    "DTPicker": {
-        "ChooseADate": "Wähle ein Datum",
-        "OK": "OK"
-    },
-    "CaseDeleteDialog": {
-        "ForceDelete": "Permanent löschen",
-        "Cancel": "Abbrechen",
-        "Confirm": "Bestätigen"
-    },
-    "CommentEditDialog": {
-        "EditComment": "Kommentar aktualisieren",
-        "Comment": "Kommentar",
-        "Cancel": "Abbrechen",
-        "Confirm": "Bestätigen"
-    },
-    "ConfirmDialog": {
-        "AreYouSure": "Bist du dir sicher?",
-        "Cancel": "Abbrechen",
-        "Confirm": "Bestätigen"
-    },
-    "NewTokenDialog": {
-        "NameToken": "Benenne deinen Schlüssel.",
-        "Name": "Name",
-        "Cancel": "Abbrechen",
-        "Confirm": "Bestätigen"
-    },
-    "TemplateCreateDialog": {
-        "CreateTemplate": "Benenne deine Vorlage.",
-        "Name": "Name",
-        "Visibility": "Sichtbarkeit",
-        "Cancel": "Abbrechen",
-        "Confirm": "Bestätigen",
-        "FailedToLoadPermissions": "Sichtbarkeitseinstellungen konnten nicht geladen werden."
-    },
-    "UserMapEditDialog": {
-        "EditUserMap": "Benutzerbeziehung aktualisieren",
-        "Description": "Beschreibung",
-        "Cancel": "Abbrechen",
-        "Confirm": "Bestätigen"
-    },
-    "ScheduledMessageEditDialog": {
-        "EditMessage": "Nachricht aktualisieren",
-        "Name": "Name",
-        "Content": "Inhalt",
-        "EditSuccess": "Nachricht erfolgreich aktualisiert.",
-        "DeleteSuccess": "Nachricht erfolgreich gelöscht.",
-        "Cancel": "Abbrechen",
-        "Confirm": "Bestätigen"
-    },
-    "UserNoteEditDialog": {
-        "EditUserNote": "Benutzernotiz aktualisieren",
-        "Description": "Beschreibung",
-        "Cancel": "Abbrechen",
-        "Confirm": "Bestätigen"
-    },
-    "GuildDialog": {
-        "ImportExistingBans": "Bestehende Sperren importieren",
-        "ImportExistingBansDetails": "Dies kann bei großen Gilden eine Weile dauern, aber wird im Hintergrund ausgeführt.",
-        "AddAGuild": "Gilde hinzufügen",
-        "SearchAGuild": "Gilde suchen",
-        "SelectAnotherGuild": "Wähle eine andere Gilde",
-        "InviteFirst": "Du musst den Bot zuerst einladen!",
-        "Invite": "Einladen",
-        "Back": "Zurück",
-        "Next": "Nächster Schritt",
-        "StepRoles": "Auswahl der rollen",
-        "AdminRoles": "Adminrollen",
-        "ModeratorRoles": "Moderatorrollen",
-        "StepChannels": "Kanäle auswählen",
-        "StaffChannels": "Mitarbeiter-Bot-Kanäle",
-        "BotChannels": "Bot-Kanäle",
-        "StepFurtherConfiguration": "Weitere Konfiguration",
-        "StaffLogs": "Kanal für Mitarbeiterprotokolle",
-        "StaffAnnouncements": "Kanal für Personalankündigungen",
-        "Language": "Sprache",
-        "StrictPermissionCheckbox": "Genaue Berechtigungskontrolle",
-        "StrictPermissionDetails": "Ein Moderator benötigt Kick/Ban Rechte auf Discord um Kick/Ban-Modkäufe zu erstellen",
-        "ExecuteWhois": "Whois automatisch ausführen bei neuen Mitgliedern",
-        "WhoisDetails": "Sendet automatisch Informationen über den neuen Benutzer an deinen internen Webhook.",
-        "PublishModerator": "Veröffentliche Moderatorinformationen",
-        "PublishModeratorDetails": "Ein Verdächtiger wird in der Lage sein, zu sehen, welcher Moderator ihn verurteilt hat.",
-        "Done": "Fertig",
-        "RegisterGuild": "Gilde registrieren",
-        "UpdateGuild": "Gilde aktualisieren",
-        "FailedToLoadGuilds": "Gilden konnten nicht geladen werden.",
-        "FailedToLoadCurrentGuild": "Gildeninformation konnte nicht geladen werden.",
-        "FailedInviteWindow": "Einladung konnte nicht gestartet werden.",
-        "FailedToRegisterGuild": "Gilde konnte nicht registriert werden.",
-        "FailedToUpdateGuild": "Gilde konnte nicht aktualisiert werden.",
-        "GuildCreated": "Gilde registriert",
-        "GuildUpdated": "Gilde aktualisiert"
-    },
-    "GuildAuditConfig": {
-        "TargetChannel": "Zielkanal",
-        "ComingSoon": "Bald verfügbar",
-        "PingRoles": "Rolle pingen",
-        "AuditLog": "AuditLogs",
-        "ConfigDeleted": "Konfiguration gelöscht.",
-        "FailedToDeleteConfig": "Konfiguration konnte nicht gelöscht werden.",
-        "SavedConfig": "Konfiguration gespeichert.",
-        "FailedToSaveConfig": "Konfiguration konnte nicht gespeichert werden.",
-        "FailedToLoadGuild": "Gildeninformationen konnten nicht geladen werden.",
-        "FailedToLoadChannels": "Gildenkanalinformationen konnten nicht geladen werden.",
-        "MessageSent": {
-            "title": "Nachricht gesendet"
-        },
-        "MessageUpdated": {
-            "title": "Nachricht editiert"
-        },
-        "MessageDeleted": {
-            "title": "Nachricht gelöscht"
-        },
-        "UsernameUpdated": {
-            "title": "Benutzername editiert"
-        },
-        "AvatarUpdated": {
-            "title": "Avatar editiert"
-        },
-        "NicknameUpdated": {
-            "title": "Nickname editiert"
-        },
-        "UserRolesUpdated": {
-            "title": "Mitgliederrollen editiert"
-        },
-        "UserJoined": {
-            "title": "Mitglied beigetreten"
-        },
-        "UserRemoved": {
-            "title": "Mitglied entfernt"
-        },
-        "BanAdded": {
-            "title": "Bann hinzugefügt"
-        },
-        "BanRemoved": {
-            "title": "Bann entfernt"
-        },
-        "InviteCreated": {
-            "title": "Einladung erstellt"
-        },
-        "InviteDeleted": {
-            "title": "Einladung gelöscht"
-        },
-        "ThreadCreated": {
-            "title": "Thread erstellt"
-        }
-    },
-    "AutoModConfig": {
-        "AutoMods": "AutoMods",
-        "Invites": {
-            "title": "Einladungen",
-            "details": "Eine Nachricht auf deinem Server passt zum Einladungs-Muster. Einladungen zu dieser Gilde werden ignoriert.",
-            "customWordField": "Ignorierte Gilden-IDs (getrennt durch Zeilenumbruch)"
-        },
-        "Emotes": {
-            "title": "Emoticons",
-            "details": "Eine Nachricht auf deinem Server enthält zu viele Emoticons."
-        },
-        "Mentions": {
-            "title": "Erwähnungen",
-            "details": "Eine Nachricht auf deinem Server enthält zu viele Erwähnungen."
-        },
-        "Attachments": {
-            "title": "Anhänge",
-            "details": "Eine Nachricht auf deinem Server enthält zu viele Anhänge."
-        },
-        "Embeds": {
-            "title": "Einbettungen",
-            "details": "Eine Nachricht auf deinem Server enthält zu viele Einbettungen."
-        },
-        "Automods": {
-            "title": "AutoModsen",
-            "details": "Ein Benutzer löst zu viele AutoModsen in einem definierten Zeitraum aus."
-        },
-        "CustomFilter": {
-            "title": "Benutzerdefinierter Filter",
-            "details": "Ein Benutzer benutzt zu viele Wörter aus deiner Liste.",
-            "tooltip": "Wörter werden zeilenweise ohne Beachtung der Groß- und Kleinschreibung überprüft.",
-            "linkText": "Beispiel",
-            "customWordField": "Eigene Wörter (Regexpattern getrennt durch Zeilenumbruch)"
-        },
-        "Spam": {
-            "title": "Spam",
-            "details": "Ein Benutzer auf deinem Server sendet zu viele Nachrichten in einem definierten Zeitraum.",
-            "TimeLimitMessage": "Zeitlimit (Sekunden)"
-        },
-        "DuplicatedChars": {
-            "title": "Wiederholende Buchstaben",
-            "details": "Eine Nachricht auf deinem Server enthält zu viele wiederholende Buchstaben."
-        },
-        "Link": {
-            "title": "Links",
-            "details": "Eine Nachricht auf deinem Server enthält zu viele Verlinkungen.",
-            "customWordField": "Ignorierte Links (getrennte Regexpatterns durch Zeilenumbruch)",
-            "linkText": "Beispiel"
-        },
-        "Next": "Nächster Schritt",
-        "Back": "Zurück",
-        "Save": "Speichern",
-        "TimeLimitMinutes": "Zeitlimit (Minuten)",
-        "Steps": {
-            "Event": "Ereignis",
-            "Filter": "Filter",
-            "Action": "Aktion",
-            "Done": "Abschluss"
-        },
-        "UpperLimit": "Oberes Limit",
-        "TeamMembersExcluded": "Hinweis: Teammitglieder werden immer gefiltert.",
-        "ExcludeRoles": "Ausgenommene Rollen",
-        "ExcludeChannels": "Ausgenommene Kanäle",
-        "SendInternalNotification": "Sende interne Benachrichtigung",
-        "SendInternalNotificationHover": "Eine interne Benachrichtigung wird immer gesendet.",
-        "LogEntry": "Eintrag erstellen",
-        "LogEntryHover": "Ein Eintrag wird immer erstellt.",
-        "Action": "Aktion",
-        "ChannelNotificationBehavior": "Kanalbenachrichtigung",
-        "DurationInMinutes": "Dauer in Minuten",
-        "YouAreDone": "Du bist nun fertig.",
-        "ConfigDeleted": "Konfiguration gelöscht.",
-        "FailedToDeleteConfig": "Konfiguration konnte nicht gelöscht werden.",
-        "SavedConfig": "Konfiguration gespeichert.",
-        "FailedToSaveConfig": "Konfiguration konnte nicht gespeichert werden.",
-        "FailedToLoadGuild": "Gildeninformationen konnten nicht geladen werden.",
-        "FailedToLoadChannels": "Gildenkanalinformationen konnten nicht geladen werden."
-    },
-    "LevelsConfig": {
-      "Levels": "Niveaus"
-    },
-    "GuildMessages": {
-        "Explained": "Benutze geplante Nachrichten, um Nachrichten zu organisieren und zu koordinieren.",
-        "NameField": "Name",
-        "ChannelField": "Kanal",
-        "ContentField": "Inhalt",
-        "QueueMessage": "Nachricht einplanen",
-        "Messages": "Geplante Nachrichten",
-        "SortBy": "Sortieren nach",
-        "LoadMore": {
-            "Button": "Mehr laden",
-            "Failed": "Nachrichten konnten nicht geladen werden."
-        }
-    },
-    "GuildMotd": {
-        "Enable": "Aktiviere MotD",
-        "Message": "Nachricht",
-        "FailedToLoad": "MotD konnte nicht geladen werden.",
-        "FailedToSave": "MotD konnte nicht gespeichert werden.",
-        "Saved": "MotD gespeichert.",
-        "Explanation": "Diese Nachricht wird deinen Administratoren und Moderatoren auf dem Dashboard angezeigt."
-    },
-    "AutoModSplit": {
-        "FailedToLoad": "Konnte AutoModsaufteilungsdaten nicht laden."
-    },
-    "DashboardCaseList": {
-        "NewestCases": "Neuste Vorfälle",
-        "ExpiringPunishments": "Auslaufende Bestrafungen",
-        "NoCasesFound": "Keine Vorfälle gefunden"
-    },
-    "DashboardCharts": {
-        "Overview": "Übersicht",
-        "Cases": "Vorfälle",
-        "Punishments": "Bestrafungen",
-        "Automods": "AutoModsen",
-        "ChooseADate": "Wähle ein Datum",
-        "Reset": "Zurücksetzen"
-    },
-    "DashboardComments": {
-        "Newestcomments": "Neueste Kommentare",
-        "NothingFound": "Keine Kommentare gefunden.",
-        "FailedToLoad": "Kommentare konnten nicht geladen werden."
-    },
-    "GuildStats": {
-        "GuildStats": "Gildenstatistiken",
-        "FailedToLoad": "Gildenstatistiken konnten nicht geladen werden."
-    },
-    "GuildInfoCard": {
-        "CreateNewCase": "Neuen Vorfall erstellen",
-        "FailedToLoad": "Gildeninfo konnte nicht geladen werden."
-    },
-    "DashboardMotd": {
-        "FailedToLoad": "Motd konnte nicht geladen werden.",
-        "MessageFrom": "Nachricht von {{name}}"
-    },
-    "QuickSearch": {
-        "Placeholder": "Schnellsuche Benutzer, Vorfälle, Bestrafungen, AutoModsen, ...",
-        "NoMatches": "Keine Einträge zur Suche gefunden :(",
-        "SearchFailed": "Suche fehlgeschlagen."
-    },
-    "GuildList": {
-        "LoadingGuilds": "Lade Gilden...",
-        "NoGuild": "Bitte füge mich einer Gilde hinzu oder lade mich zu einer ein!",
-        "AddGuild": "Gilde hinzufügen"
-    },
-    "GuildOverview": {
-        "Tabs": {
-            "Dashboard": "Dashboard",
-            "Case": "Vorfälle",
-            "AutoMods": "AutoModsen",
-            "Messages": "Nachrichten",
-            "UserNote": "Benutzernotizen",
-            "UserMap": "Benutzerbeziehungen",
-            "Config": "Konfiguration"
-        }
-    },
-    "UserMapTable": {
-        "User": "Mitglied",
-        "Description": "Beschreibung",
-        "CreateNewMap": "Neue Benutzerbeziehung erstellen",
-        "Search": "Suchen (Benutzer, ID, Beschreibung...)",
-        "NoMatches": "Keine Benutzerbeziehung passt zu deiner Suche.",
-        "FailedToLoad": "Benutzerbeziehungen konnten nicht geladen werden.",
-        "FailedToLoadUser": "Mitgliederliste konnte nicht geladen werden.",
-        "FailedToCreate": "Benutzerbeziehung konnte nicht erstellt werden.",
-        "Created": "Benutzerbeziehung erstellt."
-    },
-    "UserMapCard": {
-        "UpdatedPrefix": "Aktualisiert:",
-        "Edit": "Bearbeiten",
-        "Delete": "Löschen",
-        "FailedToUpdate": "Fehler beim Speichern der Benutzerbeziehung.",
-        "Updated": "Benutzerbeziehung gespeichert.",
-        "FailedToDelete": "Fehler beim Löschen der Benutzerbeziehung.",
-        "Deleted": "Benutzerbeziehung gelöscht."
-    },
-    "UserNoteTable": {
-        "User": "Mitglied",
-        "Description": "Beschreibung",
-        "CreateNewNote": "Neue Benutzernotiz erstellen",
-        "Search": "Suchen (Benutzer, ID, Beschreibung...)",
-        "NoMatches": "Keine Benutzernotiz passt zu deiner Suche.",
-        "FailedToLoad": "Benutzernotizen konnten nicht geladen werden.",
-        "FailedToLoadUser": "Mitgliederliste konnte nicht geladen werden.",
-        "FailedToCreate": "Benutzernotiz konnte nicht erstellt werden.",
-        "Created": "Benutzernotiz erstellt."
-    },
-    "UserNoteCard": {
-        "UpdatedPrefix": "Aktualisiert:",
-        "Edit": "Bearbeiten",
-        "Delete": "Löschen",
-        "FailedToUpdate": "Fehler beim Speichern der Benutzernotiz.",
-        "Updated": "Benutzernotiz gespeichert.",
-        "FailedToDelete": "Fehler beim Löschen der Benutzernotiz.",
-        "Deleted": "Benutzernotiz gelöscht."
-    },
-    "ModCaseDialog": {
-        "SelectATemplate": "Vorlagenauswahl",
-        "BackToGuild": "Zurück zur Gilde.",
-        "BackToCase": "Zurück zum Vorfall.",
-        "SearchTemplate": "Vorlage suchen",
-        "Back": "Zurück",
-        "Next": "Nächster Schritt",
-        "ChooseAUser": "Nutzerauswahl",
-        "User": "Mitglied",
-        "PickOne": "Wähle einen",
-        "DescribeCase": "Vorfallsbeschreibung",
-        "Title": "Titel",
-        "Description": "Beschreibung",
-        "Labels": "Labels",
-        "NewLabel": "Neuer Label...",
-        "ChoosePunishment": "Bestrafungsauswahl",
-        "Punishment": "Bestrafung",
-        "HandlePunishment": "Bestrafung ausführen",
-        "UploadFiles": "Dateienupload",
-        "Upload": "Upload",
-        "CreateCase": "Vorfallserstellung",
-        "UpdateCase": "Vorfallsaktualisierung",
-        "SaveAsTemplate": "Als Vorlage speichern",
-        "CreateCaseButton": "Vorfall erstellen",
-        "UpdateCaseButton": "Vorfall aktualisieren",
-        "FailedToLoad": {
-            "UserList": "Mitgliederliste konnte nicht geladen werden.",
-            "PunishmentEnum": "Verfügbare Bestrafungen konnten nicht geladen werden.",
-            "CaseTemplates": "Vorlagen konnte nicht geladen werden.",
-            "CurrentCase": "Vorfall konnte nicht geladen werden."
-        },
-        "AppliedTemplate": "Vorlage angewendet.",
-        "TemplateDeleted": "Vorlage gelöscht.",
-        "FailedToDeleteTemplate": "Vorlage konnte nicht gelöscht werden.",
-        "TemplateSaved": "Vorlage gespeichert.",
-        "FailedToSaveTemplate": "Vorlage konnte nicht gespeichert werden.",
-        "FileUploaded": "Datei hochgeladen.",
-        "FailedToUploadFile": "Datei konnte nicht hochgeladen werden.",
-        "CaseCreated": "Vorfall erstellt.",
-        "CaseUpdated": "Vorfall aktualisiert."
-    },
-    "ModCaseTable": {
-        "SelectUsers": "Mitglieder",
-        "SelectModerators": "Moderatoren",
-        "SelectCreationTypes": "Erstellungsarten",
-        "SelectPunishments": "Bestrafungen",
-        "SelectEdited": "Bearbeitet-Status",
-        "SelectLocked": "Sperr-Status",
-        "SelectDelete": "Lösch-Status",
-        "SelectActive": "Aktiv-Status",
-        "FilterSince": "Erstellt ab",
-        "FilterUntil": "Erstellt bis",
-        "FilterPunishedSince": "Bestraft bis mindestens",
-        "FilterPunishedBefore": "Bestraft bis",
-        "ExecuteSearch": "Suche ausführen",
-        "ExcludePermanent": "Permanente Vorfälle verstecken",
-        "UseAdvancedFilter": "Erweiterten Filter nutzen",
-        "CreateNewCase": "Neuen Vorfall erstellen",
-        "Search": "Suche (Benutzer, ID, Beschreibung...)",
-        "FailedToLoad": "Vorfälle konnten nicht geladen werden.",
-        "NoMatches": "Keine Vorfälle passen zu deiner Suche."
-    },
-    "ScheduleMessageCard": {
-        "Created": "Erstellt:",
-        "Edited": "Bearbeitet:",
-        "Edit": "Bearbeiten",
-        "Delete": "Löschen"
-    },
-    "ModCaseCard": {
-        "ViewDetailsButton": "Details anzeigen",
-        "Created": "Erstellt:",
-        "Until": "Bis:",
-        "Delete": "Löschen:"
-    },
-    "ModCaseView": {
-        "Suspect": "Verdächtiger",
-        "ID": "ID",
-        "Moderator": "Moderator",
-        "Punishment": "Bestrafung",
-        "Guild": "Gilde",
-        "PunishedUntil": "Bestraft bis:",
-        "PunishedForever": "Bestraft für immer",
-        "Deactivated": {
-            "Success": "Vorfall wurde deaktiviert.",
-            "Failed": "Vorfall konnte nicht deaktiviert werden."
-        },
-        "Activated": {
-            "Success": "Vorfall wurde aktiviert.",
-            "Failed": "Vorfall konnte nicht aktiviert werden."
-        },
-        "PunishmentExpired": "Bestrafung ist ausgelaufen",
-        "CaseInactive": "Vorfall ist inaktiv.",
-        "CreatedAt": "Erstellt am",
-        "EditedAt": "Aktualisiert",
-        "LastEditModerator": "Aktualisiert von",
-        "Description": "Beschreibung",
-        "UploadedFiles": "Hochgeladene Dateien",
-        "Upload": "Upload",
-        "Comments": "Kommentare",
-        "NewComment": "Neuer Kommentar",
-        "LockComments": "Kommentare sperren",
-        "UnlockComments": "Kommentare freigeben",
-        "PostComment": "Kommentar absenden",
-        "CaseMarkedToDelete": "Zum Löschen markiert - {{user}}",
-        "CommentsLocked": "Kommentare gesperrt - {{user}}",
-        "Restore": "Wiederherstellen",
-        "View": "Einsehen",
-        "Delete": "Löschen",
-        "Moderators": "Moderatoren",
-        "FailedToLoad": {
-            "Punishments": "Verfügbare Bestrafungen konnten nicht geladen werden.",
-            "Files": "Dateien konnten nicht geladen werden.",
-            "Guild": "Gildeninformationen konnten nicht geladen werden.",
-            "Case": "Vorfall konnte nicht geladen werden."
-        },
-        "DeleteCase": {
-            "Deleted": "Vorfall zum Löschen vormarkiert.",
-            "ForceDeleted": "Vorfall gelöscht.",
-            "Failed": "Vorfall konnte nicht gelöscht werden."
-        },
-        "RestoreCase": {
-            "Restored": "Vorfall wiederhergestellt.",
-            "Failed": "Vorfall konnte nicht wiederhergestellt werden."
-        },
-        "FileUpload": {
-            "Uploaded": "Datei hochgeladen",
-            "Failed": "Datei konnte nicht hochgeladen werden."
-        },
-        "FileDelete": {
-            "Deleted": "Datei gelöscht.",
-            "Failed": "Datei konnte nicht gelöscht werden."
-        },
-        "CommentDelete": {
-            "Deleted": "Kommentar gelöscht.",
-            "Failed": "Kommentar konnte nicht gelöscht werden."
-        },
-        "CommentLock": {
-            "Locked": "Kommentare gesperrt.",
-            "Failed": "Kommentare konnte nicht gesperrt werden."
-        },
-        "CommentUnlock": {
-            "Unlocked": "Kommentare freigegeben.",
-            "Failed": "Kommentare konnte nicht freigegeben werden."
-        },
-        "CommentPost": {
-            "Posted": "Kommentar gespeichert.",
-            "Failed": "Kommentar konnte nicht gespeichert werden."
-        },
-        "CommentUpdate": {
-            "Updated": "Kommentar aktualisiert.",
-            "Failed": "Kommentar konnte nicht aktualisiert werden."
-        }
-    },
-    "Scanning": {
-        "EnterUserOrInvite": "Gib die ID eines Nutzers oder einen Einladungslink an",
-        "Userscan": "Benutzeruntersuchung",
-        "Invitescan": "Einladungsuntersuchung",
-        "UserscanDescription": "Gib die ID eines Nutzers ein um eine schnelle Übersicht über einen Nutzer oder seine Beziehungen zu anderen Nutzern zu erhalten. Diese Funktion wird auch bei Einladungen verwendet um zu erkennen welche Accounts ein neuer Nutzer verwendet. Mit einem Doppelklick auf den Nutzer kannst du auch andere Ressourcen wie einen Vorfall ansehen.",
-        "InvitescanDescription": "Gib einen Einladungslink ein um eine schnelle Übersicht über eine Einladung oder Beziehungen zu anderen Nutzern zu erhalten. Mit einem Doppelklick kannst du auch andere Ressourcen wie einen anderen Benutzer ansehen.",
-        "FailedToLoad": {
-            "Scan": "Untersuchungsinformationen konnten nicht geladen werden.",
-            "Invite": "Einladungsinformationen konnten nicht geladen werden.",
-            "InvalidInvite": "Zu dieser Einladung wurden keine Informationen gefunden."
-        },
-        "JoinedAt": "Beigetreten am",
-        "OccuredAt": "Am",
-        "CreatedAt": "Erstellt am"
+    "Embed": {
+      "Title": "Discord-Einbettung",
+      "Content": "Diese Einstellung ändert den Inhalt der Einbettung, wenn Ihre Dexter-Instanz in Discord verknüpft ist.",
+      "TakeToUpdate": "Bitte beachten Sie, dass die Aktualisierung in Discord bis zu einer Stunde dauern kann.",
+      "Save": {
+        "Button": "Retten",
+        "Message": "Gespeichert."
+      }
     }
+  },
+  "AdminStats": {
+    "Bot": "Bot",
+    "Database": "Datenbank",
+    "InternalCache": "Interner Cache",
+    "NextCache": "Nächster Cache",
+    "Tokens": "Token",
+    "CurrentlyLoggedIn": "Aktuell eingeloggt",
+    "DiscordCache": "Discord-Cache",
+    "ClearCache": "Cache leeren",
+    "FailedToLoad": "Admin-Statistiken konnten nicht geladen werden.",
+    "FailedToClear": "Cache konnte nicht gelöscht werden.",
+    "Cleared": "Cache geleert.",
+    "Insights": "Einblicke"
+  },
+  "AdminStatsList": {
+    "ShowMore": "Zeige mehr"
+  },
+  "AutoModCard": {
+    "ViewCase": "Fall anzeigen",
+    "Message": "Nachricht"
+  },
+  "AutoModTable": {
+    "FailedToLoad": "Automods konnten nicht geladen werden.",
+    "NoMatches": "Es gibt keine moderierten Veranstaltungen.",
+    "LoadMoreEvents": "Weitere Einträge laden"
+  },
+  "DTPicker": {
+    "ChooseADate": "Wählen Sie ein Datum",
+    "OK": "Okay"
+  },
+  "CaseDeleteDialog": {
+    "ForceDelete": "Löschen erzwingen",
+    "Cancel": "Abbrechen",
+    "Confirm": "Bestätigen"
+  },
+  "CommentEditDialog": {
+    "EditComment": "Kommentar bearbeiten",
+    "Comment": "Kommentar",
+    "Cancel": "Abbrechen",
+    "Confirm": "Bestätigen"
+  },
+  "ConfirmDialog": {
+    "AreYouSure": "Bist du sicher?",
+    "Cancel": "Abbrechen",
+    "Confirm": "Bestätigen"
+  },
+  "TemplateCreateDialog": {
+    "CreateTemplate": "Benennen Sie Ihre Vorlage.",
+    "Name": "Name",
+    "Visibility": "Sichtbarkeit",
+    "Cancel": "Abbrechen",
+    "Confirm": "Bestätigen",
+    "FailedToLoadPermissions": "Sichtbarkeitsoptionen konnten nicht geladen werden."
+  },
+  "UserMapEditDialog": {
+    "EditUserMap": "UserMap bearbeiten",
+    "Description": "Beschreibung",
+    "Cancel": "Abbrechen",
+    "Confirm": "Bestätigen"
+  },
+  "ScheduledMessageEditDialog": {
+    "EditMessage": "Nachricht bearbeiten",
+    "Name": "Name",
+    "Content": "Inhalt",
+    "EditSuccess": "Nachricht erfolgreich bearbeitet.",
+    "DeleteSuccess": "Nachricht erfolgreich gelöscht.",
+    "Cancel": "Abbrechen",
+    "Confirm": "Bestätigen"
+  },
+  "GuildDialog": {
+    "ImportExistingBans": "Importieren vorhandener Sperren",
+    "ImportExistingBansDetails": "Dies kann für große Gilden eine Weile dauern, läuft aber im Hintergrund.",
+    "AddAGuild": "Füge eine Gilde hinzu",
+    "SearchAGuild": "Suche nach einer Gilde",
+    "SelectAnotherGuild": "Wähle eine Gilde aus",
+    "InviteFirst": "Sie müssen zuerst den Bot einladen!",
+    "Invite": "Einladen",
+    "Back": "Zurück",
+    "Next": "Nächster",
+    "StepRoles": "Rollen auswählen",
+    "AdminRoles": "Administratorrollen",
+    "ModeratorRoles": "Mod-Rollen",
+    "StepChannels": "Kanäle auswählen",
+    "StaffChannels": "Service-Bot-Kanäle für Mitarbeiter",
+    "BotChannels": "Bot-Kanäle",
+    "StepFurtherConfiguration": "Weitere Konfiguration auswählen",
+    "StaffLogs": "Mitarbeiter-Log-Kanal",
+    "StaffAnnouncements": "Kanal für Mitarbeiterankündigungen",
+    "Language": "Sprache",
+    "StrictPermissionCheckbox": "Strenge Berechtigungsprüfung",
+    "StrictPermissionDetails": "Ein Moderator benötigt Kick/Ban-Berechtigungen für Discord, um Kick/Ban-Modcases zu erstellen",
+    "ExecuteWhois": "Whois beim Benutzerbeitritt ausführen",
+    "WhoisDetails": "Sendet automatisch Informationen über den verbundenen Benutzer an Ihren internen Webhook.",
+    "PublishModerator": "Moderatoreninformationen veröffentlichen",
+    "PublishModeratorDetails": "Ein Verdächtiger wird sehen können, welcher Moderator ihn bestraft hat.",
+    "Done": "Fertig",
+    "RegisterGuild": "Gilde registrieren",
+    "UpdateGuild": "Gilde aktualisieren",
+    "FailedToLoadGuilds": "Gilden konnten nicht geladen werden.",
+    "FailedToLoadCurrentGuild": "Aktuelle Gildeninformationen konnten nicht geladen werden.",
+    "FailedInviteWindow": "Das Einladungsfenster konnte nicht geöffnet werden.",
+    "FailedToRegisterGuild": "Gilde konnte nicht registriert werden.",
+    "FailedToUpdateGuild": "Fehler beim Aktualisieren der Gilde.",
+    "GuildCreated": "Gilde erstellt",
+    "GuildUpdated": "Gilde aktualisiert"
+  },
+  "GuildAuditConfig": {
+    "TargetChannel": "Zielkanal",
+    "ComingSoon": "Demnächst",
+    "PingRoles": "Ping-Rollen",
+    "AuditLog": "Audit-Protokolle",
+    "ConfigDeleted": "Konfiguration gelöscht.",
+    "FailedToDeleteConfig": "Die Konfiguration konnte nicht gelöscht werden.",
+    "SavedConfig": "Gespeicherte Konfiguration.",
+    "FailedToSaveConfig": "Fehler beim Speichern der Konfiguration.",
+    "FailedToLoadGuild": "Gildeninformationen konnten nicht geladen werden.",
+    "FailedToLoadChannels": "Guildchannel-Informationen konnten nicht geladen werden.",
+    "MessageSent": {
+      "title": "Nachricht gesendet"
+    },
+    "MessageUpdated": {
+      "title": "Nachricht aktualisiert"
+    },
+    "MessageDeleted": {
+      "title": "Nachricht gelöscht"
+    },
+    "UsernameUpdated": {
+      "title": "Benutzername aktualisiert"
+    },
+    "AvatarUpdated": {
+      "title": "Avatar aktualisiert"
+    },
+    "NicknameUpdated": {
+      "title": "Spitzname aktualisiert"
+    },
+    "UserRolesUpdated": {
+      "title": "Benutzerrollen aktualisiert"
+    },
+    "UserJoined": {
+      "title": "Benutzer beigetreten"
+    },
+    "UserRemoved": {
+      "title": "Benutzer entfernt"
+    },
+    "BanAdded": {
+      "title": "Verbot hinzugefügt"
+    },
+    "BanRemoved": {
+      "title": "Sperre aufgehoben"
+    },
+    "InviteCreated": {
+      "title": "Einladung erstellt"
+    },
+    "InviteDeleted": {
+      "title": "Eingeladen gelöscht"
+    },
+    "ThreadCreated": {
+      "title": "Thread erstellt"
+    }
+  },
+  "AutoModConfig": {
+    "AutoMods": "Automatische Moderationen",
+    "Invites": {
+      "title": "Lädt",
+      "details": "Eine Nachricht auf eurer Gilde stimmt mit dem Einladungsmuster überein. Einladungen zu dieser Gilde werden ignoriert.",
+      "customWordField": "Gilden ignorieren (IDs durch Zeilenumbrüche unterteilt eingeben)"
+    },
+    "Emotes": {
+      "title": "Emotes",
+      "details": "Eine Nachricht auf eurer Gilde enthält zu viele Emotes."
+    },
+    "Mentions": {
+      "title": "Erwähnungen",
+      "details": "Eine Nachricht auf eurer Gilde enthält zu viele Erwähnungen."
+    },
+    "Attachments": {
+      "title": "Anhängsel",
+      "details": "Eine Nachricht auf eurer Gilde enthält zu viele Anhänge."
+    },
+    "Embeds": {
+      "title": "Bettet",
+      "details": "Eine Nachricht auf eurer Gilde enthält zu viele Einbettungen."
+    },
+    "Automods": {
+      "title": "Automods",
+      "details": "Ein Benutzer löst zu viele Automods in einer definierten Zeitspanne aus."
+    },
+    "CustomFilter": {
+      "title": "Benutzerdefinierter Filter",
+      "details": "Ein Benutzer verwendet zu viele Wörter, die in Ihrer Liste definiert sind.",
+      "tooltip": "Wörter werden Zeile für Zeile ohne Berücksichtigung der Groß-/Kleinschreibung überprüft.",
+      "linkText": "Beispiel",
+      "customWordField": "Benutzerdefinierte Wörter (Regex-Muster geteilt durch Zeilenumbruch)"
+    },
+    "Spam": {
+      "title": "Spam",
+      "details": "Ein Benutzer in eurer Gilde sendet zu viele Nachrichten in einer bestimmten Zeitspanne.",
+      "TimeLimitMessage": "Zeitlimit (Sekunden)"
+    },
+    "DuplicatedChars": {
+      "title": "Doppelte Zeichen",
+      "details": "Eine Nachricht auf eurer Gilde enthält zu viele doppelte Zeichen."
+    },
+    "Link": {
+      "title": "Verknüpfungen",
+      "details": "Eine Nachricht auf eurer Gilde enthält zu viele Links.",
+      "customWordField": "Links ignorieren (Regex-Muster geteilt durch Zeilenumbrüche eingeben)",
+      "linkText": "Beispiel"
+    },
+    "Next": "Nächster",
+    "Back": "Zurück",
+    "Save": "Retten",
+    "TimeLimitMinutes": "Zeitlimit (Minuten)",
+    "Steps": {
+      "Event": "Ereignis",
+      "Filter": "Filter",
+      "Action": "Aktion",
+      "Done": "Fertig"
+    },
+    "UpperLimit": "Obergrenze",
+    "TeamMembersExcluded": "Hinweis: Teambenutzer sind immer ausgeschlossen.",
+    "ExcludeRoles": "Rollen ausschließen",
+    "ExcludeChannels": "Kanäle ausschließen",
+    "SendInternalNotification": "Interne Benachrichtigung senden",
+    "SendInternalNotificationHover": "Es wird immer eine interne Benachrichtigung gesendet.",
+    "LogEntry": "Protokolleintrag",
+    "LogEntryHover": "Es wird immer ein Protokolleintrag generiert.",
+    "Action": "Aktion",
+    "ChannelNotificationBehavior": "Kanalbenachrichtigung",
+    "DurationInMinutes": "Dauer in Minuten",
+    "YouAreDone": "Sie sind nun fertig.",
+    "ConfigDeleted": "Konfiguration gelöscht",
+    "FailedToDeleteConfig": "Die Konfiguration konnte nicht gelöscht werden.",
+    "SavedConfig": "Konfiguration gespeichert",
+    "FailedToSaveConfig": "Fehler beim Speichern der Konfiguration.",
+    "FailedToLoadGuild": "Gildeninformationen konnten nicht geladen werden.",
+    "FailedToLoadChannels": "Guildchannel-Informationen konnten nicht geladen werden."
+  },
+  "LevelsConfig": {
+    "Levels": "Stufen"
+  },
+  "GuildMessages": {
+    "Explained": "Verwenden Sie geplante Nachrichten, um Ankündigungen für Ihre Community oder Mitarbeiter zu verwalten und zu koordinieren.",
+    "NameField": "Name",
+    "ChannelField": "Kanal",
+    "ContentField": "Inhalt",
+    "QueueMessage": "Warteschlangennachricht",
+    "Messages": "Geplante Nachrichten",
+    "SortBy": "Sortieren nach",
+    "LoadMore": {
+      "Button": "Mehr laden",
+      "Failed": "Weitere Nachrichten konnten nicht geladen werden."
+    }
+  },
+  "GuildMotd": {
+    "Enable": "MotD aktivieren",
+    "Message": "Nachricht",
+    "FailedToLoad": "motd konnte nicht geladen werden.",
+    "FailedToSave": "Motd konnte nicht gespeichert werden.",
+    "Saved": "Motd gespeichert.",
+    "Explanation": "Diese Meldung wird Ihren Administratoren und Moderatoren auf dem Dashboard angezeigt."
+  },
+  "AutoModSplit": {
+    "FailedToLoad": "Das Gilden-Autmod-Split-Diagramm konnte nicht geladen werden."
+  },
+  "DashboardCaseList": {
+    "NewestCases": "Neueste Cases",
+    "ExpiringPunishments": "Auslaufende Strafen",
+    "NoCasesFound": "Keine Fälle gefunden"
+  },
+  "DashboardCharts": {
+    "Overview": "Überblick",
+    "Cases": "Etuis",
+    "Punishments": "Strafen",
+    "Automods": "Automods",
+    "ChooseADate": "Wählen Sie ein Datum",
+    "Reset": "Zurücksetzen"
+  },
+  "DashboardComments": {
+    "Newestcomments": "Neueste Kommentare",
+    "NothingFound": "Keine Kommentare gefunden.",
+    "FailedToLoad": "Kommentare konnten nicht geladen werden."
+  },
+  "GuildStats": {
+    "GuildStats": "Gildenstatistik",
+    "FailedToLoad": "Gildenstatistiken konnten nicht geladen werden."
+  },
+  "GuildInfoCard": {
+    "Leaderboard": "Leaderboard anzeigen",
+    "CreateNewCase": "Neuen Fall erstellen",
+    "FailedToLoad": "Gildeninformationen konnten nicht geladen werden."
+  },
+  "DashboardMotd": {
+    "FailedToLoad": "motd konnte nicht geladen werden.",
+    "MessageFrom": "Nachricht von {{name}}"
+  },
+  "QuickSearch": {
+    "Placeholder": "Schnelle Suche nach Benutzern, Modcases, Strafen, Automods, ...",
+    "NoMatches": "Nichts stimmt mit Ihrer Suche überein :(",
+    "SearchFailed": "Suche fehlgeschlagen."
+  },
+  "GuildList": {
+    "LoadingGuilds": "Gilden werden geladen...",
+    "NoGuild": "Bitte fügt mich zu einer Gilde hinzu oder ladet mich zu einer Gilde ein!",
+    "AddGuild": "Gilde hinzufügen"
+  },
+  "GuildOverview": {
+    "Tabs": {
+      "Dashboard": "Instrumententafel",
+      "Case": "Etuis",
+      "AutoMods": "Automatische Mods",
+      "Messages": "Meldungen",
+      "UserMap": "Benutzerkarten",
+      "Config": "Konfiguration",
+      "UserNote": "Benutzerhinweise"
+    }
+  },
+  "UserMapTable": {
+    "User": "Benutzer",
+    "Description": "Beschreibung",
+    "CreateNewMap": "Neue Benutzerzuordnung erstellen",
+    "Search": "Suche (Benutzer, ID, Beschreibung...)",
+    "NoMatches": "Keine Benutzerzuordnung stimmt mit Ihrer Suche überein.",
+    "FailedToLoad": "Benutzerzuordnungen konnten nicht geladen werden.",
+    "FailedToLoadUser": "Benutzerliste konnte nicht geladen werden.",
+    "FailedToCreate": "Fehler beim Erstellen der Benutzerzuordnung.",
+    "Created": "Benutzerkarte erstellt."
+  },
+  "UserMapCard": {
+    "UpdatedPrefix": "Aktualisierte:",
+    "Edit": "Redigieren",
+    "Delete": "Löschen",
+    "FailedToUpdate": "Fehler beim Aktualisieren der Benutzerzuordnung.",
+    "Updated": "Benutzerkarte aktualisiert.",
+    "FailedToDelete": "Fehler beim Löschen der Benutzerzuordnung.",
+    "Deleted": "Benutzerzuordnung gelöscht."
+  },
+  "ModCaseDialog": {
+    "SelectATemplate": "Wählen Sie eine Vorlage aus",
+    "BackToGuild": "Zurück zur Gilde.",
+    "BackToCase": "Zurück zum Modcase.",
+    "SearchTemplate": "Suchvorlage",
+    "Back": "Zurück",
+    "Next": "Nächster",
+    "ChooseAUser": "Wählen Sie einen Benutzer",
+    "User": "Benutzer",
+    "PickOne": "Wählen Sie eine aus",
+    "DescribeCase": "Beschreiben Sie den Fall",
+    "Title": "Titel",
+    "Description": "Beschreibung",
+    "Labels": "Etiketten",
+    "NewLabel": "Neues Label...",
+    "ChoosePunishment": "Wähle eine Strafe",
+    "Punishment": "Strafe",
+    "SendDmNotification": "DM-Benachrichtigung senden",
+    "UploadFiles": "Dateien hochladen",
+    "Upload": "Hochladen",
+    "CreateCase": "Case erstellen",
+    "UpdateCase": "Fall aktualisieren",
+    "SaveAsTemplate": "Als Vorlage speichern",
+    "CreateCaseButton": "Case erstellen",
+    "UpdateCaseButton": "Fall aktualisieren",
+    "FailedToLoad": {
+      "UserList": "Benutzerliste konnte nicht geladen werden.",
+      "PunishmentEnum": "Verfügbare Strafen konnten nicht geladen werden.",
+      "CaseTemplates": "Fallvorlagen konnten nicht geladen werden.",
+      "CurrentCase": "Der aktuelle Fall konnte nicht geladen werden."
+    },
+    "AppliedTemplate": "Angewendete Vorlage.",
+    "TemplateDeleted": "Vorlage gelöscht.",
+    "FailedToDeleteTemplate": "Die Vorlage konnte nicht gelöscht werden.",
+    "TemplateSaved": "Vorlage gespeichert.",
+    "FailedToSaveTemplate": "Die Vorlage konnte nicht gespeichert werden.",
+    "FileUploaded": "Datei hochgeladen.",
+    "FailedToUploadFile": "Datei konnte nicht hochgeladen werden.",
+    "CaseCreated": "Fall erstellt.",
+    "CaseUpdated": "Fall aktualisiert."
+  },
+  "ModCaseTable": {
+    "SelectUsers": "Benutzer",
+    "SelectModerators": "Moderatoren",
+    "SelectCreationTypes": "Erstellungsarten",
+    "SelectPunishments": "Strafen",
+    "SelectEdited": "Status bearbeiten",
+    "SelectLocked": "Sperrstatus",
+    "SelectDelete": "Status \"Löschen\"",
+    "SelectActive": "Aktiver Status",
+    "FilterSince": "Erstellt seit",
+    "FilterUntil": "Erstellt bis",
+    "FilterPunishedSince": "Mindestens bestraft bis",
+    "FilterPunishedBefore": "Bestraft bis",
+    "ExecuteSearch": "Suchen",
+    "ExcludePermanent": "Dauerhafte Strafen ausschließen",
+    "UseAdvancedFilter": "Erweiterten Filter verwenden",
+    "CreateNewCase": "Neuen Fall erstellen",
+    "Search": "Suche (Benutzer, ID, Beschreibung...)",
+    "FailedToLoad": "Fälle konnten nicht geladen werden.",
+    "NoMatches": "Kein Fall stimmt mit Ihrer Suche überein."
+  },
+  "ScheduleMessageCard": {
+    "Created": "Erstellt:",
+    "Edited": "Bearbeitete:",
+    "Edit": "Redigieren",
+    "Delete": "Löschen"
+  },
+  "ModCaseCard": {
+    "ViewDetailsButton": "Details anzeigen",
+    "Created": "Erstellt:",
+    "Until": "Bis:",
+    "Delete": "Löschen:"
+  },
+  "ModCaseView": {
+    "Suspect": "Verdächtigter",
+    "ID": "Id",
+    "Moderator": "Moderator",
+    "Punishment": "Strafe",
+    "Guild": "Gilde",
+    "PunishedUntil": "Bestraft bis:",
+    "PunishedForever": "Für immer bestraft",
+    "Deactivated": {
+      "Success": "Case wurde deaktiviert.",
+      "Failed": "Das Gehäuse konnte nicht deaktiviert werden."
+    },
+    "Activated": {
+      "Success": "Case wurde aktiviert.",
+      "Failed": "Die Groß-/Kleinschreibung konnte nicht aktiviert werden."
+    },
+    "PunishmentExpired": "Die Strafe ist abgelaufen.",
+    "CaseInactive": "Modcase ist inaktiv.",
+    "CreatedAt": "Erstellt am",
+    "EditedAt": "Bearbeitet am",
+    "LastEditModerator": "Letzte Bearbeitung durch den Moderator",
+    "Description": "Beschreibung",
+    "UploadedFiles": "Hochgeladene Dateien",
+    "Upload": "Hochladen",
+    "Comments": "Kommentare",
+    "NewComment": "Neuer Kommentar",
+    "LockComments": "Kommentare sperren",
+    "UnlockComments": "Kommentare entsperren",
+    "PostComment": "Kommentar posten",
+    "CaseMarkedToDelete": "Zur Löschung markiert - {{Benutzer}}",
+    "CommentsLocked": "Kommentare gesperrt - {{user}}",
+    "Restore": "Wiederherstellen",
+    "View": "Ansehen",
+    "Delete": "Löschen",
+    "Moderators": "Moderatoren",
+    "FailedToLoad": {
+      "Punishments": "Verfügbare Strafen konnten nicht geladen werden.",
+      "Files": "Dateien konnten nicht geladen werden.",
+      "Guild": "Gildeninformationen konnten nicht geladen werden.",
+      "Case": "Fall konnte nicht geladen werden."
+    },
+    "DeleteCase": {
+      "Deleted": "Zur Löschung markierte Groß-/Kleinschreibung.",
+      "ForceDeleted": "Fall gelöscht.",
+      "Failed": "Fall konnte nicht gelöscht werden."
+    },
+    "RestoreCase": {
+      "Restored": "Gehäuse wiederhergestellt.",
+      "Failed": "Die Groß-/Kleinschreibung konnte nicht wiederhergestellt werden."
+    },
+    "FileUpload": {
+      "Uploaded": "Datei hochgeladen.",
+      "Failed": "Datei konnte nicht hochgeladen werden."
+    },
+    "FileDelete": {
+      "Deleted": "Datei gelöscht.",
+      "Failed": "Datei konnte nicht gelöscht werden"
+    },
+    "CommentDelete": {
+      "Deleted": "Kommentar gelöscht.",
+      "Failed": "Kommentar konnte nicht gelöscht werden"
+    },
+    "CommentLock": {
+      "Locked": "Kommentare gesperrt.",
+      "Failed": "Kommentare konnten nicht gesperrt werden"
+    },
+    "CommentUnlock": {
+      "Unlocked": "Kommentare entsperrt.",
+      "Failed": "Kommentare konnten nicht entsperrt werden"
+    },
+    "CommentPost": {
+      "Posted": "Kommentar gepostet.",
+      "Failed": "Kommentar konnte nicht gepostet werden"
+    },
+    "CommentUpdate": {
+      "Updated": "Kommentar aktualisiert.",
+      "Failed": "Kommentar konnte nicht aktualisiert werden"
+    }
+  },
+  "Scanning": {
+    "EnterUserOrInvite": "Geben Sie eine Benutzer-ID oder einen Einladungscode ein",
+    "Userscan": "Benutzer können",
+    "Invitescan": "Einladender",
+    "UserscanDescription": "Geben Sie eine Benutzer-ID ein, um einen schnellen Überblick über einen Benutzer oder die Beziehungen zu anderen Benutzern zu erhalten. Dies verfolgt auch Einladungen, die ein neuer Benutzer verwendet, so dass Sie Alt-Konten schnell erkennen können. Verwenden Sie einen Doppelklick, um andere Ressourcen wie einen Modcase anzuzeigen.",
+    "InvitescanDescription": "Geben Sie einen Einladungscode oder einen Link ein, um einen schnellen Überblick über eine Einladung oder Beziehungen zu anderen Benutzern zu erhalten. Verwenden Sie einen Doppelklick, um andere Ressourcen wie einen anderen Benutzer anzuzeigen.",
+    "FailedToLoad": {
+      "Scan": "Scaninformationen konnten nicht geladen werden.",
+      "Invite": "Scaninformationen konnten nicht geladen werden.",
+      "InvalidInvite": "Für diese Einladung wurden keine Informationen gefunden."
+    },
+    "JoinedAt": "Eingetragen bei",
+    "OccuredAt": "Aufgetreten bei",
+    "CreatedAt": "Erstellt am"
+  },
+  "UserNotes": "Benutzerhinweise",
+  "UserNoteEditDialog": {
+    "EditUserNote": "Benutzernotiz bearbeiten",
+    "Description": "Beschreibung",
+    "Cancel": "Abbrechen",
+    "Confirm": "Bestätigen"
+  },
+  "UserNoteTable": {
+    "User": "Benutzer",
+    "Description": "Beschreibung",
+    "CreateNewNote": "Neue Benutzernotiz erstellen",
+    "Search": "Suche (Benutzer, ID, Beschreibung...)",
+    "NoMatches": "Keine Benutzernotiz stimmt mit Ihrer Suche überein.",
+    "FailedToLoad": "Benutzernotizen konnten nicht geladen werden.",
+    "FailedToLoadUser": "Benutzerliste konnte nicht geladen werden.",
+    "FailedToCreate": "Fehler beim Erstellen einer Benutzernotiz.",
+    "Created": "Benutzernotiz erstellt."
+  },
+  "UserNoteCard": {
+    "UpdatedPrefix": "Aktualisierte:",
+    "Edit": "Redigieren",
+    "Delete": "Löschen",
+    "FailedToUpdate": "Fehler beim Aktualisieren der Benutzernotiz.",
+    "Updated": "Benutzernotiz aktualisiert.",
+    "FailedToDelete": "Benutzernotiz konnte nicht gelöscht werden.",
+    "Deleted": "Benutzernotiz gelöscht."
+  }
 }

@@ -10,6 +10,10 @@
             {{ this.guild?.content?.name }}
         </span>
         <div class="flex-grow-1"></div>
+        <a routerLink="/guilds/{{ this.guild?.content?.id }}/leaderboard" class="p-2" mat-raised-button color="primary">
+            {{ 'GuildInfoCard.Leaderboard' | translate }}
+        </a>
+        <div class="mr-3"></div>
         <a routerLink="/guilds/{{ this.guild?.content?.id }}/cases/new" class="p-2" mat-raised-button color="accent">
             {{ 'GuildInfoCard.CreateNewCase' | translate }}
         </a>

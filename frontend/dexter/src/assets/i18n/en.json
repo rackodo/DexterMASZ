@@ -93,15 +93,10 @@
         "CurrentlyLoggedIn": "Currently logged in",
         "DiscordCache": "Discord cache",
         "ClearCache": "Clear cache",
-        "FailedToLoad": "Failed to load adminstats.",
-        "FailedToLoadLocalVersion": "Failed to load installed version.",
-        "FailedToLoadAvailableVersions": "Failed to load available versions.",
+        "FailedToLoad": "Failed to load admin stats.",
         "FailedToClear": "Failed to clear cache.",
         "Cleared": "Cache cleared.",
-        "Insights": "Insights",
-        "UpdateAvailableHeadline": "Update available",
-        "Published": "Published:",
-        "UpdateAvailableText": "Update {{tag}} is available. Please update your instance."
+        "Insights": "Insights"
     },
     "AdminStatsList": {
         "ShowMore": "Show more"
@@ -205,7 +200,7 @@
         "TargetChannel": "Target channel",
         "ComingSoon": "Coming soon",
         "PingRoles": "Ping roles",
-        "AuditLog": "AuditLogs",
+        "AuditLog": "Audit Logs",
         "ConfigDeleted": "Config deleted.",
         "FailedToDeleteConfig": "Failed to delete config.",
         "SavedConfig": "Saved config.",
@@ -256,7 +251,7 @@
         }
     },
     "AutoModConfig": {
-        "AutoMods": "AutoMods",
+        "AutoMods": "Auto Moderations",
         "Invites": {
             "title": "Invites",
             "details": "A message on your guild matches the invite pattern. Invites to this guild will be ignored.",
@@ -383,6 +378,7 @@
         "FailedToLoad": "Failed to load guild stats."
     },
     "GuildInfoCard": {
+        "Leaderboard": "View Leaderboard",
         "CreateNewCase": "Create new case",
         "FailedToLoad": "Failed to load guild info."
     },
@@ -414,42 +410,42 @@
     "UserMapTable": {
         "User": "User",
         "Description": "Description",
-        "CreateNewMap": "Create new UserMap",
+        "CreateNewMap": "Create new user map",
         "Search": "Search (user, id, description...)",
-        "NoMatches": "No usermap matches your search.",
-        "FailedToLoad": "Failed to load usermaps.",
+        "NoMatches": "No user map matches your search.",
+        "FailedToLoad": "Failed to load user maps.",
         "FailedToLoadUser": "Failed to load userlist.",
-        "FailedToCreate": "Failed to create usermap.",
-        "Created": "UserMap created."
+        "FailedToCreate": "Failed to create user map.",
+        "Created": "User map created."
     },
     "UserMapCard": {
         "UpdatedPrefix": "Updated:",
         "Edit": "Edit",
         "Delete": "Delete",
-        "FailedToUpdate": "Failed to update usermap.",
-        "Updated": "UserMap updated.",
-        "FailedToDelete": "Failed to delete usermap.",
-        "Deleted": "UserMap deleted."
+        "FailedToUpdate": "Failed to update user map.",
+        "Updated": "User map updated.",
+        "FailedToDelete": "Failed to delete user map.",
+        "Deleted": "User map deleted."
     },
     "UserNoteTable": {
         "User": "User",
         "Description": "Description",
-        "CreateNewNote": "Create new usernote",
+        "CreateNewNote": "Create new user note",
         "Search": "Search (user, id, description...)",
-        "NoMatches": "No usernote matches your search.",
-        "FailedToLoad": "Failed to load usernotes.",
+        "NoMatches": "No user note matches your search.",
+        "FailedToLoad": "Failed to load user notes.",
         "FailedToLoadUser": "Failed to load userlist.",
-        "FailedToCreate": "Failed to create usernote.",
-        "Created": "UserNote created."
+        "FailedToCreate": "Failed to create user note.",
+        "Created": "User note created."
     },
     "UserNoteCard": {
         "UpdatedPrefix": "Updated:",
         "Edit": "Edit",
         "Delete": "Delete",
-        "FailedToUpdate": "Failed to update usernote.",
-        "Updated": "UserNote updated.",
-        "FailedToDelete": "Failed to delete usernote.",
-        "Deleted": "UserNote deleted."
+        "FailedToUpdate": "Failed to update user note.",
+        "Updated": "User note updated.",
+        "FailedToDelete": "Failed to delete user note.",
+        "Deleted": "User note deleted."
     },
     "ModCaseDialog": {
         "SelectATemplate": "Select a template",
