@@ -31,10 +31,10 @@ public class GuildAuditDatabase : DataContext<GuildAuditDatabase>, DataContextCr
 		return await GuildAuditConfigs.AsQueryable().Where(x => x.GuildId == guildId).ToListAsync();
 	}
 
-	public async Task<GuildAuditConfig> SelectAuditLogConfigForGuildAndType(ulong guildId, GuildAuditEvent type)
+	public async Task<GuildAuditConfig> SelectAuditLogConfigForGuildAndType(ulong guildId, GuildAuditLogEvent type)
 	{
 		return await GuildAuditConfigs.AsQueryable()
-			.FirstOrDefaultAsync(x => x.GuildId == guildId && x.GuildAuditEvent == type);
+			.FirstOrDefaultAsync(x => x.GuildId == guildId && x.GuildAuditLogEvent == type);
 	}
 
 	public async Task PutAuditLogConfig(GuildAuditConfig auditLogConfig)

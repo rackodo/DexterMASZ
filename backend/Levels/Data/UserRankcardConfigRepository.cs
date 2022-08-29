@@ -8,13 +8,11 @@ namespace Levels.Data;
 
 public class UserRankcardConfigRepository : Repository
 {
-	private readonly DiscordRest _discordRest;
 	private readonly LevelsDatabase _database;
 	private readonly LevelsEventHandler _eventHandler;
 
 	public UserRankcardConfigRepository(DiscordRest discordRest, LevelsDatabase database, LevelsEventHandler eventHandler) : base(discordRest)
 	{
-		_discordRest = discordRest;
 		_database = database;
 		_eventHandler = eventHandler;
 	}

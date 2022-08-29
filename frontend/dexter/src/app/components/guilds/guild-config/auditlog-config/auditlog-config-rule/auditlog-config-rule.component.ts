@@ -8,8 +8,8 @@ import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { DiscordChannel } from 'src/app/models/DiscordChannel';
 import { DiscordRole } from 'src/app/models/DiscordRole';
-import { GuildAuditConfig } from 'src/app/models/GuildAuditConfig';
-import { GuildAuditRuleDefinition } from 'src/app/models/GuildAuditRuleDefinition';
+import { GuildAuditLogConfig } from 'src/app/models/GuildAuditLogConfig';
+import { GuildAuditLogRuleDefinition } from 'src/app/models/GuildAuditLogRuleDefinition';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 
@@ -21,10 +21,10 @@ import { EnumManagerService } from 'src/app/services/enum-manager.service';
 export class AuditlogConfigRuleComponent implements OnInit {
 
   configForm!: FormGroup;
-  @Input() definition!: GuildAuditRuleDefinition;
+  @Input() definition!: GuildAuditLogRuleDefinition;
   @Input() guildChannels!: DiscordChannel[];
   @Input() guild!: DiscordGuild;
-  @Input() initialConfigs!: Promise<GuildAuditConfig[]>;
+  @Input() initialConfigs!: Promise<GuildAuditLogConfig[]>;
   public guildId!: string;
   public enableConfig: boolean = false;
   public tryingToSaveConfig: boolean = false;
@@ -39,7 +39,9 @@ export class AuditlogConfigRuleComponent implements OnInit {
 
     this.configForm = this._formBuilder.group({
       channel: [''],
-      pingRoles: ['']
+      pingRoles: [''],
+      ignoreRoles: [''],
+      ignoreChannels: ['']
     });
 
     this.configForm.valueChanges.subscribe(() => {
@@ -48,11 +50,11 @@ export class AuditlogConfigRuleComponent implements OnInit {
       }
     });
 
-    this.initialConfigs.then((data: GuildAuditConfig[]) => {
+    this.initialConfigs.then((data: GuildAuditLogConfig[]) => {
       // if type in initial loaded configs
-      if (data.filter(x => x.guildAuditEvent == this.definition.type).length) {
+      if (data.filter(x => x.guildAuditLogEvent == this.definition.type).length) {
         this.enableConfig = true;
-        this.applyConfig(data.filter(x => x.guildAuditEvent == this.definition.type)[0]);
+        this.applyConfig(data.filter(x => x.guildAuditLogEvent == this.definition.type)[0]);
         this.initStuff = false;
       } else {
         this.enableConfig = false;
@@ -73,10 +75,12 @@ export class AuditlogConfigRuleComponent implements OnInit {
     });
   }
 
-  applyConfig(config: GuildAuditConfig) {
+  applyConfig(config: GuildAuditLogConfig) {
     this.configForm.setValue({
       channel: config.channelId,
       pingRoles: config.pingRoles,
+      ignoreRoles: config.ignoreRoles,
+      ignoreChannels: config.ignoreChannels
     });
   }
 
@@ -89,7 +93,7 @@ export class AuditlogConfigRuleComponent implements OnInit {
   deleteConfig() {
     this.tryingToSaveConfig = true;
     this.api.deleteData(`/guilds/${this.guildId}/auditlog/${this.definition.type}`).subscribe(() => {
-      this.toastr.success(this.translator.instant('GuildAuditConfig.ConfigDeleted'));
+      this.toastr.success(this.translator.instant('GuildAuditLogConfig.ConfigDeleted'));
       this.configForm.setValue({
         channel: null,
         pingRoles: null,
@@ -98,7 +102,7 @@ export class AuditlogConfigRuleComponent implements OnInit {
     }, error => {
       console.error(error);
       if (error?.error?.status !== 404 && error?.status !== 404) {
-        this.toastr.error(this.translator.instant('GuildAuditConfig.FailedToDeleteConfig'));
+        this.toastr.error(this.translator.instant('GuildAuditLogConfig.FailedToDeleteConfig'));
       }
       this.tryingToSaveConfig = false;
     });
@@ -107,19 +111,21 @@ export class AuditlogConfigRuleComponent implements OnInit {
   saveConfig() {
     this.tryingToSaveConfig = true;
     const data = {
-      "GuildAuditEvent": this.definition.type,
+      "GuildAuditLogEvent": this.definition.type,
       "ChannelId": this.configForm.value.channel ? this.configForm.value.channel : 0,
       "PingRoles": this.configForm.value.pingRoles ? this.configForm.value.pingRoles : [],
+      "IgnoreRoles": this.configForm.value.ignoreRoles ? this.configForm.value.ignoreRoles : [],
+      "IgnoreChannels": this.configForm.value.ignoreChannels ? this.configForm.value.ignoreChannels : []
     }
 
     this.api.putSimpleData(`/guilds/${this.guildId}/auditlog`, data).subscribe((data) => {
-      this.toastr.success(this.translator.instant('GuildAuditConfig.SavedConfig'));
+      this.toastr.success(this.translator.instant('GuildAuditLogConfig.SavedConfig'));
       this.applyConfig(data);
       this.tryingToSaveConfig = false;
     }, error => {
       console.error(error);
       this.tryingToSaveConfig = false;
-      this.toastr.error(this.translator.instant('GuildAuditConfig.FailedToSaveConfig'))
+      this.toastr.error(this.translator.instant('GuildAuditLogConfig.FailedToSaveConfig'))
     });
   }
 }

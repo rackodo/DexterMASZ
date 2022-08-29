@@ -196,11 +196,13 @@
         "GuildCreated": "Guild created",
         "GuildUpdated": "Guild updated"
     },
-    "GuildAuditConfig": {
+    "GuildAuditLogConfig": {
         "TargetChannel": "Target channel",
         "ComingSoon": "Coming soon",
         "PingRoles": "Ping roles",
-        "AuditLog": "Audit Logs",
+        "ExcludeRoles": "Exclude roles",
+        "ExcludeChannels": "Exclude channels",
+        "AuditLog": "AuditLog",
         "ConfigDeleted": "Config deleted.",
         "FailedToDeleteConfig": "Failed to delete config.",
         "SavedConfig": "Saved config.",
@@ -226,13 +228,13 @@
             "title": "Nickname updated"
         },
         "UserRolesUpdated": {
-            "title": "User roles updated"
+            "title": "Member roles updated"
         },
         "UserJoined": {
-            "title": "User joined"
+            "title": "Member joined"
         },
         "UserRemoved": {
-            "title": "User removed"
+            "title": "Member removed"
         },
         "BanAdded": {
             "title": "Ban added"
@@ -248,6 +250,21 @@
         },
         "ThreadCreated": {
             "title": "Thread created"
+        },
+        "VoiceJoined": {
+            "title": "Member joined voice channel"
+        },
+        "VoiceLeft": {
+            "title": "Member left voice channel"
+        },
+        "VoiceMoved": {
+            "title": "Member moved voice channel"
+        },
+        "ReactionAdded": {
+            "title": "Reaction added"
+        },
+        "ReactionRemoved": {
+            "title": "Reaction removed"
         }
     },
     "AutoModConfig": {

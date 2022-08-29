@@ -21,10 +21,10 @@ public static class GuildAuditEmbedCreator
 		var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
 
 		embed.WithTitle(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditTitle() + ": " +
-				translator.Get<GuildAuditEnumTranslator>().Enum(config.GuildAuditEvent));
+				translator.Get<GuildAuditEnumTranslator>().Enum(config.GuildAuditLogEvent));
 
 		var guildEventTypeName =
-			$"**{translator.Get<GuildAuditEnumTranslator>().Enum(config.GuildAuditEvent).ToLower()}**";
+			$"**{translator.Get<GuildAuditEnumTranslator>().Enum(config.GuildAuditLogEvent).ToLower()}**";
 
 		switch (action)
 		{
@@ -45,9 +45,17 @@ public static class GuildAuditEmbedCreator
 
 		embed.AddField(translator.Get<BotTranslator>().Channel(), $"<#{config.ChannelId}>");
 
-		if (config.PingRoles.Length > 0)
-			embed.AddField(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditMentionRoles(),
+		if ((config.PingRoles?.Length ?? 0) > 0)
+			embed.AddField(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditLogMentionRoles(),
 				string.Join(" ", config.PingRoles.Select(x => $"<@&{x}>")));
+		
+		if ((config.IgnoreRoles?.Length ?? 0) > 0)
+			embed.AddField(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditLogExcludeRoles(),
+				string.Join(" ", config.IgnoreRoles.Select(x => $"<@&{x}>")), false);
+
+		if ((config.IgnoreChannels?.Length ?? 0) > 0)
+			embed.AddField(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditLogExcludeChannels(),
+				string.Join(" ", config.IgnoreChannels.Select(x => $"<#{x}>")), false);
 
 		return embed;
 	}

@@ -21,7 +21,7 @@ public class LevelsConfigController : AuthenticatedController
 		_guildConfigRepository = guildConfigRepository;
 	}
 
-	[HttpGet("")]
+	[HttpGet]
 	public async Task<IActionResult> GetConfig([FromRoute] ulong guildId)
 	{
 		try
@@ -37,7 +37,7 @@ public class LevelsConfigController : AuthenticatedController
 		return Ok(config);
 	}
 
-	[HttpPut("")]
+	[HttpPut]
 	public async Task<IActionResult> PutConfig([FromRoute] ulong guildId, [FromBody] GuildLevelConfig config)
 	{
 		var identity = await SetupAuthentication();

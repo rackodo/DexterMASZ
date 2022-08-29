@@ -1,6 +1,5 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
-using Bot.Enums;
 using Bot.Models;
 using Bot.Services;
 using Launch.Models;
