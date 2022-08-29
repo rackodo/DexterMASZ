@@ -15,7 +15,7 @@ export class LeaderboardRankingComponent implements OnInit {
 
   @Input("order") order : string = "total";
 
-  TESTING = true;
+  TESTING = false;
 
   guildId = "0";
   page = 1;
@@ -39,7 +39,10 @@ export class LeaderboardRankingComponent implements OnInit {
   requestPage(page: number) : Observable<CalcGuildUserLevel[]> {
     this.loading = true;
     const result = this.api.getSimpleData(`/levels/guilds/${this.guildId}/users?order=${this.order}&page=${page}&pageSize=${this.DEFAULT_PAGE_SIZE}`);
-    result.subscribe(() => {}, (err) => {this.toastr.error("Request timed out, please try again after a few seconds.")})
+    result.subscribe(() => {}, (err) => {
+      this.toastr.error("Request timed out, please try again after a few seconds.");
+      this.loading = false;
+    });
     return result;
   }
 
