@@ -9,7 +9,7 @@ import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { DiscordChannel } from 'src/app/models/DiscordChannel';
 import { DiscordRole } from 'src/app/models/DiscordRole';
 import { GuildAuditLogConfig } from 'src/app/models/GuildAuditLogConfig';
-import { GuildAuditRuleDefinition } from 'src/app/models/GuildAuditRuleDefinition';
+import { GuildAuditLogRuleDefinition } from 'src/app/models/GuildAuditLogRuleDefinition';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 
@@ -21,7 +21,7 @@ import { EnumManagerService } from 'src/app/services/enum-manager.service';
 export class AuditlogConfigRuleComponent implements OnInit {
 
   configForm!: FormGroup;
-  @Input() definition!: GuildAuditRuleDefinition;
+  @Input() definition!: GuildAuditLogRuleDefinition;
   @Input() guildChannels!: DiscordChannel[];
   @Input() guild!: DiscordGuild;
   @Input() initialConfigs!: Promise<GuildAuditLogConfig[]>;
@@ -42,7 +42,7 @@ export class AuditlogConfigRuleComponent implements OnInit {
       pingRoles: [''],
       ignoreRoles: [''],
       ignoreChannels: ['']
-	});
+    });
 
     this.configForm.valueChanges.subscribe(() => {
       if (!this.tryingToSaveConfig && !this.initStuff) {
@@ -52,9 +52,9 @@ export class AuditlogConfigRuleComponent implements OnInit {
 
     this.initialConfigs.then((data: GuildAuditLogConfig[]) => {
       // if type in initial loaded configs
-      if (data.filter(x => x.guildAuditEvent == this.definition.type).length) {
+      if (data.filter(x => x.guildAuditLogEvent == this.definition.type).length) {
         this.enableConfig = true;
-        this.applyConfig(data.filter(x => x.guildAuditEvent == this.definition.type)[0]);
+        this.applyConfig(data.filter(x => x.guildAuditLogEvent == this.definition.type)[0]);
         this.initStuff = false;
       } else {
         this.enableConfig = false;
@@ -111,10 +111,10 @@ export class AuditlogConfigRuleComponent implements OnInit {
   saveConfig() {
     this.tryingToSaveConfig = true;
     const data = {
-      "GuildAuditEvent": this.definition.type,
+      "GuildAuditLogEvent": this.definition.type,
       "ChannelId": this.configForm.value.channel ? this.configForm.value.channel : 0,
       "PingRoles": this.configForm.value.pingRoles ? this.configForm.value.pingRoles : [],
-	  "IgnoreRoles": this.configForm.value.ignoreRoles ? this.configForm.value.ignoreRoles : [],
+      "IgnoreRoles": this.configForm.value.ignoreRoles ? this.configForm.value.ignoreRoles : [],
       "IgnoreChannels": this.configForm.value.ignoreChannels ? this.configForm.value.ignoreChannels : []
     }
 

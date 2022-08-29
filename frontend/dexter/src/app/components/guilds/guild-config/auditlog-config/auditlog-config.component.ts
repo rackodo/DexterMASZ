@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { DiscordChannel } from 'src/app/models/DiscordChannel';
 import { GuildAuditLogConfig } from 'src/app/models/GuildAuditLogConfig';
-import { GuildAuditRuleDefinition } from 'src/app/models/GuildAuditRuleDefinition';
+import { GuildAuditLogRuleDefinition } from 'src/app/models/GuildAuditLogRuleDefinition';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class AuditlogConfigComponent implements OnInit {
 
-  types: GuildAuditRuleDefinition[] = [
+  types: GuildAuditLogRuleDefinition[] = [
     {
       type: 0,
       key: 'MessageSent',
@@ -51,7 +51,7 @@ export class AuditlogConfigComponent implements OnInit {
     {
       type: 6,
       key: 'UserRolesUpdated',
-	  roleFilter: true
+      roleFilter: true
     },
     {
       type: 7,
