@@ -1,6 +1,7 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { CalcGuildUserLevel } from 'src/app/models/CalcGuildUserLevel';
 import { ApiService } from 'src/app/services/api.service';
@@ -23,7 +24,7 @@ export class LeaderboardRankingComponent implements OnInit {
   canLoadMoreUsersAfter = true;
   DEFAULT_PAGE_SIZE = 100;
 
-  constructor(private api: ApiService, private route: ActivatedRoute) {}
+  constructor(private api: ApiService, private route: ActivatedRoute, private toastr : ToastrService) {}
 
   ngOnInit(): void {
     this.guildId = this.route.snapshot.paramMap.get("guildid") ?? "0";
@@ -37,7 +38,9 @@ export class LeaderboardRankingComponent implements OnInit {
 
   requestPage(page: number) : Observable<CalcGuildUserLevel[]> {
     this.loading = true;
-    return this.api.getSimpleData(`/levels/guilds/${this.guildId}/users?order=${this.order}&page=${page}&pageSize=${this.DEFAULT_PAGE_SIZE}`);
+    const result = this.api.getSimpleData(`/levels/guilds/${this.guildId}/users?order=${this.order}&page=${page}&pageSize=${this.DEFAULT_PAGE_SIZE}`);
+    result.subscribe(() => {}, (err) => {this.toastr.error("Request timed out, please try again after a few seconds.")})
+    return result;
   }
 
   loadMoreUsersBefore() {
