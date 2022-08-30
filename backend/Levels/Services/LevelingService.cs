@@ -168,6 +168,8 @@ public class LevelingService : Event
 					nonbotusers++;
 				}
 
+				if (nonbotusers < config.VoiceXpRequiredMembers) continue;
+
 				foreach (var u in toLevel)
 				{
 					await GrantXP(_random.Next(config.MinimumVoiceXpGiven, config.MaximumVoiceXpGiven + 1),
