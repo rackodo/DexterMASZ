@@ -87,6 +87,9 @@ public class LevelsConfigController : AuthenticatedController
 		existing.TextLevelUpChannel = config.TextLevelUpChannel;
 		existing.VoiceLevelUpChannel = config.VoiceLevelUpChannel;
 
+		existing.Levels = config.Levels;
+		existing.LevelUpMessageOverrides = config.LevelUpMessageOverrides;
+
 		await _levelsConfigRepository.UpdateConfig(config);
 		return Ok();
 	}
@@ -130,7 +133,7 @@ public class LevelsConfigController : AuthenticatedController
 			return BadRequest("Level Up Template must not be empty.");
 		}
 
-		if (config.LevelUpTemplate.Length > 200)
+		if (config.LevelUpTemplate.Length > 250)
 		{
 			return BadRequest("The Length of Level Up Template may not exceed 200 characters.");
 		}

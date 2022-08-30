@@ -1,13 +1,17 @@
+<mat-spinner *ngIf="TESTING || loading && !loadingAfter"></mat-spinner>
+
 <button mat-button *ngIf="TESTING || page > 1 && !loading" (click)="loadMoreUsersBefore()" class="load-more-btn">
   <mat-icon>keyboard_arrow_up</mat-icon>
   Load More
   <mat-icon>keyboard_arrow_up</mat-icon>
 </button>
 
-<app-leaderboard-item *ngFor="let user of loadedUsers; let j = index" [order]="order" [user]="user" [index]="page * DEFAULT_PAGE_SIZE + j"></app-leaderboard-item>
+<app-leaderboard-item *ngFor="let user of loadedUsers; let j = index" [order]="order" [user]="user" [index]="(page - 1) * DEFAULT_PAGE_SIZE + j"></app-leaderboard-item>
 
 <button mat-button *ngIf="TESTING || canLoadMoreUsersAfter && !loading" (click)="loadMoreUsersAfter()" class="load-more-btn">
   <mat-icon>keyboard_arrow_down</mat-icon>
   Load More
   <mat-icon>keyboard_arrow_down</mat-icon>
 </button>
+
+<mat-spinner *ngIf="TESTING || loading && loadingAfter"></mat-spinner>

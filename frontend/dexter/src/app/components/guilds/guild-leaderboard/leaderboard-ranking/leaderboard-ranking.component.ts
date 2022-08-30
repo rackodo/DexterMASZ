@@ -1,5 +1,7 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { CalcGuildUserLevel } from 'src/app/models/CalcGuildUserLevel';
 import { ApiService } from 'src/app/services/api.service';
@@ -13,21 +15,23 @@ export class LeaderboardRankingComponent implements OnInit {
 
   @Input("order") order : string = "total";
 
-  TESTING = true;
+  TESTING = false;
 
   guildId = "0";
   page = 1;
   loading = false;
+  loadingAfter = false;
   loadedUsers: CalcGuildUserLevel[] = [];
   canLoadMoreUsersAfter = true;
   DEFAULT_PAGE_SIZE = 100;
 
-  constructor(private api: ApiService, private route: ActivatedRoute) {}
+  constructor(private api: ApiService, private route: ActivatedRoute, private toastr : ToastrService) {}
 
   ngOnInit(): void {
     this.guildId = this.route.snapshot.paramMap.get("guildid") ?? "0";
 
-    this.page = Number(this.route.snapshot.queryParamMap.get("page")) ?? 1;
+    this.page = Number(this.route.snapshot.queryParamMap.get("page"));
+    if (this.page < 1) this.page = 1;
     if (this.guildId == "0") return;
 
     this.loadMoreUsersAfter();
@@ -35,11 +39,17 @@ export class LeaderboardRankingComponent implements OnInit {
 
   requestPage(page: number) : Observable<CalcGuildUserLevel[]> {
     this.loading = true;
-    return this.api.getSimpleData(`/levels/guilds/${this.guildId}/users?order=${this.order}&page=${page}&pageSize=${this.DEFAULT_PAGE_SIZE}`);
+    const result = this.api.getSimpleData(`/levels/guilds/${this.guildId}/users?order=${this.order}&page=${page}&pageSize=${this.DEFAULT_PAGE_SIZE}`);
+    result.subscribe(() => {}, (err) => {
+      this.toastr.error("Request timed out, please try again after a few seconds.");
+      this.loading = false;
+    });
+    return result;
   }
 
   loadMoreUsersBefore() {
-    if (this.page <= 1) return;
+    if (this.page <= 1) {this.loading = false; return};
+    this.loadingAfter = false;
 
     this.requestPage(this.page - 1).subscribe(data => {
       this.page--;
@@ -52,9 +62,10 @@ export class LeaderboardRankingComponent implements OnInit {
   }
 
   loadMoreUsersAfter() {
-    if (!this.canLoadMoreUsersAfter) return;
+    if (!this.canLoadMoreUsersAfter) {this.loading = false; return};
+    this.loadingAfter = true;
 
-    let newPage = this.page - 1 + (this.loadedUsers.length / this.DEFAULT_PAGE_SIZE);
+    let newPage = this.page + (this.loadedUsers.length / this.DEFAULT_PAGE_SIZE);
     this.requestPage(newPage).subscribe(data => {
       console.log(`loaded ${data.length} new users: ${JSON.stringify(data)}`)
       if (data.length < this.DEFAULT_PAGE_SIZE) this.canLoadMoreUsersAfter = false;
@@ -65,9 +76,4 @@ export class LeaderboardRankingComponent implements OnInit {
       this.loading = false;
     })
   }
-
-  getPfpUrl(userId: string): string {
-    return "";
-  }
-
 }
