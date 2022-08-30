@@ -49,28 +49,19 @@
     <tr class="form-item-container">
       <td>Show Picture</td>
       <td class="switch-holder">
-        <label class="switch">
-          <input type="checkbox" #displayPfpCheckbox (input)="toggleCheckbox('displayPfp', $event)">
-          <span class="slider round"></span>
-        </label>
+        <app-switch [value]="displayPfp" (valueChange)="displayPfp = $event; updateModelFlags()"></app-switch>
       </td>
     </tr>
     <tr class="form-item-container">
       <td>Draw Background</td>
       <td class="switch-holder">
-        <label class="switch">
-          <input type="checkbox" #pfpBackgroundCheckbox (input)="toggleCheckbox('pfpBackground', $event)">
-          <span class="slider round"></span>
-        </label>
+        <app-switch [value]="pfpBackground" (valueChange)="pfpBackground = $event; updateModelFlags()"></app-switch>
       </td>
     </tr>
     <tr class="form-item-container">
       <td>Clip to Circle</td>
       <td class="switch-holder">
-        <label class="switch">
-          <input type="checkbox" #clipPfpCheckbox (input)="toggleCheckbox('clipPfp', $event)">
-          <span class="slider round"></span>
-        </label>
+        <app-switch [value]="clipPfp" (valueChange)="clipPfp = $event; updateModelFlags()"></app-switch>
       </td>
     </tr>
   </table>
@@ -85,19 +76,13 @@
     <tr class="form-item-container">
       <td>Show Hybrid Levels</td>
       <td class="switch-holder">
-        <label class="switch">
-          <input type="checkbox" #showHybridCheckbox (input)="toggleCheckbox('showHybrid', $event)">
-          <span class="slider round"></span>
-        </label>
+        <app-switch [value]="showHybrid" (valueChange)="showHybrid = $event; updateModelFlags()"></app-switch>
       </td>
     </tr>
     <tr class="form-item-container">
       <td>Inset Main XP</td>
       <td class="switch-holder">
-        <label class="switch">
-          <input type="checkbox" #insetMainXPCheckbox (input)="toggleCheckbox('insetMainXP', $event)">
-          <span class="slider round"></span>
-        </label>
+        <app-switch [value]="insetMainXp" (valueChange)="insetMainXp = $event; updateModelFlags()"></app-switch>
       </td>
     </tr>
   </table>

@@ -128,6 +128,7 @@ import { LeaderboardItemComponent } from './components/guilds/guild-leaderboard/
 import { LeaderboardRankingComponent } from './components/guilds/guild-leaderboard/leaderboard-ranking/leaderboard-ranking.component';
 import { UnitFormatPipe } from './pipes/unit-format.pipe';
 import { OffsetEditorComponent } from './components/profiles/rankcard-customizer/offset-editor/offset-editor.component';
+import { SwitchComponent } from './components/basic/switch/switch.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -215,7 +216,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LeaderboardItemComponent,
     LeaderboardRankingComponent,
     UnitFormatPipe,
-    OffsetEditorComponent
+    OffsetEditorComponent,
+    SwitchComponent
   ],
   imports: [
     CommonModule,
