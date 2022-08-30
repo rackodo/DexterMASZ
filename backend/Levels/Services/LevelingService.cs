@@ -140,16 +140,21 @@ public class LevelingService : Event
 			var levelrepo = scope.ServiceProvider.GetRequiredService<GuildUserLevelRepository>();
 
 			var config = await configrepo.GetOrCreateConfig(cds.guildId);
-			IGuild guild = _client.GetGuild(cds.guildId);
-			guild ??= await _client.Rest.GetGuildAsync(cds.guildId);
+			SocketGuild guild = _client.GetGuild(cds.guildId);
+			if (guild == null)
+			{
+				string guildName = (await _client.Rest.GetGuildAsync(cds.guildId))?.Name;
+				_logger.LogError($"Unable to retrieve guild vc data for guild {guildName ?? "Unknown"} ({cds.guildId})");
+				continue;
+			}
 
-			foreach (var vchannel in await guild.GetVoiceChannelsAsync())
+			foreach (var vchannel in guild.VoiceChannels)
 			{
 				if (config.DisabledXpChannels.Contains(vchannel.Id)) continue;
 
 				var nonbotusers = 0;
 				List<IGuildUser> toLevel = new();
-				await foreach (IGuildUser uservc in vchannel.GetUsersAsync())
+				foreach (IGuildUser uservc in vchannel.ConnectedUsers)
 				{
 					// CHECK IF USER IS RESTRICTED ON VOICE XP
 
