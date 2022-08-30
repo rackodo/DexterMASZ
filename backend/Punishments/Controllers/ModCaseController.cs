@@ -95,6 +95,7 @@ public class ModCaseController : AuthenticatedController
 		modCase.PunishmentType = newValue.PunishmentType;
 		modCase.PunishedUntil = newValue.PunishedUntil;
 		modCase.LastEditedByModId = identity.GetCurrentUser().Id;
+		modCase.Severity = newValue.SeverityType;
 
 		modCase = await _modCaseRepository.UpdateModCase(modCase, handlePunishment);
 
@@ -114,7 +115,8 @@ public class ModCaseController : AuthenticatedController
 			ModId = identity.GetCurrentUser().Id,
 			UserId = modCaseDto.UserId,
 			Labels = modCaseDto.Labels.Distinct().ToArray(),
-			Others = modCaseDto.Others
+			Others = modCaseDto.Others,
+			Severity = modCaseDto.SeverityType
 		};
 
 		if (modCaseDto.OccurredAt.HasValue)

@@ -58,7 +58,7 @@ import { ModCaseTableComponent } from './components/modcase/modcase-table/modcas
 import { AutoModTableComponent } from './components/automod/automod-table/automod-table.component';
 import { DashboardMotdComponent } from './components/guilds/guild-dashboard/dashboard-motd/dashboard-motd.component';
 import { DashboardQuickSearchComponent } from './components/guilds/guild-dashboard/dashboard-quicksearch/dashboard-quicksearch.component';
-import { DashboardGuildInfoComponent } from './components/guilds/guild-dashboard/dashboard-guildinfo/dashboard-guildinfo.component';
+import { GuildInfoComponent } from './components/guilds/guild-overview/overview-guildinfo/overview-guildinfo.component';
 import { DashboardGuildStatsComponent } from './components/guilds/guild-dashboard/dashboard-guild-stats/dashboard-guild-stats.component';
 import { DashboardCaseListComponent } from './components/guilds/guild-dashboard/dashboard-case-list/dashboard-case-list.component';
 import { DashboardCommentListComponent } from './components/guilds/guild-dashboard/dashboard-comment-list/dashboard-comment-list.component';
@@ -156,7 +156,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AutoModTableComponent,
     DashboardMotdComponent,
     DashboardQuickSearchComponent,
-    DashboardGuildInfoComponent,
+    GuildInfoComponent,
     DashboardGuildStatsComponent,
     DashboardCaseListComponent,
     DashboardCommentListComponent,

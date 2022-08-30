@@ -1,4 +1,5 @@
-﻿using Bot.Enums;
+﻿using Bot.Abstractions;
+using Bot.Enums;
 using Bot.Extensions;
 using Bot.Models;
 using Bot.Services;
@@ -6,6 +7,7 @@ using Bot.Translators;
 using Discord;
 using Humanizer;
 using Microsoft.Extensions.DependencyInjection;
+using Punishments.Enums;
 using Punishments.Models;
 using Punishments.Translators;
 using System.Text;
@@ -48,6 +50,10 @@ public static class PunishmentEmbedCreator
 					.NotificationModCase(modCase, actor));
 				break;
 		}
+
+		if (modCase.PunishmentType == PunishmentType.Mute || modCase.PunishmentType == PunishmentType.Warn)
+			embed.AddField($"⚠️ - {translator.Get<PunishmentTranslator>().Severity()}",
+					translator.Get<PunishmentEnumTranslator>().Enum(modCase.Severity), true);
 
 		if (modCase.PunishedUntil != null)
 			embed.AddField($"⏰ - {translator.Get<PunishmentTranslator>().PunishedUntil()}",
@@ -123,7 +129,7 @@ public static class PunishmentEmbedCreator
 
 		var embed = (await EmbedCreator.CreateActionEmbed(action, provider, actor))
 			.WithThumbnailUrl(actor.GetAvatarOrDefaultUrl())
-			.WithFooter($"UserId: {actor.Id} | CaseId: {modCase.CaseId}")
+			.WithFooter($"{translator.Get<BotTranslator>().UserId()}: {actor.Id} | {translator.Get<PunishmentTranslator>().CaseId()}: {modCase.CaseId}")
 			.AddField($"**{translator.Get<BotTranslator>().Filename()}**", file.Name.Truncate(1000));
 
 		switch (action)

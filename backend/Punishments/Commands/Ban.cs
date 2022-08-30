@@ -46,7 +46,8 @@ public class Ban : Command<Ban>
 			PunishmentType = PunishmentType.Ban,
 			PunishmentActive = true,
 			PunishedUntil = time == default ? null : DateTime.UtcNow + time,
-			CreationType = CaseCreationType.ByCommand
+			CreationType = CaseCreationType.ByCommand,
+			Severity = SeverityType.None
 		};
 
 		var created =

@@ -9,6 +9,7 @@ using Discord;
 using Discord.Interactions;
 using Humanizer;
 using Punishments.Data;
+using Punishments.Enums;
 using Punishments.Extensions;
 using Punishments.Translators;
 using System.Text;
@@ -49,6 +50,10 @@ public class View : Command<View>
 				.WithDescription(modCase.Description.Truncate(2000))
 				.AddField($"⚖️ - {Translator.Get<PunishmentTranslator>().Punishment()}",
 					Translator.Get<PunishmentEnumTranslator>().Enum(modCase.PunishmentType), true);
+
+			if (modCase.PunishmentType == PunishmentType.Mute || modCase.PunishmentType == PunishmentType.Warn)
+				embed.AddField($"⚠️ - {Translator.Get<PunishmentTranslator>().Severity()}",
+						Translator.Get<PunishmentEnumTranslator>().Enum(modCase.Severity), true);
 
 			var suspect = await DiscordRest.FetchUserInfo(modCase.UserId, CacheBehavior.Default);
 

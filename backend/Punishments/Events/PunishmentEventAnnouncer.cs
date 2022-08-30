@@ -82,31 +82,34 @@ public class PunishmentEventAnnouncer : Event
 
 				var message = string.Empty;
 
+				var modCaseUrl = $"{settings.GetServiceUrl()}/guilds/{modCase.GuildId}/cases/{modCase.CaseId}";
+				var reason = $"**{modCase.Title}:** {modCase.Description}";
+
 				switch (modCase.PunishmentType)
 				{
 					case PunishmentType.Mute:
 						if (modCase.PunishedUntil.HasValue)
 							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmMuteTemp(modCase, guild, settings.GetServiceUrl());
+								.NotificationModCaseDmMuteTemp(modCase, guild, reason, modCaseUrl);
 						else
 							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmMutePerm(guild, settings.GetServiceUrl());
+								.NotificationModCaseDmMutePerm(guild, reason, modCaseUrl);
 						break;
 					case PunishmentType.Kick:
 						message = translator.Get<PunishmentNotificationTranslator>()
-							.NotificationModCaseDmKick(guild, settings.GetServiceUrl());
+							.NotificationModCaseDmKick(guild, reason, modCaseUrl);
 						break;
 					case PunishmentType.Ban:
 						if (modCase.PunishedUntil.HasValue)
 							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmBanTemp(modCase, guild, settings.GetServiceUrl());
+								.NotificationModCaseDmBanTemp(modCase, guild, reason, modCaseUrl);
 						else
 							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmBanPerm(guild, settings.GetServiceUrl());
+								.NotificationModCaseDmBanPerm(guild, reason, modCaseUrl);
 						break;
 					case PunishmentType.Warn:
 						message = translator.Get<PunishmentNotificationTranslator>()
-							.NotificationModCaseDmWarn(guild, settings.GetServiceUrl());
+							.NotificationModCaseDmWarn(guild, reason, modCaseUrl);
 						break;
 				}
 

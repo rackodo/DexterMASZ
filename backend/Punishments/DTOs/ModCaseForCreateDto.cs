@@ -26,4 +26,6 @@ public class ModCaseForCreateDto
 	public PunishmentType PunishmentType { get; set; }
 
 	public DateTime? PunishedUntil { get; set; }
+
+	[Required] public SeverityType SeverityType { get; set; }
 }

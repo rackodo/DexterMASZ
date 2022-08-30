@@ -9,6 +9,7 @@ export interface ModCaseTemplate {
     caseDescription: string;
     caseLabels: string[];
     casePunishment: string;
+    caseSeverityType: number;
     casePunishmentType: number;
     casePunishedUntil?: Date;
     handlePunishment: boolean;

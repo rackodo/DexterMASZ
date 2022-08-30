@@ -20,13 +20,14 @@ public class Warn : Command<Warn>
 	[Require(RequireCheck.GuildModerator)]
 	[SlashCommand("warn", "Warn a user and create a mod case")]
 	public async Task WarnCommand(
-		[Summary("title", "The title of the mod case")]
+		[Summary("title", "The title of the modcase")]
 		string title,
-		[Summary("user", "User to punish")] IUser user,
-		[Summary("description", "The description of the mod case")]
-		string description = "",
-		[Summary("severity-level", "Whether or not this is a higher severity case")]
-		bool highSeverity = false)
+		[Summary("user", "User to punish")]
+		IUser user,
+		[Summary("severity-level", "Whether or not this is a higher or lower severity case")]
+		SeverityType severity,
+		[Summary("description", "The description of the modcase")]
+		string description = "")
 	{
 		ModCaseRepository.AsUser(Identity);
 		GuildConfigRepository.AsUser(Identity);
@@ -45,7 +46,7 @@ public class Warn : Command<Warn>
 			PunishmentType = PunishmentType.Warn,
 			PunishmentActive = true,
 			PunishedUntil = null,
-			HighSeverity = highSeverity,
+			Severity = severity,
 			CreationType = CaseCreationType.ByCommand
 		};
 

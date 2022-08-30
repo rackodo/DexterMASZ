@@ -126,7 +126,7 @@ public class PunishmentHandler : Event
 					switch (action)
 					{
 						case RestAction.Created:
-							_logger.LogInformation($"Mute User {modCase.UserId} in guild {modCase.GuildId}");
+							_logger.LogInformation($"Muted user {modCase.UserId} in guild {modCase.GuildId}");
 
 							if (!modCase.PunishedUntil.HasValue)
 								_logger.LogError($"Failed to mute user due to unknown duration length");
@@ -137,7 +137,7 @@ public class PunishmentHandler : Event
 
 							break;
 						case RestAction.Deleted:
-							_logger.LogInformation($"Unmute User {modCase.UserId} in guild {modCase.GuildId}");
+							_logger.LogInformation($"Unmuted user {modCase.UserId} in guild {modCase.GuildId}");
 
 							await _discordRest.RemoveTimeoutFromGuildUser(modCase.GuildId, modCase.UserId, reason);
 
@@ -148,12 +148,12 @@ public class PunishmentHandler : Event
 					switch (action)
 					{
 						case RestAction.Created:
-							_logger.LogInformation($"Ban User {modCase.UserId} in guild {modCase.GuildId}.");
+							_logger.LogInformation($"Banned user {modCase.UserId} in guild {modCase.GuildId}.");
 							await _discordRest.BanUser(modCase.GuildId, modCase.UserId, reason);
 							await _discordRest.GetGuildUserBan(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreCache);
 							break;
 						case RestAction.Deleted:
-							_logger.LogInformation($"Unban User {modCase.UserId} in guild {modCase.GuildId}.");
+							_logger.LogInformation($"Unbanned user {modCase.UserId} in guild {modCase.GuildId}.");
 							await _discordRest.UnbanUser(modCase.GuildId, modCase.UserId, reason);
 							_discordRest.RemoveFromCache(CacheKey.GuildBan(modCase.GuildId, modCase.UserId));
 							break;
@@ -163,7 +163,7 @@ public class PunishmentHandler : Event
 					switch (action)
 					{
 						case RestAction.Created:
-							_logger.LogInformation($"Kick User {modCase.UserId} in guild {modCase.GuildId}.");
+							_logger.LogInformation($"Kicked user {modCase.UserId} in guild {modCase.GuildId}.");
 							await _discordRest.KickGuildUser(modCase.GuildId, modCase.UserId, reason);
 							break;
 					}

@@ -15,7 +15,7 @@ public class ModCaseTemplate
 	public string CaseDescription { get; set; }
 	public string[] CaseLabels { get; set; }
 	public PunishmentType CasePunishmentType { get; set; }
+	public SeverityType CaseSeverityType { get; set; }
 	public DateTime? CasePunishedUntil { get; set; }
 	public bool HandlePunishment { get; set; }
-	public bool? HighSeverity { get; set; } = false;
 }
