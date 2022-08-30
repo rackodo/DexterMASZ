@@ -278,8 +278,11 @@ public static partial class Rankcard
 
 			const int pfpmargin = 3;
 			if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.PfpBackground))
-				g = pfpTransform(g.Fill(0xff3f3f3f.ColorFromArgb()
-					, new EllipsePolygon(rectPfp.X + rectPfp.Width / 2, rectPfp.Y + rectPfp.Height / 2, rectPfp.Width + 2 * pfpmargin, rectPfp.Height + 2 * pfpmargin)));
+				g = g.Fill(0xff3f3f3f.ColorFromArgb()
+					, new EllipsePolygon(rectPfp.X + rectPfp.Width / 2, rectPfp.Y + rectPfp.Height / 2, rectPfp.Width + 2 * pfpmargin, rectPfp.Height + 2 * pfpmargin));
+
+			if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.DisplayPfp))
+				g = pfpTransform(g);
 
 			pfp?.Dispose();
 
