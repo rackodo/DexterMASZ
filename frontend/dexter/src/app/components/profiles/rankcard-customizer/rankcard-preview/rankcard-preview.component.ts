@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { UserRankcardConfigUtility } from 'src/app/classes/UserRankcardConfig';
 import { ExperienceModel } from 'src/app/models/ExperienceModel';
 import { RankcardFlags, UserRankcardConfig } from 'src/app/models/UserRankcardConfig';
 import { RankcardCustomizerComponent } from '../rankcard-customizer.component';
@@ -14,15 +15,7 @@ export class RankcardPreviewComponent implements OnInit {
   @Input() vcXp : ExperienceModel = {xp: 105n, level: 1n, xpLevel: 150n, xpResidual: 5n};
   @Input() totalXp : ExperienceModel = {xp: 187n, level: 1n, xpLevel: 150n, xpResidual: 87n};
 
-  @Input() model : UserRankcardConfig = {
-    "id": 0n,
-    "xpColor": 0xff70cefen,
-    "offColor": 0xffffffffn,
-    "levelBgColor": 0xff202225n,
-    "titleBgColor": 0xff202225n,
-    "background": "default",
-    "rankcardFlags": RankcardFlags.DisplayPfp | RankcardFlags.PfpBackground | RankcardFlags.ClipPfp | RankcardFlags.ShowHybrid
-  }
+  @Input() model : UserRankcardConfig = UserRankcardConfigUtility.default;
 
   @Input() username: string = "Username#0123";
   @Input() pfpUrl: string = "/assets/img/defaultProfile.png";

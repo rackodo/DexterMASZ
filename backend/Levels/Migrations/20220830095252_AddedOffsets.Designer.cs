@@ -2,6 +2,7 @@
 using Levels.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Levels.Migrations
 {
     [DbContext(typeof(LevelsDatabase))]
-    partial class LevelsDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20220830095252_AddedOffsets")]
+    partial class AddedOffsets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,20 +123,20 @@ namespace Levels.Migrations
                     b.Property<uint>("LevelBgColor")
                         .HasColumnType("int unsigned");
 
-                    b.Property<int>("LevelOffsetX")
-                        .HasColumnType("int");
+                    b.Property<float>("LevelOffsetX")
+                        .HasColumnType("float");
 
-                    b.Property<int>("LevelOffsetY")
-                        .HasColumnType("int");
+                    b.Property<float>("LevelOffsetY")
+                        .HasColumnType("float");
 
                     b.Property<uint>("OffColor")
                         .HasColumnType("int unsigned");
 
-                    b.Property<int>("PfpOffsetX")
-                        .HasColumnType("int");
+                    b.Property<float>("PfpOffsetX")
+                        .HasColumnType("float");
 
-                    b.Property<int>("PfpOffsetY")
-                        .HasColumnType("int");
+                    b.Property<float>("PfpOffsetY")
+                        .HasColumnType("float");
 
                     b.Property<float>("PfpRadiusFactor")
                         .HasColumnType("float");
@@ -145,11 +147,11 @@ namespace Levels.Migrations
                     b.Property<uint>("TitleBgColor")
                         .HasColumnType("int unsigned");
 
-                    b.Property<int>("TitleOffsetX")
-                        .HasColumnType("int");
+                    b.Property<float>("TitleOffsetX")
+                        .HasColumnType("float");
 
-                    b.Property<int>("TitleOffsetY")
-                        .HasColumnType("int");
+                    b.Property<float>("TitleOffsetY")
+                        .HasColumnType("float");
 
                     b.Property<uint>("XpColor")
                         .HasColumnType("int unsigned");

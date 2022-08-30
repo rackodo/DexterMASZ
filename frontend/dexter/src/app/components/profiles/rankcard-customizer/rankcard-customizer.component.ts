@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageUrlDialogComponent } from '../../dialogs/image-url-dialog/image-url-dialog.component';
 import { Observable } from 'rxjs';
+import { UserRankcardConfigUtility } from 'src/app/classes/UserRankcardConfig';
 
 @Component({
   selector: 'app-rankcard-customizer',
@@ -42,9 +43,16 @@ export class RankcardCustomizerComponent implements AfterViewInit {
 
   @ViewChild("fileInput") fileInput!: ElementRef;
 
+  model : UserRankcardConfig = UserRankcardConfigUtility.default;
+
   user : DiscordUser | undefined;
   username: string = "Username#0123";
   userId : bigint = 0n;
+
+  rankcardSize = {x: 1350, y: 450};
+  titleSize = {x: this.rankcardSize.x, y: 100};
+  levelsSize = {x: 1000, y: this.rankcardSize.y - this.titleSize.y};
+  pfpSize = {x: this.levelsSize.y, y: this.levelsSize.y};
 
   ngAfterViewInit(): void {
     this.setUpValues(this.model)
@@ -97,17 +105,11 @@ export class RankcardCustomizerComponent implements AfterViewInit {
       this.customLink = model.background;
     }
 
-    this.cd.detectChanges();
-  }
+    this.model.titleOffset = model.titleOffset;
+    this.model.levelOffset = model.levelOffset;
+    this.model.pfpOffset = model.pfpOffset;
 
-  model : UserRankcardConfig = {
-    "id": 0n,
-    "xpColor": 0xff70cefen,
-    "offColor": 0xffffffffn,
-    "levelBgColor": 0xff202225n,
-    "titleBgColor": 0xff202225n,
-    "background": RankcardCustomizerComponent.defaultBgToUrl("default.png"),
-    "rankcardFlags": RankcardFlags.DisplayPfp | RankcardFlags.PfpBackground | RankcardFlags.ClipPfp | RankcardFlags.ShowHybrid
+    this.cd.detectChanges();
   }
 
   defaultBgToUrl = RankcardCustomizerComponent.defaultBgToUrl;

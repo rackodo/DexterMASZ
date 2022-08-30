@@ -165,6 +165,34 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+/*Numerical Slider Range Fields*/
+
+.slider-field {
+  font-size: var(--base-size);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.slider-field > * {
+  margin-right: 0.5em;
+  min-width: 2.5em;
+}
+
+.slider-field > mat-slider {
+  width: 10em;
+}
+
+/*Offset Editors*/
+
+.offset-editor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2em;
+}
+
 /*Background Selector*/
 
 .bg-tab-group {

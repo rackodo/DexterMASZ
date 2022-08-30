@@ -1,0 +1,27 @@
+.offset-editor-body {
+  position: relative;
+  background-color: #050505;
+  border: solid 2px var(--primary);
+  box-sizing: content-box;
+}
+
+.offset-box {
+  position: absolute;
+  background-color: #555555;
+  border: solid 2px gold;
+  box-sizing: content-box;
+}
+
+/*Inputs*/
+
+.numbers-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.numbers-input > * {
+  width: 4em;
+  margin: 0 0.5em;
+}
+
