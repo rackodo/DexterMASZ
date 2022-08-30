@@ -262,9 +262,7 @@ export class ModCaseAddComponent implements OnInit {
 
     const params = new HttpParams()
       .set('handlePunishment', this.punishmentFormGroup.value.handlePunishment ? 'true' : 'false');
-	  
-	console.log(data);
-	
+	  	
     this.api.postSimpleData(`/guilds/${this.guildId}/cases`, data, params, true, true).subscribe(data => {
       const caseId = data.caseId;
       this.router.navigate(['guilds', this.guildId, 'cases', caseId], { queryParams: { 'reloadfiles': this.filesToUpload.length ?? '0' } });
