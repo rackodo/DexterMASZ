@@ -35,7 +35,7 @@ export class LevelsConfigComponent implements OnInit {
   tryingToSaveConfig = false;
 
   TEMPLATE_DEFAULT = "{USER} reached level {LEVEL}!";
-  TEMPLATE_CHARACTER_LIMIT = 200;
+  TEMPLATE_CHARACTER_LIMIT = 250;
 
   constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, private _formBuilder: FormBuilder, public dialog: MatDialog) { }
 
