@@ -3,3 +3,7 @@
   background-color: var(--primary);
   margin: 1em 0;
 }
+
+mat-spinner {
+  margin: 10px auto;
+}

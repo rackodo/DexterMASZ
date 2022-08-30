@@ -20,6 +20,7 @@ export class LeaderboardRankingComponent implements OnInit {
   guildId = "0";
   page = 1;
   loading = false;
+  loadingAfter = false;
   loadedUsers: CalcGuildUserLevel[] = [];
   canLoadMoreUsersAfter = true;
   DEFAULT_PAGE_SIZE = 100;
@@ -47,7 +48,8 @@ export class LeaderboardRankingComponent implements OnInit {
   }
 
   loadMoreUsersBefore() {
-    if (this.page <= 1) return;
+    if (this.page <= 1) {this.loading = false; return};
+    this.loadingAfter = false;
 
     this.requestPage(this.page - 1).subscribe(data => {
       this.page--;
@@ -60,7 +62,8 @@ export class LeaderboardRankingComponent implements OnInit {
   }
 
   loadMoreUsersAfter() {
-    if (!this.canLoadMoreUsersAfter) return;
+    if (!this.canLoadMoreUsersAfter) {this.loading = false; return};
+    this.loadingAfter = true;
 
     let newPage = this.page + (this.loadedUsers.length / this.DEFAULT_PAGE_SIZE);
     this.requestPage(newPage).subscribe(data => {

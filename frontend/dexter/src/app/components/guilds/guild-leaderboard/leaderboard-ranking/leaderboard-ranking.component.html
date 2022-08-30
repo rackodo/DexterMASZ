@@ -1,3 +1,5 @@
+<mat-spinner *ngIf="TESTING || loading && !loadingAfter"></mat-spinner>
+
 <button mat-button *ngIf="TESTING || page > 1 && !loading" (click)="loadMoreUsersBefore()" class="load-more-btn">
   <mat-icon>keyboard_arrow_up</mat-icon>
   Load More
@@ -11,3 +13,5 @@
   Load More
   <mat-icon>keyboard_arrow_down</mat-icon>
 </button>
+
+<mat-spinner *ngIf="TESTING || loading && loadingAfter"></mat-spinner>
