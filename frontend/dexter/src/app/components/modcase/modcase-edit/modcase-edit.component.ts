@@ -14,6 +14,7 @@ import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordUser } from 'src/app/models/DiscordUser';
 import { ModCase } from 'src/app/models/ModCase';
 import { PunishmentType } from 'src/app/models/PunishmentType';
+import { SeverityType } from 'src/app/models/SeverityType';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -54,6 +55,7 @@ export class ModCaseEditComponent implements OnInit {
   public users: ContentLoading<DiscordUser[]> = { loading: true, content: [] };
   public oldCase: ContentLoading<ModCase> = { loading: true, content: undefined };
   public punishmentOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
+  public severityOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
 
   constructor(private _formBuilder: FormBuilder, private api: ApiService, private toastr: ToastrService, private translator: TranslateService, private router: Router, private route: ActivatedRoute, private enumManager: EnumManagerService) {
     this.labelInputForm.valueChanges.subscribe(data => {
@@ -75,6 +77,7 @@ export class ModCaseEditComponent implements OnInit {
     });
     this.punishmentFormGroup = this._formBuilder.group({
       punishmentType: ['', Validators.required],
+	  severityType: ['None']
     });
     this.optionsFormGroup = this._formBuilder.group({
     });
@@ -116,6 +119,15 @@ export class ModCaseEditComponent implements OnInit {
       console.error(error);
       this.punishmentOptions.loading = false;
       this.toastr.error(this.translator.instant('ModCaseDialog.FailedToLoad.PunishmentEnum'));
+    });
+	
+    this.enumManager.getEnum(ApiEnumTypes.SEVERITY).subscribe(data => {
+      this.severityOptions.content = data;
+      this.severityOptions.loading = false;
+    }, error => {
+      console.error(error);
+      this.severityOptions.loading = false;
+      this.toastr.error(this.translator.instant('ModCaseDialog.FailedToLoad.SeverityEnum'));
     });
 
     let params = new HttpParams()
@@ -185,6 +197,7 @@ export class ModCaseEditComponent implements OnInit {
       labels: this.caseLabels,
       punishmentType: this.punishmentFormGroup.value.punishmentType,
       punishedUntil: this.punishedUntil?.toISOString(),
+	  severityType: this.getSeverity()
     };
     const params = new HttpParams();
 	
@@ -197,6 +210,15 @@ export class ModCaseEditComponent implements OnInit {
         console.error(error);
         this.savingCase = false;
       });
+  }
+  
+  getSeverity(): SeverityType {
+	let punishmentType = this.punishmentFormGroup.value.punishmentType;
+	let severity = SeverityType.None;
+
+	if (punishmentType != PunishmentType.Kick && punishmentType != PunishmentType.Ban)
+		severity = this.punishmentFormGroup.value.severityType;
+	return severity;
   }
 
   punishedUntilChanged(date: moment.Moment) {

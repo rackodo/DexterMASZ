@@ -1,7 +1,6 @@
 <div class="d-flex flex-column w-100">
     <div class="p-2">
-        <div class="d-flex flex-row flex-wrap align-items-center mb-2">
-            <div class="d-flex flex-column flex-wrap mb-2">
+        <div class="d-flex mb-2">
                 <div class="custom-control custom-switch">
                     <mat-slide-toggle
                         color="accent"
@@ -17,11 +16,6 @@
                         {{ 'ModCaseTable.UseAdvancedFilter' | translate }}
                     </mat-slide-toggle>
                 </div>
-            </div>
-            <div class="flex-grow-1"></div>
-            <button mat-raised-button color="accent" routerLink="/guilds/{{this.guildId}}/cases/new" *ngIf="this.isModOrHigher | async" class="mr-2">
-                {{ 'ModCaseTable.CreateNewCase' | translate }}
-            </button>
         </div>
         <!-- Filters -->
         <div class="d-flex flex-row flex-wrap mb-2 align-items-baseline" *ngIf="useAdvancedFilters">

@@ -477,6 +477,7 @@
         "DescribeCase": "Describe the case",
         "Title": "Title",
         "Description": "Description",
+        "Severity": "Severity",
         "Labels": "Labels",
         "NewLabel": "New label...",
         "ChoosePunishment": "Choose a punishment",
@@ -493,7 +494,8 @@
             "UserList": "Failed to load user list.",
             "PunishmentEnum": "Failed to load available punishments.",
             "CaseTemplates": "Failed to load case templates.",
-            "CurrentCase": "Failed to load current case."
+            "CurrentCase": "Failed to load current case.",
+            "SeverityEnum": "Failed to load available severities."
         },
         "AppliedTemplate": "Applied template.",
         "TemplateDeleted": "Template deleted.",
@@ -575,6 +577,7 @@
         "Moderators": "Moderators",
         "FailedToLoad": {
             "Punishments": "Failed to load available punishments.",
+            "Severities": "Failed to load available severities.",
             "Files": "Failed to load files.",
             "Guild": "Failed to load guild info.",
             "Case": "Failed to load case."

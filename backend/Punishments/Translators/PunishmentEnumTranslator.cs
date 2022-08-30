@@ -41,6 +41,41 @@ public class PunishmentEnumTranslator : Translator
 		};
 	}
 
+	public string Enum(SeverityType enumValue)
+	{
+		return enumValue switch
+		{
+			SeverityType.None => PreferredLanguage switch
+			{
+				Language.De => "Unbestimmt",
+				Language.Fr => "Rien",
+				Language.Es => "Ninguna",
+				Language.Ru => "Никто",
+				Language.It => "Nessuno",
+				_ => "None"
+			},
+			SeverityType.Low => PreferredLanguage switch
+			{
+				Language.De => "Niedrig",
+				Language.Fr => "Bas",
+				Language.Es => "Baja",
+				Language.Ru => "Низкий",
+				Language.It => "Basso",
+				_ => "Low"
+			},
+			SeverityType.High => PreferredLanguage switch
+			{
+				Language.De => "Hoch",
+				Language.Fr => "Haute",
+				Language.Es => "Alta",
+				Language.Ru => "Высокая",
+				Language.It => "Alto",
+				_ => "High"
+			},
+			_ => "Unknown"
+		};
+	}
+
 	public string Enum(MarkedToDeleteStatus enumValue)
 	{
 		return enumValue switch

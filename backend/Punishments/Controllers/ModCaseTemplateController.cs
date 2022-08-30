@@ -40,7 +40,8 @@ public class ModCaseTemplateController : AuthenticatedController
 			CaseLabels = templateDto.Labels,
 			CasePunishedUntil = templateDto.PunishedUntil,
 			CasePunishmentType = templateDto.PunishmentType,
-			HandlePunishment = templateDto.HandlePunishment
+			HandlePunishment = templateDto.HandlePunishment,
+			CaseSeverityType = templateDto.SeverityType
 		};
 
 		var createdTemplate = await _caseTemplateRepo.CreateTemplate(template);

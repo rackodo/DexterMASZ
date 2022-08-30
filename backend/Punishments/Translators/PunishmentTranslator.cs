@@ -45,6 +45,19 @@ public class PunishmentTranslator : Translator
 		};
 	}
 
+	public string Severity()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Schwere",
+			Language.Fr => "Gravité",
+			Language.Es => "Gravedad",
+			Language.Ru => "Строгость",
+			Language.It => "Gravità",
+			_ => "Severity"
+		};
+	}
+
 	public string NoCases()
 	{
 		return PreferredLanguage switch

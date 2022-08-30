@@ -13,4 +13,5 @@ export enum ApiEnumTypes {
     PUNISHMENTACTIVESTATUS = "punishmentactivestatus",
     SCHEDULEMESSAGESTATUS = "scheduledmessagestatus",
     SCHEDULEMESSAGEFAILUREREASON = "scheduledmessagefailurereason",
+	SEVERITY = "severity"
 }

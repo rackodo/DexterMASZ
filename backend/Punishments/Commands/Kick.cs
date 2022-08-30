@@ -43,7 +43,8 @@ public class Kick : Command<Kick>
 			PunishmentType = PunishmentType.Kick,
 			PunishmentActive = true,
 			PunishedUntil = null,
-			CreationType = CaseCreationType.ByCommand
+			CreationType = CaseCreationType.ByCommand,
+			Severity = SeverityType.None
 		};
 
 		var created =

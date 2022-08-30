@@ -31,6 +31,19 @@ public class PunishmentEnumController : BaseController
 		return Ok(enums);
 	}
 
+	[HttpGet("severity")]
+	public IActionResult Severity([FromQuery] Language? language = null)
+	{
+		_translator.SetLanguage(language);
+
+		var enums = new List<EnumDto>();
+
+		foreach (var enumValue in Enum.GetValues<SeverityType>())
+			enums.Add(new EnumDto((int)enumValue, _translator.Get<PunishmentEnumTranslator>().Enum(enumValue)));
+
+		return Ok(enums);
+	}
+
 	[HttpGet("casecreationtype")]
 	public IActionResult CreationType([FromQuery] Language? language = null)
 	{

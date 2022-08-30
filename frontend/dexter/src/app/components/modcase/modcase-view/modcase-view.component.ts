@@ -16,8 +16,9 @@ import { CommentEditDialog } from 'src/app/models/CommentEditDialog';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { FileInfo } from 'src/app/models/FileInfo';
 import { DiscordGuild } from 'src/app/models/DiscordGuild';
-import { convertModCaseToPunishmentString, ModCase } from 'src/app/models/ModCase';
+import { convertModCaseToPunishmentString, convertModCaseToSeverityString, ModCase } from 'src/app/models/ModCase';
 import { PunishmentType } from 'src/app/models/PunishmentType';
+import { SeverityType } from 'src/app/models/SeverityType';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
@@ -33,6 +34,7 @@ import * as moment from 'moment';
 })
 export class ModCaseViewComponent implements OnInit {
   public convertModCaseToPunishmentString = convertModCaseToPunishmentString;
+  public convertModCaseToSeverityString = convertModCaseToSeverityString;
   public restoringCase: boolean = false;
 
   public guildId!: string;
@@ -55,6 +57,8 @@ export class ModCaseViewComponent implements OnInit {
   public modCase: ContentLoading<ModCaseExpanded> = { loading: true, content: undefined };
   public punishments: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
   public punishment: string = "Unknown";
+  public severities: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
+  public severity: string = "Unknown";
 
   public creationTypes: ApiEnum[] = [];
   public creationType = "";
@@ -93,6 +97,7 @@ export class ModCaseViewComponent implements OnInit {
     this.reloadCase();
     this.reloadGuild();
     this.reloadPunishmentEnum();
+    this.reloadSeverityEnum();
     this.reloadFiles();
     this.reloadCreationTypes();
   }
@@ -106,6 +111,19 @@ export class ModCaseViewComponent implements OnInit {
     });
   }
 
+  private reloadSeverityEnum() {
+    this.severities = { loading: true, content: [] };
+    this.enumManager.getEnum(ApiEnumTypes.SEVERITY).subscribe(data => {
+      this.severities.loading = false;
+      this.severities.content = data;
+      this.severity = convertModCaseToSeverityString(this.modCase.content?.modCase, this.punishments?.content);
+    }, error => {
+      console.error(error);
+      this.severities.loading = false;
+      this.toastr.error(this.translator.instant('ModCaseView.FailedToLoad.Severities'));
+    });
+  }
+  
   private reloadPunishmentEnum() {
     this.punishments = { loading: true, content: [] };
     this.enumManager.getEnum(ApiEnumTypes.PUNISHMENT).subscribe(data => {
@@ -158,6 +176,7 @@ export class ModCaseViewComponent implements OnInit {
       this.modCase.content = data;
       this.renderedDescription = this.renderDescription(data.modCase.description, this.guildId)
       this.punishment = convertModCaseToPunishmentString(this.modCase.content?.modCase, this.punishments?.content);
+	  this.severity = convertModCaseToSeverityString(this.modCase.content?.modCase, this.severities?.content);
       this.creationType = this.creationTypes?.find(x => x.key == this.modCase.content?.modCase?.creationType)?.value ?? '';
       this.markedDeleteParams = {
         user: data.deletedBy ? `${data.deletedBy.username}#${data.deletedBy.discriminator}` : this.translator.instant('ModCaseView.Moderators')

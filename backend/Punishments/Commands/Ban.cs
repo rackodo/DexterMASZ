@@ -24,10 +24,10 @@ public class Ban : Command<Ban>
 		string title,
 		[Summary("user", "User to punish")]
 		IUser user,
-		[Summary("time", "The time to punish the user for")]
-		TimeSpan time = default,
 		[Summary("description", "The description of the mod case")]
-		string description = "")
+		string description = "",
+		[Summary("time", "The time to punish the user for")]
+		TimeSpan time = default)
 	{
 		ModCaseRepository.AsUser(Identity);
 		GuildConfigRepository.AsUser(Identity);
@@ -46,7 +46,8 @@ public class Ban : Command<Ban>
 			PunishmentType = PunishmentType.Ban,
 			PunishmentActive = true,
 			PunishedUntil = time == default ? null : DateTime.UtcNow + time,
-			CreationType = CaseCreationType.ByCommand
+			CreationType = CaseCreationType.ByCommand,
+			Severity = SeverityType.None
 		};
 
 		var created =

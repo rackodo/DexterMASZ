@@ -15,7 +15,7 @@ public class ModCase
 	public string Discriminator { get; set; }
 	public string Nickname { get; set; }
 	public ulong ModId { get; set; }
-	public bool? HighSeverity { get; set; } = false;
+	public SeverityType Severity { get; set; }
 	[Required] public DateTime CreatedAt { get; set; } = DateTime.Now;
 	public DateTime OccurredAt { get; set; }
 	public DateTime LastEditedAt { get; set; }

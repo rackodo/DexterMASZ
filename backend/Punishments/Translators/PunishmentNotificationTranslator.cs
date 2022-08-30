@@ -130,79 +130,79 @@ public class PunishmentNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationModCaseDmWarn(IGuild guild, string serviceBaseUrl)
+	public string NotificationModCaseDmWarn(IGuild guild, string reason, string caseUrl)
 	{
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"Die Moderatoren von `{guild.Name}` haben dich verwarnt.\nFür weitere Informationen besuche: {serviceBaseUrl}",
+				$"Die Moderatoren von `{guild.Name}` haben dich verwarnt - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 			Language.Fr =>
-				$"Les modérateurs de la guilde `{guild.Name}` vous ont prévenu.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
+				$"Les modérateurs de la guilde `{guild.Name}` vous ont prévenu - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
 			Language.Es =>
-				$"Los moderadores del gremio `{guild.Name}` te han advertido.\nPara obtener más información o rehabilitación, visite: {serviceBaseUrl}",
+				$"Los moderadores del gremio `{guild.Name}` te han advertido - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 			Language.Ru =>
-				$"Модераторы гильдии `{guild.Name}` вас предупредили.\nДля получения дополнительной информации или реабилитации посетите: {serviceBaseUrl}",
+				$"Модераторы гильдии `{guild.Name}` вас предупредили - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 			Language.It =>
-				$"I moderatori della gilda `{guild.Name}` ti hanno avvisato.\nPer maggiori informazioni o visita riabilitativa: {serviceBaseUrl}",
+				$"I moderatori della gilda `{guild.Name}` ti hanno avvisato - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 			_ =>
-				$"The moderators of guild `{guild.Name}` have warned you.\nFor more information or rehabilitation visit: {serviceBaseUrl}"
+				$"The moderators of `{guild.Name}` have warned you for {reason}.\nFor more information, visit {caseUrl}"
 		};
 	}
 
-	public string NotificationModCaseDmMutePerm(IGuild guild, string serviceBaseUrl)
+	public string NotificationModCaseDmMutePerm(IGuild guild, string reason, string caseUrl)
 	{
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"Die Moderatoren von `{guild.Name}` haben dich stummgeschalten.\nFür weitere Informationen besuche: {serviceBaseUrl}",
+				$"Die Moderatoren von `{guild.Name}` haben dich stummgeschalten - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 			Language.Fr =>
-				$"Les modérateurs de la guilde `{guild.Name}` vous ont mis en sourdine.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
+				$"Les modérateurs de la guilde `{guild.Name}` vous ont mis en sourdine - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
 			Language.Es =>
-				$"Los moderadores del gremio `{guild.Name}` te han silenciado.\nPara obtener más información o rehabilitación, visite: {serviceBaseUrl}",
+				$"Los moderadores del gremio `{guild.Name}` te han silenciado - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 			Language.Ru =>
-				$"Модераторы гильдии `{guild.Name}` отключили вас.\nДля получения дополнительной информации или реабилитации посетите: {serviceBaseUrl}",
+				$"Модераторы гильдии `{guild.Name}` отключили вас - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 			Language.It =>
-				$"I moderatori della gilda `{guild.Name}` ti hanno disattivato.\nPer maggiori informazioni o visita riabilitativa: {serviceBaseUrl}",
+				$"I moderatori della gilda `{guild.Name}` ti hanno disattivato - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 			_ =>
-				$"The moderators of guild `{guild.Name}` have muted you.\nFor more information or rehabilitation visit: {serviceBaseUrl}"
+				$"The moderators of `{guild.Name}` have muted you for {reason}.\nFor more information, visit {caseUrl}"
 		};
 	}
 
-	public string NotificationModCaseDmBanPerm(IGuild guild, string serviceBaseUrl)
+	public string NotificationModCaseDmBanPerm(IGuild guild, string reason, string caseUrl)
 	{
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"Die Moderatoren von `{guild.Name}` haben dich gebannt.\nFür weitere Informationen besuche: {serviceBaseUrl}",
+				$"Die Moderatoren von `{guild.Name}` haben dich gebannt - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 			Language.Fr =>
-				$"Les modérateurs de la guilde `{guild.Name}` vous ont banni.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
+				$"Les modérateurs de la guilde `{guild.Name}` vous ont banni - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
 			Language.Es =>
-				$"Los moderadores del gremio `{guild.Name}` te han prohibido.\nPara obtener más información o rehabilitación, visite: {serviceBaseUrl}",
+				$"Los moderadores del gremio `{guild.Name}` te han prohibido - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 			Language.Ru =>
-				$"Модераторы гильдии `{guild.Name}` забанили вас.\nДля получения дополнительной информации или реабилитации посетите: {serviceBaseUrl}",
+				$"Модераторы гильдии `{guild.Name}` забанили вас - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 			Language.It =>
-				$"I moderatori della gilda `{guild.Name}` ti hanno bannato.\nPer maggiori informazioni o visita riabilitativa: {serviceBaseUrl}",
+				$"I moderatori della gilda `{guild.Name}` ti hanno bannato - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 			_ =>
-				$"The moderators of guild `{guild.Name}` have banned you.\nFor more information or rehabilitation visit: {serviceBaseUrl}"
+				$"The moderators of `{guild.Name}` have banned you for {reason}.\nFor more information or rehabilitation, visit {caseUrl}"
 		};
 	}
 
-	public string NotificationModCaseDmKick(IGuild guild, string serviceBaseUrl)
+	public string NotificationModCaseDmKick(IGuild guild, string reason, string caseUrl)
 	{
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"Die Moderatoren von `{guild.Name}` haben dich kickt.\nFür weitere Informationen besuche: {serviceBaseUrl}",
+				$"Die Moderatoren von `{guild.Name}` haben dich kickt - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 			Language.Fr =>
-				$"Les modérateurs de la guilde `{guild.Name}` vous ont viré.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
+				$"Les modérateurs de la guilde `{guild.Name}` vous ont viré - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
 			Language.Es =>
-				$"Los moderadores del gremio `{guild.Name}` te han pateado.\nPara obtener más información o rehabilitación, visite: {serviceBaseUrl}",
+				$"Los moderadores del gremio `{guild.Name}` te han pateado - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 			Language.Ru =>
-				$"Модераторы гильдии `{guild.Name}` выгнали вас.\nДля получения дополнительной информации или реабилитации посетите: {serviceBaseUrl}",
+				$"Модераторы гильдии `{guild.Name}` выгнали вас - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 			Language.It =>
-				$"I moderatori della gilda `{guild.Name}` ti hanno espulso.\nPer maggiori informazioni o visita riabilitativa: {serviceBaseUrl}",
+				$"I moderatori della gilda `{guild.Name}` ti hanno espulso - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 			_ =>
-				$"The moderators of guild `{guild.Name}` have kicked you.\nFor more information or rehabilitation visit: {serviceBaseUrl}"
+				$"The moderators of `{guild.Name}` have kicked you for {reason}.\nFor more information or rehabilitation, visit {caseUrl}"
 		};
 	}
 
@@ -232,44 +232,44 @@ public class PunishmentNotificationTranslator : Translator
 		};
 	}
 
-	public string NotificationModCaseDmBanTemp(ModCase modCase, IGuild guild, string serviceBaseUrl)
+	public string NotificationModCaseDmBanTemp(ModCase modCase, IGuild guild, string reason, string caseUrl)
 	{
 		if (modCase.PunishedUntil != null)
 			return PreferredLanguage switch
 			{
 				Language.De =>
-					$"Die moderatoren von `{guild.Name}` haben dich temporär gebannt bis {modCase.PunishedUntil.Value.ToDiscordTs()}.\nFür weitere Informationen besuche: {serviceBaseUrl}",
+					$"Die moderatoren von `{guild.Name}` haben dich temporär gebannt bis {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 				Language.Fr =>
-					$"Les modérateurs de la guilde `{guild.Name}` vous ont temporairement banni jusqu'à {modCase.PunishedUntil.Value.ToDiscordTs()}.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
+					$"Les modérateurs de la guilde `{guild.Name}` vous ont temporairement banni jusqu'à {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
 				Language.Es =>
-					$"Los moderadores del gremio `{guild.Name}` te han baneado temporalmente hasta el {modCase.PunishedUntil.Value.ToDiscordTs()}.\nPara obtener más información o rehabilitación, visite: {serviceBaseUrl}",
+					$"Los moderadores del gremio `{guild.Name}` te han baneado temporalmente hasta el {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 				Language.Ru =>
-					$"Модераторы гильдии `{guild.Name}` временно заблокировали вас до {modCase.PunishedUntil.Value.ToDiscordTs()}.\nДля получения дополнительной информации или реабилитации посетите: {serviceBaseUrl}",
+					$"Модераторы гильдии `{guild.Name}` временно заблокировали вас до {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 				Language.It =>
-					$"I moderatori della gilda `{guild.Name}` ti hanno temporaneamente bannato fino al {modCase.PunishedUntil.Value.ToDiscordTs()}.\nPer maggiori informazioni o visita riabilitativa: {serviceBaseUrl}",
+					$"I moderatori della gilda `{guild.Name}` ti hanno temporaneamente bannato fino al {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 				_ =>
-					$"The moderators of guild `{guild.Name}` have temporarily banned you until {modCase.PunishedUntil.Value.ToDiscordTs()}.\nFor more information or rehabilitation visit: {serviceBaseUrl}"
+					$"The moderators of `{guild.Name}` have temporarily banned you until {modCase.PunishedUntil.Value.ToDiscordTs()} for {reason}.\nFor more information or rehabilitation visit {caseUrl}"
 			};
 		return string.Empty;
 	}
 
-	public string NotificationModCaseDmMuteTemp(ModCase modCase, IGuild guild, string serviceBaseUrl)
+	public string NotificationModCaseDmMuteTemp(ModCase modCase, IGuild guild, string reason, string caseUrl)
 	{
 		if (modCase.PunishedUntil != null)
 			return PreferredLanguage switch
 			{
 				Language.De =>
-					$"Die moderatoren von `{guild.Name}` haben dich temporär stummgeschalten bis {modCase.PunishedUntil.Value.ToDiscordTs()}.\nFür weitere Informationen besuche: {serviceBaseUrl}",
+					$"Die moderatoren von `{guild.Name}` haben dich temporär stummgeschalten bis {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 				Language.Fr =>
-					$"Les modérateurs de la guilde `{guild.Name}` vous ont temporairement mis en sourdine jusqu'à {modCase.PunishedUntil.Value.ToDiscordTs()}.\nPour plus d'informations ou pour une réhabilitation, visitez : {serviceBaseUrl}",
+					$"Les modérateurs de la guilde `{guild.Name}` vous ont temporairement mis en sourdine jusqu'à {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
 				Language.Es =>
-					$"Los moderadores del gremio `{guild.Name}` te han silenciado temporalmente hasta {modCase.PunishedUntil.Value.ToDiscordTs()}.\nPara obtener más información o rehabilitación, visite: {serviceBaseUrl}",
+					$"Los moderadores del gremio `{guild.Name}` te han silenciado temporalmente hasta {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 				Language.Ru =>
-					$"Модераторы гильдии `{guild.Name}` временно отключили ваш звук до {modCase.PunishedUntil.Value.ToDiscordTs()}.\nДля получения дополнительной информации или реабилитации посетите: {serviceBaseUrl}",
+					$"Модераторы гильдии `{guild.Name}` временно отключили ваш звук до {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 				Language.It =>
-					$"I moderatori della gilda `{guild.Name}` ti hanno temporaneamente disattivato l'audio fino a {modCase.PunishedUntil.Value.ToDiscordTs()}.\nPer maggiori informazioni o visita riabilitativa: {serviceBaseUrl}",
+					$"I moderatori della gilda `{guild.Name}` ti hanno temporaneamente disattivato l'audio fino a {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 				_ =>
-					$"The moderators of guild `{guild.Name}` have temporarily muted you until {modCase.PunishedUntil.Value.ToDiscordTs()}.\nFor more information or rehabilitation visit: {serviceBaseUrl}"
+					$"The moderators of `{guild.Name}` have temporarily muted you until {modCase.PunishedUntil.Value.ToDiscordTs()} for {reason}.\nFor more information, visit {caseUrl}"
 			};
 		return string.Empty;
 	}

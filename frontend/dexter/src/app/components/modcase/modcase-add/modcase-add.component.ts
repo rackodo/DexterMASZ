@@ -18,6 +18,7 @@ import { TemplateCreateDialogComponent } from '../../dialogs/template-create-dia
 import { MatDialog } from '@angular/material/dialog';
 import { AppUser } from 'src/app/models/AppUser';
 import { PunishmentType } from 'src/app/models/PunishmentType';
+import { SeverityType } from 'src/app/models/SeverityType';
 import { ApiEnum } from 'src/app/models/ApiEnum';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
@@ -26,7 +27,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ModCaseLabel } from 'src/app/models/ModCaseLabel';
 import { go, highlight } from 'fuzzysort';
-
 
 @Component({
   selector: 'app-modcase-add',
@@ -67,6 +67,8 @@ export class ModCaseAddComponent implements OnInit {
   public templates: ContentLoading<ModCaseTemplateExpanded[]> = { loading: true, content: [] };
   public allTemplates: ModCaseTemplateExpanded[] = [];
   public punishmentOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
+  public severityOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
+  
   public currentUser!: AppUser;
   constructor(private _formBuilder: FormBuilder, private api: ApiService, private toastr: ToastrService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private enumManager: EnumManagerService, private translator: TranslateService) {
     this.labelInputForm.valueChanges.subscribe(data => {
@@ -86,7 +88,8 @@ export class ModCaseAddComponent implements OnInit {
       description: ['', Validators.required]
     });
     this.punishmentFormGroup = this._formBuilder.group({
-      punishmentType: ['', Validators.required]
+      punishmentType: ['', Validators.required],
+	  severityType: ['None']	  
     });
     this.filesFormGroup = this._formBuilder.group({
       files: ['']
@@ -189,6 +192,15 @@ export class ModCaseAddComponent implements OnInit {
       this.toastr.error(this.translator.instant('ModCaseDialog.FailedToLoad.PunishmentEnum'));
     });
 
+    this.enumManager.getEnum(ApiEnumTypes.SEVERITY).subscribe(data => {
+      this.severityOptions.content = data;
+      this.severityOptions.loading = false;
+    }, error => {
+      console.error(error);
+      this.severityOptions.loading = false;
+      this.toastr.error(this.translator.instant('ModCaseDialog.FailedToLoad.SeverityEnum'));
+    });
+	
     this.reloadTemplates();
 
     this.authService.getUserProfile().subscribe((data) => {
@@ -222,7 +234,8 @@ export class ModCaseAddComponent implements OnInit {
     });
     this.caseLabels = template.caseLabels;
     this.punishmentFormGroup.setValue({
-      punishmentType: template.casePunishmentType
+      punishmentType: template.casePunishmentType,
+	  severityType: template.caseSeverityType
     });
     if (template.casePunishedUntil) {
       this.punishedUntilChangeForPicker.next(template.casePunishedUntil);
@@ -236,18 +249,20 @@ export class ModCaseAddComponent implements OnInit {
 
   createCase() {
     this.savingCase = true;
+	
     const data = {
       title: this.infoFormGroup.value.title,
       description: this.infoFormGroup.value.description,
       userid: this.userFormGroup.value.user?.trim(),
       labels: this.caseLabels,
       punishmentType: this.punishmentFormGroup.value.punishmentType,
+	  severityType: this.getSeverity(),
       punishedUntil: this.punishedUntil?.toISOString(),
     }
 
     const params = new HttpParams()
       .set('handlePunishment', this.punishmentFormGroup.value.handlePunishment ? 'true' : 'false');
-
+	  	
     this.api.postSimpleData(`/guilds/${this.guildId}/cases`, data, params, true, true).subscribe(data => {
       const caseId = data.caseId;
       this.router.navigate(['guilds', this.guildId, 'cases', caseId], { queryParams: { 'reloadfiles': this.filesToUpload.length ?? '0' } });
@@ -288,7 +303,8 @@ export class ModCaseAddComponent implements OnInit {
           description: this.infoFormGroup.value.description,
           labels: this.caseLabels,
           punishmentType: this.punishmentFormGroup.value.punishmentType,
-          punishedUntil: this.punishedUntil?.toISOString()
+          punishedUntil: this.punishedUntil?.toISOString(),
+		  severityType: this.getSeverity()
         };
 
         const params = new HttpParams()
@@ -331,6 +347,15 @@ export class ModCaseAddComponent implements OnInit {
     if (input) {
       input.value = '';
     }
+  }
+
+  getSeverity(): SeverityType {
+	let punishmentType = this.punishmentFormGroup.value.punishmentType;
+	let severity = SeverityType.None;
+	
+	if (punishmentType != PunishmentType.Kick && punishmentType != PunishmentType.Ban)
+		severity = this.punishmentFormGroup.value.severityType;
+	return severity;
   }
 
   remove(label: string): void {

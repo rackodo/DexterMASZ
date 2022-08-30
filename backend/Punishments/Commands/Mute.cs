@@ -24,12 +24,12 @@ public class Mute : Command<Mute>
 		string title,
 		[Summary("user", "User to punish")]
 		IUser user,
-		[Summary("time", "The time to punish the user for")]
-		TimeSpan time = default,
+		[Summary("severity-level", "Whether or not this is a higher or lower severity case")]
+		SeverityType severity,
 		[Summary("description", "The description of the modcase")]
 		string description = "",
-		[Summary("severity-level", "Whether or not this is a higher severity case")]
-		bool highSeverity = false)
+		[Summary("time", "The time to punish the user for")]
+		TimeSpan time = default)
 	{
 		ModCaseRepository.AsUser(Identity);
 		GuildConfigRepository.AsUser(Identity);
@@ -47,7 +47,7 @@ public class Mute : Command<Mute>
 			Description = string.IsNullOrEmpty(description) ? title : description,
 			PunishmentType = PunishmentType.Mute,
 			PunishmentActive = true,
-			HighSeverity = highSeverity,
+			Severity = severity,
 			PunishedUntil = time == default ? null : DateTime.UtcNow + time,
 			CreationType = CaseCreationType.ByCommand
 		};

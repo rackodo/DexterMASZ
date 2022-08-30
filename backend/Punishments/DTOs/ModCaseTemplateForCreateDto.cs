@@ -28,4 +28,6 @@ public class ModCaseTemplateForCreateDto
 	public DateTime? PunishedUntil { get; set; }
 
 	[Required] public bool HandlePunishment { get; set; } = false;
+
+	[Required] public SeverityType SeverityType { get; set; }
 }

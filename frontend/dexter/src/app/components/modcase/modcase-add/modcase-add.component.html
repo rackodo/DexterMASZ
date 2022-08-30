@@ -106,6 +106,13 @@
                     <app-date-picker *ngIf="this.punishmentFormGroup.value.punishmentType === 1 || this.punishmentFormGroup.value.punishmentType === 3"
                        (dateChanged)="punishedUntilChanged($event)" [dateChangedInParent]="punishedUntilChangeForPicker" >
                     </app-date-picker>
+					<br *ngIf="this.punishmentFormGroup.value.punishmentType === 1 || this.punishmentFormGroup.value.punishmentType === 3"/>
+                    <mat-form-field *ngIf="this.punishmentFormGroup.value.punishmentType != 2 && this.punishmentFormGroup.value.punishmentType !== 3">
+                        <mat-label>{{ 'ModCaseDialog.Severity' | translate }}</mat-label>
+                        <mat-select formControlName="severityType">
+                        <mat-option *ngFor="let enum of severityOptions.content" [value]="enum.key">{{ enum.value }}</mat-option>
+                        </mat-select>
+                    </mat-form-field><br/>
                 </form>
                 <div class="stepper-actions">
                     <button mat-raised-button matStepperPrevious class="mr-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>

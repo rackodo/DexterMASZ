@@ -1,6 +1,7 @@
 import { ApiEnum } from "./ApiEnum";
 import { ModCaseComment } from "./ModCaseComment";
 import { PunishmentType } from "./PunishmentType";
+import { SeverityType } from "./SeverityType";
 
 export interface ModCase {
     id: number;
@@ -13,6 +14,7 @@ export interface ModCase {
     discriminator?: string;
     nickname?: string;
     modId?: string;
+    severity: SeverityType;
     createdAt: Date;
     occuredAt: Date;
     lastEditedAt: Date;
@@ -34,4 +36,8 @@ export interface ModCase {
 
 export function convertModCaseToPunishmentString(modcase?: ModCase, punishments?: ApiEnum[]): string {
     return punishments?.find(x => x.key === modcase?.punishmentType)?.value ?? "Unknown";
+}
+
+export function convertModCaseToSeverityString(modcase?: ModCase, severities?: ApiEnum[]): string {
+    return severities?.find(x => x.key === modcase?.severity)?.value ?? "Unknown";
 }

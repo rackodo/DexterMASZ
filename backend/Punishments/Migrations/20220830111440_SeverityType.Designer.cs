@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Punishments.Data;
 
@@ -10,9 +11,10 @@ using Punishments.Data;
 namespace Punishments.Migrations
 {
     [DbContext(typeof(PunishmentDatabase))]
-    partial class PunishmentDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20220830111440_SeverityType")]
+    partial class SeverityType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,9 +154,6 @@ namespace Punishments.Migrations
                     b.Property<int>("CasePunishmentType")
                         .HasColumnType("int");
 
-                    b.Property<int>("CaseSeverityType")
-                        .HasColumnType("int");
-
                     b.Property<string>("CaseTitle")
                         .HasColumnType("longtext");
 
@@ -165,6 +164,9 @@ namespace Punishments.Migrations
                         .HasColumnType("bigint unsigned");
 
                     b.Property<bool>("HandlePunishment")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool?>("HighSeverity")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("TemplateName")
