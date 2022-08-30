@@ -18,8 +18,10 @@ export class RankcardPreviewComponent implements OnInit {
   @Input() model : UserRankcardConfig = UserRankcardConfigUtility.default;
 
   @Input() username: string = "Username#0123";
-  @Input() pfpUrl: string = "/assets/img/defaultProfile.png";
+  @Input() pfpUrl: string = "/assets/img/default_profile.png";
   @Input() defaultBgOptions : string[] = ["default"];
+
+  normalMargin = 25;
 
   uintColorToCss(color: bigint) : string {
     color = BigInt(color);
@@ -68,6 +70,12 @@ export class RankcardPreviewComponent implements OnInit {
 
     return amount.toString();
   }
+
+  displayPfpFlag() { return (this.model.rankcardFlags & RankcardFlags.DisplayPfp) > 0; }
+  showPfpBgFlag()  { return (this.model.rankcardFlags & RankcardFlags.PfpBackground) > 0; }
+  clipPfpFlag()    { return (this.model.rankcardFlags & RankcardFlags.ClipPfp) > 0; }
+  showHybridFlag() { return (this.model.rankcardFlags & RankcardFlags.ShowHybrid) > 0; }
+  insetMainXpFlag(){ return (this.model.rankcardFlags & RankcardFlags.InsetMainXP) > 0; }
 
   constructor() { }
 

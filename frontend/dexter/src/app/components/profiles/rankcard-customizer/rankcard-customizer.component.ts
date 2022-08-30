@@ -41,6 +41,7 @@ export class RankcardCustomizerComponent implements AfterViewInit {
 
   user : DiscordUser | undefined;
   username: string = "Username#0123";
+  pfp: string = "/assets/img/default_profile.png";
   userId : bigint = 0n;
 
   rankcardSize = {x: 1350, y: 450};
