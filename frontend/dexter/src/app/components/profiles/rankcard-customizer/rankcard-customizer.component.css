@@ -212,14 +212,6 @@ input:checked + .slider:before {
   transition: background-color .2s;
 }
 
-/*.background-option:hover {
-  background-color: #5b5b5b60;
-}
-
-.background-option.selected {
-  background-color: #8a8a8a60 !important;
-}*/
-
 .vertical-separator {
   width: 1px;
   background-color: #555;
@@ -290,11 +282,6 @@ input:checked + .slider:before {
   height: calc(var(--preview-height) * var(--unit));
   transform: scale(var(--scale))
     translateY(calc((var(--rankcard-height) - var(--preview-height)) * -0.5 * var(--unit)));
-  ;
-  /*
-  transform: scale(0.5) translateY(calc(-50% - 50px));
-  height: calc(450px * 0.5);
-  */
 }
 
 @media (min-width: 576px){
