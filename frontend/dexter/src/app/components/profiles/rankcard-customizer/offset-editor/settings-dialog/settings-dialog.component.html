@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Offset Editor Settings</h1>
+<div mat-dialog-content class="d-flex flex-column">
+  <mat-form-field *ngFor="let field of fields" [matTooltip]="field.description ?? ''" appearance="fill">
+    <mat-label>{{field.name}}</mat-label>
+    <input matInput [formControl]="field.controller" type="number">
+    <mat-error *ngIf="field.controller.errors?.['min']">Must be at least {{field.controller.errors?.min.min}}</mat-error>
+    <mat-error *ngIf="field.controller.errors?.['max']">Must be at most {{field.controller.errors?.max.max}}</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="getResult()" cdkFocusInitial>Submit</button>
+</div>
+
