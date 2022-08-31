@@ -13,5 +13,5 @@
 </div>
 <div mat-dialog-actions class="w-100 d-flex flex-row justify-content-center">
     <button mat-raised-button color="accent" [mat-dialog-close]="false" cdkFocusInitial>{{ 'TemplateCreateDialog.Cancel' | translate }}</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="true" [disabled]="!settings.name?.trim() || !settings.viewPermission == null">{{ 'TemplateCreateDialog.Confirm' | translate }}</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" [disabled]="!settings.name.trim() || !settings.viewPermission == null">{{ 'TemplateCreateDialog.Confirm' | translate }}</button>
 </div>

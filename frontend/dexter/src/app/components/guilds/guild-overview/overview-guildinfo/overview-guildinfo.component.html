@@ -5,16 +5,16 @@
         <mat-spinner *ngIf="this.guild?.loading" [diameter]="64" class="mr-1"></mat-spinner>
         <span class="mat-h1 font-weight-bold mb-0 waiting-for-text" *ngIf="this.guild?.loading" style="width: 300px;"></span>
         <!-- Content -->
-        <app-guild-icon [guild]="guild?.content" [width]="'64px'" [height]="'64px'" [darkBorder]="true" class="mr-2"></app-guild-icon>
+        <app-guild-icon [guild]="guild.content" [width]="'64px'" [height]="'64px'" [darkBorder]="true" class="mr-2"></app-guild-icon>
         <span class="mat-h1 font-weight-bold mb-0" *ngIf="this.guild?.content && !this.guild?.loading">
-            {{ this.guild?.content?.name }}
+            {{ this.guild.content?.name }}
         </span>
         <div class="flex-grow-1"></div>
-        <a routerLink="/guilds/{{ this.guild?.content?.id }}/leaderboard" class="p-2" mat-raised-button color="primary">
+        <a routerLink="/guilds/{{ this.guild.content?.id }}/leaderboard" class="p-2" mat-raised-button color="primary">
             {{ 'GuildInfoCard.Leaderboard' | translate }}
         </a>
 		<div class="mr-3" *ngIf="overview.isModOrHigher"></div>
-		<a routerLink="/guilds/{{ this.guild?.content?.id }}/cases/new" class="p-2" mat-raised-button color="accent" *ngIf="overview.isModOrHigher">
+		<a routerLink="/guilds/{{ this.guild.content?.id }}/cases/new" class="p-2" mat-raised-button color="accent" *ngIf="overview.isModOrHigher">
 			{{ 'GuildInfoCard.CreateNewCase' | translate }}
 		</a>
         <!-- Not loaded -->

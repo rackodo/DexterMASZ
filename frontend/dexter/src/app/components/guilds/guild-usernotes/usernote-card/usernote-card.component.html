@@ -23,7 +23,7 @@
             <!-- Title -->
             <div>
                 <span title="{{ userNote.userNote.userId }}" class="mat-h2 mb-0" *ngIf="userNote.user">
-                    {{ userNote.user?.username }}#{{ userNote.user?.discriminator }}
+                    {{ userNote.user.username }}#{{ userNote.user.discriminator }}
                 </span>
                 <span title="{{ userNote.userNote.userId }}" class="mat-h2 mb-0" *ngIf="!userNote.user">
                     {{ userNote.userNote.userId }}

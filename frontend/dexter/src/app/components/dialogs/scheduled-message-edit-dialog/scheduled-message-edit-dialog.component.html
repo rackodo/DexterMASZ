@@ -14,5 +14,5 @@
 </div>
 <div mat-dialog-actions class="w-100 d-flex flex-row justify-content-center">
     <button mat-raised-button color="accent" [mat-dialog-close]="false" cdkFocusInitial>{{ 'ScheduledMessageEditDialog.Cancel' | translate }}</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="true" [disabled]="!message.content?.trim() || !message.name?.trim()">{{ 'ScheduledMessageEditDialog.Confirm' | translate }}</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" [disabled]="!message.content.trim() || !message.name.trim()">{{ 'ScheduledMessageEditDialog.Confirm' | translate }}</button>
 </div>

@@ -1048,6 +1048,7 @@ typings/
 # e2e
 e2e/*.js
 e2e/*.map
+.angular/
 
 # System Files
 .DS_Store/

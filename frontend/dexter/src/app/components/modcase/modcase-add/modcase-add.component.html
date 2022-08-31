@@ -13,7 +13,7 @@
                     <mat-list>
                         <mat-list-item class="crs-ptr" *ngFor="let note of this.templates.content" (click)="applyTemplate(note.caseTemplate, stepper)">
                             <img width="40px" height="40px" class="rounded-circle mr-2"
-                             alt="creator {{ note.caseTemplate?.userId }}" src="{{ note.creator?.imageUrl }}" />
+                             alt="creator {{ note.caseTemplate.userId }}" src="{{ note.creator?.imageUrl }}" />
                             <div class="mr-2">
                                 {{note.caseTemplate.templateName}}
                             </div>

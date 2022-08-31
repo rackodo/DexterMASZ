@@ -6,47 +6,47 @@
         <div class="w-100 d-flex flex-row flex-wrap" *ngIf="stats.loading || stats.content">
             <div class="mr-3">
                 <span>{{ 'Cases' | translate }}</span>
-                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content?.caseCount }}</span>
+                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content.caseCount }}</span>
                 <span class="d-block mat-h1 mb-0 waiting-for-text" style="width: 40px;" *ngIf="!stats.content"></span>
             </div>
             <div class="mr-3">
                 <span>{{ 'Punishments' | translate }}</span>
-                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content?.activeCount }}</span>
+                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content.activeCount }}</span>
                 <span class="d-block mat-h1 mb-0 waiting-for-text" style="width: 40px;" *ngIf="!stats.content"></span>
             </div>
             <div class="mr-3">
                 <span>{{ 'Bans' | translate }}</span>
-                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content?.activeBanCount }}</span>
+                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content.activeBanCount }}</span>
                 <span class="d-block mat-h1 mb-0 waiting-for-text" style="width: 40px;" *ngIf="!stats.content"></span>
             </div>
             <div class="mr-3">
                 <span>{{ 'Mutes' | translate }}</span>
-                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content?.activeMuteCount }}</span>
+                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content.activeMuteCount }}</span>
                 <span class="d-block mat-h1 mb-0 waiting-for-text" style="width: 40px;" *ngIf="!stats.content"></span>
             </div>
             <div class="mr-3">
                 <span>{{ 'Automods' | translate }}</span>
-                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content?.autoModCount }}</span>
+                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content.autoModCount }}</span>
                 <span class="d-block mat-h1 mb-0 waiting-for-text" style="width: 40px;" *ngIf="!stats.content"></span>
             </div>
             <div class="mr-3">
                 <span>{{ 'Invites' | translate }}</span>
-                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content?.trackedInvites }}</span>
+                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content.trackedInvites }}</span>
                 <span class="d-block mat-h1 mb-0 waiting-for-text" style="width: 40px;" *ngIf="!stats.content"></span>
             </div>
             <div class="mr-3">
                 <span>{{ 'UserNotes' | translate }}</span>
-                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content?.userNotes }}</span>
+                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content.userNotes }}</span>
                 <span class="d-block mat-h1 mb-0 waiting-for-text" style="width: 40px;" *ngIf="!stats.content"></span>
             </div>
             <div class="mr-3">
                 <span>{{ 'UserMaps' | translate }}</span>
-                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content?.userMaps }}</span>
+                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content.userMaps }}</span>
                 <span class="d-block mat-h1 mb-0 waiting-for-text" style="width: 40px;" *ngIf="!stats.content"></span>
             </div>
             <div class="mr-3">
                 <span>{{ 'Comments' | translate }}</span>
-                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content?.comments }}</span>
+                <span class="d-block mat-h1 mb-0" *ngIf="stats.content">{{ stats.content.comments }}</span>
                 <span class="d-block mat-h1 mb-0 waiting-for-text" style="width: 40px;" *ngIf="!stats.content"></span>
             </div>
         </div>

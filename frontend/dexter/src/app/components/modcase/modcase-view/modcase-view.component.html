@@ -71,7 +71,7 @@
             <!-- cards -->
             <div class="row mb-3 mt-3">
                 <!-- user information -->
-                <div class="col-12 col-sm-6 col-md-4 grid-margin stretch-card mt-2" (click)="this.redirectToUserscan(this.modCase?.content?.modCase?.userId)">
+                <div class="col-12 col-sm-6 col-md-4 grid-margin stretch-card mt-2" (click)="this.redirectToUserscan(this.modCase.content?.modCase?.userId)">
                     <div class="infobox bg-g-green">
                         <div class="infobox-body d-flex flex-row flex-wrap">
                             <div class="flex-grow-1 d-flex flex-column">
@@ -119,7 +119,7 @@
                                 </ng-container>
                             </div>
                             <div class="infobox-icon">
-                                <app-guild-icon [guild]="this.currentGuild?.content" [width]="'80px'" [height]="'80px'"></app-guild-icon>
+                                <app-guild-icon [guild]="this.currentGuild.content" [width]="'80px'" [height]="'80px'"></app-guild-icon>
                             </div>
                         </div>
                     </div>
@@ -360,7 +360,7 @@
                                         />
                                     </ng-container>
                                     <ng-container *ngIf="!comment?.comment?.userId">
-                                        <app-guild-icon class="mr-1" [guild]="currentGuild?.content"
+                                        <app-guild-icon class="mr-1" [guild]="currentGuild.content"
                                             [width]="'32px'" [height]="'32px'" [darkBorder]="true">
                                         </app-guild-icon>
                                     </ng-container>
@@ -440,7 +440,7 @@
                         <button mat-raised-button color="accent"
                             class="flex-shrink-1"
                             (click)="postComment()"
-                            [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined || this.newComment?.trim() == '' || !this.modCase.content?.modCase?.allowComments">
+                            [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined || this.newComment.trim() == '' || !this.modCase.content?.modCase?.allowComments">
                             {{ 'ModCaseView.PostComment' | translate }}
                         </button>
                     </div>
