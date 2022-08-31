@@ -77,12 +77,10 @@ export class ModCaseEditComponent implements OnInit {
     });
     this.punishmentFormGroup = this._formBuilder.group({
       punishmentType: ['', Validators.required],
-	  severityType: ['None']
+	  severityType: ['None', Validators.required]
     });
     this.optionsFormGroup = this._formBuilder.group({
     });
-
-    this.optionsFormGroup.controls['sendNotification'].setValue(true);
 
     this.punishmentFormGroup.get('punishmentType')?.valueChanges.subscribe((val: PunishmentType) => {
       if (val !== PunishmentType.Ban && val !== PunishmentType.Mute) {
@@ -182,6 +180,7 @@ export class ModCaseEditComponent implements OnInit {
     this.caseLabels = modCase.labels;
     this.punishmentFormGroup.setValue({
       punishmentType: modCase.punishmentType,
+	  severityType: modCase.severity
     });
     if (modCase.punishedUntil) {
       this.punishedUntilChangeForPicker.next(modCase.punishedUntil);

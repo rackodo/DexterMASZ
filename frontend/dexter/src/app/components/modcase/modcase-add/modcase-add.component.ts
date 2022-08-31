@@ -89,7 +89,7 @@ export class ModCaseAddComponent implements OnInit {
     });
     this.punishmentFormGroup = this._formBuilder.group({
       punishmentType: ['', Validators.required],
-	  severityType: ['None']	  
+	  severityType: ['None', Validators.required]	  
     });
     this.filesFormGroup = this._formBuilder.group({
       files: ['']
