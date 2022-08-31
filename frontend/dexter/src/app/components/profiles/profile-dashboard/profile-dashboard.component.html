@@ -5,12 +5,12 @@
             <mat-tab *ngFor="let tab of this.tabs">
                 <ng-template mat-tab-label>
                     <mat-icon class="mr-1">{{ tab.icon }}</mat-icon>
-                    <span *ngIf="tab.component == 'overview'">{{ 'Profile.Tabs.Overview' | translate }}</span>
-                    <span *ngIf="tab.component == 'rankcard'">{{ 'Profile.Tabs.Rankcard' | translate }}</span>
+                    <span *ngIf="tab.component === 'overview'">{{ 'Profile.Tabs.Overview' | translate }}</span>
+                    <span *ngIf="tab.component === 'rankcard'">{{ 'Profile.Tabs.Rankcard' | translate }}</span>
                 </ng-template>
                 <ng-template matTabContent>
-                    <app-profile-overview *ngIf="tab.component == 'overview'"></app-profile-overview>
-                    <app-rankcard-customizer *ngIf="tab.component == 'rankcard'"></app-rankcard-customizer>
+                    <app-profile-overview *ngIf="tab.component === 'overview'"></app-profile-overview>
+                    <app-rankcard-customizer *ngIf="tab.component === 'rankcard'"></app-rankcard-customizer>
                 </ng-template>
             </mat-tab>
             <!-- dash board optional tab? -->

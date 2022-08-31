@@ -12,7 +12,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class LeaderboardRankingComponent implements OnInit {
 
-  @Input("order") order : string = "total";
+  @Input() order : string = "total";
 
   TESTING = false;
 

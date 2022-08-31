@@ -9,9 +9,9 @@ import { CalcGuildUserLevel } from 'src/app/models/CalcGuildUserLevel';
 })
 export class LeaderboardItemComponent implements OnInit {
 
-  @Input("index") index : number = 1;
-  @Input("order") order : string = "total";
-  @Input("user") user! : CalcGuildUserLevel;
+  @Input() index : number = 1;
+  @Input() order : string = "total";
+  @Input() user! : CalcGuildUserLevel;
   json = JSON;
   record!: ExperienceRecord
 
