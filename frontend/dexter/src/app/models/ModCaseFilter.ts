@@ -1,4 +1,5 @@
 import { PunishmentType } from "./PunishmentType";
+import { SeverityType } from "./SeverityType";
 
 export interface ModCaseFilter {
     customTextFilter?: string;
@@ -11,6 +12,7 @@ export interface ModCaseFilter {
     edited?: boolean;
     creationTypes?: number[];
     punishmentTypes?: PunishmentType[];
+    severityTypes?: SeverityType[];
     punishmentActive?: boolean;
     lockedComments?: boolean;
     markedToDelete?: boolean;

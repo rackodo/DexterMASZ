@@ -14,6 +14,7 @@ public class ModCaseTableFilterDto
 	public bool? Edited { get; set; }
 	public List<CaseCreationType> CreationTypes { get; set; }
 	public List<PunishmentType> PunishmentTypes { get; set; }
+	public List<SeverityType> SeverityTypes { get; set; }
 	public bool? PunishmentActive { get; set; }
 	public bool? LockedComments { get; set; }
 	public bool? MarkedToDelete { get; set; }

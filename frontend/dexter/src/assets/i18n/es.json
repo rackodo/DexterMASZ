@@ -241,6 +241,23 @@
     },
     "ThreadCreated": {
       "title": "Subproceso creado"
+    },
+    "ExcludeRoles": "Excluir roles",
+    "ExcludeChannels": "Excluir canales",
+    "VoiceJoined": {
+      "title": "Canal de voz unido a un miembro"
+    },
+    "VoiceLeft": {
+      "title": "Canal de voz izquierdo del miembro"
+    },
+    "VoiceMoved": {
+      "title": "Canal de voz movido por el miembro"
+    },
+    "ReactionAdded": {
+      "title": "Reacción añadida"
+    },
+    "ReactionRemoved": {
+      "title": "Reacción eliminada"
     }
   },
   "AutoModConfig": {
@@ -449,7 +466,8 @@
       "UserList": "Error al cargar la lista de usuarios.",
       "PunishmentEnum": "No se pudieron cargar los castigos disponibles.",
       "CaseTemplates": "Error al cargar plantillas de casos.",
-      "CurrentCase": "Error al cargar el caso actual."
+      "CurrentCase": "Error al cargar el caso actual.",
+      "SeverityEnum": "Error al cargar las severidades disponibles."
     },
     "AppliedTemplate": "Plantilla aplicada.",
     "TemplateDeleted": "Plantilla eliminada.",
@@ -459,7 +477,8 @@
     "FileUploaded": "Archivo cargado.",
     "FailedToUploadFile": "Error al cargar el archivo.",
     "CaseCreated": "Caso creado.",
-    "CaseUpdated": "Caso actualizado."
+    "CaseUpdated": "Caso actualizado.",
+    "Severity": "Severidad"
   },
   "ModCaseTable": {
     "SelectUsers": "Usuarios",
@@ -480,7 +499,8 @@
     "CreateNewCase": "Crear nuevo caso",
     "Search": "Búsqueda (usuario, id, descripción...)",
     "FailedToLoad": "Error al cargar los casos.",
-    "NoMatches": "Ningún caso coincide con su búsqueda."
+    "NoMatches": "Ningún caso coincide con su búsqueda.",
+    "SelectSeverity": "Severidad"
   },
   "ScheduleMessageCard": {
     "Created": "Creado:",
@@ -533,7 +553,8 @@
       "Punishments": "No se pudieron cargar los castigos disponibles.",
       "Files": "Error al cargar archivos.",
       "Guild": "Error al cargar la información del gremio.",
-      "Case": "Error al cargar el caso."
+      "Case": "Error al cargar el caso.",
+      "Severities": "Error al cargar las severidades disponibles."
     },
     "DeleteCase": {
       "Deleted": "Caso marcado para ser eliminado.",

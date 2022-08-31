@@ -38,6 +38,12 @@
                               [searchPredicate]="enumFilterPredicate"
                               [displayPredicate]="enumDisplayPredicate"></app-multi-select>
             <mat-form-field class="px-2 pb-2">
+                <mat-label>{{ 'ModCaseTable.SelectSeverity' | translate }}</mat-label>
+                <mat-select [formControl]="severityTypeCtrl">
+                    <mat-option *ngFor="let enum of (severityTypes | async)" [value]="enum">{{ enum.value }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="px-2 pb-2">
                 <mat-label>{{ 'ModCaseTable.SelectEdited' | translate }}</mat-label>
                 <mat-select [formControl]="editStatusCtrl">
                     <mat-option *ngFor="let enum of (editedStatus | async)" [value]="enum">{{ enum.value }}</mat-option>

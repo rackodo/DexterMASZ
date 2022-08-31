@@ -241,6 +241,23 @@
     },
     "ThreadCreated": {
       "title": "Thread creato"
+    },
+    "ExcludeRoles": "Escludere ruoli",
+    "ExcludeChannels": "Escludi canali",
+    "VoiceJoined": {
+      "title": "Canale vocale iscritto da un membro"
+    },
+    "VoiceLeft": {
+      "title": "Canale vocale sinistro del membro"
+    },
+    "VoiceMoved": {
+      "title": "Canale vocale spostato dal membro"
+    },
+    "ReactionAdded": {
+      "title": "Reazione aggiunta"
+    },
+    "ReactionRemoved": {
+      "title": "Reazione rimossa"
     }
   },
   "AutoModConfig": {
@@ -449,7 +466,8 @@
       "UserList": "Impossibile caricare l'elenco degli utenti.",
       "PunishmentEnum": "Impossibile caricare le punizioni disponibili.",
       "CaseTemplates": "Impossibile caricare i modelli di caso.",
-      "CurrentCase": "Impossibile caricare il caso corrente."
+      "CurrentCase": "Impossibile caricare il caso corrente.",
+      "SeverityEnum": "Impossibile caricare i livelli di gravità disponibili."
     },
     "AppliedTemplate": "Modello applicato.",
     "TemplateDeleted": "Modello eliminato.",
@@ -459,7 +477,8 @@
     "FileUploaded": "File caricato.",
     "FailedToUploadFile": "Impossibile caricare il file.",
     "CaseCreated": "Caso creato.",
-    "CaseUpdated": "Caso aggiornato."
+    "CaseUpdated": "Caso aggiornato.",
+    "Severity": "Severità"
   },
   "ModCaseTable": {
     "SelectUsers": "Gli utenti",
@@ -480,7 +499,8 @@
     "CreateNewCase": "Crea nuovo caso",
     "Search": "Ricerca (utente, id, descrizione...)",
     "FailedToLoad": "Impossibile caricare i casi.",
-    "NoMatches": "Nessun caso corrisponde alla tua ricerca."
+    "NoMatches": "Nessun caso corrisponde alla tua ricerca.",
+    "SelectSeverity": "Severità"
   },
   "ScheduleMessageCard": {
     "Created": "Creato:",
@@ -533,7 +553,8 @@
       "Punishments": "Impossibile caricare le punizioni disponibili.",
       "Files": "Impossibile caricare i file.",
       "Guild": "Impossibile caricare le informazioni sulla gilda.",
-      "Case": "Impossibile caricare il caso."
+      "Case": "Impossibile caricare il caso.",
+      "Severities": "Impossibile caricare i livelli di gravità disponibili."
     },
     "DeleteCase": {
       "Deleted": "Caso contrassegnato per essere cancellato.",

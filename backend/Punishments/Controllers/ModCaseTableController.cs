@@ -125,6 +125,8 @@ public class ModCaseTableController : AuthenticatedController
 				search.CustomTextFilter.Search(t.ModCase.CaseId.ToString()) ||
 				search.CustomTextFilter.Search("#" + t.ModCase.CaseId) ||
 				search.CustomTextFilter.Search(t.Moderator) ||
+				search.CustomTextFilter.Search(_translator.Get<PunishmentEnumTranslator>()
+					.Enum(t.ModCase.Severity)) ||
 				search.CustomTextFilter.Search(t.Suspect));
 
 		if (search?.UserIds != null && search.UserIds.Count > 0)
@@ -152,6 +154,9 @@ public class ModCaseTableController : AuthenticatedController
 
 		if (search?.CreationTypes != null && search.CreationTypes.Count > 0)
 			table = table.Where(x => search.CreationTypes.Contains(x.ModCase.CreationType));
+
+		if (search?.SeverityTypes != null && search.SeverityTypes.Count > 0)
+			table = table.Where(x => search.SeverityTypes.Contains(x.ModCase.Severity));
 
 		if (search?.PunishmentTypes != null && search.PunishmentTypes.Count > 0)
 			table = table.Where(x => search.PunishmentTypes.Contains(x.ModCase.PunishmentType));

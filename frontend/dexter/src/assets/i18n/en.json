@@ -526,7 +526,8 @@
         "CreateNewCase": "Create new case",
         "Search": "Search (user, id, description...)",
         "FailedToLoad": "Failed to load cases.",
-        "NoMatches": "No case matches your search."
+        "NoMatches": "No case matches your search.",
+		"SelectSeverity": "Severity"
     },
     "ScheduleMessageCard": {
         "Created": "Created:",

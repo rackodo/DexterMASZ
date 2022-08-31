@@ -241,6 +241,23 @@
     },
     "ThreadCreated": {
       "title": "Thread erstellt"
+    },
+    "ExcludeRoles": "Rollen ausschließen",
+    "ExcludeChannels": "Kanäle ausschließen",
+    "VoiceJoined": {
+      "title": "Dem Mitglied beigetretener Sprachkanal"
+    },
+    "VoiceLeft": {
+      "title": "Linker Sprachkanal des Mitglieds"
+    },
+    "VoiceMoved": {
+      "title": "Vom Mitglied verschobener Sprachkanal"
+    },
+    "ReactionAdded": {
+      "title": "Reaktion hinzugefügt"
+    },
+    "ReactionRemoved": {
+      "title": "Reaktion entfernt"
     }
   },
   "AutoModConfig": {
@@ -449,7 +466,8 @@
       "UserList": "Benutzerliste konnte nicht geladen werden.",
       "PunishmentEnum": "Verfügbare Strafen konnten nicht geladen werden.",
       "CaseTemplates": "Fallvorlagen konnten nicht geladen werden.",
-      "CurrentCase": "Der aktuelle Fall konnte nicht geladen werden."
+      "CurrentCase": "Der aktuelle Fall konnte nicht geladen werden.",
+      "SeverityEnum": "Verfügbare Schweregrade konnten nicht geladen werden."
     },
     "AppliedTemplate": "Angewendete Vorlage.",
     "TemplateDeleted": "Vorlage gelöscht.",
@@ -459,7 +477,8 @@
     "FileUploaded": "Datei hochgeladen.",
     "FailedToUploadFile": "Datei konnte nicht hochgeladen werden.",
     "CaseCreated": "Fall erstellt.",
-    "CaseUpdated": "Fall aktualisiert."
+    "CaseUpdated": "Fall aktualisiert.",
+    "Severity": "Strenge"
   },
   "ModCaseTable": {
     "SelectUsers": "Benutzer",
@@ -480,7 +499,8 @@
     "CreateNewCase": "Neuen Fall erstellen",
     "Search": "Suche (Benutzer, ID, Beschreibung...)",
     "FailedToLoad": "Fälle konnten nicht geladen werden.",
-    "NoMatches": "Kein Fall stimmt mit Ihrer Suche überein."
+    "NoMatches": "Kein Fall stimmt mit Ihrer Suche überein.",
+    "SelectSeverity": "Strenge"
   },
   "ScheduleMessageCard": {
     "Created": "Erstellt:",
@@ -533,7 +553,8 @@
       "Punishments": "Verfügbare Strafen konnten nicht geladen werden.",
       "Files": "Dateien konnten nicht geladen werden.",
       "Guild": "Gildeninformationen konnten nicht geladen werden.",
-      "Case": "Fall konnte nicht geladen werden."
+      "Case": "Fall konnte nicht geladen werden.",
+      "Severities": "Verfügbare Schweregrade konnten nicht geladen werden."
     },
     "DeleteCase": {
       "Deleted": "Zur Löschung markierte Groß-/Kleinschreibung.",

@@ -44,11 +44,13 @@ export class ModCaseTableComponent implements OnInit {
   public commentLockedStatus: ReplaySubject<ApiEnum[]> = new ReplaySubject<ApiEnum[]>(1);
   public markedToDeleteStatus: ReplaySubject<ApiEnum[]> = new ReplaySubject<ApiEnum[]>(1);
   public punishmentActiveStatus: ReplaySubject<ApiEnum[]> = new ReplaySubject<ApiEnum[]>(1);
+  public severityTypes: ReplaySubject<ApiEnum[]> = new ReplaySubject<ApiEnum[]>(1)
 
   public editStatusCtrl: FormControl = new FormControl();
   public commentLockedCtrl: FormControl = new FormControl();
   public markDeleteCtrl: FormControl = new FormControl();
   public punishmentActiveCtrl: FormControl = new FormControl();
+  public severityTypeCtrl: FormControl = new FormControl();
 
   public userFilterPredicate = (user: DiscordUser, search: string) =>
       `${user.username.toLowerCase()}#${user.discriminator}`.indexOf(search.toLowerCase()) > -1 || user.id.toString() == search;
@@ -86,6 +88,9 @@ export class ModCaseTableComponent implements OnInit {
     this.punishmentActiveCtrl.valueChanges.subscribe(value => {
       this.selectedPunishmentActiveStatusChanged(value);
     });
+    this.severityTypeCtrl.valueChanges.subscribe(value => {
+      this.selectedSeverityTypeChanged(value);
+    });
 
     this.enumManager.getEnum(ApiEnumTypes.CASECREATIONTYPE).subscribe(data => {
       this.caseCreationTypes.next(data);
@@ -104,6 +109,9 @@ export class ModCaseTableComponent implements OnInit {
     });
     this.enumManager.getEnum(ApiEnumTypes.PUNISHMENTACTIVESTATUS).subscribe(data => {
       this.punishmentActiveStatus.next(data);
+    });
+    this.enumManager.getEnum(ApiEnumTypes.SEVERITY).subscribe(data => {
+      this.severityTypes.next(data);
     });
   }
 
@@ -158,6 +166,10 @@ export class ModCaseTableComponent implements OnInit {
   selectedPunishmentActiveStatusChanged(type: ApiEnum) {
     this.apiFilter.punishmentActive = type.key === 0 ? undefined : type.key !== 1;
   };
+  
+  selectedSeverityTypeChanged(types: ApiEnum[]) {
+    this.apiFilter.severityTypes = types?.map(x => x.key) ?? [];
+  }
 
   selectedSinceChanged(date: Moment) {
     this.apiFilter.since = date?.toISOString();

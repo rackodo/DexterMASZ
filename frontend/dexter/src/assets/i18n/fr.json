@@ -241,6 +241,23 @@
     },
     "ThreadCreated": {
       "title": "Thread créé"
+    },
+    "ExcludeRoles": "Exclure des rôles",
+    "ExcludeChannels": "Exclure des chaînes",
+    "VoiceJoined": {
+      "title": "Canal vocal rejoint par un membre"
+    },
+    "VoiceLeft": {
+      "title": "Canal vocal gauche du membre"
+    },
+    "VoiceMoved": {
+      "title": "Canal vocal déplacé par un membre"
+    },
+    "ReactionAdded": {
+      "title": "Réaction ajoutée"
+    },
+    "ReactionRemoved": {
+      "title": "Réaction supprimée"
     }
   },
   "AutoModConfig": {
@@ -449,7 +466,8 @@
       "UserList": "Impossible de charger la liste des utilisateurs.",
       "PunishmentEnum": "N’a pas réussi à charger les punitions disponibles.",
       "CaseTemplates": "Impossible de charger les modèles de cas.",
-      "CurrentCase": "Impossible de charger le dossier actuel."
+      "CurrentCase": "Impossible de charger le dossier actuel.",
+      "SeverityEnum": "Impossible de charger les gravités disponibles."
     },
     "AppliedTemplate": "Modèle appliqué.",
     "TemplateDeleted": "Modèle supprimé.",
@@ -459,7 +477,8 @@
     "FileUploaded": "Fichier téléchargé.",
     "FailedToUploadFile": "Impossible de télécharger le fichier.",
     "CaseCreated": "Cas créé.",
-    "CaseUpdated": "Cas mis à jour."
+    "CaseUpdated": "Cas mis à jour.",
+    "Severity": "Sévérité"
   },
   "ModCaseTable": {
     "SelectUsers": "Utilisateurs",
@@ -480,7 +499,8 @@
     "CreateNewCase": "Créer un nouveau dossier",
     "Search": "Recherche (utilisateur, identifiant, description...)",
     "FailedToLoad": "Impossible de charger les cas.",
-    "NoMatches": "Aucun cas ne correspond à votre recherche."
+    "NoMatches": "Aucun cas ne correspond à votre recherche.",
+    "SelectSeverity": "Sévérité"
   },
   "ScheduleMessageCard": {
     "Created": "Créé:",
@@ -533,7 +553,8 @@
       "Punishments": "N’a pas réussi à charger les punitions disponibles.",
       "Files": "Impossible de charger les fichiers.",
       "Guild": "Impossible de charger les informations de guilde.",
-      "Case": "Impossible de charger le dossier."
+      "Case": "Impossible de charger le dossier.",
+      "Severities": "Impossible de charger les gravités disponibles."
     },
     "DeleteCase": {
       "Deleted": "Cas marqué à supprimer.",
