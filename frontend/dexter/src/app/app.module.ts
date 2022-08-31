@@ -127,6 +127,9 @@ import { NumberInputDialogComponent } from './components/dialogs/number-input-di
 import { LeaderboardItemComponent } from './components/guilds/guild-leaderboard/leaderboard-item/leaderboard-item.component';
 import { LeaderboardRankingComponent } from './components/guilds/guild-leaderboard/leaderboard-ranking/leaderboard-ranking.component';
 import { UnitFormatPipe } from './pipes/unit-format.pipe';
+import { OffsetEditorComponent } from './components/profiles/rankcard-customizer/offset-editor/offset-editor.component';
+import { SwitchComponent } from './components/basic/switch/switch.component';
+import { RankcardLevelDisplayComponent } from './components/profiles/rankcard-customizer/rankcard-preview/rankcard-level-display/rankcard-level-display.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -213,7 +216,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     NumberInputDialogComponent,
     LeaderboardItemComponent,
     LeaderboardRankingComponent,
-    UnitFormatPipe
+    UnitFormatPipe,
+    OffsetEditorComponent,
+    SwitchComponent,
+    RankcardLevelDisplayComponent
   ],
   imports: [
     CommonModule,

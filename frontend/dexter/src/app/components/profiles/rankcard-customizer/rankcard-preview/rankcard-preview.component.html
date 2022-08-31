@@ -1,6 +1,7 @@
 <div class="container" [style]="imageNameToCss(model.background)">
   <img *ngIf="!isNameColor(model.background)" class="background" [src]="imageNameToUrl(model.background)">
-  <div class="titlebar" [style]="'background-color: ' + uintColorToCss(model.titleBgColor)">
+  <div class="titlebar" [style.background-color]="uintColorToCss(model.titleBgColor)"
+    [style.left]="(model.titleOffset.x + normalMargin) + 'px'" [style.top]="(model.titleOffset.y + normalMargin) + 'px'">
     <div class="relcontainer">
       <p class="title-level">
         <span class="label-sm" [style]="'color: ' + uintColorToCss(model.offColor)">LEVEL</span>
@@ -12,12 +13,25 @@
       </p>
     </div>
   </div>
-  <div class="pfp-bg">
-    <div class="pfp"></div>
+  <div class="pfp-bg" [style.transform]="'scale(' + model.pfpRadiusFactor + ')'"
+  [style.left]="(model.pfpOffset.x) + 'px'" [style.top]="(model.pfpOffset.y) + 'px'"
+  [style.background-color]="showPfpBgFlag() ? '#444444' : 'transparent'"
+  [style.border] = "'solid 3px ' + showPfpBgFlag() ? '#444444' : 'transparent'">
+    <img class="pfp" [style.clip-path]="clipPfpFlag() ? 'circle()' : 'inset()'" [src]="pfpUrl">
   </div>
-  <div class="levels">
-    <div class="xp xp-main" [style]="'background-color: ' + uintColorToCss(model.levelBgColor)"></div>
-    <div class="xp xp-hybrid" [style]="'background-color: ' + uintColorToCss(model.levelBgColor)"></div>
-    <div class="xp xp-hybrid shift-right" [style]="'background-color: ' + uintColorToCss(model.levelBgColor)"></div>
+  <div class="levels"
+  [style.left]="(model.levelOffset.x + normalMargin) + 'px'" [style.top]="(model.levelOffset.y + normalMargin) + 'px'">
+    <div class="xp xp-main" [style.background-color]="uintColorToCss(model.levelBgColor)">
+      <app-rankcard-level-display [model]="model" [xpModel]="totalXp" [isMain]="true"
+      [typeName]="'Total'"></app-rankcard-level-display>
+    </div>
+    <div class="xp xp-hybrid" [style.background-color]="uintColorToCss(model.levelBgColor)">
+      <app-rankcard-level-display [model]="model" [xpModel]="txtXp.xp > vcXp.xp ? txtXp : vcXp" [isMain]="false"
+        [typeName]="txtXp.xp > vcXp.xp ? 'Txt' : 'VC'"></app-rankcard-level-display>
+    </div>
+    <div class="xp xp-hybrid shift-right" [style.background-color]="uintColorToCss(model.levelBgColor)">
+      <app-rankcard-level-display [model]="model" [xpModel]="txtXp.xp > vcXp.xp ? vcXp : txtXp" [isMain]="false"
+        [typeName]="txtXp.xp > vcXp.xp ? 'VC' : 'Txt'"></app-rankcard-level-display>
+    </div>
   </div>
 </div>

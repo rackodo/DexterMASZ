@@ -1,0 +1,99 @@
+.level-header {
+  height: calc(var(--header-height));
+  vertical-align: bottom;
+  line-height: 100%;
+  margin-top: var(--margin-mini);
+  margin-left: var(--margin-mini);
+}
+
+.rank-header {
+  position: absolute;
+  height: calc(var(--header-height));
+  vertical-align: bottom;
+  line-height: 100%;
+  top: var(--margin-mini);
+  left: 175px;
+}
+
+.xp-descriptor {
+  position: absolute;
+  width: 100%;
+  height: calc(var(--header-height));
+  vertical-align: bottom;
+  text-align: right;
+  line-height: 100%;
+  top: var(--margin-mini);
+  right: var(--margin-mini);
+}
+
+.level-display {
+  position: absolute;
+  display: inline-block;
+  width: var(--level-label-width);
+  margin: 0;
+  text-align: center;
+  vertical-align: middle;
+  height: 100%;
+  line-height: 1.5;
+}
+
+.level-left {
+  left: 0;
+}
+
+.level-right {
+  right: 0;
+}
+
+/*Bar*/
+
+.bar-container {
+  --bar-h: 80px;
+  position: absolute;
+  bottom: 0;
+  height: var(--bar-h);
+  width: 100%;
+}
+
+.bar-background {
+  position: absolute;
+  left: var(--level-label-width);
+  bottom: var(--margin-mini);
+  top: var(--margin-mini);
+  border: 3px solid black;
+  background-color: black;
+  border-radius: calc(var(--bar-h) * 0.5);
+}
+
+.bar-fill {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--bar-h) * 0.5);
+}
+
+.inset-xp {
+  position: absolute;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: middle;
+  height: 100%;
+  width: 100%;
+}
+
+/*Labels*/
+
+.label-sm {
+  display: inline-block;
+  font-size: 0.25em;
+}
+
+.label-md {
+  display: inline-block;
+  font-size: 0.75em;
+}
+
+.label-lg {
+  display: inline-block;
+  font-size: 1em;
+}

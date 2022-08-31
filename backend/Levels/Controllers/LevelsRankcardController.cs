@@ -31,6 +31,10 @@ public class LevelsRankcardController : AuthenticatedController
 			levelBgColor: config.LevelBgColor,
 			titleBgColor: config.TitleBgColor,
 			background: config.Background,
+			pfpRadiusFactor: config.PfpRadiusFactor,
+			titleOffset: config.TitleOffset,
+			levelOffset: config.LevelOffset,
+			pfpOffset: config.PfpOffset,
 			rankcardFlags: config.RankcardFlags);
 
 		return Ok(result);
@@ -68,8 +72,16 @@ public class LevelsRankcardController : AuthenticatedController
 			LevelBgColor = rankcardConfig.LevelBgColor,
 			TitleBgColor = rankcardConfig.TitleBgColor,
 			Background = rankcardConfig.Background,
+			PfpRadiusFactor = rankcardConfig.PfpRadiusFactor,
 			RankcardFlags = rankcardConfig.RankcardFlags
 		};
+
+		if (rankcardConfig.PfpRadiusFactor < 0) return BadRequest("Pfp Radius Multiplier must be at least 0");
+		if (rankcardConfig.PfpRadiusFactor > 2) return BadRequest("Pfp Radius Multiplier must be at most 2");
+
+		newConfig.TitleOffset = rankcardConfig.TitleOffset;
+		newConfig.LevelOffset = rankcardConfig.LevelOffset;
+		newConfig.PfpOffset = rankcardConfig.PfpOffset;
 
 		var existing = _levelsRankcardRepository.GetRankcard(newConfig.Id) is not null;
 		Console.WriteLine($"Rankcard for ID {newConfig.Id} {(existing ? "exists" : "doesn't exist")}.");

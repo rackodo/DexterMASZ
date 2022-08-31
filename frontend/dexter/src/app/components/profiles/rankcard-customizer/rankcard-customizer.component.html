@@ -7,7 +7,7 @@
       <div class="mat-display-2 font-weight-bold text-center">Rankcard Customization</div>
   </div>
   <div class="rankcard-preview">
-    <app-rankcard-preview class="rankcard-preview" [model]="model" [username]="username" [defaultBgOptions]="defaultBgOptions"></app-rankcard-preview>
+    <app-rankcard-preview class="rankcard-preview" [model]="model" [username]="username" [defaultBgOptions]="defaultBgOptions" [pfpUrl]="pfp"></app-rankcard-preview>
   </div>
   <hr class="separator">
   <h2>Color Palette</h2>
@@ -49,60 +49,64 @@
     <tr class="form-item-container">
       <td>Show Picture</td>
       <td class="switch-holder">
-        <label class="switch">
-          <input type="checkbox" #displayPfpCheckbox (input)="toggleCheckbox('displayPfp', $event)">
-          <span class="slider round"></span>
-        </label>
+        <app-switch [value]="displayPfp" (valueChange)="displayPfp = $event; updateModelFlags()"></app-switch>
       </td>
     </tr>
     <tr class="form-item-container">
       <td>Draw Background</td>
       <td class="switch-holder">
-        <label class="switch">
-          <input type="checkbox" #pfpBackgroundCheckbox (input)="toggleCheckbox('pfpBackground', $event)">
-          <span class="slider round"></span>
-        </label>
+        <app-switch [value]="pfpBackground" (valueChange)="pfpBackground = $event; updateModelFlags()"></app-switch>
       </td>
     </tr>
     <tr class="form-item-container">
       <td>Clip to Circle</td>
       <td class="switch-holder">
-        <label class="switch">
-          <input type="checkbox" #clipPfpCheckbox (input)="toggleCheckbox('clipPfp', $event)">
-          <span class="slider round"></span>
-        </label>
+        <app-switch [value]="clipPfp" (valueChange)="clipPfp = $event; updateModelFlags()"></app-switch>
       </td>
     </tr>
   </table>
+  <div class="slider-field">
+    <div>Scale</div>
+    <mat-slider [(ngModel)]="model.pfpRadiusFactor" min="0.1" max="2" step="0.01"></mat-slider>
+    <div>{{(model.pfpRadiusFactor * 100).toFixed(0)}}%</div>
+  </div>
   <hr class="separator"/>
   <h2>Experience Options</h2>
   <table class="form-toggle-table">
     <tr class="form-item-container">
       <td>Show Hybrid Levels</td>
       <td class="switch-holder">
-        <label class="switch">
-          <input type="checkbox" #showHybridCheckbox (input)="toggleCheckbox('showHybrid', $event)">
-          <span class="slider round"></span>
-        </label>
+        <app-switch [value]="showHybrid" (valueChange)="showHybrid = $event; updateModelFlags()"></app-switch>
       </td>
     </tr>
     <tr class="form-item-container">
       <td>Inset Main XP</td>
       <td class="switch-holder">
-        <label class="switch">
-          <input type="checkbox" #insetMainXPCheckbox (input)="toggleCheckbox('insetMainXP', $event)">
-          <span class="slider round"></span>
-        </label>
+        <app-switch [value]="insetMainXp" (valueChange)="insetMainXp = $event; updateModelFlags()"></app-switch>
       </td>
     </tr>
   </table>
+  <hr class="separator">
+  <h2>Positioning Options</h2>
+  <div class="offset-editor">
+    <h3>Title</h3>
+    <app-offset-editor [marginTolerance]="25" [scale]="0.3" [areaSize]="rankcardSize" [boxSize]="titleSize" [(offset)]="model.titleOffset"></app-offset-editor>
+  </div>
+  <div class="offset-editor">
+    <h3>Levels</h3>
+    <app-offset-editor [marginTolerance]="25" [scale]="0.3" [areaSize]="rankcardSize" [boxSize]="levelsSize" [(offset)]="model.levelOffset"></app-offset-editor>
+  </div>
+  <div class="offset-editor">
+    <h3>Profile Picture</h3>
+    <app-offset-editor [marginTolerance]="25" [scale]="0.3" [areaSize]="rankcardSize" [boxSize]="pfpSize" [(offset)]="model.pfpOffset"></app-offset-editor>
+  </div>
   <hr class="separator">
   <h2>Background Options</h2>
   <mat-tab-group mat-stretch-tabs class="flex-grow-1 bg-tab-group" [selectedIndex]="backgroundMode" (selectedIndexChange)="setBackgroundMode($event)">
     <mat-tab *ngFor="let tab of this.bgOptTabs">
         <ng-template mat-tab-label>
             <mat-icon class="mr-1">{{ bgOptTabIcons[tab] }}</mat-icon>
-            <span>{{ bgOptTabNames[tab] | translate }}</span>
+            <span>{{ bgOptTabNames[tab] }}</span>
         </ng-template>
         <ng-template matTabContent>
           <div class="background-option" *ngIf="tab == SOLID">

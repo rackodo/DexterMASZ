@@ -1,12 +1,12 @@
 .container {
-  --w: 1335px;
+  --w: 1350px;
   --h: 450px;
-  --clearing: 20px;
-  --title-height: 100px;
-  --pfp-side: calc(var(--h) - var(--title-height));
-  --top-levels-margin: 35px;
+  --margin-normal: 25px;
+  --margin-mini: 10px;
   --text-margin: 4px;
-  font-size: calc(var(--title-height) - 2 * var(--clearing) - 2 * var(--text-margin));
+  --pfp-side: 350px;
+  --header-height: 60px;
+  font-size: 50px;
   max-width: var(--w) !important;
   width: var(--w);
   height: var(--h);
@@ -23,18 +23,16 @@
 
 .titlebar {
   position: absolute;
-  top: var(--clearing);
-  left: var(--clearing);
-  right: var(--clearing);
-  height: calc(var(--title-height) - 2 * var(--clearing));
+  width: calc(100% - 2 * var(--margin-normal));
+  height: var(--header-height);
 }
 
 .pfp-bg {
   position: absolute;
-  bottom: 0;
-  right: 0;
   width: var(--pfp-side);
   height: var(--pfp-side);
+  border-radius: 50%;
+  box-sizing: content-box;
 }
 
 .pfp {
@@ -44,32 +42,33 @@
 
 .levels {
   position: absolute;
-  left: 0;
-  bottom: var(--clearing);
-  right: var(--pfp-side);
-  top: calc(var(--title-height) + var(--top-levels-margin));
+  width: calc(var(--w) - var(--pfp-side) - 2 * var(--margin-normal));
+  height: calc(var(--pfp-side) - 2 * var(--margin-normal));
 }
 
 .xp {
   position: absolute;
   border-radius: 35px;
-  left: var(--clearing);
-  height: calc(50% - 2 * var(--clearing));
+  margin: 0;
+  height: calc(50% - 0.5 * var(--margin-normal));
+  border: 0;
 }
 
 .xp-main {
-  top: var(--clearing);
-  width: calc(100% - 2 * var(--clearing));
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 
 .xp-hybrid {
-  top: calc(50% + var(--clearing));
-  width: calc(50% - 2 * var(--clearing));
+  left: 0;
+  bottom: 0;
+  width: calc(50% - 0.5 * var(--margin-normal));
 }
 
 .xp-hybrid.shift-right {
   left: initial;
-  right: var(--clearing);
+  right: 0;
 }
 
 .relcontainer {

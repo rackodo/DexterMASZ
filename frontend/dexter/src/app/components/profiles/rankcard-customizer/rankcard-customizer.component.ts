@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageUrlDialogComponent } from '../../dialogs/image-url-dialog/image-url-dialog.component';
 import { Observable } from 'rxjs';
+import { UserRankcardConfigUtility } from 'src/app/classes/UserRankcardConfig';
 
 @Component({
   selector: 'app-rankcard-customizer',
@@ -30,21 +31,29 @@ export class RankcardCustomizerComponent implements AfterViewInit {
   @ViewChild("titleBgColorSelector") titleBgColorSelector!: ElementRef;
   @ViewChild("titleBgColorSlider") titleBgColorSlider!: ElementRef;
 
-  @ViewChild("displayPfpCheckbox") displayPfpCheckbox!: ElementRef;
-  @ViewChild("pfpBackgroundCheckbox") pfpBackgroundCheckbox!: ElementRef;
-  @ViewChild("clipPfpCheckbox") clipPfpCheckbox!: ElementRef;
-  @ViewChild("showHybridCheckbox") showHybridCheckbox!: ElementRef;
-  @ViewChild("insetMainXPCheckbox") insetMainXPCheckbox!: ElementRef;
-
   @ViewChild("backgroundColorSelector") backgroundColorSelector!: ElementRef;
   @ViewChild("backgroundCustomSelector") backgroundCustomSelector!: ElementRef;
   @ViewChild("backgroundDefaultSelector") backgroundDefaultSelector!: ElementRef;
 
   @ViewChild("fileInput") fileInput!: ElementRef;
 
+  model : UserRankcardConfig = UserRankcardConfigUtility.default;
+
   user : DiscordUser | undefined;
   username: string = "Username#0123";
+  pfp: string = "/assets/img/default_profile.png";
   userId : bigint = 0n;
+
+  rankcardSize = {x: 1350, y: 450};
+  titleSize = {x: this.rankcardSize.x, y: 100};
+  levelsSize = {x: 1000, y: this.rankcardSize.y - this.titleSize.y};
+  pfpSize = {x: this.levelsSize.y, y: this.levelsSize.y};
+
+  displayPfp = true;
+  pfpBackground = true;
+  clipPfp = true;
+  showHybrid = true;
+  insetMainXp = false;
 
   ngAfterViewInit(): void {
     this.setUpValues(this.model)
@@ -53,6 +62,7 @@ export class RankcardCustomizerComponent implements AfterViewInit {
       this.user = data.discordUser;
       this.userId = BigInt(data.discordUser.id);
       this.username = `${data.discordUser.username}#${data.discordUser.discriminator}`;
+      this.pfp = data.discordUser.imageUrl;
       console.log(`Setting up existing values for user: ${this.user.username}#${this.user.discriminator}`)
       this.api.getSimpleData(`/levels/rankcard/${this.userId}`, true).subscribe((data: UserRankcardConfig) => {
         this.model = data;
@@ -78,11 +88,11 @@ export class RankcardCustomizerComponent implements AfterViewInit {
     this.levelBgOpacity = lvlBgC.opacity;
     this.titleBgOpacity = ttlBgC.opacity;
 
-    this.setToggle(this.displayPfpCheckbox, (model.rankcardFlags & RankcardFlags.DisplayPfp) != RankcardFlags.None);
-    this.setToggle(this.pfpBackgroundCheckbox, (model.rankcardFlags & RankcardFlags.PfpBackground) != RankcardFlags.None);
-    this.setToggle(this.clipPfpCheckbox, (model.rankcardFlags & RankcardFlags.ClipPfp) != RankcardFlags.None);
-    this.setToggle(this.showHybridCheckbox, (model.rankcardFlags & RankcardFlags.ShowHybrid) != RankcardFlags.None);
-    this.setToggle(this.insetMainXPCheckbox, (model.rankcardFlags & RankcardFlags.InsetMainXP) != RankcardFlags.None);
+    this.displayPfp = (model.rankcardFlags & RankcardFlags.DisplayPfp) != RankcardFlags.None;
+    this.pfpBackground = (model.rankcardFlags & RankcardFlags.PfpBackground) != RankcardFlags.None;
+    this.clipPfp = (model.rankcardFlags & RankcardFlags.ClipPfp) != RankcardFlags.None;
+    this.showHybrid = (model.rankcardFlags & RankcardFlags.ShowHybrid) != RankcardFlags.None;
+    this.insetMainXp = (model.rankcardFlags & RankcardFlags.InsetMainXP) != RankcardFlags.None;
 
     if (model.background.startsWith(`${API_URL}/levels/default`)) {
       this.backgroundMode = this.DEFAULT;
@@ -97,17 +107,11 @@ export class RankcardCustomizerComponent implements AfterViewInit {
       this.customLink = model.background;
     }
 
-    this.cd.detectChanges();
-  }
+    this.model.titleOffset = model.titleOffset;
+    this.model.levelOffset = model.levelOffset;
+    this.model.pfpOffset = model.pfpOffset;
 
-  model : UserRankcardConfig = {
-    "id": 0n,
-    "xpColor": 0xff70cefen,
-    "offColor": 0xffffffffn,
-    "levelBgColor": 0xff202225n,
-    "titleBgColor": 0xff202225n,
-    "background": RankcardCustomizerComponent.defaultBgToUrl("default.png"),
-    "rankcardFlags": RankcardFlags.DisplayPfp | RankcardFlags.PfpBackground | RankcardFlags.ClipPfp | RankcardFlags.ShowHybrid
+    this.cd.detectChanges();
   }
 
   defaultBgToUrl = RankcardCustomizerComponent.defaultBgToUrl;
@@ -188,24 +192,12 @@ export class RankcardCustomizerComponent implements AfterViewInit {
     this.cd.detectChanges();
   }
 
-  toggleCheckbox(item: string, event: Event) {
-    if (event.target === null) return;
-    let value = (event.target as any)["checked"] as boolean;
-    if (value === undefined) return;
-
-    const flagLookup : any = {
-      "displayPfp": RankcardFlags.DisplayPfp,
-      "pfpBackground": RankcardFlags.PfpBackground,
-      "clipPfp": RankcardFlags.ClipPfp,
-      "showHybrid": RankcardFlags.ShowHybrid,
-      "insetMainXP": RankcardFlags.InsetMainXP
-    }
-
-    let f = flagLookup[item];
-    if (f === undefined) return;
-    this.setFlag(f, value);
-
-    this.cd.detectChanges();
+  updateModelFlags() {
+    this.setFlag(RankcardFlags.DisplayPfp, this.displayPfp);
+    this.setFlag(RankcardFlags.PfpBackground, this.pfpBackground);
+    this.setFlag(RankcardFlags.ClipPfp, this.clipPfp);
+    this.setFlag(RankcardFlags.ShowHybrid, this.showHybrid);
+    this.setFlag(RankcardFlags.InsetMainXP, this.insetMainXp);
   }
 
   setFlag(flag: RankcardFlags, value: boolean) {

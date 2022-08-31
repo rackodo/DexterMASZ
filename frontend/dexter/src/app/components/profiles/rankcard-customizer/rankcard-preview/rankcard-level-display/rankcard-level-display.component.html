@@ -1,0 +1,27 @@
+<div class="relcontainer">
+  <div class="level-header" [style.color]="uintColorToCss(model.offColor)">
+    <span class="label-lg">{{typeName}}</span>
+  </div>
+  <div class="rank-header" [style.color]="uintColorToCss(model.offColor)">
+    <span class="label-sm">RANK</span>
+    <span class="label-lg">#{{rank}}</span>
+  </div>
+  <div *ngIf="isMain && !insetMainXpFlag()" class="xp-descriptor" [style.color]="uintColorToCss(model.xpColor)">
+    <span class="label-md">{{rawToSuffixForm(xpModel.xpResidual)}} / {{rawToSuffixForm(xpModel.xpLevel)}} XP</span>
+  </div>
+
+  <div class="bar-container" [style.--level-label-width]="levelLabelWidth+'px'">
+    <div class="level-display level-left" [style.color]="uintColorToCss(model.xpColor)">
+      <span class="label-lg">{{xpModel.level}}</span>
+    </div>
+    <div class="level-display level-right" [style.color]="uintColorToCss(model.xpColor)" *ngIf="isMain">
+      <span class="label-lg">{{xpModel.level + one}}</span>
+    </div>
+    <div class="bar-background" [style.right]="(isMain ? 'var(--level-label-width)' : 'var(--margin-mini)')">
+      <span class="inset-xp label-md" [style.color]="uintColorToCss(model.xpColor)"> {{rawToSuffixForm(xpModel.xpResidual)}} / {{rawToSuffixForm(xpModel.xpLevel)}} XP </span>
+      <div class="bar-fill" [style.background-color]="uintColorToCss(model.xpColor)" [style.clip-path]="xpClipPath()">
+        <span class="inset-xp label-md" [style.color]="xpContrastColor()">{{rawToSuffixForm(xpModel.xpResidual)}} / {{rawToSuffixForm(xpModel.xpLevel)}} XP</span>
+      </div>
+    </div>
+  </div>
+</div>

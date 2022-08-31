@@ -1,0 +1,16 @@
+<div class="numbers-input">
+  <mat-form-field>
+    <mat-label>X</mat-label>
+    <input matInput type="number" [value]="offset.x" (change)="setOffsetX($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Y</mat-label>
+    <input matInput type="number" [value]="offset.y" (change)="setOffsetY($event)">
+  </mat-form-field>
+</div>
+<br>
+<div #area class="offset-editor-body" [ngStyle]="{'min-width': scale*areaSize.x+'px', 'min-height':scale*areaSize.y+'px'}">
+  <div #box class="offset-box" [ngStyle]="{'min-width': scale*boxSize.x+'px', 'min-height': scale*boxSize.y+'px', left: scale*offset.x+'px', top: scale*offset.y+'px'}"
+    (mousedown)="mouseDown($event)"
+  ></div>
+</div>
