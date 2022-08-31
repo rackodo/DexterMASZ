@@ -17,8 +17,8 @@ export class CookieTrackerService {
 
   private updateObservable() {
     let settings: LocalAppSettings = {
-      language: this.cookieService.hasKey('language') ? this.cookieService.get('language') : DEFAULT_LANGUAGE,
-      timezone: this.cookieService.hasKey('timezone') ? this.cookieService.get('timezone') : DEFAULT_TIMEZONE,
+      language: this.cookieService.hasKey('language') ? this.cookieService.get('language') || DEFAULT_LANGUAGE : DEFAULT_LANGUAGE,
+      timezone: this.cookieService.hasKey('timezone') ? this.cookieService.get('timezone') || DEFAULT_TIMEZONE : DEFAULT_TIMEZONE,
     }
     this.settings.next(settings);
   }
