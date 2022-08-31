@@ -31,7 +31,7 @@ public static partial class Rankcard
 	private static Rectangle TitleRect(UserRankcardConfig config) => new(config.TitleOffset + normalMargin, titleSize);
 	private static readonly Size levelsSize = new(widthmain - 2 * normalMargin, pfpside - 2 * normalMargin);
 	private static Rectangle LevelsRect(UserRankcardConfig config) => new(config.LevelOffset + normalMargin, levelsSize);
-	private static int PfpMargin(UserRankcardConfig config) => (int)(pfpside * (1 - config.PfpRadiusFactor < 0.1 ? 0.1 : config.PfpRadiusFactor)) / 2;
+	private static int PfpMargin(UserRankcardConfig config) => (int)(pfpside * (1 - (config.PfpRadiusFactor < 0.1 ? 0.1 : config.PfpRadiusFactor))) / 2;
 	private static Size PfpSize(UserRankcardConfig config) => new(pfpside - 2 * PfpMargin(config));
 	private static Rectangle PfpRect(UserRankcardConfig config) => new(config.PfpOffset + PfpMargin(config), PfpSize(config));
 
