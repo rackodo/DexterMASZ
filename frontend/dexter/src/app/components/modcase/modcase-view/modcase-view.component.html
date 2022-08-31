@@ -440,7 +440,7 @@
                         <button mat-raised-button color="accent"
                             class="flex-shrink-1"
                             (click)="postComment()"
-                            [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined || this.newComment.trim() === '' || !this.modCase.content?.modCase?.allowComments">
+                            [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined || this.newComment || !this.modCase.content?.modCase?.allowComments">
                             {{ 'ModCaseView.PostComment' | translate }}
                         </button>
                     </div>
