@@ -27,19 +27,10 @@ jobs:
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u FeroxFoxxo --password-stdin
           docker push ghcr.io/feroxfoxxo/dexter_backend:latest
           docker push ghcr.io/feroxfoxxo/dexter_frontend:latest
-          
-      - name: Calculate image sizes
-        run: |
-          SIZE_BACKEND=$(docker image inspect ghcr.io/feroxfoxxo/dexter_backend:latest | jq -r '.[0].Size' | numfmt --to=si)
-          SIZE_FRONTEND=$(docker image inspect ghcr.io/feroxfoxxo/dexter_frontend:latest | jq -r '.[0].Size' | numfmt --to=si)
-          echo "I found backend size: $SIZE_BACKEND"
-          echo "I found frontend size: $SIZE_FRONTEND"
-          echo "SIZE_BACKEND=$SIZE_BACKEND" >> $GITHUB_ENV
-          echo "SIZE_FRONTEND=$SIZE_FRONTEND" >> $GITHUB_ENV
-          
+
       - name: Send discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "🚀 Published backend with `${{ env.SIZE_BACKEND }}`.\n🚀 Published frontend with `${{ env.SIZE_FRONTEND }}`.\nNotifying <@${{ secrets.ROLE_PING }}>"
+          args: "🚀 Published 🚀"
