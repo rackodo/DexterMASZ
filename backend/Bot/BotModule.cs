@@ -65,8 +65,7 @@ public class BotModule : WebModule
 		services.AddSingleton(new InteractionServiceConfig
 		{
 			DefaultRunMode = RunMode.Async,
-			LogLevel = LogSeverity.Debug,
-			UseCompiledLambda = true
+			LogLevel = LogSeverity.Debug
 		});
 
 		services.AddSingleton<InteractionService>();

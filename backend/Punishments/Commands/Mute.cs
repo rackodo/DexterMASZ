@@ -34,7 +34,7 @@ public class Mute : Command<Mute>
 		ModCaseRepository.AsUser(Identity);
 		GuildConfigRepository.AsUser(Identity);
 
-		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Channel.Id);
+		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
 
 		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
 
