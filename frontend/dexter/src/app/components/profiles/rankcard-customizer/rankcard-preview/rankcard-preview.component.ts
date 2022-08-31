@@ -24,8 +24,7 @@ export class RankcardPreviewComponent implements OnInit {
   normalMargin = 25;
 
   uintColorToCss(color: bigint) : string {
-    color = BigInt(color);
-    return `#${(color & 0x00ffffffn).toString(16).padStart(6, '0')}${((color & 0xff000000n) >> 24n).toString(16).padStart(2, '0')}`
+    return uintColorToCss(color);
   }
 
   isNameColor(name: string) {
@@ -52,23 +51,8 @@ export class RankcardPreviewComponent implements OnInit {
     return name;
   }
 
-  rawToSuffixForm(amount: bigint | number) : string {
-    amount = Number(amount)
-
-    const suffixes = [
-      {val: 1e15, suf: "Q"},
-      {val: 1e12, suf: "T"},
-      {val: 1e9, suf: "B"},
-      {val: 1e6, suf: "M"},
-      {val: 1e3, suf: "K"}
-    ];
-
-    for (let s of suffixes) {
-      if (amount >= s.val)
-        return `${(amount / s.val).toPrecision(3)}${s.suf}`
-    }
-
-    return amount.toString();
+  rawToSuffixForm(amount: bigint | number) {
+    return rawToSuffixForm(amount);
   }
 
   displayPfpFlag() { return (this.model.rankcardFlags & RankcardFlags.DisplayPfp) > 0; }
@@ -83,3 +67,28 @@ export class RankcardPreviewComponent implements OnInit {
   }
 
 }
+
+export function rawToSuffixForm(amount: bigint | number) {
+  amount = Number(amount)
+
+  const suffixes = [
+    {val: 1e15, suf: "Q"},
+    {val: 1e12, suf: "T"},
+    {val: 1e9, suf: "B"},
+    {val: 1e6, suf: "M"},
+    {val: 1e3, suf: "K"}
+  ];
+
+  for (let s of suffixes) {
+    if (amount >= s.val)
+      return `${(amount / s.val).toPrecision(3)}${s.suf}`
+  }
+
+  return amount.toString();
+}
+
+export function uintColorToCss(color: bigint) {
+  color = BigInt(color);
+  return `#${(color & 0x00ffffffn).toString(16).padStart(6, '0')}${((color & 0xff000000n) >> 24n).toString(16).padStart(2, '0')}`
+}
+
