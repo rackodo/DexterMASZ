@@ -1,7 +1,8 @@
 import { LanguageSelect } from "../models/LanguageSelect";
+import { environment } from 'src/environments/environment';
 
-export const APP_BASE_URL = 'http://127.0.0.1:5565';
-export const ENABLE_CORS = true;
+export const APP_BASE_URL = environment.url;
+export const ENABLE_CORS = environment.cors;
 
 export const API_URL = APP_BASE_URL + '/api/v1';
 
