@@ -39,6 +39,13 @@ export class OffsetEditorSettingsDialog {
     ]
   }
 
+  onSubmit() {
+    for (let field of this.fields) {
+      if (field.controller.errors) return;
+    }
+    this.dialogRef.close(this.getResult());
+  }
+
   getResult(): OffsetEditorSettings {
     return {
       snapping: {value: this.fields[0].controller.value},
