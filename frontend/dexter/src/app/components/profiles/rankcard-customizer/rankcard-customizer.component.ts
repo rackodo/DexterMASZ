@@ -1,17 +1,15 @@
-import { ChangeDetectorRef, ElementRef } from '@angular/core';
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
-import { MatSlider } from '@angular/material/slider';
-import { API_URL, APP_BASE_URL } from '../../../config/config';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import { UserRankcardConfigUtility } from 'src/app/classes/UserRankcardConfig';
 import { AppUser } from 'src/app/models/AppUser';
 import { DiscordUser } from 'src/app/models/DiscordUser';
 import { RankcardFlags, UserRankcardConfig } from 'src/app/models/UserRankcardConfig';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { MatDialog } from '@angular/material/dialog';
+import { API_URL } from '../../../config/config';
 import { ImageUrlDialogComponent } from '../../dialogs/image-url-dialog/image-url-dialog.component';
-import { Observable } from 'rxjs';
-import { UserRankcardConfigUtility } from 'src/app/classes/UserRankcardConfig';
 import { OffsetEditorSettings } from './offset-editor/offset-editor.component';
 
 @Component({

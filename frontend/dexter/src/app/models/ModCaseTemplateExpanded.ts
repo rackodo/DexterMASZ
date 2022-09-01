@@ -1,6 +1,6 @@
-import { ModCaseTemplate } from "./ModCaseTemplate";
-import { DiscordUser } from "./DiscordUser";
 import { DiscordGuild } from "./DiscordGuild";
+import { DiscordUser } from "./DiscordUser";
+import { ModCaseTemplate } from "./ModCaseTemplate";
 
 export interface ModCaseTemplateExpanded {
     caseTemplate: ModCaseTemplate;
