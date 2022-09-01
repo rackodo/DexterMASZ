@@ -102,7 +102,7 @@ public static partial class Rankcard
 			rankLabel = new Rectangle(originX + typeLabelWidth, originY, miniLabelWidth + labelIntrusionPixels, labelHeight);
 			rankText = new Rectangle(originX + miniLabelWidth + typeLabelWidth, originY, width * 2 / 3 - miniLabelWidth - typeLabelWidth - normalMargin, labelHeight + labelBaselineDeltaTitle);
 			expText = leveltype == LevelBarType.Normal ? 
-				new Rectangle(originX + width / 3, originY, width * 2 / 3, labelHeight) :
+				new Rectangle(originX + width / 3, originY, width * 2 / 3 - labelMiniMargin, labelHeight) :
 				Bar(1);
 		}
 
