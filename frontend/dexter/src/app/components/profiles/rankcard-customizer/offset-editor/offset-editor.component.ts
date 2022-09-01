@@ -1,5 +1,8 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { relativeTimeThreshold } from 'moment';
 import { Offset2D } from 'src/app/models/Offset2D';
+import { OffsetEditorSettingsDialog } from './settings-dialog/settings-dialog.component';
 
 @Component({
   selector: 'app-offset-editor',
@@ -8,8 +11,8 @@ import { Offset2D } from 'src/app/models/Offset2D';
 })
 export class OffsetEditorComponent implements OnInit {
 
-  @Input() marginTolerance = 0;
-  @Input() scale = 1;
+  @Input() settings!: OffsetEditorSettings;
+
   @Input() areaSize = {x: 100, y: 100};
   @Input() boxSize = {x: 10, y: 10};
 
@@ -22,16 +25,22 @@ export class OffsetEditorComponent implements OnInit {
   absMouseOffset = {x: 0, y: 0};
   tracking = false;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     console.log(this.boxSize);
   }
 
   setOffset(x: number, y: number) {
-    let min = {x: -this.marginTolerance, y: -this.marginTolerance};
-    let max = {x: this.areaSize.x + this.marginTolerance - this.boxSize.x,
-               y: this.areaSize.y + this.marginTolerance - this.boxSize.y};
+    let min = {x: this.settings.margin.value, y: this.settings.margin.value};
+    let max = {x: this.areaSize.x - this.settings.margin.value - this.boxSize.x,
+               y: this.areaSize.y - this.settings.margin.value - this.boxSize.y};
+
+    let snap = this.settings.snapping.value;
+    x += snap / 2;
+    y += snap / 2;
+    x -= x % snap;
+    y -= y % snap;
 
     if (x < min.x) x = min.x;
     else if (x > max.x) x = max.x;
@@ -56,6 +65,21 @@ export class OffsetEditorComponent implements OnInit {
     this.setOffset(this.offset.x, val);
   }
 
+  openSettings() {
+    const ref = this.dialog.open(OffsetEditorSettingsDialog, {
+      width: '450px',
+      data: this.settings
+    });
+
+    ref.afterClosed().subscribe((result: OffsetEditorSettings) => {
+      if (!result) return;
+
+      this.settings.margin.value = result.margin.value;
+      this.settings.snapping.value = result.snapping.value;
+      this.settings.scale.value = result.scale.value;
+    })
+  }
+
   mouseDown(event: MouseEvent) {
     this.initOffset = {x: this.offset.x, y: this.offset.y};
     this.absMouseOffset = {x: event.pageX, y: event.pageY};
@@ -71,8 +95,8 @@ export class OffsetEditorComponent implements OnInit {
     this.change = {x: changeX, y: changeY};
 
     this.setOffset(
-      this.initOffset.x + (changeX / this.scale),
-      this.initOffset.y + (changeY / this.scale)
+      this.initOffset.x + (changeX / this.settings.scale.value),
+      this.initOffset.y + (changeY / this.settings.scale.value)
     )
   }
 
@@ -88,4 +112,15 @@ export class OffsetEditorComponent implements OnInit {
   @HostListener('mouseup', ['$event']) mouseUp(event: MouseEvent) { this.endTracking(event); }
 
   @HostListener('mouseexit', ['$event']) mouseExit(event: MouseEvent) { this.endTracking(event); }
+}
+
+export interface OffsetEditorSettings {
+  snapping: ValueRange,
+  margin: ValueRange,
+  scale: ValueRange
+}
+
+export interface ValueRange {
+  value: number,
+  range?: {min: number, max: number}
 }

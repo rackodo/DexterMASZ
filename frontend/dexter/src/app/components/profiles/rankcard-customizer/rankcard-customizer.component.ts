@@ -1,15 +1,18 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { MatSlider } from '@angular/material/slider';
+import { API_URL, APP_BASE_URL } from '../../../config/config';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
-import { UserRankcardConfigUtility } from 'src/app/classes/UserRankcardConfig';
 import { AppUser } from 'src/app/models/AppUser';
 import { DiscordUser } from 'src/app/models/DiscordUser';
 import { RankcardFlags, UserRankcardConfig } from 'src/app/models/UserRankcardConfig';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { API_URL } from '../../../config/config';
+import { MatDialog } from '@angular/material/dialog';
 import { ImageUrlDialogComponent } from '../../dialogs/image-url-dialog/image-url-dialog.component';
+import { Observable } from 'rxjs';
+import { UserRankcardConfigUtility } from 'src/app/classes/UserRankcardConfig';
+import { OffsetEditorSettings } from './offset-editor/offset-editor.component';
 
 @Component({
   selector: 'app-rankcard-customizer',
@@ -46,6 +49,12 @@ export class RankcardCustomizerComponent implements AfterViewInit {
   titleSize = {x: this.rankcardSize.x, y: 100};
   levelsSize = {x: 1000, y: this.rankcardSize.y - this.titleSize.y};
   pfpSize = {x: this.levelsSize.y, y: this.levelsSize.y};
+
+  offsetEditorSettings: OffsetEditorSettings = {
+    scale: {value: 0.3, range: {min: 0.1, max: 1}},
+    margin: {value: -25, range: {min: -1000, max: 0}},
+    snapping: {value: 1, range: {min: 1, max: 100}}
+  }
 
   displayPfp = true;
   pfpBackground = true;

@@ -90,15 +90,15 @@
   <h2>Positioning Options</h2>
   <div class="offset-editor">
     <h3>Title</h3>
-    <app-offset-editor [marginTolerance]="25" [scale]="0.3" [areaSize]="rankcardSize" [boxSize]="titleSize" [(offset)]="model.titleOffset"></app-offset-editor>
+    <app-offset-editor [settings]="offsetEditorSettings" [areaSize]="rankcardSize" [boxSize]="titleSize" [(offset)]="model.titleOffset"></app-offset-editor>
   </div>
   <div class="offset-editor">
     <h3>Levels</h3>
-    <app-offset-editor [marginTolerance]="25" [scale]="0.3" [areaSize]="rankcardSize" [boxSize]="levelsSize" [(offset)]="model.levelOffset"></app-offset-editor>
+    <app-offset-editor [settings]="offsetEditorSettings" [areaSize]="rankcardSize" [boxSize]="levelsSize" [(offset)]="model.levelOffset"></app-offset-editor>
   </div>
   <div class="offset-editor">
     <h3>Profile Picture</h3>
-    <app-offset-editor [marginTolerance]="25" [scale]="0.3" [areaSize]="rankcardSize" [boxSize]="pfpSize" [(offset)]="model.pfpOffset"></app-offset-editor>
+    <app-offset-editor [settings]="offsetEditorSettings" [areaSize]="rankcardSize" [boxSize]="pfpSize" [(offset)]="model.pfpOffset"></app-offset-editor>
   </div>
   <hr class="separator">
   <h2>Background Options</h2>

@@ -7,10 +7,15 @@
     <mat-label>Y</mat-label>
     <input matInput type="number" [value]="offset.y" (change)="setOffsetY($event)">
   </mat-form-field>
+  <div class="settings-btn">
+    <button mat-mini-fab aria-label="Offset editor settings" (click)="openSettings()">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
 </div>
 <br>
-<div #area class="offset-editor-body" [ngStyle]="{'min-width': scale*areaSize.x+'px', 'min-height':scale*areaSize.y+'px'}">
-  <div #box class="offset-box" [ngStyle]="{'min-width': scale*boxSize.x+'px', 'min-height': scale*boxSize.y+'px', left: scale*offset.x+'px', top: scale*offset.y+'px'}"
+<div #area class="offset-editor-body" [ngStyle]="{'min-width': settings.scale.value*areaSize.x+'px', 'min-height':settings.scale.value*areaSize.y+'px'}">
+  <div #box class="offset-box" [ngStyle]="{'min-width': settings.scale.value*boxSize.x+'px', 'min-height': settings.scale.value*boxSize.y+'px', left: settings.scale.value*offset.x+'px', top: settings.scale.value*offset.y+'px'}"
     (mousedown)="mouseDown($event)"
   ></div>
 </div>
