@@ -1,7 +1,5 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatDatepicker } from '@angular/material/datepicker';
 import { ActivatedRoute } from '@angular/router';
 import { ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';

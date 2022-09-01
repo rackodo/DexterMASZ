@@ -16,7 +16,7 @@ export class GuildInfoComponent implements OnInit {
 
   private guildId!: string;
   public guild: ContentLoading<DiscordGuild> = { loading: true, content: undefined };
-  
+
   constructor(private route: ActivatedRoute, private api: ApiService, public overview: GuildOverviewComponent, private toastr: ToastrService, private translator: TranslateService) { }
 
   ngOnInit(): void {

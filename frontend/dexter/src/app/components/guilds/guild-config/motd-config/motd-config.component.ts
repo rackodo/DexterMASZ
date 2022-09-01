@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { ContentLoading } from 'src/app/models/ContentLoading';
-import { GuildMotd, GuildMotdView } from 'src/app/models/GuildMotd';
+import { GuildMotdView } from 'src/app/models/GuildMotd';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({

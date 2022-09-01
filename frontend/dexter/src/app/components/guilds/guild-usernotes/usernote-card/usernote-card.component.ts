@@ -1,5 +1,4 @@
-import { EventEmitter } from '@angular/core';
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -14,16 +13,13 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './usernote-card.component.html',
   styleUrls: ['./usernote-card.component.css']
 })
-export class UserNoteCardComponent implements OnInit {
+export class UserNoteCardComponent {
 
   @Output() updateEvent = new EventEmitter<number>();
   @Output() deleteEvent = new EventEmitter<number>();
   @Input() userNote!: UserNoteExpanded;
   @Input() showDeleteButton: boolean = true;
   constructor(private dialog: MatDialog, private api: ApiService, private toastr: ToastrService, private translator: TranslateService) { }
-
-  ngOnInit(): void {
-  }
 
   deleteNote() {
     const confirmDialogRef = this.dialog.open(ConfirmationDialogComponent);

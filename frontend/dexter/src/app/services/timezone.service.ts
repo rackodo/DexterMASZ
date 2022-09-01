@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { ReplaySubject } from 'rxjs';
-import { DEFAULT_TIMEZONE, LANGUAGES } from '../config/config';
+import { LANGUAGES } from '../config/config';
 
 @Injectable({
   providedIn: 'root'

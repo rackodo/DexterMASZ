@@ -28,6 +28,6 @@ export class GuildListComponent implements OnInit {
 
   open(...target: any[]) {
     const url = target.join('/');
-    this.router.navigateByUrl(url);    
+    this.router.navigateByUrl(url);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { ReplaySubject, Subject } from 'rxjs';
@@ -9,7 +9,7 @@ import { take, takeUntil } from 'rxjs/operators';
   templateUrl: './multi-select.component.html',
   styleUrls: ['./multi-select.component.css']
 })
-export class MultiSelectComponent implements OnInit {
+export class MultiSelectComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() public elements!: ReplaySubject<any[]>;
   public _elements: any[] = [];

@@ -29,7 +29,7 @@
                 <app-quicksearch-moderation-result [entry]="entry.entry" class="mb-1"
                  *ngIf="entry.quickSearchEntryType === 1"></app-quicksearch-moderation-result>
             </ng-container>
-            <div *ngIf="searchResults?.searchEntries?.length === 0 && searchResults?.userNoteExpanded == null && searchResults?.userMapExpands?.length === 0">
+            <div *ngIf="searchResults?.searchEntries?.length === 0 && searchResults?.userNoteExpanded === null && searchResults?.userMapExpands?.length === 0">
                 <div class="d-flex flex-row">
                     <div class="flex-grow-1"></div>
                     <img src="/assets/img/notfound.svg" class="flex-grow-0 w-50" />

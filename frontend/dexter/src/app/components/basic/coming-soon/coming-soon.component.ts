@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'coming-soon',
+  selector: 'app-coming-soon',
   templateUrl: './coming-soon.component.html',
   styleUrls: ['./coming-soon.component.css']
 })
-export class ComingSoonComponent implements OnInit {
+export class ComingSoonComponent {
 
   @Input() date : Date | undefined;
   @Input() title : string | undefined;
@@ -13,8 +13,5 @@ export class ComingSoonComponent implements OnInit {
   @Input() description : string | undefined;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

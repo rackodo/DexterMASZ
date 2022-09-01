@@ -109,12 +109,12 @@
             <span>{{ bgOptTabNames[tab] }}</span>
         </ng-template>
         <ng-template matTabContent>
-          <div class="background-option" *ngIf="tab == SOLID">
+          <div class="background-option" *ngIf="tab === SOLID">
             <h3>Solid Color</h3>
             <input type="color" #backgroundColorSelector (input)="setSolidBackgroundColor()" class="color-picker color-chooser">
             <div class="color-preview" [style]="'background-color: ' + backgroundColorSelector.value"></div>
           </div>
-          <div class="background-option" *ngIf="tab == CUSTOM">
+          <div class="background-option" *ngIf="tab === CUSTOM">
             <h3>Custom Image</h3>
             <div class="droptarget" (drop)="handleFileDrop($event)" (dragover)="handleFileDragOver($event)">
               <mat-icon>move_to_inbox</mat-icon>
@@ -130,7 +130,7 @@
             </button>
             <img *ngIf="customLink" class="img-preview" [src]="customLink" aria-label="custom image preview">
           </div>
-          <div class="background-option" *ngIf="tab == DEFAULT">
+          <div class="background-option" *ngIf="tab === DEFAULT">
             <h3>Default Image</h3>
             <a class="combo-box">
               <div class="rounded navitem w-100 d-flex flex-row">

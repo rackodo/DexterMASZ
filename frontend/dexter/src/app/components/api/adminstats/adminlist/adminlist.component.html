@@ -29,13 +29,13 @@
                     <div class="waiting-for-text" style="width: 200px"></div>
                 </mat-list-item>
             </ng-container>
-            <mat-list-item *ngIf="!loading && (showList == undefined || showList?.length == 0)">
+            <mat-list-item *ngIf="!loading && (showList === undefined || showList?.length === 0)">
                 <mat-icon mat-list-icon>error_outline</mat-icon>
                 <div mat-line>{{ 'NothingHere' | translate }}</div>
             </mat-list-item>
         </mat-list>
         <button mat-raised-button color="accent"
-            *ngIf="!this.showAll && showList?.slice(5)?.length != 0 && !loading && showList"
+            *ngIf="!this.showAll && showList?.slice(5)?.length !== 0 && !loading && showList"
             (click)="this.showAll = true">
                 {{ 'AdminStatsList.ShowMore' | translate }}
         </button>

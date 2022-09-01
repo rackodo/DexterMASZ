@@ -4,8 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { API_URL, APP_BASE_URL } from '../config/config';
-import { ApiEnumTypes } from '../models/ApiEnumTypes';
 import { ApiEnum } from '../models/ApiEnum';
+import { ApiEnumTypes } from '../models/ApiEnumTypes';
 import { EnumManagerService } from './enum-manager.service';
 
 @Injectable({

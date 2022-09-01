@@ -1,16 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Moment } from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { ReplaySubject } from 'rxjs';
 import { DiscordChannel } from 'src/app/models/DiscordChannel';
-import { ScheduledMessage } from 'src/app/models/ScheduledMessage';
 import { ApiService } from 'src/app/services/api.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { EnumManagerService } from 'src/app/services/enum-manager.service';
 
 @Component({
   selector: 'app-guild-messages',

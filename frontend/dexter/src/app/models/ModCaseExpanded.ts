@@ -1,6 +1,6 @@
-import { ModCaseCommentExpanded } from "./ModCaseCommentExpanded";
 import { DiscordUser } from "./DiscordUser";
 import { ModCase } from "./ModCase";
+import { ModCaseCommentExpanded } from "./ModCaseCommentExpanded";
 import { UserNoteExpanded } from "./UserNoteExpanded";
 
 export interface ModCaseExpanded {

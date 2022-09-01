@@ -1,25 +1,25 @@
-import { ENTER, COMMA, SPACE, X } from '@angular/cdk/keycodes';
+import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { HttpParams } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { go, highlight } from 'fuzzysort';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, ReplaySubject } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
-import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
+import { map, startWith } from 'rxjs/operators';
 import { ApiEnum } from 'src/app/models/ApiEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordUser } from 'src/app/models/DiscordUser';
 import { ModCase } from 'src/app/models/ModCase';
+import { ModCaseLabel } from 'src/app/models/ModCaseLabel';
 import { PunishmentType } from 'src/app/models/PunishmentType';
 import { SeverityType } from 'src/app/models/SeverityType';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { ModCaseLabel } from 'src/app/models/ModCaseLabel';
-import { go, highlight } from 'fuzzysort';
 
 
 @Component({
@@ -118,7 +118,7 @@ export class ModCaseEditComponent implements OnInit {
       this.punishmentOptions.loading = false;
       this.toastr.error(this.translator.instant('ModCaseDialog.FailedToLoad.PunishmentEnum'));
     });
-	
+
     this.enumManager.getEnum(ApiEnumTypes.SEVERITY).subscribe(data => {
       this.severityOptions.content = data;
       this.severityOptions.loading = false;
@@ -199,7 +199,7 @@ export class ModCaseEditComponent implements OnInit {
 	  severityType: this.getSeverity()
     };
     const params = new HttpParams();
-	
+
       this.api.putSimpleData(`/guilds/${this.guildId}/cases/${this.caseId}`, data, params, true, true).subscribe((data) => {
         const caseId = data.caseId;
         this.router.navigate(['guilds', this.guildId, 'cases', caseId]);
@@ -210,10 +210,10 @@ export class ModCaseEditComponent implements OnInit {
         this.savingCase = false;
       });
   }
-  
+
   getSeverity(): SeverityType {
 	let punishmentType = this.punishmentFormGroup.value.punishmentType;
-	let severity = SeverityType.None;
+	let severity = SeverityType.High;
 
 	if (punishmentType != PunishmentType.Kick && punishmentType != PunishmentType.Ban)
 		severity = this.punishmentFormGroup.value.severityType;

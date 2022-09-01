@@ -4,8 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AutoModConfig } from 'src/app/models/AutoModConfig';
 import { AutoModRuleDefinition } from 'src/app/models/AutoModRuleDefinitions';
-import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { DiscordChannel } from 'src/app/models/DiscordChannel';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({

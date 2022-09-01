@@ -1,5 +1,4 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { relativeTimeThreshold } from 'moment';
 import { Offset2D } from 'src/app/models/Offset2D';
 
 @Component({

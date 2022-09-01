@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { LANGUAGES } from 'src/app/config/config';
 import * as moment from 'moment';
+import { LANGUAGES } from 'src/app/config/config';
 import { TimezoneService } from 'src/app/services/timezone.service';
 
 @Component({

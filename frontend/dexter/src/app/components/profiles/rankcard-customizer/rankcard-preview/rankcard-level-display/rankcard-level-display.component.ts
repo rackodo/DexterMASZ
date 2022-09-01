@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ExperienceModel } from 'src/app/models/ExperienceModel';
 import { RankcardFlags, UserRankcardConfig } from 'src/app/models/UserRankcardConfig';
 import { rawToSuffixForm, uintColorToCss } from '../rankcard-preview.component';
@@ -8,7 +8,7 @@ import { rawToSuffixForm, uintColorToCss } from '../rankcard-preview.component';
   templateUrl: './rankcard-level-display.component.html',
   styleUrls: ['./rankcard-level-display.component.css']
 })
-export class RankcardLevelDisplayComponent implements OnInit {
+export class RankcardLevelDisplayComponent {
 
   @Input() xpModel! : ExperienceModel;
   @Input() model! : UserRankcardConfig;
@@ -21,9 +21,6 @@ export class RankcardLevelDisplayComponent implements OnInit {
   levelLabelWidth = 175;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   insetMainXpFlag() { return (this.model.rankcardFlags & RankcardFlags.InsetMainXP) > 0; }
 

@@ -1,5 +1,5 @@
-import { DiscordUser } from "./DiscordUser";
 import { DiscordChannel } from "./DiscordChannel";
+import { DiscordUser } from "./DiscordUser";
 
 export interface ScheduledMessage {
     id: number;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModCaseCommentExpandedTable } from 'src/app/models/ModCaseCommentExpandedTable';
 
 @Component({
@@ -6,12 +6,9 @@ import { ModCaseCommentExpandedTable } from 'src/app/models/ModCaseCommentExpand
   templateUrl: './comments-card-compact.component.html',
   styleUrls: ['./comments-card-compact.component.css']
 })
-export class CommentsCardCompactComponent implements OnInit {
+export class CommentsCardCompactComponent {
 
   @Input() entry!: ModCaseCommentExpandedTable;
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

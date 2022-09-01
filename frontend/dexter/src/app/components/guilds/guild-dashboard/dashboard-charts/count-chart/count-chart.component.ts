@@ -51,7 +51,7 @@ export class CountChartComponent implements OnInit {
         },
         gridLines: {
           color: "rgba(0, 0, 0, 0)",
-        } 
+        }
       }]
     }
   };

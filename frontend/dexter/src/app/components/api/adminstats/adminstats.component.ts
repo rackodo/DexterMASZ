@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { forkJoin, interval, ReplaySubject } from 'rxjs';
+import { interval } from 'rxjs';
 import { AdminStats } from 'src/app/models/AdminStats';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { ApiService } from 'src/app/services/api.service';
@@ -13,7 +13,7 @@ import { ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/c
   templateUrl: './adminstats.component.html',
   styleUrls: ['./adminstats.component.css']
 })
-export class AdminStatsComponent implements OnInit {
+export class AdminStatsComponent implements OnInit, OnDestroy {
 
   private subscription?: any;
   private timeDifference?: number;

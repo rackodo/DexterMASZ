@@ -22,12 +22,12 @@
 
                 <!-- Delete / Edit button information -->
                 <div class="d-flex flex-row flex-wrap ml-2 flex-shrink-0" *ngIf="this.isModOrHigher">
-                    <button mat-fab color="accent" aria-label="edit case" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined"
+                    <button mat-fab color="accent" aria-label="edit case" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined"
                         class="flex-grow-0 flex-shrink-0 mb-2 mr-2" routerLink="/guilds/{{ this.guildId }}/cases/{{ this.caseId }}/edit">
                         <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-fab color="primary" aria-label="delete case"
-                        class="flex-grow-0 flex-shrink-0" (click)="deleteCase()" *ngIf="this.modCase.content?.modCase?.markedToDeleteAt == undefined">
+                        class="flex-grow-0 flex-shrink-0" (click)="deleteCase()" *ngIf="this.modCase.content?.modCase?.markedToDeleteAt === undefined">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>
@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <!-- moderator information -->
-                <div class="col-12 col-sm-6 col-md-4 grid-margin stretch-card mt-2" *ngIf="this.modCase.loading || (this.modCase.content?.modCase?.modId && this.modCase.content?.modCase?.modId != '0')">
+                <div class="col-12 col-sm-6 col-md-4 grid-margin stretch-card mt-2" *ngIf="this.modCase.loading || (this.modCase.content?.modCase?.modId && this.modCase.content?.modCase?.modId !== '0')">
                     <div class="infobox bg-g-red">
                         <div class="infobox-body d-flex flex-row flex-wrap">
                             <div class="flex-grow-1 d-flex flex-column">
@@ -168,7 +168,7 @@
                                 <ng-container *ngIf="!this.modCase.loading">
                                     <div class="d-flex flex-row">
                                         <span class="mat-h2 mb-0 font-weight-bold">{{ 'ModCaseView.Punishment' | translate }}</span>
-                                        <h5 *ngIf="this.modCase.content?.modCase?.punishmentType != 0 && this.modCase.content?.modCase?.punishmentType != 2 && !this.modCase.loading">
+                                        <h5 *ngIf="this.modCase.content?.modCase?.punishmentType !== 0 && this.modCase.content?.modCase?.punishmentType !== 2 && !this.modCase.loading">
                                             <span class="badge mat-h4 mb-0 ml-2" style="padding: .1rem .4rem"
                                                 [ngClass]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? 'badge-danger' : 'badge-dark'"
                                                 [attr.title]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? '' :  'ModCaseView.Punishment' | translate">
@@ -176,21 +176,21 @@
                                             </span>
                                         </h5>
                                     </div>
-                                    <h3 *ngIf="this.modCase.content?.modCase?.punishmentType == 0 || this.modCase.content?.modCase?.punishmentType == 2">
+                                    <h3 *ngIf="this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentType === 2">
                                         <span class="badge mat-h4 mb-0 ml-2" style="padding: .1rem .4rem"
                                             [ngClass]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? 'badge-danger' : 'badge-dark'"
                                             [attr.title]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? '' : 'ModCaseView.Punishment' | translate">
                                             {{ punishment }}
                                         </span>
                                     </h3>
-                                    <h3 *ngIf="this.modCase.content?.modCase?.severity != 0">
+                                    <h3 *ngIf="this.modCase.content?.modCase?.severity !== 0">
                                         <span class="badge mat-h4 mb-0 ml-2" style="padding: .1rem .4rem"
-                                            [ngClass]="(this.modCase.content?.modCase?.severity === 2) ? 'badge-danger' : 'badge-dark'"
+                                            [ngClass]="(this.modCase.content?.modCase?.severity === 1) ? 'badge-danger' : 'badge-dark'"
                                             [attr.title]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? '' : 'ModCaseView.Punishment' | translate">
                                             {{ severity }}
                                         </span>
                                     </h3>
-                                    <ng-container *ngIf="this.modCase.content?.modCase?.punishmentType != 0 && this.modCase.content?.modCase?.punishmentType != 2">
+                                    <ng-container *ngIf="this.modCase.content?.modCase?.punishmentType !== 0 && this.modCase.content?.modCase?.punishmentType !== 2">
                                         <span class="mat-h3 mb-0" *ngIf="this.modCase.content?.modCase?.punishedUntil || ! this.modCase.content?.modCase?.punishmentActive ?? true else punishedForever">
                                             <app-date-display [showTime]="true" *ngIf="this.modCase.content?.modCase?.punishmentActive"
                                                 [date]="this.modCase.content!.modCase.punishedUntil"
@@ -214,10 +214,10 @@
                                             </mat-progress-bar>
                                         </div>
                                         <ng-container *ngIf="showActivationSlider && isModOrHigher">
-                                            <mat-slide-toggle 
+                                            <mat-slide-toggle
                                                 [matTooltip]="activationSliderModeDeactivation ? 'Deactivate Punishment' : 'Activate Punishment'"
                                                 (change)="handleActivation()"
-                                                [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != null"
+                                                [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== null"
                                                 [(ngModel)]="activationSliderValue">
                                                     {{ activationSliderModeDeactivation ? 'Deactivate Punishment' : 'Activate Punishment'}}
                                             </mat-slide-toggle>
@@ -240,10 +240,10 @@
                                 </ng-container>
                                 <ng-container *ngIf="!this.modCase.loading">
                                     <app-date-display [showTime]="true" [date]="this.modCase.content!.modCase.createdAt"></app-date-display>
-                                    <span class="mat-h3 mb-0 font-weight-bold" *ngIf="this.modCase.content?.modCase?.lastEditedAt != this.modCase.content?.modCase?.createdAt">
+                                    <span class="mat-h3 mb-0 font-weight-bold" *ngIf="this.modCase.content?.modCase?.lastEditedAt !== this.modCase.content?.modCase?.createdAt">
                                         {{ 'ModCaseView.EditedAt' | translate }}
                                     </span>
-                                    <span class="mat-h3 mb-0" *ngIf="this.modCase.content?.modCase?.lastEditedAt != this.modCase.content?.modCase?.createdAt">
+                                    <span class="mat-h3 mb-0" *ngIf="this.modCase.content?.modCase?.lastEditedAt !== this.modCase.content?.modCase?.createdAt">
                                         <app-date-display [showTime]="true" [date]="this.modCase.content!.modCase.lastEditedAt"></app-date-display>
                                     </span>
                                 </ng-container>
@@ -256,7 +256,7 @@
                 </div>
                 <!-- Last moderator information -->
                 <div class="col-12 col-sm-6 col-md-4 grid-margin stretch-card mt-2"
-                 *ngIf="this.modCase.content?.modCase?.lastEditedByModId && this.modCase.content?.modCase?.lastEditedAt != this.modCase.content?.modCase?.createdAt">
+                 *ngIf="this.modCase.content?.modCase?.lastEditedByModId && this.modCase.content?.modCase?.lastEditedAt !== this.modCase.content?.modCase?.createdAt">
                     <div class="infobox bg-g-red">
                         <div class="infobox-body d-flex flex-row flex-wrap">
                             <div class="flex-grow-1 d-flex flex-column">
@@ -305,7 +305,7 @@
                     <div class="mat-h2 font-weight-bold">{{ 'ModCaseView.UploadedFiles' | translate }} ({{ (this.files.content | async)?.names?.length || 0 }})</div>
                     <div class="flex-grow-1"></div>
                     <div *ngIf="this.isModOrHigher">
-                        <button mat-raised-button color="accent" (click)="uploadInit()" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined">
+                        <button mat-raised-button color="accent" (click)="uploadInit()" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined">
                             <mat-icon>file_upload</mat-icon>
                             {{ 'ModCaseView.Upload' | translate }}
                         </button>
@@ -327,7 +327,7 @@
                                     {{ 'ModCaseView.View' | translate }}
                                 </a>
                                 <button mat-raised-button color="primary" *ngIf="this.isModOrHigher" class="ml-2"
-                                 [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined" (click)="deleteFile(file)">
+                                 [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined" (click)="deleteFile(file)">
                                     {{ 'ModCaseView.Delete' | translate }}
                                 </button>
                             </div>
@@ -383,11 +383,11 @@
 
                                     <!-- Icons -->
                                     <div class="d-flex flex-row flex-wrap align-self-end flex-grow-0 flex-shrink-0" *ngIf="this.currentUser.content?.discordUser?.id === comment.comment?.userId || this.currentUser.content?.isAdmin">
-                                        <button mat-mini-fab color="accent" aria-label="edit comment" class="flex-shrink-0 mr-2" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined"
+                                        <button mat-mini-fab color="accent" aria-label="edit comment" class="flex-shrink-0 mr-2" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined"
                                          (click)="updateComment(comment.comment)" *ngIf="this.modCase.content?.modCase?.allowComments">
                                             <mat-icon>edit</mat-icon>
                                         </button>
-                                        <button mat-mini-fab color="primary" aria-label="delete comment" class="flex-shrink-0" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined"
+                                        <button mat-mini-fab color="primary" aria-label="delete comment" class="flex-shrink-0" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined"
                                          (click)="deleteComment(comment.comment.id)">
                                             <mat-icon>delete</mat-icon>
                                         </button>
@@ -425,7 +425,7 @@
                     <div class="d-flex flex-column">
                         <button mat-raised-button color="accent"
                             class="flex-shrink-1 mb-2"
-                            [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined"
+                            [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined"
                             (click)="lockModCaseComments()"
                             *ngIf="this.isModOrHigher && this.modCase?.content?.modCase?.allowComments">
                             {{ 'ModCaseView.LockComments' | translate }}
@@ -434,13 +434,13 @@
                             class="flex-shrink-1 mb-2"
                             (click)="unlockModCaseComments()"
                             *ngIf="this.isModOrHigher && ! this.modCase?.content?.modCase?.allowComments"
-                            [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined">
+                            [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined">
                             {{ 'ModCaseView.UnlockComments' | translate }}
                         </button>
                         <button mat-raised-button color="accent"
                             class="flex-shrink-1"
                             (click)="postComment()"
-                            [disabled]="this.modCase.content?.modCase?.markedToDeleteAt != undefined || !this.newComment || !this.modCase.content?.modCase?.allowComments">
+                            [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined || !this.newComment || !this.modCase.content?.modCase?.allowComments">
                             {{ 'ModCaseView.PostComment' | translate }}
                         </button>
                     </div>

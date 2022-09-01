@@ -1,5 +1,5 @@
-import { DiscordUser } from "./DiscordUser";
 import { DiscordGuild } from "./DiscordGuild";
+import { DiscordUser } from "./DiscordUser";
 
 export interface AppUser {
   userGuilds: DiscordGuild[];
