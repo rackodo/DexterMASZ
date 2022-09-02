@@ -4,7 +4,7 @@
 
         <div class="d-flex flex-column align-items-center p-4">
             <app-guild-icon [guild]="currentGuild.content" [width]="'128px'" [height]="'128px'"></app-guild-icon>
-            <div class="mat-h3 mb-0 font-weight-bold">{{ currentGuild.content?.name }}</div>
+            <div class="mat-h3 mb-0 fw-bold">{{ currentGuild.content?.name }}</div>
             <div class="mat-small">({{ currentGuild.content?.id }})</div>
         </div>
 
@@ -33,7 +33,7 @@
 							</mat-form-field>
                         </div>
                         <div class="stepper-actions">
-                            <button mat-raised-button matStepperPrevious class="mr-2" color="accent">{{ 'GuildDialog.Back' | translate }}</button>
+                            <button mat-raised-button matStepperPrevious class="me-2" color="accent">{{ 'GuildDialog.Back' | translate }}</button>
                             <button mat-raised-button matStepperNext color="accent">{{ 'GuildDialog.Next' | translate }}</button>
                         </div>
                     </form>
@@ -78,7 +78,7 @@
 							</mat-form-field>
                         </div>
                         <div class="stepper-actions">
-                            <button mat-raised-button matStepperPrevious class="mr-2" color="accent">{{ 'GuildDialog.Back' | translate }}</button>
+                            <button mat-raised-button matStepperPrevious class="me-2" color="accent">{{ 'GuildDialog.Back' | translate }}</button>
                             <button mat-raised-button matStepperNext color="accent">{{ 'GuildDialog.Next' | translate }}</button>
                         </div>
                     </form>
@@ -95,7 +95,7 @@
                         </mat-form-field>
                         <div class="d-flex flex-row">
                             <mat-checkbox
-                                class="mr-2"
+                                class="me-2"
                                 formControlName="strictPermissionCheck"
                                 [labelPosition]="'after'">
                                 {{ 'GuildDialog.StrictPermissionCheckbox' | translate }}
@@ -106,7 +106,7 @@
                         </div>
                         <div class="d-flex flex-row">
                             <mat-checkbox
-                                class="mr-2"
+                                class="me-2"
                                 formControlName="executeWhoIsOnJoin"
                                 [labelPosition]="'after'">
                                 {{ 'GuildDialog.ExecuteWhois' | translate }}
@@ -117,7 +117,7 @@
                         </div>
                         <div class="d-flex flex-row">
                             <mat-checkbox
-                                class="mr-2"
+                                class="me-2"
                                 formControlName="publishModeratorInfo"
                                 [labelPosition]="'after'">
                                 {{ 'GuildDialog.PublishModerator' | translate }}
@@ -127,7 +127,7 @@
                             </mat-icon>
                         </div>
                         <div class="stepper-actions">
-                            <button mat-raised-button matStepperPrevious class="mr-2" color="accent">{{ 'GuildDialog.Back' | translate }}</button>
+                            <button mat-raised-button matStepperPrevious class="me-2" color="accent">{{ 'GuildDialog.Back' | translate }}</button>
                             <button mat-raised-button matStepperNext color="accent">{{ 'GuildDialog.Next' | translate }}</button>
                         </div>
                     </form>
@@ -135,7 +135,7 @@
                 <mat-step>
                     <ng-template matStepLabel>{{ 'GuildDialog.Done' | translate }}</ng-template>
                     <div class="d-flex flex-row mt-2 stepper-actions">
-                        <button mat-raised-button matStepperPrevious class="mr-2" color="accent">{{ 'GuildDialog.Back' | translate }}</button>
+                        <button mat-raised-button matStepperPrevious class="me-2" color="accent">{{ 'GuildDialog.Back' | translate }}</button>
                         <button mat-raised-button color="accent" (click)="updateGuild()">{{ 'GuildDialog.UpdateGuild' | translate }}</button>
                     </div>
                 </mat-step>

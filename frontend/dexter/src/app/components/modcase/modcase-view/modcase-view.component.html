@@ -4,9 +4,9 @@
     <div class="d-flex flex-column justify-content-center align-items-left cw-75-100">
         <div class="d-flex flex-column p-4 mt-2">
             <div class="d-flex flex-row conditional-fc justify-content-between">
-                <div class="d-flex flex-row flex-grow-1 font-weight-bold align-items-center" *ngIf="!this.modCase.loading">
+                <div class="d-flex flex-row flex-grow-1 fw-bold align-items-center" *ngIf="!this.modCase.loading">
                     <div class="crs-ptr" style="font-size: 56px;" routerLink="/guilds/{{ this.guildId }}">
-                        <mat-icon [inline]="true">arrow_back_ios</mat-icon>
+                        <mat-icon [inline]="true">popover-arrow_back_ios</mat-icon>
                     </div>
                     <span class="mat-display-3 mb-2" style="word-break: break-all;" title="The case title">
                         <span class="text-black-50" title="The case id">
@@ -15,15 +15,15 @@
                        {{ this.modCase.content?.modCase?.title }}
                     </span>
                 </div>
-                <div *ngIf="this.modCase.loading" class="d-flex flex-column flex-grow-1 font-weight-bold align-items-start">
+                <div *ngIf="this.modCase.loading" class="d-flex flex-column flex-grow-1 fw-bold align-items-start">
                     <div class="waiting-for-text mb-2" style="width: 10rem"></div>
                     <div class="waiting-for-text" style="width: 8rem"></div>
                 </div>
 
                 <!-- Delete / Edit button information -->
-                <div class="d-flex flex-row flex-wrap ml-2 flex-shrink-0" *ngIf="this.isModOrHigher">
+                <div class="d-flex flex-row flex-wrap ms-2 flex-shrink-0" *ngIf="this.isModOrHigher">
                     <button mat-fab color="accent" aria-label="edit case" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined"
-                        class="flex-grow-0 flex-shrink-0 mb-2 mr-2" routerLink="/guilds/{{ this.guildId }}/cases/{{ this.caseId }}/edit">
+                        class="flex-grow-0 flex-shrink-0 mb-2 me-2" routerLink="/guilds/{{ this.guildId }}/cases/{{ this.caseId }}/edit">
                         <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-fab color="primary" aria-label="delete case"
@@ -34,9 +34,9 @@
             </div>
 
             <mat-card class="d-flex flex-column primary-bg-color mt-3" *ngIf="this.modCase.content?.modCase?.markedToDeleteAt">
-                <span class="mat-display-1 mb-0 font-weight-bold">
+                <span class="mat-display-1 mb-0 fw-bold">
                     <img *ngIf="this.modCase.content?.deletedBy"
-                        class="rounded-circle z-depth-0 mr-1"
+                        class="rounded-circle z-depth-0 me-1"
                         [attr.src]="this.modCase.content?.deletedBy?.imageUrl"
                         alt="avatar"
                         height="40"
@@ -51,7 +51,7 @@
                     <button mat-raised-button class="align-self-end" style="background-color: green;" (click)="restoreCase()" *ngIf="!this.restoringCase">
                         {{ 'ModCaseView.Restore' | translate }}
                     </button>
-                    <button mat-raised-button class="align-self-end ml-2" color="accent" (click)="deleteCaseFromBin()" *ngIf="!this.restoringCase && this.currentUser.content?.isAdmin">
+                    <button mat-raised-button class="align-self-end ms-2" color="accent" (click)="deleteCaseFromBin()" *ngIf="!this.restoringCase && this.currentUser.content?.isAdmin">
                         {{ 'ModCaseView.Delete' | translate }}
                     </button>
                     <mat-spinner id="custom-green-spinner" class="align-self-end" *ngIf="this.restoringCase"></mat-spinner>
@@ -65,7 +65,7 @@
             </app-usernote-card>
 
             <!-- Labels -->
-            <mat-chip-list aria-label="case labels" class="caselabels row mt-3 ml-2" title="The case labels" *ngIf="this.modCase.content?.modCase?.labels?.length">
+            <mat-chip-list aria-label="case labels" class="caselabels row mt-3 ms-2" title="The case labels" *ngIf="this.modCase.content?.modCase?.labels?.length">
                 <mat-chip class="mat-h1" selected *ngFor="let label of this.modCase.content?.modCase?.labels">{{ label }}</mat-chip>
             </mat-chip-list>
             <!-- cards -->
@@ -75,7 +75,7 @@
                     <div class="infobox bg-g-green">
                         <div class="infobox-body d-flex flex-row flex-wrap">
                             <div class="flex-grow-1 d-flex flex-column">
-                                <span class="mat-h2 mb-0 font-weight-bold">{{ 'ModCaseView.Suspect' | translate }}</span>
+                                <span class="mat-h2 mb-0 fw-bold">{{ 'ModCaseView.Suspect' | translate }}</span>
                                 <ng-container *ngIf="this.modCase.loading">
                                     <div class="waiting-for-text mb-2" style="width: 10rem"></div>
                                     <div class="waiting-for-text mb-2" style="width: 8rem"></div>
@@ -94,7 +94,7 @@
                             <div class="infobox-icon">
                                 <img
                                     src="{{ this.modCase.content?.suspect?.imageUrl }}"
-                                    class="rounded-circle z-depth-0 mr-1"
+                                    class="rounded-circle z-depth-0 me-1"
                                     alt="suspect avatar"
                                     height="80"
                                     onerror="this.src='/assets/img/default_profile.png';"
@@ -108,7 +108,7 @@
                     <div class="infobox bg-g-orange">
                         <div class="infobox-body d-flex flex-row flex-wrap">
                             <div class="flex-grow-1 d-flex flex-column">
-                                <span class="mat-h2 mb-0 font-weight-bold">{{ 'ModCaseView.Guild' | translate }}</span>
+                                <span class="mat-h2 mb-0 fw-bold">{{ 'ModCaseView.Guild' | translate }}</span>
                                 <ng-container *ngIf="this.modCase.loading">
                                     <div class="waiting-for-text mb-2" style="width: 10rem"></div>
                                     <div class="waiting-for-text mb-2" style="width: 8rem"></div>
@@ -129,7 +129,7 @@
                     <div class="infobox bg-g-red">
                         <div class="infobox-body d-flex flex-row flex-wrap">
                             <div class="flex-grow-1 d-flex flex-column">
-                                <span class="mat-h2 mb-0 font-weight-bold">{{ 'ModCaseView.Moderator' | translate }}</span>
+                                <span class="mat-h2 mb-0 fw-bold">{{ 'ModCaseView.Moderator' | translate }}</span>
                                 <ng-container *ngIf="this.modCase.loading">
                                     <div class="waiting-for-text mb-2" style="width: 10rem"></div>
                                     <div class="waiting-for-text mb-2" style="width: 8rem"></div>
@@ -146,7 +146,7 @@
                             <div class="infobox-icon">
                                 <img
                                     src="{{ this.modCase.content?.moderator?.imageUrl }}"
-                                    class="rounded-circle z-depth-0 mr-1"
+                                    class="rounded-circle z-depth-0 me-1"
                                     alt="moderator avatar"
                                     height="80"
                                     onerror="this.src='/assets/img/default_profile.png';"
@@ -161,15 +161,15 @@
                         <div class="infobox-body d-flex flex-row flex-wrap">
                             <div class="flex-grow-1 d-flex flex-column">
                                 <ng-container *ngIf="this.modCase.loading">
-                                    <span class="mat-h2 mb-0 font-weight-bold">{{ 'ModCaseView.Punishment' | translate }}</span>
+                                    <span class="mat-h2 mb-0 fw-bold">{{ 'ModCaseView.Punishment' | translate }}</span>
                                     <div class="waiting-for-text mb-2" style="width: 10rem"></div>
                                     <div class="waiting-for-text mb-2" style="width: 8rem"></div>
                                 </ng-container>
                                 <ng-container *ngIf="!this.modCase.loading">
                                     <div class="d-flex flex-row">
-                                        <span class="mat-h2 mb-0 font-weight-bold">{{ 'ModCaseView.Punishment' | translate }}</span>
+                                        <span class="mat-h2 mb-0 fw-bold">{{ 'ModCaseView.Punishment' | translate }}</span>
                                         <h5 *ngIf="this.modCase.content?.modCase?.punishmentType !== 0 && this.modCase.content?.modCase?.punishmentType !== 2 && !this.modCase.loading">
-                                            <span class="badge mat-h4 mb-0 ml-2" style="padding: .1rem .4rem"
+                                            <span class="badge mat-h4 mb-0 ms-2" style="padding: .1rem .4rem"
                                                 [ngClass]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? 'badge-danger' : 'badge-dark'"
                                                 [attr.title]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? '' :  'ModCaseView.Punishment' | translate">
                                                 {{ punishment }}
@@ -177,14 +177,14 @@
                                         </h5>
                                     </div>
                                     <h3 *ngIf="this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentType === 2">
-                                        <span class="badge mat-h4 mb-0 ml-2" style="padding: .1rem .4rem"
+                                        <span class="badge mat-h4 mb-0 ms-2" style="padding: .1rem .4rem"
                                             [ngClass]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? 'badge-danger' : 'badge-dark'"
                                             [attr.title]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? '' : 'ModCaseView.Punishment' | translate">
                                             {{ punishment }}
                                         </span>
                                     </h3>
                                     <h3 *ngIf="this.modCase.content?.modCase?.severity !== 0">
-                                        <span class="badge mat-h4 mb-0 ml-2" style="padding: .1rem .4rem"
+                                        <span class="badge mat-h4 mb-0 ms-2" style="padding: .1rem .4rem"
                                             [ngClass]="(this.modCase.content?.modCase?.severity === 1) ? 'badge-danger' : 'badge-dark'"
                                             [attr.title]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? '' : 'ModCaseView.Punishment' | translate">
                                             {{ severity }}
@@ -233,14 +233,14 @@
                     <div class="infobox bg-g-pink">
                         <div class="infobox-body d-flex flex-row flex-wrap">
                             <div class="flex-grow-1 d-flex flex-column">
-                                <span class="mat-h2 mb-0 font-weight-bold">{{ 'ModCaseView.CreatedAt' | translate }}</span>
+                                <span class="mat-h2 mb-0 fw-bold">{{ 'ModCaseView.CreatedAt' | translate }}</span>
                                 <ng-container *ngIf="this.modCase.loading">
                                     <div class="waiting-for-text mb-2" style="width: 10rem"></div>
                                     <div class="waiting-for-text mb-2" style="width: 8rem"></div>
                                 </ng-container>
                                 <ng-container *ngIf="!this.modCase.loading">
                                     <app-date-display [showTime]="true" [date]="this.modCase.content!.modCase.createdAt"></app-date-display>
-                                    <span class="mat-h3 mb-0 font-weight-bold" *ngIf="this.modCase.content?.modCase?.lastEditedAt !== this.modCase.content?.modCase?.createdAt">
+                                    <span class="mat-h3 mb-0 fw-bold" *ngIf="this.modCase.content?.modCase?.lastEditedAt !== this.modCase.content?.modCase?.createdAt">
                                         {{ 'ModCaseView.EditedAt' | translate }}
                                     </span>
                                     <span class="mat-h3 mb-0" *ngIf="this.modCase.content?.modCase?.lastEditedAt !== this.modCase.content?.modCase?.createdAt">
@@ -260,7 +260,7 @@
                     <div class="infobox bg-g-red">
                         <div class="infobox-body d-flex flex-row flex-wrap">
                             <div class="flex-grow-1 d-flex flex-column">
-                                <span class="mat-h2 mb-0 font-weight-bold">
+                                <span class="mat-h2 mb-0 fw-bold">
                                     {{ 'ModCaseView.LastEditModerator' | translate }}
                                 </span>
                                 <span class="mat-h3 mb-0" style="word-break: break-all;">
@@ -273,7 +273,7 @@
                             <div class="infobox-icon">
                                 <img
                                     src="{{ this.modCase.content?.lastModerator?.imageUrl }}"
-                                    class="rounded-circle z-depth-0 mr-1"
+                                    class="rounded-circle z-depth-0 me-1"
                                     alt="lastModerator avatar"
                                     height="80"
                                     onerror="this.src='/assets/img/default_profile.png';"
@@ -286,7 +286,7 @@
 
             <!-- Description -->
             <div class="mb-3">
-                <div class="mat-h2 font-weight-bold">{{ 'ModCaseView.Description' | translate }}</div>
+                <div class="mat-h2 fw-bold">{{ 'ModCaseView.Description' | translate }}</div>
                 <mat-divider class="mb-2"></mat-divider>
                 <ng-container *ngIf="this.modCase.loading">
                     <div class="waiting-for-text mb-2" style="width: 10rem"></div>
@@ -302,7 +302,7 @@
             <!-- Files -->
             <div class="mb-3" *ngIf="this.isModOrHigher">
                 <div class="d-flex flex-row align-items-baseline">
-                    <div class="mat-h2 font-weight-bold">{{ 'ModCaseView.UploadedFiles' | translate }} ({{ (this.files.content | async)?.names?.length || 0 }})</div>
+                    <div class="mat-h2 fw-bold">{{ 'ModCaseView.UploadedFiles' | translate }} ({{ (this.files.content | async)?.names?.length || 0 }})</div>
                     <div class="flex-grow-1"></div>
                     <div *ngIf="this.isModOrHigher">
                         <button mat-raised-button color="accent" (click)="uploadInit()" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined">
@@ -326,7 +326,7 @@
                                 <a mat-raised-button href="/api/v1/guilds/{{ this.guildId }}/cases/{{ this.caseId }}/files/{{ file }}" color="accent" target="_blank">
                                     {{ 'ModCaseView.View' | translate }}
                                 </a>
-                                <button mat-raised-button color="primary" *ngIf="this.isModOrHigher" class="ml-2"
+                                <button mat-raised-button color="primary" *ngIf="this.isModOrHigher" class="ms-2"
                                  [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined" (click)="deleteFile(file)">
                                     {{ 'ModCaseView.Delete' | translate }}
                                 </button>
@@ -338,7 +338,7 @@
 
             <!-- Comments -->
             <div>
-                <div class="mat-h2 font-weight-bold">{{ 'ModCaseView.Comments' | translate }} ({{ this.modCase.content?.comments?.length || 0 }})</div>
+                <div class="mat-h2 fw-bold">{{ 'ModCaseView.Comments' | translate }} ({{ this.modCase.content?.comments?.length || 0 }})</div>
                 <mat-divider class="mb-2"></mat-divider>
                 <div class="d-flex flex-column flex-wrap justify-content-between">
                     <ng-container *ngIf="this.modCase.loading">
@@ -352,7 +352,7 @@
                                     <ng-container *ngIf="comment?.comment?.userId">
                                         <img
                                             [attr.src]="comment?.commenter?.imageUrl"
-                                            class="card-img rounded-circle z-depth-0 mr-1"
+                                            class="card-img rounded-circle z-depth-0 me-1"
                                             alt="avatar icon"
                                             height="32"
                                             style="width: unset"
@@ -360,7 +360,7 @@
                                         />
                                     </ng-container>
                                     <ng-container *ngIf="!comment?.comment?.userId">
-                                        <app-guild-icon class="mr-1" [guild]="currentGuild.content"
+                                        <app-guild-icon class="me-1" [guild]="currentGuild.content"
                                             [width]="'32px'" [height]="'32px'" [darkBorder]="true">
                                         </app-guild-icon>
                                     </ng-container>
@@ -383,7 +383,7 @@
 
                                     <!-- Icons -->
                                     <div class="d-flex flex-row flex-wrap align-self-end flex-grow-0 flex-shrink-0" *ngIf="this.currentUser.content?.discordUser?.id === comment.comment?.userId || this.currentUser.content?.isAdmin">
-                                        <button mat-mini-fab color="accent" aria-label="edit comment" class="flex-shrink-0 mr-2" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined"
+                                        <button mat-mini-fab color="accent" aria-label="edit comment" class="flex-shrink-0 me-2" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined"
                                          (click)="updateComment(comment.comment)" *ngIf="this.modCase.content?.modCase?.allowComments">
                                             <mat-icon>edit</mat-icon>
                                         </button>
@@ -404,7 +404,7 @@
                         <img
                             *ngIf="this.modCase.content?.lockedBy"
                             [attr.src]="this.modCase.content?.lockedBy?.imageUrl"
-                            class="card-img rounded-circle z-depth-0 mr-2"
+                            class="card-img rounded-circle z-depth-0 me-2"
                             alt="avatar icon"
                             height="32"
                             style="width: unset"
@@ -418,7 +418,7 @@
                     </div>
                 </div>
                 <div class="d-flex flex-row">
-                    <mat-form-field class="flex-grow-1 mr-2">
+                    <mat-form-field class="flex-grow-1 me-2">
                         <mat-label>{{ 'ModCaseView.NewComment' | translate }}</mat-label>
                         <textarea matInput [(ngModel)]="newComment" [disabled]="!this.modCase.content?.modCase?.allowComments"></textarea>
                     </mat-form-field>

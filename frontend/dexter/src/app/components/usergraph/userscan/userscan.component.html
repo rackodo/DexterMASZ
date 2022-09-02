@@ -2,7 +2,7 @@
     <div class="d-flex flex-column justify-content-center align-items-left cw-50-75 mt-2 p-4">
         <div class="card-container">
             <div class="card-container-body d-flex flex-row flex-wrap flex-shrink-0 flex-grow-1 align-items-center">
-                <mat-icon class="mr-2">search</mat-icon>
+                <mat-icon class="me-2">search</mat-icon>
                 <mat-form-field class="flex-grow-1 m-0">
                     <mat-label>{{ 'Scanning.EnterUserOrInvite' | translate }}</mat-label>
                     <input matInput type="text" autocomplete="off" [(ngModel)]="search" (ngModelChange)="onSearch($event)">
@@ -12,7 +12,7 @@
         <div class="card-container mt-2" *ngIf="this.showUsage">
             <div class="card-container-body d-flex flex-row conditional-fc">
                 <div class="d-flex flex-column p-4">
-                    <span class="mat-h1 font-weight-bold mb-2">
+                    <span class="mat-h1 fw-bold mb-2">
                         {{ 'Scanning.Userscan' | translate }}
                     </span>
                     <p style="word-wrap: break-word;">
@@ -26,7 +26,7 @@
             <div class="card-container-body d-flex flex-row conditional-fc">
                 <img src="/assets/img/connection.svg" class="w-50 flex-grow-0" alt="connection image"/>
                 <div class="d-flex flex-column p-4">
-                    <span class="mat-h1 font-weight-bold mb-2">
+                    <span class="mat-h1 fw-bold mb-2">
                         {{ 'Scanning.Invitescan' | translate }}
                     </span>
                     <p style="word-wrap: break-word;">

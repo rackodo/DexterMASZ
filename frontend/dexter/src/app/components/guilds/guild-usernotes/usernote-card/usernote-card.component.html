@@ -1,7 +1,7 @@
 <div class="card-container">
     <div class="card-container-body d-flex conditional-fc">
         <!-- Profile picture -->
-        <div class="pictures-parent mr-3">
+        <div class="pictures-parent me-3">
             <img
                 src="{{ userNote.user?.imageUrl }}"
                 class="rounded-circle z-depth-0 user-image"
@@ -19,7 +19,7 @@
                 onerror="this.src='/assets/img/default_profile.png';"
             />
         </div>
-        <div class="flex-shrink-1 d-flex flex-column flex-wrap pr-2">
+        <div class="flex-shrink-1 d-flex flex-column flex-wrap pe-2">
             <!-- Title -->
             <div>
                 <span title="{{ userNote.userNote.userId }}" class="mat-h2 mb-0" *ngIf="userNote.user">

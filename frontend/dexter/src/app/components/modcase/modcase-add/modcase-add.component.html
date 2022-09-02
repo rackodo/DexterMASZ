@@ -12,9 +12,9 @@
                     </mat-form-field>
                     <mat-list>
                         <mat-list-item class="crs-ptr" *ngFor="let note of this.templates.content" (click)="applyTemplate(note.caseTemplate, stepper)">
-                            <img width="40px" height="40px" class="rounded-circle mr-2"
+                            <img width="40px" height="40px" class="rounded-circle me-2"
                              alt="creator {{ note.caseTemplate.userId }}" src="{{ note.creator?.imageUrl }}" />
-                            <div class="mr-2">
+                            <div class="me-2">
                                 {{note.caseTemplate.templateName}}
                             </div>
                             <button mat-mini-fab color="primary" aria-label="delete template"
@@ -50,7 +50,7 @@
                     </mat-form-field>
                 </form>
                 <div class="stepper-actions">
-                    <button mat-raised-button matStepperPrevious class="mr-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
+                    <button mat-raised-button matStepperPrevious class="me-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
                     <button mat-raised-button matStepperNext color="accent">{{ 'ModCaseDialog.Next' | translate }}</button>
                 </div>
             </mat-step>
@@ -90,7 +90,7 @@
                     </mat-form-field>
                 </form>
                 <div class="stepper-actions">
-                    <button mat-raised-button matStepperPrevious class="mr-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
+                    <button mat-raised-button matStepperPrevious class="me-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
                     <button mat-raised-button matStepperNext color="accent">{{ 'ModCaseDialog.Next' | translate }}</button>
                 </div>
             </mat-step>
@@ -115,7 +115,7 @@
 					<br *ngIf="this.punishmentFormGroup.value.punishmentType === 1 || this.punishmentFormGroup.value.punishmentType === 3"/>
                 </form>
                 <div class="stepper-actions">
-                    <button mat-raised-button matStepperPrevious class="mr-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
+                    <button mat-raised-button matStepperPrevious class="me-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
                     <button mat-raised-button matStepperNext color="accent">{{ 'ModCaseDialog.Next' | translate }}</button>
                 </div>
             </mat-step>
@@ -135,15 +135,15 @@
                     </mat-list-item>
                 </mat-list>
                 <div class="stepper-actions">
-                    <button mat-raised-button matStepperPrevious class="mr-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
+                    <button mat-raised-button matStepperPrevious class="me-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
                     <button mat-raised-button matStepperNext color="accent">{{ 'ModCaseDialog.Next' | translate }}</button>
                 </div>
             </mat-step>
             <mat-step [stepControl]="optionsFormGroup">
                 <ng-template matStepLabel>{{ 'ModCaseDialog.CreateCase' | translate }}</ng-template>
                 <div *ngIf="!this.savingCase" class="stepper-actions">
-                    <button mat-raised-button matStepperPrevious class="mr-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
-                    <button mat-raised-button class="mr-2 mb-2" (click)="saveTemplate()" color="accent">{{ 'ModCaseDialog.SaveAsTemplate' | translate }}</button>
+                    <button mat-raised-button matStepperPrevious class="me-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
+                    <button mat-raised-button class="me-2 mb-2" (click)="saveTemplate()" color="accent">{{ 'ModCaseDialog.SaveAsTemplate' | translate }}</button>
                     <button mat-raised-button color="accent" (click)="createCase()">{{ 'ModCaseDialog.CreateCaseButton' | translate }}</button>
                 </div>
                 <mat-spinner *ngIf="this.savingCase"></mat-spinner>
