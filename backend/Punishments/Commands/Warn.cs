@@ -25,7 +25,7 @@ public class Warn : Command<Warn>
 		[Summary("user", "User to punish")]
 		IUser user,
 		[Summary("severity-level", "Whether or not this is a higher or lower severity case")]
-		SeverityType severity,
+		InnerSeverityType severity,
 		[Summary("description", "The description of the modcase")]
 		string description = "")
 	{
@@ -46,7 +46,7 @@ public class Warn : Command<Warn>
 			PunishmentType = PunishmentType.Warn,
 			PunishmentActive = true,
 			PunishedUntil = null,
-			Severity = severity,
+			Severity = (SeverityType) severity,
 			CreationType = CaseCreationType.ByCommand
 		};
 

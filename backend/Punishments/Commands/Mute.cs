@@ -25,7 +25,7 @@ public class Mute : Command<Mute>
 		[Summary("user", "User to punish")]
 		IUser user,
 		[Summary("severity-level", "Whether or not this is a higher or lower severity case")]
-		SeverityType severity,
+		InnerSeverityType severity,
 		[Summary("description", "The description of the modcase")]
 		string description = "",
 		[Summary("time", "The time to punish the user for")]
@@ -47,7 +47,7 @@ public class Mute : Command<Mute>
 			Description = string.IsNullOrEmpty(description) ? title : description,
 			PunishmentType = PunishmentType.Mute,
 			PunishmentActive = true,
-			Severity = severity,
+			Severity = (SeverityType) severity,
 			PunishedUntil = time == default ? null : DateTime.UtcNow + time,
 			CreationType = CaseCreationType.ByCommand
 		};
