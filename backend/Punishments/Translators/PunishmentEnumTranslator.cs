@@ -45,6 +45,15 @@ public class PunishmentEnumTranslator : Translator
 	{
 		return enumValue switch
 		{
+			SeverityType.None => PreferredLanguage switch
+			{
+				Language.De => "Unbestimmt",
+				Language.Fr => "Rien",
+				Language.Es => "Ninguna",
+				Language.Ru => "Никто",
+				Language.It => "Nessuno",
+				_ => "None"
+			},
 			SeverityType.Low => PreferredLanguage switch
 			{
 				Language.De => "Niedrig",

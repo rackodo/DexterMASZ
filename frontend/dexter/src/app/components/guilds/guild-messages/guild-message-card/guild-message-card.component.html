@@ -24,9 +24,9 @@
                 <!-- Title -->
                 <div>
                     <span class="badge mat-h4 mb-0 me-1" style="padding: .1rem .4rem"
-                    [class.badge-primary]="message.status === 0"
-                    [class.badge-success]="message.status === 1"
-                    [class.badge-danger]="message.status === 2">
+                    [class.bg-primary]="message.status === 0"
+                    [class.bg-success]="message.status === 1"
+                    [class.bg-danger]="message.status === 2">
                         {{ status }}{{ message.status === 2 ? ': ' : '' }}{{ failureReason }}
                     </span>
 

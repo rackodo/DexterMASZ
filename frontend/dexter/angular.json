@@ -20,8 +20,7 @@
             "allowedCommonJsDependencies": [
               "fuzzysort",
               "chart.js",
-              "moment",
-              "vis"
+              "moment"
             ],
             "outputPath": "dist/dexter",
             "index": "src/index.html",
@@ -34,7 +33,6 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
-              "./node_modules/vis/dist/vis.min.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/ngx-toastr/toastr.css",
               "src/styles.css",

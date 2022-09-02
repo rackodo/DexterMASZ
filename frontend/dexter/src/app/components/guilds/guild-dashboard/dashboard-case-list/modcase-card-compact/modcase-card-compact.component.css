@@ -21,7 +21,7 @@ a {
     text-decoration: none; /* no underline */
 }
 
-.badge-danger {
+.bg-danger {
     background-color: #df0b1f;
 }
 

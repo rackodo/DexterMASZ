@@ -212,12 +212,12 @@ export class ModCaseEditComponent implements OnInit {
   }
 
   getSeverity(): SeverityType {
-	let punishmentType = this.punishmentFormGroup.value.punishmentType;
-	let severity = SeverityType.High;
+	  let punishmentType = this.punishmentFormGroup.value.punishmentType;
+  	let severity = SeverityType.None;
 
-	if (punishmentType != PunishmentType.Kick && punishmentType != PunishmentType.Ban)
-		severity = this.punishmentFormGroup.value.severityType;
-	return severity;
+	  if (punishmentType != PunishmentType.Kick && punishmentType != PunishmentType.Ban)
+	  	severity = this.punishmentFormGroup.value.severityType;
+	  return severity;
   }
 
   punishedUntilChanged(date: moment.Moment) {

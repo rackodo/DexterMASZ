@@ -5,13 +5,9 @@
         </span>
         <div class="w-100 d-flex flex-row flex-wrap" *ngIf="!loading">
             <canvas baseChart
-                [datasets]="chartData"
-                [labels]="chartLabels"
+                [data]="chartData"
                 [options]="chartOptions"
-                [colors]="chartColors"
-                [legend]="chartLegend"
-                [chartType]="chartType"
-                [plugins]="chartPlugins">
+                [type]="chartType">
             </canvas>
         </div>
         <mat-spinner *ngIf="loading"></mat-spinner>

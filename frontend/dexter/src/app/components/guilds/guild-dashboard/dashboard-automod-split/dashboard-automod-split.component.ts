@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { BaseChartDirective, Color, Label } from 'ng2-charts';
+import { ChartData, ChartConfiguration, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 import { ToastrService } from 'ngx-toastr';
 import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { AutoModSplit } from 'src/app/models/AutoModSplit';
@@ -19,32 +19,36 @@ export class DashboardAutoModSplitComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   public loading: boolean = true;
   public foundContent: boolean = false;
-  public chartData: ChartDataSets[] = [];
-  public chartLabels: Label[] = [];
-  public chartOptions: (ChartOptions & { annotation: any } | any) = {
-    title: {
-      text: '',
-      display: true,
-      fontColor: 'rgba(232, 230, 227, 1)'
+
+  public chartOptions: ChartConfiguration['options'] = {
+    plugins: {
+      title: {
+        text: '',
+        display: true,
+        color: 'rgba(232, 230, 227, 1)'
+      },
+      legend: {
+        display: true,
+        labels: {
+          color: 'white'
+        }
+      },
     },
     responsive: true,
     maintainAspectRatio: true,
-    legend: {
-      display: true,
-      labels: {
-        fontColor: 'white'
-      }
-    }
+    borderColor: 'rgba(18, 18, 18, 0.2)'
   };
-  public chartColors: Color[] = [
-    {
-      borderColor: 'rgba(18, 18, 18, 0.2)',
-      backgroundColor: ['#d84315', '#f9a825', '#2e7d32', '#00695c', '#0277bd', '#1e0ead', '#6a1b9a', '#cc1097']
-    },
-  ];
-  public chartLegend = true;
+
   public chartType: ChartType = 'pie';
-  public chartPlugins: any = [];
+
+  public chartData: ChartData<'pie'> = {
+    labels: [],
+    datasets: [ {
+      data: [],
+      backgroundColor: []
+    } ]
+  };
+
   public splittedData: AutoModSplit[] = [];
 
   constructor(private route: ActivatedRoute, private api: ApiService, private toastr: ToastrService, private translator: TranslateService, private enumManager: EnumManagerService) { }
@@ -59,12 +63,12 @@ export class DashboardAutoModSplitComponent implements OnInit {
     this.foundContent = false;
     this.api.getSimpleData(`/guilds/${guildId}/dashboard/automodchart`).subscribe((data: AutoModSplit[]) => {
       this.splittedData = data;
-      this.chartData = [{ data: data.map(x => x.count), label: 'Count' }];
+      this.chartData.datasets = [{ data: data.map(x => x.count), label: 'Count', backgroundColor: ['#d84315', '#f9a825', '#2e7d32', '#00695c', '#0277bd', '#1e0ead', '#6a1b9a', '#cc1097'] }];
       if (data.length) {
         this.foundContent = true;
         this.enumManager.getEnum(ApiEnumTypes.AUTOMODTYPE).subscribe(data => {
-          this.chartLabels = this.splittedData.map(d => data.find(x => x.key === d.type)?.value) as Label[];
-          this.chart?.ngOnInit();
+          this.chartData.labels = this.splittedData.map(d => data.find(x => x.key === d.type)?.value) as string[];
+          this.chart?.update();
         });
       }
       this.loading = false;

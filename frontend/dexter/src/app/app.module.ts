@@ -32,7 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ChartsModule } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts';
 import { CookieModule } from 'ngx-cookie';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
@@ -264,7 +264,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     BrowserModule,
     AppRoutingModule,
-    ChartsModule,
+    NgChartsModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

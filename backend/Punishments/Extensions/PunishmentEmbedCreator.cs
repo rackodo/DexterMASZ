@@ -50,7 +50,7 @@ public static class PunishmentEmbedCreator
 				break;
 		}
 
-		if (modCase.PunishmentType == PunishmentType.Mute || modCase.PunishmentType == PunishmentType.Warn)
+		if (modCase.Severity != SeverityType.None)
 			embed.AddField($"⚠️ - {translator.Get<PunishmentTranslator>().Severity()}",
 					translator.Get<PunishmentEnumTranslator>().Enum(modCase.Severity), true);
 
