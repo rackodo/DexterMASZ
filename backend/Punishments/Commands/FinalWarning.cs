@@ -1,5 +1,6 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
+using Bot.Enums;
 using Discord;
 using Discord.Interactions;
 using Punishments.Data;
@@ -17,6 +18,7 @@ public class FinalWarning : Command<FinalWarning>
 	public GuildConfigRepository GuildConfigRepository { get; set; }
 	public PunishmentConfigRepository PunishmentConfigRepository { get; set; }
 
+	[Require(RequireCheck.GuildModerator, RequireCheck.GuildStrictModeBan)]
 	[SlashCommand("finalwarn", "Issues a final warning to a user, mutes them and records the final warn.")]
 	public async Task FinalWarnCommand(
 		[Summary("title", "The title of the modcase")]
