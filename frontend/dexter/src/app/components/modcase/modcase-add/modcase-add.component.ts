@@ -353,7 +353,7 @@ export class ModCaseAddComponent implements OnInit {
 	  let punishmentType = this.punishmentFormGroup.value.punishmentType;
 	  let severity = SeverityType.None;
 
-	  if (punishmentType != PunishmentType.Kick && punishmentType != PunishmentType.Ban)
+	  if (punishmentType === PunishmentType.Mute || punishmentType === PunishmentType.Warn)
 	  	severity = this.punishmentFormGroup.value.severityType;
 
 	  return severity;

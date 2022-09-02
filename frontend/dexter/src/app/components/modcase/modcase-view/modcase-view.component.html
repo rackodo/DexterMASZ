@@ -33,6 +33,18 @@
                 </div>
             </div>
 
+            <mat-card class="d-flex flex-column bg-danger mt-3" *ngIf="isFinalWarned">
+                <div class="d-flex flex-row mt-1">
+                    <div class="d-flex flex-row">
+                        <span class="mat-h2 mb-0 fw-bold">{{ 'ModCaseView.UserFinalWarned' | translate }}</span>
+                    </div>
+                    <div class="flex-grow-1"></div>
+                    <button mat-raised-button class="align-self-end ms-2" color="accent" routerLink="/guilds/{{ this.guildId }}/cases/{{ this.finalWarning }}">
+                        {{ 'ModCaseView.ViewCase' | translate }}
+                    </button>
+                </div>
+            </mat-card>
+
             <mat-card class="d-flex flex-column primary-bg-color mt-3" *ngIf="this.modCase.content?.modCase?.markedToDeleteAt">
                 <span class="mat-display-1 mb-0 fw-bold">
                     <img *ngIf="this.modCase.content?.deletedBy"

@@ -71,6 +71,8 @@ public class PunishmentEventAnnouncer : Event
 
 		translator.SetLanguage(guildConfig);
 
+		var announceResult = AnnouncementResult.None;
+
 		if (action != RestAction.Deleted)
 		{
 			_logger.LogInformation(
@@ -111,14 +113,22 @@ public class PunishmentEventAnnouncer : Event
 						message = translator.Get<PunishmentNotificationTranslator>()
 							.NotificationModCaseDmWarn(guild, reason, modCaseUrl);
 						break;
+					case PunishmentType.FinalWarn:
+						message = translator.Get<PunishmentNotificationTranslator>()
+							.NotificationModCaseDmFinalWarn(guild, reason, modCaseUrl);
+						break;
 				}
 
 				await _discordRest.SendDmMessage(modCase.UserId, message);
+
+				announceResult = AnnouncementResult.Announced;
 			}
 			catch (Exception e)
 			{
 				_logger.LogError(e,
 					$"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} in DMs to {modCase.UserId}.");
+
+				announceResult = AnnouncementResult.Failed;
 			}
 		}
 
@@ -127,7 +137,7 @@ public class PunishmentEventAnnouncer : Event
 
 		try
 		{
-			var embed = await modCase.CreateModCaseEmbed(action, actor, scope.ServiceProvider, caseUser);
+			var embed = await modCase.CreateModCaseEmbed(action, actor, scope.ServiceProvider, announceResult, caseUser);
 
 			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
 		}

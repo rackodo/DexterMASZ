@@ -5,5 +5,6 @@ public enum PunishmentType
 	Warn,
 	Mute,
 	Kick,
-	Ban
+	Ban,
+	FinalWarn
 }

@@ -103,7 +103,7 @@
                         <mat-option *ngFor="let enum of punishmentOptions.content" [value]="enum.key">{{ enum.value }}</mat-option>
                         </mat-select>
                     </mat-form-field><br/>
-                    <mat-form-field *ngIf="this.punishmentFormGroup.value.punishmentType !== 2 && this.punishmentFormGroup.value.punishmentType !== 3">
+                    <mat-form-field *ngIf="this.punishmentFormGroup.value.punishmentType === 0 || this.punishmentFormGroup.value.punishmentType === 1">
                         <mat-label>{{ 'ModCaseDialog.Severity' | translate }}</mat-label>
                         <mat-select formControlName="severityType">
                         <mat-option *ngFor="let enum of severityOptions.content" [value]="enum.key">{{ enum.value }}</mat-option>

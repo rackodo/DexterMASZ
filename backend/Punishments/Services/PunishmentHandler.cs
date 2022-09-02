@@ -168,6 +168,28 @@ public class PunishmentHandler : Event
 							break;
 					}
 					break;
+				case PunishmentType.FinalWarn:
+					switch (action)
+					{
+						case RestAction.Created:
+							_logger.LogInformation($"Final warned user {modCase.UserId} in guild {modCase.GuildId}");
+
+							if (!modCase.PunishedUntil.HasValue)
+								_logger.LogError($"Failed to final warn user due to unknown duration length");
+
+							var muteDuration = modCase.PunishedUntil.Value - DateTime.UtcNow;
+
+							await _discordRest.TimeoutGuildUser(modCase.GuildId, modCase.UserId, muteDuration, reason);
+
+							break;
+						case RestAction.Deleted:
+							_logger.LogInformation($"Unfinal warned user {modCase.UserId} in guild {modCase.GuildId}");
+
+							await _discordRest.RemoveTimeoutFromGuildUser(modCase.GuildId, modCase.UserId, reason);
+
+							break;
+					}
+					break;
 			}
 		}
 		catch (ResourceNotFoundException)

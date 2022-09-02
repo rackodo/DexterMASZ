@@ -72,6 +72,7 @@ import { GuildCardComponent } from './components/guilds/guild-card/guild-card.co
 import { AuditlogConfigRuleComponent } from './components/guilds/guild-config/auditlog-config/auditlog-config-rule/auditlog-config-rule.component';
 import { AuditlogConfigComponent } from './components/guilds/guild-config/auditlog-config/auditlog-config.component';
 import { AutoModConfigComponent } from './components/guilds/guild-config/automod-config/automod-config.component';
+import { PunishmentConfigComponent } from './components/guilds/guild-config/punishment-config/punishment-config.component';
 import { AutoModRuleComponent } from './components/guilds/guild-config/automod-config/automod-rule/automod-rule.component';
 import { GuildConfigComponent } from './components/guilds/guild-config/guild-config.component';
 import { LevelsConfigComponent } from './components/guilds/guild-config/levels-config/levels-config.component';
@@ -131,6 +132,7 @@ import { AuthService } from './services/auth.service';
 import { CookieTrackerService } from './services/cookie-tracker.service';
 import { EnumManagerService } from './services/enum-manager.service';
 import { TimezoneService } from './services/timezone.service';
+import { DurationPickerModule } from 'ngx-duration-picker';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -176,6 +178,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CommentsCardCompactComponent,
     MotdConfigComponent,
     AutoModConfigComponent,
+    PunishmentConfigComponent,
     AutoModRuleComponent,
     CaseDeleteDialogComponent,
     CommentEditDialogComponent,
@@ -261,6 +264,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    DurationPickerModule,
 
     BrowserModule,
     AppRoutingModule,

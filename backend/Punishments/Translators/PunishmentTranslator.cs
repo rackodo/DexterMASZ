@@ -32,6 +32,32 @@ public class PunishmentTranslator : Translator
 		};
 	}
 
+	public string AlreadyFinalWarned()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Dieser Benutzer ist bereits endgültig gewarnt!",
+			Language.Fr => "Cet utilisateur est déjà prévenu définitivement!",
+			Language.Es => "¡Este usuario ya es el último advertido!",
+			Language.Ru => "Этот пользователь уже получил окончательное предупреждение!",
+			Language.It => "Questo utente è già stato avvisato definitivamente!",
+			_ => "This user is already final warned!"
+		};
+	}
+
+	public string DMReceipt()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "DM-Quittung",
+			Language.Fr => "Reçu DM",
+			Language.Es => "Recibo de mensaje directo",
+			Language.Ru => "Квитанция DM",
+			Language.It => "Ricevuta DM",
+			_ => "DM Receipt"
+		};
+	}
+
 	public string Cases()
 	{
 		return PreferredLanguage switch
