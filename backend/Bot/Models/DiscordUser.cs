@@ -12,7 +12,7 @@ public class DiscordUser
 		else if (user.Id is 0)
 			return null;
 		else
-			return DiscordUser.GetDiscordUser(user);
+			return new DiscordUser(user);
 	}
 
 	private DiscordUser(IUser user)

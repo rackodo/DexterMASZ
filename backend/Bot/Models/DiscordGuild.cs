@@ -12,7 +12,7 @@ public class DiscordGuild
 		else if (guild.Id is 0)
 			return null;
 		else
-			return DiscordGuild.GetDiscordGuild(guild);
+			return new DiscordGuild(guild);
 	}
 
 	private DiscordGuild(IGuild guild)

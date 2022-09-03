@@ -12,7 +12,7 @@ public class DiscordChannel
 		else if (channel.Id is 0)
 			return null;
 		else
-			return DiscordChannel.GetDiscordChannel(channel);
+			return new DiscordChannel(channel);
 	}
 
 	private DiscordChannel(IGuildChannel channel)
