@@ -18,12 +18,6 @@ public class DiscordApplication
 
 	private DiscordApplication(IApplication application)
 	{
-		if (application is null)
-			throw new ResourceNotFoundException("Application for DiscordApplicationView is null!");
-
-		if (application.Id is 0)
-			throw new ResourceNotFoundException("Application for DiscordApplicationView has an ID of 0!");
-
 		Id = application.Id;
 		Name = application.Name;
 		Description = application.Description;
