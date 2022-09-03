@@ -43,7 +43,7 @@ public class LevelsXPController : AuthenticatedController
 
 	private async Task<GuildUserLevelDTO> levelToDTO(GuildUserLevel level, GuildLevelConfig config)
 	{
-		var user = await _rest.FetchUserInfo(level.UserId, CacheBehavior.OnlyCache);
+		var user = await _rest.FetchUserInfo(level.UserId, CacheBehavior.Default);
 
 		var calc = new CalculatedGuildUserLevel(level, config);
 		return calc.ToDTO(DiscordUser.GetDiscordUser(user));
