@@ -154,17 +154,17 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"🚨 Sie erhielten eine letzte Warnung von **{guild.Name}** 🚨\n\n**Grund:**\n {reason}.\nFür weitere Informationen besuche: {caseUrl}",
+				$"🚨 Sie erhielten eine letzte Warnung von **{guild.Name}** 🚨\n\n**Grund:**\n {reason}.\n\nFür weitere Informationen besuche: {caseUrl}",
 			Language.Fr =>
-				$"🚨 Vous avez reçu un dernier avertissement de **{guild.Name}** 🚨\n\n**Raison:**\n {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez: {caseUrl}",
+				$"🚨 Vous avez reçu un dernier avertissement de **{guild.Name}** 🚨\n\n**Raison:**\n {reason}.\n\nPour plus d'informations ou pour une réhabilitation, visitez: {caseUrl}",
 			Language.Es =>
-				$"🚨 Se le emitió una advertencia final de **{guild.Name}** 🚨\n\n**Razón:**\n {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
+				$"🚨 Se le emitió una advertencia final de **{guild.Name}** 🚨\n\n**Razón:**\n {reason}.\n\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 			Language.Ru =>
-				$"🚨 Вы получили последнее предупреждение от **{guild.Name}** 🚨\n\n**Причина:**\n {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
+				$"🚨 Вы получили последнее предупреждение от **{guild.Name}** 🚨\n\n**Причина:**\n {reason}.\n\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 			Language.It =>
-				$"🚨 Ti è stato emesso un ultimo avvertimento da **{guild.Name}** 🚨\n\n**Motivo:**\n {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
+				$"🚨 Ti è stato emesso un ultimo avvertimento da **{guild.Name}** 🚨\n\n**Motivo:**\n {reason}.\n\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 			_ =>
-				$"🚨 You were issued a final warning from **{guild.Name}** 🚨\n\n**Reason:**\n {reason}.\nFor more information and rehabilitation, please visit: {caseUrl}"
+				$"🚨 You were issued a final warning from **{guild.Name}** 🚨\n\n**Reason:**\n {reason}.\n\nFor more information and rehabilitation, please visit: {caseUrl}"
 		};
 	}
 

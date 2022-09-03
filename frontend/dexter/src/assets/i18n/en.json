@@ -585,7 +585,7 @@
             "Punishments": "Failed to load available punishments.",
             "Severities": "Failed to load available severities.",
             "Files": "Failed to load files.",
-            "Guild": "Failed to load guild info.",
+            "DiscordGuild": "Failed to load guild info.",
             "Case": "Failed to load case.",
             "FinalWarning": "Failed to load final warning."
         },

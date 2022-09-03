@@ -552,9 +552,10 @@
     "FailedToLoad": {
       "Punishments": "Verfügbare Strafen konnten nicht geladen werden.",
       "Files": "Dateien konnten nicht geladen werden.",
-      "Guild": "Gildeninformationen konnten nicht geladen werden.",
       "Case": "Fall konnte nicht geladen werden.",
-      "Severities": "Verfügbare Schweregrade konnten nicht geladen werden."
+      "Severities": "Verfügbare Schweregrade konnten nicht geladen werden.",
+      "DiscordGuild": "Gildeninformationen konnten nicht geladen werden.",
+      "FinalWarning": "Letzte Warnung konnte nicht geladen werden."
     },
     "DeleteCase": {
       "Deleted": "Zur Löschung markierte Groß-/Kleinschreibung.",
@@ -592,7 +593,9 @@
     "CommentUpdate": {
       "Updated": "Kommentar aktualisiert.",
       "Failed": "Kommentar konnte nicht aktualisiert werden"
-    }
+    },
+    "UserFinalWarned": "Der Benutzer ist derzeit endgültig gewarnt!",
+    "ViewCase": "Fall anzeigen"
   },
   "Scanning": {
     "EnterUserOrInvite": "Geben Sie eine Benutzer-ID oder einen Einladungscode ein",
@@ -635,5 +638,8 @@
     "Updated": "Benutzernotiz aktualisiert.",
     "FailedToDelete": "Benutzernotiz konnte nicht gelöscht werden.",
     "Deleted": "Benutzernotiz gelöscht."
+  },
+  "PunishmentConfig": {
+    "Punishments": "Strafen"
   }
 }

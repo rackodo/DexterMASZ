@@ -154,6 +154,10 @@ export class ModCaseTableComponent implements OnInit {
     this.apiFilter.edited = type.key === 0 ? undefined : type.key !== 1;
   };
 
+  selectedSeverityTypeChanged(types: ApiEnum[]) {
+    this.apiFilter.severityTypes = types?.map(x => x.key) ?? [];
+  }
+
   selectedCommentLockedStatusChanged(type: ApiEnum) {
     this.apiFilter.lockedComments = type.key === 0 ? undefined : type.key !== 1;
   };
@@ -165,10 +169,6 @@ export class ModCaseTableComponent implements OnInit {
   selectedPunishmentActiveStatusChanged(type: ApiEnum) {
     this.apiFilter.punishmentActive = type.key === 0 ? undefined : type.key !== 1;
   };
-
-  selectedSeverityTypeChanged(types: ApiEnum[]) {
-    this.apiFilter.severityTypes = types?.map(x => x.key) ?? [];
-  }
 
   selectedSinceChanged(date: Moment) {
     this.apiFilter.since = date?.toISOString();
