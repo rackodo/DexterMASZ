@@ -595,7 +595,8 @@
       "Failed": "Echec de la mise à jour du commentaire"
     },
     "UserFinalWarned": "L’utilisateur est actuellement averti en dernier lieu!",
-    "ViewCase": "Voir le cas"
+    "ViewCase": "Voir le cas",
+    "Severity": "Sévérité"
   },
   "Scanning": {
     "EnterUserOrInvite": "Entrez un ID utilisateur ou un code d’invitation",

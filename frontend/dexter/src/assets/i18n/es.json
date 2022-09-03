@@ -595,7 +595,8 @@
       "Failed": "Error al actualizar el comentario"
     },
     "UserFinalWarned": "¡El usuario está actualmente finalmente advertido!",
-    "ViewCase": "Ver caso"
+    "ViewCase": "Ver caso",
+    "Severity": "Severidad"
   },
   "Scanning": {
     "EnterUserOrInvite": "Introduzca un identificador de usuario o un código de invitación",

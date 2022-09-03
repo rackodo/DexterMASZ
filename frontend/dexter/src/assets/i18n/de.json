@@ -595,7 +595,8 @@
       "Failed": "Kommentar konnte nicht aktualisiert werden"
     },
     "UserFinalWarned": "Der Benutzer ist derzeit endgültig gewarnt!",
-    "ViewCase": "Fall anzeigen"
+    "ViewCase": "Fall anzeigen",
+    "Severity": "Strenge"
   },
   "Scanning": {
     "EnterUserOrInvite": "Geben Sie eine Benutzer-ID oder einen Einladungscode ein",

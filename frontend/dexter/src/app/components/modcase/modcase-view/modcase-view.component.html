@@ -178,18 +178,7 @@
                                     <div class="waiting-for-text mb-2" style="width: 8rem"></div>
                                 </ng-container>
                                 <ng-container *ngIf="!this.modCase.loading">
-                                    <div class="d-flex flex-row">
-                                        <span class="mat-h2 mb-0 fw-bold">{{ 'ModCaseView.Punishment' | translate }}</span>
-                                        <h5 *ngIf="this.modCase.content?.modCase?.punishmentType !== 0 && this.modCase.content?.modCase?.punishmentType !== 2 && !this.modCase.loading">
-                                            <span class="badge mat-h4 mb-0 ms-2" style="padding: .1rem .4rem"
-                                                [ngClass]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? 'bg-danger' : 'bg-dark'"
-                                                [attr.title]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? '' :  'ModCaseView.Punishment' | translate">
-                                                {{ punishment }}
-                                            </span>
-                                        </h5>
-                                    </div>
-                                    <br>
-                                    <h3 *ngIf="this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentType === 2">
+                                    <h3>
                                         <span class="badge mat-h4 mb-0 ms-2" style="padding: .1rem .4rem"
                                             [ngClass]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? 'bg-danger' : 'bg-dark'"
                                             [attr.title]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? '' : 'ModCaseView.Punishment' | translate">
@@ -199,7 +188,7 @@
                                     <h3 *ngIf="this.modCase.content?.modCase?.severity !== 0">
                                         <span class="badge mat-h4 mb-0 ms-2" style="padding: .1rem .4rem"
                                             [ngClass]="(this.modCase.content?.modCase?.severity === 2) ? 'bg-danger' : 'bg-secondary'"
-                                            [attr.title]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? '' : 'ModCaseView.Punishment' | translate">
+                                            [attr.title]="(this.modCase.content?.modCase?.punishmentType === 0 || this.modCase.content?.modCase?.punishmentActive === true) ? '' : 'ModCaseView.Severity' | translate">
                                             {{ severity }}
                                         </span>
                                     </h3>

@@ -595,7 +595,8 @@
       "Failed": "Impossibile aggiornare il commento"
     },
     "UserFinalWarned": "L'utente è attualmente avvisato definitivamente!",
-    "ViewCase": "Visualizza caso"
+    "ViewCase": "Visualizza caso",
+    "Severity": "Severità"
   },
   "Scanning": {
     "EnterUserOrInvite": "Immettere un ID utente o un codice di invito",

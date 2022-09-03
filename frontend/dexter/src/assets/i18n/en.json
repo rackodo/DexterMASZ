@@ -578,6 +578,7 @@
         "CaseMarkedToDelete": "Marked to be deleted - {{user}}",
         "CommentsLocked": "Comments locked - {{user}}",
         "Restore": "Restore",
+        "Severity": "Severity",
         "View": "View",
         "Delete": "Delete",
         "Moderators": "Moderators",
