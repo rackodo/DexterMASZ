@@ -21,7 +21,7 @@ public class MetaController : BaseController
 	[HttpGet("user")]
 	public IActionResult GetBotUser()
 	{
-		return Ok(new DiscordUser(_discordRest.GetCurrentBotInfo()));
+		return Ok(DiscordUser.GetDiscordUser(_discordRest.GetCurrentBotInfo()));
 	}
 
 	[HttpGet("embed")]
@@ -39,6 +39,6 @@ public class MetaController : BaseController
 	[HttpGet("application")]
 	public async Task<IActionResult> GetApplication()
 	{
-		return Ok(new DiscordApplication(await _discordRest.GetCurrentApplicationInfo()));
+		return Ok(DiscordApplication.GetDiscordApplication(await _discordRest.GetCurrentApplicationInfo()));
 	}
 }

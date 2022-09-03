@@ -6,7 +6,17 @@ namespace Bot.Models;
 
 public class DiscordApplication
 {
-	public DiscordApplication(IApplication application)
+	public static DiscordApplication GetDiscordApplication(IApplication application)
+	{
+		if (application is null)
+			return null;
+		else if (application.Id is 0)
+			return null;
+		else
+			return new DiscordApplication(application);
+	}
+
+	private DiscordApplication(IApplication application)
 	{
 		if (application is null)
 			throw new ResourceNotFoundException("Application for DiscordApplicationView is null!");

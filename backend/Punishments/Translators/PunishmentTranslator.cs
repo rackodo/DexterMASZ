@@ -155,10 +155,10 @@ public class PunishmentTranslator : Translator
 		{
 			Language.De => $"Fall `#{caseId}` erstellt: {caseLink}\nDer Benutzer hat `{caseCount}` Mod-Fälle aufgezeichnet.",
 			Language.Fr => $"Cas `#{caseId}` créé : {caseLink}\nL'utilisateur a `{caseCount}` cas de mod enregistrés.",
-			Language.Es => $"Caso `# {caseId}` creado: {caseLink}\nEl usuario tiene `{caseCount}` casos de modificación registrados.",
+			Language.Es => $"Caso `# {caseId}` creado: {caseLink}\nEl usuario tiene `{caseCount}` caso(s) de modificación registrados.",
 			Language.Ru => $"Обращение `# {caseId}` создано: {caseLink}\nУ пользователя зарегистрировано `{caseCount}` случаев модификации.",
 			Language.It => $"Caso `#{caseId}` creato: {caseLink}\nL'utente ha registrato casi mod `{caseCount}`.",
-			_ => $"Case `#{caseId}` created: {caseLink}\nUser has `{caseCount}` mod cases recorded."
+			_ => $"Case `#{caseId}` created: {caseLink}\nUser has `{caseCount}` mod case(s) recorded."
 		};
 	}
 

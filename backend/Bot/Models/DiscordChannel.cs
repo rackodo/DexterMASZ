@@ -5,14 +5,18 @@ namespace Bot.Models;
 
 public class DiscordChannel
 {
-	public DiscordChannel(IGuildChannel channel)
+	public static DiscordChannel GetDiscordChannel(IGuildChannel channel)
 	{
 		if (channel is null)
-			throw new ResourceNotFoundException("Channel for DiscordChannelView is equal to null!");
+			return null;
+		else if (channel.Id is 0)
+			return null;
+		else
+			return DiscordChannel.GetDiscordChannel(channel);
+	}
 
-		if (channel.Id is 0)
-			throw new ResourceNotFoundException("Channel for DiscordChannelView has an ID of 0!");
-
+	private DiscordChannel(IGuildChannel channel)
+	{
 		Id = channel.Id;
 		Name = channel.Name;
 		Position = channel.Position;

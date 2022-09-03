@@ -57,11 +57,11 @@ public class DiscordRestController : AuthenticatedController
 				{
 					if (await identity.HasModRoleOrHigherOnGuild(guild.GuildId))
 						if (await identity.HasAdminRoleOnGuild(guild.GuildId))
-							adminGuilds.Add(new DiscordGuild(userGuildFetched));
+							adminGuilds.Add(DiscordGuild.GetDiscordGuild(userGuildFetched));
 						else
-							modGuilds.Add(new DiscordGuild(userGuildFetched));
+							modGuilds.Add(DiscordGuild.GetDiscordGuild(userGuildFetched));
 					else
-						userGuilds.Add(new DiscordGuild(userGuildFetched));
+						userGuilds.Add(DiscordGuild.GetDiscordGuild(userGuildFetched));
 				}
 			}
 			else
@@ -70,7 +70,7 @@ public class DiscordRestController : AuthenticatedController
 				{
 					_discordRest.GetFromCache<IBan>(CacheKey.GuildBan(guild.GuildId, currentUser.Id));
 					bannedGuilds.Add(
-						new DiscordGuild(_discordRest.FetchGuildInfo(guild.GuildId, CacheBehavior.Default)));
+						DiscordGuild.GetDiscordGuild(_discordRest.FetchGuildInfo(guild.GuildId, CacheBehavior.Default)));
 				}
 				catch (NotFoundInCacheException)
 				{
@@ -88,7 +88,7 @@ public class DiscordRestController : AuthenticatedController
 		var user = await _discordRest.FetchUserInfo(userid, CacheBehavior.OnlyCache);
 
 		if (user != null)
-			return Ok(new DiscordUser(user));
+			return Ok(DiscordUser.GetDiscordUser(user));
 
 		return NotFound();
 	}
@@ -99,7 +99,7 @@ public class DiscordRestController : AuthenticatedController
 		var guild = _discordRest.FetchGuildInfo(guildId, CacheBehavior.Default);
 
 		if (guild != null)
-			return Ok(new DiscordGuild(guild));
+			return Ok(DiscordGuild.GetDiscordGuild(guild));
 
 		return NotFound();
 	}
@@ -110,7 +110,7 @@ public class DiscordRestController : AuthenticatedController
 		var channels = _discordRest.FetchGuildChannels(guildId, CacheBehavior.Default);
 
 		if (channels != null)
-			return Ok(channels.Select(x => new DiscordChannel(x)));
+			return Ok(channels.Select(x => DiscordChannel.GetDiscordChannel(x)));
 
 		return NotFound();
 	}
@@ -123,7 +123,7 @@ public class DiscordRestController : AuthenticatedController
 		var users = await _discordRest.FetchGuildUsers(guildId, CacheBehavior.OnlyCache);
 
 		if (users != null)
-			return Ok(users.Select(x => new DiscordUser(x)));
+			return Ok(users.Select(x => DiscordUser.GetDiscordUser(x)));
 
 		return NotFound();
 	}

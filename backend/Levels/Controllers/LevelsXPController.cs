@@ -1,5 +1,6 @@
 ﻿using Bot.Abstractions;
 using Bot.Services;
+using Bot.Models;
 using Levels.Data;
 using Levels.DTOs;
 using Levels.Models;
@@ -44,7 +45,7 @@ public class LevelsXPController : AuthenticatedController
 		var user = await _rest.FetchUserInfo(level.UserId, Bot.Enums.CacheBehavior.Default);
 
 		var calc = new CalculatedGuildUserLevel(level, config);
-		return calc.ToDTO(new Bot.Models.DiscordUser(user));
+		return calc.ToDTO(DiscordUser.GetDiscordUser(user));
 	}
 
 	[HttpGet("guilds/{guildId}/users")]
