@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DashboardTabs } from 'src/app/models/DashboardTabs';
@@ -8,7 +8,7 @@ import { DashboardTabs } from 'src/app/models/DashboardTabs';
   templateUrl: './profile-dashboard.component.html',
   styleUrls: ['./profile-dashboard.component.css']
 })
-export class ProfileDashboardComponent implements OnInit {
+export class ProfileDashboardComponent {
 
   constructor(private activatedRoute: ActivatedRoute) {
     this.activatedRoute.queryParams.subscribe((params: any) => {
@@ -35,8 +35,5 @@ export class ProfileDashboardComponent implements OnInit {
       "component": "rankcard"
     }
   ]
-
-  ngOnInit(): void {
-  }
 
 }

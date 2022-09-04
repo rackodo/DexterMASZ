@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
+import * as moment from 'moment';
 import { ApiEnum } from 'src/app/models/ApiEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { convertModCaseToPunishmentString } from 'src/app/models/ModCase';
 import { ModCaseTableEntry } from 'src/app/models/ModCaseTableEntry';
 import { PunishmentType } from 'src/app/models/PunishmentType';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-modcase-card-compact',

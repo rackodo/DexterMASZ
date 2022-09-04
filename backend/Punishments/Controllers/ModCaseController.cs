@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Punishments.Data;
 using Punishments.DTOs;
 using Punishments.Enums;
+using Punishments.Exceptions;
 using Punishments.Extensions;
 using Punishments.Models;
 using System.ComponentModel.DataAnnotations;
@@ -16,14 +17,16 @@ namespace Punishments.Controllers;
 public class ModCaseController : AuthenticatedController
 {
 	private readonly GuildConfigRepository _guildConfigRepository;
+	private readonly PunishmentConfigRepository _punishmentConfigRepository;
 	private readonly ModCaseRepository _modCaseRepository;
 
 	public ModCaseController(ModCaseRepository modCaseRepository, GuildConfigRepository guildConfigRepository,
-		IdentityManager identityManager) :
-		base(identityManager, modCaseRepository, guildConfigRepository)
+		PunishmentConfigRepository punishmentConfigRepository, IdentityManager identityManager) :
+		base(identityManager, modCaseRepository, guildConfigRepository, punishmentConfigRepository)
 	{
 		_modCaseRepository = modCaseRepository;
 		_guildConfigRepository = guildConfigRepository;
+		_punishmentConfigRepository = punishmentConfigRepository;
 	}
 
 	[HttpGet("labels")]
@@ -102,10 +105,25 @@ public class ModCaseController : AuthenticatedController
 		return Ok(modCase);
 	}
 
+	[HttpGet("{userId}/finalWarn")]
+	public async Task<int> GetFinalWarn([FromRoute] ulong guildId, [FromRoute] ulong userId)
+	{
+		await SetupAuthentication();
+		var finalWarn = await _modCaseRepository.GetFinalWarn(userId, guildId);
+
+		if (finalWarn != null)
+			return finalWarn.CaseId;
+		else
+			return -1;
+	}
+
 	[HttpPost]
 	public async Task<IActionResult> CreateItem([FromRoute] ulong guildId, [FromBody] ModCaseForCreateDto modCaseDto)
 	{
 		var identity = await SetupAuthentication();
+
+		if (await _modCaseRepository.GetFinalWarn(modCaseDto.UserId, guildId) != null)
+			throw new AlreadyFinalWarnedException();
 
 		var modCase = new ModCase
 		{
@@ -125,6 +143,13 @@ public class ModCaseController : AuthenticatedController
 		modCase.CreationType = CaseCreationType.Default;
 		modCase.PunishmentType = modCaseDto.PunishmentType;
 		modCase.PunishedUntil = modCaseDto.PunishedUntil;
+
+		if (modCaseDto.PunishmentType == PunishmentType.FinalWarn)
+		{
+			_punishmentConfigRepository.AsUser(identity);
+			var punishmentConfig = await _punishmentConfigRepository.GetGuildPunishmentConfig(guildId);
+			modCase.PunishedUntil = punishmentConfig.FinalWarnMuteTime == default ? null : DateTime.UtcNow + punishmentConfig.FinalWarnMuteTime;
+		}
 
 		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 

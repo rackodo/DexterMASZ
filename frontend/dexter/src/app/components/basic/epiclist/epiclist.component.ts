@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input } from '@angular/core';
 import { InfoPanel } from 'src/app/models/InfoPanel';
 
 @Component({
@@ -7,13 +6,11 @@ import { InfoPanel } from 'src/app/models/InfoPanel';
   templateUrl: './epiclist.component.html',
   styleUrls: ['./epiclist.component.css']
 })
-export class EpiclistComponent implements OnInit {
+export class EpiclistComponent {
 
   @Input() loading: boolean = true;
   @Input() items: InfoPanel[] = [];
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
 }

@@ -26,7 +26,7 @@ public static partial class Rankcard
 	private const int normalMargin = 25;
 	private const int levelHeight = (pfpside - 3 * normalMargin) / 2;
 	private const int maxTitleXpWidth = widthmain / 2;
-	
+
 	private static readonly Size titleSize = new(RankCardSize.Width - 2 * normalMargin, labelHeight);
 	private static Rectangle TitleRect(UserRankcardConfig config) => new(config.TitleOffset + normalMargin, titleSize);
 	private static readonly Size levelsSize = new(widthmain - 2 * normalMargin, pfpside - 2 * normalMargin);
@@ -77,7 +77,7 @@ public static partial class Rankcard
 			this.leveltype = leveltype;
 			if (leveltype == LevelBarType.Normal)
 			{
-				width = container.Width; 
+				width = container.Width;
 				barwidth = width - 2 * barMarginHorizontal;
 
 				nextLevel = new Rectangle(originX + width - barMarginHorizontal, originY + levelHeight - barHeight - barMarginVertical, barMarginHorizontal, barHeight + 2 * barMarginVertical);
@@ -89,7 +89,7 @@ public static partial class Rankcard
 					originX += width + normalMargin;
 				originY += (container.Height + normalMargin) / 2;
 				barwidth = width - barMarginHorizontal - labelMiniMargin;
-				
+
 				nextLevel = default;
 			}
 
@@ -101,7 +101,7 @@ public static partial class Rankcard
 			typeLabel = new Rectangle(originX + labelMiniMargin, originY + labelMiniMargin, typeLabelWidth, labelHeight);
 			rankLabel = new Rectangle(originX + typeLabelWidth, originY, miniLabelWidth + labelIntrusionPixels, labelHeight);
 			rankText = new Rectangle(originX + miniLabelWidth + typeLabelWidth, originY, width * 2 / 3 - miniLabelWidth - typeLabelWidth - normalMargin, labelHeight + labelBaselineDeltaTitle);
-			expText = leveltype == LevelBarType.Normal ? 
+			expText = leveltype == LevelBarType.Normal ?
 				new Rectangle(originX + width / 3, originY, width * 2 / 3 - labelMiniMargin, labelHeight) :
 				Bar(1);
 		}
@@ -193,7 +193,7 @@ public static partial class Rankcard
 				levelsData[2].xpType = "Txt";
 			}
 		}
-		
+
 		Func<IImageProcessingContext, IImageProcessingContext> bgTransform;
 		Func<IImageProcessingContext, IImageProcessingContext> pfpTransform;
 

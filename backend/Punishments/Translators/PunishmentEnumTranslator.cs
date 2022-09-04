@@ -41,6 +41,32 @@ public class PunishmentEnumTranslator : Translator
 		};
 	}
 
+	public string Enum(AnnouncementResult enumValue)
+	{
+		return enumValue switch
+		{
+			AnnouncementResult.Announced => PreferredLanguage switch
+			{
+				Language.De => "Erfolgreich abgeschlossen",
+				Language.Fr => "Complété avec succès",
+				Language.Es => "Completado con éxito",
+				Language.Ru => "Успешно завершено",
+				Language.It => "Completato con successo",
+				_ => "Successfully completed"
+			},
+			AnnouncementResult.Failed => PreferredLanguage switch
+			{
+				Language.De => "Senden fehlgeschlagen",
+				Language.Fr => "Échec de l'envoi",
+				Language.Es => "Fallo al enviar",
+				Language.Ru => "Не удалось отправить",
+				Language.It => "Impossibile inviare",
+				_ => "Failed to send"
+			},
+			_ => "Unknown"
+		};
+	}
+
 	public string Enum(SeverityType enumValue)
 	{
 		return enumValue switch
@@ -229,6 +255,15 @@ public class PunishmentEnumTranslator : Translator
 				Language.Ru => "Предупреждать",
 				Language.It => "Avvisare",
 				_ => "Warn"
+			},
+			PunishmentType.FinalWarn => PreferredLanguage switch
+			{
+				Language.De => "Letzte Warnung",
+				Language.Fr => "Dernier avertissement",
+				Language.Es => "Última advertencia",
+				Language.Ru => "Последнее предупреждение",
+				Language.It => "Avviso finale",
+				_ => "Final Warning"
 			},
 			_ => "Unknown"
 		};

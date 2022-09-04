@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ReplaySubject } from 'rxjs';
 import { LANGUAGES } from '../config/config';
-import { ApiEnumTypes } from '../models/ApiEnumTypes';
 import { ApiEnum } from '../models/ApiEnum';
+import { ApiEnumTypes } from '../models/ApiEnumTypes';
 import { ApiService } from './api.service';
 
 @Injectable({

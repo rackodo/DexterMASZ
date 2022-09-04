@@ -226,6 +226,11 @@ public class ModCaseRepository : Repository,
 		}
 	}
 
+	public async Task<ModCase> GetFinalWarn(ulong userId, ulong guildId)
+	{
+		return await _punishmentDatabase.GetFinalWarn(userId, guildId);
+	}
+
 	public async Task<ModCase> ImportModCase(ModCase modCase)
 	{
 		try

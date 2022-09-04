@@ -2,10 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ApiEnum } from 'src/app/models/ApiEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ContentLoading } from 'src/app/models/ContentLoading';
-import { ModCaseTemplateSettings, ModCaseTemplateExpandedPermissionOptions } from 'src/app/models/ModCaseTemplateSettings';
+import { ModCaseTemplateSettings } from 'src/app/models/ModCaseTemplateSettings';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 
 @Component({

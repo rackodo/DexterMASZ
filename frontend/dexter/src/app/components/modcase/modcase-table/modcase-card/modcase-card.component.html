@@ -1,8 +1,8 @@
-<a class="font-weight-bold" routerLink="/guilds/{{entry.modCase.guildId}}/cases/{{ entry.modCase.caseId }}">
+<a class="fw-bold" routerLink="/guilds/{{entry.modCase.guildId}}/cases/{{ entry.modCase.caseId }}">
     <div class="card-container">
         <div class="card-container-body d-flex flex-wrap">
             <!-- Profile picture -->
-            <div class="pictures-parent mr-3">
+            <div class="pictures-parent me-3">
                 <img
                     src="{{ entry.suspect?.imageUrl }}"
                     class="rounded-circle z-depth-0 user-image"
@@ -23,8 +23,8 @@
             <div class="flex-shrink-1 d-flex flex-column flex-wrap">
                 <!-- Title -->
                 <div>
-                    <span class="badge mat-h4 mb-0 mr-1" style="padding: .1rem .4rem"
-                        [ngClass]="(entry.modCase.punishmentType === 0 || entry.modCase.punishmentActive === true) ? 'badge-danger' : 'badge-dark'"
+                    <span class="badge mat-h4 mb-0 me-1" style="padding: .1rem .4rem"
+                        [ngClass]="(entry.modCase.punishmentType === 0 || entry.modCase.punishmentActive === true) ? 'bg-danger' : 'bg-dark'"
                         [attr.title]="punishmentTooltip">
                         {{ punishment }}
                     </span>
@@ -35,7 +35,7 @@
                 </div>
 
                 <!-- Labels -->
-                <mat-chip-list aria-label="Fish selection" class="caselabels ml-1 mb-1" title="The case labels">
+                <mat-chip-list aria-label="Fish selection" class="caselabels ms-1 mb-1" title="The case labels">
                     <mat-chip selected *ngFor="let label of entry.modCase.labels">{{ label }}</mat-chip>
                 </mat-chip-list>
 

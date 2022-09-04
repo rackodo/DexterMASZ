@@ -1,31 +1,30 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
+import { Observable, ReplaySubject } from 'rxjs';
 import { ApiEnum } from 'src/app/models/ApiEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { AppUser } from 'src/app/models/AppUser';
-import { ModCaseComment } from 'src/app/models/ModCaseComment';
 import { CaseDeleteDialogData } from 'src/app/models/CaseDeleteDialogData';
-import { ModCaseExpanded } from 'src/app/models/ModCaseExpanded';
 import { CommentEditDialog } from 'src/app/models/CommentEditDialog';
 import { ContentLoading } from 'src/app/models/ContentLoading';
-import { FileInfo } from 'src/app/models/FileInfo';
 import { DiscordGuild } from 'src/app/models/DiscordGuild';
+import { FileInfo } from 'src/app/models/FileInfo';
 import { convertModCaseToPunishmentString, convertModCaseToSeverityString, ModCase } from 'src/app/models/ModCase';
+import { ModCaseComment } from 'src/app/models/ModCaseComment';
+import { ModCaseExpanded } from 'src/app/models/ModCaseExpanded';
 import { PunishmentType } from 'src/app/models/PunishmentType';
-import { SeverityType } from 'src/app/models/SeverityType';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 import { CaseDeleteDialogComponent } from '../../dialogs/case-delete-dialog/case-delete-dialog.component';
 import { CommentEditDialogComponent } from '../../dialogs/comment-edit-dialog/comment-edit-dialog.component';
 import { ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/confirmation-dialog.component';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-modcase-view',
@@ -49,6 +48,8 @@ export class ModCaseViewComponent implements OnInit {
   public activationSliderModeDeactivation = true;
   public punishmentDescriptionTranslationKey = "";
   public isModOrHigher: boolean = false;
+  public isFinalWarned: boolean = false;
+  public finalWarning: number = 0;
   public renderedDescription!: string;
   private filesSubject$ = new ReplaySubject<FileInfo>(1);
   public files: ContentLoading<Observable<FileInfo>> = { loading: true, content: this.filesSubject$.asObservable() };
@@ -75,6 +76,8 @@ export class ModCaseViewComponent implements OnInit {
   ngOnInit(): void {
     this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
     this.caseId = this.route.snapshot.paramMap.get('caseid') as string;
+    
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
     // reload files from case creation
     if (this.route.snapshot.queryParamMap.get('reloadfiles') !== '0' && this.route.snapshot.queryParamMap.get('reloadfiles') != null) {
@@ -102,6 +105,20 @@ export class ModCaseViewComponent implements OnInit {
     this.reloadCreationTypes();
   }
 
+  private reloadFinalWarning() {
+    this.api.getSimpleData(`/guilds/${this.guildId}/cases/${this.modCase.content?.suspect?.id}/finalWarn`).subscribe(data => {
+      this.finalWarning = data;
+      if (this.finalWarning !== -1)
+        this.isFinalWarned = true;
+      else
+        this.isFinalWarned = false;
+    }, error => {
+      console.error(error);
+      this.files.loading = false;
+      this.toastr.error(this.translator.instant('ModCaseView.FailedToLoad.FinalWarning'));
+    });
+  }
+
   private reloadCreationTypes() {
     this.enumManager.getEnum(ApiEnumTypes.CASECREATIONTYPE).subscribe((data) => {
       this.creationTypes = data;
@@ -123,7 +140,7 @@ export class ModCaseViewComponent implements OnInit {
       this.toastr.error(this.translator.instant('ModCaseView.FailedToLoad.Severities'));
     });
   }
-  
+
   private reloadPunishmentEnum() {
     this.punishments = { loading: true, content: [] };
     this.enumManager.getEnum(ApiEnumTypes.PUNISHMENT).subscribe(data => {
@@ -198,6 +215,7 @@ export class ModCaseViewComponent implements OnInit {
         }
       }
       this.modCase.loading = false;
+      this.reloadFinalWarning();
     }, error => {
       console.error(error);
       this.modCase.loading = false;

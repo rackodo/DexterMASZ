@@ -32,6 +32,32 @@ public class PunishmentTranslator : Translator
 		};
 	}
 
+	public string AlreadyFinalWarned()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Dieser Benutzer ist bereits endgültig gewarnt!",
+			Language.Fr => "Cet utilisateur est déjà prévenu définitivement!",
+			Language.Es => "¡Este usuario ya es el último advertido!",
+			Language.Ru => "Этот пользователь уже получил окончательное предупреждение!",
+			Language.It => "Questo utente è già stato avvisato definitivamente!",
+			_ => "This user is already final warned!"
+		};
+	}
+
+	public string DMReceipt()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "DM-Quittung",
+			Language.Fr => "Reçu DM",
+			Language.Es => "Recibo de mensaje directo",
+			Language.Ru => "Квитанция DM",
+			Language.It => "Ricevuta DM",
+			_ => "DM Receipt"
+		};
+	}
+
 	public string Cases()
 	{
 		return PreferredLanguage switch
@@ -123,16 +149,16 @@ public class PunishmentTranslator : Translator
 		};
 	}
 
-	public string CaseCreated(int caseId, string caseLink)
+	public string CaseCreated(int caseId, string caseLink, int caseCount)
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => $"Fall `#{caseId}` erstellt: {caseLink}",
-			Language.Fr => $"Cas `#{caseId}` créé : {caseLink}",
-			Language.Es => $"Caso `# {caseId}` creado: {caseLink}",
-			Language.Ru => $"Обращение `# {caseId}` создано: {caseLink}",
-			Language.It => $"Caso `#{caseId}` creato: {caseLink}",
-			_ => $"Case `#{caseId}` created: {caseLink}"
+			Language.De => $"Fall `#{caseId}` erstellt: {caseLink}\nDer Benutzer hat `{caseCount}` Mod-Fälle aufgezeichnet.",
+			Language.Fr => $"Cas `#{caseId}` créé : {caseLink}\nL'utilisateur a `{caseCount}` cas de mod enregistrés.",
+			Language.Es => $"Caso `# {caseId}` creado: {caseLink}\nEl usuario tiene `{caseCount}` caso(s) de modificación registrados.",
+			Language.Ru => $"Обращение `# {caseId}` создано: {caseLink}\nУ пользователя зарегистрировано `{caseCount}` случаев модификации.",
+			Language.It => $"Caso `#{caseId}` creato: {caseLink}\nL'utente ha registrato casi mod `{caseCount}`.",
+			_ => $"Case `#{caseId}` created: {caseLink}\nUser has `{caseCount}` mod case(s) recorded."
 		};
 	}
 

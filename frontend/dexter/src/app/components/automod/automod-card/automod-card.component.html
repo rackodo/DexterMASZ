@@ -1,6 +1,6 @@
 <div class="p-3 d-flex flex-column moderation-without-hover">
     <div class="d-flex flex-row" style="align-items: center">
-        <mat-icon class="mr-2">{{ iconsMap[moderation.autoModType] }}</mat-icon>
+        <mat-icon class="me-2">{{ iconsMap[moderation.autoModType] }}</mat-icon>
         <span>{{ moderation.username }}#{{ moderation.discriminator }}
             <span class="text-black-50">({{ moderation.userId }}) </span>
             <span class="accent-color">{{ event }}.</span>
@@ -14,7 +14,7 @@
         </a>
     </div>
     <div>
-        <div class="ml-3 mt-3">
+        <div class="ms-3 mt-3">
             <mat-icon>format_quote</mat-icon> <span style="word-break: break-all; white-space: pre;"> {{ moderation.messageContent }}</span>
             <hr/>
             <div class="d-flex flex-row">

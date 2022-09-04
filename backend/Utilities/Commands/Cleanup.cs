@@ -30,7 +30,7 @@ public class Cleanup : Command<Cleanup>
 	{
 		GuildConfigRepository.AsUser(filterUser);
 
-		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Channel.Id);
+		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
 
 		if (cleanupMode == CleanupMode.Messages && filterUser == null)
 		{

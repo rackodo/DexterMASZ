@@ -24,7 +24,7 @@ public class WhoIs : Command<WhoIs>
 	{
 		GuildConfigRepository.AsUser(user);
 
-		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Channel.Id);
+		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
 
 		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
 

@@ -60,11 +60,11 @@ public class GuildAuditTranslator : Translator
 	{
 		return PreferredLanguage switch
 		{
-			 Language.De => "Emote",
-			 Language.Fr => "Émoticône",
-			 Language.Es => "Emoción",
-			 Language.Ru => "Эмоция",
-			 Language.It => "Emote",
+			Language.De => "Emote",
+			Language.Fr => "Émoticône",
+			Language.Es => "Emoción",
+			Language.Ru => "Эмоция",
+			Language.It => "Emote",
 			_ => "Emote",
 		};
 	}

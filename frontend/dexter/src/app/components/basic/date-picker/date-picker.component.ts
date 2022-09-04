@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
-import { TimezoneService } from 'src/app/services/timezone.service';
-import { DEFAULT_TIMEZONE } from 'src/app/config/config';
 import { Observable } from 'rxjs';
-import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker';
+import { DEFAULT_TIMEZONE } from 'src/app/config/config';
+import { TimezoneService } from 'src/app/services/timezone.service';
 
 @Component({
   selector: 'app-date-picker',

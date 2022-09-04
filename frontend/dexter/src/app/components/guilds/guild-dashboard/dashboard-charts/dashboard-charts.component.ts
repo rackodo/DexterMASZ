@@ -1,10 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatDatepicker } from '@angular/material/datepicker';
 import { ActivatedRoute } from '@angular/router';
-import { ChartDataSets } from 'chart.js';
-import { Label } from 'ng2-charts';
+import { ChartDataset } from 'chart.js';
 import { Observable, Subject } from 'rxjs';
 import { DashboardCharts } from 'src/app/models/DashboardCharts';
 import { DbCount } from 'src/app/models/DbCount';
@@ -21,12 +18,12 @@ export class DashboardChartsComponent implements OnInit {
   public loading: boolean = true;
   public since: Date = new Date();
 
-  public caseChartData: ChartDataSets[] = [];
-  public caseChartLabels: Label[] = [];
-  public punishmentChartData: ChartDataSets[] = [];
-  public punishmentChartLabels: Label[] = [];
-  public moderationChartData: ChartDataSets[] = [];
-  public moderationChartLabels: Label[] = [];
+  public caseChartData: ChartDataset[] = [];
+  public caseChartLabels: string[] = [];
+  public punishmentChartData: ChartDataset[] = [];
+  public punishmentChartLabels: string[] = [];
+  public moderationChartData: ChartDataset[] = [];
+  public moderationChartLabels: string[] = [];
   private maxSubject$ = new Subject<number>();
   public max: Observable<number> = this.maxSubject$.asObservable();
 

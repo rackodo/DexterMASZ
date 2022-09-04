@@ -8,7 +8,7 @@ public class AutoModEventExpanded
 	public AutoModEventExpanded(AutoModEvent punishmentsEvent, IUser suspect)
 	{
 		AutoModEvent = punishmentsEvent;
-		Suspect = new DiscordUser(suspect);
+		Suspect = DiscordUser.GetDiscordUser(suspect);
 	}
 
 	public AutoModEvent AutoModEvent { get; set; }

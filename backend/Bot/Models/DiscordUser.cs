@@ -1,4 +1,3 @@
-using Bot.Exceptions;
 using Bot.Extensions;
 using Discord;
 
@@ -6,14 +5,18 @@ namespace Bot.Models;
 
 public class DiscordUser
 {
-	public DiscordUser(IUser user)
+	public static DiscordUser GetDiscordUser(IUser user)
 	{
 		if (user is null)
-			throw new ResourceNotFoundException("User for IUser is equal to null!");
+			return null;
+		else if (user.Id is 0)
+			return null;
+		else
+			return new DiscordUser(user);
+	}
 
-		if (user.Id is 0)
-			throw new ResourceNotFoundException("User for IUser has an ID of 0!");
-
+	private DiscordUser(IUser user)
+	{
 		Id = user.Id;
 		Username = user.Username;
 		Discriminator = user.Discriminator;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserRankcardConfigUtility } from 'src/app/classes/UserRankcardConfig';
 import { ExperienceModel } from 'src/app/models/ExperienceModel';
 import { RankcardFlags, UserRankcardConfig } from 'src/app/models/UserRankcardConfig';
@@ -9,7 +9,7 @@ import { RankcardCustomizerComponent } from '../rankcard-customizer.component';
   templateUrl: './rankcard-preview.component.html',
   styleUrls: ['./rankcard-preview.component.css']
 })
-export class RankcardPreviewComponent implements OnInit {
+export class RankcardPreviewComponent {
 
   @Input() txtXp : ExperienceModel = {xp: 82n, level: 0n, xpLevel: 100n, xpResidual: 82n};
   @Input() vcXp : ExperienceModel = {xp: 105n, level: 1n, xpLevel: 150n, xpResidual: 5n};
@@ -62,9 +62,6 @@ export class RankcardPreviewComponent implements OnInit {
   insetMainXpFlag(){ return (this.model.rankcardFlags & RankcardFlags.InsetMainXP) > 0; }
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
 

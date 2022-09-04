@@ -1,6 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DiscordGuild } from 'src/app/models/DiscordGuild';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GuildDeleteDialogData } from 'src/app/models/GuildDeleteDialogData';
 
 @Component({
@@ -8,10 +7,8 @@ import { GuildDeleteDialogData } from 'src/app/models/GuildDeleteDialogData';
   templateUrl: './guild-delete-dialog.component.html',
   styleUrls: ['./guild-delete-dialog.component.css']
 })
-export class GuildDeleteDialogComponent implements OnInit {
+export class GuildDeleteDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public guildToDelete: GuildDeleteDialogData) { }
 
-  ngOnInit(): void {
-  }
 }

@@ -5,7 +5,7 @@ import { GuildInfoComponent } from './overview-guildinfo.component';
 describe('GuildInfoComponent', () => {
   let component: GuildInfoComponent;
   let fixture: ComponentFixture<GuildInfoComponent>;
-  
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ GuildInfoComponent ]

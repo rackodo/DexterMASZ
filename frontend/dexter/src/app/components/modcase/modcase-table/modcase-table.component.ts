@@ -6,9 +6,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Moment } from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, ReplaySubject } from 'rxjs';
-import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ApiEnum } from 'src/app/models/ApiEnum';
-import { ContentLoading } from 'src/app/models/ContentLoading';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { DiscordUser } from 'src/app/models/DiscordUser';
 import { ModCaseFilter } from 'src/app/models/ModCaseFilter';
 import { ModCaseTable } from 'src/app/models/ModCaseTable';
@@ -155,6 +154,10 @@ export class ModCaseTableComponent implements OnInit {
     this.apiFilter.edited = type.key === 0 ? undefined : type.key !== 1;
   };
 
+  selectedSeverityTypeChanged(types: ApiEnum[]) {
+    this.apiFilter.severityTypes = types?.map(x => x.key) ?? [];
+  }
+
   selectedCommentLockedStatusChanged(type: ApiEnum) {
     this.apiFilter.lockedComments = type.key === 0 ? undefined : type.key !== 1;
   };
@@ -166,10 +169,6 @@ export class ModCaseTableComponent implements OnInit {
   selectedPunishmentActiveStatusChanged(type: ApiEnum) {
     this.apiFilter.punishmentActive = type.key === 0 ? undefined : type.key !== 1;
   };
-  
-  selectedSeverityTypeChanged(types: ApiEnum[]) {
-    this.apiFilter.severityTypes = types?.map(x => x.key) ?? [];
-  }
 
   selectedSinceChanged(date: Moment) {
     this.apiFilter.since = date?.toISOString();

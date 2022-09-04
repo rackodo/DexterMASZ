@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-oauth-failed',
   templateUrl: './oauth-failed.component.html',
   styleUrls: ['./oauth-failed.component.css']
 })
-export class OauthFailedComponent implements OnInit {
+export class OauthFailedComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

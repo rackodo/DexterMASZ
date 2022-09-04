@@ -1,25 +1,25 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { AuthService } from './services/auth.service';
-import { AppUser } from './models/AppUser';
-import { ToastrService } from 'ngx-toastr';
-import { GuildDeleteDialogComponent } from './components/guilds/guild-delete-dialog/guild-delete-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { DiscordGuild } from './models/DiscordGuild';
-import { GuildDeleteDialogData } from './models/GuildDeleteDialogData';
-import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { HttpParams } from '@angular/common/http';
-import { ApiService } from './services/api.service';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DiscordApplication } from './models/DiscordApplication';
-import { ApplicationInfoService } from './services/application-info.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { GuildDeleteDialogComponent } from './components/guilds/guild-delete-dialog/guild-delete-dialog.component';
 import { DEFAULT_LANGUAGE, DEFAULT_TIMEZONE, LANGUAGES, TIMEZONES } from './config/config';
-import { TimezoneService } from './services/timezone.service';
-import { CookieTrackerService } from './services/cookie-tracker.service';
+import { AppUser } from './models/AppUser';
+import { DiscordApplication } from './models/DiscordApplication';
+import { DiscordGuild } from './models/DiscordGuild';
+import { GuildDeleteDialogData } from './models/GuildDeleteDialogData';
 import { LocalAppSettings } from './models/LocalAppSettings';
+import { ApiService } from './services/api.service';
+import { ApplicationInfoService } from './services/application-info.service';
+import { AuthService } from './services/auth.service';
+import { CookieTrackerService } from './services/cookie-tracker.service';
+import { TimezoneService } from './services/timezone.service';
 
 
 @Component({
@@ -27,7 +27,7 @@ import { LocalAppSettings } from './models/LocalAppSettings';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   title = 'Dexter';
   mobileQuery: MediaQueryList;
   activatedNav: string[] = ['', ''];

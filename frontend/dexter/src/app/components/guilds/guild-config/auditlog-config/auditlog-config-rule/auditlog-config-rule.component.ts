@@ -1,17 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatStepper } from '@angular/material/stepper';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
-import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { DiscordChannel } from 'src/app/models/DiscordChannel';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { DiscordRole } from 'src/app/models/DiscordRole';
 import { GuildAuditLogConfig } from 'src/app/models/GuildAuditLogConfig';
 import { GuildAuditLogRuleDefinition } from 'src/app/models/GuildAuditLogRuleDefinition';
 import { ApiService } from 'src/app/services/api.service';
-import { EnumManagerService } from 'src/app/services/enum-manager.service';
 
 @Component({
   selector: 'app-auditlog-config-rule',

@@ -444,6 +444,9 @@
         "FailedToDelete": "Failed to delete user map.",
         "Deleted": "User map deleted."
     },
+    "PunishmentConfig": {
+        "Punishments": "Punishments"
+    },
     "UserNoteTable": {
         "User": "User",
         "Description": "Description",
@@ -547,6 +550,8 @@
         "Moderator": "Moderator",
         "Punishment": "Punishment",
         "Guild": "Guild",
+        "UserFinalWarned": "User is currently final warned!",
+        "ViewCase": "View case",
         "PunishedUntil": "Punished until:",
         "PunishedForever": "Punished forever",
         "Deactivated": {
@@ -573,6 +578,7 @@
         "CaseMarkedToDelete": "Marked to be deleted - {{user}}",
         "CommentsLocked": "Comments locked - {{user}}",
         "Restore": "Restore",
+        "Severity": "Severity",
         "View": "View",
         "Delete": "Delete",
         "Moderators": "Moderators",
@@ -580,8 +586,9 @@
             "Punishments": "Failed to load available punishments.",
             "Severities": "Failed to load available severities.",
             "Files": "Failed to load files.",
-            "Guild": "Failed to load guild info.",
-            "Case": "Failed to load case."
+            "DiscordGuild": "Failed to load guild info.",
+            "Case": "Failed to load case.",
+            "FinalWarning": "Failed to load final warning."
         },
         "DeleteCase": {
             "Deleted": "Case marked to be deleted.",

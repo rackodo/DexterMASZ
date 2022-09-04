@@ -1,6 +1,6 @@
 import { AutoModEvent } from "./AutoModEvent";
-import { DiscordUser } from "./DiscordUser";
 import { DiscordGuild } from "./DiscordGuild";
+import { DiscordUser } from "./DiscordUser";
 import { ModCase } from "./ModCase";
 import { UserInviteExpanded } from "./UserInviteExpanded";
 import { UserMapExpanded } from "./UserMapExpanded";

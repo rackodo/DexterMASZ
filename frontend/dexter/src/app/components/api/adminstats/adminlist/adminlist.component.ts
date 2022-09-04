@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-adminlist',
   templateUrl: './adminlist.component.html',
   styleUrls: ['./adminlist.component.css']
 })
-export class AdminlistComponent implements OnInit {
+export class AdminlistComponent {
 
   @Input() public titleKey: string = "";
   @Input() public showList: string[] | undefined = []
@@ -13,8 +13,5 @@ export class AdminlistComponent implements OnInit {
   @Input() public emote: string = "person";
   public showAll: boolean = false;
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

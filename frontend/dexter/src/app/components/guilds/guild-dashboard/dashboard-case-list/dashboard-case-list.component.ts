@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { ModCaseTable } from 'src/app/models/ModCaseTable';
 import { ModCaseTableEntry } from 'src/app/models/ModCaseTableEntry';
 import { ApiService } from 'src/app/services/api.service';

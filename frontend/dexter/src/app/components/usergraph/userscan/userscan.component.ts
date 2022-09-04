@@ -1,15 +1,15 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ApiEnum } from 'src/app/models/ApiEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { AutoModEvent } from 'src/app/models/AutoModEvent';
 import { ContentLoading } from 'src/app/models/ContentLoading';
-import { DiscordUser } from 'src/app/models/DiscordUser';
 import { DiscordGuild } from 'src/app/models/DiscordGuild';
+import { DiscordUser } from 'src/app/models/DiscordUser';
 import { InviteNetwork } from 'src/app/models/InviteNetwork';
 import { convertModCaseToPunishmentString, ModCase } from 'src/app/models/ModCase';
 import { UserInvite } from 'src/app/models/UserInvite';
@@ -18,14 +18,14 @@ import { UserNote } from 'src/app/models/UserNote';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 import { TimezoneService } from 'src/app/services/timezone.service';
-import { Network, DataSet, Node, Edge, Data, IdType } from 'vis';
+import { Edge, Network, Node } from 'vis';
 
 @Component({
   selector: 'app-userscan',
   templateUrl: './userscan.component.html',
   styleUrls: ['./userscan.component.css']
 })
-export class UserScanComponent implements OnInit {
+export class UserScanComponent implements AfterViewInit, OnInit {
 
   @ViewChild('network') el!: ElementRef;
   timeout: any = null;

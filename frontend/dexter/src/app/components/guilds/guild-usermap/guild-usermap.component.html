@@ -2,7 +2,7 @@
     <div class="p-2">
         <div class="d-flex flex-row flex-wrap align-items-end mb-4">
             <form [formGroup]="newMapFormGroup" *ngIf="!this.users.loading">
-                <mat-form-field class="mr-2">
+                <mat-form-field class="me-2">
                     <mat-label>{{ 'UserMapTable.User' | translate }}</mat-label>
                     <input type="text"
                         placeholder="Pick one"
@@ -16,7 +16,7 @@
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
-                <mat-form-field class="mr-2">
+                <mat-form-field class="me-2">
                     <mat-label>{{ 'UserMapTable.User' | translate }}</mat-label>
                     <input type="text"
                         placeholder="Pick one"
@@ -30,12 +30,12 @@
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
-                <mat-form-field class="mr-2">
+                <mat-form-field class="me-2">
                     <mat-label>{{ 'UserMapTable.Description' | translate }}</mat-label>
                     <textarea matInput type="text" formControlName="reason" rows="1"></textarea>
                 </mat-form-field>
                 <button mat-raised-button color="accent" (click)="createMap()"
-                 [disabled]="!this.newMapFormGroup.value.userA.trim() || !this.newMapFormGroup.value.reason.trim() || !this.newMapFormGroup.value.userB.trim() || this.newMapFormGroup.value.userA.trim() == this.newMapFormGroup.value.userB.trim()">
+                 [disabled]="!this.newMapFormGroup.value.userA.trim() || !this.newMapFormGroup.value.reason.trim() || !this.newMapFormGroup.value.userB.trim() || this.newMapFormGroup.value.userA.trim() === this.newMapFormGroup.value.userB.trim()">
                  {{ 'UserMapTable.CreateNewMap' | translate }}
                 </button>
             </form>
@@ -54,7 +54,7 @@
                 (deleteEvent)="removeMap($event)"
                 (updateEvent)="updateEvent()">
             </app-usermap-card>
-            <div class="card-container rounded m-2 mb-3" *ngIf="(this.showUserMaps | async)?.length == 0">
+            <div class="card-container rounded m-2 mb-3" *ngIf="(this.showUserMaps | async)?.length === 0">
                 <div class="card-container-body">
                     <span class="mat-h1">{{ 'NothingHere' | translate }}</span>
                     <p class="card-text">{{ 'UserMapTable.NoMatches' | translate }}</p>

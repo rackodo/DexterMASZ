@@ -48,7 +48,7 @@ public static class GuildAuditEmbedCreator
 		if ((config.PingRoles?.Length ?? 0) > 0)
 			embed.AddField(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditLogMentionRoles(),
 				string.Join(" ", config.PingRoles.Select(x => $"<@&{x}>")));
-		
+
 		if ((config.IgnoreRoles?.Length ?? 0) > 0)
 			embed.AddField(translator.Get<GuildAuditNotificationTranslator>().NotificationGuildAuditLogExcludeRoles(),
 				string.Join(" ", config.IgnoreRoles.Select(x => $"<@&{x}>")), false);

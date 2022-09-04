@@ -1,17 +1,13 @@
-import { M, X } from '@angular/cdk/keycodes';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, ReplaySubject } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordUser } from 'src/app/models/DiscordUser';
-import { UserNote } from 'src/app/models/UserNote';
-import { UserNoteDto } from 'src/app/models/UserNoteDto';
 import { UserNoteExpanded } from 'src/app/models/UserNoteExpanded';
 import { ApiService } from 'src/app/services/api.service';
 

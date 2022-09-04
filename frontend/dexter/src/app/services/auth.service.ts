@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AppUser } from '../models/AppUser';
-import { API_URL } from '../config/config';
-import { ReplaySubject, Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { Params, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
 import { ToastrService } from 'ngx-toastr';
+import { Observable, ReplaySubject, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { API_URL } from '../config/config';
+import { AppUser } from '../models/AppUser';
 
 @Injectable({
   providedIn: 'root'

@@ -1,32 +1,32 @@
-import {COMMA, ENTER, SPACE} from '@angular/cdk/keycodes';
+import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { HttpParams } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { go, highlight } from 'fuzzysort';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { ModCaseTemplate } from 'src/app/models/ModCaseTemplate';
+import { ApiEnum } from 'src/app/models/ApiEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
+import { AppUser } from 'src/app/models/AppUser';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordUser } from 'src/app/models/DiscordUser';
+import { ModCaseLabel } from 'src/app/models/ModCaseLabel';
+import { ModCaseTemplate } from 'src/app/models/ModCaseTemplate';
 import { ModCaseTemplateExpanded } from 'src/app/models/ModCaseTemplateExpanded';
-import { ApiService } from 'src/app/services/api.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { ModCaseTemplateSettings, ModCaseTemplateExpandedPermission } from 'src/app/models/ModCaseTemplateSettings';
-import { TemplateCreateDialogComponent } from '../../dialogs/template-create-dialog/template-create-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { AppUser } from 'src/app/models/AppUser';
+import { ModCaseTemplateExpandedPermission, ModCaseTemplateSettings } from 'src/app/models/ModCaseTemplateSettings';
 import { PunishmentType } from 'src/app/models/PunishmentType';
 import { SeverityType } from 'src/app/models/SeverityType';
-import { ApiEnum } from 'src/app/models/ApiEnum';
+import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
-import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
-import * as moment from 'moment';
-import { TranslateService } from '@ngx-translate/core';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { ModCaseLabel } from 'src/app/models/ModCaseLabel';
-import { go, highlight } from 'fuzzysort';
+import { TemplateCreateDialogComponent } from '../../dialogs/template-create-dialog/template-create-dialog.component';
 
 @Component({
   selector: 'app-modcase-add',
@@ -68,7 +68,7 @@ export class ModCaseAddComponent implements OnInit {
   public allTemplates: ModCaseTemplateExpanded[] = [];
   public punishmentOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
   public severityOptions: ContentLoading<ApiEnum[]> = { loading: true, content: [] };
-  
+
   public currentUser!: AppUser;
   constructor(private _formBuilder: FormBuilder, private api: ApiService, private toastr: ToastrService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private enumManager: EnumManagerService, private translator: TranslateService) {
     this.labelInputForm.valueChanges.subscribe(data => {
@@ -89,7 +89,7 @@ export class ModCaseAddComponent implements OnInit {
     });
     this.punishmentFormGroup = this._formBuilder.group({
       punishmentType: ['', Validators.required],
-	  severityType: ['None', Validators.required]	  
+	  severityType: ['None', Validators.required]
     });
     this.filesFormGroup = this._formBuilder.group({
       files: ['']
@@ -200,7 +200,7 @@ export class ModCaseAddComponent implements OnInit {
       this.severityOptions.loading = false;
       this.toastr.error(this.translator.instant('ModCaseDialog.FailedToLoad.SeverityEnum'));
     });
-	
+
     this.reloadTemplates();
 
     this.authService.getUserProfile().subscribe((data) => {
@@ -249,7 +249,7 @@ export class ModCaseAddComponent implements OnInit {
 
   createCase() {
     this.savingCase = true;
-	
+
     const data = {
       title: this.infoFormGroup.value.title,
       description: this.infoFormGroup.value.description,
@@ -262,7 +262,7 @@ export class ModCaseAddComponent implements OnInit {
 
     const params = new HttpParams()
       .set('handlePunishment', this.punishmentFormGroup.value.handlePunishment ? 'true' : 'false');
-	  	
+
     this.api.postSimpleData(`/guilds/${this.guildId}/cases`, data, params, true, true).subscribe(data => {
       const caseId = data.caseId;
       this.router.navigate(['guilds', this.guildId, 'cases', caseId], { queryParams: { 'reloadfiles': this.filesToUpload.length ?? '0' } });
@@ -350,12 +350,13 @@ export class ModCaseAddComponent implements OnInit {
   }
 
   getSeverity(): SeverityType {
-	let punishmentType = this.punishmentFormGroup.value.punishmentType;
-	let severity = SeverityType.None;
-	
-	if (punishmentType != PunishmentType.Kick && punishmentType != PunishmentType.Ban)
-		severity = this.punishmentFormGroup.value.severityType;
-	return severity;
+	  let punishmentType = this.punishmentFormGroup.value.punishmentType;
+	  let severity = SeverityType.None;
+
+	  if (punishmentType === PunishmentType.Mute || punishmentType === PunishmentType.Warn)
+	  	severity = this.punishmentFormGroup.value.severityType;
+
+	  return severity;
   }
 
   remove(label: string): void {

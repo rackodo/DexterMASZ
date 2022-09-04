@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommentEditDialog } from 'src/app/models/CommentEditDialog';
 
@@ -7,11 +7,8 @@ import { CommentEditDialog } from 'src/app/models/CommentEditDialog';
   templateUrl: './comment-edit-dialog.component.html',
   styleUrls: ['./comment-edit-dialog.component.css']
 })
-export class CommentEditDialogComponent implements OnInit {
+export class CommentEditDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public comment: CommentEditDialog) { }
-
-  ngOnInit(): void {
-  }
 
 }

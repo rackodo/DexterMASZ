@@ -54,9 +54,12 @@ public class Kick : Command<Kick>
 
 		var url = $"{config.GetServiceUrl()}/guilds/{created.GuildId}/cases/{created.CaseId}";
 
+		var caseCount =
+			(await ModCaseRepository.GetCasesForGuildAndUser(Context.Guild.Id, user.Id)).Count;
+
 		await Context.Interaction.ModifyOriginalResponseAsync((MessageProperties msg) =>
 		{
-			msg.Content = Translator.Get<PunishmentTranslator>().CaseCreated(created.CaseId, url);
+			msg.Content = Translator.Get<PunishmentTranslator>().CaseCreated(created.CaseId, url, caseCount);
 		});
 	}
 }

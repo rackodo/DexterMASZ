@@ -4,7 +4,7 @@
         <mat-tab-group class="flex-grow-1" [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)">
             <mat-tab *ngFor="let tab of this.tabs">
                 <ng-template mat-tab-label>
-                    <mat-icon class="mr-1">{{ tab.icon }}</mat-icon>
+                    <mat-icon class="me-1">{{ tab.icon }}</mat-icon>
                     <span *ngIf="tab.component === 'overview'">{{ 'Profile.Tabs.Overview' | translate }}</span>
                     <span *ngIf="tab.component === 'rankcard'">{{ 'Profile.Tabs.Rankcard' | translate }}</span>
                 </ng-template>

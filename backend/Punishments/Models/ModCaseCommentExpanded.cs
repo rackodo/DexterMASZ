@@ -8,7 +8,7 @@ public class ModCaseCommentExpanded
 	public ModCaseCommentExpanded(ModCaseComment comment, IUser commenter)
 	{
 		Comment = comment;
-		Commenter = new DiscordUser(commenter);
+		Commenter = DiscordUser.GetDiscordUser(commenter);
 	}
 
 	public ModCaseComment Comment { get; set; }

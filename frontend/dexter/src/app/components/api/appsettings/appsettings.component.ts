@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ApiEnum } from 'src/app/models/ApiEnum';
-import { ContentLoading } from 'src/app/models/ContentLoading';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { AppSettings } from 'src/app/models/AppSettings';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';

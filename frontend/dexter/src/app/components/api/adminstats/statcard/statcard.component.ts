@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ServiceStatus } from 'src/app/models/ServiceStatus';
 
 @Component({
@@ -6,7 +6,7 @@ import { ServiceStatus } from 'src/app/models/ServiceStatus';
   templateUrl: './statcard.component.html',
   styleUrls: ['./statcard.component.css']
 })
-export class StatcardComponent implements OnInit {
+export class StatcardComponent {
 
   @Input() titleKey: string = "";
   @Input() text?: string | number | undefined;
@@ -16,8 +16,5 @@ export class StatcardComponent implements OnInit {
   @Input() errorPingLimit: number = 400;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

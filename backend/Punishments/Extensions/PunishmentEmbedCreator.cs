@@ -1,5 +1,4 @@
-﻿using Bot.Abstractions;
-using Bot.Enums;
+﻿using Bot.Enums;
 using Bot.Extensions;
 using Bot.Models;
 using Bot.Services;
@@ -17,7 +16,7 @@ namespace Punishments.Extensions;
 public static class PunishmentEmbedCreator
 {
 	public static async Task<EmbedBuilder> CreateModCaseEmbed(this ModCase modCase, RestAction action, IUser actor,
-		IServiceProvider provider, IUser suspect = null)
+		IServiceProvider provider, AnnouncementResult result, IUser suspect = null)
 	{
 		var translator = provider.GetRequiredService<Translation>();
 
@@ -51,13 +50,17 @@ public static class PunishmentEmbedCreator
 				break;
 		}
 
-		if (modCase.PunishmentType == PunishmentType.Mute || modCase.PunishmentType == PunishmentType.Warn)
+		if (modCase.Severity != SeverityType.None)
 			embed.AddField($"⚠️ - {translator.Get<PunishmentTranslator>().Severity()}",
 					translator.Get<PunishmentEnumTranslator>().Enum(modCase.Severity), true);
 
 		if (modCase.PunishedUntil != null)
 			embed.AddField($"⏰ - {translator.Get<PunishmentTranslator>().PunishedUntil()}",
 				modCase.PunishedUntil.Value.ToDiscordTs(), true);
+
+		if (result != AnnouncementResult.None)
+			embed.AddField($"📣 - {translator.Get<PunishmentTranslator>().DMReceipt()}",
+				translator.Get<PunishmentEnumTranslator>().Enum(result), true);
 
 		if (modCase.Labels.Length == 0) return embed;
 		StringBuilder sb = new();

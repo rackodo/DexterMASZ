@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -12,16 +12,13 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './usermap-card.component.html',
   styleUrls: ['./usermap-card.component.css']
 })
-export class UserMapCardComponent implements OnInit {
+export class UserMapCardComponent {
 
   @Output() updateEvent = new EventEmitter<number>();
   @Output() deleteEvent = new EventEmitter<number>();
   @Input() userMap!: UserMapExpanded;
   @Input() showDeleteButton: boolean = true;
   constructor(private dialog: MatDialog, private api: ApiService, private toastr: ToastrService, private translator: TranslateService) { }
-
-  ngOnInit(): void {
-  }
 
   deleteMap() {
     const confirmDialogRef = this.dialog.open(ConfirmationDialogComponent);

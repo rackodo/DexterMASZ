@@ -23,22 +23,23 @@
     "@angular/router": "^14.2.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
-    "bootstrap": "^4.6.2",
-    "chart.js": "^2.9.4",
+    "bootstrap": "^5.2.0",
+    "chart.js": "^3.6.0",
+    "chartjs-adapter-moment": "^1.0.0",
     "compare-versions": "^5.0.1",
     "fuzzysort": "^2.0.1",
     "i": "^0.3.7",
     "moment": "^2.29.4",
-    "ng2-charts": "^2.4.2",
+    "ng2-charts": "^4.0.0",
     "ngx-cookie": "^6.0.1",
+    "ngx-duration-picker": "^3.3.1",
     "ngx-mat-select-search": "^4.2.1",
     "ngx-material-file-input": "^4.0.0",
     "ngx-toastr": "^15.0.0",
     "npm": "^8.18.0",
-    "rxjs": "^6.6.7",
+    "rxjs": "^7.5.6",
     "tslib": "^2.4.0",
     "vis": "^4.21.0-EOL",
-    "vis-network": "^9.1.2",
     "zone.js": "^0.11.8"
   },
   "devDependencies": {
@@ -59,6 +60,6 @@
     "jasmine-core": "^4.3.0",
     "jasmine-spec-reporter": "^7.0.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.2"
   }
 }

@@ -1,5 +1,5 @@
-import { DiscordRole } from "./DiscordRole";
 import { DiscordChannel } from "./DiscordChannel";
+import { DiscordRole } from "./DiscordRole";
 
 export interface DiscordGuild {
   id: string;

@@ -1,5 +1,5 @@
-import { LanguageSelect } from "../models/LanguageSelect";
 import { environment } from 'src/environments/environment';
+import { LanguageSelect } from "../models/LanguageSelect";
 
 export const APP_BASE_URL = environment.url;
 export const ENABLE_CORS = environment.cors;

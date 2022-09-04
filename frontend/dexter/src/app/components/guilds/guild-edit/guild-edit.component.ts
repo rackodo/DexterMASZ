@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ApiEnum } from 'src/app/models/ApiEnum';
+import { ApiEnumTypes } from 'src/app/models/ApiEnumTypes';
 import { ContentLoading } from 'src/app/models/ContentLoading';
 import { DiscordGuild } from 'src/app/models/DiscordGuild';
-import { GuildConfig } from 'src/app/models/GuildConfig';
 import { DiscordRole } from 'src/app/models/DiscordRole';
+import { GuildConfig } from 'src/app/models/GuildConfig';
 import { ApiService } from 'src/app/services/api.service';
 import { EnumManagerService } from 'src/app/services/enum-manager.service';
 
@@ -118,7 +118,7 @@ export class GuildEditComponent implements OnInit {
       publishModeratorInfo: (this.configGroup.value?.publishModeratorInfo != '' ? this.configGroup.value?.publishModeratorInfo : false) ?? false,
       preferredLanguage: this.configGroup.value?.preferredLanguage != '' ? this.configGroup.value?.preferredLanguage : 0
     }
-	
+
     this.api.putSimpleData(`/guilds/${this.currentGuild?.content?.id}`, data).subscribe(() => {
       this.toastr.success(this.translator.instant('GuildDialog.GuildUpdated'));
       this.router.navigate(['guilds']);

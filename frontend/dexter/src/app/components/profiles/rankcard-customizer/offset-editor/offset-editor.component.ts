@@ -1,6 +1,5 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { relativeTimeThreshold } from 'moment';
 import { Offset2D } from 'src/app/models/Offset2D';
 import { OffsetEditorSettingsDialog } from './settings-dialog/settings-dialog.component';
 

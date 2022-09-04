@@ -126,9 +126,9 @@ public class GuildAuditer : Event
 		using var scope = _serviceProvider.CreateScope();
 
 		var auditLogRepository = scope.ServiceProvider.GetRequiredService<GuildAuditConfigRepository>();
-		
+
 		GuildAuditConfig auditLogConfig = null;
-		
+
 		try
 		{
 			auditLogConfig = await auditLogRepository.GetConfigsByGuildAndType(guildId, eventType);
@@ -154,7 +154,7 @@ public class GuildAuditer : Event
 		var auditLogRepository = scope.ServiceProvider.GetRequiredService<GuildAuditConfigRepository>();
 
 		GuildAuditConfig auditLogConfig = null;
-		
+
 		try
 		{
 			auditLogConfig = await auditLogRepository.GetConfigsByGuildAndType(guildId, eventType);
