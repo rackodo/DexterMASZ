@@ -75,6 +75,21 @@ public class LevelsEventAnnouncer : Event
 		}
 	}
 
+	private async Task HandleUpdateRoles(IGuildUser user)
+	{
+		var scope = _serviceProvider.CreateScope();
+		ulong guildId = user.GuildId;
+
+		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildLevelConfigRepository>().GetOrCreateConfig(guildId);
+		if (guildConfig == null) return;
+
+		var userLevel = scope.ServiceProvider.GetRequiredService<GuildUserLevelRepository>().GetLevel(user.Id, guildId);
+		if (userLevel == null) return;
+
+		var calc = new CalculatedGuildUserLevel(userLevel, guildConfig);
+		await HandleLevelRoles(userLevel, calc.Total.Level, user, null);
+	}
+
 	private async Task HandleLevelRoles(GuildUserLevel guildUserLevel, int level, IGuildUser guildUser, IChannel? channel)
 	{
 		using var scope = _serviceProvider.CreateScope();

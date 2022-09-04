@@ -33,8 +33,6 @@ public class LevelingService : Event
 		_eventHandler = eventHandler;
 
 		_random = new Random();
-
-		// GET ALL REGISTERED GUILDS' CONFIGS AND INJECT INTO GUILDCOOLDOWNS
 	}
 
 	public void RegisterEvents()
