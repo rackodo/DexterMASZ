@@ -6,6 +6,19 @@ namespace Punishments.Translators;
 
 public class PunishmentTranslator : Translator
 {
+	public string CaseCount()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Fallzahl",
+			Language.Fr => "Nombre de cas",
+			Language.Es => "Recuento de casos",
+			Language.Ru => "Количество дел",
+			Language.It => "Conteggio casi",
+			_ => "Case Count"
+		};
+	}
+
 	public string Punishment()
 	{
 		return PreferredLanguage switch
@@ -133,6 +146,19 @@ public class PunishmentTranslator : Translator
 			Language.Ru => "Импортный",
 			Language.It => "importato",
 			_ => "Imported"
+		};
+	}
+
+	internal string UserTriggeredOnFinalWarn()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Letzter verwarnter Benutzer hat einen Verstoß ausgelöst",
+			Language.Fr => "Le dernier utilisateur averti a déclenché une infraction",
+			Language.Es => "El último usuario advertido ha provocado una infracción",
+			Language.Ru => "Последний предупрежденный пользователь спровоцировал нарушение",
+			Language.It => "L'utente con avviso finale ha attivato un'infrazione",
+			_ => "Final warned user has triggered an infraction"
 		};
 	}
 

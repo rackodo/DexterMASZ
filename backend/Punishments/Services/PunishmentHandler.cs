@@ -73,7 +73,7 @@ public class PunishmentHandler : Event
 		var database = scope.ServiceProvider.GetRequiredService<PunishmentDatabase>();
 		var cases = await database.SelectAllModCasesWithActivePunishments();
 
-		foreach (var element in cases.Where(element => element.PunishedUntil != null).Where(element => element.PunishedUntil <= DateTime.UtcNow))
+		foreach (var element in cases.Where(element => element.PunishedUntil != null && element.PunishmentType != PunishmentType.FinalWarn).Where(element => element.PunishedUntil <= DateTime.UtcNow))
 		{
 			try
 			{
@@ -177,10 +177,12 @@ public class PunishmentHandler : Event
 							if (!modCase.PunishedUntil.HasValue)
 								_logger.LogError($"Failed to final warn user due to unknown duration length");
 
-							var muteDuration = modCase.PunishedUntil.Value - DateTime.UtcNow;
+							if (modCase.PunishedUntil.HasValue)
+							{
+								var muteDuration = modCase.PunishedUntil.Value - DateTime.UtcNow;
 
-							await _discordRest.TimeoutGuildUser(modCase.GuildId, modCase.UserId, muteDuration, reason);
-
+								await _discordRest.TimeoutGuildUser(modCase.GuildId, modCase.UserId, muteDuration, reason);
+							}
 							break;
 						case RestAction.Deleted:
 							_logger.LogInformation($"Unfinal warned user {modCase.UserId} in guild {modCase.GuildId}");

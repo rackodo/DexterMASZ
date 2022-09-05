@@ -6,6 +6,7 @@ using Bot.Translators;
 using Discord;
 using Humanizer;
 using Microsoft.Extensions.DependencyInjection;
+using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Models;
 using Punishments.Translators;
@@ -15,8 +16,26 @@ namespace Punishments.Extensions;
 
 public static class PunishmentEmbedCreator
 {
+	public static async Task<EmbedBuilder> CreateNewModCaseEmbed(this ModCase modCase, IUser actor, GuildConfig config,
+		AnnouncementResult result, IServiceProvider provider, IUser suspect)
+	{
+		var translator = provider.GetRequiredService<Translation>();
+
+		await translator.SetLanguage(modCase.GuildId);
+
+		translator.SetLanguage(config);
+
+		var embed = await modCase.CreateModCaseEmbed(RestAction.Created, actor, provider, suspect);
+
+		if (result != AnnouncementResult.None)
+			embed.AddField($"📣 - {translator.Get<PunishmentTranslator>().DMReceipt()}",
+				translator.Get<PunishmentEnumTranslator>().Enum(result), true);
+
+		return embed;
+	}
+
 	public static async Task<EmbedBuilder> CreateModCaseEmbed(this ModCase modCase, RestAction action, IUser actor,
-		IServiceProvider provider, AnnouncementResult result, IUser suspect = null)
+		IServiceProvider provider, IUser suspect = null)
 	{
 		var translator = provider.GetRequiredService<Translation>();
 
@@ -50,6 +69,14 @@ public static class PunishmentEmbedCreator
 				break;
 		}
 
+		var modCaseRepo = provider.GetRequiredService<ModCaseRepository>();
+
+		var cases = await modCaseRepo.GetCasesForGuildAndUser(modCase.GuildId, modCase.UserId);
+
+		var caseCount = cases.Count;
+
+		embed.AddField($"📝 - {translator.Get<PunishmentTranslator>().CaseCount()}", caseCount, true);
+
 		if (modCase.Severity != SeverityType.None)
 			embed.AddField($"⚠️ - {translator.Get<PunishmentTranslator>().Severity()}",
 					translator.Get<PunishmentEnumTranslator>().Enum(modCase.Severity), true);
@@ -58,11 +85,9 @@ public static class PunishmentEmbedCreator
 			embed.AddField($"⏰ - {translator.Get<PunishmentTranslator>().PunishedUntil()}",
 				modCase.PunishedUntil.Value.ToDiscordTs(), true);
 
-		if (result != AnnouncementResult.None)
-			embed.AddField($"📣 - {translator.Get<PunishmentTranslator>().DMReceipt()}",
-				translator.Get<PunishmentEnumTranslator>().Enum(result), true);
-
-		if (modCase.Labels.Length == 0) return embed;
+		if (modCase.Labels.Length == 0)
+			return embed;
+		
 		StringBuilder sb = new();
 
 		foreach (var label in modCase.Labels)
