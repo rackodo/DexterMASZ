@@ -73,7 +73,7 @@ public class PunishmentHandler : Event
 		var database = scope.ServiceProvider.GetRequiredService<PunishmentDatabase>();
 		var cases = await database.SelectAllModCasesWithActivePunishments();
 
-		foreach (var element in cases.Where(element => element.PunishedUntil != null).Where(element => element.PunishedUntil <= DateTime.UtcNow))
+		foreach (var element in cases.Where(element => element.PunishedUntil != null && element.PunishmentType != PunishmentType.FinalWarn).Where(element => element.PunishedUntil <= DateTime.UtcNow))
 		{
 			try
 			{
