@@ -28,6 +28,7 @@ public class LevelsEventAnnouncer : Event
 	{
 		_eventHandler.OnUserLevelUp += AnnounceLevelUp;
 		_eventHandler.OnUserLevelUp += HandleLevelRoles;
+		_client.UserJoined += HandleUpdateRoles;
 	}
 
 	private async Task AnnounceLevelUp(GuildUserLevel guildUserLevel, int level, IGuildUser guildUser, IChannel? channel)
