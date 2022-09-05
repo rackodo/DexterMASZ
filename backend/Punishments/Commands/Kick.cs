@@ -1,22 +1,16 @@
 using Bot.Abstractions;
 using Bot.Attributes;
-using Bot.Data;
 using Bot.Enums;
 using Discord;
 using Discord.Interactions;
-using Punishments.Data;
+using Punishments.Abstractions;
 using Punishments.Enums;
 using Punishments.Models;
-using Punishments.Translators;
 
 namespace Punishments.Commands;
 
-public class Kick : Command<Kick>
+public class Kick : PunishmentCommand<Kick>
 {
-	public ModCaseRepository ModCaseRepository { get; set; }
-	public SettingsRepository SettingsRepository { get; set; }
-	public GuildConfigRepository GuildConfigRepository { get; set; }
-
 	[Require(RequireCheck.GuildModerator, RequireCheck.GuildStrictModeKick)]
 	[SlashCommand("kick", "Kick a user and create a modcase")]
 	public async Task KickCommand(
@@ -26,14 +20,7 @@ public class Kick : Command<Kick>
 		[Summary("description", "The description of the modcase")]
 		string description = "")
 	{
-		ModCaseRepository.AsUser(Identity);
-		GuildConfigRepository.AsUser(Identity);
-
-		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
-
-		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
-
-		var modCase = new ModCase
+		await RunModcase(new ModCase
 		{
 			Title = title,
 			GuildId = Context.Guild.Id,
@@ -45,21 +32,6 @@ public class Kick : Command<Kick>
 			PunishedUntil = null,
 			CreationType = CaseCreationType.ByCommand,
 			Severity = SeverityType.None
-		};
-
-		var created =
-			await ModCaseRepository.CreateModCase(modCase);
-
-		var config = await SettingsRepository.GetAppSettings();
-
-		var url = $"{config.GetServiceUrl()}/guilds/{created.GuildId}/cases/{created.CaseId}";
-
-		var caseCount =
-			(await ModCaseRepository.GetCasesForGuildAndUser(Context.Guild.Id, user.Id)).Count;
-
-		await Context.Interaction.ModifyOriginalResponseAsync((MessageProperties msg) =>
-		{
-			msg.Content = Translator.Get<PunishmentTranslator>().CaseCreated(created.CaseId, url, caseCount);
 		});
 	}
 }

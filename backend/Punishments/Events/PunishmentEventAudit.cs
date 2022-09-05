@@ -2,6 +2,7 @@
 using Bot.Models;
 using Bot.Services;
 using Discord;
+using Punishments.Enums;
 using Punishments.Models;
 
 namespace Punishments.Events;
@@ -65,9 +66,9 @@ public class PunishmentEventAudit : Event
 			$"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> by <@{modCase.LastEditedByModId}> updated.");
 	}
 
-	private async Task OnModCaseCreated(ModCase modCase, IUser actor)
+	private async Task OnModCaseCreated(ModCase modCase, IUser actor, AnnouncementResult result)
 	{
 		await _auditLogger.QueueLog(
-			$"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> by <@{modCase.ModId}> created.");
+			$"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> by <@{modCase.ModId}> created. Resulted DM: {result}.");
 	}
 }

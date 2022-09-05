@@ -153,7 +153,7 @@ public class ModCaseController : AuthenticatedController
 
 		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 
-		modCase = await _modCaseRepository.CreateModCase(modCase);
+		modCase = (await _modCaseRepository.CreateModCase(modCase)).Item1;
 
 		return StatusCode(201, modCase);
 	}

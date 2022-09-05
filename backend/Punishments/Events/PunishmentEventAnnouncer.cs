@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using Punishments.Enums;
 using Punishments.Extensions;
 using Punishments.Models;
-using Punishments.Translators;
 
 namespace Punishments.Events;
 
@@ -24,7 +23,8 @@ public class PunishmentEventAnnouncer : Event
 	private readonly DiscordSocketClient _client;
 
 	public PunishmentEventAnnouncer(DiscordRest discordRest, PunishmentEventHandler eventHandler,
-		ILogger<PunishmentEventAnnouncer> logger, IServiceProvider serviceProvider, DiscordSocketClient client)
+		ILogger<PunishmentEventAnnouncer> logger, IServiceProvider serviceProvider,
+		DiscordSocketClient client)
 	{
 		_discordRest = discordRest;
 		_eventHandler = eventHandler;
@@ -35,7 +35,7 @@ public class PunishmentEventAnnouncer : Event
 
 	public void RegisterEvents()
 	{
-		_eventHandler.OnModCaseCreated += async (a, b) => await AnnounceModCase(a, b, RestAction.Created);
+		_eventHandler.OnModCaseCreated += AnnounceModCaseCreated;
 
 		_eventHandler.OnModCaseUpdated += async (a, b) => await AnnounceModCase(a, b, RestAction.Updated);
 
@@ -54,90 +54,50 @@ public class PunishmentEventAnnouncer : Event
 		_eventHandler.OnFileDeleted += async (a, b, c) => await AnnounceFile(a, b, c, RestAction.Deleted);
 	}
 
-	private async Task AnnounceModCase(ModCase modCase, IUser actor, RestAction action)
+	private async Task AnnounceModCaseCreated(ModCase modCase, IUser actor, AnnouncementResult result)
 	{
 		using var scope = _serviceProvider.CreateScope();
 
 		_logger.LogInformation($"Announcing mod case {modCase.Id} in guild {modCase.GuildId}.");
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-
 		var caseUser = await _discordRest.FetchUserInfo(modCase.UserId, CacheBehavior.Default);
-
-		var settings = await scope.ServiceProvider.GetRequiredService<SettingsRepository>().GetAppSettings();
 
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(modCase.GuildId);
-
-		translator.SetLanguage(guildConfig);
-
-		var announceResult = AnnouncementResult.None;
-
-		if (action != RestAction.Deleted)
-		{
-			_logger.LogInformation(
-				$"Sending dm notification to {modCase.UserId} for case {modCase.GuildId}/{modCase.CaseId}");
-
-			try
-			{
-				var guild = _discordRest.FetchGuildInfo(modCase.GuildId, CacheBehavior.Default);
-
-				var message = string.Empty;
-
-				var modCaseUrl = $"{settings.GetServiceUrl()}/guilds/{modCase.GuildId}/cases/{modCase.CaseId}";
-				var reason = $"**{modCase.Title}:** {modCase.Description}";
-
-				switch (modCase.PunishmentType)
-				{
-					case PunishmentType.Mute:
-						if (modCase.PunishedUntil.HasValue)
-							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmMuteTemp(modCase, guild, reason, modCaseUrl);
-						else
-							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmMutePerm(guild, reason, modCaseUrl);
-						break;
-					case PunishmentType.Kick:
-						message = translator.Get<PunishmentNotificationTranslator>()
-							.NotificationModCaseDmKick(guild, reason, modCaseUrl);
-						break;
-					case PunishmentType.Ban:
-						if (modCase.PunishedUntil.HasValue)
-							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmBanTemp(modCase, guild, reason, modCaseUrl);
-						else
-							message = translator.Get<PunishmentNotificationTranslator>()
-								.NotificationModCaseDmBanPerm(guild, reason, modCaseUrl);
-						break;
-					case PunishmentType.Warn:
-						message = translator.Get<PunishmentNotificationTranslator>()
-							.NotificationModCaseDmWarn(guild, reason, modCaseUrl);
-						break;
-					case PunishmentType.FinalWarn:
-						message = translator.Get<PunishmentNotificationTranslator>()
-							.NotificationModCaseDmFinalWarn(guild, reason, modCaseUrl);
-						break;
-				}
-
-				await _discordRest.SendDmMessage(modCase.UserId, message);
-
-				announceResult = AnnouncementResult.Announced;
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e,
-					$"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} in DMs to {modCase.UserId}.");
-
-				announceResult = AnnouncementResult.Failed;
-			}
-		}
 
 		_logger.LogInformation(
 			$"Sending webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
 
 		try
 		{
-			var embed = await modCase.CreateModCaseEmbed(action, actor, scope.ServiceProvider, announceResult, caseUser);
+			var embed = await modCase.CreateNewModCaseEmbed(actor, guildConfig, result, scope.ServiceProvider, caseUser);
+
+			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e,
+				$"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
+		}
+	}
+
+	private async Task AnnounceModCase(ModCase modCase, IUser actor, RestAction action)
+	{
+		using var scope = _serviceProvider.CreateScope();
+
+		_logger.LogInformation($"Announcing mod case {modCase.Id} in guild {modCase.GuildId}.");
+
+		var caseUser = await _discordRest.FetchUserInfo(modCase.UserId, CacheBehavior.Default);
+
+		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
+			.GetGuildConfig(modCase.GuildId);
+
+		_logger.LogInformation(
+			$"Sending webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
+
+		try
+		{
+			var embed = await modCase.CreateModCaseEmbed(action, actor, scope.ServiceProvider, caseUser);
 
 			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
 		}

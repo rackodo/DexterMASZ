@@ -1,4 +1,3 @@
-using Bot.Exceptions;
 using Bot.Extensions;
 using Discord;
 
