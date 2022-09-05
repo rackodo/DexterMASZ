@@ -8,9 +8,11 @@ using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Extensions;
 using Punishments.Models;
+using Punishments.Translators;
 
 namespace Punishments.Events;
 
@@ -73,6 +75,20 @@ public class PunishmentEventAnnouncer : Event
 			var embed = await modCase.CreateNewModCaseEmbed(actor, guildConfig, result, scope.ServiceProvider, caseUser);
 
 			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+
+			var modCaseRepo = scope.ServiceProvider.GetRequiredService<ModCaseRepository>();
+
+			var finalWarn = modCaseRepo.GetFinalWarn(modCase.UserId, modCase.GuildId);
+
+			if (finalWarn != null || modCase.PunishmentType == PunishmentType.FinalWarn)
+			{
+				var translator = scope.ServiceProvider.GetRequiredService<Translation>();
+
+				embed.WithTitle(translator.Get<PunishmentTranslator>().UserTriggeredOnFinalWarn())
+					.WithColor(Color.Red);
+
+				await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
+			}
 		}
 		catch (Exception e)
 		{

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Punishments.Data;
 
@@ -10,9 +11,10 @@ using Punishments.Data;
 namespace Punishments.Migrations
 {
     [DbContext(typeof(PunishmentDatabase))]
-    partial class PunishmentDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20220905094417_FinalWarnConfig")]
+    partial class FinalWarnConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

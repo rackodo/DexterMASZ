@@ -6,6 +6,7 @@ using Bot.Translators;
 using Discord;
 using Humanizer;
 using Microsoft.Extensions.DependencyInjection;
+using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Models;
 using Punishments.Translators;
@@ -68,6 +69,14 @@ public static class PunishmentEmbedCreator
 				break;
 		}
 
+		var modCaseRepo = provider.GetRequiredService<ModCaseRepository>();
+
+		var cases = await modCaseRepo.GetCasesForGuildAndUser(modCase.GuildId, modCase.UserId);
+
+		var caseCount = cases.Count;
+
+		embed.AddField($"📝 - {translator.Get<PunishmentTranslator>().CaseCount()}", caseCount, true);
+
 		if (modCase.Severity != SeverityType.None)
 			embed.AddField($"⚠️ - {translator.Get<PunishmentTranslator>().Severity()}",
 					translator.Get<PunishmentEnumTranslator>().Enum(modCase.Severity), true);
@@ -76,7 +85,9 @@ public static class PunishmentEmbedCreator
 			embed.AddField($"⏰ - {translator.Get<PunishmentTranslator>().PunishedUntil()}",
 				modCase.PunishedUntil.Value.ToDiscordTs(), true);
 
-		if (modCase.Labels.Length == 0) return embed;
+		if (modCase.Labels.Length == 0)
+			return embed;
+		
 		StringBuilder sb = new();
 
 		foreach (var label in modCase.Labels)

@@ -31,6 +31,10 @@ public class FinalWarning : PunishmentCommand<FinalWarning>
 		PunishmentConfigRepository.AsUser(Identity);
 
 		var punishmentConfig = await PunishmentConfigRepository.GetGuildPunishmentConfig(Context.Guild.Id);
+		TimeSpan finalMuteTime = default;
+
+		if (punishmentConfig is not null)
+			finalMuteTime = punishmentConfig.FinalWarnMuteTime;
 
 		await RunModcase(new ModCase()
 		{
@@ -41,7 +45,7 @@ public class FinalWarning : PunishmentCommand<FinalWarning>
 			Description = string.IsNullOrEmpty(description) ? title : description,
 			PunishmentType = PunishmentType.FinalWarn,
 			PunishmentActive = true,
-			PunishedUntil = punishmentConfig.FinalWarnMuteTime == default ? null : DateTime.UtcNow + punishmentConfig.FinalWarnMuteTime,
+			PunishedUntil = finalMuteTime == default ? null : DateTime.UtcNow + finalMuteTime,
 			Severity = SeverityType.None,
 			CreationType = CaseCreationType.ByCommand
 		});
