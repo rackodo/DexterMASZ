@@ -78,7 +78,7 @@ public class PunishmentEventAnnouncer : Event
 
 			var modCaseRepo = scope.ServiceProvider.GetRequiredService<ModCaseRepository>();
 
-			var finalWarn = modCaseRepo.GetFinalWarn(modCase.UserId, modCase.GuildId);
+			var finalWarn = await modCaseRepo.GetFinalWarn(modCase.UserId, modCase.GuildId);
 
 			if (finalWarn != null || modCase.PunishmentType == PunishmentType.FinalWarn)
 			{
