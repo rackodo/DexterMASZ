@@ -111,7 +111,7 @@ export class MultiSelectComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filteredElementsCache = this._elements.slice().filter(x => this.searchPredicate(x, search));
     this.filteredElements.next(this.filteredElementsCache.slice(0, this.filterAmount));
 
-    if (this.filteredElementsCache.length <= this.filterAmount)
+    if (this.filteredElementsCache.length < this.filterAmount)
       this.hasMoreToLoad = false;
   }
 }
