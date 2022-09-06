@@ -101,8 +101,6 @@ export class MultiSelectComponent implements OnInit, AfterViewInit, OnDestroy {
     // get the search keyword
     let search = this.multiFilterCtrl.value;
     if (!search) {
-      this.filteredElementsCache = this._elements.slice();
-      this.filteredElements.next(this.filteredElementsCache);
       return;
     } else {
       search = search.toLowerCase();
