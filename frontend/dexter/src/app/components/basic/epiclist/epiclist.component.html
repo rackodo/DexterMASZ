@@ -7,7 +7,7 @@
             <div class="d-flex flex-column great-division justify-content-center ms-4">
                 <div class="mat-display-1 mb-4 fw-bold">{{ card.title }}</div>
                 <span class="mb-4">{{ card.description }}</span>
-                <a mat-raised-button color="primary" class="mb-4" href="{{ card.buttonHref }}" target="_blank" style="text-decoration: none;" *ngIf="card.buttonText">
+                <a mat-raised-button color="primary" class="mb-4" href="{{ card.buttonHref }}" rel="noopener"  target="_blank" style="text-decoration: none;" *ngIf="card.buttonText">
                     {{ card.buttonText }}
                 </a>
             </div>

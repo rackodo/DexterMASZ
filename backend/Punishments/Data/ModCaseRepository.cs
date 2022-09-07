@@ -384,7 +384,10 @@ public class ModCaseRepository : Repository,
 				var message = string.Empty;
 
 				var modCaseUrl = $"{config.GetServiceUrl()}/guilds/{modCase.GuildId}/cases/{modCase.CaseId}";
-				var reason = $"**{modCase.Title}:** {modCase.Description}";
+				var reason = $"**{modCase.Title}**";
+				
+				if (modCase.Title != modCase.Description)
+					reason = $"**{modCase.Title}:** {modCase.Description}";
 
 				_translator.SetLanguage(guildConfig);
 

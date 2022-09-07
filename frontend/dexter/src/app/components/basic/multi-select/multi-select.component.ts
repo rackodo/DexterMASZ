@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Outpu
 import { FormControl } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { ReplaySubject, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { filter, take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-multi-select',
@@ -29,6 +29,9 @@ export class MultiSelectComponent implements OnInit, AfterViewInit, OnDestroy {
   public multiCtrl: FormControl = new FormControl();
   public multiFilterCtrl: FormControl = new FormControl();
 
+  public filterAmount: number = 20;
+  public hasMoreToLoad: boolean = true;
+
   protected _onDestroy = new Subject<void>();
 
   @ViewChild('multiSelect', { static: true }) multiSelect?: MatSelect;
@@ -43,13 +46,14 @@ export class MultiSelectComponent implements OnInit, AfterViewInit, OnDestroy {
       // this.multiCtrl.setValue([this._elements[10], this._elements[11], this._elements[12]]);
 
       // load the initial bank list
-      this.filteredElements.next(this._elements.slice());
+      this.filteredElements.next(this._elements.slice(0, this.filterAmount));
     });
 
     // listen for search field value changes
     this.multiFilterCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
+        this.hasMoreToLoad = true;
         this.filterBanksMulti();
       });
 
@@ -65,6 +69,11 @@ export class MultiSelectComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this._onDestroy.next();
     this._onDestroy.complete();
+  }
+
+  increaseFilter() {
+    this.filterAmount += 10;
+    this.filterBanksMulti();
   }
 
   /**
@@ -92,14 +101,15 @@ export class MultiSelectComponent implements OnInit, AfterViewInit, OnDestroy {
     // get the search keyword
     let search = this.multiFilterCtrl.value;
     if (!search) {
-      this.filteredElementsCache = this._elements.slice();
-      this.filteredElements.next(this.filteredElementsCache);
       return;
     } else {
       search = search.toLowerCase();
     }
     // filter the banks
     this.filteredElementsCache = this._elements.slice().filter(x => this.searchPredicate(x, search));
-    this.filteredElements.next(this.filteredElementsCache);
+    this.filteredElements.next(this.filteredElementsCache.slice(0, this.filterAmount));
+
+    if (this.filteredElementsCache.length < this.filterAmount)
+      this.hasMoreToLoad = false;
   }
 }
