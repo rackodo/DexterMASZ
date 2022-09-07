@@ -47,4 +47,9 @@ public class GuildUserLevelRepository : Repository
 	{
 		return _database.GetGuildUserLevelByGuild(guildid);
 	}
+
+	public async Task Save()
+	{
+		await _database.SaveChangesAsync();
+	}
 }
