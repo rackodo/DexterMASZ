@@ -65,7 +65,7 @@ public class IdentityManager : Event
 		{
 			var gUser = await discordRest.FetchUserInfo(guildConfig.GuildId, user.Id, CacheBehavior.Default);
 
-			guilds.Add(new UserGuild(gUser));
+			guilds.Add(UserGuild.GetUserGuild(gUser));
 		}
 
 		var identity = new DiscordCommandIdentity(user, guilds, _serviceProvider);

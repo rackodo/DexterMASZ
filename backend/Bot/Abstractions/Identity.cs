@@ -118,12 +118,12 @@ public abstract class Identity
 	public virtual void AddGuildMembership(IGuildUser user)
 	{
 		if (CurrentUserGuilds.All(x => x.Id != user.Guild.Id))
-			CurrentUserGuilds.Add(new UserGuild(user));
+			CurrentUserGuilds.Add(UserGuild.GetUserGuild(user));
 	}
 
 	public virtual void UpdateGuildMembership(IGuildUser user)
 	{
 		if (CurrentUserGuilds.All(x => x.Id != user.Guild.Id))
-			CurrentUserGuilds.Add(new UserGuild(user));
+			CurrentUserGuilds.Add(UserGuild.GetUserGuild(user));
 	}
 }

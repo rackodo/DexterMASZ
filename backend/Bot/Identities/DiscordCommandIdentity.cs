@@ -117,7 +117,7 @@ public class DiscordCommandIdentity : Identity
 	public override void AddGuildMembership(IGuildUser user)
 	{
 		if (CurrentUserGuilds.All(x => x.Id != user.Guild.Id))
-			CurrentUserGuilds.Add(new UserGuild(user));
+			CurrentUserGuilds.Add(UserGuild.GetUserGuild(user));
 
 		_guildMemberships[user.Guild.Id] = user;
 	}
@@ -125,7 +125,7 @@ public class DiscordCommandIdentity : Identity
 	public override void UpdateGuildMembership(IGuildUser user)
 	{
 		if (CurrentUserGuilds.All(x => x.Id != user.Guild.Id))
-			CurrentUserGuilds.Add(new UserGuild(user));
+			CurrentUserGuilds.Add(UserGuild.GetUserGuild(user));
 
 		_guildMemberships[user.Guild.Id] = user;
 	}

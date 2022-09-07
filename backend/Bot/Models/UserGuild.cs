@@ -5,7 +5,27 @@ namespace Bot.Models;
 
 public class UserGuild
 {
-	public UserGuild(IGuildUser user)
+	public static UserGuild GetUserGuild(IGuildUser guildUser)
+	{
+		if (guildUser is null)
+			return null;
+		else if (guildUser.Id is 0)
+			return null;
+		else
+			return new UserGuild(guildUser);
+	}
+
+	public static UserGuild GetUserGuild(IUserGuild userGuild)
+	{
+		if (userGuild is null)
+			return null;
+		else if (userGuild.Id is 0)
+			return null;
+		else
+			return new UserGuild(userGuild);
+	}
+
+	private UserGuild(IGuildUser user)
 	{
 		Id = user.Guild.Id;
 		Name = user.Guild.Name;
@@ -13,7 +33,7 @@ public class UserGuild
 		IsAdmin = user.GuildPermissions.Administrator;
 	}
 
-	public UserGuild(IUserGuild guild)
+	private UserGuild(IUserGuild guild)
 	{
 		Id = guild.Id;
 		Name = guild.Name;
