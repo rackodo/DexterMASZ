@@ -42,6 +42,8 @@ public class LevelingService : Event
 		_eventHandler.OnGuildLevelConfigUpdated += HandleGuildConfigChanged;
 		_eventHandler.OnGuildLevelConfigCreated += HandleGuildConfigChanged;
 		_eventHandler.OnGuildLevelConfigDeleted += HandleGuildConfigDeleted;
+		_eventHandler.OnUserLevelUp += HandleLevelRoles;
+		_client.UserJoined += HandleUpdateRoles;
 	}
 
 	public async Task GrantXP(int xp, XPType xptype, GuildUserLevel level, GuildLevelConfig config, IGuildUser user, IGuildChannel channel, IServiceScope scope)
@@ -66,6 +68,92 @@ public class LevelingService : Event
 		}
 		var levelrepo = scope.ServiceProvider.GetRequiredService<GuildUserLevelRepository>();
 		await levelrepo.UpdateLevel(level);
+	}
+
+	public async Task<string> HandleUpdateRoles(IGuildUser user)
+	{
+		using var scope = _serviceProvider.CreateScope();
+		return await HandleUpdateRoles(user, scope);
+	}
+
+	public async Task<string> HandleUpdateRoles(IGuildUser user, IServiceScope serviceScope)
+	{
+		ulong guildId = user.GuildId;
+
+		var levelConfigRepo = serviceScope.ServiceProvider.GetRequiredService<GuildLevelConfigRepository>();
+		var guildConfig = await levelConfigRepo.GetOrCreateConfig(guildId);
+		if (guildConfig == null) return "Unable to locate guild configuration";
+
+		var userLevel = serviceScope.ServiceProvider.GetRequiredService<GuildUserLevelRepository>().GetLevel(user.Id, guildId);
+		if (userLevel == null) return "Unable to locate user's level";
+
+		var calc = new CalculatedGuildUserLevel(userLevel, guildConfig);
+		return await HandleLevelRoles(userLevel, calc.Total.Level, user, null, levelConfigRepo);
+	}
+
+	public async Task<string> HandleLevelRoles(GuildUserLevel guildUserLevel, int level, IGuildUser guildUser, IChannel? channel)
+	{
+		using var scope = _serviceProvider.CreateScope();
+		var configRepo = scope.ServiceProvider.GetRequiredService<GuildLevelConfigRepository>();
+		return await HandleLevelRoles(guildUserLevel, level, guildUser, channel, configRepo);
+	}
+
+	public async Task<string> HandleLevelRoles(GuildUserLevel guildUserLevel, int level, IGuildUser guildUser, IChannel? channel, GuildLevelConfigRepository levelConfigRepo)
+	{
+		try
+		{
+			var config = await levelConfigRepo.GetOrCreateConfig(guildUserLevel.GuildId);
+			if (!config.HandleRoles)
+				return "This guild has leveled role handling disabled!";
+
+			var toAdd = new HashSet<ulong>();
+			var toRemove = new HashSet<ulong>();
+			var currRoles = guildUser.RoleIds;
+
+			foreach (var entry in config.Levels)
+			{
+				if (level < entry.Key)
+				{
+					Array.ForEach(entry.Value, (v) => toRemove.Add(v));
+					continue;
+				}
+				else
+				{
+					Array.ForEach(entry.Value, (v) => toAdd.Add(v));
+				}
+			}
+
+			if (config.NicknameDisabledRole != default && currRoles.Contains(config.NicknameDisabledRole) && toAdd.Contains(config.NicknameDisabledReplacement))
+				toAdd.Remove(config.NicknameDisabledReplacement);
+
+			var guild = guildUser.Guild;
+			var guildRoles = guild.Roles;
+			var guildRoleIds = guild.Roles.Select(x => x.Id);
+
+			toAdd.IntersectWith(guildRoleIds);
+			toRemove.IntersectWith(guildRoleIds);
+
+			toRemove.IntersectWith(currRoles);
+			toAdd.ExceptWith(currRoles);
+
+			Task.WaitAll(guildUser.AddRolesAsync(toAdd), guildUser.RemoveRolesAsync(toRemove));
+
+			var stringify = (IEnumerable<ulong> list) =>
+			{
+				var cnt = list.Count();
+				var result = $"{cnt} role{(cnt == 1 ? "" : "s")}";
+				if (cnt > 0)
+					result += " (" + string.Join(", ", list.Select(r => guildUser.Guild.GetRole(r).Name)) + ")";
+				return result;
+			};
+
+			return $"Successfully added {stringify(toAdd)} and removed {stringify(toRemove)} for user {guildUser.Mention} (level {level}).";
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e, $"Error while handling roles on level up for user {guildUser.Id} in guild {guildUser.GuildId}.");
+			return "ERROR: " + e.Message;
+		}
 	}
 
 	private Task SetupTimer()
