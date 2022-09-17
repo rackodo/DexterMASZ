@@ -4,7 +4,7 @@ WORKDIR /angular
 COPY dexter/ .
 
 RUN npm install -g @angular/cli
-RUN npm install
+RUN npm install -g
 
 RUN ng build --configuration production --output-hashing=all
 
