@@ -4,6 +4,7 @@ WORKDIR /frontend
 COPY dexter/ .
 
 RUN node package.js 
+RUN npm install 
 
 RUN ng build --configuration production --output-hashing=all
 
