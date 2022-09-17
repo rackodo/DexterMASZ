@@ -1,16 +1,13 @@
 FROM mcr.microsoft.com/dotnet/nightly/sdk:6.0 AS build-env
-WORKDIR /app
+WORKDIR /backend
 
-# Copy everything and build
 COPY ./ ./
 RUN dotnet publish -c Release -o ./bin
 
-# Build runtime image
 FROM mcr.microsoft.com/dotnet/nightly/aspnet:6.0
-WORKDIR /app/bin
-COPY --from=build-env /app/bin/ .
+WORKDIR /backend/bin
+COPY --from=build-env /backend/bin/ .
 
-# Set timezone
 ENV TZ=America/New_York
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
