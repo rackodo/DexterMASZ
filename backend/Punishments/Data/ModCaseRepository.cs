@@ -221,8 +221,7 @@ public class ModCaseRepository : Repository,
 		}
 		else
 		{
-			embed.AddField($"{translator.Get<PunishmentTranslator>().Cases().First()}",
-				translator.Get<PunishmentTranslator>().NoCases());
+			embed.AddField($"{translator.Get<PunishmentTranslator>().Cases()}", translator.Get<PunishmentTranslator>().NoCases());
 		}
 	}
 
