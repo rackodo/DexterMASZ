@@ -1,9 +1,11 @@
 ﻿using Bot.Abstractions;
 using Bot.Services;
+using Bot.Models;
 using Levels.Data;
 using Levels.DTOs;
 using Levels.Models;
 using Microsoft.AspNetCore.Mvc;
+using Bot.Enums;
 
 namespace Levels.Controllers;
 
@@ -41,10 +43,10 @@ public class LevelsXPController : AuthenticatedController
 
 	private async Task<GuildUserLevelDTO> levelToDTO(GuildUserLevel level, GuildLevelConfig config)
 	{
-		var user = await _rest.FetchUserInfo(level.UserId, Bot.Enums.CacheBehavior.Default);
+		var user = await _rest.FetchUserInfo(level.UserId, CacheBehavior.Default);
 
 		var calc = new CalculatedGuildUserLevel(level, config);
-		return calc.ToDTO(new Bot.Models.DiscordUser(user));
+		return calc.ToDTO(DiscordUser.GetDiscordUser(user));
 	}
 
 	[HttpGet("guilds/{guildId}/users")]

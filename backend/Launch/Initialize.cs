@@ -352,7 +352,7 @@ public class Initialize
 		}
 
 		ConsoleHelper.AddSubHeading("Successfully post built", "application");
-		
+
 		app.UseRouting();
 
 		app.UseAuthentication();

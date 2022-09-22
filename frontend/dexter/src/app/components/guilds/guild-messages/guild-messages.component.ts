@@ -69,7 +69,7 @@ export class GuildMessagesComponent implements OnInit {
       });
       this.newMessageForm.markAsPristine();
       this.newMessageForm.markAsUntouched();
-      this.scheduledForChangedForPicker.next(undefined);
+      this.scheduledForChangedForPicker.next(new Date());
       this.messages.unshift(data);
       this.newMessageLoading = false;
     }, error => {

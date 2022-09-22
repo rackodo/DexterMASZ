@@ -47,14 +47,13 @@ public class UserNetworkController : AuthenticatedController
 			{
 				modGuilds.Add(guildConfig.GuildId.ToString());
 				guildViews.Add(
-					new DiscordGuild(_discordRest.FetchGuildInfo(guildConfig.GuildId, CacheBehavior.Default)));
+					DiscordGuild.GetDiscordGuild(_discordRest.FetchGuildInfo(guildConfig.GuildId, CacheBehavior.Default)));
 			}
 
 		if (modGuilds.Count == 0)
 			return Unauthorized();
 
-		DiscordUser searchedUser =
-			new(await _discordRest.FetchUserInfo(userId, CacheBehavior.IgnoreButCacheOnError));
+		var searchedUser = DiscordUser.GetDiscordUser(await _discordRest.FetchUserInfo(userId, CacheBehavior.IgnoreButCacheOnError));
 
 		dynamic data = new ExpandoObject();
 

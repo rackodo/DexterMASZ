@@ -5,7 +5,7 @@
         <mat-tab-group mat-stretch-tabs [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)">
             <mat-tab *ngFor="let ord of orders; let i = index">
                 <ng-template mat-tab-label>
-                    <mat-icon class="mr-1">{{ icons[i] }}</mat-icon>
+                    <mat-icon class="me-1">{{ icons[i] }}</mat-icon>
                     <span>{{ord | uppercase }}</span>
                 </ng-template>
                 <ng-template matTabContent>

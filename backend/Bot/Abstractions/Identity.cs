@@ -56,13 +56,28 @@ public abstract class Identity
 		if (await IsSiteAdmin())
 			return true;
 
-		return permission switch
+		try
 		{
-			DiscordPermission.User => IsOnGuild(guildId),
-			DiscordPermission.Moderator => await HasModRoleOrHigherOnGuild(guildId),
-			DiscordPermission.Admin => await HasAdminRoleOnGuild(guildId),
-			_ => false
-		};
+			return permission switch
+			{
+				DiscordPermission.User => IsOnGuild(guildId),
+				DiscordPermission.Moderator => await HasModRoleOrHigherOnGuild(guildId),
+				DiscordPermission.Admin => await HasAdminRoleOnGuild(guildId),
+				_ => false
+			};
+		} catch (UnregisteredGuildException)
+		{
+			var guild = DiscordRest.FetchGuildInfo(guildId, CacheBehavior.Default);
+			var user = await guild.GetUserAsync(CurrentUser.Id);
+
+			return permission switch
+			{
+				DiscordPermission.User => user != null,
+				DiscordPermission.Moderator => user.GuildPermissions.Administrator,
+				DiscordPermission.Admin => user.GuildPermissions.Administrator,
+				_ => false
+			};
+		}
 	}
 
 	public async Task RequireSiteAdmin()
@@ -103,12 +118,12 @@ public abstract class Identity
 	public virtual void AddGuildMembership(IGuildUser user)
 	{
 		if (CurrentUserGuilds.All(x => x.Id != user.Guild.Id))
-			CurrentUserGuilds.Add(new UserGuild(user));
+			CurrentUserGuilds.Add(UserGuild.GetUserGuild(user));
 	}
 
 	public virtual void UpdateGuildMembership(IGuildUser user)
 	{
 		if (CurrentUserGuilds.All(x => x.Id != user.Guild.Id))
-			CurrentUserGuilds.Add(new UserGuild(user));
+			CurrentUserGuilds.Add(UserGuild.GetUserGuild(user));
 	}
 }

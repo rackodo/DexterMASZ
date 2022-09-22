@@ -1,8 +1,8 @@
-<a class="font-weight-bold">
+<a class="fw-bold">
     <div class="card-container">
         <div class="card-container-body d-flex conditional-fc">
             <!-- Profile picture -->
-            <div class="pictures-parent mr-3">
+            <div class="pictures-parent me-3">
                 <img
                     src="{{ message.creator?.imageUrl }}"
                     class="rounded-circle z-depth-0 big-image"
@@ -23,10 +23,10 @@
             <div class="flex-shrink-1 flex-grow-0 d-flex flex-column flex-wrap">
                 <!-- Title -->
                 <div>
-                    <span class="badge mat-h4 mb-0 mr-1" style="padding: .1rem .4rem"
-                    [class.badge-primary]="message.status === 0"
-                    [class.badge-success]="message.status === 1"
-                    [class.badge-danger]="message.status === 2">
+                    <span class="badge mat-h4 mb-0 me-1" style="padding: .1rem .4rem"
+                    [class.bg-primary]="message.status === 0"
+                    [class.bg-success]="message.status === 1"
+                    [class.bg-danger]="message.status === 2">
                         {{ status }}{{ message.status === 2 ? ': ' : '' }}{{ failureReason }}
                     </span>
 

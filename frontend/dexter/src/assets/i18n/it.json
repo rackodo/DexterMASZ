@@ -552,9 +552,10 @@
     "FailedToLoad": {
       "Punishments": "Impossibile caricare le punizioni disponibili.",
       "Files": "Impossibile caricare i file.",
-      "Guild": "Impossibile caricare le informazioni sulla gilda.",
       "Case": "Impossibile caricare il caso.",
-      "Severities": "Impossibile caricare i livelli di gravità disponibili."
+      "Severities": "Impossibile caricare i livelli di gravità disponibili.",
+      "DiscordGuild": "Impossibile caricare le informazioni sulla gilda.",
+      "FinalWarning": "Impossibile caricare l'avviso finale."
     },
     "DeleteCase": {
       "Deleted": "Caso contrassegnato per essere cancellato.",
@@ -592,7 +593,10 @@
     "CommentUpdate": {
       "Updated": "Commento aggiornato.",
       "Failed": "Impossibile aggiornare il commento"
-    }
+    },
+    "UserFinalWarned": "L'utente è attualmente avvisato definitivamente!",
+    "ViewCase": "Visualizza caso",
+    "Severity": "Severità"
   },
   "Scanning": {
     "EnterUserOrInvite": "Immettere un ID utente o un codice di invito",
@@ -635,5 +639,8 @@
     "Updated": "Nota utente aggiornata.",
     "FailedToDelete": "Impossibile eliminare la nota utente.",
     "Deleted": "Nota utente eliminata."
+  },
+  "PunishmentConfig": {
+    "Punishments": "Punizioni"
   }
 }

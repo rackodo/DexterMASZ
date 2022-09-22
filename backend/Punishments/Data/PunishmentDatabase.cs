@@ -25,6 +25,8 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 
 	public DbSet<ModCase> ModCases { get; set; }
 
+	public DbSet<PunishmentConfig> PunishmentConfig { get; set; }
+
 	public override void OverrideModelCreating(ModelBuilder builder)
 	{
 		builder.Entity<ModCaseComment>()
@@ -32,6 +34,18 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 			.WithMany(c => c.Comments)
 			.IsRequired()
 			.OnDelete(DeleteBehavior.Cascade);
+
+		builder
+			.Entity<PunishmentConfig>()
+			.Property(e => e.PointMuteTimes)
+			.HasConversion(new DictionaryDataConverter<short, TimeSpan>(),
+				new DictionaryDataComparer<short, TimeSpan>());
+	}
+
+	public async Task<ModCase> GetFinalWarn(ulong userId, ulong guildId)
+	{
+		return await ModCases.AsQueryable().FirstOrDefaultAsync(x => x.UserId == userId && x.GuildId == guildId &&
+			x.PunishmentType == PunishmentType.FinalWarn && x.PunishmentActive);
 	}
 
 	public async Task<ModCaseTemplate> GetSpecificCaseTemplate(int templateId)
@@ -249,5 +263,10 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCr
 	{
 		await ModCases.AddAsync(modCase);
 		await SaveChangesAsync();
+	}
+
+	public async Task<PunishmentConfig> SelectPunishmentConfig(ulong guildId)
+	{
+		return await PunishmentConfig.FindAsync(guildId);
 	}
 }

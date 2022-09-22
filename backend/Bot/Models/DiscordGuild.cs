@@ -5,7 +5,17 @@ namespace Bot.Models;
 
 public class DiscordGuild
 {
-	public DiscordGuild(IGuild guild)
+	public static DiscordGuild GetDiscordGuild(IGuild guild)
+	{
+		if (guild is null)
+			return null;
+		else if (guild.Id is 0)
+			return null;
+		else
+			return new DiscordGuild(guild);
+	}
+
+	private DiscordGuild(IGuild guild)
 	{
 		Id = guild.Id;
 		Name = guild.Name;
@@ -18,7 +28,7 @@ public class DiscordGuild
 		Channels = new List<DiscordChannel>();
 
 		foreach (var channel in guild.GetTextChannelsAsync().GetAwaiter().GetResult())
-			Channels.Add(new DiscordChannel(channel));
+			Channels.Add(DiscordChannel.GetDiscordChannel(channel));
 	}
 
 	public DiscordGuild(UserGuild guild)

@@ -1,6 +1,7 @@
 ﻿using Bot.Abstractions;
 using Bot.Models;
 using Discord;
+using Punishments.Enums;
 using Punishments.Models;
 
 namespace Punishments.Events;
@@ -21,7 +22,7 @@ public class PunishmentEventHandler : InternalEventHandler
 
 	internal readonly AsyncEvent<Func<ModCaseComment, IUser, Task>> ModCaseCommentUpdatedEvent = new();
 
-	internal readonly AsyncEvent<Func<ModCase, IUser, Task>> ModCaseCreatedEvent = new();
+	internal readonly AsyncEvent<Func<ModCase, IUser, AnnouncementResult, Task>> ModCaseCreatedEvent = new();
 
 	internal readonly AsyncEvent<Func<ModCase, IUser, Task>> ModCaseDeletedEvent = new();
 
@@ -49,7 +50,7 @@ public class PunishmentEventHandler : InternalEventHandler
 		remove => ModCaseCommentDeletedEvent.Remove(value);
 	}
 
-	public event Func<ModCase, IUser, Task> OnModCaseCreated
+	public event Func<ModCase, IUser, AnnouncementResult, Task> OnModCaseCreated
 	{
 		add => ModCaseCreatedEvent.Add(value);
 		remove => ModCaseCreatedEvent.Remove(value);

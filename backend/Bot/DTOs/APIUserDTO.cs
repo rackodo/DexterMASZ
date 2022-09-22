@@ -12,7 +12,7 @@ public class ApiUserDto
 		BannedGuilds = bannedGuilds;
 		ModGuilds = modGuilds;
 		AdminGuilds = adminGuilds;
-		DiscordUser = new DiscordUser(user);
+		DiscordUser = DiscordUser.GetDiscordUser(user);
 		IsAdmin = isAdmin;
 	}
 

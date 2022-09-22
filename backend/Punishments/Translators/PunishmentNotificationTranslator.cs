@@ -135,17 +135,36 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"Die Moderatoren von `{guild.Name}` haben dich verwarnt - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
+				$"Die Moderatoren von **{guild.Name}** haben dich verwarnt - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 			Language.Fr =>
-				$"Les modérateurs de la guilde `{guild.Name}` vous ont prévenu - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
+				$"Les modérateurs de la guilde **{guild.Name}** vous ont prévenu - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
 			Language.Es =>
-				$"Los moderadores del gremio `{guild.Name}` te han advertido - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
+				$"Los moderadores del gremio **{guild.Name}** te han advertido - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 			Language.Ru =>
-				$"Модераторы гильдии `{guild.Name}` вас предупредили - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
+				$"Модераторы гильдии **{guild.Name}** вас предупредили - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 			Language.It =>
-				$"I moderatori della gilda `{guild.Name}` ti hanno avvisato - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
+				$"I moderatori della gilda **{guild.Name}** ti hanno avvisato - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 			_ =>
-				$"The moderators of `{guild.Name}` have warned you for {reason}.\nFor more information, visit {caseUrl}"
+				$"The moderators of **{guild.Name}** have warned you for {reason}.\nFor more information, visit {caseUrl}"
+		};
+	}
+
+	public string NotificationModCaseDmFinalWarn(IGuild guild, string reason, string caseUrl)
+	{
+		return PreferredLanguage switch
+		{
+			Language.De =>
+				$"🚨 Sie erhielten eine letzte Warnung von **{guild.Name}** 🚨\n\n**Grund:**\n {reason}.\n\nFür weitere Informationen besuche: {caseUrl}",
+			Language.Fr =>
+				$"🚨 Vous avez reçu un dernier avertissement de **{guild.Name}** 🚨\n\n**Raison:**\n {reason}.\n\nPour plus d'informations ou pour une réhabilitation, visitez: {caseUrl}",
+			Language.Es =>
+				$"🚨 Se le emitió una advertencia final de **{guild.Name}** 🚨\n\n**Razón:**\n {reason}.\n\nPara obtener más información o rehabilitación, visite: {caseUrl}",
+			Language.Ru =>
+				$"🚨 Вы получили последнее предупреждение от **{guild.Name}** 🚨\n\n**Причина:**\n {reason}.\n\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
+			Language.It =>
+				$"🚨 Ti è stato emesso un ultimo avvertimento da **{guild.Name}** 🚨\n\n**Motivo:**\n {reason}.\n\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
+			_ =>
+				$"🚨 You were issued a final warning from **{guild.Name}** 🚨\n\n**Reason:**\n {reason}.\n\nFor more information and rehabilitation, please visit: {caseUrl}"
 		};
 	}
 
@@ -154,17 +173,17 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"Die Moderatoren von `{guild.Name}` haben dich stummgeschalten - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
+				$"Die Moderatoren von **{guild.Name}** haben dich stummgeschalten - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 			Language.Fr =>
-				$"Les modérateurs de la guilde `{guild.Name}` vous ont mis en sourdine - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
+				$"Les modérateurs de la guilde **{guild.Name}** vous ont mis en sourdine - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez: {caseUrl}",
 			Language.Es =>
-				$"Los moderadores del gremio `{guild.Name}` te han silenciado - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
+				$"Los moderadores del gremio **{guild.Name}** te han silenciado - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 			Language.Ru =>
-				$"Модераторы гильдии `{guild.Name}` отключили вас - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
+				$"Модераторы гильдии **{guild.Name}** отключили вас - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 			Language.It =>
-				$"I moderatori della gilda `{guild.Name}` ti hanno disattivato - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
+				$"I moderatori della gilda **{guild.Name}** ti hanno disattivato - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 			_ =>
-				$"The moderators of `{guild.Name}` have muted you for {reason}.\nFor more information, visit {caseUrl}"
+				$"The moderators of **{guild.Name}** have muted you for {reason}.\nFor more information, visit {caseUrl}"
 		};
 	}
 
@@ -173,17 +192,17 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"Die Moderatoren von `{guild.Name}` haben dich gebannt - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
+				$"Die Moderatoren von **{guild.Name}** haben dich gebannt - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 			Language.Fr =>
-				$"Les modérateurs de la guilde `{guild.Name}` vous ont banni - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
+				$"Les modérateurs de la guilde **{guild.Name}** vous ont banni - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
 			Language.Es =>
-				$"Los moderadores del gremio `{guild.Name}` te han prohibido - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
+				$"Los moderadores del gremio **{guild.Name}** te han prohibido - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 			Language.Ru =>
-				$"Модераторы гильдии `{guild.Name}` забанили вас - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
+				$"Модераторы гильдии **{guild.Name}** забанили вас - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 			Language.It =>
-				$"I moderatori della gilda `{guild.Name}` ti hanno bannato - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
+				$"I moderatori della gilda **{guild.Name}** ti hanno bannato - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 			_ =>
-				$"The moderators of `{guild.Name}` have banned you for {reason}.\nFor more information or rehabilitation, visit {caseUrl}"
+				$"The moderators of **{guild.Name}** have banned you for {reason}.\nFor more information or rehabilitation, visit {caseUrl}"
 		};
 	}
 
@@ -192,17 +211,17 @@ public class PunishmentNotificationTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De =>
-				$"Die Moderatoren von `{guild.Name}` haben dich kickt - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
+				$"Die Moderatoren von **{guild.Name}** haben dich kickt - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 			Language.Fr =>
-				$"Les modérateurs de la guilde `{guild.Name}` vous ont viré - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
+				$"Les modérateurs de la guilde **{guild.Name}** vous ont viré - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
 			Language.Es =>
-				$"Los moderadores del gremio `{guild.Name}` te han pateado - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
+				$"Los moderadores del gremio **{guild.Name}** te han pateado - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 			Language.Ru =>
-				$"Модераторы гильдии `{guild.Name}` выгнали вас - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
+				$"Модераторы гильдии **{guild.Name}** выгнали вас - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 			Language.It =>
-				$"I moderatori della gilda `{guild.Name}` ti hanno espulso - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
+				$"I moderatori della gilda **{guild.Name}** ti hanno espulso - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 			_ =>
-				$"The moderators of `{guild.Name}` have kicked you for {reason}.\nFor more information or rehabilitation, visit {caseUrl}"
+				$"The moderators of **{guild.Name}** have kicked you for {reason}.\nFor more information or rehabilitation, visit {caseUrl}"
 		};
 	}
 
@@ -238,17 +257,17 @@ public class PunishmentNotificationTranslator : Translator
 			return PreferredLanguage switch
 			{
 				Language.De =>
-					$"Die moderatoren von `{guild.Name}` haben dich temporär gebannt bis {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
+					$"Die moderatoren von **{guild.Name}** haben dich temporär gebannt bis {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 				Language.Fr =>
-					$"Les modérateurs de la guilde `{guild.Name}` vous ont temporairement banni jusqu'à {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
+					$"Les modérateurs de la guilde **{guild.Name}** vous ont temporairement banni jusqu'à {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
 				Language.Es =>
-					$"Los moderadores del gremio `{guild.Name}` te han baneado temporalmente hasta el {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
+					$"Los moderadores del gremio **{guild.Name}** te han baneado temporalmente hasta el {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 				Language.Ru =>
-					$"Модераторы гильдии `{guild.Name}` временно заблокировали вас до {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
+					$"Модераторы гильдии **{guild.Name}** временно заблокировали вас до {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 				Language.It =>
-					$"I moderatori della gilda `{guild.Name}` ti hanno temporaneamente bannato fino al {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
+					$"I moderatori della gilda **{guild.Name}** ti hanno temporaneamente bannato fino al {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 				_ =>
-					$"The moderators of `{guild.Name}` have temporarily banned you until {modCase.PunishedUntil.Value.ToDiscordTs()} for {reason}.\nFor more information or rehabilitation visit {caseUrl}"
+					$"The moderators of **{guild.Name}** have temporarily banned you until {modCase.PunishedUntil.Value.ToDiscordTs()} for {reason}.\nFor more information or rehabilitation visit {caseUrl}"
 			};
 		return string.Empty;
 	}
@@ -259,17 +278,17 @@ public class PunishmentNotificationTranslator : Translator
 			return PreferredLanguage switch
 			{
 				Language.De =>
-					$"Die moderatoren von `{guild.Name}` haben dich temporär stummgeschalten bis {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
+					$"Die moderatoren von **{guild.Name}** haben dich temporär stummgeschalten bis {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
 				Language.Fr =>
-					$"Les modérateurs de la guilde `{guild.Name}` vous ont temporairement mis en sourdine jusqu'à {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
+					$"Les modérateurs de la guilde **{guild.Name}** vous ont temporairement mis en sourdine jusqu'à {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPour plus d'informations ou pour une réhabilitation, visitez : {caseUrl}",
 				Language.Es =>
-					$"Los moderadores del gremio `{guild.Name}` te han silenciado temporalmente hasta {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
+					$"Los moderadores del gremio **{guild.Name}** te han silenciado temporalmente hasta {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPara obtener más información o rehabilitación, visite: {caseUrl}",
 				Language.Ru =>
-					$"Модераторы гильдии `{guild.Name}` временно отключили ваш звук до {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
+					$"Модераторы гильдии **{guild.Name}** временно отключили ваш звук до {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nДля получения дополнительной информации или реабилитации посетите: {caseUrl}",
 				Language.It =>
-					$"I moderatori della gilda `{guild.Name}` ti hanno temporaneamente disattivato l'audio fino a {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
+					$"I moderatori della gilda **{guild.Name}** ti hanno temporaneamente disattivato l'audio fino a {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
 				_ =>
-					$"The moderators of `{guild.Name}` have temporarily muted you until {modCase.PunishedUntil.Value.ToDiscordTs()} for {reason}.\nFor more information, visit {caseUrl}"
+					$"The moderators of **{guild.Name}** have temporarily muted you until {modCase.PunishedUntil.Value.ToDiscordTs()} for {reason}.\nFor more information, visit {caseUrl}"
 			};
 		return string.Empty;
 	}

@@ -181,6 +181,23 @@ namespace Punishments.Migrations
                     b.ToTable("ModCaseTemplates", "Punishments");
                 });
 
+            modelBuilder.Entity("Punishments.Models.PunishmentConfig", b =>
+                {
+                    b.Property<ulong>("GuildId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint unsigned");
+
+                    b.Property<TimeSpan>("FinalWarnMuteTime")
+                        .HasColumnType("time(6)");
+
+                    b.Property<string>("PointMuteTimes")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("GuildId");
+
+                    b.ToTable("PunishmentConfig", "Punishments");
+                });
+
             modelBuilder.Entity("Punishments.Models.ModCaseComment", b =>
                 {
                     b.HasOne("Punishments.Models.ModCase", "ModCase")

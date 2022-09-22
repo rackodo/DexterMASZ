@@ -1,0 +1,12 @@
+<div class="d-flex flex-column">
+    <span class="mat-h1 fw-bold mb-2">{{ 'PunishmentConfig.Punishments' | translate }}</span>
+    <div class="range mt-4">
+      <span class="label">Text XP awarded per interval</span>
+      <ngx-duration-picker [(value)]="finalWarnMuteTime"  (valueChange)="updateFinalMuteTime()" [options]="{ showYears: false, showMonths: false, showWeeks: false, showDays: false, showPreview: false }"></ngx-duration-picker>
+    </div>
+
+    <button mat-button type="submit" class="submit-button">
+      <mat-icon>save</mat-icon>&nbsp;Save Changes
+    </button>
+
+</div>

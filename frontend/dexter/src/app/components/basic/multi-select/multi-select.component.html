@@ -6,5 +6,8 @@
         <mat-option *ngFor="let element of filteredElements | async" [value]="idPredicate(element)">
             {{ displayPredicate(element) }}
         </mat-option>
+        <button mat-button type="submit" class="more" (click)="increaseFilter()" *ngIf="hasMoreToLoad">
+          <mat-icon>expand_more</mat-icon>&nbsp;Load More
+        </button>
     </mat-select>
 </mat-form-field>

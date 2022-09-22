@@ -2,7 +2,7 @@
     <div class="p-2">
         <div class="d-flex flex-row flex-wrap align-items-end mb-4">
             <form [formGroup]="newMapFormGroup" *ngIf="!this.users.loading">
-                <mat-form-field class="mr-2">
+                <mat-form-field class="me-2">
                     <mat-label>{{ 'UserMapTable.User' | translate }}</mat-label>
                     <input type="text"
                         placeholder="Pick one"
@@ -16,7 +16,7 @@
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
-                <mat-form-field class="mr-2">
+                <mat-form-field class="me-2">
                     <mat-label>{{ 'UserMapTable.User' | translate }}</mat-label>
                     <input type="text"
                         placeholder="Pick one"
@@ -30,7 +30,7 @@
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
-                <mat-form-field class="mr-2">
+                <mat-form-field class="me-2">
                     <mat-label>{{ 'UserMapTable.Description' | translate }}</mat-label>
                     <textarea matInput type="text" formControlName="reason" rows="1"></textarea>
                 </mat-form-field>

@@ -48,6 +48,8 @@ export class ModCaseViewComponent implements OnInit {
   public activationSliderModeDeactivation = true;
   public punishmentDescriptionTranslationKey = "";
   public isModOrHigher: boolean = false;
+  public isFinalWarned: boolean = false;
+  public finalWarning: number = 0;
   public renderedDescription!: string;
   private filesSubject$ = new ReplaySubject<FileInfo>(1);
   public files: ContentLoading<Observable<FileInfo>> = { loading: true, content: this.filesSubject$.asObservable() };
@@ -74,6 +76,8 @@ export class ModCaseViewComponent implements OnInit {
   ngOnInit(): void {
     this.guildId = this.route.snapshot.paramMap.get('guildid') as string;
     this.caseId = this.route.snapshot.paramMap.get('caseid') as string;
+    
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
     // reload files from case creation
     if (this.route.snapshot.queryParamMap.get('reloadfiles') !== '0' && this.route.snapshot.queryParamMap.get('reloadfiles') != null) {
@@ -99,6 +103,20 @@ export class ModCaseViewComponent implements OnInit {
     this.reloadSeverityEnum();
     this.reloadFiles();
     this.reloadCreationTypes();
+  }
+
+  private reloadFinalWarning() {
+    this.api.getSimpleData(`/guilds/${this.guildId}/cases/${this.modCase.content?.suspect?.id}/finalWarn`).subscribe(data => {
+      this.finalWarning = data;
+      if (this.finalWarning !== -1)
+        this.isFinalWarned = true;
+      else
+        this.isFinalWarned = false;
+    }, error => {
+      console.error(error);
+      this.files.loading = false;
+      this.toastr.error(this.translator.instant('ModCaseView.FailedToLoad.FinalWarning'));
+    });
   }
 
   private reloadCreationTypes() {
@@ -197,6 +215,7 @@ export class ModCaseViewComponent implements OnInit {
         }
       }
       this.modCase.loading = false;
+      this.reloadFinalWarning();
     }, error => {
       console.error(error);
       this.modCase.loading = false;

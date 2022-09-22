@@ -8,8 +8,8 @@ public class ModCaseTableEntry
 	public ModCaseTableEntry(ModCase modCase, IUser moderator, IUser suspect)
 	{
 		ModCase = modCase;
-		Moderator = new DiscordUser(moderator);
-		Suspect = new DiscordUser(suspect);
+		Moderator = DiscordUser.GetDiscordUser(moderator);
+		Suspect = DiscordUser.GetDiscordUser(suspect);
 	}
 
 	public ModCase ModCase { get; set; }

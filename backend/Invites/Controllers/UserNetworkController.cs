@@ -34,7 +34,7 @@ public class UserNetworkController : AuthenticatedController
 
 		await identity.RequirePermission(DiscordPermission.Moderator, invites.First().GuildId);
 
-		DiscordGuild guild = new(_discordRest.FetchGuildInfo(invites.First().GuildId, CacheBehavior.Default));
+		var guild = DiscordGuild.GetDiscordGuild(_discordRest.FetchGuildInfo(invites.First().GuildId, CacheBehavior.Default));
 
 		List<UserInviteExpanded> inviteViews = new();
 

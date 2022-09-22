@@ -10,9 +10,9 @@ public class ModCaseExpanded
 		List<ModCaseCommentExpanded> comments, UserNoteExpanded userNoteView)
 	{
 		ModCase = modCase;
-		Moderator = new DiscordUser(moderator);
-		LastModerator = new DiscordUser(lastModerator);
-		Suspect = new DiscordUser(suspect);
+		Moderator = DiscordUser.GetDiscordUser(moderator);
+		LastModerator = DiscordUser.GetDiscordUser(lastModerator);
+		Suspect = DiscordUser.GetDiscordUser(suspect);
 		Comments = comments;
 		UserNote = userNoteView;
 

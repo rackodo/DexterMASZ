@@ -3,7 +3,7 @@
     <div class="d-flex flex-column justify-content-center align-items-center cw-75-100">
         <mat-spinner *ngIf="this.oldCase.loading"></mat-spinner>
         <div class="d-flex flex-column align-items-center" *ngIf="!this.oldCase.loading && !this.oldCase.content">
-            <span class="mat-display-1 font-weight-bold">{{ 'ModCaseDialog.FailedToLoad.CurrentCase' | translate }}</span>
+            <span class="mat-display-1 fw-bold">{{ 'ModCaseDialog.FailedToLoad.CurrentCase' | translate }}</span>
             <img src="/assets/img/notfound.svg" alt="not found" class="w-50"/>
         </div>
         <mat-vertical-stepper [linear]="true" #stepper color="accent" class="cw-75-100" [style.display]="(!this.oldCase.loading && this.oldCase.content) ? 'block' : 'none'">
@@ -67,7 +67,7 @@
                     </mat-form-field>
                 </form>
                 <div class="stepper-actions">
-                    <button mat-raised-button matStepperPrevious class="mr-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
+                    <button mat-raised-button matStepperPrevious class="me-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
                     <button mat-raised-button matStepperNext color="accent">{{ 'ModCaseDialog.Next' | translate }}</button>
                 </div>
             </mat-step>
@@ -84,7 +84,7 @@
                        (dateChanged)="punishedUntilChanged($event)" [dateChangedInParent]="punishedUntilChangeForPicker" >
                     </app-date-picker>
 					<br *ngIf="this.punishmentFormGroup.value.punishmentType === 1 || this.punishmentFormGroup.value.punishmentType === 3"/>
-                    <mat-form-field *ngIf="this.punishmentFormGroup.value.punishmentType !== 2 && this.punishmentFormGroup.value.punishmentType !== 3">
+                    <mat-form-field *ngIf="this.punishmentFormGroup.value.punishmentType === 0 || this.punishmentFormGroup.value.punishmentType === 1">
                         <mat-label>{{ 'ModCaseDialog.Severity' | translate }}</mat-label>
                         <mat-select formControlName="severityType">
                         <mat-option *ngFor="let enum of severityOptions.content" [value]="enum.key">{{ enum.value }}</mat-option>
@@ -92,14 +92,14 @@
                     </mat-form-field><br/>
                 </form>
                 <div class="stepper-actions">
-                    <button mat-raised-button matStepperPrevious class="mr-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
+                    <button mat-raised-button matStepperPrevious class="me-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
                     <button mat-raised-button matStepperNext color="accent">{{ 'ModCaseDialog.Next' | translate }}</button>
                 </div>
             </mat-step>
             <mat-step [stepControl]="optionsFormGroup">
                 <ng-template matStepLabel>{{ 'ModCaseDialog.UpdateCase' | translate }}</ng-template>
                 <div *ngIf="!this.savingCase" class="stepper-actions">
-                    <button mat-raised-button matStepperPrevious class="mr-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
+                    <button mat-raised-button matStepperPrevious class="me-2 mb-2" color="accent">{{ 'ModCaseDialog.Back' | translate }}</button>
                     <button mat-raised-button color="accent" (click)="updateCase()">{{ 'ModCaseDialog.UpdateCaseButton' | translate }}</button>
                 </div>
                 <mat-spinner *ngIf="this.savingCase"></mat-spinner>

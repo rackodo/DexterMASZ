@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "ng serve",
+        "type": "shell",
+        "command": "\"start npm start\""
+      },
+      {
+        "label": "ng test",
+        "type": "shell",
+        "command": "\"start npm test\"",
+      }
+    ]
+  }

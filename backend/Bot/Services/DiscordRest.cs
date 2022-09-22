@@ -381,7 +381,7 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			var client = await GetOAuthClient(token);
-			guilds = (await client.GetGuildSummariesAsync().FlattenAsync()).Select(guild => new UserGuild(guild))
+			guilds = (await client.GetGuildSummariesAsync().FlattenAsync()).Select(guild => UserGuild.GetUserGuild(guild))
 				.ToList();
 		}
 		catch (Exception e)

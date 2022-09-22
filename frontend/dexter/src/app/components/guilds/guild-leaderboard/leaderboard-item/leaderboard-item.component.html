@@ -1,9 +1,9 @@
 <div *ngIf="user" class="container">
-  <img class="pfp mr-2" [src]="user.user.imageUrl">
-  <div class="rank mr-2"><span [style.color]="'#'+rankColor()">{{index+1}}</span></div>
-  <div class="name mr-4">{{user.user.username}}#{{user.user.discriminator}}</div>
+  <img class="pfp me-2" [src]="user.user.imageUrl">
+  <div class="rank me-2"><span [style.color]="'#'+rankColor()">{{index+1}}</span></div>
+  <div class="name me-4">{{user.user.username}}#{{user.user.discriminator}}</div>
   <div class="side-right">
-    <div class="xp mr-2">{{record.xp | unitFormat}} XP</div>
+    <div class="xp me-2">{{record.xp | unitFormat}} XP</div>
     <div class="xpbar-container">
       <div class="xpbar-inner"></div>
       <div class="xpbar-text">{{record.level}}</div>

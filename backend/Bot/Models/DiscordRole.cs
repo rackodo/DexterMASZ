@@ -4,6 +4,16 @@ namespace Bot.Models;
 
 public class DiscordRole
 {
+	public static DiscordRole GetDiscordRole(IRole role)
+	{
+		if (role is null)
+			return null;
+		else if (role.Id is 0)
+			return null;
+		else
+			return new DiscordRole(role);
+	}
+
 	public DiscordRole(IRole role)
 	{
 		Id = role.Id;

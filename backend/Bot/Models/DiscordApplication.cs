@@ -1,4 +1,3 @@
-using Bot.Exceptions;
 using Bot.Extensions;
 using Discord;
 
@@ -6,14 +5,18 @@ namespace Bot.Models;
 
 public class DiscordApplication
 {
-	public DiscordApplication(IApplication application)
+	public static DiscordApplication GetDiscordApplication(IApplication application)
 	{
 		if (application is null)
-			throw new ResourceNotFoundException("Application for DiscordApplicationView is null!");
+			return null;
+		else if (application.Id is 0)
+			return null;
+		else
+			return new DiscordApplication(application);
+	}
 
-		if (application.Id is 0)
-			throw new ResourceNotFoundException("Application for DiscordApplicationView has an ID of 0!");
-
+	private DiscordApplication(IApplication application)
+	{
 		Id = application.Id;
 		Name = application.Name;
 		Description = application.Description;

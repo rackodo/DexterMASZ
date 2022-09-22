@@ -552,9 +552,10 @@
     "FailedToLoad": {
       "Punishments": "No se pudieron cargar los castigos disponibles.",
       "Files": "Error al cargar archivos.",
-      "Guild": "Error al cargar la información del gremio.",
       "Case": "Error al cargar el caso.",
-      "Severities": "Error al cargar las severidades disponibles."
+      "Severities": "Error al cargar las severidades disponibles.",
+      "DiscordGuild": "Error al cargar la información del gremio.",
+      "FinalWarning": "Error al cargar la advertencia final."
     },
     "DeleteCase": {
       "Deleted": "Caso marcado para ser eliminado.",
@@ -592,7 +593,10 @@
     "CommentUpdate": {
       "Updated": "Comentario actualizado.",
       "Failed": "Error al actualizar el comentario"
-    }
+    },
+    "UserFinalWarned": "¡El usuario está actualmente finalmente advertido!",
+    "ViewCase": "Ver caso",
+    "Severity": "Severidad"
   },
   "Scanning": {
     "EnterUserOrInvite": "Introduzca un identificador de usuario o un código de invitación",
@@ -635,5 +639,8 @@
     "Updated": "Nota de usuario actualizada.",
     "FailedToDelete": "Error al eliminar la nota de usuario.",
     "Deleted": "Nota de usuario eliminada."
+  },
+  "PunishmentConfig": {
+    "Punishments": "Castigos"
   }
 }

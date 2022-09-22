@@ -225,6 +225,11 @@ public class ModCaseRepository : Repository,
 		}
 	}
 
+	public async Task<ModCase> GetFinalWarn(ulong userId, ulong guildId)
+	{
+		return await _punishmentDatabase.GetFinalWarn(userId, guildId);
+	}
+
 	public async Task<ModCase> ImportModCase(ModCase modCase)
 	{
 		try
@@ -287,7 +292,7 @@ public class ModCaseRepository : Repository,
 		return result.OrderByDescending(x => x.Count).ToList();
 	}
 
-	public async Task<ModCase> CreateModCase(ModCase modCase)
+	public async Task<Tuple<ModCase, AnnouncementResult>> CreateModCase(ModCase modCase)
 	{
 		var currentReportedUser = await _discordRest.FetchUserInfo(modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
 
@@ -366,15 +371,78 @@ public class ModCaseRepository : Repository,
 
 			await _punishmentDatabase.SaveModCase(modCase);
 
-			_eventHandler.ModCaseCreatedEvent.Invoke(modCase, Identity);
+			var announceResult = AnnouncementResult.None;
+
+			_logger.LogInformation(
+				$"Sending dm notification to {modCase.UserId} for case {modCase.GuildId}/{modCase.CaseId}");
+
+			try
+			{
+				var guild = _discordRest.FetchGuildInfo(modCase.GuildId, CacheBehavior.Default);
+
+				var message = string.Empty;
+
+				var modCaseUrl = $"{config.GetServiceUrl()}/guilds/{modCase.GuildId}/cases/{modCase.CaseId}";
+				var reason = $"**{modCase.Title}**";
+				
+				if (modCase.Title != modCase.Description)
+					reason = $"**{modCase.Title}:** {modCase.Description}";
+
+				_translator.SetLanguage(guildConfig);
+
+				switch (modCase.PunishmentType)
+				{
+					case PunishmentType.Mute:
+						if (modCase.PunishedUntil.HasValue)
+							message = _translator.Get<PunishmentNotificationTranslator>()
+								.NotificationModCaseDmMuteTemp(modCase, guild, reason, modCaseUrl);
+						else
+							message = _translator.Get<PunishmentNotificationTranslator>()
+								.NotificationModCaseDmMutePerm(guild, reason, modCaseUrl);
+						break;
+					case PunishmentType.Kick:
+						message = _translator.Get<PunishmentNotificationTranslator>()
+							.NotificationModCaseDmKick(guild, reason, modCaseUrl);
+						break;
+					case PunishmentType.Ban:
+						if (modCase.PunishedUntil.HasValue)
+							message = _translator.Get<PunishmentNotificationTranslator>()
+								.NotificationModCaseDmBanTemp(modCase, guild, reason, modCaseUrl);
+						else
+							message = _translator.Get<PunishmentNotificationTranslator>()
+								.NotificationModCaseDmBanPerm(guild, reason, modCaseUrl);
+						break;
+					case PunishmentType.Warn:
+						message = _translator.Get<PunishmentNotificationTranslator>()
+							.NotificationModCaseDmWarn(guild, reason, modCaseUrl);
+						break;
+					case PunishmentType.FinalWarn:
+						message = _translator.Get<PunishmentNotificationTranslator>()
+							.NotificationModCaseDmFinalWarn(guild, reason, modCaseUrl);
+						break;
+				}
+
+				await _discordRest.SendDmMessage(modCase.UserId, message);
+
+				announceResult = AnnouncementResult.Announced;
+			}
+			catch (Exception e)
+			{
+				_logger.LogError(e,
+					$"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} in DMs to {modCase.UserId}.");
+
+				announceResult = AnnouncementResult.Failed;
+			}
+
+			_eventHandler.ModCaseCreatedEvent.Invoke(modCase, Identity, announceResult);
 
 			if ((!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick))
-				return modCase;
+				return new (modCase, announceResult);
 
 			if (modCase.PunishedUntil == null || modCase.PunishedUntil > DateTime.UtcNow)
 				await _punishmentHandler.ModifyPunishment(modCase, RestAction.Created);
 
-			return modCase;
+			return new(modCase, announceResult);
 		}
 		catch (ResourceNotFoundException)
 		{

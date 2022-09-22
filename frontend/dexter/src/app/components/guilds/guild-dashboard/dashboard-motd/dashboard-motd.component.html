@@ -1,10 +1,10 @@
 <div class="card-container" *ngIf="this.motd.content?.motd?.showMotd">
     <div class="card-container-body d-flex flex-column flex-wrap flex-shrink-0 flex-grow-1">
         <div class="d-flex flex-row flex-wrap">
-            <span class="mat-h1 font-weight-bold mb-2" *ngIf="this.motd.content?.creator">
+            <span class="mat-h1 fw-bold mb-2" *ngIf="this.motd.content?.creator">
                 {{ 'DashboardMotd.MessageFrom' | translate:motdParams }}
             </span>
-            <span class="mat-h1 font-weight-bold mb-2" *ngIf="!this.motd.content?.creator">
+            <span class="mat-h1 fw-bold mb-2" *ngIf="!this.motd.content?.creator">
                 Motd
             </span>
         </div>
@@ -12,7 +12,7 @@
             <div class="d-flex flex-row">
                 <img
                     src="{{ this.motd.content?.creator?.imageUrl }}"
-                    class="rounded-circle z-depth-0 mr-3"
+                    class="rounded-circle z-depth-0 me-3"
                     alt="creator avatar"
                     height="80"
                     onerror="this.src='/assets/img/default_profile.png';"

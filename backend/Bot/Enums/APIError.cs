@@ -31,6 +31,7 @@ public enum ApiError
 	ModCaseDoesNotAllowComments,
 	TooManyTemplates,
 	LastCommentAlreadyFromSuspect,
+	AlreadyFinalWarned,
 
 	// AUTOMOD
 	InvalidAutoModAction,

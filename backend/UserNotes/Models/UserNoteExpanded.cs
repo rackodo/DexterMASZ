@@ -8,8 +8,8 @@ public class UserNoteExpanded
 	public UserNoteExpanded(UserNote userNote, IUser user, IUser moderator)
 	{
 		UserNote = userNote;
-		User = new DiscordUser(user);
-		Moderator = new DiscordUser(moderator);
+		User = DiscordUser.GetDiscordUser(user);
+		Moderator = DiscordUser.GetDiscordUser(moderator);
 	}
 
 	public UserNote UserNote { get; set; }

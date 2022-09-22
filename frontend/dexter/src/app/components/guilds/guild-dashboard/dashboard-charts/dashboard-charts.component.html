@@ -1,9 +1,9 @@
 <div class="card-container">
     <div class="card-container-body d-flex flex-column flex-wrap flex-shrink-0 flex-grow-1 conditional-fc">
         <div class="d-flex flex-row flex-wrap align-items-center">
-            <span class="mat-h1 font-weight-bold mb-0">{{ 'DashboardCharts.Overview' | translate }}</span>
+            <span class="mat-h1 fw-bold mb-0">{{ 'DashboardCharts.Overview' | translate }}</span>
             <div class="flex-grow-1"></div>
-            <mat-form-field appearance="fill" color="accent" class="mr-2">
+            <mat-form-field appearance="fill" color="accent" class="me-2">
                 <mat-label>{{ 'DashboardCharts.ChooseADate' | translate }}</mat-label>
                 <input matInput [matDatepicker]="picker" [(ngModel)]="since" (ngModelChange)="reload()">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

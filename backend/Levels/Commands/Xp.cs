@@ -90,7 +90,7 @@ public class Experience : Command<Experience>
 				roleTargetName = guildInfo.GetRole(guildlevelconfig.Levels[maxLevel].First()).Name;
 			}
 		}
-				
+
 		long roleTargetXp = GuildUserLevel.XPFromLevel(roleTargetLevel, guildlevelconfig);
 
 		var embed = new EmbedBuilder()

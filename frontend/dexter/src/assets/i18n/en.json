@@ -139,7 +139,7 @@
         "FailedToLoadPermissions": "Failed to load visibility options."
     },
     "UserMapEditDialog": {
-        "EditUserMap": "Edit UserMap",
+        "EditUserMap": "Edit user map",
         "Description": "Description",
         "Cancel": "Cancel",
         "Confirm": "Confirm"
@@ -154,7 +154,7 @@
         "Confirm": "Confirm"
     },
     "UserNoteEditDialog": {
-        "EditUserNote": "Edit usernote",
+        "EditUserNote": "Edit user note",
         "Description": "Description",
         "Cancel": "Cancel",
         "Confirm": "Confirm"
@@ -202,7 +202,7 @@
         "PingRoles": "Ping roles",
         "ExcludeRoles": "Exclude roles",
         "ExcludeChannels": "Exclude channels",
-        "AuditLog": "AuditLog",
+        "AuditLog": "Audit Log",
         "ConfigDeleted": "Config deleted.",
         "FailedToDeleteConfig": "Failed to delete config.",
         "SavedConfig": "Saved config.",
@@ -381,7 +381,7 @@
         "Overview": "Overview",
         "Cases": "Cases",
         "Punishments": "Punishments",
-        "Automods": "Automods",
+        "Automods": "Auto Mods",
         "ChooseADate": "Choose a date",
         "Reset": "Reset"
     },
@@ -443,6 +443,9 @@
         "Updated": "User map updated.",
         "FailedToDelete": "Failed to delete user map.",
         "Deleted": "User map deleted."
+    },
+    "PunishmentConfig": {
+        "Punishments": "Punishments"
     },
     "UserNoteTable": {
         "User": "User",
@@ -547,6 +550,8 @@
         "Moderator": "Moderator",
         "Punishment": "Punishment",
         "Guild": "Guild",
+        "UserFinalWarned": "User is currently final warned!",
+        "ViewCase": "View case",
         "PunishedUntil": "Punished until:",
         "PunishedForever": "Punished forever",
         "Deactivated": {
@@ -573,6 +578,7 @@
         "CaseMarkedToDelete": "Marked to be deleted - {{user}}",
         "CommentsLocked": "Comments locked - {{user}}",
         "Restore": "Restore",
+        "Severity": "Severity",
         "View": "View",
         "Delete": "Delete",
         "Moderators": "Moderators",
@@ -580,8 +586,9 @@
             "Punishments": "Failed to load available punishments.",
             "Severities": "Failed to load available severities.",
             "Files": "Failed to load files.",
-            "Guild": "Failed to load guild info.",
-            "Case": "Failed to load case."
+            "DiscordGuild": "Failed to load guild info.",
+            "Case": "Failed to load case.",
+            "FinalWarning": "Failed to load final warning."
         },
         "DeleteCase": {
             "Deleted": "Case marked to be deleted.",
@@ -623,8 +630,8 @@
     },
     "Scanning": {
         "EnterUserOrInvite": "Enter a users id or invite code",
-        "Userscan": "Userscan",
-        "Invitescan": "Invitescan",
+        "Userscan": "User scan",
+        "Invitescan": "Invite scan",
         "UserscanDescription": "Enter a users id to get a quick overview of a user or relations to other users. This also tracks invites a new user uses so you can quickly spot alt accounts. Use a double click to view other ressources such as a modcase.",
         "InvitescanDescription": "Enter an invite code or link to get a quick overview of an invite or relations to other users. Use a double click to view other ressources such as another user.",
         "FailedToLoad": {

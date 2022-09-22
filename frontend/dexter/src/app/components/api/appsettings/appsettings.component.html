@@ -1,11 +1,11 @@
 <div style="height: 100px;"></div>
 <div class="d-flex flex-column justify-content-center align-items-center">
     <div class="d-flex flex-column justify-content-center align-items-left cw-50-75">
-        <div class="mat-display-2 font-weight-bold mb-4">{{ 'AppSettings.Title' | translate }}</div>
+        <div class="mat-display-2 fw-bold mb-4">{{ 'AppSettings.Title' | translate }}</div>
 
         <!-- Embed -->
 
-        <div class="mat-h1 font-weight-bold mb-2">{{ 'AppSettings.Embed.Title' | translate }}</div>
+        <div class="mat-h1 fw-bold mb-2">{{ 'AppSettings.Embed.Title' | translate }}</div>
         <div class="mb-0">{{ 'AppSettings.Embed.Content' | translate }}</div>
         <div class="mb-3 warn-color">{{ 'AppSettings.Embed.TakeToUpdate' | translate }}</div>
         <mat-spinner *ngIf="settingsLoading"></mat-spinner>
@@ -48,7 +48,7 @@
 
         <!-- Settings -->
 
-        <div class="mat-h1 font-weight-bold mt-4 mb-2">{{ 'AppSettings.Infrastrcture.Title' | translate }}</div>
+        <div class="mat-h1 fw-bold mt-4 mb-2">{{ 'AppSettings.Infrastrcture.Title' | translate }}</div>
         <div class="mb-2">{{ 'AppSettings.Infrastrcture.DefaultLanguage.Explained' | translate }}</div>
         <mat-spinner *ngIf="settingsLoading"></mat-spinner>
         <form *ngIf="!settingsLoading" [formGroup]="settingsFormGroup">

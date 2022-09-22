@@ -54,6 +54,15 @@ public class BotEnumTranslator : Translator
 				Language.It => "L'utente è protetto. È un amministratore del sito.",
 				_ => "User is protected. He is a site admin."
 			},
+			ApiError.AlreadyFinalWarned => PreferredLanguage switch
+			{
+				Language.De => "Dieser Benutzer ist bereits endgültig gewarnt!",
+				Language.Fr => "Cet utilisateur est déjà prévenu définitivement!",
+				Language.Es => "¡Este usuario ya es el último advertido!",
+				Language.Ru => "Этот пользователь уже получил окончательное предупреждение!",
+				Language.It => "Questo utente è già stato avvisato definitivamente!",
+				_ => "This user is already final warned!"
+			},
 			ApiError.ProtectedModCaseSuspectIsTeam => PreferredLanguage switch
 			{
 				Language.De => "Benutzer ist geschützt. Er ist ein Teammitglied.",

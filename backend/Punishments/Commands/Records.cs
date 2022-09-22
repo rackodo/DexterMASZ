@@ -1,11 +1,7 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
-using Discord;
 using Discord.Interactions;
 using Punishments.Data;
-using Punishments.Enums;
-using Punishments.Models;
-using Punishments.Translators;
 
 namespace Punishments.Commands;
 
