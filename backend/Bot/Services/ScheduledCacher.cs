@@ -3,6 +3,7 @@ using Bot.Data;
 using Bot.Dynamics;
 using Bot.Enums;
 using Bot.Events;
+using Bot.Exceptions;
 using Bot.Extensions;
 using Bot.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,9 +43,11 @@ public class ScheduledCacher : Event
 
 	private async Task HandleGuildRegister(GuildConfig guildConfig, bool importExistingBans)
 	{
-		await CacheAllKnownGuilds();
-		await CacheAllGuildUsers(new List<ulong>());
-		await CacheAllGuildBans(new List<ulong>());
+		List<ulong> handledUsers = new();
+
+		await CacheKnownGuild(guildConfig, handledUsers);
+
+		_logger.LogInformation($"Cacher | Cached guild {guildConfig.GuildId} with {handledUsers.Count} entries.");
 
 		using var scope = _serviceProvider.CreateScope();
 
@@ -67,7 +70,7 @@ public class ScheduledCacher : Event
 
 			eventTimer.Elapsed += async (_, _) => await LoopThroughCaches();
 
-			await Task.Run(() => eventTimer.Start());
+			await Task.Run(eventTimer.Start);
 
 			_logger.LogWarning("Started schedule timers.");
 
@@ -102,12 +105,11 @@ public class ScheduledCacher : Event
 
 	public async void CacheAll()
 	{
-		await CacheAllKnownGuilds();
+		_logger.LogInformation("Cacher | Starting caching.");
 
 		List<ulong> handledUsers = new();
 
-		handledUsers = await CacheAllGuildBans(handledUsers);
-		handledUsers = await CacheAllGuildUsers(handledUsers);
+		handledUsers = await CacheAllKnownGuilds(handledUsers);
 		handledUsers = await CacheAllKnownUsers(handledUsers);
 
 		_logger.LogInformation($"Cacher | Done with {handledUsers.Count} entries.");
@@ -115,7 +117,7 @@ public class ScheduledCacher : Event
 		_eventHandler.InternalCachingDoneEvent.Invoke(handledUsers.Count, GetNextCacheSchedule());
 	}
 
-	public async Task CacheAllKnownGuilds()
+	public async Task<List<ulong>> CacheAllKnownGuilds(List<ulong> handledUsers)
 	{
 		_logger.LogInformation("Cacher | Cache all registered guilds.");
 
@@ -125,48 +127,49 @@ public class ScheduledCacher : Event
 
 		foreach (var guild in await database.SelectAllGuildConfigs())
 		{
-			_discordRest.FetchGuildInfo(guild.GuildId, CacheBehavior.IgnoreCache);
-			_discordRest.FetchGuildChannels(guild.GuildId, CacheBehavior.IgnoreCache);
-		}
-	}
-
-	public async Task<List<ulong>> CacheAllGuildUsers(List<ulong> handledUsers)
-	{
-		_logger.LogInformation("Cacher | Cache all users of registered guilds.");
-
-		using var scope = _serviceProvider.CreateScope();
-
-		var database = scope.ServiceProvider.GetRequiredService<BotDatabase>();
-
-		foreach (var guild in await database.SelectAllGuildConfigs())
-		{
-			var users = await _discordRest.FetchGuildUsers(guild.GuildId, CacheBehavior.IgnoreCache);
-
-			if (users == null) continue;
-
-			foreach (var item in users.Where(item => !handledUsers.Contains(item.Id)))
-				handledUsers.Add(item.Id);
+			try
+			{
+				handledUsers = await CacheKnownGuild(guild, handledUsers);
+			}
+			catch (GuildNotFoundException)
+			{
+				await database.DeleteSpecificGuildConfig(guild);
+			}
 		}
 
 		return handledUsers;
 	}
-
-	public async Task<List<ulong>> CacheAllGuildBans(List<ulong> handledUsers)
+	
+	public async Task<List<ulong>> CacheKnownGuild(GuildConfig guild, List<ulong> handledUsers)
 	{
-		_logger.LogInformation("Cacher | Cache all bans of registered guilds.");
+		var guildInst = _discordRest.FetchGuildInfo(guild.GuildId, CacheBehavior.IgnoreCache);
 
-		using var scope = _serviceProvider.CreateScope();
-
-		var database = scope.ServiceProvider.GetRequiredService<BotDatabase>();
-
-		foreach (var guild in await database.SelectAllGuildConfigs())
+		if (guildInst == null)
 		{
-			var bans = await _discordRest.GetGuildBans(guild.GuildId, CacheBehavior.IgnoreCache);
-
-			if (bans == null) continue;
-
-			handledUsers.AddRange(bans.Select(ban => ban.User.Id));
+			_logger.LogError($"Cacher | Guild {guild.GuildId} does not exist!");
+			throw new GuildNotFoundException();
 		}
+
+		var guildTag = $"{guildInst.Name} ({guildInst.Id})";
+
+		_logger.LogInformation($"Cacher | Caching guild {guildTag}");
+
+		_discordRest.FetchGuildChannels(guild.GuildId, CacheBehavior.IgnoreCache);
+
+		_logger.LogInformation($"Cacher | Cache all bans of guild {guildTag}");
+
+		var bans = await _discordRest.GetGuildBans(guild.GuildId, CacheBehavior.IgnoreCache);
+
+		if (bans != null)
+			handledUsers.AddRange(bans.Select(ban => ban.User.Id));
+
+		_logger.LogInformation($"Cacher | Cache all users of guild {guildTag}");
+
+		var users = await _discordRest.FetchGuildUsers(guild.GuildId, CacheBehavior.IgnoreCache);
+
+		if (users != null)
+			foreach (var item in users.Where(item => !handledUsers.Contains(item.Id)))
+				handledUsers.Add(item.Id);
 
 		return handledUsers;
 	}

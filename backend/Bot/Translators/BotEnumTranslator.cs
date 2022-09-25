@@ -81,6 +81,15 @@ public class BotEnumTranslator : Translator
 				Language.It => "Risorsa non trovata",
 				_ => "Resource not found"
 			},
+			ApiError.GuildNotFound => PreferredLanguage switch
+			{
+				Language.De => "Guild nicht gefunden",
+				Language.Fr => "Guild introuvable",
+				Language.Es => "Guild no encontrado",
+				Language.Ru => "Guild не найден",
+				Language.It => "Guild non trovata",
+				_ => "Guild not found"
+			},
 			ApiError.InvalidIdentity => PreferredLanguage switch
 			{
 				Language.De => "Ungültige Identität",

@@ -17,6 +17,7 @@ public enum ApiError
 	NoGuildsRegistered,
 	InvalidAuditLogEvent,
 	NotFoundInCache,
+	GuildNotFound,
 
 	// USER MAPS
 	CannotBeSameUser,

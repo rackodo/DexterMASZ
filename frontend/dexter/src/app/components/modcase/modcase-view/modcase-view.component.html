@@ -350,52 +350,47 @@
                     <ng-container *ngIf="!this.modCase.loading">
                         <div class="card-container mb-3" *ngFor="let comment of this.modCase.content?.comments">
                             <div class="card-container-body d-flex flex-column">
-                                <div class="d-flex flex-row flex-grow-1 w-100 align-self-start align-items-center">
-                                    <ng-container *ngIf="comment?.comment?.userId">
-                                        <img
-                                            [attr.src]="comment?.commenter?.imageUrl"
-                                            class="card-img rounded-circle z-depth-0 me-1"
-                                            alt="avatar icon"
-                                            height="32"
-                                            style="width: unset"
-                                            onerror="this.src='/assets/img/default_profile.png';"
-                                        />
-                                    </ng-container>
-                                    <ng-container *ngIf="!comment?.comment?.userId">
-                                        <app-guild-icon class="me-1" [guild]="currentGuild.content"
-                                            [width]="'32px'" [height]="'32px'" [darkBorder]="true">
-                                        </app-guild-icon>
-                                    </ng-container>
+                              <div class="d-flex flex-row flex-grow-1 w-100 align-self-start align-items-center">
+                                <ng-container *ngIf="comment?.comment?.userId">
+                                  <img [attr.src]="comment?.commenter?.imageUrl"
+                                       class="card-img rounded-circle z-depth-0 me-1"
+                                       alt="avatar icon"
+                                       height="32"
+                                       style="width: unset"
+                                       onerror="this.src='/assets/img/default_profile.png';" />
+                                </ng-container>
+                                <ng-container *ngIf="!comment?.comment?.userId">
+                                  <app-guild-icon class="me-1" [guild]="currentGuild.content"
+                                                  [width]="'32px'" [height]="'32px'" [darkBorder]="true">
+                                  </app-guild-icon>
+                                </ng-container>
 
-
-                                    <!-- Title -->
-                                    <span>
-                                        <div class="mat-h3" style="display: inline;" *ngIf="comment?.comment?.userId">
-                                            {{ comment?.commenter?.username || comment?.commenter?.id }}#{{ comment?.commenter?.discriminator || comment?.commenter?.id }}
-                                        </div>
-                                        <div class="mat-h3" style="display: inline;" *ngIf="! comment?.comment?.userId">
-                                            {{ 'ModCaseView.Moderators' | translate }}
-                                        </div>
-                                        <span class="mat-h3 text-black-50">
-                                            <app-date-display [date]="comment.comment.createdAt" [showTime]="true"></app-date-display>
-                                        </span>
-                                    </span>
-
-                                    <div class="flex-grow-1"></div>
-
-                                    <!-- Icons -->
-                                    <div class="d-flex flex-row flex-wrap align-self-end flex-grow-0 flex-shrink-0" *ngIf="this.currentUser.content?.discordUser?.id === comment.comment?.userId || this.currentUser.content?.isAdmin">
-                                        <button mat-mini-fab color="accent" aria-label="edit comment" class="flex-shrink-0 me-2" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined"
-                                         (click)="updateComment(comment.comment)" *ngIf="this.modCase.content?.modCase?.allowComments">
-                                            <mat-icon>edit</mat-icon>
-                                        </button>
-                                        <button mat-mini-fab color="primary" aria-label="delete comment" class="flex-shrink-0" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined"
-                                         (click)="deleteComment(comment.comment.id)">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </div>
+                                <div class="mat-h3" style="display: inline;" *ngIf="comment?.comment?.userId">
+                                  {{ comment?.commenter?.username || comment?.commenter?.id }}#{{ comment?.commenter?.discriminator || comment?.commenter?.id }}
                                 </div>
-                                <span style="white-space: pre-wrap; word-wrap: anywhere;" class="mat-h3 mb-0 text-monospace casecomment">{{ comment.comment.message }}</span>
+                                <div class="mat-h3" style="display: inline;" *ngIf="! comment?.comment?.userId">
+                                  {{ 'ModCaseView.Moderators' | translate }}
+                                </div>
+                                <span class="mat-h3 text-black-50">
+                                  <app-date-display [date]="comment.comment.createdAt" [showTime]="true"></app-date-display>
+                                </span>
+
+                                <div class="flex-grow-1"></div>
+
+                                <!-- Icons -->
+                                <div class="d-flex flex-row flex-wrap align-self-end flex-grow-0 flex-shrink-0" *ngIf="this.currentUser.content?.discordUser?.id === comment.comment?.userId || this.currentUser.content?.isAdmin">
+                                  <button mat-mini-fab color="accent" aria-label="edit comment" class="flex-shrink-0 me-2" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined"
+                                          (click)="updateComment(comment.comment)" *ngIf="this.modCase.content?.modCase?.allowComments">
+                                    <mat-icon>edit</mat-icon>
+                                  </button>
+                                  <button mat-mini-fab color="primary" aria-label="delete comment" class="flex-shrink-0" [disabled]="this.modCase.content?.modCase?.markedToDeleteAt !== undefined"
+                                          (click)="deleteComment(comment.comment.id)">
+                                    <mat-icon>delete</mat-icon>
+                                  </button>
+                                </div>
+                              </div>
+
+                              <span style="white-space: pre-wrap; word-wrap: anywhere;" class="mat-h3 mb-0 text-monospace casecomment">{{ comment.comment.message }}</span>
                             </div>
                         </div>
                     </ng-container>
