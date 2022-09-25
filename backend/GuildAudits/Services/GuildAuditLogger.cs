@@ -168,6 +168,21 @@ public class GuildAuditer : Event
 		return false;
 	}
 
+	private static async Task<Translation> TryGetTranslation(IServiceScope scope, ulong guildId)
+	{
+		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
+
+		try
+		{
+			await translator.SetLanguage(guildId);
+			return translator;
+		}
+		catch (UnregisteredGuildException)
+		{
+			return null;
+		}
+	}
+
 	public async Task HandleGuildUserUpdated(Cacheable<SocketGuildUser, ulong> oldU, SocketGuildUser newU)
 	{
 		var oldUser = await oldU.GetOrDownloadAsync();
@@ -189,8 +204,10 @@ public class GuildAuditer : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(guildId);
+		var translator = await TryGetTranslation(scope, guildId);
+
+		if (translator == null)
+			return;
 
 		StringBuilder description = new();
 		description.AppendLine(
@@ -219,8 +236,10 @@ public class GuildAuditer : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(guildId);
+		var translator = await TryGetTranslation(scope, guildId);
+
+		if (translator == null)
+			return;
 
 		StringBuilder description = new();
 		description.AppendLine(
@@ -254,8 +273,10 @@ public class GuildAuditer : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(guildId);
+		var translator = await TryGetTranslation(scope, guildId);
+
+		if (translator == null)
+			return;
 
 		StringBuilder description = new();
 		description.AppendLine(
@@ -294,11 +315,12 @@ public class GuildAuditer : Event
 		{
 			using var scope = _serviceProvider.CreateScope();
 
-			var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-
 			foreach (var guild in newU.MutualGuilds)
 			{
-				await translator.SetLanguage(guild.Id);
+				var translator = await TryGetTranslation(scope, guild.Id);
+
+				if (translator == null)
+					return;
 
 				StringBuilder description = new();
 				description.AppendLine(
@@ -354,8 +376,10 @@ public class GuildAuditer : Event
 			return;
 		}
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(guildChannel.GuildId);
+		var translator = await TryGetTranslation(scope, guildChannel.GuildId);
+
+		if (translator == null)
+			return;
 
 		StringBuilder description = new();
 		description.AppendLine($"> **{translator.Get<BotTranslator>().User()}:** {reaction.User.Value.Username}#{reaction.User.Value.Discriminator} - {reaction.User.Value.Mention}");
@@ -406,8 +430,10 @@ public class GuildAuditer : Event
 			return;
 		}
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(guildChannel.GuildId);
+		var translator = await TryGetTranslation(scope, guildChannel.GuildId);
+
+		if (translator == null)
+			return;
 
 		StringBuilder description = new();
 		description.AppendLine($"> **{translator.Get<BotTranslator>().User()}:** {reaction.User.Value.Username}#{reaction.User.Value.Discriminator} - {reaction.User.Value.Mention}");
@@ -447,13 +473,13 @@ public class GuildAuditer : Event
 		{
 			eventType = GuildAuditLogEvent.VoiceJoined;
 			afterChannel = voiceStateAfter.VoiceChannel;
-			guildId = afterChannel.Guild.Id;
+			guildId = afterChannel.GuildId;
 		}
 		else if (voiceStateAfter.VoiceChannel == null)
 		{
 			eventType = GuildAuditLogEvent.VoiceLeft;
 			beforeChannel = voiceStateBefore.VoiceChannel;
-			guildId = beforeChannel.Guild.Id;
+			guildId = beforeChannel.GuildId;
 		}
 		else
 		{
@@ -472,8 +498,10 @@ public class GuildAuditer : Event
 			return;
 		}
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(guildId);
+		var translator = await TryGetTranslation(scope, guildId);
+
+		if (translator == null)
+			return;
 
 		string title;
 		if (eventType == GuildAuditLogEvent.VoiceJoined)
@@ -535,8 +563,10 @@ public class GuildAuditer : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(guild.Id);
+		var translator = await TryGetTranslation(scope, guild.Id);
+
+		if (translator == null)
+			return;
 
 		StringBuilder description = new();
 		description.AppendLine(
@@ -555,8 +585,10 @@ public class GuildAuditer : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(guild.Id);
+		var translator = await TryGetTranslation(scope, guild.Id);
+
+		if (translator == null)
+			return;
 
 		StringBuilder description = new();
 		description.AppendLine(
@@ -573,10 +605,15 @@ public class GuildAuditer : Event
 
 	public async Task HandleInviteCreated(SocketInvite invite)
 	{
+		if (!invite.GuildId.HasValue)
+			return;
+
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(invite.Guild.Id);
+		var translator = await TryGetTranslation(scope, invite.GuildId.Value);
+
+		if (translator == null)
+			return;
 
 		EmbedBuilder embed = new();
 
@@ -595,7 +632,7 @@ public class GuildAuditer : Event
 			description.AppendLine(
 				$"> **{translator.Get<GuildAuditTranslator>().TargetChannel()}:** {tChannel.Name} - {tChannel.Mention}");
 
-		if (invite.GuildId.HasValue && await CheckForIgnoredChannel(invite.GuildId.Value, GuildAuditLogEvent.InviteCreated, invite.ChannelId))
+		if (await CheckForIgnoredChannel(invite.GuildId.Value, GuildAuditLogEvent.InviteCreated, invite.ChannelId))
 			return;
 
 		embed.WithTitle(translator.Get<GuildAuditTranslator>().InviteCreated())
@@ -608,15 +645,17 @@ public class GuildAuditer : Event
 			embed.AddField(translator.Get<GuildAuditTranslator>().ExpirationDate(),
 				invite.CreatedAt.AddSeconds(invite.MaxAge).DateTime.ToDiscordTs(), true);
 
-		await SendEmbed(embed, invite.Guild.Id, GuildAuditLogEvent.InviteCreated);
+		await SendEmbed(embed, invite.GuildId.Value, GuildAuditLogEvent.InviteCreated);
 	}
 
 	public async Task HandleInviteDeleted(SocketGuildChannel channel, TrackedInvite invite)
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(channel.Guild.Id);
+		var translator = await TryGetTranslation(scope, channel.Guild.Id);
+
+		if (translator == null)
+			return;
 
 		EmbedBuilder embed = new();
 
@@ -649,8 +688,10 @@ public class GuildAuditer : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(user.Guild.Id);
+		var translator = await TryGetTranslation(scope, user.Guild.Id);
+
+		if (translator == null)
+			return;
 
 		StringBuilder description = new();
 		description.AppendLine(
@@ -672,8 +713,10 @@ public class GuildAuditer : Event
 	{
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(guild.Id);
+		var translator = await TryGetTranslation(scope, guild.Id);
+
+		if (translator == null)
+			return;
 
 		StringBuilder description = new();
 		description.AppendLine(
@@ -707,8 +750,10 @@ public class GuildAuditer : Event
 
 			using var scope = _serviceProvider.CreateScope();
 
-			var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-			await translator.SetLanguage(textChannel.Guild.Id);
+			var translator = await TryGetTranslation(scope, textChannel.GuildId);
+
+			if (translator == null)
+				return;
 
 			EmbedBuilder embed = new();
 
@@ -767,7 +812,7 @@ public class GuildAuditer : Event
 				embed.AddField(translator.Get<BotTranslator>().Attachments(), attachmentInfo.ToString());
 			}
 
-			await SendEmbed(embed, textChannel.Guild.Id, GuildAuditLogEvent.MessageDeleted);
+			await SendEmbed(embed, textChannel.GuildId, GuildAuditLogEvent.MessageDeleted);
 		}
 	}
 
@@ -785,8 +830,10 @@ public class GuildAuditer : Event
 
 				using var scope = _serviceProvider.CreateScope();
 
-				var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-				await translator.SetLanguage(textChannel.Guild.Id);
+				var translator = await TryGetTranslation(scope, textChannel.GuildId);
+
+				if (translator == null)
+					return;
 
 				StringBuilder description = new();
 				description.AppendLine(
@@ -837,7 +884,7 @@ public class GuildAuditer : Event
 					embed.AddField(translator.Get<BotTranslator>().Attachments(), attachmentInfo.ToString());
 				}
 
-				await SendEmbed(embed, textChannel.Guild.Id, GuildAuditLogEvent.MessageSent);
+				await SendEmbed(embed, textChannel.GuildId, GuildAuditLogEvent.MessageSent);
 			}
 	}
 
@@ -859,8 +906,10 @@ public class GuildAuditer : Event
 
 				using var scope = _serviceProvider.CreateScope();
 
-				var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-				await translator.SetLanguage(textChannel.Guild.Id);
+				var translator = await TryGetTranslation(scope, textChannel.GuildId);
+
+				if (translator == null)
+					return;
 
 				StringBuilder description = new();
 				description.AppendLine(
@@ -925,7 +974,7 @@ public class GuildAuditer : Event
 					embed.AddField(translator.Get<BotTranslator>().Attachments(), attachmentInfo.ToString());
 				}
 
-				await SendEmbed(embed, textChannel.Guild.Id, GuildAuditLogEvent.MessageUpdated);
+				await SendEmbed(embed, textChannel.GuildId, GuildAuditLogEvent.MessageUpdated);
 			}
 	}
 
@@ -936,8 +985,10 @@ public class GuildAuditer : Event
 
 		using var scope = _serviceProvider.CreateScope();
 
-		var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-		await translator.SetLanguage(thread.Guild.Id);
+		var translator = await TryGetTranslation(scope, thread.Guild.Id);
+
+		if (translator == null)
+			return;
 
 		StringBuilder description = new();
 		description.AppendLine($"> **{translator.Get<BotTranslator>().Channel()}:** {thread.Name} - {thread.Mention}");
