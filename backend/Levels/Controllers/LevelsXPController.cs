@@ -6,6 +6,7 @@ using Levels.DTOs;
 using Levels.Models;
 using Microsoft.AspNetCore.Mvc;
 using Bot.Enums;
+using Discord;
 
 namespace Levels.Controllers;
 
@@ -32,21 +33,11 @@ public class LevelsXPController : AuthenticatedController
 		var level = _levelsRepository.GetLevel(guildId, userId);
 		if (level is null) return NotFound();
 
-		return Ok(await levelToDTO(level));
-	}
-
-	private async Task<GuildUserLevelDTO> levelToDTO(GuildUserLevel level)
-	{
 		var guildLevelConfig = await _levelsConfigRepository.GetOrCreateConfig(level.GuildId);
-		return await levelToDTO(level, guildLevelConfig);
-	}
 
-	private async Task<GuildUserLevelDTO> levelToDTO(GuildUserLevel level, GuildLevelConfig config)
-	{
 		var user = await _rest.FetchUserInfo(level.UserId, CacheBehavior.Default);
 
-		var calc = new CalculatedGuildUserLevel(level, config);
-		return calc.ToDTO(DiscordUser.GetDiscordUser(user));
+		return Ok(new CalculatedGuildUserLevel(level, guildLevelConfig).ToDTO(DiscordUser.GetDiscordUser(user)));
 	}
 
 	[HttpGet("guilds/{guildId}/users")]
@@ -68,8 +59,11 @@ public class LevelsXPController : AuthenticatedController
 		var allRecords = _levelsRepository.GetAllLevelsInGuild(guildId).OrderByDescending(func).AsQueryable();
 		var selRecords = PagedList<GuildUserLevel>.ToPagedList(allRecords, page, pageSize);
 
-		return Ok(selRecords.AsParallel().Select(async l => await levelToDTO(l, guildLevelConfig))
-			.Select(t => t.Result)
+		return Ok(selRecords.AsParallel().Select(async l =>
+		{
+			var user = await _rest.FetchUserInfo(l.UserId, CacheBehavior.OnlyCache);
+			return new CalculatedGuildUserLevel(l, guildLevelConfig).ToDTO(DiscordUser.GetDiscordUser(user));
+		}).Select(t => t.Result)
 			.Where(r => r != null)
 			.ToList());
 	}
