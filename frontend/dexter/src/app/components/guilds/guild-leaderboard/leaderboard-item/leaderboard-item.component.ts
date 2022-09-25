@@ -11,7 +11,7 @@ export class LeaderboardItemComponent implements OnInit {
 
   @Input() index : number = 1;
   @Input() order : string = "total";
-  @Input() user! : CalcGuildUserLevel;
+  @Input() userLevel! : CalcGuilduserLevelLevel;
   json = JSON;
   record!: ExperienceRecord
 
