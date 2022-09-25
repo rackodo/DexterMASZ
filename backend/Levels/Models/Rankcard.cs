@@ -2,6 +2,7 @@
 using Bot.Extensions;
 using Discord;
 using Levels.Data;
+using Levels.Enums;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
@@ -147,7 +148,7 @@ public static partial class Rankcard
 
 		List<RankcardLevelData> levelsData = new();
 		int totallevel;
-		long totalxp = ul.TotalXP;
+		var totalxp = ul.TotalXP;
 
 		string totallevelstr;
 

@@ -78,7 +78,7 @@ public class LevelingService : Event
 
 	public async Task<string> HandleUpdateRoles(IGuildUser user, IServiceScope serviceScope)
 	{
-		ulong guildId = user.GuildId;
+		var guildId = user.GuildId;
 
 		var levelConfigRepo = serviceScope.ServiceProvider.GetRequiredService<GuildLevelConfigRepository>();
 		var guildConfig = await levelConfigRepo.GetOrCreateConfig(guildId);
@@ -226,10 +226,10 @@ public class LevelingService : Event
 			var levelrepo = scope.ServiceProvider.GetRequiredService<GuildUserLevelRepository>();
 
 			var config = await configrepo.GetOrCreateConfig(cds.guildId);
-			SocketGuild guild = _client.GetGuild(cds.guildId);
+			var guild = _client.GetGuild(cds.guildId);
 			if (guild == null)
 			{
-				string guildName = (await _client.Rest.GetGuildAsync(cds.guildId))?.Name;
+				var guildName = (await _client.Rest.GetGuildAsync(cds.guildId))?.Name;
 				_logger.LogError($"Unable to retrieve guild vc data for guild {guildName ?? "Unknown"} ({cds.guildId})");
 				continue;
 			}

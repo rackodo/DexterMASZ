@@ -5,6 +5,12 @@ namespace Levels.Models;
 
 public class CalculatedGuildUserLevel : GuildUserLevel
 {
+	private LevelData? _textLevel = null;
+	private LevelData? _voiceLevel = null;
+	private LevelData? _totalLevel = null;
+
+	public GuildLevelConfig? Config { get; set; } = null;
+
 	public CalculatedGuildUserLevel(GuildUserLevel guildUserLevel, GuildLevelConfig? config = null)
 	{
 		Token = guildUserLevel.Token;
@@ -60,13 +66,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 			base.VoiceXp = value;
 		}
 	}
-
-	private LevelData? _textLevel = null;
-	private LevelData? _voiceLevel = null;
-	private LevelData? _totalLevel = null;
-
-	public GuildLevelConfig? Config { get; set; } = null;
-
+	
 	public LevelData Text
 	{
 		get
@@ -97,66 +97,5 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 	public GuildUserLevelDTO ToDTO(DiscordUser user)
 	{
 		return new GuildUserLevelDTO(GuildId, UserId, Text.toDTO(), Voice.toDTO(), Total.toDTO(), user);
-	}
-}
-
-public class LevelData : IComparable<LevelData>
-{
-	public void AddXp(long increment, GuildLevelConfig config)
-	{
-		_xp += increment;
-		_residualxp += increment;
-		if (_residualxp < 0 || _residualxp > _levelxp) Recalculate(config);
-	}
-
-	public void RemoveXp(long decrement, GuildLevelConfig config)
-	{
-		AddXp(-decrement, config);
-	}
-
-	public void SetXp(long value, GuildLevelConfig config)
-	{
-		AddXp(value - _xp, config);
-	}
-
-	public void SetLevel(int value, GuildLevelConfig config)
-	{
-		_level = value;
-		_xp = GuildUserLevel.XPFromLevel(value, config);
-		_levelxp = GuildUserLevel.XPFromLevel(value + 1, config) - 1;
-		_residualxp = 0;
-	}
-
-	private void Recalculate(GuildLevelConfig config)
-	{
-		_level = GuildUserLevel.LevelFromXP(_xp, config, out _residualxp, out _levelxp);
-	}
-
-	public LevelData() { }
-	public LevelData(long xp, GuildLevelConfig config)
-	{
-		_xp = xp;
-		Recalculate(config);
-	}
-
-	private int _level;
-	private long _xp;
-	private long _levelxp;
-	private long _residualxp;
-
-	public int Level => _level;
-	public long Xp => _xp;
-	public long Levelxp => _levelxp;
-	public long Residualxp => _residualxp;
-
-	public ExperienceRecordDTO toDTO()
-	{
-		return new ExperienceRecordDTO(_xp, _level, _levelxp, _residualxp);
-	}
-
-	public int CompareTo(LevelData? other)
-	{
-		if (other is null) return 1;
-		return Xp.CompareTo(other.Xp);
 	}
 }

@@ -71,7 +71,7 @@ public class TransferXp : Command<TransferXp>
 			return;
 		}
 
-		Embed embed = new EmbedBuilder()
+		var embed = new EmbedBuilder()
 			.WithColor(Color.Blue)
 			.WithTitle("XP Transfer Successful")
 			.WithDescription($"Transferred {textXp} text XP and {voiceXp} voice XP from {source.Mention} to {target.Mention}")

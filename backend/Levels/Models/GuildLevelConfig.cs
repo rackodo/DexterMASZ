@@ -5,17 +5,6 @@ namespace Levels.Models;
 
 public class GuildLevelConfig
 {
-	public GuildLevelConfig() { }
-
-	public GuildLevelConfig(IGuild guild)
-	{
-		Id = guild.Id;
-	}
-
-	public GuildLevelConfig(ulong guildId)
-	{
-		Id = guildId;
-	}
 
 	[Key]
 	public ulong Id { get; set; }
@@ -41,4 +30,16 @@ public class GuildLevelConfig
 
 	public Dictionary<int, ulong[]> Levels { get; set; } = new();
 	public Dictionary<int, string> LevelUpMessageOverrides { get; set; } = new();
+
+	public GuildLevelConfig() { }
+
+	public GuildLevelConfig(IGuild guild)
+	{
+		Id = guild.Id;
+	}
+
+	public GuildLevelConfig(ulong guildId)
+	{
+		Id = guildId;
+	}
 }

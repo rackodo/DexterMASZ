@@ -4,6 +4,13 @@ namespace Levels.DTOs;
 
 public class GuildUserLevelDTO
 {
+	public ulong GuildId { get; set; }
+	public ulong UserId { get; set; }
+	public ExperienceRecordDTO TextXp { get; set; }
+	public ExperienceRecordDTO VoiceXp { get; set; }
+	public ExperienceRecordDTO TotalXp { get; set; }
+	public DiscordUser User { get; set; }
+
 	public GuildUserLevelDTO(ulong guildId, ulong userId, ExperienceRecordDTO textXp, ExperienceRecordDTO voiceXp, ExperienceRecordDTO totalXp, DiscordUser user)
 	{
 		GuildId = guildId;
@@ -13,11 +20,4 @@ public class GuildUserLevelDTO
 		TotalXp = totalXp;
 		User = user;
 	}
-
-	public ulong GuildId { get; set; }
-	public ulong UserId { get; set; }
-	public ExperienceRecordDTO TextXp { get; set; }
-	public ExperienceRecordDTO VoiceXp { get; set; }
-	public ExperienceRecordDTO TotalXp { get; set; }
-	public DiscordUser User { get; set; }
 }

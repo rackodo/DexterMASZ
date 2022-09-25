@@ -6,6 +6,15 @@ namespace Levels.Models;
 
 public class GuildUserLevel
 {
+	[Key]
+	[Column(TypeName = "char(22)")]
+	public string Token { get; set; }
+	public ulong UserId { get; set; }
+	public ulong GuildId { get; set; }
+	public long TextXp { get; set; }
+	public long VoiceXp { get; set; }
+	public long TotalXP => TextXp + VoiceXp;
+
 	protected GuildUserLevel()
 	{
 		Token = "";
@@ -102,13 +111,4 @@ public class GuildUserLevel
 		}
 		return (long)Math.Round(xp);
 	}
-
-	[Key]
-	[Column(TypeName = "char(22)")]
-	public string Token { get; set; }
-	public ulong UserId { get; set; }
-	public ulong GuildId { get; set; }
-	public long TextXp { get; set; }
-	public long VoiceXp { get; set; }
-	public long TotalXP => TextXp + VoiceXp;
 }

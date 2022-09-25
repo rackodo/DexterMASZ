@@ -64,7 +64,7 @@ public class UpdateRoles : Command<UpdateRoles>
 		var guildlevelconfig = await GuildLevelConfigRepository!.GetOrCreateConfig(Context.Guild.Id);
 		var calclevel = new CalculatedGuildUserLevel(level, guildlevelconfig);
 
-		int totalLevel = calclevel.Total.Level;
+		var totalLevel = calclevel.Total.Level;
 		var result = await LevelingService.HandleLevelRoles(level, totalLevel, user, Context.Channel, GuildLevelConfigRepository);
 		
 		await FollowupAsync(result, ephemeral: true);

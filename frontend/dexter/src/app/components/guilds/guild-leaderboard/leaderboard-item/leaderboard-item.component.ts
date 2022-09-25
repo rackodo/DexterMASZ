@@ -11,7 +11,7 @@ export class LeaderboardItemComponent implements OnInit {
 
   @Input() index : number = 1;
   @Input() order : string = "total";
-  @Input() userLevel! : CalcGuilduserLevelLevel;
+  @Input() userLevel!: CalcGuildUserLevel;
   json = JSON;
   record!: ExperienceRecord
 
@@ -22,9 +22,9 @@ export class LeaderboardItemComponent implements OnInit {
   }
 
   getXpModel(): ExperienceRecord {
-    if (this.order == "text") return this.user.textXp;
-    if (this.order == "voice") return this.user.voiceXp;
-    return this.user.totalXp;
+    if (this.order == "text") return this.userLevel.textXp;
+    if (this.order == "voice") return this.userLevel.voiceXp;
+    return this.userLevel.totalXp;
   }
 
   calcLeftRot(): number {

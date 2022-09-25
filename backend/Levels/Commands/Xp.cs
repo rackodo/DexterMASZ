@@ -37,13 +37,13 @@ public class Experience : Command<Experience>
 		var guildlevelconfig = await GuildLevelConfigRepository!.GetOrCreateConfig(Context.Guild.Id);
 		var calclevel = new CalculatedGuildUserLevel(level, guildlevelconfig);
 
-		int totalLevel = calclevel.Total.Level;
+		var totalLevel = calclevel.Total.Level;
 		if (levelTarget < 0) levelTarget = totalLevel + 1;
-		long targetXp = GuildUserLevel.XPFromLevel(levelTarget, guildlevelconfig);
+		var targetXp = GuildUserLevel.XPFromLevel(levelTarget, guildlevelconfig);
 
-		int roleTargetLevel = 0;
-		string roleTargetName = "Unknown";
-		bool found = false;
+		var roleTargetLevel = 0;
+		var roleTargetName = "Unknown";
+		var found = false;
 		var guildInfo = _client.FetchGuildInfo(guildlevelconfig.Id, Bot.Enums.CacheBehavior.Default);
 		if (roleTarget != null)
 		{
@@ -68,11 +68,11 @@ public class Experience : Command<Experience>
 		}
 		else
 		{
-			int maxLevel = 0;
-			foreach (KeyValuePair<int, ulong[]> levelRole in guildlevelconfig.Levels)
+			var maxLevel = 0;
+			foreach (var levelRole in guildlevelconfig.Levels)
 			{
 				if (levelRole.Value.Length == 0) continue;
-				IRole r = guildInfo.GetRole(levelRole.Value.First());
+				var r = guildInfo.GetRole(levelRole.Value.First());
 				if (levelRole.Key > totalLevel)
 				{
 					roleTargetLevel = levelRole.Key;
@@ -91,7 +91,7 @@ public class Experience : Command<Experience>
 			}
 		}
 
-		long roleTargetXp = GuildUserLevel.XPFromLevel(roleTargetLevel, guildlevelconfig);
+		var roleTargetXp = GuildUserLevel.XPFromLevel(roleTargetLevel, guildlevelconfig);
 
 		var embed = new EmbedBuilder()
 			.WithTitle($"XP Summary for: {user.Id}")
@@ -104,7 +104,7 @@ public class Experience : Command<Experience>
 			.Build();
 
 		var guildconfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
-		bool ephemeral = !guildconfig.BotChannels.Contains(Context.Channel.Id);
+		var ephemeral = !guildconfig.BotChannels.Contains(Context.Channel.Id);
 		await RespondAsync("", ephemeral: ephemeral, embed: embed);
 	}
 
@@ -118,7 +118,7 @@ public class Experience : Command<Experience>
 		string textExpr;
 		try
 		{
-			TimeSpan textTime = TimeSpan.FromMinutes((targetXP - currentXP) / ((config.MinimumTextXpGiven + config.MaximumTextXpGiven) >> 1));
+			var textTime = TimeSpan.FromMinutes((targetXP - currentXP) / ((config.MinimumTextXpGiven + config.MaximumTextXpGiven) >> 1));
 			textExpr = textTime.Humanize(2, minUnit: Humanizer.Localisation.TimeUnit.Minute);
 		}
 		catch
@@ -128,7 +128,7 @@ public class Experience : Command<Experience>
 		string voiceExpr;
 		try
 		{
-			TimeSpan voiceTime = TimeSpan.FromMinutes((targetXP - currentXP) / ((config.MinimumVoiceXpGiven + config.MaximumVoiceXpGiven) >> 1));
+			var voiceTime = TimeSpan.FromMinutes((targetXP - currentXP) / ((config.MinimumVoiceXpGiven + config.MaximumVoiceXpGiven) >> 1));
 			voiceExpr = voiceTime.Humanize(2, minUnit: Humanizer.Localisation.TimeUnit.Minute);
 		}
 		catch

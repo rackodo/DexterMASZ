@@ -1,4 +1,5 @@
 ﻿using Discord;
+using Levels.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,37 +7,6 @@ namespace Levels.Models;
 
 public class UserRankcardConfig
 {
-	public UserRankcardConfig() { }
-
-	public UserRankcardConfig(IUser user)
-	{
-		Id = user.Id;
-	}
-
-	public UserRankcardConfig(ulong userId)
-	{
-		Id = userId;
-	}
-
-	[NotMapped]
-	public Offset2D TitleOffset
-	{
-		get => new Offset2D(TitleOffsetX, TitleOffsetY);
-		set { TitleOffsetX = value.x; TitleOffsetY = value.y; }
-	}
-	[NotMapped]
-	public Offset2D LevelOffset
-	{
-		get => new Offset2D(LevelOffsetX, LevelOffsetY);
-		set { LevelOffsetX = value.x; LevelOffsetY = value.y; }
-	}
-	[NotMapped]
-	public Offset2D PfpOffset
-	{
-		get => new Offset2D(PfpOffsetX, PfpOffsetY);
-		set { PfpOffsetX = value.x; PfpOffsetY = value.y; }
-	}
-
 	[Key]
 	public ulong Id { get; set; }
 	public uint XpColor { get; set; } = 0xff70cefe;
@@ -52,38 +22,35 @@ public class UserRankcardConfig
 	public int PfpOffsetY { get; set; } = 100;
 	public float PfpRadiusFactor { get; set; } = 0.9f;
 	public RankcardFlags RankcardFlags { get; set; } = RankcardFlags.DisplayPfp | RankcardFlags.PfpBackground | RankcardFlags.ClipPfp | RankcardFlags.ShowHybrid;
-}
 
-public class Offset2D
-{
-	public int x;
-	public int y;
+	public UserRankcardConfig() { }
 
-	public Offset2D(int x = 0, int y = 0)
+	public UserRankcardConfig(IUser user)
 	{
-		this.x = x;
-		this.y = y;
+		Id = user.Id;
 	}
 
-	public static implicit operator SixLabors.ImageSharp.Point(Offset2D o) => new(o.x, o.y);
-	public static explicit operator Offset2D(SixLabors.ImageSharp.Point p) => new(p.X, p.Y);
-
-	public static Offset2D operator +(Offset2D o, int n) => new(o.x + n, o.y + n);
-	public static Offset2D operator -(Offset2D o, int n) => new(o.x - n, o.y - n);
-
-	public override string ToString()
+	public UserRankcardConfig(ulong userId)
 	{
-		return $"({x}, {y})";
+		Id = userId;
 	}
-}
 
-[Flags]
-public enum RankcardFlags
-{
-	None = 0,
-	PfpBackground = 1 << 0,
-	ClipPfp = 1 << 1,
-	DisplayPfp = 1 << 2,
-	ShowHybrid = 1 << 3,
-	InsetMainXP = 1 << 4
+	[NotMapped]
+	public Offset2D TitleOffset
+	{
+		get => new(TitleOffsetX, TitleOffsetY);
+		set { TitleOffsetX = value.x; TitleOffsetY = value.y; }
+	}
+	[NotMapped]
+	public Offset2D LevelOffset
+	{
+		get => new(LevelOffsetX, LevelOffsetY);
+		set { LevelOffsetX = value.x; LevelOffsetY = value.y; }
+	}
+	[NotMapped]
+	public Offset2D PfpOffset
+	{
+		get => new(PfpOffsetX, PfpOffsetY);
+		set { PfpOffsetX = value.x; PfpOffsetY = value.y; }
+	}
 }
