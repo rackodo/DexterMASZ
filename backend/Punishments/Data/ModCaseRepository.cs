@@ -23,7 +23,7 @@ using Utilities.Dynamics;
 namespace Punishments.Data;
 
 public class ModCaseRepository : Repository,
-	AddAdminStats, ImportGuildInfo, LoopCaches, CacheUsers, AddChart, AddGuildStats, AddQuickEntrySearch,
+	AddAdminStats, ImportGuildInfo, LoopCaches, AddChart, AddGuildStats, AddQuickEntrySearch,
 	AddNetworks, WhoIsResults, DeleteGuildData
 {
 	private readonly DiscordRest _discordRest;
@@ -98,30 +98,6 @@ public class ModCaseRepository : Repository,
 				CreatedAt = item.CreatedAt,
 				QuickSearchEntryType = QuickSearchEntryType.ModCase
 			});
-	}
-
-	public async Task CacheKnownUsers(List<ulong> handledUsers)
-	{
-		foreach (var modCase in await _punishmentDatabase.SelectLatestModCases(DateTime.UtcNow.AddYears(-3), 750))
-		{
-			if (!handledUsers.Contains(modCase.UserId))
-			{
-				await _discordRest.FetchUserInfo(modCase.UserId, CacheBehavior.IgnoreCache);
-				handledUsers.Add(modCase.UserId);
-			}
-
-			if (!handledUsers.Contains(modCase.ModId))
-			{
-				await _discordRest.FetchUserInfo(modCase.ModId, CacheBehavior.IgnoreCache);
-				handledUsers.Add(modCase.ModId);
-			}
-
-			if (handledUsers.Contains(modCase.LastEditedByModId))
-				continue;
-
-			await _discordRest.FetchUserInfo(modCase.LastEditedByModId, CacheBehavior.IgnoreCache);
-			handledUsers.Add(modCase.LastEditedByModId);
-		}
 	}
 
 	public async Task ImportGuildInfo(GuildConfig guildConfig)

@@ -16,7 +16,7 @@ using Utilities.Dynamics;
 namespace UserMaps.Data;
 
 public class UserMapRepository : Repository,
-	AddAdminStats, CacheUsers, AddGuildStats, AddSearch, AddNetworks, WhoIsResults, DeleteGuildData
+	AddAdminStats, AddGuildStats, AddSearch, AddNetworks, WhoIsResults, DeleteGuildData
 {
 	private readonly DiscordRest _discordRest;
 	private readonly UserMapEventHandler _eventHandler;
@@ -92,29 +92,6 @@ public class UserMapRepository : Repository,
 		}
 
 		data.userMapsViews = userMapsViews;
-	}
-
-	public async Task CacheKnownUsers(List<ulong> handledUsers)
-	{
-		foreach (var userMaps in await _userMapsDatabase.SelectLatestUserMaps(DateTime.UtcNow.AddYears(-3), 100))
-		{
-			if (!handledUsers.Contains(userMaps.UserA))
-			{
-				await _discordRest.FetchUserInfo(userMaps.UserA, CacheBehavior.IgnoreCache);
-				handledUsers.Add(userMaps.UserA);
-			}
-
-			if (!handledUsers.Contains(userMaps.UserB))
-			{
-				await _discordRest.FetchUserInfo(userMaps.UserB, CacheBehavior.IgnoreCache);
-				handledUsers.Add(userMaps.UserB);
-			}
-
-			if (handledUsers.Contains(userMaps.CreatorUserId)) continue;
-
-			await _discordRest.FetchUserInfo(userMaps.CreatorUserId, CacheBehavior.IgnoreCache);
-			handledUsers.Add(userMaps.CreatorUserId);
-		}
 	}
 
 	public async Task AddWhoIsInformation(EmbedBuilder embed, IGuildUser user, IInteractionContext context,

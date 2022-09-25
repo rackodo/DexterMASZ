@@ -107,18 +107,17 @@ public class ScheduledCacher : Event
 	{
 		_logger.LogInformation("Cacher | Starting caching.");
 
-		List<ulong> handledUsers = new();
-
-		handledUsers = await CacheAllKnownGuilds(handledUsers);
-		handledUsers = await CacheAllKnownUsers(handledUsers);
+		var handledUsers = await CacheAllKnownGuilds();
 
 		_logger.LogInformation($"Cacher | Done with {handledUsers.Count} entries.");
 
 		_eventHandler.InternalCachingDoneEvent.Invoke(handledUsers.Count, GetNextCacheSchedule());
 	}
 
-	public async Task<List<ulong>> CacheAllKnownGuilds(List<ulong> handledUsers)
+	public async Task<List<ulong>> CacheAllKnownGuilds()
 	{
+		var handledUsers = new List<ulong> ();
+
 		_logger.LogInformation("Cacher | Cache all registered guilds.");
 
 		using var scope = _serviceProvider.CreateScope();
@@ -170,18 +169,6 @@ public class ScheduledCacher : Event
 		if (users != null)
 			foreach (var item in users.Where(item => !handledUsers.Contains(item.Id)))
 				handledUsers.Add(item.Id);
-
-		return handledUsers;
-	}
-
-	public async Task<List<ulong>> CacheAllKnownUsers(List<ulong> handledUsers)
-	{
-		_logger.LogInformation("Cacher | Cache all known users.");
-
-		using var scope = _serviceProvider.CreateScope();
-
-		foreach (var repo in _cachedServices.GetInitializedClasses<CacheUsers>(scope.ServiceProvider))
-			await repo.CacheKnownUsers(handledUsers);
 
 		return handledUsers;
 	}

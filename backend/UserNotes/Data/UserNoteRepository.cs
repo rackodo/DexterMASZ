@@ -14,7 +14,7 @@ using Utilities.Dynamics;
 namespace UserNotes.Data;
 
 public class UserNoteRepository : Repository,
-	AddAdminStats, CacheUsers, AddGuildStats, AddSearch, AddNetworks, WhoIsResults, DeleteGuildData
+	AddAdminStats, AddGuildStats, AddSearch, AddNetworks, WhoIsResults, DeleteGuildData
 {
 	private readonly DiscordRest _discordRest;
 	private readonly UserNoteEventHandler _eventHandler;
@@ -75,23 +75,6 @@ public class UserNoteRepository : Repository,
 		}
 
 		data.userNoteView = userNote;
-	}
-
-	public async Task CacheKnownUsers(List<ulong> handledUsers)
-	{
-		foreach (var userNote in await _userNoteDatabase.SelectLatestUserNotes(DateTime.UtcNow.AddYears(-3), 100))
-		{
-			if (!handledUsers.Contains(userNote.UserId))
-			{
-				await _discordRest.FetchUserInfo(userNote.UserId, CacheBehavior.IgnoreCache);
-				handledUsers.Add(userNote.UserId);
-			}
-
-			if (handledUsers.Contains(userNote.CreatorId)) continue;
-
-			await _discordRest.FetchUserInfo(userNote.CreatorId, CacheBehavior.IgnoreCache);
-			handledUsers.Add(userNote.CreatorId);
-		}
 	}
 
 	public async Task AddWhoIsInformation(EmbedBuilder embed, IGuildUser user, IInteractionContext context,

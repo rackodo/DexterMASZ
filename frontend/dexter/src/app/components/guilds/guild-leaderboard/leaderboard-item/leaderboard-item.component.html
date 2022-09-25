@@ -7,7 +7,7 @@
   />
   <div class="rank me-2"><span [style.color]="'#'+rankColor()">{{index+1}}</span></div>
   <div class="name me-4" *ngIf="userLevel.user != null">{{userLevel.user.username}}#{{userLevel.user.discriminator}}</div>
-  <div class="name me-4" *ngIf="userLevel.user == null">{{userLevel.userId}}</div>
+  <div class="name me-4" *ngIf="userLevel.user == null">Unkown User {{userLevel.userId}}</div>
   <div class="side-right">
     <div class="xp me-2">{{record.xp | unitFormat}} XP</div>
     <div class="xpbar-container">
