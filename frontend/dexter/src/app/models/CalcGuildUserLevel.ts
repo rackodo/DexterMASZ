@@ -7,5 +7,5 @@ export interface CalcGuildUserLevel {
     textXp: ExperienceRecord;
     voiceXp: ExperienceRecord;
     totalXp: ExperienceRecord;
-    user: DiscordUser;
+    user?: DiscordUser;
 }
