@@ -118,8 +118,8 @@ public static partial class Rankcard
 	internal class RankcardLevelData : LevelData
 	{
 		public bool isHybrid = false;
-		public float Percent => Residualxp / (float)Levelxp;
-		public string XpExpr => $"{Residualxp.ToUnit()} / {Levelxp.ToUnit()}{(isHybrid ? "" : " XP")}";
+		public float Percent => ResidualXp / (float)LevelXp;
+		public string XpExpr => $"{ResidualXp.ToUnit()} / {LevelXp.ToUnit()}{(isHybrid ? "" : " XP")}";
 		public string xpType = "";
 
 		public int rank;

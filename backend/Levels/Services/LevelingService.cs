@@ -62,7 +62,7 @@ public class LevelingService : Event
 			grantedxp += xp;
 		}
 		CalculatedGuildUserLevel calcLevel = new(level, config);
-		if (calcLevel.Total.Residualxp < grantedxp)
+		if (calcLevel.Total.ResidualXp < grantedxp)
 		{
 			_eventHandler.UserLevelUpEvent.Invoke(level, calcLevel.Total.Level, user, channel);
 		}

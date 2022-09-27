@@ -69,6 +69,6 @@ public class PunishmentEventAudit : Event
 	private async Task OnModCaseCreated(ModCase modCase, IUser actor, AnnouncementResult result)
 	{
 		await _auditLogger.QueueLog(
-			$"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> by <@{modCase.ModId}> created. Resulted DM: {result}.");
+			$"**Mod case** `{modCase.GuildId}/{modCase.CaseId}` for <@{modCase.UserId}> by <@{modCase.ModId}> created.");
 	}
 }

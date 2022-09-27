@@ -5,6 +5,7 @@ using Discord;
 using Discord.Interactions;
 using Humanizer;
 using Levels.Data;
+using Levels.Enums;
 using Levels.Models;
 
 namespace Levels.Commands;
@@ -94,13 +95,15 @@ public class Experience : Command<Experience>
 		var roleTargetXp = GuildUserLevel.XPFromLevel(roleTargetLevel, guildlevelconfig);
 
 		var embed = new EmbedBuilder()
-			.WithTitle($"XP Summary for: {user.Id}")
-			.WithDescription($"Level {LevelDataExpression(calclevel.Total)}\n" +
-			$"Text Level: {LevelDataExpression(calclevel.Text)}\n" +
-			$"Voice Level: {LevelDataExpression(calclevel.Voice)}")
-			.AddField("Experience", $"{level.TotalXP} ({level.TextXp} from text + {level.VoiceXp} from voice)")
-			.AddField($"Till level {levelTarget}:", LevelTargetExpression(level.TotalXP, targetXp, guildlevelconfig))
-			.AddField($"Till rank {roleTargetName}:", LevelTargetExpression(level.TotalXP, roleTargetXp, guildlevelconfig))
+			.WithTitle($"{user.Username}#{user.Discriminator}'s XP Summary")
+			.WithImageUrl(user.GetAvatarUrl())
+			.WithDescription(
+				$"{LevelDataExpression(LevelType.Total, calclevel)}\n" +
+				$"{LevelDataExpression(LevelType.Text, calclevel)}\n" +
+				$"{LevelDataExpression(LevelType.Voice, calclevel)}\n\n" +
+				$"**Until Level {levelTarget}:** {LevelTargetExpression(level.TotalXP, targetXp, guildlevelconfig)}\n\n" +
+				$"**Until {levelTarget} Rank:** {LevelTargetExpression(level.TotalXP, roleTargetXp, guildlevelconfig)}")
+			.WithColor(Color.Blue)
 			.Build();
 
 		var guildconfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
@@ -108,12 +111,20 @@ public class Experience : Command<Experience>
 		await RespondAsync("", ephemeral: ephemeral, embed: embed);
 	}
 
-	private string LevelDataExpression(LevelData data)
+	private static string LevelDataExpression(LevelType type, CalculatedGuildUserLevel level)
 	{
-		return $"{data.Level} ({data.Residualxp}/{data.Levelxp})";
+		var data = type switch
+		{
+			LevelType.Total => level.Total,
+			LevelType.Voice => level.Voice,
+			LevelType.Text => level.Text,
+			_ => throw new NotImplementedException()
+		};
+
+		return $"**{type} Level:** {data.Level} ({data.ResidualXp}/{data.LevelXp} xp, total {data.Xp})";
 	}
 
-	private string LevelTargetExpression(long currentXP, long targetXP, GuildLevelConfig config)
+	private static string LevelTargetExpression(long currentXP, long targetXP, GuildLevelConfig config)
 	{
 		string textExpr;
 		try
@@ -125,6 +136,7 @@ public class Experience : Command<Experience>
 		{
 			textExpr = "a **very** long time";
 		}
+
 		string voiceExpr;
 		try
 		{
@@ -135,9 +147,10 @@ public class Experience : Command<Experience>
 		{
 			voiceExpr = "a **very** long time";
 		}
-		if (targetXP > currentXP) return $"{currentXP} out of {targetXP} experience. Missing {targetXP - currentXP}; " +
-			$"which can be obtained in an average of {textExpr} through text activity " +
-			$"or in an average of {voiceExpr} through voice activity.";
-		else return $"{currentXP} out of {targetXP}. Exceeded target by {currentXP - targetXP} experience.";
+
+		if (targetXP > currentXP)
+			return $"An average of **{textExpr} through text**, or **{voiceExpr} through voice** " +
+				$"({currentXP}/{targetXP} xp, missing {targetXP - currentXP})";
+		else return $"Exceeded target by {currentXP - targetXP} experience ({currentXP}/{targetXP}).";
 	}
 }

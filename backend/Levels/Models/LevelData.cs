@@ -11,8 +11,8 @@ public class LevelData : IComparable<LevelData>
 
 	public int Level => _level;
 	public long Xp => _xp;
-	public long Levelxp => _levelxp;
-	public long Residualxp => _residualxp;
+	public long LevelXp => _levelxp;
+	public long ResidualXp => _residualxp;
 
 	public void AddXp(long increment, GuildLevelConfig config)
 	{
