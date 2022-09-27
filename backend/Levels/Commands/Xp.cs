@@ -94,14 +94,14 @@ public class Experience : Command<Experience>
 		var roleTargetXp = GuildUserLevel.XPFromLevel(roleTargetLevel, guildlevelconfig);
 
 		var embed = new EmbedBuilder()
-			.WithTitle($"{user.Username}#{user.Discriminator}'s Experience Summary")
-			.WithThumbnailUrl(user.GetAvatarUrl())
+			.WithTitle($"Experience Summary")
+			.WithAuthor(user)
 			.WithDescription(
 				$"{LevelDataExpression(LevelType.Total, calclevel)}\n" +
 				$"{LevelDataExpression(LevelType.Text, calclevel)}\n" +
 				$"{LevelDataExpression(LevelType.Voice, calclevel)}")
-			.AddField($"Until Level {levelTarget}:", LevelTargetExpression(level.TotalXP, targetXp, guildlevelconfig))
-			.AddField($"Until {roleTargetName} Rank:", LevelTargetExpression(level.TotalXP, roleTargetXp, guildlevelconfig))
+			.AddField($"Time Until Level {levelTarget}:", LevelTargetExpression(level.TotalXP, targetXp, guildlevelconfig))
+			.AddField($"Time Until {roleTargetName} Rank:", LevelTargetExpression(level.TotalXP, roleTargetXp, guildlevelconfig))
 			.WithColor(Color.Blue)
 			.Build();
 
@@ -120,7 +120,7 @@ public class Experience : Command<Experience>
 			_ => throw new NotImplementedException()
 		};
 
-		return $"**{type} Level:** {data.Level}, or {data.ResidualXp}/{data.LevelXp} experience; totalling {data.Xp}";
+		return $"**{type} Level: {data.Level}**, or {data.ResidualXp}/{data.LevelXp} experience; totalling {data.Xp}";
 	}
 
 	private static string LevelTargetExpression(long currentXP, long targetXP, GuildLevelConfig config)
@@ -148,9 +148,9 @@ public class Experience : Command<Experience>
 		}
 
 		if (targetXP > currentXP)
-			return $"Text Average: {textExpr}\n" +
-				$"Voice Average: {voiceExpr}\n" +
-				$"Experience: {currentXP}/{targetXP}, missing {targetXP - currentXP} xp";
+			return $"**Text:** {textExpr}\n" +
+				$"**Voice:** {voiceExpr}\n" +
+				$"Experience: {currentXP} out of {targetXP}, missing {targetXP - currentXP}";
 		else return $"Exceeded target by {currentXP - targetXP} experience ({currentXP}/{targetXP}).";
 	}
 }
