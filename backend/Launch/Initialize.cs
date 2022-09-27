@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 using Microsoft.EntityFrameworkCore;
-using MySqlConnector;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Module = Bot.Abstractions.Module;
 
@@ -49,12 +48,11 @@ public class Initialize
 
 				builder.Services.AddSingleton(appSettings);
 			}
-			catch (MySqlException e)
+			catch (Exception e)
 			{
 				Console.WriteLine();
 
-				ConsoleHelper.AddSubHeading("Failed to get app settings",
-					$"{e.Message} (MySqlException)");
+				ConsoleHelper.AddSubHeading("Failed to get app settings", e.ToString());
 
 				ConsoleHelper.AddHeading("Trying to add migrations, in the case of an error!");
 

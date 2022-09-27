@@ -85,7 +85,7 @@ public class DiscordRestController : AuthenticatedController
 	[HttpGet("users/{userid}")]
 	public async Task<IActionResult> GetSpecificUser([FromRoute] ulong userid)
 	{
-		var user = await _discordRest.FetchUserInfo(userid, CacheBehavior.OnlyCache);
+		var user = await _discordRest.FetchUserInfo(userid);
 
 		if (user != null)
 			return Ok(DiscordUser.GetDiscordUser(user));

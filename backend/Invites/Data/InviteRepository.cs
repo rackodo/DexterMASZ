@@ -1,6 +1,5 @@
 ﻿using Bot.Abstractions;
 using Bot.Dynamics;
-using Bot.Enums;
 using Bot.Extensions;
 using Bot.Services;
 using Bot.Translators;
@@ -54,8 +53,8 @@ public class InviteRepository : Repository,
 
 			invited.Add(new UserInviteExpanded(
 				invite,
-				await _discordRest.FetchUserInfo(invite.JoinedUserId, CacheBehavior.OnlyCache),
-				await _discordRest.FetchUserInfo(invite.InviteIssuerId, CacheBehavior.OnlyCache)
+				await _discordRest.FetchUserInfo(invite.JoinedUserId),
+				await _discordRest.FetchUserInfo(invite.InviteIssuerId)
 			));
 		}
 
@@ -67,8 +66,8 @@ public class InviteRepository : Repository,
 
 			invitedBy.Add(new UserInviteExpanded(
 				invite,
-				await _discordRest.FetchUserInfo(invite.JoinedUserId, CacheBehavior.OnlyCache),
-				await _discordRest.FetchUserInfo(invite.InviteIssuerId, CacheBehavior.OnlyCache)
+				await _discordRest.FetchUserInfo(invite.JoinedUserId),
+				await _discordRest.FetchUserInfo(invite.InviteIssuerId)
 			));
 		}
 

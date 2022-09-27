@@ -53,7 +53,7 @@ public class UserNetworkController : AuthenticatedController
 		if (modGuilds.Count == 0)
 			return Unauthorized();
 
-		var searchedUser = DiscordUser.GetDiscordUser(await _discordRest.FetchUserInfo(userId, CacheBehavior.IgnoreButCacheOnError));
+		var searchedUser = DiscordUser.GetDiscordUser(await _discordRest.FetchUserInfo(userId));
 
 		dynamic data = new ExpandoObject();
 

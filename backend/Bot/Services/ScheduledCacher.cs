@@ -6,6 +6,7 @@ using Bot.Events;
 using Bot.Exceptions;
 using Bot.Extensions;
 using Bot.Models;
+using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Timer = System.Timers.Timer;
@@ -21,24 +22,50 @@ public class ScheduledCacher : Event
 	private readonly ILogger<ScheduledCacher> _logger;
 	private readonly CachedServices _cachedServices;
 	private readonly IServiceProvider _serviceProvider;
+	private readonly DiscordSocketClient _client;
 
 	private DateTime _nextCacheSchedule;
 
-	public ScheduledCacher(ILogger<ScheduledCacher> logger, DiscordRest discordRest, IServiceProvider serviceProvider,
-		IdentityManager identityManager, BotEventHandler eventHandler, CachedServices cachedServices)
+	public ScheduledCacher(DiscordRest discordRest, BotEventHandler eventHandler,
+		IdentityManager identityManager, ILogger<ScheduledCacher> logger, CachedServices cachedServices,
+		IServiceProvider serviceProvider, DiscordSocketClient client)
 	{
-		_logger = logger;
 		_discordRest = discordRest;
-		_serviceProvider = serviceProvider;
-		_identityManager = identityManager;
 		_eventHandler = eventHandler;
+		_identityManager = identityManager;
+		_logger = logger;
 		_cachedServices = cachedServices;
+		_serviceProvider = serviceProvider;
+		_client = client;
 	}
 
 	public void RegisterEvents()
 	{
 		_eventHandler.OnBotLaunched += StartCaching;
 		_eventHandler.OnGuildRegistered += HandleGuildRegister;
+		_client.UserLeft += HandleUserLeftCaching;
+		_client.UserJoined += HandleUserJoinCaching;
+	}
+
+	private async Task HandleUserJoinCaching(SocketGuildUser user)
+	{
+		using var scope = _serviceProvider.CreateScope();
+
+		var userRepo = scope.ServiceProvider.GetRequiredService<UserRepository>();
+
+		await userRepo.RemoveUserIfExists(user);
+	}
+
+	private async Task HandleUserLeftCaching(SocketGuild _, SocketUser user)
+	{
+		if(user.MutualGuilds.Count <= 0)
+		{
+			using var scope = _serviceProvider.CreateScope();
+
+			var userRepo = scope.ServiceProvider.GetRequiredService<UserRepository>();
+
+			await userRepo.AddUserIfDoesNotExist(user);
+		}
 	}
 
 	private async Task HandleGuildRegister(GuildConfig guildConfig, bool importExistingBans)

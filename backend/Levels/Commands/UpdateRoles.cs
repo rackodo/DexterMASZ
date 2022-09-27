@@ -4,9 +4,7 @@ using Bot.Exceptions;
 using Bot.Services;
 using Discord;
 using Discord.Interactions;
-using Humanizer;
 using Levels.Data;
-using Levels.Events;
 using Levels.Models;
 using Levels.Services;
 

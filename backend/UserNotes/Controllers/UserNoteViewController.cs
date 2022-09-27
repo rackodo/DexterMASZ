@@ -34,8 +34,8 @@ public class UserNoteViewController : AuthenticatedController
 		foreach (var userNote in userNotes)
 			userNoteViews.Add(new UserNoteExpanded(
 				userNote,
-				await _discordRest.FetchUserInfo(userNote.UserId, CacheBehavior.OnlyCache),
-				await _discordRest.FetchUserInfo(userNote.CreatorId, CacheBehavior.OnlyCache)
+				await _discordRest.FetchUserInfo(userNote.UserId),
+				await _discordRest.FetchUserInfo(userNote.CreatorId)
 			));
 
 		return Ok(userNoteViews);

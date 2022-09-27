@@ -42,14 +42,14 @@ public class Track : Command<Track>
 			createdAt = invites.First().InviteCreatedAt;
 
 			if (invites.First().InviteIssuerId != 0)
-				creator = await DiscordRest.FetchUserInfo(invites.First().InviteIssuerId, CacheBehavior.Default);
+				creator = await DiscordRest.FetchUserInfo(invites.First().InviteIssuerId);
 
 			const int count = 0;
 
 			foreach (var invite in invites.TakeWhile(_ => count <= 20).Where(invite => !invitees.ContainsKey(invite.JoinedUserId)))
 			{
 				invitees.Add(invite.JoinedUserId,
-					await DiscordRest.FetchUserInfo(invite.JoinedUserId, CacheBehavior.Default));
+					await DiscordRest.FetchUserInfo(invite.JoinedUserId));
 			}
 		}
 		else
@@ -68,7 +68,7 @@ public class Track : Command<Track>
 				try
 				{
 					usages = fetchedInvite.Uses;
-					creator = await DiscordRest.FetchUserInfo(fetchedInvite.Inviter.Id, CacheBehavior.Default);
+					creator = await DiscordRest.FetchUserInfo(fetchedInvite.Inviter.Id);
 				}
 				catch (NullReferenceException)
 				{

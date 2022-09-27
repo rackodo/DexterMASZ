@@ -122,7 +122,8 @@ public class AuditLogger : IHostedService, Event
 		if (log.Exception != null)
 		{
 			await QueueLog("======= ERROR ENCOUNTERED =======");
-			await QueueLog($"Exception: {log.Exception.ToString().NormalizeMarkdown()}");
+			foreach (var l in log.Exception.ToString().NormalizeMarkdown().Split('\n'))
+				await QueueLog(l);
 			await QueueLog("=================================", true);
 		}
 	}

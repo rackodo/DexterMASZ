@@ -30,7 +30,7 @@ public class MotdController : AuthenticatedController
 
 		var motd = await _guildMotdRepo.GetMotd(guildId);
 
-		var creator = await _discordRest.FetchUserInfo(motd.UserId, CacheBehavior.Default);
+		var creator = await _discordRest.FetchUserInfo(motd.UserId);
 
 		return Ok(new MotdExpandedView(motd, creator));
 	}

@@ -21,6 +21,8 @@ public class BotDatabase : DataContext<BotDatabase>, DataContextCreate
 
 	public DbSet<GuildConfig> GuildConfigs { get; set; }
 
+	public DbSet<LeftUser> LeftUsers { get; set; }
+
 	public async Task<AppSettings> GetAppSettings(ulong clientId)
 	{
 		return await AppSettings.FindAsync(clientId);
@@ -35,6 +37,29 @@ public class BotDatabase : DataContext<BotDatabase>, DataContextCreate
 	public async Task AddAppSetting(AppSettings appSettings)
 	{
 		AppSettings.Add(appSettings);
+		await SaveChangesAsync();
+	}
+
+	public async Task<LeftUser> GetLeftUser(ulong userId)
+	{
+		return await LeftUsers.FindAsync(userId);
+	}
+
+	public async Task RemoveLeftUser(LeftUser leftUser)
+	{
+		LeftUsers.Remove(leftUser);
+		await SaveChangesAsync();
+	}
+
+	public async Task AddLeftUser(LeftUser leftUser)
+	{
+		LeftUsers.Add(leftUser);
+		await SaveChangesAsync();
+	}
+
+	public async Task UpdateUser(LeftUser leftUser)
+	{
+		LeftUsers.Update(leftUser);
 		await SaveChangesAsync();
 	}
 

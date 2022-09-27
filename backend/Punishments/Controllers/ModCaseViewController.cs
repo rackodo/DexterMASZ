@@ -42,14 +42,14 @@ public class ModCaseViewController : AuthenticatedController
 
 		await identity.RequirePermission(ApiActionPermission.View, modCase);
 
-		var suspect = await _discordRest.FetchUserInfo(modCase.UserId, CacheBehavior.OnlyCache);
+		var suspect = await _discordRest.FetchUserInfo(modCase.UserId);
 
 		var comments = new List<ModCaseCommentExpanded>();
 
 		foreach (var comment in modCase.Comments)
 			comments.Add(new ModCaseCommentExpanded(
 				comment,
-				await _discordRest.FetchUserInfo(comment.UserId, CacheBehavior.OnlyCache)
+				await _discordRest.FetchUserInfo(comment.UserId)
 			));
 
 		UserNoteExpanded userNote = null;
@@ -61,7 +61,7 @@ public class ModCaseViewController : AuthenticatedController
 				userNote = new UserNoteExpanded(
 					note,
 					suspect,
-					await _discordRest.FetchUserInfo(note.CreatorId, CacheBehavior.OnlyCache)
+					await _discordRest.FetchUserInfo(note.CreatorId)
 				);
 			}
 			catch (ResourceNotFoundException)
@@ -70,8 +70,8 @@ public class ModCaseViewController : AuthenticatedController
 
 		var caseView = new ModCaseExpanded(
 			modCase,
-			await _discordRest.FetchUserInfo(modCase.ModId, CacheBehavior.OnlyCache),
-			await _discordRest.FetchUserInfo(modCase.LastEditedByModId, CacheBehavior.OnlyCache),
+			await _discordRest.FetchUserInfo(modCase.ModId),
+			await _discordRest.FetchUserInfo(modCase.LastEditedByModId),
 			suspect,
 			comments,
 			userNote
@@ -79,11 +79,11 @@ public class ModCaseViewController : AuthenticatedController
 
 		if (modCase.LockedByUserId != 0)
 			caseView.LockedBy =
-				DiscordUser.GetDiscordUser(await _discordRest.FetchUserInfo(modCase.LockedByUserId, CacheBehavior.OnlyCache));
+				DiscordUser.GetDiscordUser(await _discordRest.FetchUserInfo(modCase.LockedByUserId));
 
 		if (modCase.DeletedByUserId != 0)
 			caseView.DeletedBy =
-				DiscordUser.GetDiscordUser(await _discordRest.FetchUserInfo(modCase.DeletedByUserId, CacheBehavior.OnlyCache));
+				DiscordUser.GetDiscordUser(await _discordRest.FetchUserInfo(modCase.DeletedByUserId));
 
 		if (!(await identity.HasPermission(DiscordPermission.Moderator, guildId) || guildConfig.PublishModeratorInfo))
 			caseView.RemoveModeratorInfo();

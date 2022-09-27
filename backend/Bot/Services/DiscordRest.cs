@@ -9,6 +9,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace Bot.Services;
 
@@ -190,34 +191,54 @@ public class DiscordRest : IHostedService, Event
 		return ban;
 	}
 
-	public async Task<IUser> FetchUserInfo(ulong userId, CacheBehavior cacheBehavior)
+	public async Task<IUser> FetchUserInfo(ulong userId)
 	{
 		var cacheKey = CacheKey.User(userId);
-		IUser user = null;
+		IUser user;
 
 		try
 		{
-			user = TryGetFromCache<IUser>(cacheKey, cacheBehavior);
-			if (user != null) return user;
-		}
-		catch (NotFoundInCacheException)
-		{
-			return user;
-		}
+			user = TryGetFromCache<IUser>(cacheKey, CacheBehavior.OnlyCache);
 
-		try
+			if (user != null)
+				return user;
+		}
+		catch (NotFoundInCacheException) {}
+
+		using var scope = _serviceProvider.CreateScope();
+
+		var userRepo = scope.ServiceProvider.GetRequiredService<UserRepository>();
+
+		user = await userRepo.TryGetUser(userId);
+
+		if (user == null)
 		{
 			user = await _client.GetUserAsync(userId);
+			await userRepo.AddUserIfDoesNotExist(user);
 		}
-		catch (Exception e)
+		else if(!await IsImageAvailable(user.GetAvatarUrl()))
 		{
-			_logger.LogError(e, $"Failed to fetch user '{userId}' from API.");
-			return FallBackToCache<IUser>(cacheKey, cacheBehavior);
+			user = await _client.GetUserAsync(userId);
+			await userRepo.UpdateUser(user);
 		}
 
 		SetCacheValue(cacheKey, new CacheApiResponse(user));
 
 		return user;
+	}
+
+	private static async Task<bool> IsImageAvailable(string imageUrl)
+	{
+		using var client = new HttpClient();
+
+		var response = await client.GetAsync(imageUrl);
+
+		if (response.IsSuccessStatusCode)
+			return true;
+		else if (response.StatusCode == HttpStatusCode.NotFound)
+			return false;
+		else
+			throw new UnauthorizedException();
 	}
 
 	public async Task<List<IGuildUser>> FetchGuildUsers(ulong guildId, CacheBehavior cacheBehavior)

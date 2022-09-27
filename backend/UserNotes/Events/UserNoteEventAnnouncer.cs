@@ -53,7 +53,7 @@ public class UserNoteEventAnnouncer : Event
 
 		try
 		{
-			var user = await _discordRest.FetchUserInfo(userNote.UserId, CacheBehavior.Default);
+			var user = await _discordRest.FetchUserInfo(userNote.UserId);
 			var embed = await userNote.CreateUserNoteEmbed(action, actor, user, scope.ServiceProvider);
 
 			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
