@@ -23,8 +23,7 @@ public class Experience : Command<Experience>
 	public async Task RankCommand(
 		[Summary("user", "Target user to get rank from.")] IUser? user = null,
 		[Summary("level", "The level you wish to get information about")] int levelTarget = -1,
-		[Summary("rank", "The rank you wish to get information about")] IRole roleTarget = null
-		)
+		[Summary("rank", "The rank you wish to get information about")] IRole roleTarget = null)
 	{
 		if (Context.Channel is not IGuildChannel)
 		{
@@ -96,13 +95,13 @@ public class Experience : Command<Experience>
 
 		var embed = new EmbedBuilder()
 			.WithTitle($"{user.Username}#{user.Discriminator}'s XP Summary")
-			.WithImageUrl(user.GetAvatarUrl())
+			.WithThumbnailUrl(user.GetAvatarUrl())
 			.WithDescription(
 				$"{LevelDataExpression(LevelType.Total, calclevel)}\n" +
 				$"{LevelDataExpression(LevelType.Text, calclevel)}\n" +
-				$"{LevelDataExpression(LevelType.Voice, calclevel)}\n\n" +
-				$"**Until Level {levelTarget}:** {LevelTargetExpression(level.TotalXP, targetXp, guildlevelconfig)}\n\n" +
-				$"**Until {levelTarget} Rank:** {LevelTargetExpression(level.TotalXP, roleTargetXp, guildlevelconfig)}")
+				$"{LevelDataExpression(LevelType.Voice, calclevel)}")
+			.AddField($"Until Level {levelTarget}:", LevelTargetExpression(level.TotalXP, targetXp, guildlevelconfig))
+			.AddField($"Until {roleTargetName} Rank:", LevelTargetExpression(level.TotalXP, roleTargetXp, guildlevelconfig))
 			.WithColor(Color.Blue)
 			.Build();
 
