@@ -31,6 +31,7 @@ public class AuditLogger : IHostedService, Event
 	{
 		_client.Connected += OnBotReady;
 		_client.Disconnected += OnDisconnect;
+		_client.Log += OnLog;
 	}
 
 	public async Task StartAsync(CancellationToken _)
@@ -113,6 +114,19 @@ public class AuditLogger : IHostedService, Event
 		catch (Exception e)
 		{
 			_logger.LogError(e, "Error executing audit log webhook. ");
+		}
+	}
+
+	private async Task OnLog(LogMessage log)
+	{
+		if (log.Exception != null)
+		{
+			var config = await GetConfig();
+
+			await QueueLog("======= ERROR ENCOUNTERED =======");
+			await QueueLog($"Notifying: {string.Join(' ', config.SiteAdmins.Select(i => $"<@{i}>"))}");
+			await QueueLog($"Exception: {log.Exception}");
+			await QueueLog("=================================", true);
 		}
 	}
 
