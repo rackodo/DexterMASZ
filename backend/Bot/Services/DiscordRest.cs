@@ -215,8 +215,7 @@ public class DiscordRest : IHostedService, Event
 		{
 			if (user == null)
 			{
-				user = await _client.GetUserAsync(userId);
-				await userRepo.AddUserIfDoesNotExist(user);
+			return user;
 			}
 			else if (!await IsImageAvailable(user.GetAvatarUrl()))
 			{
