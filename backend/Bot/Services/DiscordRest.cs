@@ -211,15 +211,22 @@ public class DiscordRest : IHostedService, Event
 
 		user = await userRepo.TryGetUser(userId);
 
-		if (user == null)
+		try
 		{
-			user = await _client.GetUserAsync(userId);
-			await userRepo.AddUserIfDoesNotExist(user);
-		}
-		else if(!await IsImageAvailable(user.GetAvatarUrl()))
+			if (user == null)
+			{
+				user = await _client.GetUserAsync(userId);
+				await userRepo.AddUserIfDoesNotExist(user);
+			}
+			else if (!await IsImageAvailable(user.GetAvatarUrl()))
+			{
+				user = await _client.GetUserAsync(userId);
+				await userRepo.UpdateUser(user);
+			}
+		} catch (Exception e)
 		{
-			user = await _client.GetUserAsync(userId);
-			await userRepo.UpdateUser(user);
+			_logger.LogError(e, $"Failed to fetch user '{userId}' from API.");
+			return FallBackToCache<IUser>(cacheKey, CacheBehavior.Default);
 		}
 
 		SetCacheValue(cacheKey, new CacheApiResponse(user));
