@@ -223,7 +223,8 @@ public class DiscordRest : IHostedService, Event
 				user = await _client.GetUserAsync(userId);
 				await userRepo.UpdateUser(user);
 			}
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			_logger.LogError(e, $"Failed to fetch user '{userId}' from API.");
 			return FallBackToCache<IUser>(cacheKey, CacheBehavior.Default);
