@@ -121,8 +121,6 @@ public class AuditLogger : IHostedService, Event
 	{
 		if (log.Exception != null)
 		{
-			var config = await GetConfig();
-
 			await QueueLog("======= ERROR ENCOUNTERED =======");
 			await QueueLog($"Exception: {log.Exception.ToString().NormalizeMarkdown()}");
 			await QueueLog("=================================", true);

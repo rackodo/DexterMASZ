@@ -94,8 +94,8 @@ public class Experience : Command<Experience>
 		var roleTargetXp = GuildUserLevel.XPFromLevel(roleTargetLevel, guildlevelconfig);
 
 		var embed = new EmbedBuilder()
-			.WithTitle($"Experience Summary")
-			.WithAuthor(user)
+			.WithTitle($"{user.Username}#{user.Discriminator}'s Experience Summary")
+			.WithThumbnailUrl(user.GetAvatarUrl())
 			.WithDescription(
 				$"{LevelDataExpression(LevelType.Total, calclevel)}\n" +
 				$"{LevelDataExpression(LevelType.Text, calclevel)}\n" +
@@ -148,9 +148,10 @@ public class Experience : Command<Experience>
 		}
 
 		if (targetXP > currentXP)
-			return $"**Text:** {textExpr}\n" +
+			return $"\n" +
+				$"**Text:** {textExpr}\n" +
 				$"**Voice:** {voiceExpr}\n" +
-				$"Experience: {currentXP} out of {targetXP}, missing {targetXP - currentXP}";
+				$"**Experience:** {currentXP} out of {targetXP}, missing {targetXP - currentXP}";
 		else return $"Exceeded target by {currentXP - targetXP} experience ({currentXP}/{targetXP}).";
 	}
 }
