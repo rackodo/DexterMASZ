@@ -100,8 +100,8 @@ public class Experience : Command<Experience>
 				$"{LevelDataExpression(LevelType.Total, calclevel)}\n" +
 				$"{LevelDataExpression(LevelType.Text, calclevel)}\n" +
 				$"{LevelDataExpression(LevelType.Voice, calclevel)}")
-			.AddField($"Time Until Level {levelTarget}:", LevelTargetExpression(level.TotalXP, targetXp, guildlevelconfig))
-			.AddField($"Time Until {roleTargetName} Rank:", LevelTargetExpression(level.TotalXP, roleTargetXp, guildlevelconfig))
+			.AddField($"Till Level {levelTarget}:", LevelTargetExpression(level.TotalXP, targetXp, guildlevelconfig))
+			.AddField($"Till {roleTargetName} Rank:", LevelTargetExpression(level.TotalXP, roleTargetXp, guildlevelconfig))
 			.WithColor(Color.Blue)
 			.Build();
 
@@ -149,8 +149,8 @@ public class Experience : Command<Experience>
 
 		if (targetXP > currentXP)
 			return
-				$"**Text:** {textExpr} average.\n" +
-				$"**Voice:** {voiceExpr} average.\n" +
+				$"**Text:** {textExpr} average time.\n" +
+				$"**Voice:** {voiceExpr} average time.\n" +
 				$"**Experience:** {currentXP} out of {targetXP}, missing {targetXP - currentXP}.";
 		else return $"Exceeded target by {currentXP - targetXP} experience ({currentXP}/{targetXP}).";
 	}
