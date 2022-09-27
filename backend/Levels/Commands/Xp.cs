@@ -94,7 +94,7 @@ public class Experience : Command<Experience>
 		var roleTargetXp = GuildUserLevel.XPFromLevel(roleTargetLevel, guildlevelconfig);
 
 		var embed = new EmbedBuilder()
-			.WithTitle($"{user.Username}#{user.Discriminator}'s XP Summary")
+			.WithTitle($"{user.Username}#{user.Discriminator}'s Experience Summary")
 			.WithThumbnailUrl(user.GetAvatarUrl())
 			.WithDescription(
 				$"{LevelDataExpression(LevelType.Total, calclevel)}\n" +
@@ -120,7 +120,7 @@ public class Experience : Command<Experience>
 			_ => throw new NotImplementedException()
 		};
 
-		return $"**{type} Level:** {data.Level} ({data.ResidualXp}/{data.LevelXp}, totalling {data.Xp} xp)";
+		return $"**{type} Level:** {data.Level}, or {data.ResidualXp}/{data.LevelXp} experience; totalling {data.Xp}";
 	}
 
 	private static string LevelTargetExpression(long currentXP, long targetXP, GuildLevelConfig config)
@@ -150,7 +150,7 @@ public class Experience : Command<Experience>
 		if (targetXP > currentXP)
 			return $"**Text Average:** {textExpr}\n" +
 				$"**Voice Average:** {voiceExpr}\n" +
-				$"**Experience:** ({currentXP}/{targetXP}, missing {targetXP - currentXP} xp)";
+				$"**Experience:** {currentXP}/{targetXP}, missing {targetXP - currentXP} xp";
 		else return $"Exceeded target by {currentXP - targetXP} experience ({currentXP}/{targetXP}).";
 	}
 }
