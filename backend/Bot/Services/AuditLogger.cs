@@ -124,8 +124,7 @@ public class AuditLogger : IHostedService, Event
 			var config = await GetConfig();
 
 			await QueueLog("======= ERROR ENCOUNTERED =======");
-			await QueueLog($"Notifying: {string.Join(' ', config.SiteAdmins.Select(i => $"<@{i}>"))}");
-			await QueueLog($"Exception: {log.Exception}");
+			await QueueLog($"Exception: {log.Exception.ToString().NormalizeMarkdown()}");
 			await QueueLog("=================================", true);
 		}
 	}
