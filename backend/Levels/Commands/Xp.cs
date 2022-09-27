@@ -120,7 +120,7 @@ public class Experience : Command<Experience>
 			_ => throw new NotImplementedException()
 		};
 
-		return $"**{type} Level: {data.Level}**, or {data.ResidualXp}/{data.LevelXp} experience; totalling {data.Xp}";
+		return $"**{type} Level: {data.Level}** ({data.Xp}), {data.ResidualXp}/{data.LevelXp} xp until level up.";
 	}
 
 	private static string LevelTargetExpression(long currentXP, long targetXP, GuildLevelConfig config)
@@ -148,7 +148,8 @@ public class Experience : Command<Experience>
 		}
 
 		if (targetXP > currentXP)
-			return $"Text: {textExpr}\n" +
+			return
+				$"Text: {textExpr}\n" +
 				$"Voice: {voiceExpr}\n" +
 				$"Experience: {currentXP} out of {targetXP}, missing {targetXP - currentXP}";
 		else return $"Exceeded target by {currentXP - targetXP} experience ({currentXP}/{targetXP}).";
