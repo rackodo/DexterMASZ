@@ -149,9 +149,9 @@ public class Experience : Command<Experience>
 
 		if (targetXP > currentXP)
 			return
-				$"Text: {textExpr} average.\n" +
-				$"Voice: {voiceExpr} average.\n" +
-				$"Experience: {currentXP} out of {targetXP}, missing {targetXP - currentXP}.";
+				$"**Text:** {textExpr} average.\n" +
+				$"**Voice:** {voiceExpr} average.\n" +
+				$"**Experience:** {currentXP} out of {targetXP}, missing {targetXP - currentXP}.";
 		else return $"Exceeded target by {currentXP - targetXP} experience ({currentXP}/{targetXP}).";
 	}
 }
