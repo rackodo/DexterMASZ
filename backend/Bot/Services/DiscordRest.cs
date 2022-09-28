@@ -328,7 +328,16 @@ public class DiscordRest : IHostedService, Event
 	}
 
 	public IUser FetchMemCachedUserInfo(ulong userId)
-		=> TryGetFromCache<IUser>(CacheKey.User(userId), CacheBehavior.OnlyCache);
+	{
+		try
+		{
+			return TryGetFromCache<IUser>(CacheKey.User(userId), CacheBehavior.OnlyCache);
+		}
+		catch (NotFoundInCacheException)
+		{
+			return null;
+		}
+	}
 
 	private async Task<bool> IsImageAvailable(string imageUrl)
 	{
