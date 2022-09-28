@@ -397,7 +397,8 @@
     "GuildInfoCard": {
         "Leaderboard": "View Leaderboard",
         "CreateNewCase": "Create new case",
-        "FailedToLoad": "Failed to load guild info."
+        "FailedToLoad": "Failed to load guild info.",
+		"BackToGuild": "Back to overview"
     },
     "DashboardMotd": {
         "FailedToLoad": "Failed to load motd.",

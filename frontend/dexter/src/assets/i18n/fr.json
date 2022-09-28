@@ -390,7 +390,8 @@
   "GuildInfoCard": {
     "Leaderboard": "Voir le classement",
     "CreateNewCase": "Créer un nouveau dossier",
-    "FailedToLoad": "Impossible de charger les informations de guilde."
+    "FailedToLoad": "Impossible de charger les informations de guilde.",
+    "BackToGuild": "Retour à la vue d’ensemble"
   },
   "DashboardMotd": {
     "FailedToLoad": "Impossible de charger motd.",

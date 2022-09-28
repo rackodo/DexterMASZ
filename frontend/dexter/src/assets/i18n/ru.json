@@ -390,7 +390,8 @@
   "GuildInfoCard": {
     "Leaderboard": "Посмотреть таблицу лидеров",
     "CreateNewCase": "Создать новое дело",
-    "FailedToLoad": "Не удалось загрузить информацию о гильдии."
+    "FailedToLoad": "Не удалось загрузить информацию о гильдии.",
+    "BackToGuild": "Вернуться к обзору"
   },
   "DashboardMotd": {
     "FailedToLoad": "Не удалось загрузить motd.",

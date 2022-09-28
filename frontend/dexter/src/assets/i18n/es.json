@@ -390,7 +390,8 @@
   "GuildInfoCard": {
     "Leaderboard": "Ver tabla de clasificación",
     "CreateNewCase": "Crear nuevo caso",
-    "FailedToLoad": "Error al cargar la información del gremio."
+    "FailedToLoad": "Error al cargar la información del gremio.",
+    "BackToGuild": "Volver al resumen"
   },
   "DashboardMotd": {
     "FailedToLoad": "Error al cargar motd.",

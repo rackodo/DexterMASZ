@@ -390,7 +390,8 @@
   "GuildInfoCard": {
     "Leaderboard": "Leaderboard anzeigen",
     "CreateNewCase": "Neuen Fall erstellen",
-    "FailedToLoad": "Gildeninformationen konnten nicht geladen werden."
+    "FailedToLoad": "Gildeninformationen konnten nicht geladen werden.",
+    "BackToGuild": "Zurück zur Übersicht"
   },
   "DashboardMotd": {
     "FailedToLoad": "motd konnte nicht geladen werden.",

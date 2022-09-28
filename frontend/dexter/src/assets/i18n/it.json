@@ -390,7 +390,8 @@
   "GuildInfoCard": {
     "Leaderboard": "Visualizza classifica",
     "CreateNewCase": "Crea nuovo caso",
-    "FailedToLoad": "Impossibile caricare le informazioni sulla gilda."
+    "FailedToLoad": "Impossibile caricare le informazioni sulla gilda.",
+    "BackToGuild": "Torna alla panoramica"
   },
   "DashboardMotd": {
     "FailedToLoad": "Impossibile caricare motd.",
