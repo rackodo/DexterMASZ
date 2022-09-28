@@ -63,9 +63,10 @@ public class AuditLogger : IHostedService, Event
 		await QueueLog("======= LOGOUT ========", true);
 	}
 
-	public async Task QueueLog(string message, bool shouldExecute = false)
+	public async Task QueueLog(string message, bool shouldExecute = false, bool shouldAppendTime = true)
 	{
-		message = DateTime.UtcNow.ToDiscordTs() + " " + message[..Math.Min(message.Length, 1950)];
+		if (shouldAppendTime)
+			message = DateTime.UtcNow.ToDiscordTs() + " " + message[..Math.Min(message.Length, 1950)];
 
 		if (_currentMessage.Length + message.Length <= 1998)
 		{
@@ -128,11 +129,9 @@ public class AuditLogger : IHostedService, Event
 		if (e != null)
 		{
 			await QueueLog("======= ERROR ENCOUNTERED =======", true);
-			var ex = e.ToString().NormalizeMarkdown();
 
-			if (ex.Length > 1900)
-				ex = $"{ex.Substring(0, 1900)}...";
-			await QueueLog($"```\n{ex}\n```", true);
+			foreach (var ex in e.ToString().NormalizeMarkdown().ChunksUpTo(1900))
+				await QueueLog($"```\n{ex}\n```", true, false);
 
 			await QueueLog("=================================", true);
 		}

@@ -27,6 +27,8 @@ public class Rank : Command<Rank>
 	{
 		if (Context.Channel is not IGuildChannel)
 			throw new UnauthorizedException("This command must be executed in a guild context.");
+		
+		await DeferAsync();
 
 		user ??= Context.User;
 
