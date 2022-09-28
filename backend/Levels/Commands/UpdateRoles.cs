@@ -26,10 +26,7 @@ public class UpdateRoles : Command<UpdateRoles>
 		)
 	{
 		if (Context.Channel is not IGuildChannel)
-		{
-			await DeclineCommand("This command must be executed in a guild context.");
-			return;
-		}
+			throw new UnauthorizedException("This command must be executed in a guild context.");
 
 		user ??= Context.Guild.GetUser(Context.User.Id);
 
