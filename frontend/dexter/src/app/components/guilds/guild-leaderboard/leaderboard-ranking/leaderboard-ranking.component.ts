@@ -6,6 +6,7 @@ import { CalcGuildUserLevel } from 'src/app/models/CalcGuildUserLevel';
 import { ApiService } from 'src/app/services/api.service';
 import { DiscordGuild } from 'src/app/models/DiscordGuild';
 import { ContentLoading } from 'src/app/models/ContentLoading';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-leaderboard-ranking',
@@ -28,7 +29,7 @@ export class LeaderboardRankingComponent implements OnInit {
   canLoadMoreUsersAfter = true;
   DEFAULT_PAGE_SIZE = 100;
 
-  constructor(private api: ApiService, private route: ActivatedRoute, private toastr : ToastrService) {}
+  constructor(private api: ApiService, private route: ActivatedRoute, private toastr : ToastrService, private translator: TranslateService) {}
 
   ngOnInit(): void {
     this.guildId = this.route.snapshot.paramMap.get("guildid") ?? "0";
