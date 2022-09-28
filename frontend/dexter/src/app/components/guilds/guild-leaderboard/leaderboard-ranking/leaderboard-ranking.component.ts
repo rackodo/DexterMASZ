@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { CalcGuildUserLevel } from 'src/app/models/CalcGuildUserLevel';
 import { ApiService } from 'src/app/services/api.service';
+import { DiscordGuild } from 'src/app/models/DiscordGuild';
+import { ContentLoading } from 'src/app/models/ContentLoading';
 
 @Component({
   selector: 'app-leaderboard-ranking',
@@ -16,7 +18,9 @@ export class LeaderboardRankingComponent implements OnInit {
 
   TESTING = false;
 
-  guildId = "0";
+  private guildId!: string;
+  public guild: ContentLoading<DiscordGuild> = { loading: true, content: undefined };
+
   page = 1;
   loading = false;
   loadingAfter = false;
@@ -29,6 +33,20 @@ export class LeaderboardRankingComponent implements OnInit {
   ngOnInit(): void {
     this.guildId = this.route.snapshot.paramMap.get("guildid") ?? "0";
 
+    this.reload();
+  }
+
+  private reload() {
+    this.guild = { loading: true, content: undefined };
+
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}`).subscribe(data => {
+      this.guild = { loading: false, content: data };
+    }, error => {
+      console.error(error);
+      this.guild.loading = false;
+      this.toastr.error(this.translator.instant("GuildInfoCard.FailedToLoad"));
+    });
+	
     this.page = Number(this.route.snapshot.queryParamMap.get("page"));
     if (this.page < 1) this.page = 1;
     if (this.guildId == "0") return;
@@ -36,7 +54,7 @@ export class LeaderboardRankingComponent implements OnInit {
     this.loadMoreUsersAfter();
   }
 
-  requestPage(page: number) : Observable<CalcGuildUserLevel[]> {
+  private requestPage(page: number) : Observable<CalcGuildUserLevel[]> {
     this.loading = true;
     const result = this.api.getSimpleData(`/levels/guilds/${this.guildId}/users?order=${this.order}&page=${page}&pageSize=${this.DEFAULT_PAGE_SIZE}`);
     result.subscribe(() => {}, (err) => {
@@ -46,7 +64,7 @@ export class LeaderboardRankingComponent implements OnInit {
     return result;
   }
 
-  loadMoreUsersBefore() {
+  public loadMoreUsersBefore() {
     if (this.page <= 1) {this.loading = false; return};
     this.loadingAfter = false;
 
@@ -60,7 +78,7 @@ export class LeaderboardRankingComponent implements OnInit {
     })
   }
 
-  loadMoreUsersAfter() {
+  public loadMoreUsersAfter() {
     if (!this.canLoadMoreUsersAfter) {this.loading = false; return};
     this.loadingAfter = true;
 
