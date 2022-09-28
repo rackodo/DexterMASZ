@@ -11,11 +11,11 @@ public class UserMapTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => $"Benutzerbeziehung zwischen {userMap.UserA} und {userMap.UserB}.",
-			Language.Fr => $"UserMap entre {userMap.UserA} et {userMap.UserB}.",
-			Language.Es => $"UserMap entre {userMap.UserA} y {userMap.UserB}.",
-			Language.Ru => $"UserMap между {userMap.UserA} и {userMap.UserB}.",
-			Language.It => $"UserMap tra {userMap.UserA} e {userMap.UserB}.",
-			_ => $"UserMap between {userMap.UserA} and {userMap.UserB}."
+			Language.Fr => $"User map entre {userMap.UserA} et {userMap.UserB}.",
+			Language.Es => $"User map entre {userMap.UserA} y {userMap.UserB}.",
+			Language.Ru => $"User map между {userMap.UserA} и {userMap.UserB}.",
+			Language.It => $"User map tra {userMap.UserA} e {userMap.UserB}.",
+			_ => $"User map between {userMap.UserA} and {userMap.UserB}."
 		};
 	}
 
@@ -24,11 +24,11 @@ public class UserMapTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Benutzerbeziehung",
-			Language.Fr => "UserMap",
-			Language.Es => "UserMap",
-			Language.Ru => "UserMap",
+			Language.Fr => "User Map",
+			Language.Es => "User Map",
+			Language.Ru => "User Map",
 			Language.It => "Mappa Utente",
-			_ => "UserMap"
+			_ => "User Map"
 		};
 	}
 
@@ -37,11 +37,11 @@ public class UserMapTranslator : Translator
 		return PreferredLanguage switch
 		{
 			Language.De => "Benutzerbeziehungen",
-			Language.Fr => "UserMaps",
-			Language.Es => "UserMaps",
-			Language.Ru => "UserMaps",
+			Language.Fr => "User Maps",
+			Language.Es => "User Maps",
+			Language.Ru => "User Maps",
 			Language.It => "Mappe Utente",
-			_ => "UserMaps"
+			_ => "User Maps"
 		};
 	}
 
@@ -54,7 +54,7 @@ public class UserMapTranslator : Translator
 			Language.Es => "ID de Mapa de Usuario",
 			Language.Ru => "идентификатор пользовательской карты",
 			Language.It => "ID Mappa Utente",
-			_ => "UserMap ID"
+			_ => "User Map ID"
 		};
 	}
 }
