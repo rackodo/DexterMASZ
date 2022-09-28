@@ -1,5 +1,7 @@
 ﻿using Bot.Abstractions;
+using Bot.Attributes;
 using Bot.Data;
+using Bot.Exceptions;
 using Discord;
 using Discord.Interactions;
 using Microsoft.Extensions.Logging;
@@ -12,23 +14,17 @@ public class Leaderboard : Command<Leaderboard>
 	public SettingsRepository? SettingsRepository { get; set; }
 
 	[SlashCommand("leaderboard", "Get a link to the Dexter leaderboard")]
+	[BotChannel]
 	public async Task LeaderboardCommand()
 	{
 		if (GuildConfigRepository is null)
 		{
 			Logger.LogError(new NullReferenceException(), "GuildConfigRepository is null");
-			await DeclineCommand("GuildConfigRepository is not set in Leaderboard.");
-			return;
+			throw new UnauthorizedException("GuildConfigRepository is not set in leaderboard.");
 		}
+
 		if (Context.Channel is not IGuildChannel)
-		{
-			await DeclineCommand("This command must be used inside a guild!");
-			return;
-		}
-		GuildConfigRepository.AsUser(Identity);
-		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
-		if (!await EnsureBotChannel(guildConfig))
-			return;
+			throw new UnauthorizedException("This command must be used inside a guild!");
 
 		var settings = await SettingsRepository!.GetAppSettings();
 		await RespondAsync($"{settings.GetServiceUrl().Replace("5565", "4200")}/guilds/{Context.Guild.Id}/leaderboard");

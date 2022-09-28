@@ -25,19 +25,4 @@ public abstract class Command<T> : InteractionModuleBase<SocketInteractionContex
 		if (Identity == null)
 			throw new InvalidIdentityException($"Failed to register command identity for '{Context.User.Id}'.");
 	}
-
-	public async Task<bool> EnsureBotChannel(Models.GuildConfig guildConfig)
-	{
-		if (!guildConfig.BotChannels.Contains(Context.Channel.Id))
-		{
-			await DeclineCommand(Translator.Get<Translators.BotTranslator>().OnlyBotChannel(), true);
-			return false;
-		}
-		return true;
-	}
-
-	public async Task DeclineCommand(string reply, bool ephemeral = false)
-	{
-		await RespondAsync(reply, ephemeral: ephemeral);
-	}
 }

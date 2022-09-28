@@ -204,7 +204,7 @@ public class DiscordRest : IHostedService, Event
 				return user;
 		}
 		catch (NotFoundInCacheException) {}
-return null;/*
+
 		using var scope = _serviceProvider.CreateScope();
 
 		var userRepo = scope.ServiceProvider.GetRequiredService<UserRepository>();
@@ -215,7 +215,8 @@ return null;/*
 		{
 			if (user == null)
 			{
-			return user;
+				user = await _client.GetUserAsync(userId);
+				await userRepo.AddUserIfDoesNotExist(user);
 			}
 			else if (!await IsImageAvailable(user.GetAvatarUrl()))
 			{
@@ -231,7 +232,7 @@ return null;/*
 
 		SetCacheValue(cacheKey, new CacheApiResponse(user));
 
-		return user;*/
+		return user;
 	}
 
 	private static async Task<bool> IsImageAvailable(string imageUrl)

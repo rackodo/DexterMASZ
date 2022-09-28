@@ -1,5 +1,6 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
+using Bot.Exceptions;
 using Bot.Services;
 using Discord;
 using Discord.Interactions;
@@ -26,10 +27,7 @@ public class Experience : Command<Experience>
 		[Summary("rank", "The rank you wish to get information about")] IRole roleTarget = null)
 	{
 		if (Context.Channel is not IGuildChannel)
-		{
-			await DeclineCommand("This command must be executed in a guild context.");
-			return;
-		}
+			throw new UnauthorizedException("This command must be executed in a guild context.");
 
 		user ??= Context.User;
 

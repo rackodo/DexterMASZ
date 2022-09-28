@@ -13,7 +13,14 @@ public class UserRepository : Repository
 		=> _context = context;
 
 	public async Task<LeftUserDTO> TryGetUser(ulong userId)
-		=> new LeftUserDTO(await _context.GetLeftUser(userId));
+	{
+		var user = await _context.GetLeftUser(userId);
+
+		if (user == null)
+			return null;
+
+		return new LeftUserDTO(user);
+	}
 
 	public async Task UpdateUser(IUser user)
 		=> await _context.UpdateUser(new LeftUserDTO(user).CreateUserFromDto());

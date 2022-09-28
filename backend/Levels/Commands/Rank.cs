@@ -1,9 +1,12 @@
 ﻿using Bot.Abstractions;
+using Bot.Attributes;
 using Bot.Data;
+using Bot.Exceptions;
 using Discord;
 using Discord.Interactions;
 using Levels.Data;
 using Levels.Models;
+using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
 
 namespace Levels.Commands;
@@ -19,26 +22,19 @@ public class Rank : Command<Rank>
 	private static string Storage(IUser user, string root) => Path.Combine(root, "Cache", $"Rankcard{user.Id}.png");
 
 	[SlashCommand("rank", "Display your rankcard and experience information.", runMode: RunMode.Async)]
+	[BotChannel]
 	public async Task RankCommand([Summary("user", "Target user to get rank from.")] IUser? user = null)
 	{
 		if (Context.Channel is not IGuildChannel)
-		{
-			await DeclineCommand("This command must be executed in a guild context.");
-			return;
-		}
-
-		var guildconfig = await GuildConfigRepository!.GetGuildConfig(Context.Guild.Id);
-		if (!await EnsureBotChannel(guildconfig))
-			return;
+			throw new UnauthorizedException("This command must be executed in a guild context.");
 
 		user ??= Context.User;
 
-		var rankcardconfig = UserRankcardConfigRepository!.GetOrDefaultRankcard(user);
+		var rankCardConfig = UserRankcardConfigRepository!.GetOrDefaultRankcard(user);
 		var level = await GuildUserLevelRepository!.GetOrCreateLevel(Context.Guild.Id, user.Id);
-		var guildlevelconfig = await GuildLevelConfigRepository!.GetOrCreateConfig(Context.Guild.Id);
-		var calclevel = new CalculatedGuildUserLevel(level, guildlevelconfig);
+		var guildLevelConfig = await GuildLevelConfigRepository!.GetOrCreateConfig(Context.Guild.Id);
+		var calcLevel = new CalculatedGuildUserLevel(level, guildLevelConfig);
 
-		_ = DeferAsync();
 		var path = "";
 
 		try
@@ -48,7 +44,7 @@ public class Rank : Command<Rank>
 
 			Directory.CreateDirectory(Path.GetDirectoryName(path));
 
-			using (var rankcardimg = await Models.Rankcard.RenderRankCard(user, calclevel, rankcardconfig, GuildUserLevelRepository, SettingsRepository))
+			using (var rankcardimg = await Models.Rankcard.RenderRankCard(user, calcLevel, rankCardConfig, GuildUserLevelRepository, SettingsRepository))
 			{
 				await rankcardimg.SaveAsPngAsync(path);
 			}
@@ -60,10 +56,10 @@ public class Rank : Command<Rank>
 			{
 				new EmbedBuilder()
 					.WithTitle("An error has occurred!")
-					.WithDescription("An exception took place while handling rankcard rendering! \n" +
-						$"{ex.GetType().Name}: {ex.Message}")
+					.WithDescription("An exception took place while handling rankcard rendering, please consult logs.")
 					.Build()
 			});
+			Logger.LogError(ex, "Exception took place while handling rankcard rendering.");
 		}
 
 		if (File.Exists(path))
