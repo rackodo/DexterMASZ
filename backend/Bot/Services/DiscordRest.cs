@@ -296,7 +296,7 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			if (user == null)
-				if (cacheBehavior != CacheBehavior.OnlyCache)
+				if (cacheBehavior == CacheBehavior.OnlyCache)
 					_downloadingUsers.TryAdd(userId, RestAction.Created);
 				else
 				{
@@ -304,7 +304,7 @@ public class DiscordRest : IHostedService, Event
 					await userRepo.AddUser(user);
 				}
 			else if (!await IsImageAvailable(user.GetAvatarUrl()))
-				if (cacheBehavior != CacheBehavior.OnlyCache)
+				if (cacheBehavior == CacheBehavior.OnlyCache)
 					_downloadingUsers.TryAdd(userId, RestAction.Updated);
 				else
 				{
