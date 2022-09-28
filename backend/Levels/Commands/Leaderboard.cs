@@ -27,6 +27,11 @@ public class Leaderboard : Command<Leaderboard>
 			throw new UnauthorizedException("This command must be used inside a guild!");
 
 		var settings = await SettingsRepository!.GetAppSettings();
-		await RespondAsync($"{settings.GetServiceUrl().Replace("5565", "4200")}/guilds/{Context.Guild.Id}/leaderboard");
+		var url = $"{settings.GetServiceUrl().Replace("5565", "4200")}/guilds/{Context.Guild.Id}/leaderboard";
+		
+		var builder = new ComponentBuilder()
+			.WithButton("View Leaderboard", style: ButtonStyle.Link, url: url);
+
+		await RespondAsync($"Here you go! 💙", components: builder.Build());
 	}
 }

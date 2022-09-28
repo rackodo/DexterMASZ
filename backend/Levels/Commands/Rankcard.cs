@@ -12,6 +12,6 @@ public class Rankcard : Command<Rankcard>
 	public async Task LeaderboardCommand()
 	{
 		var settings = await SettingsRepository!.GetAppSettings();
-		await RespondAsync($"{settings.GetServiceUrl().Replace("5565", "4200")}/profile?selectedTab=rankcard");
+		await RespondAsync($"{settings.GetServiceUrl().Replace("5565", "4200")}/profile?selectedTab=rankcard", ephemeral: true);
 	}
 }
