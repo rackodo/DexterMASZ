@@ -66,8 +66,8 @@ export class LeaderboardRankingComponent implements OnInit {
 
     let newPage = this.page + (this.loadedUsers.length / this.DEFAULT_PAGE_SIZE);
     this.requestPage(newPage).subscribe(data => {
-      console.log(`loaded ${data.length} new users: ${JSON.stringify(data)}`)
-      if (data.length < this.DEFAULT_PAGE_SIZE) this.canLoadMoreUsersAfter = false;
+      if (data.length < this.DEFAULT_PAGE_SIZE)
+		this.canLoadMoreUsersAfter = false;
 
       for (let u of data) {
         this.loadedUsers.push(u);

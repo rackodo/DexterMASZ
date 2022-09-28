@@ -2,11 +2,13 @@ using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Extensions;
+using Bot.Models;
 using Bot.Services;
 using Microsoft.AspNetCore.Mvc;
 using Punishments.Data;
 using Punishments.DTOs;
 using Punishments.Enums;
+using Punishments.Extensions;
 using Punishments.Models;
 using Punishments.Translators;
 using System.ComponentModel.DataAnnotations;
@@ -89,12 +91,84 @@ public class ModCaseTableController : AuthenticatedController
 
 		var publishMod = guildConfig.PublishModeratorInfo ||
 						 await identity.HasPermission(DiscordPermission.Moderator, guildId);
+
+		var table = modCases.AsEnumerable();
+
+		if (!string.IsNullOrWhiteSpace(search?.CustomTextFilter))
+			table = table.Where(t =>
+				search.CustomTextFilter.Search(t.Title) ||
+				search.CustomTextFilter.Search(t.Description) ||
+				search.CustomTextFilter.Search(_translator.Get<PunishmentEnumTranslator>()
+					.Enum(t.PunishmentType)) ||
+				search.CustomTextFilter.Search(t.Username) ||
+				search.CustomTextFilter.Search(t.Discriminator) ||
+				search.CustomTextFilter.Search(t.Nickname) ||
+				search.CustomTextFilter.Search(t.UserId) ||
+				search.CustomTextFilter.Search(t.ModId) ||
+				search.CustomTextFilter.Search(t.LastEditedByModId) ||
+				search.CustomTextFilter.Search(t.CreatedAt) ||
+				search.CustomTextFilter.Search(t.OccurredAt) ||
+				search.CustomTextFilter.Search(t.LastEditedAt) ||
+				search.CustomTextFilter.Search(t.Labels) ||
+				search.CustomTextFilter.Search(t.CaseId.ToString()) ||
+				search.CustomTextFilter.Search("#" + t.CaseId) ||
+				search.CustomTextFilter.Search(
+					DiscordUser.GetDiscordUser(_discordRest.FetchMemCachedUserInfo(t.ModId))
+				) ||
+				search.CustomTextFilter.Search(_translator.Get<PunishmentEnumTranslator>()
+					.Enum(t.Severity)) ||
+				search.CustomTextFilter.Search(
+					DiscordUser.GetDiscordUser(_discordRest.FetchMemCachedUserInfo(t.UserId)
+				)));
+
+		if (search?.UserIds != null && search.UserIds.Count > 0)
+			table = table.Where(x => search.UserIds.Contains(x.UserId.ToString()));
+
+		if (search?.ModeratorIds != null && search.ModeratorIds.Count > 0)
+			table = table.Where(x =>
+				search.ModeratorIds.Contains(x.ModId.ToString()) ||
+				search.ModeratorIds.Contains(x.LastEditedByModId.ToString()));
+
+		if (search?.Since != null && search.Since != DateTime.MinValue)
+			table = table.Where(x => x.CreatedAt >= search.Since);
+
+		if (search?.Before != null && search.Before != DateTime.MinValue)
+			table = table.Where(x => x.CreatedAt <= search.Before);
+
+		if (search?.PunishedUntilMin != null && search.PunishedUntilMin != DateTime.MinValue)
+			table = table.Where(x => x.PunishedUntil >= search.PunishedUntilMin);
+
+		if (search?.PunishedUntilMax != null && search.PunishedUntilMax != DateTime.MinValue)
+			table = table.Where(x => x.PunishedUntil <= search.PunishedUntilMax);
+
+		if (search?.Edited != null)
+			table = table.Where(x => x.LastEditedAt == x.CreatedAt != search.Edited.Value);
+
+		if (search?.CreationTypes != null && search.CreationTypes.Count > 0)
+			table = table.Where(x => search.CreationTypes.Contains(x.CreationType));
+
+		if (search?.SeverityTypes != null && search.SeverityTypes.Count > 0)
+			table = table.Where(x => search.SeverityTypes.Contains(x.Severity));
+
+		if (search?.PunishmentTypes != null && search.PunishmentTypes.Count > 0)
+			table = table.Where(x => search.PunishmentTypes.Contains(x.PunishmentType));
+
+		if (search?.PunishmentActive != null)
+			table = table.Where(x => search.PunishmentActive != null && x.PunishmentActive == search.PunishmentActive.Value);
+
+		if (search?.LockedComments != null)
+			table = table.Where(x => search.LockedComments != null && x.AllowComments != search.LockedComments.Value);
+
+		if (search?.MarkedToDelete != null)
+			table = table.Where(x => search.MarkedToDelete != null && x.MarkedToDeleteAt.HasValue == search.MarkedToDelete.Value);
+
 		List<ModCaseTableEntry> tmp = new();
-		foreach (var c in modCases)
+
+		foreach (var c in table.Skip(startPage * 20).Take(20))
 		{
 			var entry = new ModCaseTableEntry(
 				c,
-				await _discordRest.FetchUserInfo(c.ModId, CacheBehavior.OnlyCache),
+				publishMod ? await _discordRest.FetchUserInfo(c.ModId, CacheBehavior.OnlyCache) : null,
 				await _discordRest.FetchUserInfo(c.UserId, CacheBehavior.OnlyCache)
 			);
 
@@ -104,75 +178,6 @@ public class ModCaseTableController : AuthenticatedController
 			tmp.Add(entry);
 		}
 
-		var table = tmp.AsEnumerable();
-
-		if (!string.IsNullOrWhiteSpace(search?.CustomTextFilter))
-			table = table.Where(t =>
-				search.CustomTextFilter.Search(t.ModCase.Title) ||
-				search.CustomTextFilter.Search(t.ModCase.Description) ||
-				search.CustomTextFilter.Search(_translator.Get<PunishmentEnumTranslator>()
-					.Enum(t.ModCase.PunishmentType)) ||
-				search.CustomTextFilter.Search(t.ModCase.Username) ||
-				search.CustomTextFilter.Search(t.ModCase.Discriminator) ||
-				search.CustomTextFilter.Search(t.ModCase.Nickname) ||
-				search.CustomTextFilter.Search(t.ModCase.UserId) ||
-				search.CustomTextFilter.Search(t.ModCase.ModId) ||
-				search.CustomTextFilter.Search(t.ModCase.LastEditedByModId) ||
-				search.CustomTextFilter.Search(t.ModCase.CreatedAt) ||
-				search.CustomTextFilter.Search(t.ModCase.OccurredAt) ||
-				search.CustomTextFilter.Search(t.ModCase.LastEditedAt) ||
-				search.CustomTextFilter.Search(t.ModCase.Labels) ||
-				search.CustomTextFilter.Search(t.ModCase.CaseId.ToString()) ||
-				search.CustomTextFilter.Search("#" + t.ModCase.CaseId) ||
-				search.CustomTextFilter.Search(t.Moderator) ||
-				search.CustomTextFilter.Search(_translator.Get<PunishmentEnumTranslator>()
-					.Enum(t.ModCase.Severity)) ||
-				search.CustomTextFilter.Search(t.Suspect));
-
-		if (search?.UserIds != null && search.UserIds.Count > 0)
-			table = table.Where(x => search.UserIds.Contains(x.ModCase.UserId.ToString()));
-
-		if (search?.ModeratorIds != null && search.ModeratorIds.Count > 0)
-			table = table.Where(x =>
-				search.ModeratorIds.Contains(x.ModCase.ModId.ToString()) ||
-				search.ModeratorIds.Contains(x.ModCase.LastEditedByModId.ToString()));
-
-		if (search?.Since != null && search.Since != DateTime.MinValue)
-			table = table.Where(x => x.ModCase.CreatedAt >= search.Since);
-
-		if (search?.Before != null && search.Before != DateTime.MinValue)
-			table = table.Where(x => x.ModCase.CreatedAt <= search.Before);
-
-		if (search?.PunishedUntilMin != null && search.PunishedUntilMin != DateTime.MinValue)
-			table = table.Where(x => x.ModCase.PunishedUntil >= search.PunishedUntilMin);
-
-		if (search?.PunishedUntilMax != null && search.PunishedUntilMax != DateTime.MinValue)
-			table = table.Where(x => x.ModCase.PunishedUntil <= search.PunishedUntilMax);
-
-		if (search?.Edited != null)
-			table = table.Where(x => x.ModCase.LastEditedAt == x.ModCase.CreatedAt != search.Edited.Value);
-
-		if (search?.CreationTypes != null && search.CreationTypes.Count > 0)
-			table = table.Where(x => search.CreationTypes.Contains(x.ModCase.CreationType));
-
-		if (search?.SeverityTypes != null && search.SeverityTypes.Count > 0)
-			table = table.Where(x => search.SeverityTypes.Contains(x.ModCase.Severity));
-
-		if (search?.PunishmentTypes != null && search.PunishmentTypes.Count > 0)
-			table = table.Where(x => search.PunishmentTypes.Contains(x.ModCase.PunishmentType));
-
-		if (search?.PunishmentActive != null)
-			table = table.Where(x => search.PunishmentActive != null && x.ModCase.PunishmentActive == search.PunishmentActive.Value);
-
-		if (search?.LockedComments != null)
-			table = table.Where(x => search.LockedComments != null && x.ModCase.AllowComments != search.LockedComments.Value);
-
-		if (search?.MarkedToDelete != null)
-			table = table.Where(x => search.MarkedToDelete != null && x.ModCase.MarkedToDeleteAt.HasValue == search.MarkedToDelete.Value);
-
-		var modCaseTableEntries = table as ModCaseTableEntry[] ?? table.ToArray();
-
-		return new ModCaseTable(modCaseTableEntries.Skip(startPage * 20).Take(20).ToList(),
-			modCaseTableEntries.Length);
+		return new ModCaseTable(tmp, table.Count());
 	}
 }

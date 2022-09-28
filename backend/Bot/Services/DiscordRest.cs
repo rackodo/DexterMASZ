@@ -327,6 +327,9 @@ public class DiscordRest : IHostedService, Event
 		return user;
 	}
 
+	public IUser FetchMemCachedUserInfo(ulong userId)
+		=> TryGetFromCache<IUser>(CacheKey.User(userId), CacheBehavior.OnlyCache);
+
 	private async Task<bool> IsImageAvailable(string imageUrl)
 	{
 		_logger.LogInformation($"Fetching {imageUrl} from API for user download.");
