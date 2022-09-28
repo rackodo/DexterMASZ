@@ -1,33 +1,47 @@
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
+using Bot.Events;
 using Bot.Exceptions;
 using Bot.Models;
 using Discord;
 using Discord.Rest;
 using Discord.WebSocket;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net;
+using Timer = System.Timers.Timer;
 
 namespace Bot.Services;
 
 public class DiscordRest : IHostedService, Event
 {
-	private readonly Dictionary<string, CacheApiResponse> _cache = new();
 	private readonly DiscordSocketClient _client;
-	private readonly DiscordRestClient _discordRestClient;
 	private readonly ILogger<DiscordRest> _logger;
 	private readonly IServiceProvider _serviceProvider;
+	private readonly BotEventHandler _eventHandler;
 
-	public DiscordRest(ILogger<DiscordRest> logger, IServiceProvider serviceProvider, DiscordSocketClient client)
+	private readonly DiscordRestClient _discordRestClient;
+	private readonly Dictionary<string, CacheApiResponse> _cache;
+	private readonly ConcurrentDictionary<ulong, RestAction> _downloadingUsers;
+	private Timer _eventTimer;
+
+	private const int DownloadIntervalMinutes = 1;
+
+	public DiscordRest(ILogger<DiscordRest> logger, IServiceProvider serviceProvider, BotEventHandler eventHandler, DiscordSocketClient client)
 	{
 		_logger = logger;
 		_client = client;
 		_serviceProvider = serviceProvider;
+		_eventHandler = eventHandler;
 
 		_discordRestClient = new DiscordRestClient();
+		_cache = new Dictionary<string, CacheApiResponse>();
+		_downloadingUsers = new ConcurrentDictionary<ulong, RestAction>();
 	}
 
 	public void RegisterEvents()
@@ -37,6 +51,7 @@ public class DiscordRest : IHostedService, Event
 			AddOrUpdateCache(CacheKey.GuildUser(user.Guild.Id, user.Id), new CacheApiResponse(user));
 			return Task.CompletedTask;
 		};
+		_eventHandler.OnBotLaunched += StartDownloadingUsers;
 	}
 
 	public async Task StartAsync(CancellationToken cancellationToken)
@@ -56,6 +71,73 @@ public class DiscordRest : IHostedService, Event
 	public async Task StopAsync(CancellationToken cancellationToken)
 	{
 		await _discordRestClient.LogoutAsync();
+	}
+
+	private async Task StartDownloadingUsers()
+	{
+		try
+		{
+			if (_eventTimer != null)
+				return;
+
+			_logger.LogWarning("Starting user downloader timers.");
+
+			_eventTimer = new(TimeSpan.FromMinutes(DownloadIntervalMinutes).TotalMilliseconds)
+			{
+				AutoReset = false,
+				Enabled = true
+			};
+
+			_eventTimer.Elapsed += async (_, _) => await LoopThroughDownloads();
+
+			await Task.Run(_eventTimer.Start);
+
+			_logger.LogWarning("Started user downloader timers.");
+
+			await LoopThroughDownloads();
+		}
+		catch (Exception ex)
+		{
+			_logger.LogCritical(ex, "Something went wrong while starting the user downloader timer.");
+		}
+	}
+
+	private async Task LoopThroughDownloads()
+	{
+		try
+		{
+			using var scope = _serviceProvider.CreateScope();
+			var userRepo = scope.ServiceProvider.GetRequiredService<UserRepository>();
+
+			foreach (var user in _downloadingUsers)
+			{
+				IUser dUser;
+				var cacheKey = CacheKey.User(user.Key);
+
+				switch (user.Value)
+				{
+					case RestAction.Created:
+						dUser = await _client.GetUserAsync(user.Key);
+						await userRepo.AddUser(dUser);
+						break;
+					case RestAction.Updated:
+						dUser = await _client.GetUserAsync(user.Key);
+						await userRepo.UpdateUser(dUser);
+						break;
+					default:
+						throw new NotImplementedException();
+				}
+
+				SetCacheValue(cacheKey, new CacheApiResponse(user));
+				_downloadingUsers.TryRemove(user.Key, out _);
+			}
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e, "Error in downloading user.");
+		}
+
+		_eventTimer.Start();
 	}
 
 	public static async Task<DiscordRestClient> GetOAuthClient(string token)
@@ -191,7 +273,7 @@ public class DiscordRest : IHostedService, Event
 		return ban;
 	}
 
-	public async Task<IUser> FetchUserInfo(ulong userId)
+	public async Task<IUser> FetchUserInfo(ulong userId, CacheBehavior cacheBehavior)
 	{
 		var cacheKey = CacheKey.User(userId);
 		IUser user;
@@ -214,15 +296,21 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			if (user == null)
-			{
-				user = await _client.GetUserAsync(userId);
-				await userRepo.AddUserIfDoesNotExist(user);
-			}
+				if (cacheBehavior != CacheBehavior.OnlyCache)
+					_downloadingUsers.TryAdd(userId, RestAction.Created);
+				else
+				{
+					user = await _client.GetUserAsync(userId);
+					await userRepo.AddUser(user);
+				}
 			else if (!await IsImageAvailable(user.GetAvatarUrl()))
-			{
-				user = await _client.GetUserAsync(userId);
-				await userRepo.UpdateUser(user);
-			}
+				if (cacheBehavior != CacheBehavior.OnlyCache)
+					_downloadingUsers.TryAdd(userId, RestAction.Updated);
+				else
+				{
+					user = await _client.GetUserAsync(userId);
+					await userRepo.UpdateUser(user);
+				}
 		}
 		catch (Exception e)
 		{

@@ -1,5 +1,6 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
+using Bot.Enums;
 using Bot.Services;
 using Discord;
 using Punishments.Data;
@@ -32,9 +33,9 @@ public class PunishmentCommand<T> : Command<T>
 		var caseCount =
 			(await ModCaseRepository.GetCasesForGuildAndUser(Context.Guild.Id, modCase.UserId)).Count;
 
-		var caseUser = await DiscordRest.FetchUserInfo(modCase.UserId);
+		var caseUser = await DiscordRest.FetchUserInfo(modCase.UserId, CacheBehavior.Default);
 
-		var modUser = await DiscordRest.FetchUserInfo(modCase.ModId);
+		var modUser = await DiscordRest.FetchUserInfo(modCase.ModId, CacheBehavior.Default);
 
 		var settings = await SettingsRepository.GetAppSettings();
 

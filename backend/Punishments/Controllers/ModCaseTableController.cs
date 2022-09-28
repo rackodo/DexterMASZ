@@ -94,8 +94,8 @@ public class ModCaseTableController : AuthenticatedController
 		{
 			var entry = new ModCaseTableEntry(
 				c,
-				await _discordRest.FetchUserInfo(c.ModId),
-				await _discordRest.FetchUserInfo(c.UserId)
+				await _discordRest.FetchUserInfo(c.ModId, CacheBehavior.OnlyCache),
+				await _discordRest.FetchUserInfo(c.UserId, CacheBehavior.OnlyCache)
 			);
 
 			if (!publishMod)

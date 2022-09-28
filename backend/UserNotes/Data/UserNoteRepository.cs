@@ -57,8 +57,8 @@ public class UserNoteRepository : Repository,
 			var note = await GetUserNote(guildId, userId);
 			userNote = new UserNoteExpanded(
 				note,
-				await _discordRest.FetchUserInfo(note.UserId),
-				await _discordRest.FetchUserInfo(note.CreatorId)
+				await _discordRest.FetchUserInfo(note.UserId, CacheBehavior.Default),
+				await _discordRest.FetchUserInfo(note.CreatorId, CacheBehavior.Default)
 			);
 		}
 		catch (ResourceNotFoundException)
@@ -112,7 +112,7 @@ public class UserNoteRepository : Repository,
 
 	public async Task<UserNote> CreateOrUpdateUserNote(ulong guildId, ulong userId, string content)
 	{
-		var validUser = await _discordRest.FetchUserInfo(userId);
+		var validUser = await _discordRest.FetchUserInfo(userId, CacheBehavior.Default);
 
 		if (validUser == null)
 			throw new InvalidIUserException("User not found", userId);

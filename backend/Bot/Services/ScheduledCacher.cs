@@ -15,7 +15,6 @@ namespace Bot.Services;
 
 public class ScheduledCacher : Event
 {
-	private const int CacheIntervalMinutes = 15;
 	private readonly DiscordRest _discordRest;
 	private readonly BotEventHandler _eventHandler;
 	private readonly IdentityManager _identityManager;
@@ -24,6 +23,8 @@ public class ScheduledCacher : Event
 	private readonly IServiceProvider _serviceProvider;
 	private readonly DiscordSocketClient _client;
 
+	private const int CacheIntervalMinutes = 15;
+	private Timer _eventTimer;
 	private DateTime _nextCacheSchedule;
 
 	public ScheduledCacher(DiscordRest discordRest, BotEventHandler eventHandler,
@@ -64,7 +65,7 @@ public class ScheduledCacher : Event
 
 			var userRepo = scope.ServiceProvider.GetRequiredService<UserRepository>();
 
-			await userRepo.AddUserIfDoesNotExist(user);
+			await userRepo.AddUser(user);
 		}
 	}
 
@@ -87,17 +88,20 @@ public class ScheduledCacher : Event
 	{
 		try
 		{
+			if (_eventTimer != null)
+				return;
+
 			_logger.LogWarning("Starting schedule timers.");
 
-			Timer eventTimer = new(TimeSpan.FromMinutes(CacheIntervalMinutes).TotalMilliseconds)
+			_eventTimer = new(TimeSpan.FromMinutes(CacheIntervalMinutes).TotalMilliseconds)
 			{
-				AutoReset = true,
+				AutoReset = false,
 				Enabled = true
 			};
 
-			eventTimer.Elapsed += async (_, _) => await LoopThroughCaches();
+			_eventTimer.Elapsed += async (_, _) => await LoopThroughCaches();
 
-			await Task.Run(eventTimer.Start);
+			await Task.Run(_eventTimer.Start);
 
 			_logger.LogWarning("Started schedule timers.");
 
@@ -128,6 +132,8 @@ public class ScheduledCacher : Event
 		{
 			_logger.LogError(e, "Error in caching.");
 		}
+
+		_eventTimer.Start();
 	}
 
 	public async void CacheAll()

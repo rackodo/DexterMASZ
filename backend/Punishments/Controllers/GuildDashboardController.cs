@@ -33,7 +33,7 @@ public class GuildDashboardController : AuthenticatedController
 		foreach (var comment in await _modCaseCommentRepo.GetLastCommentsByGuild(guildId))
 			view.Add(new ModCaseCommentExpandedTable(
 				comment,
-				await _discordRest.FetchUserInfo(comment.UserId),
+				await _discordRest.FetchUserInfo(comment.UserId, CacheBehavior.OnlyCache),
 				guildId,
 				comment.ModCase.CaseId
 			));

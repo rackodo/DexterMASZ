@@ -46,8 +46,8 @@ public class ScheduledMessageController : AuthenticatedController
 		{
 			results.Add(new ScheduledMessageExtended(
 				message,
-				await _discordRest.FetchUserInfo(message.CreatorId),
-				await _discordRest.FetchUserInfo(message.LastEditedById),
+				await _discordRest.FetchUserInfo(message.CreatorId, CacheBehavior.OnlyCache),
+				await _discordRest.FetchUserInfo(message.LastEditedById, CacheBehavior.OnlyCache),
 				_discordRest.FetchGuildChannels(guildId, CacheBehavior.OnlyCache).FirstOrDefault(x => x.Id == message.ChannelId)));
 		}
 
@@ -80,8 +80,8 @@ public class ScheduledMessageController : AuthenticatedController
 
 		return Ok(new ScheduledMessageExtended(
 			message,
-			await _discordRest.FetchUserInfo(message.CreatorId),
-			 await _discordRest.FetchUserInfo(message.LastEditedById),
+			await _discordRest.FetchUserInfo(message.CreatorId, CacheBehavior.Default),
+			 await _discordRest.FetchUserInfo(message.LastEditedById, CacheBehavior.Default),
 				   _discordRest.FetchGuildChannels(guildId, CacheBehavior.OnlyCache).FirstOrDefault(x => x.Id == message.ChannelId)
 		));
 	}
@@ -120,8 +120,8 @@ public class ScheduledMessageController : AuthenticatedController
 
 		return Ok(new ScheduledMessageExtended(
 			message,
-			await _discordRest.FetchUserInfo(message.CreatorId),
-			await _discordRest.FetchUserInfo(message.LastEditedById),
+			await _discordRest.FetchUserInfo(message.CreatorId, CacheBehavior.Default),
+			await _discordRest.FetchUserInfo(message.LastEditedById, CacheBehavior.Default),
 				  _discordRest.FetchGuildChannels(guildId, CacheBehavior.OnlyCache).FirstOrDefault(x => x.Id == message.ChannelId)
 		));
 	}

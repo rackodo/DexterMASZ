@@ -4,6 +4,7 @@ using Bot.Models;
 using Levels.Data;
 using Levels.Models;
 using Microsoft.AspNetCore.Mvc;
+using Bot.Enums;
 
 namespace Levels.Controllers;
 
@@ -32,7 +33,7 @@ public class LevelsXPController : AuthenticatedController
 
 		var guildLevelConfig = await _levelsConfigRepository.GetOrCreateConfig(level.GuildId);
 
-		var user = await _rest.FetchUserInfo(level.UserId);
+		var user = await _rest.FetchUserInfo(level.UserId, CacheBehavior.Default);
 
 		return Ok(new CalculatedGuildUserLevel(level, guildLevelConfig).ToDTO(DiscordUser.GetDiscordUser(user)));
 	}
@@ -58,7 +59,7 @@ public class LevelsXPController : AuthenticatedController
 
 		return Ok(selRecords.AsParallel().Select(async l =>
 		{
-			var user = await _rest.FetchUserInfo(l.UserId);
+			var user = await _rest.FetchUserInfo(l.UserId, CacheBehavior.OnlyCache);
 			return new CalculatedGuildUserLevel(l, guildLevelConfig).ToDTO(DiscordUser.GetDiscordUser(user));
 		}).Select(t => t.Result)
 			.Where(r => r != null)

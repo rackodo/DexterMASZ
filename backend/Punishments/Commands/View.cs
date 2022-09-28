@@ -55,7 +55,7 @@ public class View : Command<View>
 				embed.AddField($"⚠️ - {Translator.Get<PunishmentTranslator>().Severity()}",
 						Translator.Get<PunishmentEnumTranslator>().Enum(modCase.Severity), true);
 
-			var suspect = await DiscordRest.FetchUserInfo(modCase.UserId);
+			var suspect = await DiscordRest.FetchUserInfo(modCase.UserId, CacheBehavior.Default);
 
 			if (suspect != null)
 				embed.WithThumbnailUrl(suspect.GetAvatarOrDefaultUrl());
