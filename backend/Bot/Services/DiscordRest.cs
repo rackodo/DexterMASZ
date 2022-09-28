@@ -7,12 +7,10 @@ using Bot.Models;
 using Discord;
 using Discord.Rest;
 using Discord.WebSocket;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Net;
 using Timer = System.Timers.Timer;
 
@@ -109,27 +107,27 @@ public class DiscordRest : IHostedService, Event
 			using var scope = _serviceProvider.CreateScope();
 			var userRepo = scope.ServiceProvider.GetRequiredService<UserRepository>();
 
-			foreach (var user in _downloadingUsers)
+			foreach (var userToDownload in _downloadingUsers)
 			{
-				IUser dUser;
-				var cacheKey = CacheKey.User(user.Key);
+				IUser downloadedUser;
+				var cacheKey = CacheKey.User(userToDownload.Key);
 
-				switch (user.Value)
+				switch (userToDownload.Value)
 				{
 					case RestAction.Created:
-						dUser = await _client.GetUserAsync(user.Key);
-						await userRepo.AddUser(dUser);
+						downloadedUser = await _client.GetUserAsync(userToDownload.Key);
+						await userRepo.AddUser(downloadedUser);
 						break;
 					case RestAction.Updated:
-						dUser = await _client.GetUserAsync(user.Key);
-						await userRepo.UpdateUser(dUser);
+						downloadedUser = await _client.GetUserAsync(userToDownload.Key);
+						await userRepo.UpdateUser(downloadedUser);
 						break;
 					default:
 						throw new NotImplementedException();
 				}
 
-				SetCacheValue(cacheKey, new CacheApiResponse(user));
-				_downloadingUsers.TryRemove(user.Key, out _);
+				SetCacheValue(cacheKey, new CacheApiResponse(downloadedUser));
+				_downloadingUsers.TryRemove(userToDownload.Key, out _);
 			}
 		}
 		catch (Exception e)
