@@ -4,9 +4,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { CalcGuildUserLevel } from 'src/app/models/CalcGuildUserLevel';
 import { ApiService } from 'src/app/services/api.service';
-import { DiscordGuild } from 'src/app/models/DiscordGuild';
-import { ContentLoading } from 'src/app/models/ContentLoading';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-leaderboard-ranking',
@@ -20,7 +17,6 @@ export class LeaderboardRankingComponent implements OnInit {
   TESTING = false;
 
   private guildId!: string;
-  public guild: ContentLoading<DiscordGuild> = { loading: true, content: undefined };
 
   page = 1;
   loading = false;
@@ -29,7 +25,7 @@ export class LeaderboardRankingComponent implements OnInit {
   canLoadMoreUsersAfter = true;
   DEFAULT_PAGE_SIZE = 100;
 
-  constructor(private api: ApiService, private route: ActivatedRoute, private toastr : ToastrService, private translator: TranslateService) {}
+  constructor(private api: ApiService, private route: ActivatedRoute, private toastr : ToastrService) {}
 
   ngOnInit(): void {
     this.guildId = this.route.snapshot.paramMap.get("guildid") ?? "0";
@@ -38,16 +34,6 @@ export class LeaderboardRankingComponent implements OnInit {
   }
 
   private reload() {
-    this.guild = { loading: true, content: undefined };
-
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}`).subscribe(data => {
-      this.guild = { loading: false, content: data };
-    }, error => {
-      console.error(error);
-      this.guild.loading = false;
-      this.toastr.error(this.translator.instant("GuildInfoCard.FailedToLoad"));
-    });
-	
     this.page = Number(this.route.snapshot.queryParamMap.get("page"));
     if (this.page < 1) this.page = 1;
     if (this.guildId == "0") return;
