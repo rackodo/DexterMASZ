@@ -303,14 +303,20 @@ public class DiscordRest : IHostedService, Event
 					user = await _client.GetUserAsync(userId);
 					await userRepo.AddUser(user);
 				}
-			else if (!await IsImageAvailable(user.GetAvatarUrl()))
-				if (cacheBehavior == CacheBehavior.OnlyCache)
-					_downloadingUsers.TryAdd(userId, RestAction.Updated);
-				else
-				{
-					user = await _client.GetUserAsync(userId);
-					await userRepo.UpdateUser(user);
-				}
+			else
+			{
+				var avatarUrl = user.GetAvatarUrl();
+
+				if (!string.IsNullOrEmpty(avatarUrl))
+					if (!await IsImageAvailable(avatarUrl))
+						if (cacheBehavior == CacheBehavior.OnlyCache)
+							_downloadingUsers.TryAdd(userId, RestAction.Updated);
+						else
+						{
+							user = await _client.GetUserAsync(userId);
+							await userRepo.UpdateUser(user);
+						}
+			}
 		}
 		catch (Exception e)
 		{
@@ -323,8 +329,10 @@ public class DiscordRest : IHostedService, Event
 		return user;
 	}
 
-	private static async Task<bool> IsImageAvailable(string imageUrl)
+	private async Task<bool> IsImageAvailable(string imageUrl)
 	{
+		_logger.LogInformation($"Fetching {imageUrl} from API for user download.");
+
 		using var client = new HttpClient();
 
 		var response = await client.GetAsync(imageUrl);
