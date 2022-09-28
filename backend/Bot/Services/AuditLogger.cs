@@ -1,5 +1,6 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
+using Bot.Events;
 using Bot.Extensions;
 using Bot.Models;
 using Discord;
@@ -18,12 +19,16 @@ public class AuditLogger : IHostedService, Event
 	private readonly StringBuilder _currentMessage;
 	private readonly ILogger<AuditLogger> _logger;
 	private readonly IServiceProvider _serviceProvider;
+	private readonly BotEventHandler _eventHandler;
 
-	public AuditLogger(ILogger<AuditLogger> logger, IServiceProvider serviceProvider, DiscordSocketClient client)
+	public AuditLogger(DiscordSocketClient client, ILogger<AuditLogger> logger,
+		IServiceProvider serviceProvider, BotEventHandler eventHandler)
 	{
+		_client = client;
 		_logger = logger;
 		_serviceProvider = serviceProvider;
-		_client = client;
+		_eventHandler = eventHandler;
+
 		_currentMessage = new StringBuilder();
 	}
 
@@ -31,7 +36,8 @@ public class AuditLogger : IHostedService, Event
 	{
 		_client.Connected += OnBotReady;
 		_client.Disconnected += OnDisconnect;
-		_client.Log += OnLog;
+		_client.Log += async (l) => await OnLog(l.Exception);
+		_eventHandler.OnCommandErroredEvent += OnLog;
 	}
 
 	public async Task StartAsync(CancellationToken _)
@@ -117,13 +123,17 @@ public class AuditLogger : IHostedService, Event
 		}
 	}
 
-	private async Task OnLog(LogMessage log)
+	private async Task OnLog(Exception e)
 	{
-		if (log.Exception != null)
+		if (e != null)
 		{
-			await QueueLog("======= ERROR ENCOUNTERED =======");
-			foreach (var l in log.Exception.ToString().NormalizeMarkdown().Split('\n'))
-				await QueueLog(l);
+			await QueueLog("======= ERROR ENCOUNTERED =======", true);
+			var ex = e.ToString().NormalizeMarkdown();
+
+			if (ex.Length > 1900)
+				ex = $"{ex.Substring(0, 1900)}...";
+			await QueueLog($"```\n{ex}\n```", true);
+
 			await QueueLog("=================================", true);
 		}
 	}

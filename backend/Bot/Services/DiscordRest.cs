@@ -273,6 +273,9 @@ public class DiscordRest : IHostedService, Event
 
 	public async Task<IUser> FetchUserInfo(ulong userId, CacheBehavior cacheBehavior)
 	{
+		if (userId == 0)
+			throw new InvalidIUserException(userId);
+
 		var cacheKey = CacheKey.User(userId);
 		IUser user;
 

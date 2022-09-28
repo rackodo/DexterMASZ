@@ -325,6 +325,8 @@ public class DiscordBot : IHostedService, Event
 						$"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed: " +
 						eResult.Exception.Message + "\n" + eResult.Exception.StackTrace);
 				}
+
+				_eventHandler.CommandErroredEvent.Invoke(eResult.Exception);
 			}
 			else
 			{

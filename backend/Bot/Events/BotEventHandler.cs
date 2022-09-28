@@ -19,6 +19,8 @@ public class BotEventHandler : InternalEventHandler
 
 	public readonly AsyncEvent<Func<int, DateTime, Task>> InternalCachingDoneEvent = new();
 
+	public readonly AsyncEvent<Func<Exception, Task>> CommandErroredEvent = new();
+
 	public event Func<Task> OnBotLaunched
 	{
 		add => BotLaunchedEvent.Add(value);
@@ -59,5 +61,11 @@ public class BotEventHandler : InternalEventHandler
 	{
 		add => InternalCachingDoneEvent.Add(value);
 		remove => InternalCachingDoneEvent.Remove(value);
+	}
+
+	public event Func<Exception, Task> OnCommandErroredEvent
+	{
+		add => CommandErroredEvent.Add(value);
+		remove => CommandErroredEvent.Remove(value);
 	}
 }
