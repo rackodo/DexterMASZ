@@ -14,7 +14,7 @@ public static class EmbedCreator
 		return new EmbedBuilder()
 			.WithCurrentTimestamp()
 			.WithColor(color)
-			.WithFooter(ns.First() + ns.Last());
+			.WithFooter($"{ns.First()} {ns.Last()}");
 	}
 
 	public static async Task<EmbedBuilder> CreateActionEmbed(RestAction action, IServiceProvider provider,
