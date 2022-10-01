@@ -129,9 +129,9 @@ public class PunishmentHandler : Event
 							_logger.LogInformation($"Muted user {modCase.UserId} in guild {modCase.GuildId}");
 
 							var muteDuration = modCase.PunishedUntil.HasValue ? modCase.PunishedUntil.Value - DateTime.UtcNow : Timeout.InfiniteTimeSpan;
+							var maxDuration = TimeSpan.FromDays(7);
+							await _discordRest.TimeoutGuildUser(modCase.GuildId, modCase.UserId, muteDuration > maxDuration ? maxDuration : muteDuration, reason);
 
-							await _discordRest.TimeoutGuildUser(modCase.GuildId, modCase.UserId, muteDuration, reason);
-							
 							break;
 						case RestAction.Deleted:
 							_logger.LogInformation($"Unmuted user {modCase.UserId} in guild {modCase.GuildId}");
@@ -171,15 +171,10 @@ public class PunishmentHandler : Event
 						case RestAction.Created:
 							_logger.LogInformation($"Final warned user {modCase.UserId} in guild {modCase.GuildId}");
 
-							if (!modCase.PunishedUntil.HasValue)
-								_logger.LogError($"Failed to final warn user due to unknown duration length");
+							var muteDuration = modCase.PunishedUntil.HasValue ? modCase.PunishedUntil.Value - DateTime.UtcNow : Timeout.InfiniteTimeSpan;
+							var maxDuration = TimeSpan.FromDays(7);
+							await _discordRest.TimeoutGuildUser(modCase.GuildId, modCase.UserId, muteDuration > maxDuration ? maxDuration : muteDuration, reason);
 
-							if (modCase.PunishedUntil.HasValue)
-							{
-								var muteDuration = modCase.PunishedUntil.Value - DateTime.UtcNow;
-								var maxDuration = TimeSpan.FromDays(7);
-								await _discordRest.TimeoutGuildUser(modCase.GuildId, modCase.UserId, muteDuration > maxDuration ? maxDuration : muteDuration, reason);
-							}
 							break;
 						case RestAction.Deleted:
 							_logger.LogInformation($"Unfinal warned user {modCase.UserId} in guild {modCase.GuildId}");
