@@ -177,8 +177,8 @@ public class PunishmentHandler : Event
 							if (modCase.PunishedUntil.HasValue)
 							{
 								var muteDuration = modCase.PunishedUntil.Value - DateTime.UtcNow;
-
-								await _discordRest.TimeoutGuildUser(modCase.GuildId, modCase.UserId, muteDuration, reason);
+								var maxDuration = TimeSpan.FromDays(7);
+								await _discordRest.TimeoutGuildUser(modCase.GuildId, modCase.UserId, muteDuration > maxDuration ? maxDuration : muteDuration, reason);
 							}
 							break;
 						case RestAction.Deleted:
