@@ -6,6 +6,7 @@ using Discord.Interactions;
 using Punishments.Abstractions;
 using Punishments.Enums;
 using Punishments.Models;
+using System.Threading;
 
 namespace Punishments.Commands;
 
@@ -35,7 +36,7 @@ public class Mute : PunishmentCommand<Mute>
 			PunishmentType = PunishmentType.Mute,
 			PunishmentActive = true,
 			Severity = (SeverityType) severity,
-			PunishedUntil = time == default ? null : DateTime.UtcNow + time,
+			PunishedUntil = time == default ? DateTime.UtcNow + Timeout.InfiniteTimeSpan : DateTime.UtcNow + time,
 			CreationType = CaseCreationType.ByCommand
 		});
 	}
