@@ -36,7 +36,7 @@ public class Mute : PunishmentCommand<Mute>
 			PunishmentType = PunishmentType.Mute,
 			PunishmentActive = true,
 			Severity = (SeverityType) severity,
-			PunishedUntil = time == default ? DateTime.UtcNow + Timeout.InfiniteTimeSpan : DateTime.UtcNow + time,
+			PunishedUntil = DateTime.UtcNow + (time == default ? Timeout.InfiniteTimeSpan : time),
 			CreationType = CaseCreationType.ByCommand
 		});
 	}
