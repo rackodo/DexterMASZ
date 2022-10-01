@@ -128,13 +128,10 @@ public class PunishmentHandler : Event
 						case RestAction.Created:
 							_logger.LogInformation($"Muted user {modCase.UserId} in guild {modCase.GuildId}");
 
-							if (!modCase.PunishedUntil.HasValue)
-								_logger.LogError($"Failed to mute user due to unknown duration length");
-
-							var muteDuration = modCase.PunishedUntil.Value - DateTime.UtcNow;
+							var muteDuration = modCase.PunishedUntil.HasValue ? modCase.PunishedUntil.Value - DateTime.UtcNow : Timeout.InfiniteTimeSpan;
 
 							await _discordRest.TimeoutGuildUser(modCase.GuildId, modCase.UserId, muteDuration, reason);
-
+							
 							break;
 						case RestAction.Deleted:
 							_logger.LogInformation($"Unmuted user {modCase.UserId} in guild {modCase.GuildId}");
