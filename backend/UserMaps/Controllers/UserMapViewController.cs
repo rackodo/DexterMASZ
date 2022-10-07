@@ -34,9 +34,9 @@ public class UserMapViewController : AuthenticatedController
 		foreach (var userMap in userMaps)
 			userMapsViews.Add(new UserMapExpanded(
 				userMap,
-				await _discordRest.FetchUserInfo(userMap.UserA, CacheBehavior.OnlyCache),
-				await _discordRest.FetchUserInfo(userMap.UserB, CacheBehavior.OnlyCache),
-				await _discordRest.FetchUserInfo(userMap.CreatorUserId, CacheBehavior.OnlyCache)
+				await _discordRest.FetchUserInfo(userMap.UserA, true),
+				await _discordRest.FetchUserInfo(userMap.UserB, true),
+				await _discordRest.FetchUserInfo(userMap.CreatorUserId, true)
 			));
 
 		return Ok(userMapsViews);

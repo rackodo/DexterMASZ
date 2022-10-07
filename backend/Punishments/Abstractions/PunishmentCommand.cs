@@ -33,9 +33,9 @@ public class PunishmentCommand<T> : Command<T>
 		var caseCount =
 			(await ModCaseRepository.GetCasesForGuildAndUser(Context.Guild.Id, modCase.UserId)).Count;
 
-		var caseUser = await DiscordRest.FetchUserInfo(modCase.UserId, CacheBehavior.Default);
+		var caseUser = await DiscordRest.FetchUserInfo(modCase.UserId, false);
 
-		var modUser = await DiscordRest.FetchUserInfo(modCase.ModId, CacheBehavior.Default);
+		var modUser = await DiscordRest.FetchUserInfo(modCase.ModId, false);
 
 		var settings = await SettingsRepository.GetAppSettings();
 

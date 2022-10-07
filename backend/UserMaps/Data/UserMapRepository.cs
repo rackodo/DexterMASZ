@@ -53,9 +53,9 @@ public class UserMapRepository : Repository,
 		{
 			userMaps.Add(new UserMapExpanded(
 				userMap,
-				await _discordRest.FetchUserInfo(userMap.UserA, CacheBehavior.OnlyCache),
-				await _discordRest.FetchUserInfo(userMap.UserB, CacheBehavior.OnlyCache),
-				await _discordRest.FetchUserInfo(userMap.CreatorUserId, CacheBehavior.OnlyCache)
+				await _discordRest.FetchUserInfo(userMap.UserA, true),
+				await _discordRest.FetchUserInfo(userMap.UserB, true),
+				await _discordRest.FetchUserInfo(userMap.CreatorUserId, true)
 			));
 		}
 
@@ -73,9 +73,9 @@ public class UserMapRepository : Repository,
 			foreach (var userMap in userMaps)
 				userMapsViews.Add(new UserMapExpanded(
 					userMap,
-					await _discordRest.FetchUserInfo(userMap.UserA, CacheBehavior.OnlyCache),
-					await _discordRest.FetchUserInfo(userMap.UserB, CacheBehavior.OnlyCache),
-					await _discordRest.FetchUserInfo(userMap.CreatorUserId, CacheBehavior.OnlyCache)
+					await _discordRest.FetchUserInfo(userMap.UserA, true),
+					await _discordRest.FetchUserInfo(userMap.UserB, true),
+					await _discordRest.FetchUserInfo(userMap.CreatorUserId, true)
 				));
 		}
 		catch (ResourceNotFoundException)
@@ -154,10 +154,10 @@ public class UserMapRepository : Repository,
 
 	public async Task<UserMap> CreateOrUpdateUserMap(ulong guildId, ulong userA, ulong userB, string content)
 	{
-		if (await _discordRest.FetchUserInfo(userA, CacheBehavior.Default) == null)
+		if (await _discordRest.FetchUserInfo(userA, false) == null)
 			throw new InvalidIUserException("User not found", userA);
 
-		if (await _discordRest.FetchUserInfo(userB, CacheBehavior.Default) == null)
+		if (await _discordRest.FetchUserInfo(userB, false) == null)
 			throw new InvalidIUserException("User not found", userB);
 
 		if (userA == userB)

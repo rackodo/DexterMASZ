@@ -271,17 +271,18 @@ public class DiscordRest : IHostedService, Event
 		return ban;
 	}
 
-	public async Task<IUser> FetchUserInfo(ulong userId, CacheBehavior cacheBehavior)
+	public async Task<IUser> FetchUserInfo(ulong userId, bool onlyUseCachedUsers)
 	{
 		if (userId == 0)
 			throw new InvalidIUserException(userId);
 
 		var cacheKey = CacheKey.User(userId);
 		IUser user;
+		var cachingType = onlyUseCachedUsers ? CacheBehavior.OnlyCache : CacheBehavior.Default;
 
 		try
 		{
-			user = TryGetFromCache<IUser>(cacheKey, CacheBehavior.OnlyCache);
+			user = TryGetFromCache<IUser>(cacheKey, cachingType);
 
 			if (user != null)
 				return user;
@@ -297,7 +298,7 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			if (user == null)
-				if (cacheBehavior == CacheBehavior.OnlyCache)
+				if (onlyUseCachedUsers)
 					_downloadingUsers.TryAdd(userId, RestAction.Created);
 				else
 				{
@@ -310,7 +311,7 @@ public class DiscordRest : IHostedService, Event
 
 				if (!string.IsNullOrEmpty(avatarUrl))
 					if (!await IsImageAvailable(avatarUrl))
-						if (cacheBehavior == CacheBehavior.OnlyCache)
+						if (onlyUseCachedUsers)
 							_downloadingUsers.TryAdd(userId, RestAction.Updated);
 						else
 						{
@@ -322,7 +323,7 @@ public class DiscordRest : IHostedService, Event
 		catch (Exception e)
 		{
 			_logger.LogError(e, $"Failed to fetch user '{userId}' from API.");
-			return FallBackToCache<IUser>(cacheKey, CacheBehavior.Default);
+			return FallBackToCache<IUser>(cacheKey, cachingType);
 		}
 
 		SetCacheValue(cacheKey, new CacheApiResponse(user));

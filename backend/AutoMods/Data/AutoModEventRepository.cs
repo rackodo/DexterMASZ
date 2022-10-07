@@ -78,7 +78,7 @@ public class AutoModEventRepository : Repository,
 			{
 				Entry = new AutoModEventExpanded(
 					item,
-					await _discordRest.FetchUserInfo(item.UserId, CacheBehavior.OnlyCache)
+					await _discordRest.FetchUserInfo(item.UserId, true)
 				),
 				CreatedAt = item.CreatedAt,
 				QuickSearchEntryType = QuickSearchEntryType.AutoMod
@@ -108,7 +108,7 @@ public class AutoModEventRepository : Repository,
 
 		var modConfig = await _autoModConfigRepo.GetConfigsByGuildAndType(modEvent.GuildId, modEvent.AutoModType);
 
-		var user = await _discordRest.FetchUserInfo(modEvent.UserId, CacheBehavior.Default);
+		var user = await _discordRest.FetchUserInfo(modEvent.UserId, false);
 
 		if (user != null)
 		{
@@ -219,7 +219,7 @@ public class AutoModEventRepository : Repository,
 		{
 			var entry = new AutoModEventExpanded(
 				c,
-				await _discordRest.FetchUserInfo(c.UserId, CacheBehavior.OnlyCache)
+				await _discordRest.FetchUserInfo(c.UserId, true)
 			);
 
 			if (searchString.Search(entry))

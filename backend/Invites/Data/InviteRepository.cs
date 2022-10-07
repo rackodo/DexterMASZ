@@ -54,8 +54,8 @@ public class InviteRepository : Repository,
 
 			invited.Add(new UserInviteExpanded(
 				invite,
-				await _discordRest.FetchUserInfo(invite.JoinedUserId, CacheBehavior.OnlyCache),
-				await _discordRest.FetchUserInfo(invite.InviteIssuerId, CacheBehavior.OnlyCache)
+				await _discordRest.FetchUserInfo(invite.JoinedUserId, true),
+				await _discordRest.FetchUserInfo(invite.InviteIssuerId, true)
 			));
 		}
 
@@ -67,8 +67,8 @@ public class InviteRepository : Repository,
 
 			invitedBy.Add(new UserInviteExpanded(
 				invite,
-				await _discordRest.FetchUserInfo(invite.JoinedUserId, CacheBehavior.OnlyCache),
-				await _discordRest.FetchUserInfo(invite.InviteIssuerId, CacheBehavior.OnlyCache)
+				await _discordRest.FetchUserInfo(invite.JoinedUserId, true),
+				await _discordRest.FetchUserInfo(invite.InviteIssuerId, true)
 			));
 		}
 

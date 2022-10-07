@@ -89,9 +89,9 @@ public class ModCaseRepository : Repository,
 			{
 				Entry = new ModCaseExpanded(
 					item,
-					await _discordRest.FetchUserInfo(item.ModId, CacheBehavior.OnlyCache),
-					await _discordRest.FetchUserInfo(item.LastEditedByModId, CacheBehavior.OnlyCache),
-					await _discordRest.FetchUserInfo(item.UserId, CacheBehavior.OnlyCache),
+					await _discordRest.FetchUserInfo(item.ModId, true),
+					await _discordRest.FetchUserInfo(item.LastEditedByModId, true),
+					await _discordRest.FetchUserInfo(item.UserId, true),
 					new List<ModCaseCommentExpanded>(),
 					null
 				),
@@ -270,7 +270,7 @@ public class ModCaseRepository : Repository,
 
 	public async Task<Tuple<ModCase, AnnouncementResult>> CreateModCase(ModCase modCase)
 	{
-		var currentReportedUser = await _discordRest.FetchUserInfo(modCase.UserId, CacheBehavior.Default);
+		var currentReportedUser = await _discordRest.FetchUserInfo(modCase.UserId, false);
 
 		try
 		{
@@ -487,7 +487,7 @@ public class ModCaseRepository : Repository,
 
 	public async Task<ModCase> UpdateModCase(ModCase modCase, bool handlePunishment)
 	{
-		var currentReportedUser = await _discordRest.FetchUserInfo(modCase.UserId, CacheBehavior.Default);
+		var currentReportedUser = await _discordRest.FetchUserInfo(modCase.UserId, false);
 
 		try
 		{
@@ -631,8 +631,8 @@ public class ModCaseRepository : Repository,
 		{
 			var entry = new ModCaseTableEntry(
 				c,
-				await _discordRest.FetchUserInfo(c.ModId, CacheBehavior.OnlyCache),
-				await _discordRest.FetchUserInfo(c.UserId, CacheBehavior.OnlyCache)
+				await _discordRest.FetchUserInfo(c.ModId, true),
+				await _discordRest.FetchUserInfo(c.UserId, true)
 			);
 
 			if (searchString.Search(entry, _translator))

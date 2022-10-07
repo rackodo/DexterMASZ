@@ -41,8 +41,8 @@ public class UserNetworkController : AuthenticatedController
 		foreach (var invite in invites)
 			inviteViews.Add(new UserInviteExpanded(
 				invite,
-				await _discordRest.FetchUserInfo(invite.JoinedUserId, CacheBehavior.OnlyCache),
-				await _discordRest.FetchUserInfo(invite.InviteIssuerId, CacheBehavior.OnlyCache)
+				await _discordRest.FetchUserInfo(invite.JoinedUserId, true),
+				await _discordRest.FetchUserInfo(invite.InviteIssuerId, true)
 			));
 
 		return Ok(new

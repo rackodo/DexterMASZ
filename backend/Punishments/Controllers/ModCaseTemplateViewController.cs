@@ -32,7 +32,7 @@ public class ModCaseTemplateViewController : AuthenticatedController
 		foreach (var template in templates.Where(x => x.UserId == userId || userId == 0))
 			templatesView.Add(new ModCaseTemplateExpanded(
 				template,
-				await _discordRest.FetchUserInfo(template.UserId, CacheBehavior.OnlyCache),
+				await _discordRest.FetchUserInfo(template.UserId, true),
 				_discordRest.FetchGuildInfo(template.CreatedForGuildId, CacheBehavior.Default)
 			));
 

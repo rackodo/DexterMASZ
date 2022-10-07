@@ -33,7 +33,7 @@ public class LevelsXPController : AuthenticatedController
 
 		var guildLevelConfig = await _levelsConfigRepository.GetOrCreateConfig(level.GuildId);
 
-		var user = await _rest.FetchUserInfo(level.UserId, CacheBehavior.Default);
+		var user = await _rest.FetchUserInfo(level.UserId, false);
 
 		return Ok(new CalculatedGuildUserLevel(level, guildLevelConfig).ToDTO(DiscordUser.GetDiscordUser(user)));
 	}
@@ -59,7 +59,7 @@ public class LevelsXPController : AuthenticatedController
 
 		return Ok(selRecords.AsParallel().Select(async l =>
 		{
-			var user = await _rest.FetchUserInfo(l.UserId, CacheBehavior.OnlyCache);
+			var user = await _rest.FetchUserInfo(l.UserId, true);
 			return new CalculatedGuildUserLevel(l, guildLevelConfig).ToDTO(DiscordUser.GetDiscordUser(user));
 		}).Select(t => t.Result)
 			.Where(r => r != null)
