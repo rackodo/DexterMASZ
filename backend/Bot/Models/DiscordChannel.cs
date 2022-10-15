@@ -4,6 +4,11 @@ namespace Bot.Models;
 
 public class DiscordChannel
 {
+	public ulong Id { get; set; }
+	public string Name { get; set; }
+	public int Position { get; set; }
+	public int Type { get; set; }
+
 	public static DiscordChannel GetDiscordChannel(IGuildChannel channel)
 	{
 		if (channel is null)
@@ -21,9 +26,4 @@ public class DiscordChannel
 		Position = channel.Position;
 		Type = (int)channel.GetChannelType();
 	}
-
-	public ulong Id { get; set; }
-	public string Name { get; set; }
-	public int Position { get; set; }
-	public int Type { get; set; }
 }

@@ -5,6 +5,12 @@ namespace Bot.Models;
 
 public class DiscordGuild
 {
+	public ulong Id { get; set; }
+	public string Name { get; set; }
+	public string IconUrl { get; set; }
+	public List<DiscordRole> Roles { get; set; }
+	public List<DiscordChannel> Channels { get; set; }
+
 	public static DiscordGuild GetDiscordGuild(IGuild guild)
 	{
 		if (guild is null)
@@ -39,10 +45,4 @@ public class DiscordGuild
 		Roles = new List<DiscordRole>();
 		Channels = new List<DiscordChannel>();
 	}
-
-	public ulong Id { get; set; }
-	public string Name { get; set; }
-	public string IconUrl { get; set; }
-	public List<DiscordRole> Roles { get; set; }
-	public List<DiscordChannel> Channels { get; set; }
 }

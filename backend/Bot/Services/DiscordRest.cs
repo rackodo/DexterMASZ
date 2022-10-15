@@ -274,7 +274,9 @@ public class DiscordRest : IHostedService, Event
 	public async Task<IUser> FetchUserInfo(ulong userId, bool onlyUseCachedUsers)
 	{
 		if (userId == 0)
+		{
 			throw new InvalidIUserException(userId);
+		}
 
 		var cacheKey = CacheKey.User(userId);
 		IUser user;
@@ -285,7 +287,9 @@ public class DiscordRest : IHostedService, Event
 			user = TryGetFromCache<IUser>(cacheKey, cachingType);
 
 			if (user != null)
+			{
 				return user;
+			}
 		}
 		catch (NotFoundInCacheException) {}
 
@@ -298,26 +302,33 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			if (user == null)
+			{
 				if (onlyUseCachedUsers)
+				{
 					_downloadingUsers.TryAdd(userId, RestAction.Created);
+				}
 				else
 				{
 					user = await _client.GetUserAsync(userId);
 					await userRepo.AddUser(user);
 				}
+			}
 			else
 			{
 				var avatarUrl = user.GetAvatarUrl();
 
-				if (!string.IsNullOrEmpty(avatarUrl))
-					if (!await IsImageAvailable(avatarUrl))
-						if (onlyUseCachedUsers)
-							_downloadingUsers.TryAdd(userId, RestAction.Updated);
-						else
-						{
-							user = await _client.GetUserAsync(userId);
-							await userRepo.UpdateUser(user);
-						}
+				if (!string.IsNullOrEmpty(avatarUrl) && !await IsImageAvailable(avatarUrl))
+				{
+					if (onlyUseCachedUsers)
+					{
+						_downloadingUsers.TryAdd(userId, RestAction.Updated);
+					}
+					else
+					{
+						user = await _client.GetUserAsync(userId);
+						await userRepo.UpdateUser(user);
+					}
+				}
 			}
 		}
 		catch (Exception e)

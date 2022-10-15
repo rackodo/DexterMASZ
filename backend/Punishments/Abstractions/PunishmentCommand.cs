@@ -37,6 +37,11 @@ public class PunishmentCommand<T> : Command<T>
 
 		var modUser = await DiscordRest.FetchUserInfo(modCase.ModId, false);
 
+		Console.WriteLine(modUser);
+		Console.WriteLine(modUser.Id);
+		Console.WriteLine(modUser.Username);
+		Console.WriteLine(modUser.Discriminator);
+
 		var settings = await SettingsRepository.GetAppSettings();
 
 		var embed = await modCase.CreateNewModCaseEmbed(modUser, guildConfig, result, ServiceProvider, caseUser);

@@ -5,6 +5,14 @@ namespace Bot.Models;
 
 public class DiscordApplication
 {
+	public ulong Id { get; set; }
+	public string Name { get; set; }
+	public string Description { get; set; }
+	public string IconUrl { get; set; }
+	public string IconHash { get; set; }
+	public string PrivacyPolicyUrl { get; set; }
+	public string TermsOfServiceUrl { get; set; }
+
 	public static DiscordApplication GetDiscordApplication(IApplication application)
 	{
 		if (application is null)
@@ -25,12 +33,4 @@ public class DiscordApplication
 		PrivacyPolicyUrl = application.PrivacyPolicy ?? "";
 		TermsOfServiceUrl = application.TermsOfService ?? "";
 	}
-
-	public ulong Id { get; set; }
-	public string Name { get; set; }
-	public string Description { get; set; }
-	public string IconUrl { get; set; }
-	public string IconHash { get; set; }
-	public string PrivacyPolicyUrl { get; set; }
-	public string TermsOfServiceUrl { get; set; }
 }

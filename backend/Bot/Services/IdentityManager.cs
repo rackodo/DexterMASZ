@@ -84,7 +84,8 @@ public class IdentityManager : Event
 
 		var key = $"/discord/cmd/{user.Id}";
 
-		if (!_identities.ContainsKey(key)) return await RegisterNewIdentity(user);
+		if (!_identities.ContainsKey(key))
+			return await RegisterNewIdentity(user);
 
 		var identity = _identities[key];
 
