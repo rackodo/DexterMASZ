@@ -86,10 +86,18 @@ Entity Framework implores some new features of MySQL for sake of optimising call
 As such, it is recommended you install MySQL 8+ to use this new syntax. Otherwise, you will encounter
 a `MySQLException` stating you need to check your MySQL version corresponds correctly with the version in your manual.
 
-#### Local hosting
+#### 💻 Local hosting
 
 - Start your bot from the `Launch` project and enter in the variables as required. These are set environmentally.
 - To launch the frontend, run `npm start` from the terminal in the directory of frontend/dexter. Make sure to install dependencies prior using `npm install`.
+
+#### ↪ After Deployment
+
+
+- You can visit your application at `yourdomain.com` (or `127.0.0.1:5565`). You will see a login screen that will ask you to authenticate yourself using Discord OAuth2.
+- After authorizing your service to use your Discord account you will see your profile picture in the toolbar (this is hosted on `127.0.0.1:4200` when developing).
+- If you are logged in as a siteadmin, you can use the "register guild" (+) button to register your guilds and to get started.
+- Based on wanted features and functionalities you might have to grant your bot advanced permissions, read above under `Enabling Restricted Features`.
 
 ## 🚀 Discord Permissions
 
@@ -132,15 +140,6 @@ To avoid any issue for message deletion or read permissions it is recommended to
 #### ⭐ Invite tracking
 
 Allows Dexter to track the invites new members are using. Grant your bot the `manage guild` permission to use this feature.
-
-## ↪ After Deployment
-
-### 🐾 First Steps
-
-- You can visit your application at `yourdomain.com` (or `127.0.0.1:5565`). You will see a login screen that will ask you to authenticate yourself using Discord OAuth2.
-- After authorizing your service to use your Discord account you will see your profile picture in the toolbar (this is hosted on `127.0.0.1:4200` when developing).
-- If you are logged in as a siteadmin, you can use the "register guild" (+) button to register your guilds and to get started.
-- Based on wanted features and functionalities you might have to grant your bot advanced permissions, read above under `Enabling Restricted Features`.
 
 ### 🤝 Contribute
 
