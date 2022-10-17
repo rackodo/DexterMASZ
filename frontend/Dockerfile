@@ -3,7 +3,7 @@ WORKDIR /frontend
 
 COPY dexter/package.json /opt/dexter/package.json
 RUN cd /opt/dexter && npm install -g @angular/cli && npm install
-COPY /opt/dexter .
+COPY /opt/dexter/ .
 
 COPY dexter/ .
 
