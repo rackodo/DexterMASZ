@@ -41,6 +41,7 @@
 
 ### Plugins
 
+⭐ **Levelling** - including a leaderboard and rank system\
 ⭐ **Infractions and managed (temporary) punishments** - to moderate your server\
 ⭐ **Quicksearch** - to reliably search for any infractions or notes a user has\
 ⭐ **Automoderation** - to give trolls no chance\
