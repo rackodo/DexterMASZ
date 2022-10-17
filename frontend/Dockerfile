@@ -1,11 +1,10 @@
 FROM node:16.17 AS compile-frontend
-WORKDIR /frontend
-
-COPY dexter/package.json /opt/dexter/package.json
-RUN npm install -g @angular/cli && npm install --prefix /opt/dexter
-COPY /opt/dexter/ .
+WORKDIR /angular
 
 COPY dexter/ .
+
+RUN npm install -g @angular/cli
+RUN npm install
 
 RUN ng build --configuration production --output-hashing=all
 
@@ -15,7 +14,7 @@ RUN rm -rf /usr/share/nginx/html/*
 
 COPY static/ /var/www/data/static/
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=compile-frontend /frontend/dist/dexter/ /var/www/data/
+COPY --from=compile-frontend /angular/dist/dexter/ /var/www/data/
 
 # Set timezone
 ENV TZ=Europe/Berlin
