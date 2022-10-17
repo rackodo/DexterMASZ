@@ -3,7 +3,7 @@
       <h1 align="center" style="position: relative;">
          <img src="https://cdn.discordapp.com/attachments/781077443338960926/807479083297931264/DexLove.png" width="200" style="border-radius: 50%;" align="center">
          <br>
-         Dexter Masz
+         Dexter MASZ
       </h1>
       <h3 align="center">The official USFurries Discord bot!</h3>
       <h4 align="center">Used to help moderate the server and provides useful tools. Made with love <3</h4>
