@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Outpu
 import { FormControl } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { ReplaySubject, Subject } from 'rxjs';
-import { filter, take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-multi-select',
@@ -23,6 +23,7 @@ export class MultiSelectComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() public compareWithPredicate: (x: any, y: any) => boolean = (x: any, y: any) => { return x && y };
   @Input() placeholderKey = 'Select.Select';
   @Input() placeholderSearchKey = 'Select.Search';
+  @Input() notFoundSearchKey = "Select.NotFound";
 
   @Output() public selected = new EventEmitter<any[]>();
 
@@ -47,12 +48,14 @@ export class MultiSelectComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // load the initial bank list
       this.filteredElements.next(this._elements.slice(0, this.filterAmount));
+      this.filterBanksMulti();
     });
 
     // listen for search field value changes
     this.multiFilterCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
+        this.filterAmount = 20;
         this.hasMoreToLoad = true;
         this.filterBanksMulti();
       });
@@ -64,6 +67,7 @@ export class MultiSelectComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.setInitialValue();
+    this.filterBanksMulti();
   }
 
   ngOnDestroy() {
@@ -98,6 +102,10 @@ export class MultiSelectComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this._elements) {
       return;
     }
+
+    if (this._elements.length < this.filterAmount)
+      this.hasMoreToLoad = false;
+
     // get the search keyword
     let search = this.multiFilterCtrl.value;
     if (!search) {

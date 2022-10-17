@@ -6,7 +6,8 @@
     },
     "Select": {
         "Select": "Select",
-        "Search": "Search"
+        "Search": "Search",
+		"NotFound": "No options found"
     },
     "Version": "Version",
     "LoginWithDiscord": {
