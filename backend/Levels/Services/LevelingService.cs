@@ -42,7 +42,7 @@ public class LevelingService : Event
 		_eventHandler.OnGuildLevelConfigUpdated += HandleGuildConfigChanged;
 		_eventHandler.OnGuildLevelConfigCreated += HandleGuildConfigChanged;
 		_eventHandler.OnGuildLevelConfigDeleted += HandleGuildConfigDeleted;
-		_eventHandler.OnUserLevelUp += HandleLevelRoles;
+		_eventHandler.OnUserLevelUp += async (gL, l, u, _) => await HandleLevelRoles(gL, l, u);
 		_client.UserJoined += HandleUpdateRoles;
 	}
 
@@ -70,41 +70,46 @@ public class LevelingService : Event
 		await levelrepo.UpdateLevel(level);
 	}
 
-	public async Task<string> HandleUpdateRoles(IGuildUser user)
+	public async Task<UpdatedUser> HandleUpdateRoles(IGuildUser user)
 	{
 		using var scope = _serviceProvider.CreateScope();
 		return await HandleUpdateRoles(user, scope);
 	}
 
-	public async Task<string> HandleUpdateRoles(IGuildUser user, IServiceScope serviceScope)
+	public async Task<UpdatedUser> HandleUpdateRoles(IGuildUser user, IServiceScope serviceScope)
 	{
 		var guildId = user.GuildId;
 
 		var levelConfigRepo = serviceScope.ServiceProvider.GetRequiredService<GuildLevelConfigRepository>();
 		var guildConfig = await levelConfigRepo.GetOrCreateConfig(guildId);
-		if (guildConfig == null) return "Unable to locate guild configuration";
+
+		if (guildConfig == null)
+			return new UpdatedUser { Error = "Unable to locate guild configuration" };
 
 		var userLevel = serviceScope.ServiceProvider.GetRequiredService<GuildUserLevelRepository>().GetLevel(user.Id, guildId);
-		if (userLevel == null) return "Unable to locate user's level";
+
+		if (userLevel == null)
+			return new UpdatedUser { Error = "Unable to locate user's level" };
 
 		var calc = new CalculatedGuildUserLevel(userLevel, guildConfig);
-		return await HandleLevelRoles(userLevel, calc.Total.Level, user, null, levelConfigRepo);
+		return await HandleLevelRoles(userLevel, calc.Total.Level, user, levelConfigRepo);
 	}
 
-	public async Task<string> HandleLevelRoles(GuildUserLevel guildUserLevel, int level, IGuildUser guildUser, IChannel? channel)
+	public async Task<UpdatedUser> HandleLevelRoles(GuildUserLevel guildUserLevel, int level, IGuildUser guildUser)
 	{
 		using var scope = _serviceProvider.CreateScope();
 		var configRepo = scope.ServiceProvider.GetRequiredService<GuildLevelConfigRepository>();
-		return await HandleLevelRoles(guildUserLevel, level, guildUser, channel, configRepo);
+		return await HandleLevelRoles(guildUserLevel, level, guildUser, configRepo);
 	}
 
-	public async Task<string> HandleLevelRoles(GuildUserLevel guildUserLevel, int level, IGuildUser guildUser, IChannel? channel, GuildLevelConfigRepository levelConfigRepo)
+	public async Task<UpdatedUser> HandleLevelRoles(GuildUserLevel guildUserLevel, int level, IGuildUser guildUser, GuildLevelConfigRepository levelConfigRepo)
 	{
 		try
 		{
 			var config = await levelConfigRepo.GetOrCreateConfig(guildUserLevel.GuildId);
+
 			if (!config.HandleRoles)
-				return "This guild has leveled role handling disabled!";
+				return new UpdatedUser { Error = "This guild has leveled role handling disabled!" };
 
 			var toAdd = new HashSet<ulong>();
 			var toRemove = new HashSet<ulong>();
@@ -147,12 +152,12 @@ public class LevelingService : Event
 				return result;
 			};
 
-			return $"Successfully added {stringify(toAdd)} and removed {stringify(toRemove)} for user {guildUser.Mention} (level {level}).";
+			return new UpdatedUser { AddedRoles = stringify(toAdd), RemovedRoles = stringify(toRemove) };
 		}
 		catch (Exception e)
 		{
 			_logger.LogError(e, $"Error while handling roles on level up for user {guildUser.Id} in guild {guildUser.GuildId}.");
-			return "ERROR: " + e.Message;
+			return new UpdatedUser { Error = e.Message };
 		}
 	}
 

@@ -60,8 +60,25 @@ public class UpdateRoles : Command<UpdateRoles>
 		var calclevel = new CalculatedGuildUserLevel(level, guildlevelconfig);
 
 		var totalLevel = calclevel.Total.Level;
-		var result = await LevelingService.HandleLevelRoles(level, totalLevel, user, Context.Channel, GuildLevelConfigRepository);
-		
-		await FollowupAsync(result, ephemeral: true);
+
+		var result = await LevelingService.HandleLevelRoles(level, totalLevel, user, GuildLevelConfigRepository);
+
+		var embed = new EmbedBuilder()
+			.WithTitle($"Role update")
+			.WithCurrentTimestamp();
+
+		if (result.IsErrored)
+			embed
+				.WithColor(Color.Green)
+				.WithDescription($"Successfully updated {user.Mention}'s roles (level {level})")
+				.AddField("Added Roles", result.AddedRoles)
+				.AddField("Removed Roles", result.RemovedRoles);
+		else
+			embed
+				.WithColor(Color.Red)
+				.WithDescription($"Unable to update {user.Mention}'s roles (level {level})")
+				.AddField("Error", result.Error);
+
+		await FollowupAsync(embed: embed.Build());
 	}
 }
