@@ -2,7 +2,7 @@ FROM node:16.17 AS compile-frontend
 WORKDIR /frontend
 
 COPY dexter/package.json /opt/dexter/package.json
-RUN cd /opt/dexter && npm install -g @angular/cli && npm install
+RUN npm install -g @angular/cli && npm install --prefix /opt/dexter
 COPY /opt/dexter/ .
 
 COPY dexter/ .
