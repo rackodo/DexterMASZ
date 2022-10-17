@@ -200,12 +200,12 @@ export class ModCaseTableComponent implements OnInit {
   }
 
   loadNextPage() {
-    // this.loading = true;
+    this.loading = true;
     this.currentPage++;
     const params = new HttpParams()
           .set('startPage', this.currentPage.toString());
-    this.api.postSimpleData(`/guilds/${this.guildId}/${this.apiUrl}`, {}, params).subscribe((data: ModCaseTable) => {
-      // this.loading = false;
+    this.api.postSimpleData(`/guilds/${this.guildId}/${this.apiUrl}`, this.apiFilter, params).subscribe((data: ModCaseTable) => {
+      this.loading = false;
       this.casesTable.cases.push(...data.cases);
       this.casesTable.fullSize = data.fullSize;
       this.applyCurrentFilters();
