@@ -86,11 +86,9 @@ Entity Framework implores some new features of MySQL for sake of optimising call
 As such, it is recommended you install MySQL 8+ to use this new syntax. Otherwise, you will encounter
 a `MySQLException` stating you need to check your MySQL version corresponds correctly with the version in your manual.
 
-## 💻 Self Hosting
+#### .NET
 
-### .NET
-
-- If you're using an IDE like Visual Studio, you can copy and paste your ` launchSettingsExample.json` file inside `Properties` if your C# solution to `launchSettings.json`, replacing the values to your testing variables. On running the program, it will treat these as environmental variables.
+- Start your bot from the Launch project and enter in the variables as required. These are set environmentally.
 
 ## 🚀 Discord Permissions
 
