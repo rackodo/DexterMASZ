@@ -17,15 +17,19 @@ jobs:
           cd backend
           docker build -t ghcr.io/feroxfoxxo/dexter_backend:latest .
      
+      - name: Push backend
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u FeroxFoxxo --password-stdin
+          docker push ghcr.io/feroxfoxxo/dexter_backend:latest
+          
       - name: Build frontend
         run: |
           cd frontend
           docker build -t ghcr.io/feroxfoxxo/dexter_frontend:latest .
      
-      - name: Push images
+      - name: Push frontend
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u FeroxFoxxo --password-stdin
-          docker push ghcr.io/feroxfoxxo/dexter_backend:latest
           docker push ghcr.io/feroxfoxxo/dexter_frontend:latest
 
       - name: Send discord notification
