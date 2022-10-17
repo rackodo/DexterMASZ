@@ -28,7 +28,7 @@
          This bot is an adaption from the version of Dexter, written in JavaScript, by <a href="https://github.com/Jakey-F">Jakey Floofle</a>. As such, some commands have been adaptions from their original sources.
       </p>
       <p>
-         This bot was originally built off of <a href="https://github.com/zaanposni/discord-masz">MASZ</a>, but extends upon it by focusing on plugin support!
+         This bot was originally built off of <a href="https://github.com/zaanposni/discord-masz">MASZ</a>, but extends upon it by offering much more, general features, and a refreshed, abstracted backend!
       </p>
    </body>
 </html>
@@ -49,7 +49,7 @@
 
 ### 👀 Preview
 
-![dashboard preview](https://raw.githubusercontent.com/zaanposni/discord-masz/master/docs/dashboard.png)
+![dashboard preview](https://raw.githubusercontent.com/FeroxFoxxo/DexterMASZ/master/.github/dashboard.png)
 
 ### 🤝 Support Server
 
