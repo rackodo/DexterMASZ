@@ -1,9 +1,11 @@
 FROM node:16.17 AS compile-frontend
 WORKDIR /frontend
 
-COPY dexter/ .
+COPY dexter/package.json /opt/dexter/package.json
+RUN cd /opt/dexter && npm install -g @angular/cli && npm install
+COPY /opt/dexter .
 
-RUN npm install 
+COPY dexter/ .
 
 RUN ng build --configuration production --output-hashing=all
 
