@@ -69,8 +69,7 @@ public static class IdentityPermissions
 					if (await identity.HasPermission(DiscordPermission.Admin, modCase.GuildId))
 						return true;
 
-					return await identity.HasPermission(DiscordPermission.Moderator, modCase.GuildId) &&
-						   await identity.HasPermission(x, modCase.GuildId);
+					return await identity.HasPermission(DiscordPermission.Moderator, modCase.GuildId) && identity.HasPermission(x, modCase.GuildId);
 
 				}
 				catch (ResourceNotFoundException)

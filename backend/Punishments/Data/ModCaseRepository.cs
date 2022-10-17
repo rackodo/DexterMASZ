@@ -304,8 +304,7 @@ public class ModCaseRepository : Repository,
 			modCase.Username = currentReportedUser.Username;
 			modCase.Discriminator = currentReportedUser.Discriminator;
 
-			var reportedGuildUser =
-				await _discordRest.FetchUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
+			var reportedGuildUser = _discordRest.FetchGuildUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
 
 			if (reportedGuildUser != null)
 			{
@@ -521,8 +520,7 @@ public class ModCaseRepository : Repository,
 			modCase.Username = currentReportedUser.Username;
 			modCase.Discriminator = currentReportedUser.Discriminator;
 
-			var reportedGuildUser =
-				await _discordRest.FetchUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
+			var reportedGuildUser = _discordRest.FetchGuildUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
 
 			if (reportedGuildUser != null)
 			{

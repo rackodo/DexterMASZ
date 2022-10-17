@@ -57,14 +57,14 @@ public class DiscordOAuthIdentity : Identity
 		return CurrentUser != null && CurrentUserGuilds.Any(x => x.Id == guildId);
 	}
 
-	public virtual async Task<IGuildUser> GetGuildMembership(ulong guildId)
+	public IGuildUser GetGuildMembership(ulong guildId)
 	{
 		if (_guildMemberships.ContainsKey(guildId))
 			return _guildMemberships[guildId];
 		if (CurrentUser is null)
 			return null;
 
-		var guildUser = await DiscordRest.FetchUserInfo(guildId, CurrentUser.Id, CacheBehavior.Default);
+		var guildUser = DiscordRest.FetchGuildUserInfo(guildId, CurrentUser.Id, CacheBehavior.Default);
 
 		if (guildUser is null)
 			return null;
@@ -87,7 +87,7 @@ public class DiscordOAuthIdentity : Identity
 
 			var guildConfig = await guildConfigRepo.GetGuildConfig(guildId);
 
-			var guildUser = await GetGuildMembership(guildId);
+			var guildUser = GetGuildMembership(guildId);
 
 			if (guildUser is null)
 				return false;
@@ -112,7 +112,7 @@ public class DiscordOAuthIdentity : Identity
 
 			var guildConfig = await guildConfigRepo.GetGuildConfig(guildId);
 
-			var guildUser = await GetGuildMembership(guildId);
+			var guildUser = GetGuildMembership(guildId);
 
 			if (guildUser is null)
 				return false;

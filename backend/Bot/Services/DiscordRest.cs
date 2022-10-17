@@ -545,7 +545,7 @@ public class DiscordRest : IHostedService, Event
 		return guilds;
 	}
 
-	public async Task<IGuildUser> FetchUserInfo(ulong guildId, ulong userId, CacheBehavior cacheBehavior)
+	public IGuildUser FetchGuildUserInfo(ulong guildId, ulong userId, CacheBehavior cacheBehavior)
 	{
 		var cacheKey = CacheKey.GuildUser(guildId, userId);
 		IGuildUser user;
@@ -564,8 +564,7 @@ public class DiscordRest : IHostedService, Event
 
 		try
 		{
-			IGuild g = _client.GetGuild(guildId);
-			user = await g.GetUserAsync(userId);
+			user = _client.GetGuild(guildId).GetUser(userId);
 		}
 		catch (Exception e)
 		{
@@ -628,7 +627,7 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			var guild = _client.GetGuild(guildId);
-			var user = await FetchUserInfo(guildId, userId, CacheBehavior.Default);
+			var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
 			if (user is null)
 				return false;
@@ -654,7 +653,7 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			var guild = _client.GetGuild(guildId);
-			var user = await FetchUserInfo(guildId, userId, CacheBehavior.Default);
+			var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
 			if (user is null)
 				return false;
@@ -680,7 +679,7 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			var guild = _client.GetGuild(guildId);
-			var user = await FetchUserInfo(guildId, userId, CacheBehavior.Default);
+			var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
 			if (user is null)
 				return false;
@@ -711,7 +710,7 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			var guild = _client.GetGuild(guildId);
-			var user = await FetchUserInfo(guildId, userId, CacheBehavior.Default);
+			var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
 			if (user is null)
 				return false;
@@ -741,7 +740,7 @@ public class DiscordRest : IHostedService, Event
 	{
 		try
 		{
-			var user = await FetchUserInfo(guildId, userId, CacheBehavior.Default);
+			var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
 			if (user is null)
 				return false;

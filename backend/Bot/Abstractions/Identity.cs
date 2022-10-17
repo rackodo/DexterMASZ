@@ -34,14 +34,14 @@ public abstract class Identity
 
 	public abstract Task<bool> HasModRoleOrHigherOnGuild(ulong guildId);
 
-	public async Task<bool> HasPermission(GuildPermission permission, ulong guildId)
+	public bool HasPermission(GuildPermission permission, ulong guildId)
 	{
 		var guild = DiscordRest.FetchGuildInfo(guildId, CacheBehavior.Default);
 
 		if (CurrentUser is null || guild is null)
 			return false;
 
-		var user = await DiscordRest.FetchUserInfo(guildId, CurrentUser.Id, CacheBehavior.Default);
+		var user = DiscordRest.FetchGuildUserInfo(guildId, CurrentUser.Id, CacheBehavior.Default);
 
 		if (user is null)
 			return false;

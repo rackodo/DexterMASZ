@@ -63,7 +63,7 @@ public class IdentityManager : Event
 
 		foreach (var guildConfig in guildConfigs)
 		{
-			var gUser = await discordRest.FetchUserInfo(guildConfig.GuildId, user.Id, CacheBehavior.Default);
+			var gUser = discordRest.FetchGuildUserInfo(guildConfig.GuildId, user.Id, CacheBehavior.Default);
 
 			if (gUser is not null)
 				guilds.Add(UserGuild.GetUserGuild(gUser));
