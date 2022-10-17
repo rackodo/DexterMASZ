@@ -86,9 +86,10 @@ Entity Framework implores some new features of MySQL for sake of optimising call
 As such, it is recommended you install MySQL 8+ to use this new syntax. Otherwise, you will encounter
 a `MySQLException` stating you need to check your MySQL version corresponds correctly with the version in your manual.
 
-#### .NET
+#### Local hosting
 
-- Start your bot from the Launch project and enter in the variables as required. These are set environmentally.
+- Start your bot from the `Launch` project and enter in the variables as required. These are set environmentally.
+- To launch the frontend, run `npm start` from the terminal in the directory of frontend/dexter. Make sure to install dependencies prior using `npm install`.
 
 ## 🚀 Discord Permissions
 
