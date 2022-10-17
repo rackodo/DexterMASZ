@@ -28,7 +28,7 @@
          This bot is an adaption from the version of Dexter, written in JavaScript, by <a href="https://github.com/Jakey-F">Jakey Floofle</a>. As such, some commands have been adaptions from their original sources.
       </p>
       <p>
-         This bot was originally built off of <a href="https://github.com/zaanposni/discord-masz">MASZ</a>, but extends upon it by offering much more, general features, and a refreshed, abstracted backend!
+         This bot was originally built off of <a href="https://github.com/zaanposni/discord-masz">MASZ</a>, but extends upon it by offering much more, general features, and a refreshed, plugin-based, abstracted backend!
       </p>
    </body>
 </html>
@@ -86,12 +86,12 @@ Entity Framework implores some new features of MySQL for sake of optimising call
 As such, it is recommended you install MySQL 8+ to use this new syntax. Otherwise, you will encounter
 a `MySQLException` stating you need to check your MySQL version corresponds correctly with the version in your manual.
 
-#### 💻 Local hosting
+### 💻 Local hosting
 
 - Start your bot from the `Launch` project and enter in the variables as required. These are set environmentally.
 - To launch the frontend, run `npm start` from the terminal in the directory of frontend/dexter. Make sure to install dependencies prior using `npm install`.
 
-#### ↪ After Deployment
+### ↪ After Deployment
 
 
 - You can visit your application at `yourdomain.com` (or `127.0.0.1:5565`). You will see a login screen that will ask you to authenticate yourself using Discord OAuth2.
