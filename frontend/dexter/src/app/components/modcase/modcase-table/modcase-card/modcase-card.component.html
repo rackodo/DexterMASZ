@@ -24,7 +24,7 @@
                 <!-- Title -->
                 <div>
                     <span class="badge mat-h4 mb-0 me-1" style="padding: .1rem .4rem"
-                        [ngClass]="entry.modCase.punishmentActive === true ? 'bg-danger' : 'bg-dark'"
+                        [ngClass]="entry.modCase.valid === true ? 'bg-danger' : 'bg-dark'"
                         [attr.title]="punishmentTooltip">
                         {{ punishment }}
                     </span>
