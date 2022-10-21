@@ -62,7 +62,7 @@ public class Unban : Command<Unban>
 			interactionString.AppendLine(Translator.Get<BotTranslator>().AndXMore(modCases.Count - 5));
 
 		var embed = new EmbedBuilder()
-			.WithTitle(user.Username)
+			.WithAuthor(user)
 			.WithDescription(interactionString.ToString())
 			.WithColor(Color.Orange);
 
