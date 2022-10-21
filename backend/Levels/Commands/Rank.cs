@@ -12,7 +12,6 @@ namespace Levels.Commands;
 
 public class Rank : Command<Rank>
 {
-	public GuildConfigRepository? GuildConfigRepository { get; set; }
 	public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
 	public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
 	public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }

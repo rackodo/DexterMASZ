@@ -3,7 +3,6 @@ using Bot.Data;
 using Bot.Services;
 using Discord;
 using Punishments.Data;
-using Punishments.Enums;
 using Punishments.Extensions;
 using Punishments.Models;
 
@@ -22,43 +21,29 @@ public class PunishmentCommand<T> : Command<T>
 		ModCaseRepository.AsUser(Identity);
 		GuildConfigRepository.AsUser(Identity);
 
-		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
+		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 
-		var (created, result) =
+		var (created, result, finalWarned) =
 			await ModCaseRepository.CreateModCase(modCase);
 
-		var cases = await ModCaseRepository.GetCasesForGuildAndUser(Context.Guild.Id, modCase.UserId);
-
-		var caseUser = await DiscordRest.FetchUserInfo(modCase.UserId, false);
-
-		var modUser = await DiscordRest.FetchUserInfo(modCase.ModId, false);
-
-		var settings = await SettingsRepository.GetAppSettings();
-
-		var embed = (await modCase.CreateNewModCaseEmbed(modUser, guildConfig, result, ServiceProvider, caseUser));
-
-		var url = $"{settings.GetServiceUrl()}/guilds/{created.GuildId}/cases/{created.CaseId}";
-
-		var buttons = new ComponentBuilder().WithButton(label: "View Case", style: ButtonStyle.Link, url: url).Build();
-
-		if (cases.Where(c => c.Valid.GetValueOrDefault() && c.PunishmentType == PunishmentType.FinalWarn).Any())
+		if (finalWarned)
 		{
-			var textChannel = Context.Guild.GetTextChannel(guildConfig.StaffAnnouncements);
-
-			embed.WithTitle($"ON FINAL WARN: {embed.Title}");
-
-			await textChannel.SendMessageAsync(text: "⚠️ FINAL WARNING TRIGGERED ⚠️", embed: embed.Build(), components: buttons);
+			var textChannel = Context.Guild.GetTextChannel(GuildConfig.StaffAnnouncements);
 
 			await Context.Interaction.ModifyOriginalResponseAsync(msg =>
 				msg.Content = $"Final warning hit! Please check {textChannel.Mention} for more information."
 			);
 		}
 		else
+		{
+			var (embed, buttons) = await modCase.CreateNewModCaseEmbed(GuildConfig, await SettingsRepository.GetAppSettings(), result, DiscordRest, ServiceProvider);
+
 			await Context.Interaction.ModifyOriginalResponseAsync((MessageProperties msg) =>
 			{
 				msg.Embed = embed.Build();
-				msg.Components = buttons;
+				msg.Components = buttons.Build();
 			});
+		}
 	}
 
 }

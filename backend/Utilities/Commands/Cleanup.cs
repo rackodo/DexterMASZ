@@ -1,6 +1,5 @@
 using Bot.Abstractions;
 using Bot.Attributes;
-using Bot.Data;
 using Bot.Enums;
 using Bot.Translators;
 using Discord;
@@ -44,7 +43,7 @@ public class Cleanup : Command<Cleanup>
 				return;
 			}
 
-		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
+		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 
 		if (count > 1000)
 			count = 1000;

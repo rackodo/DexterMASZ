@@ -15,17 +15,17 @@ public abstract class Command<T> : InteractionModuleBase<SocketInteractionContex
 	public IdentityManager IdentityManager { get; set; }
 	public GuildConfigRepository GuildConfigRepository { get; set; }
 
-	public GuildConfig guildConfig;
+	public GuildConfig GuildConfig;
 
 	public override async Task BeforeExecuteAsync(ICommandInfo command)
 	{
 		Logger.LogInformation(
 			$"{Context.User.Id} used {command.Name} in {Context.Channel.Id} | {Context.Guild.Id} {Context.Guild.Name}");
 
-		guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
+		GuildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
 
-		if (guildConfig != null)
-			Translator.SetLanguage(guildConfig);
+		if (GuildConfig != null)
+			Translator.SetLanguage(GuildConfig);
 		else
 			throw new UnregisteredGuildException(Context.Guild.Id);
 

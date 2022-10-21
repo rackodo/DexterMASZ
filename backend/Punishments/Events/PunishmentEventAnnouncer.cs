@@ -67,12 +67,15 @@ public class PunishmentEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(modCase.GuildId);
 
+		var settings = await scope.ServiceProvider.GetRequiredService<SettingsRepository>()
+			.GetAppSettings();
+
 		_logger.LogInformation(
 			$"Sending webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
 
 		try
 		{
-			var embed = await modCase.CreateNewModCaseEmbed(actor, guildConfig, result, scope.ServiceProvider, caseUser);
+			var (embed, _) = await modCase.CreateNewModCaseEmbed(guildConfig, settings, result, _discordRest, scope.ServiceProvider);
 
 			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
 
@@ -113,7 +116,7 @@ public class PunishmentEventAnnouncer : Event
 
 		try
 		{
-			var embed = await modCase.CreateModCaseEmbed(action, actor, scope.ServiceProvider, caseUser);
+			var embed = await modCase.CreateModCaseEmbed(action, _discordRest, scope.ServiceProvider);
 
 			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
 		}

@@ -21,7 +21,7 @@ public class Report : Command<Report>
 		{
 			var embed = await msg.CreateReportEmbed(Context.User, Services);
 
-			await Client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
+			await Client.SendEmbed(GuildConfig.GuildId, GuildConfig.StaffAnnouncements, embed);
 		}
 		catch (Exception e)
 		{

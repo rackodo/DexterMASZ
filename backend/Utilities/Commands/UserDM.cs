@@ -1,6 +1,5 @@
 ﻿using Bot.Abstractions;
 using Bot.Attributes;
-using Bot.Data;
 using Bot.Enums;
 using Bot.Extensions;
 using Bot.Services;
@@ -24,7 +23,7 @@ public class UserDM : Command<UserDM>
 		[Summary("message", "The message you wish to be sent to the user.")]
 		string message)
 	{
-		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
+		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 
 		if (user is null)
 		{

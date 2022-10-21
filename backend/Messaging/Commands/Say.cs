@@ -49,7 +49,7 @@ public class Say : Command<Say>
 			{
 				var embed = await createdMessage.CreateMessageSentEmbed(channel, Context.User, ServiceProvider);
 
-				await Client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+				await Client.SendEmbed(GuildConfig.GuildId, GuildConfig.StaffLogs, embed);
 			}
 			catch (Exception ex)
 			{

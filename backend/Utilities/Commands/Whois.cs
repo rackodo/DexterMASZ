@@ -1,6 +1,5 @@
 using Bot.Abstractions;
 using Bot.Attributes;
-using Bot.Data;
 using Bot.Enums;
 using Bot.Extensions;
 using Bot.Services;
@@ -21,7 +20,7 @@ public class WhoIs : Command<WhoIs>
 	[SlashCommand("whois", "Who is information about a user.")]
 	public async Task WhoIsCommand([Summary("user", "user to scan")] IGuildUser user)
 	{
-		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
+		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 
 		var embed = new EmbedBuilder()
 			.WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {user.Id}")
