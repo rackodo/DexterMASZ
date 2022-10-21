@@ -144,7 +144,7 @@ public class PunishmentEventAnnouncer : Event
 		{
 			var embed = await comment.CreateCommentEmbed(action, actor, scope.ServiceProvider);
 
-			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
 		}
 		catch (Exception e)
 		{
