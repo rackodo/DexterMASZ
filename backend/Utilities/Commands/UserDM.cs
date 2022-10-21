@@ -15,7 +15,6 @@ public class UserDM : Command<UserDM>
 {
 	public IServiceProvider ServiceProvider { get; set; }
 	public DiscordRest DiscordRest { get; set; }
-	public GuildConfigRepository GuildConfigRepository { get; set; }
 
 	[Require(RequireCheck.GuildModerator)]
 	[SlashCommand("dm", "Sends a direct message to a user specified.")]
@@ -25,10 +24,6 @@ public class UserDM : Command<UserDM>
 		[Summary("message", "The message you wish to be sent to the user.")]
 		string message)
 	{
-		GuildConfigRepository.AsUser(user);
-
-		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
-
 		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
 
 		if (user is null)

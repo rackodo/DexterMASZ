@@ -14,7 +14,7 @@ public class Warn : PunishmentCommand<Warn>
 	[Require(RequireCheck.GuildModerator)]
 	[SlashCommand("warn", "Warn a user and create a mod case")]
 	public async Task WarnCommand(
-		[Summary("title", "The title of the modcase")]
+		[Summary("title", "The title of the modcase")] [MaxLength(200)]
 		string title,
 		[Summary("user", "User to punish")]
 		IUser user,

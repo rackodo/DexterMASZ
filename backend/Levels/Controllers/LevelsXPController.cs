@@ -4,7 +4,6 @@ using Bot.Models;
 using Levels.Data;
 using Levels.Models;
 using Microsoft.AspNetCore.Mvc;
-using Bot.Enums;
 
 namespace Levels.Controllers;
 

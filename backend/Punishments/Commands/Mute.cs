@@ -14,7 +14,7 @@ public class Mute : PunishmentCommand<Mute>
 	[Require(RequireCheck.GuildModerator, RequireCheck.GuildStrictModeMute)]
 	[SlashCommand("mute", "Mute a user and create a modcase")]
 	public async Task MuteCommand(
-		[Summary("title", "The title of the modcase")]
+		[Summary("title", "The title of the modcase")] [MaxLength(200)]
 		string title,
 		[Summary("user", "User to punish")]
 		IUser user,

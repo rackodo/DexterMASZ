@@ -9,7 +9,6 @@ public class Records : Command<Records>
 {
 	public ModCaseRepository ModCaseRepository { get; set; }
 	public SettingsRepository SettingsRepository { get; set; }
-	public GuildConfigRepository GuildConfigRepository { get; set; }
 
 	[SlashCommand("records", "Gets the records for the current user.")]
 	public async Task RecordsCommand()

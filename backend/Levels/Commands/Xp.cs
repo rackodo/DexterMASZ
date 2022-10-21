@@ -1,6 +1,5 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
-using Bot.Exceptions;
 using Bot.Services;
 using Discord;
 using Discord.Interactions;
@@ -13,7 +12,6 @@ namespace Levels.Commands;
 
 public class Experience : Command<Experience>
 {
-	public GuildConfigRepository? GuildConfigRepository { get; set; }
 	public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
 	public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
 	public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
@@ -26,9 +24,6 @@ public class Experience : Command<Experience>
 		[Summary("level", "The level you wish to get information about")] int levelTarget = -1,
 		[Summary("rank", "The rank you wish to get information about")] IRole roleTarget = null)
 	{
-		if (Context.Channel is not IGuildChannel)
-			throw new UnauthorizedException("This command must be executed in a guild context.");
-
 		user ??= Context.User;
 
 		var level = await GuildUserLevelRepository!.GetOrCreateLevel(Context.Guild.Id, user.Id);

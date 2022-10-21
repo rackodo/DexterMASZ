@@ -12,7 +12,6 @@ namespace Levels.Commands;
 
 public class UpdateRoles : Command<UpdateRoles>
 {
-	public GuildConfigRepository? GuildConfigRepository { get; set; }
 	public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
 	public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
 	public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
@@ -25,9 +24,6 @@ public class UpdateRoles : Command<UpdateRoles>
 		[Summary("user", "User to update roles for. Defaults to oneself.")] IGuildUser? user = null
 		)
 	{
-		if (Context.Channel is not IGuildChannel)
-			throw new UnauthorizedException("This command must be executed in a guild context.");
-
 		user ??= Context.Guild.GetUser(Context.User.Id);
 
 		if (user is null)

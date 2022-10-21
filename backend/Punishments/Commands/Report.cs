@@ -1,5 +1,4 @@
 using Bot.Abstractions;
-using Bot.Data;
 using Bot.Extensions;
 using Discord;
 using Discord.Interactions;
@@ -12,17 +11,12 @@ namespace Punishments.Commands;
 
 public class Report : Command<Report>
 {
-	public GuildConfigRepository GuildConfigRepository { get; set; }
 	public DiscordSocketClient Client { get; set; }
 	public IServiceProvider Services { get; set; }
 
 	[MessageCommand("Report to moderators")]
 	public async Task ReportCommand(IMessage msg)
 	{
-		GuildConfigRepository.AsUser(Identity);
-
-		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
-
 		try
 		{
 			var embed = await msg.CreateReportEmbed(Context.User, Services);

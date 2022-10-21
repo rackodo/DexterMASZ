@@ -330,16 +330,16 @@ public class DiscordRest : IHostedService, Event
 					}
 				}
 			}
+
+			SetCacheValue(cacheKey, new CacheApiResponse(user));
+
+			return user;
 		}
 		catch (Exception e)
 		{
 			_logger.LogError(e, $"Failed to fetch user '{userId}' from API.");
 			return FallBackToCache<IUser>(cacheKey, cachingType);
 		}
-
-		SetCacheValue(cacheKey, new CacheApiResponse(user));
-
-		return user;
 	}
 
 	public IUser FetchMemCachedUserInfo(ulong userId)
