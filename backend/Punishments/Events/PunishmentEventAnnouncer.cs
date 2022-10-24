@@ -78,20 +78,6 @@ public class PunishmentEventAnnouncer : Event
 			var (embed, _) = await modCase.CreateNewModCaseEmbed(guildConfig, settings, result, _discordRest, scope.ServiceProvider);
 
 			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
-
-			var modCaseRepo = scope.ServiceProvider.GetRequiredService<ModCaseRepository>();
-
-			var finalWarn = await modCaseRepo.GetFinalWarn(modCase.UserId, modCase.GuildId);
-
-			if (finalWarn != null || modCase.PunishmentType == PunishmentType.FinalWarn)
-			{
-				var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-
-				embed.WithTitle(translator.Get<PunishmentTranslator>().UserTriggeredOnFinalWarn())
-					.WithColor(Color.Red);
-
-				await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
-			}
 		}
 		catch (Exception e)
 		{

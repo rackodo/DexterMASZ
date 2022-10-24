@@ -424,9 +424,15 @@ public class ModCaseRepository : Repository,
 
 				var textChannel = await guild.GetTextChannelAsync(guildConfig.StaffAnnouncements);
 
-				embed.WithTitle($"ON FINAL WARN: {embed.Title}");
+				var title = embed.Title;
 
-				await textChannel.SendMessageAsync(text: "⚠️ FINAL WARNING TRIGGERED ⚠️", embed: embed.Build(), components: buttons.Build());
+				embed.WithTitle($"Final warned user has triggered an infraction")
+					.WithColor(Color.Red);
+
+				if (title != embed.Description)
+					embed.AddField("Title", title);
+
+				await textChannel.SendMessageAsync(embed: embed.Build(), components: buttons.Build());
 			}
 
 			if ((!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick))
