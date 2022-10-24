@@ -435,7 +435,7 @@ public class ModCaseRepository : Repository,
 				await textChannel.SendMessageAsync(embed: embed.Build(), components: buttons.Build());
 			}
 
-			if ((!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick))
+			if (!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick)
 				return new(modCase, announceResult, finalWarned);
 
 			if (modCase.PunishedUntil == null || modCase.PunishedUntil > DateTime.UtcNow)

@@ -27,13 +27,13 @@ public static class Graphics
 			HorizontalAlignment = horAlignment,
 			VerticalAlignment = verAlignment,
 			Origin = new PointF(
-				(horAlignment) switch
+				horAlignment switch
 				{
 					HorizontalAlignment.Left => rect.Left,
 					HorizontalAlignment.Right => rect.Right,
 					_ => (rect.Left + rect.Right) / 2
 				},
-				(verAlignment) switch
+				verAlignment switch
 				{
 					VerticalAlignment.Top => rect.Top,
 					VerticalAlignment.Bottom => rect.Bottom,
@@ -63,13 +63,9 @@ public static class Graphics
 
 		path.SetOrigin(Point.Empty)
 		.AddQuadraticBezier(p1, c1, p2)
-		//.AddLine(p2, p3)
 		.AddQuadraticBezier(p3, c2, p4)
-		//.AddLine(p4, p5)
 		.AddQuadraticBezier(p5, c3, p6)
-		//.AddLine(p6, p7)
 		.AddQuadraticBezier(p7, c4, p8)
-		//.AddLine(p8, p1)
 		.CloseFigure();
 
 		return path.Build();
