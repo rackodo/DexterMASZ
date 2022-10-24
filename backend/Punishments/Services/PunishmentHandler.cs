@@ -154,9 +154,10 @@ public class PunishmentHandler : Event
 							var finalWarning = await modRepo.GetFinalWarn(modCase.UserId, modCase.GuildId);
 
 							if (finalWarning != null)
+							{
 								finalWarning.PunishmentActive = false;
-
-							await modRepo.UpdateModCase(finalWarning, false);
+								await modRepo.UpdateModCase(finalWarning, false);
+							}
 
 							break;
 						case RestAction.Deleted:
