@@ -413,13 +413,12 @@ public class ModCaseRepository : Repository,
 
 			_eventHandler.ModCaseCreatedEvent.Invoke(modCase, Identity, announceResult);
 
-			var finalWarned = false;
+			var finalWarning = await GetFinalWarn(modCase.UserId, modCase.GuildId);
 
-			if ((await GetCasesForGuildAndUser(modCase.GuildId, modCase.UserId))
-				.Where(c => c.Valid.GetValueOrDefault() && c.PunishmentType == PunishmentType.FinalWarn).Any())
+			var isFinalWarned = finalWarning != null;
+
+			if (isFinalWarned)
 			{
-				finalWarned = true;
-
 				var (embed, buttons) = await modCase.CreateNewModCaseEmbed(guildConfig, config, announceResult, _discordRest, _serviceProvider);
 
 				var textChannel = await guild.GetTextChannelAsync(guildConfig.StaffAnnouncements);
@@ -432,16 +431,19 @@ public class ModCaseRepository : Repository,
 				if (title != embed.Description)
 					embed.AddField("Title", title);
 
+				buttons.WithButton("View Final Warn", style: ButtonStyle.Link,
+					url: $"{config.GetServiceUrl()}/guilds/{finalWarning.GuildId}/cases/{finalWarning.CaseId}");
+
 				await textChannel.SendMessageAsync(embed: embed.Build(), components: buttons.Build());
 			}
 
 			if (!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick)
-				return new(modCase, announceResult, finalWarned);
+				return new(modCase, announceResult, isFinalWarned);
 
 			if (modCase.PunishedUntil == null || modCase.PunishedUntil > DateTime.UtcNow)
 				await _punishmentHandler.ModifyPunishment(modCase, RestAction.Created);
 
-			return new(modCase, announceResult, finalWarned);
+			return new(modCase, announceResult, isFinalWarned);
 		}
 		catch (ResourceNotFoundException)
 		{

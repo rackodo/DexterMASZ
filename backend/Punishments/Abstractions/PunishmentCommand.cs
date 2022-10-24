@@ -31,7 +31,7 @@ public class PunishmentCommand<T> : Command<T>
 			var textChannel = Context.Guild.GetTextChannel(GuildConfig.StaffAnnouncements);
 
 			await Context.Interaction.ModifyOriginalResponseAsync(msg =>
-				msg.Content = $"Final warning hit! Please check {textChannel.Mention} for more information."
+				msg.Content = $"This user is on a final warning! Please check {textChannel.Mention} for this modlog."
 			);
 		}
 		else
