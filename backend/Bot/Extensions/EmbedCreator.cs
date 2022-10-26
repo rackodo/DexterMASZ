@@ -3,7 +3,6 @@ using Bot.Enums;
 using Bot.Models;
 using Discord;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Bot.Extensions;
 

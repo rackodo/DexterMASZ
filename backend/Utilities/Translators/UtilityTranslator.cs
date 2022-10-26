@@ -6,6 +6,30 @@ namespace Utilities.Translators;
 
 public class UtilityTranslator : Translator
 {
+	public string GuildAvatarUrl()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Holen Sie sich die Guild Avatar-URL",
+			Language.Fr => "Obtenir l'URL de l'avatar guild",
+			Language.Es => "Obtener URL de avatar guild",
+			Language.Ru => "Получить URL-адрес аватара guild",
+			Language.It => "Ottieni l'URL dell'avatar guild",
+			_ => "Get Guild Avatar URL"
+		};
+	}
+	public string BannerUrl()
+	{
+		return PreferredLanguage switch
+		{
+			Language.De => "Holen Sie sich die Banner-URL",
+			Language.Fr => "Obtenir l'URL de l'banner",
+			Language.Es => "Obtener URL de banner",
+			Language.Ru => "Получить URL-адрес баннера",
+			Language.It => "Ottieni URL banner",
+			_ => "Get Bannel URL"
+		};
+	}
 	public string AvatarUrl()
 	{
 		return PreferredLanguage switch
@@ -18,7 +42,6 @@ public class UtilityTranslator : Translator
 			_ => "Get Avatar URL"
 		};
 	}
-
 	public string Status()
 	{
 		return PreferredLanguage switch

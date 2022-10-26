@@ -8,11 +8,9 @@ using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Extensions;
 using Punishments.Models;
-using Punishments.Translators;
 
 namespace Punishments.Events;
 

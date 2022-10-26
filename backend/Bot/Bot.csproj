@@ -23,9 +23,9 @@
 
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
 
-		<PackageReference Include="AspNet.Security.OAuth.Discord" Version="6.0.11" />
+		<PackageReference Include="AspNet.Security.OAuth.Discord" Version="6.0.12" />
 
-		<PackageReference Include="RestSharp" Version="108.0.2" />
+		<PackageReference Include="RestSharp" Version="108.0.3-alpha.0.5" />
 
 		<PackageReference Include="AspNetCoreRateLimit" Version="4.0.2" />
 
