@@ -39,7 +39,7 @@ public class Avatar : Command<Avatar>
 			.WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {(gUser ?? user).Id}")
 			.WithUrl(avatarUrl)
 			.WithImageUrl(avatarUrl)
-			.WithAuthor(gUser)
+			.WithAuthor(gUser ?? user)
 			.WithColor(Color.Magenta)
 			.WithCurrentTimestamp();
 
