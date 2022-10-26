@@ -12,8 +12,9 @@ public class Banner : Command<Banner>
 	public DiscordRest Client { get; set; }
 
 	[SlashCommand("banner", "Get the high resolution banner of a user.")]
-	public async Task BannerCommand([Summary("user", "User to get the banner from")] IUser user)
+	public async Task BannerCommand([Summary("user", "User to get the banner from")] IUser user = null)
 	{
+		user ??= Context.User;
 		var rUser = await Client.GetRestClient().GetUserAsync(user.Id);
 
 		var embed = new EmbedBuilder()
