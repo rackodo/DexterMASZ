@@ -14,7 +14,7 @@ public class Avatar : Command<Avatar>
 	public async Task AvatarCommand([Summary("user", "User to get the avatar from")] IUser user = null)
 	{
 		user ??= Context.User;
-		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
+		await Context.Interaction.DeferAsync();
 		await UserAvatar(user.Id.ToString(), true);
 	}
 
