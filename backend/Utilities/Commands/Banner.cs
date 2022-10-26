@@ -1,20 +1,20 @@
 ﻿using Bot.Abstractions;
+using Bot.Services;
 using Bot.Translators;
 using Discord;
 using Discord.Interactions;
-using Discord.Rest;
 using Utilities.Translators;
 
 namespace Utilities.Commands;
 
 public class Banner : Command<Banner>
 {
-	public DiscordRestClient Client { get; set; }
+	public DiscordRest Client { get; set; }
 
 	[SlashCommand("banner", "Get the high resolution banner of a user.")]
 	public async Task BannerCommand([Summary("user", "User to get the banner from")] IUser user)
 	{
-		var rUser = await Client.GetUserAsync(user.Id);
+		var rUser = await Client.GetRestClient().GetUserAsync(user.Id);
 
 		var embed = new EmbedBuilder()
 			.WithTitle(Translator.Get<UtilityTranslator>().BannerUrl())

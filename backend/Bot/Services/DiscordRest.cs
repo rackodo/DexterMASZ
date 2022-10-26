@@ -831,4 +831,6 @@ public class DiscordRest : IHostedService, Event
 	{
 		_cache[key.GetValue()] = response;
 	}
+
+	public DiscordRestClient GetRestClient() => _discordRestClient;
 }
