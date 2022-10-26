@@ -14,8 +14,7 @@ public class Avatar : Command<Avatar>
 	public async Task AvatarCommand([Summary("user", "User to get the avatar from")] IUser user = null)
 	{
 		user ??= Context.User;
-		await Context.Interaction.RespondAsync("Loading...",
-			ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
+		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 		await UserAvatar(user.Id.ToString(), false);
 	}
 
@@ -32,30 +31,34 @@ public class Avatar : Command<Avatar>
 		if (isGuild && !guildAvail)
 			isGuild = false;
 
+		var avatarUrl = isGuild ? gUser.GetGuildAvatarUrl(size: 1024) : user.GetAvatarOrDefaultUrl(size: 1024);
+		var translator = Translator.Get<UtilityTranslator>();
+
+		var embed = new EmbedBuilder()
+			.WithTitle(isGuild ? translator.GuildAvatarUrl() : translator.AvatarUrl())
+			.WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {(gUser ?? user).Id}")
+			.WithUrl(avatarUrl)
+			.WithImageUrl(avatarUrl)
+			.WithAuthor(gUser)
+			.WithColor(Color.Magenta)
+			.WithCurrentTimestamp();
+
+		var buttons = new ComponentBuilder();
+
+		if (guildAvail)
+			buttons.WithButton(isGuild ? translator.AvatarUrl() : translator.GuildAvatarUrl(), $"avatar-user:{user.Id},{!isGuild}");
+
 		if (Context.Interaction is SocketMessageComponent castInteraction)
-		{
-			var avatarUrl = isGuild ? gUser.GetGuildAvatarUrl(size: 1024) : user.GetAvatarOrDefaultUrl(size: 1024);
-			var translator = Translator.Get<UtilityTranslator>();
-
-			var embed = new EmbedBuilder()
-				.WithTitle(isGuild ? translator.GuildAvatarUrl() : translator.AvatarUrl())
-				.WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {(gUser ?? user).Id}")
-				.WithUrl(avatarUrl)
-				.WithImageUrl(avatarUrl)
-				.WithAuthor(gUser)
-				.WithColor(Color.Magenta)
-				.WithCurrentTimestamp();
-
-			var buttons = new ComponentBuilder();
-
-			if (guildAvail)
-				buttons.WithButton(isGuild ? translator.AvatarUrl() : translator.GuildAvatarUrl(), $"avatar-user:{user.Id},{!isGuild}");
-
 			await castInteraction.UpdateAsync(message =>
 			{
 				message.Embed = embed.Build();
 				message.Components = buttons.Build();
 			});
-		}
+		else
+			await Context.Interaction.ModifyOriginalResponseAsync(message =>
+			{
+				message.Embed = embed.Build();
+				message.Components = buttons.Build();
+			});
 	}
 }
