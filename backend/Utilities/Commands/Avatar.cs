@@ -11,8 +11,9 @@ namespace Utilities.Commands;
 public class Avatar : Command<Avatar>
 {
 	[SlashCommand("avatar", "Get the high resolution avatar of a user.")]
-	public async Task AvatarCommand([Summary("user", "User to get the avatar from")] IUser user)
+	public async Task AvatarCommand([Summary("user", "User to get the avatar from")] IUser user = null)
 	{
+		user ??= Context.User;
 		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 		await UserAvatar(user.Id.ToString(), false);
 	}
