@@ -12,7 +12,7 @@ public class Banner : Command<Banner>
 	public DiscordRestClient Client { get; set; }
 
 	[SlashCommand("banner", "Get the high resolution banner of a user.")]
-	public async Task AvatarCommand([Summary("user", "User to get the banner from")] IUser user)
+	public async Task BannerCommand([Summary("user", "User to get the banner from")] IUser user)
 	{
 		var rUser = await Client.GetUserAsync(user.Id);
 
