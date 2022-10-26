@@ -265,7 +265,7 @@ public class AutoModChecker : Event
 		var existing = await scope.ServiceProvider.GetRequiredService<AutoModEventRepository>()
 			.GetAllEventsForUserSinceMinutes(message.Author.Id, config.TimeLimitMinutes.Value);
 
-		return existing.Count > config.Limit.Value;
+		return existing.Where(x => x.AutoModType != AutoModType.TooManyAutomods).Count() > config.Limit.Value;
 	}
 
 	private async Task ExecutePunishment(IMessage message, AutoModConfig autoModConfig, IServiceScope scope)

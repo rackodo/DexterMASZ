@@ -25,7 +25,11 @@ public static class CustomWordCheck
 			if (string.IsNullOrWhiteSpace(word))
 				continue;
 
-			matches += Regex.Matches(message.Content, word, RegexOptions.IgnoreCase).Count;
+			try
+			{
+				matches += Regex.Matches(message.Content, word, RegexOptions.IgnoreCase).Count;
+			}
+			catch (RegexParseException) { }
 
 			if (matches > config.Limit)
 				break;
