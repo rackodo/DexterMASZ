@@ -15,7 +15,7 @@ public class Avatar : Command<Avatar>
 	{
 		user ??= Context.User;
 		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
-		await UserAvatar(user.Id.ToString(), false);
+		await UserAvatar(user.Id.ToString(), true);
 	}
 
 	[ComponentInteraction("avatar-user:*,*")]
