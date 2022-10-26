@@ -2,6 +2,7 @@ using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Events;
+using Bot.Exceptions;
 using Bot.Extensions;
 using Bot.Models;
 using Bot.Translators;
@@ -293,7 +294,13 @@ public class DiscordBot : IHostedService, Event
 					var translator = scope.ServiceProvider.GetRequiredService<Translation>();
 
 					if (context.Guild != null)
-						await translator.SetLanguage(context.Guild.Id);
+						try
+						{
+							await translator.SetLanguage(context.Guild.Id);
+						} catch (UnregisteredGuildException)
+						{
+							translator.SetLanguage(Language.En);
+						}
 
 					var errorCode = "#" + ((int)exception.Error).ToString("D4");
 
