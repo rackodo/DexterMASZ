@@ -35,7 +35,7 @@ public class Avatar : Command<Avatar>
 		var translator = Translator.Get<UtilityTranslator>();
 
 		var embed = new EmbedBuilder()
-			.WithTitle(isGuild ? translator.GuildAvatarUrl() : translator.AvatarUrl())
+			.WithTitle(isGuild ? "Guild" : "User" + " Avatar URL")
 			.WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {(gUser ?? user).Id}")
 			.WithUrl(avatarUrl)
 			.WithImageUrl(avatarUrl)
@@ -46,7 +46,7 @@ public class Avatar : Command<Avatar>
 		var buttons = new ComponentBuilder();
 
 		if (guildAvail)
-			buttons.WithButton(isGuild ? translator.AvatarUrl() : translator.GuildAvatarUrl(), $"avatar-user:{user.Id},{!isGuild}");
+			buttons.WithButton($"Get {(isGuild ? "Guild" : "User")} Avatar", $"avatar-user:{user.Id},{!isGuild}");
 
 		if (Context.Interaction is SocketMessageComponent castInteraction)
 			await castInteraction.UpdateAsync(message =>
