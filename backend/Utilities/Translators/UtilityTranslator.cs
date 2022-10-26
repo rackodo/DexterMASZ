@@ -27,7 +27,7 @@ public class UtilityTranslator : Translator
 			Language.Es => "Obtener URL de banner",
 			Language.Ru => "Получить URL-адрес баннера",
 			Language.It => "Ottieni URL banner",
-			_ => "Get Bannel URL"
+			_ => "Get Banner URL"
 		};
 	}
 	public string AvatarUrl()
