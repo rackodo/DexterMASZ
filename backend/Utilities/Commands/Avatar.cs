@@ -35,7 +35,7 @@ public class Avatar : Command<Avatar>
 		var translator = Translator.Get<UtilityTranslator>();
 
 		var embed = new EmbedBuilder()
-			.WithTitle(isGuild ? "Guild" : "User" + " Avatar URL")
+			.WithTitle((isGuild ? "Guild" : "User") + " Avatar URL")
 			.WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {(gUser ?? user).Id}")
 			.WithUrl(avatarUrl)
 			.WithImageUrl(avatarUrl)
