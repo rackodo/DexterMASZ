@@ -274,7 +274,9 @@ public class DiscordRest : IHostedService, Event
 	public async Task<IUser> FetchUserInfo(ulong userId, bool onlyUseCachedUsers)
 	{
 		if (userId == 0)
+		{
 			throw new InvalidIUserException(userId);
+		}
 
 		var cacheKey = CacheKey.User(userId);
 		IUser user;
@@ -285,7 +287,9 @@ public class DiscordRest : IHostedService, Event
 			user = TryGetFromCache<IUser>(cacheKey, cachingType);
 
 			if (user != null)
+			{
 				return user;
+			}
 		}
 		catch (NotFoundInCacheException) {}
 
@@ -298,37 +302,44 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			if (user == null)
+			{
 				if (onlyUseCachedUsers)
+				{
 					_downloadingUsers.TryAdd(userId, RestAction.Created);
+				}
 				else
 				{
 					user = await _client.GetUserAsync(userId);
 					await userRepo.AddUser(user);
 				}
+			}
 			else
 			{
 				var avatarUrl = user.GetAvatarUrl();
 
-				if (!string.IsNullOrEmpty(avatarUrl))
-					if (!await IsImageAvailable(avatarUrl))
-						if (onlyUseCachedUsers)
-							_downloadingUsers.TryAdd(userId, RestAction.Updated);
-						else
-						{
-							user = await _client.GetUserAsync(userId);
-							await userRepo.UpdateUser(user);
-						}
+				if (!string.IsNullOrEmpty(avatarUrl) && !await IsImageAvailable(avatarUrl))
+				{
+					if (onlyUseCachedUsers)
+					{
+						_downloadingUsers.TryAdd(userId, RestAction.Updated);
+					}
+					else
+					{
+						user = await _client.GetUserAsync(userId);
+						await userRepo.UpdateUser(user);
+					}
+				}
 			}
+
+			SetCacheValue(cacheKey, new CacheApiResponse(user));
+
+			return user;
 		}
 		catch (Exception e)
 		{
 			_logger.LogError(e, $"Failed to fetch user '{userId}' from API.");
 			return FallBackToCache<IUser>(cacheKey, cachingType);
 		}
-
-		SetCacheValue(cacheKey, new CacheApiResponse(user));
-
-		return user;
 	}
 
 	public IUser FetchMemCachedUserInfo(ulong userId)
@@ -534,7 +545,7 @@ public class DiscordRest : IHostedService, Event
 		return guilds;
 	}
 
-	public async Task<IGuildUser> FetchUserInfo(ulong guildId, ulong userId, CacheBehavior cacheBehavior)
+	public IGuildUser FetchGuildUserInfo(ulong guildId, ulong userId, CacheBehavior cacheBehavior)
 	{
 		var cacheKey = CacheKey.GuildUser(guildId, userId);
 		IGuildUser user;
@@ -553,8 +564,7 @@ public class DiscordRest : IHostedService, Event
 
 		try
 		{
-			IGuild g = _client.GetGuild(guildId);
-			user = await g.GetUserAsync(userId);
+			user = _client.GetGuild(guildId).GetUser(userId);
 		}
 		catch (Exception e)
 		{
@@ -617,7 +627,7 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			var guild = _client.GetGuild(guildId);
-			var user = await FetchUserInfo(guildId, userId, CacheBehavior.Default);
+			var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
 			if (user is null)
 				return false;
@@ -643,7 +653,7 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			var guild = _client.GetGuild(guildId);
-			var user = await FetchUserInfo(guildId, userId, CacheBehavior.Default);
+			var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
 			if (user is null)
 				return false;
@@ -669,7 +679,7 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			var guild = _client.GetGuild(guildId);
-			var user = await FetchUserInfo(guildId, userId, CacheBehavior.Default);
+			var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
 			if (user is null)
 				return false;
@@ -700,7 +710,7 @@ public class DiscordRest : IHostedService, Event
 		try
 		{
 			var guild = _client.GetGuild(guildId);
-			var user = await FetchUserInfo(guildId, userId, CacheBehavior.Default);
+			var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
 			if (user is null)
 				return false;
@@ -730,7 +740,7 @@ public class DiscordRest : IHostedService, Event
 	{
 		try
 		{
-			var user = await FetchUserInfo(guildId, userId, CacheBehavior.Default);
+			var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
 			if (user is null)
 				return false;
@@ -821,4 +831,6 @@ public class DiscordRest : IHostedService, Event
 	{
 		_cache[key.GetValue()] = response;
 	}
+
+	public DiscordRestClient GetRestClient() => _discordRestClient;
 }

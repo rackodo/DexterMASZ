@@ -3,6 +3,7 @@ using Bot.Extensions;
 using Bot.Translators;
 using Discord;
 using Discord.Interactions;
+using Discord.WebSocket;
 using Utilities.Translators;
 
 namespace Utilities.Commands;
@@ -10,30 +11,54 @@ namespace Utilities.Commands;
 public class Avatar : Command<Avatar>
 {
 	[SlashCommand("avatar", "Get the high resolution avatar of a user.")]
-	public async Task AvatarCommand([Summary("user", "User to get the avatar from")] IUser user)
+	public async Task AvatarCommand([Summary("user", "User to get the avatar from")] IUser user = null)
 	{
+		user ??= Context.User;
+		await Context.Interaction.DeferAsync();
+		await UserAvatar(user.Id.ToString(), true);
+	}
+
+	[ComponentInteraction("avatar-user:*,*")]
+	public async Task UserAvatar(string userId, bool isGuild)
+	{
+		IUser user = Context.Client.GetUser(ulong.Parse(userId));
+		IGuildUser gUser = Context.Guild.GetUser(ulong.Parse(userId));
+		var guildAvail = false;
+
+		if (gUser is { GuildAvatarId: { } })
+			guildAvail = true;
+
+		if (isGuild && !guildAvail)
+			isGuild = false;
+
+		var avatarUrl = isGuild ? gUser.GetGuildAvatarUrl(size: 1024) : user.GetAvatarOrDefaultUrl(size: 1024);
+		var translator = Translator.Get<UtilityTranslator>();
+
 		var embed = new EmbedBuilder()
-			.WithTitle(Translator.Get<UtilityTranslator>().AvatarUrl())
-			.WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {user.Id}")
+			.WithTitle((isGuild ? "Guild" : "User") + " Avatar URL")
+			.WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {(gUser ?? user).Id}")
+			.WithUrl(avatarUrl)
+			.WithImageUrl(avatarUrl)
+			.WithAuthor(gUser ?? user)
 			.WithColor(Color.Magenta)
-			.WithCurrentTimestamp()
-			.WithUrl(user.GetAvatarOrDefaultUrl(size: 1024))
-			.WithImageUrl(user.GetAvatarOrDefaultUrl(size: 1024))
-			.WithAuthor(user);
+			.WithCurrentTimestamp();
 
-		try
-		{
-			var gUser = Context.Guild.GetUser(user.Id);
+		var buttons = new ComponentBuilder();
 
-			if (gUser is { GuildAvatarId: { } })
-				embed.WithUrl(gUser.GetGuildAvatarUrl(size: 1024))
-					.WithImageUrl(gUser.GetGuildAvatarUrl(size: 1024))
-					.WithAuthor(gUser);
-		}
-		catch
-		{
-		}
+		if (guildAvail)
+			buttons.WithButton($"Get {(isGuild ? "Guild" : "User")} Avatar", $"avatar-user:{user.Id},{!isGuild}");
 
-		await Context.Interaction.RespondAsync(embed: embed.Build());
+		if (Context.Interaction is SocketMessageComponent castInteraction)
+			await castInteraction.UpdateAsync(message =>
+			{
+				message.Embed = embed.Build();
+				message.Components = buttons.Build();
+			});
+		else
+			await Context.Interaction.ModifyOriginalResponseAsync(message =>
+			{
+				message.Embed = embed.Build();
+				message.Components = buttons.Build();
+			});
 	}
 }

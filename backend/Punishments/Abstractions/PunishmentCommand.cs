@@ -1,6 +1,5 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
-using Bot.Enums;
 using Bot.Services;
 using Discord;
 using Punishments.Data;
@@ -14,7 +13,6 @@ public class PunishmentCommand<T> : Command<T>
 
 	public ModCaseRepository ModCaseRepository { get; set; }
 	public SettingsRepository SettingsRepository { get; set; }
-	public GuildConfigRepository GuildConfigRepository { get; set; }
 	public IServiceProvider ServiceProvider { get; set; }
 	public DiscordRest DiscordRest { get; set; }
 
@@ -23,33 +21,29 @@ public class PunishmentCommand<T> : Command<T>
 		ModCaseRepository.AsUser(Identity);
 		GuildConfigRepository.AsUser(Identity);
 
-		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
+		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 
-		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
-
-		var (created, result) =
+		var (created, result, finalWarned) =
 			await ModCaseRepository.CreateModCase(modCase);
 
-		var caseCount =
-			(await ModCaseRepository.GetCasesForGuildAndUser(Context.Guild.Id, modCase.UserId)).Count;
-
-		var caseUser = await DiscordRest.FetchUserInfo(modCase.UserId, false);
-
-		var modUser = await DiscordRest.FetchUserInfo(modCase.ModId, false);
-
-		var settings = await SettingsRepository.GetAppSettings();
-
-		var embed = await modCase.CreateNewModCaseEmbed(modUser, guildConfig, result, ServiceProvider, caseUser);
-
-		var url = $"{settings.GetServiceUrl()}/guilds/{created.GuildId}/cases/{created.CaseId}";
-
-		var buttons = new ComponentBuilder().WithButton(label: "View Case", style: ButtonStyle.Link, url: url);
-
-		await Context.Interaction.ModifyOriginalResponseAsync((MessageProperties msg) =>
+		if (finalWarned)
 		{
-			msg.Embed = embed.Build();
-			msg.Components = buttons.Build();
-		});
+			var textChannel = Context.Guild.GetTextChannel(GuildConfig.StaffAnnouncements);
+
+			await Context.Interaction.ModifyOriginalResponseAsync(msg =>
+				msg.Content = $"This user is on a final warning! Please check {textChannel.Mention} for this modlog."
+			);
+		}
+		else
+		{
+			var (embed, buttons) = await modCase.CreateNewModCaseEmbed(GuildConfig, await SettingsRepository.GetAppSettings(), result, DiscordRest, ServiceProvider);
+
+			await Context.Interaction.ModifyOriginalResponseAsync((MessageProperties msg) =>
+			{
+				msg.Embed = embed.Build();
+				msg.Components = buttons.Build();
+			});
+		}
 	}
 
 }

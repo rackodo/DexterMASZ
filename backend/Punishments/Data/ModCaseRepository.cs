@@ -1,4 +1,4 @@
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Dynamics;
 using Bot.Enums;
@@ -34,11 +34,12 @@ public class ModCaseRepository : Repository,
 	private readonly PunishmentHandler _punishmentHandler;
 	private readonly SettingsRepository _settingsRepository;
 	private readonly Translation _translator;
+	private readonly IServiceProvider _serviceProvider;
 
 	public ModCaseRepository(DiscordRest discordRest, SettingsRepository settingsRepository,
 		GuildConfigRepository guildConfigRepository, PunishmentDatabase punishmentDatabase,
 		PunishmentEventHandler eventHandler, PunishmentHandler punishmentHandler,
-		Translation translator, ILogger<ModCaseRepository> logger) : base(discordRest)
+		Translation translator, ILogger<ModCaseRepository> logger, IServiceProvider serviceProvider) : base(discordRest)
 	{
 		_discordRest = discordRest;
 		_settingsRepository = settingsRepository;
@@ -51,6 +52,7 @@ public class ModCaseRepository : Repository,
 
 		_settingsRepository.AsUser(Identity);
 		_guildConfigRepository.AsUser(Identity);
+		_serviceProvider = serviceProvider;
 	}
 
 	public async Task DeleteGuildData(ulong guildId)
@@ -268,7 +270,7 @@ public class ModCaseRepository : Repository,
 		return result.OrderByDescending(x => x.Count).ToList();
 	}
 
-	public async Task<Tuple<ModCase, AnnouncementResult>> CreateModCase(ModCase modCase)
+	public async Task<Tuple<ModCase, AnnouncementResult, bool>> CreateModCase(ModCase modCase)
 	{
 		var currentReportedUser = await _discordRest.FetchUserInfo(modCase.UserId, false);
 
@@ -304,8 +306,7 @@ public class ModCaseRepository : Repository,
 			modCase.Username = currentReportedUser.Username;
 			modCase.Discriminator = currentReportedUser.Discriminator;
 
-			var reportedGuildUser =
-				await _discordRest.FetchUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
+			var reportedGuildUser = _discordRest.FetchGuildUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
 
 			if (reportedGuildUser != null)
 			{
@@ -352,10 +353,10 @@ public class ModCaseRepository : Repository,
 			_logger.LogInformation(
 				$"Sending dm notification to {modCase.UserId} for case {modCase.GuildId}/{modCase.CaseId}");
 
+			var guild = _discordRest.FetchGuildInfo(modCase.GuildId, CacheBehavior.Default);
+
 			try
 			{
-				var guild = _discordRest.FetchGuildInfo(modCase.GuildId, CacheBehavior.Default);
-
 				var message = string.Empty;
 
 				var modCaseUrl = $"{config.GetServiceUrl()}/guilds/{modCase.GuildId}/cases/{modCase.CaseId}";
@@ -412,13 +413,37 @@ public class ModCaseRepository : Repository,
 
 			_eventHandler.ModCaseCreatedEvent.Invoke(modCase, Identity, announceResult);
 
-			if ((!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick))
-				return new (modCase, announceResult);
+			var finalWarning = await GetFinalWarn(modCase.UserId, modCase.GuildId);
+
+			var isFinalWarned = finalWarning != null;
+
+			if (isFinalWarned)
+			{
+				var (embed, buttons) = await modCase.CreateNewModCaseEmbed(guildConfig, config, announceResult, _discordRest, _serviceProvider);
+
+				var textChannel = await guild.GetTextChannelAsync(guildConfig.StaffAnnouncements);
+
+				var title = embed.Title;
+
+				embed.WithTitle($"Final warned user has triggered an infraction")
+					.WithColor(Color.Red);
+
+				if (title != embed.Description)
+					embed.AddField("Title", title);
+
+				buttons.WithButton("View Final Warn", style: ButtonStyle.Link,
+					url: $"{config.GetServiceUrl()}/guilds/{finalWarning.GuildId}/cases/{finalWarning.CaseId}");
+
+				await textChannel.SendMessageAsync(embed: embed.Build(), components: buttons.Build());
+			}
+
+			if (!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick)
+				return new(modCase, announceResult, isFinalWarned);
 
 			if (modCase.PunishedUntil == null || modCase.PunishedUntil > DateTime.UtcNow)
 				await _punishmentHandler.ModifyPunishment(modCase, RestAction.Created);
 
-			return new(modCase, announceResult);
+			return new(modCase, announceResult, isFinalWarned);
 		}
 		catch (ResourceNotFoundException)
 		{
@@ -521,8 +546,7 @@ public class ModCaseRepository : Repository,
 			modCase.Username = currentReportedUser.Username;
 			modCase.Discriminator = currentReportedUser.Discriminator;
 
-			var reportedGuildUser =
-				await _discordRest.FetchUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
+			var reportedGuildUser = _discordRest.FetchGuildUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
 
 			if (reportedGuildUser != null)
 			{

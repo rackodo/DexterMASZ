@@ -1,6 +1,5 @@
 using Bot.Abstractions;
 using Bot.Attributes;
-using Bot.Data;
 using Bot.Enums;
 using Bot.Extensions;
 using Bot.Translators;
@@ -17,7 +16,6 @@ namespace Messaging.Commands;
 
 public class Say : Command<Say>
 {
-	public GuildConfigRepository GuildConfigRepository { get; set; }
 	public IServiceProvider ServiceProvider { get; set; }
 	public DiscordSocketClient Client { get; set; }
 
@@ -49,11 +47,9 @@ public class Say : Command<Say>
 
 			try
 			{
-				var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
-
 				var embed = await createdMessage.CreateMessageSentEmbed(channel, Context.User, ServiceProvider);
 
-				await Client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+				await Client.SendEmbed(GuildConfig.GuildId, GuildConfig.StaffLogs, embed);
 			}
 			catch (Exception ex)
 			{

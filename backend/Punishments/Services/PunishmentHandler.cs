@@ -148,6 +148,17 @@ public class PunishmentHandler : Event
 							_logger.LogInformation($"Banned user {modCase.UserId} in guild {modCase.GuildId}.");
 							await _discordRest.BanUser(modCase.GuildId, modCase.UserId, reason);
 							await _discordRest.GetGuildUserBan(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreCache);
+
+							var modRepo = scope.ServiceProvider.GetRequiredService<ModCaseRepository>();
+
+							var finalWarning = await modRepo.GetFinalWarn(modCase.UserId, modCase.GuildId);
+
+							if (finalWarning != null)
+							{
+								finalWarning.PunishmentActive = false;
+								await modRepo.UpdateModCase(finalWarning, false);
+							}
+
 							break;
 						case RestAction.Deleted:
 							_logger.LogInformation($"Unbanned user {modCase.UserId} in guild {modCase.GuildId}.");

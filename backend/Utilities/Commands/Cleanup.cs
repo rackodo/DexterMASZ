@@ -1,6 +1,5 @@
 using Bot.Abstractions;
 using Bot.Attributes;
-using Bot.Data;
 using Bot.Enums;
 using Bot.Translators;
 using Discord;
@@ -14,8 +13,6 @@ namespace Utilities.Commands;
 
 public class Cleanup : Command<Cleanup>
 {
-	public GuildConfigRepository GuildConfigRepository { get; set; }
-
 	[Require(RequireCheck.GuildModerator)]
 	[SlashCommand("cleanup", "Cleanup specific data from the server and/or channel.")]
 	public async Task CleanupCommand(
@@ -28,10 +25,6 @@ public class Cleanup : Command<Cleanup>
 		[Summary("count", "The amount of messages to delete, defaults to 100.")]
 		long count = 100)
 	{
-		GuildConfigRepository.AsUser(filterUser);
-
-		var guildConfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
-
 		if (cleanupMode == CleanupMode.Messages && filterUser == null)
 		{
 			await Context.Interaction.RespondAsync("I can't clean up all these messages! Please provide a filter...", ephemeral: true);
@@ -50,7 +43,7 @@ public class Cleanup : Command<Cleanup>
 				return;
 			}
 
-		await Context.Interaction.DeferAsync(ephemeral: !guildConfig.StaffChannels.Contains(Context.Channel.Id));
+		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 
 		if (count > 1000)
 			count = 1000;

@@ -42,7 +42,7 @@ public class LevelsConfigController : AuthenticatedController
 	{
 		var identity = await SetupAuthentication();
 
-		if (!await identity.HasPermission(Discord.GuildPermission.Administrator, guildId) && !await identity.IsSiteAdmin())
+		if (!identity.HasPermission(Discord.GuildPermission.Administrator, guildId) && !await identity.IsSiteAdmin())
 			return Forbid();
 
 		try

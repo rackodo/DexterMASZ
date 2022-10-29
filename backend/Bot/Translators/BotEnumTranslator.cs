@@ -106,7 +106,7 @@ public class BotEnumTranslator : Translator
 				Language.Es => "El gremio no está registrado",
 				Language.Ru => "Гильдия не зарегистрирована",
 				Language.It => "La gilda non è registrata",
-				_ => "Guild is not registered"
+				_ => "Guild is not registered. Please visit the website to set up fully."
 			},
 			ApiError.Unauthorized => PreferredLanguage switch
 			{

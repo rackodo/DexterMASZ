@@ -2,7 +2,6 @@
 using Bot.Attributes;
 using Bot.Data;
 using Bot.Enums;
-using Bot.Exceptions;
 using Bot.Services;
 using Discord;
 using Discord.Interactions;
@@ -13,7 +12,6 @@ namespace Levels.Commands;
 
 public class TransferXp : Command<TransferXp>
 {
-	public GuildConfigRepository? GuildConfigRepository { get; set; }
 	public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
 	public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
 	public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
@@ -29,9 +27,6 @@ public class TransferXp : Command<TransferXp>
 		[Summary("voiceXpCap", "The maximum amount of voice experience to transfer.")] long voiceXpCap = -1
 		)
 	{
-		if (Context.Channel is not IGuildChannel)
-			throw new UnauthorizedException("This command must be executed in a guild context.");
-
 		var sourceLevel = await GuildUserLevelRepository!.GetOrCreateLevel(Context.Guild.Id, source.Id);
 		var targetLevel = await GuildUserLevelRepository!.GetOrCreateLevel(Context.Guild.Id, target.Id);
 

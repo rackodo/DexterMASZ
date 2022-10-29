@@ -3,7 +3,7 @@
       <h1 align="center" style="position: relative;">
          <img src="https://cdn.discordapp.com/attachments/781077443338960926/807479083297931264/DexLove.png" width="200" style="border-radius: 50%;" align="center">
          <br>
-         Dexter Masz
+         Dexter MASZ
       </h1>
       <h3 align="center">The official USFurries Discord bot!</h3>
       <h4 align="center">Used to help moderate the server and provides useful tools. Made with love <3</h4>
@@ -28,7 +28,7 @@
          This bot is an adaption from the version of Dexter, written in JavaScript, by <a href="https://github.com/Jakey-F">Jakey Floofle</a>. As such, some commands have been adaptions from their original sources.
       </p>
       <p>
-         This bot was originally built off of <a href="https://github.com/zaanposni/discord-masz">MASZ</a>, but extends upon it by focusing on plugin support!
+         This bot was originally built off of <a href="https://github.com/zaanposni/discord-masz">MASZ</a>, but extends upon it by offering much more, general features, and a refreshed, plugin-based, abstracted backend!
       </p>
    </body>
 </html>
@@ -41,6 +41,7 @@
 
 ### Plugins
 
+⭐ **Levelling** - including a leaderboard and rank system\
 ⭐ **Infractions and managed (temporary) punishments** - to moderate your server\
 ⭐ **Quicksearch** - to reliably search for any infractions or notes a user has\
 ⭐ **Automoderation** - to give trolls no chance\
@@ -49,7 +50,7 @@
 
 ### 👀 Preview
 
-![dashboard preview](https://raw.githubusercontent.com/zaanposni/discord-masz/master/docs/dashboard.png)
+![dashboard preview](https://raw.githubusercontent.com/FeroxFoxxo/DexterMASZ/master/.github/dashboard.png)
 
 ### 🤝 Support Server
 
@@ -85,11 +86,18 @@ Entity Framework implores some new features of MySQL for sake of optimising call
 As such, it is recommended you install MySQL 8+ to use this new syntax. Otherwise, you will encounter
 a `MySQLException` stating you need to check your MySQL version corresponds correctly with the version in your manual.
 
-## 💻 Self Hosting
+### 💻 Local hosting
 
-### .NET
+- Start your bot from the `Launch` project and enter in the variables as required. These are set environmentally.
+- To launch the frontend, run `npm start` from the terminal in the directory of frontend/dexter. Make sure to install dependencies prior using `npm install`.
 
-- If you're using an IDE like Visual Studio, you can copy and paste your ` launchSettingsExample.json` file inside `Properties` if your C# solution to `launchSettings.json`, replacing the values to your testing variables. On running the program, it will treat these as environmental variables.
+### ↪ After Deployment
+
+
+- You can visit your application at `yourdomain.com` (or `127.0.0.1:5565`). You will see a login screen that will ask you to authenticate yourself using Discord OAuth2.
+- After authorizing your service to use your Discord account you will see your profile picture in the toolbar (this is hosted on `127.0.0.1:4200` when developing).
+- If you are logged in as a siteadmin, you can use the "register guild" (+) button to register your guilds and to get started.
+- Based on wanted features and functionalities you might have to grant your bot advanced permissions, read above under `Enabling Restricted Features`.
 
 ## 🚀 Discord Permissions
 
@@ -132,15 +140,6 @@ To avoid any issue for message deletion or read permissions it is recommended to
 #### ⭐ Invite tracking
 
 Allows Dexter to track the invites new members are using. Grant your bot the `manage guild` permission to use this feature.
-
-## ↪ After Deployment
-
-### 🐾 First Steps
-
-- You can visit your application at `yourdomain.com` (or `127.0.0.1:5565`). You will see a login screen that will ask you to authenticate yourself using Discord OAuth2.
-- After authorizing your service to use your Discord account you will see your profile picture in the toolbar (this is hosted on `127.0.0.1:4200` when developing).
-- If you are logged in as a siteadmin, you can use the "register guild" (+) button to register your guilds and to get started.
-- Based on wanted features and functionalities you might have to grant your bot advanced permissions, read above under `Enabling Restricted Features`.
 
 ### 🤝 Contribute
 

@@ -31,7 +31,8 @@ public class RequireAttribute : PreconditionAttribute
 			throw new UnregisteredGuildException(context.Guild.Id);
 		}
 
-		if (await identity.IsSiteAdmin()) return PreconditionResult.FromSuccess();
+		if (await identity.IsSiteAdmin())
+			return PreconditionResult.FromSuccess();
 
 		foreach (var check in _checks)
 		{
@@ -40,12 +41,9 @@ public class RequireAttribute : PreconditionAttribute
 				RequireCheck.GuildUser => identity.IsOnGuild(context.Guild.Id),
 				RequireCheck.GuildModerator => await identity.HasModRoleOrHigherOnGuild(context.Guild.Id),
 				RequireCheck.GuildAdmin => await identity.HasAdminRoleOnGuild(context.Guild.Id),
-				RequireCheck.GuildStrictModeMute => await identity.HasPermission(GuildPermission.MuteMembers,
-					context.Guild.Id),
-				RequireCheck.GuildStrictModeKick => await identity.HasPermission(GuildPermission.KickMembers,
-					context.Guild.Id),
-				RequireCheck.GuildStrictModeBan => await identity.HasPermission(GuildPermission.BanMembers,
-					context.Guild.Id),
+				RequireCheck.GuildStrictModeMute => identity.HasPermission(GuildPermission.MuteMembers, context.Guild.Id),
+				RequireCheck.GuildStrictModeKick => identity.HasPermission(GuildPermission.KickMembers, context.Guild.Id),
+				RequireCheck.GuildStrictModeBan => identity.HasPermission(GuildPermission.BanMembers, context.Guild.Id),
 				RequireCheck.SiteAdmin => throw new UnauthorizedException("Only site admins allowed."),
 				_ => throw new NotImplementedException()
 			};

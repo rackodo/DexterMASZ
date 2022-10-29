@@ -141,7 +141,7 @@ public class ScheduledMessageController : AuthenticatedController
 			throw new UnauthorizedException();
 		}
 
-		if (message.Status != ScheduledMessageStatus.Pending && !(await identity.HasAdminRoleOnGuild(guildId)))
+		if (message.Status != ScheduledMessageStatus.Pending && !await identity.HasAdminRoleOnGuild(guildId))
 		{
 			throw new ProtectedScheduledMessageException();
 		}

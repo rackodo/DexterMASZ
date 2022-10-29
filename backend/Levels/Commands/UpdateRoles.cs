@@ -12,7 +12,6 @@ namespace Levels.Commands;
 
 public class UpdateRoles : Command<UpdateRoles>
 {
-	public GuildConfigRepository? GuildConfigRepository { get; set; }
 	public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
 	public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
 	public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
@@ -25,9 +24,6 @@ public class UpdateRoles : Command<UpdateRoles>
 		[Summary("user", "User to update roles for. Defaults to oneself.")] IGuildUser? user = null
 		)
 	{
-		if (Context.Channel is not IGuildChannel)
-			throw new UnauthorizedException("This command must be executed in a guild context.");
-
 		user ??= Context.Guild.GetUser(Context.User.Id);
 
 		if (user is null)
@@ -60,8 +56,25 @@ public class UpdateRoles : Command<UpdateRoles>
 		var calclevel = new CalculatedGuildUserLevel(level, guildlevelconfig);
 
 		var totalLevel = calclevel.Total.Level;
-		var result = await LevelingService.HandleLevelRoles(level, totalLevel, user, Context.Channel, GuildLevelConfigRepository);
-		
-		await FollowupAsync(result, ephemeral: true);
+
+		var result = await LevelingService.HandleLevelRoles(level, totalLevel, user, GuildLevelConfigRepository);
+
+		var embed = new EmbedBuilder()
+			.WithTitle($"Role update")
+			.WithCurrentTimestamp();
+
+		if (result.IsErrored)
+			embed
+				.WithColor(Color.Green)
+				.WithDescription($"Successfully updated {user.Mention}'s roles (level {level})")
+				.AddField("Added Roles", result.AddedRoles)
+				.AddField("Removed Roles", result.RemovedRoles);
+		else
+			embed
+				.WithColor(Color.Red)
+				.WithDescription($"Unable to update {user.Mention}'s roles (level {level})")
+				.AddField("Error", result.Error);
+
+		await FollowupAsync(embed: embed.Build());
 	}
 }

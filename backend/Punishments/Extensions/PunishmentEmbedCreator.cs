@@ -16,8 +16,8 @@ namespace Punishments.Extensions;
 
 public static class PunishmentEmbedCreator
 {
-	public static async Task<EmbedBuilder> CreateNewModCaseEmbed(this ModCase modCase, IUser actor, GuildConfig config,
-		AnnouncementResult result, IServiceProvider provider, IUser suspect)
+	public static async Task<Tuple<EmbedBuilder, ComponentBuilder>> CreateNewModCaseEmbed(this ModCase modCase, GuildConfig config,
+		AppSettings settings, AnnouncementResult result, DiscordRest rest, IServiceProvider provider)
 	{
 		var translator = provider.GetRequiredService<Translation>();
 
@@ -25,21 +25,28 @@ public static class PunishmentEmbedCreator
 
 		translator.SetLanguage(config);
 
-		var embed = await modCase.CreateModCaseEmbed(RestAction.Created, actor, provider, suspect);
+		var embed = await modCase.CreateModCaseEmbed(RestAction.Created, rest, provider);
 
 		if (result != AnnouncementResult.None)
 			embed.AddField($"📣 - {translator.Get<PunishmentTranslator>().DMReceipt()}",
 				translator.Get<PunishmentEnumTranslator>().Enum(result), true);
 
-		return embed;
+		var url = $"{settings.GetServiceUrl()}/guilds/{modCase.GuildId}/cases/{modCase.CaseId}";
+
+		var buttons = new ComponentBuilder().WithButton(label: "View Case", style: ButtonStyle.Link, url: url);
+
+		return new (embed, buttons);
 	}
 
-	public static async Task<EmbedBuilder> CreateModCaseEmbed(this ModCase modCase, RestAction action, IUser actor,
-		IServiceProvider provider, IUser suspect = null)
+	public static async Task<EmbedBuilder> CreateModCaseEmbed(this ModCase modCase, RestAction action, DiscordRest rest, IServiceProvider provider)
 	{
 		var translator = provider.GetRequiredService<Translation>();
 
 		await translator.SetLanguage(modCase.GuildId);
+
+		var suspect = await rest.FetchUserInfo(modCase.UserId, false);
+
+		var actor = await rest.FetchUserInfo(modCase.ModId, false);
 
 		var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
 

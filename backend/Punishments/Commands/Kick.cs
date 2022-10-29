@@ -14,7 +14,7 @@ public class Kick : PunishmentCommand<Kick>
 	[Require(RequireCheck.GuildModerator, RequireCheck.GuildStrictModeKick)]
 	[SlashCommand("kick", "Kick a user and create a modcase")]
 	public async Task KickCommand(
-		[Summary("title", "The title of the modcase")]
+		[Summary("title", "The title of the modcase")] [MaxLength(200)]
 		string title,
 		[Summary("user", "User to punish")] IUser user,
 		[Summary("description", "The description of the modcase")]

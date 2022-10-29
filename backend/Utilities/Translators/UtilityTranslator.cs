@@ -6,19 +6,18 @@ namespace Utilities.Translators;
 
 public class UtilityTranslator : Translator
 {
-	public string AvatarUrl()
+	public string BannerUrl()
 	{
 		return PreferredLanguage switch
 		{
-			Language.De => "Holen Sie sich die Avatar-URL",
-			Language.Fr => "Obtenir l'URL de l'avatar",
-			Language.Es => "Obtener URL de avatar",
-			Language.Ru => "Получить URL-адрес аватара",
-			Language.It => "Ottieni l'URL dell'avatar",
-			_ => "Get Avatar URL"
+			Language.De => "Holen Sie sich die Banner-URL",
+			Language.Fr => "Obtenir l'URL de l'banner",
+			Language.Es => "Obtener URL de banner",
+			Language.Ru => "Получить URL-адрес баннера",
+			Language.It => "Ottieni URL banner",
+			_ => "Get Banner URL"
 		};
 	}
-
 	public string Status()
 	{
 		return PreferredLanguage switch

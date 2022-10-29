@@ -62,7 +62,7 @@ public class Unban : Command<Unban>
 			interactionString.AppendLine(Translator.Get<BotTranslator>().AndXMore(modCases.Count - 5));
 
 		var embed = new EmbedBuilder()
-			.WithTitle(user.Username)
+			.WithAuthor(user)
 			.WithDescription(interactionString.ToString())
 			.WithColor(Color.Orange);
 
@@ -70,15 +70,15 @@ public class Unban : Command<Unban>
 			Translator.Get<PunishmentTranslator>().WaitingForApproval());
 
 		var button = new ComponentBuilder()
-			.WithButton(Translator.Get<PunishmentTranslator>().DeleteBans(), $"Unban-delete:{user.Id}")
-			.WithButton(Translator.Get<PunishmentTranslator>().DeactivateBans(), $"Unban-deactivate:{user.Id}",
+			.WithButton(Translator.Get<PunishmentTranslator>().DeleteBans(), $"unban-delete:{user.Id}")
+			.WithButton(Translator.Get<PunishmentTranslator>().DeactivateBans(), $"unban-deactivate:{user.Id}",
 				ButtonStyle.Secondary)
-			.WithButton(Translator.Get<PunishmentTranslator>().Cancel(), "Unban-cancel", ButtonStyle.Danger);
+			.WithButton(Translator.Get<PunishmentTranslator>().Cancel(), "unban-cancel", ButtonStyle.Danger);
 
 		await Context.Interaction.RespondAsync(embed: embed.Build(), components: button.Build());
 	}
 
-	[ComponentInteraction("Unban-delete:*")]
+	[ComponentInteraction("unban-delete:*")]
 	public async Task DeleteBanConfirmation(string userId)
 	{
 		ModCaseRepository.AsUser(Identity);
@@ -108,7 +108,7 @@ public class Unban : Command<Unban>
 		}
 	}
 
-	[ComponentInteraction("Unban-deactivate:*")]
+	[ComponentInteraction("unban-deactivate:*")]
 	public async Task DeactivateBan(string userId)
 	{
 		ModCaseRepository.AsUser(Identity);
@@ -136,7 +136,7 @@ public class Unban : Command<Unban>
 		}
 	}
 
-	[ComponentInteraction("Unban-cancel")]
+	[ComponentInteraction("unban-cancel")]
 	public async Task UnbanCancel()
 	{
 		if (Context.Interaction is SocketMessageComponent castInteraction)

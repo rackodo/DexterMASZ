@@ -116,14 +116,14 @@ public class DiscordRestController : AuthenticatedController
 	}
 
 	[HttpGet("guilds/{guildId}/users")]
-	public async Task<IActionResult> GetGuildUsers([FromRoute] ulong guildId)
+	public async Task<IActionResult> GetGuildUsers([FromRoute] ulong guildId, [FromQuery] bool partial = false)
 	{
 		await _guildConfigRepo.RequireGuildRegistered(guildId);
 
 		var users = await _discordRest.FetchGuildUsers(guildId, CacheBehavior.OnlyCache);
 
 		if (users != null)
-			return Ok(users.Select(x => DiscordUser.GetDiscordUser(x)));
+			return Ok(users.Select(x => partial ? DiscordUserPartial.GetPartialDiscordUser(x) : DiscordUser.GetDiscordUser(x)));
 
 		return NotFound();
 	}

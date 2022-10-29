@@ -1,5 +1,6 @@
 ﻿using Bot.Data;
 using Bot.Enums;
+using Bot.Models;
 using Discord;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +19,9 @@ public static class EmbedCreator
 	}
 
 	public static async Task<EmbedBuilder> CreateActionEmbed(RestAction action, IServiceProvider provider,
+		IUser author = null) => CreateActionEmbed(action, await provider.GetRequiredService<SettingsRepository>().GetAppSettings(), author);
+
+	public static EmbedBuilder CreateActionEmbed(RestAction action, AppSettings settings,
 		IUser author = null)
 	{
 		var embed = new EmbedBuilder()
@@ -33,8 +37,7 @@ public static class EmbedCreator
 		if (author != null)
 			embed.WithAuthor(author);
 
-		var config = await provider.GetRequiredService<SettingsRepository>().GetAppSettings();
-		var url = config.GetServiceUrl();
+		var url = settings.GetServiceUrl();
 
 		if (!string.IsNullOrEmpty(url))
 			embed.Url = url;

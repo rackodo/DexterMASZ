@@ -43,13 +43,6 @@ export const LANGUAGES: LanguageSelect[] = [
         dateTimeFormat: 'DD MMM Y HH:mm:ss'
     },
     {
-        language: 'at',
-        displayName: 'Austrian (Österreichisch)',
-        apiValue: 5,
-        dateFormat: 'DD MMM Y',
-        dateTimeFormat: 'DD MMM Y HH:mm:ss'
-    },
-    {
         language: 'ru',
         displayName: 'Russian (русский)',
         apiValue: 6,

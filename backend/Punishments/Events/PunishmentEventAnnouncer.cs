@@ -8,11 +8,9 @@ using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Extensions;
 using Punishments.Models;
-using Punishments.Translators;
 
 namespace Punishments.Events;
 
@@ -67,28 +65,17 @@ public class PunishmentEventAnnouncer : Event
 		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
 			.GetGuildConfig(modCase.GuildId);
 
+		var settings = await scope.ServiceProvider.GetRequiredService<SettingsRepository>()
+			.GetAppSettings();
+
 		_logger.LogInformation(
 			$"Sending webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
 
 		try
 		{
-			var embed = await modCase.CreateNewModCaseEmbed(actor, guildConfig, result, scope.ServiceProvider, caseUser);
+			var (embed, _) = await modCase.CreateNewModCaseEmbed(guildConfig, settings, result, _discordRest, scope.ServiceProvider);
 
 			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
-
-			var modCaseRepo = scope.ServiceProvider.GetRequiredService<ModCaseRepository>();
-
-			var finalWarn = await modCaseRepo.GetFinalWarn(modCase.UserId, modCase.GuildId);
-
-			if (finalWarn != null || modCase.PunishmentType == PunishmentType.FinalWarn)
-			{
-				var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-
-				embed.WithTitle(translator.Get<PunishmentTranslator>().UserTriggeredOnFinalWarn())
-					.WithColor(Color.Red);
-
-				await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
-			}
 		}
 		catch (Exception e)
 		{
@@ -113,7 +100,7 @@ public class PunishmentEventAnnouncer : Event
 
 		try
 		{
-			var embed = await modCase.CreateModCaseEmbed(action, actor, scope.ServiceProvider, caseUser);
+			var embed = await modCase.CreateModCaseEmbed(action, _discordRest, scope.ServiceProvider);
 
 			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
 		}
@@ -141,7 +128,7 @@ public class PunishmentEventAnnouncer : Event
 		{
 			var embed = await comment.CreateCommentEmbed(action, actor, scope.ServiceProvider);
 
-			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
 		}
 		catch (Exception e)
 		{

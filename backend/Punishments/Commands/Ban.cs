@@ -14,7 +14,7 @@ public class Ban : PunishmentCommand<Ban>
 	[Require(RequireCheck.GuildModerator, RequireCheck.GuildStrictModeBan)]
 	[SlashCommand("ban", "Ban a user and create a mod case")]
 	public async Task BanCommand(
-		[Summary("title", "The title of the mod case")]
+		[Summary("title", "The title of the mod case")] [MaxLength(200)]
 		string title,
 		[Summary("user", "User to punish")]
 		IUser user,

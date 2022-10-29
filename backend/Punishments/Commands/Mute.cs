@@ -14,16 +14,16 @@ public class Mute : PunishmentCommand<Mute>
 	[Require(RequireCheck.GuildModerator, RequireCheck.GuildStrictModeMute)]
 	[SlashCommand("mute", "Mute a user and create a modcase")]
 	public async Task MuteCommand(
-		[Summary("title", "The title of the modcase")]
+		[Summary("title", "The title of the modcase")] [MaxLength(200)]
 		string title,
 		[Summary("user", "User to punish")]
 		IUser user,
 		[Summary("severity-level", "Whether or not this is a higher or lower severity case")]
 		InnerSeverityType severity,
-		[Summary("description", "The description of the modcase")]
-		string description = "",
 		[Summary("time", "The time to punish the user for")]
-		TimeSpan time = default)
+		TimeSpan time,
+		[Summary("description", "The description of the modcase")]
+		string description = "")
 	{
 		await RunModcase(new ModCase
 		{
@@ -35,7 +35,7 @@ public class Mute : PunishmentCommand<Mute>
 			PunishmentType = PunishmentType.Mute,
 			PunishmentActive = true,
 			Severity = (SeverityType) severity,
-			PunishedUntil = time == default ? null : DateTime.UtcNow + time,
+			PunishedUntil = DateTime.UtcNow + time,
 			CreationType = CaseCreationType.ByCommand
 		});
 	}

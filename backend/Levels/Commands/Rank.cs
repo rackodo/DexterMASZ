@@ -1,7 +1,6 @@
 ﻿using Bot.Abstractions;
 using Bot.Attributes;
 using Bot.Data;
-using Bot.Exceptions;
 using Discord;
 using Discord.Interactions;
 using Levels.Data;
@@ -13,7 +12,6 @@ namespace Levels.Commands;
 
 public class Rank : Command<Rank>
 {
-	public GuildConfigRepository? GuildConfigRepository { get; set; }
 	public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
 	public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
 	public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
@@ -25,9 +23,6 @@ public class Rank : Command<Rank>
 	[BotChannel]
 	public async Task RankCommand([Summary("user", "Target user to get rank from.")] IUser? user = null)
 	{
-		if (Context.Channel is not IGuildChannel)
-			throw new UnauthorizedException("This command must be executed in a guild context.");
-		
 		await DeferAsync();
 
 		user ??= Context.User;
