@@ -56,7 +56,7 @@ public class BotModule : WebModule
 			AlwaysDownloadUsers = true,
 			MessageCacheSize = 10240,
 			LogLevel = LogSeverity.Debug,
-			GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.GuildMembers,
+			GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.GuildMembers | GatewayIntents.GuildMessages | GatewayIntents.DirectMessages,
 			LogGatewayIntentWarnings = false
 		});
 
@@ -65,7 +65,8 @@ public class BotModule : WebModule
 		services.AddSingleton(new InteractionServiceConfig
 		{
 			DefaultRunMode = RunMode.Async,
-			LogLevel = LogSeverity.Debug
+			LogLevel = LogSeverity.Debug,
+			UseCompiledLambda = true
 		});
 
 		services.AddSingleton<InteractionService>();

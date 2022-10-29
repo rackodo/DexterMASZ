@@ -8,8 +8,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Genbox.WolframAlpha" Version="3.0.0-alpha3" />
-		
 		<ProjectReference Include="..\Bot\Bot.csproj" />
 	</ItemGroup>
 
