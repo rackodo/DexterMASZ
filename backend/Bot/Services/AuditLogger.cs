@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Net.WebSockets;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Bot.Services;
@@ -142,6 +143,8 @@ public class AuditLogger : IHostedService, Event
 			else
 				descript = $"Error Code: {ee.ErrorCode}\n" + descript;
 
+		descript = descript[..Math.Min(1000, descript.Length)];
+
 		await QueueLog("======= ERROR ENCOUNTERED =======", true);
 
 		foreach (var ex in e.ToString().Replace("```", "").ChunksUpTo(1900))
@@ -153,7 +156,7 @@ public class AuditLogger : IHostedService, Event
 
 		var embed = new EmbedBuilder()
 			.WithTitle("Error Encountered")
-			.WithDescription(descript[..Math.Min(1000, descript.Length)])
+			.WithDescription(descript)
 			.WithCurrentTimestamp()
 			.WithColor(Color.Red)
 			.WithFooter("View logs for more information");
