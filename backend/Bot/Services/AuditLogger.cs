@@ -10,6 +10,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Net.WebSockets;
 using System.Text;
 
 namespace Bot.Services;
@@ -132,6 +133,10 @@ public class AuditLogger : IHostedService, Event
 
 		if (e is GatewayReconnectException || e is UnregisteredGuildException)
 			return;
+
+		if (e is WebSocketException wse)
+			if (wse.ErrorCode == 997)
+				return;
 
 		await QueueLog("======= ERROR ENCOUNTERED =======", true);
 
