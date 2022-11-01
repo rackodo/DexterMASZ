@@ -23,27 +23,40 @@ public class PunishmentCommand<T> : Command<T>
 
 		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 
-		var (created, result, finalWarned) =
-			await ModCaseRepository.CreateModCase(modCase);
-
-		if (finalWarned)
+		try
 		{
-			var textChannel = Context.Guild.GetTextChannel(GuildConfig.StaffAnnouncements);
-
-			await Context.Interaction.ModifyOriginalResponseAsync(msg =>
-				msg.Content = $"This user is on a final warning! Please check {textChannel.Mention} for this modlog."
-			);
-		}
-		else
-		{
-			var (embed, buttons) = await modCase.CreateNewModCaseEmbed(GuildConfig, await SettingsRepository.GetAppSettings(), result, DiscordRest, ServiceProvider);
-
-			await Context.Interaction.ModifyOriginalResponseAsync((MessageProperties msg) =>
+			var (created, result, finalWarned) =
+				await ModCaseRepository.CreateModCase(modCase); 
+			
+			if (finalWarned)
 			{
-				msg.Embed = embed.Build();
-				msg.Components = buttons.Build();
-			});
+				var textChannel = Context.Guild.GetTextChannel(GuildConfig.StaffAnnouncements);
+
+				await Context.Interaction.ModifyOriginalResponseAsync(msg =>
+					msg.Content = $"This user is on a final warning! Please check {textChannel.Mention} for this modlog."
+				);
+			}
+			else
+			{
+				var (embed, buttons) = await modCase.CreateNewModCaseEmbed(GuildConfig, await SettingsRepository.GetAppSettings(), result, DiscordRest, ServiceProvider);
+
+				await Context.Interaction.ModifyOriginalResponseAsync((MessageProperties msg) =>
+				{
+					msg.Embed = embed.Build();
+					msg.Components = buttons.Build();
+				});
+			}
 		}
+		catch (Exception e)
+		{
+			await Context.Interaction.FollowupAsync(embed: new EmbedBuilder()
+				.WithTitle("Failed to complete operation")
+				.WithDescription(e.Message)
+				.WithColor(Color.Red)
+				.WithCurrentTimestamp()
+				.Build());
+			throw;
+		}		
 	}
 
 }

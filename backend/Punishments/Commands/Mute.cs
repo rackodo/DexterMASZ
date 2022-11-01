@@ -18,7 +18,7 @@ public class Mute : PunishmentCommand<Mute>
 		string title,
 		[Summary("user", "User to punish")]
 		IUser user,
-		[Summary("severity-level", "Whether or not this is a higher or lower severity case")]
+		[Summary("severity-level", "Whether this is a lower or higher severity case")]
 		InnerSeverityType severity,
 		[Summary("time", "The time to punish the user for")]
 		TimeSpan time,
