@@ -137,11 +137,12 @@ public class AuditLogger : IHostedService, Event
 		
 		var descript = e.ToString().NormalizeMarkdown();
 
-		if (e is WebSocketException ee)
-			if (ee.ErrorCode == 997)
-				return;
-			else
-				descript = $"Error Code: {ee.ErrorCode}\n" + descript;
+		if (e.InnerException != null)
+			if (e.InnerException is ExternalException ee)
+				if (ee is WebSocketException && ee.ErrorCode == 997)
+					return;
+				else
+					descript = $"Error Code: {ee.ErrorCode}\n" + descript;
 
 		descript = descript[..Math.Min(1000, descript.Length)];
 
