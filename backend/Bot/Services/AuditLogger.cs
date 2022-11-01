@@ -146,19 +146,19 @@ public class AuditLogger : IHostedService, Event
 
 		var embed = new EmbedBuilder()
 			.WithTitle("Error Encountered")
-			.WithAuthor(_client.CurrentUser)
 			.WithDescription(descript[..Math.Min(1000, descript.Length)])
 			.WithCurrentTimestamp()
 			.WithColor(Color.Red)
-			.WithFooter("View logs for more information...")
-			.Build();
+			.WithFooter("View logs for more information");
 
 		foreach (var admin in config.SiteAdmins)
 		{
 			var user = await _client.GetUserAsync(admin);
 			var dmChannel = await user.CreateDMChannelAsync();
 
-			await dmChannel.SendMessageAsync(embed: embed);
+			embed.WithAuthor(user);
+
+			await dmChannel.SendMessageAsync(embed: embed.Build());
 		}
 	}
 
