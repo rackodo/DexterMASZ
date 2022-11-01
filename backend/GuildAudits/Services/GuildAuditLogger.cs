@@ -187,7 +187,7 @@ public class GuildAuditer : Event
 	{
 		var oldUser = await oldU.GetOrDownloadAsync();
 
-		if (oldUser is null)
+		if (oldUser is null || newU is null)
 			return;
 
 		if (await CheckForIgnoredRoles(newU.Guild.Id, GuildAuditLogEvent.UserRolesUpdated, newU.Roles))
