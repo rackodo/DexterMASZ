@@ -133,10 +133,14 @@ public class AuditLogger : IHostedService, Event
 
 		if (e is GatewayReconnectException || e is UnregisteredGuildException)
 			return;
+		
+		var descript = e.ToString().NormalizeMarkdown();
 
-		if (e is WebSocketException wse)
-			if (wse.ErrorCode == 997)
+		if (e is ExternalException ee)
+			if (ee.ErrorCode == 997)
 				return;
+			else
+				descript = $"Error Code: {ee.ErrorCode}\n" + descript;
 
 		await QueueLog("======= ERROR ENCOUNTERED =======", true);
 
@@ -146,8 +150,6 @@ public class AuditLogger : IHostedService, Event
 		await QueueLog("=================================", true);
 		
 		var config = await GetConfig();
-		
-		var descript = e.ToString().NormalizeMarkdown();
 
 		var embed = new EmbedBuilder()
 			.WithTitle("Error Encountered")
