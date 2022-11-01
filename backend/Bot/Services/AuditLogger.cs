@@ -1,6 +1,7 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Events;
+using Bot.Exceptions;
 using Bot.Extensions;
 using Bot.Models;
 using Discord;
@@ -126,14 +127,38 @@ public class AuditLogger : IHostedService, Event
 
 	private async Task OnLog(Exception e)
 	{
-		if (e != null)
+		if (e == null)
+			return;
+
+		if (e is GatewayReconnectException || e is UnregisteredGuildException)
+			return;
+
+		await QueueLog("======= ERROR ENCOUNTERED =======", true);
+
+		foreach (var ex in e.ToString().Replace("```", "").ChunksUpTo(1900))
+			await QueueLog($"```\n{ex}\n```", true, false);
+
+		await QueueLog("=================================", true);
+		
+		var config = await GetConfig();
+		
+		var descript = e.ToString().NormalizeMarkdown();
+
+		var embed = new EmbedBuilder()
+			.WithTitle("Error Encountered")
+			.WithAuthor(_client.CurrentUser)
+			.WithDescription(descript[..Math.Min(1000, descript.Length)])
+			.WithCurrentTimestamp()
+			.WithColor(Color.Red)
+			.WithFooter("View logs for more information...")
+			.Build();
+
+		foreach (var admin in config.SiteAdmins)
 		{
-			await QueueLog("======= ERROR ENCOUNTERED =======", true);
+			var user = await _client.GetUserAsync(admin);
+			var dmChannel = await user.CreateDMChannelAsync();
 
-			foreach (var ex in e.ToString().NormalizeMarkdown().ChunksUpTo(1900))
-				await QueueLog($"```\n{ex}\n```", true, false);
-
-			await QueueLog("=================================", true);
+			await dmChannel.SendMessageAsync(embed: embed);
 		}
 	}
 
