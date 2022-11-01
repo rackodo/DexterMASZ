@@ -139,7 +139,7 @@ public class AuditLogger : IHostedService, Event
 
 		if (e.InnerException != null)
 			if (e.InnerException is ExternalException ee)
-				if (ee is WebSocketException && ee.ErrorCode == 997)
+				if (ee is WebSocketException && e.Message.Contains("WebSocket connection was closed"))
 					return;
 				else
 					descript = $"Error Code: {ee.ErrorCode}\n" + descript;
