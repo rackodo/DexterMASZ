@@ -339,6 +339,8 @@ public class DiscordRest : IHostedService, Event
 				SetCacheValue(cacheKey, new CacheApiResponse(user));
 				return user;
 			}
+
+			throw new NullReferenceException();
 		}
 		catch (Exception e)
 		{
