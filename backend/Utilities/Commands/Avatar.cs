@@ -46,7 +46,7 @@ public class Avatar : Command<Avatar>
 		var buttons = new ComponentBuilder();
 
 		if (guildAvail)
-			buttons.WithButton($"Get {(isGuild ? "Guild" : "User")} Avatar", $"avatar-user:{user.Id},{!isGuild}");
+			buttons.WithButton($"Get {(isGuild ? "User" : "Guild")} Avatar", $"avatar-user:{user.Id},{!isGuild}");
 
 		if (Context.Interaction is SocketMessageComponent castInteraction)
 			await castInteraction.UpdateAsync(message =>
