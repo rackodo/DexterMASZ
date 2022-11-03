@@ -63,7 +63,7 @@ public class UpdateRoles : Command<UpdateRoles>
 			.WithTitle($"Role update")
 			.WithCurrentTimestamp();
 
-		if (result.IsErrored)
+		if (!result.IsErrored)
 			embed
 				.WithColor(Color.Green)
 				.WithDescription($"Successfully updated {user.Mention}'s roles (level {level})")
