@@ -282,12 +282,15 @@ public class DiscordRest : IHostedService, Event
 		IUser user;
 		var cachingType = onlyUseCachedUsers ? CacheBehavior.OnlyCache : CacheBehavior.Default;
 
+		Console.WriteLine(0);
 		try
 		{
+			Console.WriteLine(1);
 			user = TryGetFromCache<IUser>(cacheKey, cachingType);
 
 			if (user != null)
 			{
+				Console.WriteLine(2);
 				return user;
 			}
 		}
@@ -299,47 +302,60 @@ public class DiscordRest : IHostedService, Event
 
 		user = await userRepo.TryGetUser(userId);
 
+		Console.WriteLine(3);
 		try
 		{
 			if (user == null)
 			{
+				Console.WriteLine(4);
 				if (onlyUseCachedUsers)
 				{
+					Console.WriteLine(5);
 					_downloadingUsers.TryAdd(userId, RestAction.Created);
 				}
 				else
 				{
+					Console.WriteLine(6);
 					user = await _client.GetUserAsync(userId);
 					await userRepo.AddUser(user);
 				}
 			}
 			else
 			{
+				Console.WriteLine(4.5);
 				var avatarUrl = user.GetAvatarUrl();
 
 				if (!string.IsNullOrEmpty(avatarUrl) && !await IsImageAvailable(avatarUrl))
 				{
 					if (onlyUseCachedUsers)
 					{
+						Console.WriteLine(5.5);
 						_downloadingUsers.TryAdd(userId, RestAction.Updated);
 					}
 					else
 					{
+						Console.WriteLine(6.5);
 						user = await _client.GetUserAsync(userId);
 						await userRepo.UpdateUser(user);
 					}
 				}
 			}
 
-			SetCacheValue(cacheKey, new CacheApiResponse(user));
+			Console.WriteLine(7);
+			Console.WriteLine(user);
 
-			return user;
+			if (user != null)
+			{
+				SetCacheValue(cacheKey, new CacheApiResponse(user));
+				return user;
+			}
 		}
 		catch (Exception e)
 		{
 			_logger.LogError(e, $"Failed to fetch user '{userId}' from API.");
-			return FallBackToCache<IUser>(cacheKey, cachingType);
 		}
+		
+		return FallBackToCache<IUser>(cacheKey, cachingType);
 	}
 
 	public IUser FetchMemCachedUserInfo(ulong userId)

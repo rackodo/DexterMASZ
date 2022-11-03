@@ -295,11 +295,6 @@ public class PunishmentNotificationTranslator : Translator
 
 	public string NotificationModCase(ModCase modCase, IUser moderator)
 	{
-		if (modCase == null)
-			return "Modcase is null! This is a known error and has been caught, and is fixed in the modlog.";
-		if (moderator == null)
-			return "Moderator is null! This is a known error and has been caught, and is fixed in the modlog.";
-
 		return PreferredLanguage switch
 		{
 			Language.De =>
