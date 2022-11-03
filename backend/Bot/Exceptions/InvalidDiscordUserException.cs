@@ -10,7 +10,7 @@ public class InvalidIUserException : ApiException
 		UserId = userId;
 	}
 
-	public InvalidIUserException(ulong userId) : base("Failed to fetch user '{userId}' from API.",
+	public InvalidIUserException(ulong userId) : base($"Failed to fetch user '{userId}' from API.",
 		ApiError.InvalidDiscordUser)
 	{
 		UserId = userId;
