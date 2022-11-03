@@ -282,17 +282,12 @@ public class DiscordRest : IHostedService, Event
 		IUser user;
 		var cachingType = onlyUseCachedUsers ? CacheBehavior.OnlyCache : CacheBehavior.Default;
 
-		Console.WriteLine(0);
 		try
 		{
-			Console.WriteLine(1);
 			user = TryGetFromCache<IUser>(cacheKey, cachingType);
 
 			if (user != null)
-			{
-				Console.WriteLine(2);
 				return user;
-			}
 		}
 		catch (NotFoundInCacheException) {}
 
@@ -302,20 +297,16 @@ public class DiscordRest : IHostedService, Event
 
 		user = await userRepo.TryGetUser(userId);
 
-		Console.WriteLine(3);
 		try
 		{
 			if (user == null)
 			{
-				Console.WriteLine(4);
 				if (onlyUseCachedUsers)
 				{
-					Console.WriteLine(5);
 					_downloadingUsers.TryAdd(userId, RestAction.Created);
 				}
 				else
 				{
-					Console.WriteLine(6);
 					user = await _client.GetUserAsync(userId);
 					await userRepo.AddUser(user);
 				}
@@ -329,7 +320,6 @@ public class DiscordRest : IHostedService, Event
 				{
 					if (onlyUseCachedUsers)
 					{
-						Console.WriteLine(5.5);
 						_downloadingUsers.TryAdd(userId, RestAction.Updated);
 					}
 					else
@@ -353,9 +343,14 @@ public class DiscordRest : IHostedService, Event
 		catch (Exception e)
 		{
 			_logger.LogError(e, $"Failed to fetch user '{userId}' from API.");
+
+			user = FallBackToCache<IUser>(cacheKey, cachingType);
+
+			if (user != null)
+				return user;
+
+			throw;
 		}
-		
-		return FallBackToCache<IUser>(cacheKey, cachingType);
 	}
 
 	public IUser FetchMemCachedUserInfo(ulong userId)

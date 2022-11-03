@@ -2,6 +2,7 @@
 using Bot.DTOs;
 using Bot.Services;
 using Discord;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bot.Data;
 
@@ -15,6 +16,8 @@ public class UserRepository : Repository
 	public async Task<LeftUserDTO> TryGetUser(ulong userId)
 	{
 		var user = await _context.GetLeftUser(userId);
+
+		_context.Entry(user).State = EntityState.Detached;
 
 		if (user == null)
 			return null;
