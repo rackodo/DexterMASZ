@@ -74,9 +74,12 @@ public class UserDM : Command<UserDM>
 		{
 			var channel = await DiscordRest.CreateDmChannel(user.Id);
 
-			await channel.SendMessageAsync(embed: EmbedCreator.CreateColoredEmbed(Color.Green, typeof(UserDM))
-					.WithTitle($"Message From {Context.Guild.Name}")
-					.WithDescription(message).Build());
+			await channel.SendMessageAsync(embed: new EmbedBuilder()
+				.WithCurrentTimestamp()
+				.WithColor(Color.Green)
+				.WithTitle($"Message From {Context.Guild.Name}")
+				.WithDescription(message).Build()
+			);
 		}
 		catch (Exception)
 		{
