@@ -143,6 +143,11 @@ public class BotModule : WebModule
 			initEvent.RegisterEvents();
 	}
 
+	public override void ConfigureModules(List<Module> modules, WebApplication app)
+	{
+		app.Services.GetRequiredService<AuditLogger>().SetModules(modules);
+	}
+
 	public override void PostWebBuild(WebApplication app, AppSettings settings)
 	{
 		if (settings.CorsEnabled)

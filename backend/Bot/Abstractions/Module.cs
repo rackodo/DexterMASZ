@@ -1,5 +1,6 @@
 ﻿using Bot.Models;
 using Bot.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,10 @@ public abstract class Module
 	}
 
 	public virtual void AddServices(IServiceCollection services, CachedServices cachedServices, AppSettings appSettings)
+	{
+	}
+
+	public virtual void ConfigureModules(List<Module> modules, WebApplication app)
 	{
 	}
 

@@ -76,6 +76,10 @@ public class Initialize
 			ConsoleHelper.AddHeading("Adding Migrations");
 			await AddMigrations(cachedServices, app);
 
+			ConsoleHelper.AddHeading("Configuring Modules");
+			foreach (var startup in modules)
+				startup.ConfigureModules(modules, app);
+
 			ConsoleHelper.AddHeading("Configuring App");
 			ConfigureApp(modules, cachedServices, appSettings, app);
 
