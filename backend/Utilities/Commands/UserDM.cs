@@ -27,7 +27,9 @@ public class UserDM : Command<UserDM>
 
 		if (user is null)
 		{
-			var embed = EmbedCreator.CreateColoredEmbed(Color.Red, typeof(UserDM))
+			var embed = new EmbedBuilder()
+				.WithCurrentTimestamp()
+				.WithColor(Color.Red)
 				.WithTitle("Unable to find given user!")
 				.WithDescription("This may be due to caching! Try using their ID if you haven't.");
 
@@ -38,7 +40,9 @@ public class UserDM : Command<UserDM>
 
 		if (string.IsNullOrEmpty(message))
 		{
-			var embed = EmbedCreator.CreateColoredEmbed(Color.Red, typeof(UserDM))
+			var embed = new EmbedBuilder()
+				.WithCurrentTimestamp()
+				.WithColor(Color.Red)
 				.WithTitle("Empty message!")
 				.WithDescription("I received an empty message. It would be rude for me to send that; I believe.");
 
@@ -58,7 +62,9 @@ public class UserDM : Command<UserDM>
 			$"> **{Translator.Get<BotTranslator>().User()}:** {Context.User.Username}#{Context.User.Discriminator} - {Context.User.Mention}");
 		sender.AppendLine($"> **{Translator.Get<BotTranslator>().Id()}:** `{Context.User.Id}`");
 
-		var sendEmbed = EmbedCreator.CreateColoredEmbed(Color.Green, typeof(UserDM))
+		var sendEmbed = new EmbedBuilder()
+			.WithCurrentTimestamp()
+			.WithColor(Color.Green)
 			.WithTitle("User DM")
 			.WithDescription(message)
 			.AddField("Recipient", recipient.ToString())
