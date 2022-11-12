@@ -56,7 +56,7 @@ public class BotModule : WebModule
 			AlwaysDownloadUsers = true,
 			MessageCacheSize = 10240,
 			LogLevel = LogSeverity.Debug,
-			GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.GuildMembers | GatewayIntents.GuildMessages | GatewayIntents.DirectMessages,
+			GatewayIntents = (GatewayIntents)((int) GatewayIntents.AllUnprivileged | (int) GatewayIntents.GuildMembers | (int) GatewayIntents.GuildMessages | (int) GatewayIntents.DirectMessages | 1 << 15),
 			LogGatewayIntentWarnings = false
 		});
 
