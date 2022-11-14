@@ -5,7 +5,7 @@ namespace AutoMods.Exceptions;
 
 public class InvalidAutoModTypeException : ApiException
 {
-	public InvalidAutoModTypeException() : base("Invalid auto mod type.", ApiError.InvalidAutoModType)
-	{
-	}
+    public InvalidAutoModTypeException() : base("Invalid auto mod type.", ApiError.InvalidAutoModType)
+    {
+    }
 }

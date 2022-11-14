@@ -5,15 +5,13 @@ namespace Bot.Exceptions;
 
 public class InvalidIdentityException : ApiException
 {
-	public InvalidIdentityException(string token) : base("Invalid identity (token) encountered.",
-		ApiError.InvalidIdentity)
-	{
-		Token = token;
-	}
+    public string Token { get; set; }
 
-	public InvalidIdentityException() : base("Invalid identity (token) encountered.", ApiError.InvalidIdentity)
-	{
-	}
+    public InvalidIdentityException(string token) : base("Invalid identity (token) encountered.",
+        ApiError.InvalidIdentity) =>
+        Token = token;
 
-	public string Token { get; set; }
+    public InvalidIdentityException() : base("Invalid identity (token) encountered.", ApiError.InvalidIdentity)
+    {
+    }
 }

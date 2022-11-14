@@ -1,9 +1,11 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
+using Bot.Enums;
 using Bot.Services;
 using Discord;
 using Discord.Interactions;
 using Humanizer;
+using Humanizer.Localisation;
 using Levels.Data;
 using Levels.Enums;
 using Levels.Models;
@@ -12,139 +14,148 @@ namespace Levels.Commands;
 
 public class Experience : Command<Experience>
 {
-	public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
-	public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
-	public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
-	public SettingsRepository? SettingsRepository { get; set; }
-	public DiscordRest? _client { get; set; }
+    public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
+    public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
+    public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
+    public SettingsRepository? SettingsRepository { get; set; }
+    public DiscordRest? _client { get; set; }
 
-	[SlashCommand("xp", "Display detailed experience information.")]
-	public async Task RankCommand(
-		[Summary("user", "Target user to get rank from.")] IUser? user = null,
-		[Summary("level", "The level you wish to get information about")] int levelTarget = -1,
-		[Summary("rank", "The rank you wish to get information about")] IRole roleTarget = null)
-	{
-		user ??= Context.User;
+    [SlashCommand("xp", "Display detailed experience information.")]
+    public async Task RankCommand(
+        [Summary("user", "Target user to get rank from.")]
+        IUser? user = null,
+        [Summary("level", "The level you wish to get information about")]
+        int levelTarget = -1,
+        [Summary("rank", "The rank you wish to get information about")]
+        IRole roleTarget = null)
+    {
+        user ??= Context.User;
 
-		var level = await GuildUserLevelRepository!.GetOrCreateLevel(Context.Guild.Id, user.Id);
-		var guildlevelconfig = await GuildLevelConfigRepository!.GetOrCreateConfig(Context.Guild.Id);
-		var calclevel = new CalculatedGuildUserLevel(level, guildlevelconfig);
+        var level = await GuildUserLevelRepository!.GetOrCreateLevel(Context.Guild.Id, user.Id);
+        var guildlevelconfig = await GuildLevelConfigRepository!.GetOrCreateConfig(Context.Guild.Id);
+        var calclevel = new CalculatedGuildUserLevel(level, guildlevelconfig);
 
-		var totalLevel = calclevel.Total.Level;
-		if (levelTarget < 0) levelTarget = totalLevel + 1;
-		var targetXp = GuildUserLevel.XPFromLevel(levelTarget, guildlevelconfig);
+        var totalLevel = calclevel.Total.Level;
+        if (levelTarget < 0) levelTarget = totalLevel + 1;
+        var targetXp = GuildUserLevel.XPFromLevel(levelTarget, guildlevelconfig);
 
-		var roleTargetLevel = 0;
-		var roleTargetName = "Unknown";
-		var found = false;
-		var guildInfo = _client.FetchGuildInfo(guildlevelconfig.Id, Bot.Enums.CacheBehavior.Default);
-		if (roleTarget != null)
-		{
-			var entry = guildlevelconfig.Levels.FirstOrDefault((e) =>
-			{
-				if (e.Value.Contains(roleTarget.Id))
-				{
-					found = true;
-					roleTargetLevel = e.Key;
-					return true;
-				}
-				return false;
-			});
+        var roleTargetLevel = 0;
+        var roleTargetName = "Unknown";
+        var found = false;
+        var guildInfo = _client.FetchGuildInfo(guildlevelconfig.Id, CacheBehavior.Default);
+        if (roleTarget != null)
+        {
+            var entry = guildlevelconfig.Levels.FirstOrDefault(e =>
+            {
+                if (e.Value.Contains(roleTarget.Id))
+                {
+                    found = true;
+                    roleTargetLevel = e.Key;
+                    return true;
+                }
 
-			if (!found)
-			{
-				await RespondAsync("The role you provided isn't part of the rank system! Ensure you're choosing a leveling role.", ephemeral: true);
-				return;
-			}
+                return false;
+            });
 
-			roleTargetName = roleTarget.Name;
-		}
-		else
-		{
-			var maxLevel = 0;
-			foreach (var levelRole in guildlevelconfig.Levels)
-			{
-				if (levelRole.Value.Length == 0) continue;
-				var r = guildInfo.GetRole(levelRole.Value.First());
-				if (levelRole.Key > totalLevel)
-				{
-					roleTargetLevel = levelRole.Key;
-					roleTargetName = r.Name;
-					found = true;
-					break;
-				}
+            if (!found)
+            {
+                await RespondAsync(
+                    "The role you provided isn't part of the rank system! Ensure you're choosing a leveling role.",
+                    ephemeral: true);
+                return;
+            }
 
-				if (levelRole.Key > maxLevel) maxLevel = levelRole.Key;
-			}
+            roleTargetName = roleTarget.Name;
+        }
+        else
+        {
+            var maxLevel = 0;
+            foreach (var levelRole in guildlevelconfig.Levels)
+            {
+                if (levelRole.Value.Length == 0) continue;
+                var r = guildInfo.GetRole(levelRole.Value.First());
+                if (levelRole.Key > totalLevel)
+                {
+                    roleTargetLevel = levelRole.Key;
+                    roleTargetName = r.Name;
+                    found = true;
+                    break;
+                }
 
-			if (!found)
-			{
-				roleTargetLevel = maxLevel;
-				roleTargetName = guildInfo.GetRole(guildlevelconfig.Levels[maxLevel].First()).Name;
-			}
-		}
+                if (levelRole.Key > maxLevel) maxLevel = levelRole.Key;
+            }
 
-		var roleTargetXp = GuildUserLevel.XPFromLevel(roleTargetLevel, guildlevelconfig);
+            if (!found)
+            {
+                roleTargetLevel = maxLevel;
+                roleTargetName = guildInfo.GetRole(guildlevelconfig.Levels[maxLevel].First()).Name;
+            }
+        }
 
-		var embed = new EmbedBuilder()
-			.WithTitle($"{user.Username}#{user.Discriminator}'s Experience Summary")
-			.WithThumbnailUrl(user.GetAvatarUrl())
-			.WithDescription(
-				$"{LevelDataExpression(LevelType.Total, calclevel)}\n" +
-				$"{LevelDataExpression(LevelType.Text, calclevel)}\n" +
-				$"{LevelDataExpression(LevelType.Voice, calclevel)}")
-			.AddField($"Till Level {levelTarget}:", LevelTargetExpression(level.TotalXP, targetXp, guildlevelconfig))
-			.AddField($"Till {roleTargetName} Rank:", LevelTargetExpression(level.TotalXP, roleTargetXp, guildlevelconfig))
-			.WithColor(Color.Blue)
-			.Build();
+        var roleTargetXp = GuildUserLevel.XPFromLevel(roleTargetLevel, guildlevelconfig);
 
-		var guildconfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
-		var ephemeral = !guildconfig.BotChannels.Contains(Context.Channel.Id);
-		await RespondAsync("", ephemeral: ephemeral, embed: embed);
-	}
+        var embed = new EmbedBuilder()
+            .WithTitle($"{user.Username}#{user.Discriminator}'s Experience Summary")
+            .WithThumbnailUrl(user.GetAvatarUrl())
+            .WithDescription(
+                $"{LevelDataExpression(LevelType.Total, calclevel)}\n" +
+                $"{LevelDataExpression(LevelType.Text, calclevel)}\n" +
+                $"{LevelDataExpression(LevelType.Voice, calclevel)}")
+            .AddField($"Till Level {levelTarget}:", LevelTargetExpression(level.TotalXP, targetXp, guildlevelconfig))
+            .AddField($"Till {roleTargetName} Rank:",
+                LevelTargetExpression(level.TotalXP, roleTargetXp, guildlevelconfig))
+            .WithColor(Color.Blue)
+            .Build();
 
-	private static string LevelDataExpression(LevelType type, CalculatedGuildUserLevel level)
-	{
-		var data = type switch
-		{
-			LevelType.Total => level.Total,
-			LevelType.Voice => level.Voice,
-			LevelType.Text => level.Text,
-			_ => throw new NotImplementedException()
-		};
+        var guildconfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
+        var ephemeral = !guildconfig.BotChannels.Contains(Context.Channel.Id);
+        await RespondAsync("", ephemeral: ephemeral, embed: embed);
+    }
 
-		return $"**{type} Level: {data.Level} ({data.Xp})**, {data.ResidualXp}/{data.LevelXp} till next level.";
-	}
+    private static string LevelDataExpression(LevelType type, CalculatedGuildUserLevel level)
+    {
+        var data = type switch
+        {
+            LevelType.Total => level.Total,
+            LevelType.Voice => level.Voice,
+            LevelType.Text => level.Text,
+            _ => throw new NotImplementedException()
+        };
 
-	private static string LevelTargetExpression(long currentXP, long targetXP, GuildLevelConfig config)
-	{
-		string textExpr;
-		try
-		{
-			var textTime = TimeSpan.FromMinutes((targetXP - currentXP) / ((config.MinimumTextXpGiven + config.MaximumTextXpGiven) >> 1));
-			textExpr = textTime.Humanize(2, minUnit: Humanizer.Localisation.TimeUnit.Minute);
-		}
-		catch
-		{
-			textExpr = "a **very** long time";
-		}
+        return $"**{type} Level: {data.Level} ({data.Xp})**, {data.ResidualXp}/{data.LevelXp} till next level.";
+    }
 
-		string voiceExpr;
-		try
-		{
-			var voiceTime = TimeSpan.FromMinutes((targetXP - currentXP) / ((config.MinimumVoiceXpGiven + config.MaximumVoiceXpGiven) >> 1));
-			voiceExpr = voiceTime.Humanize(2, minUnit: Humanizer.Localisation.TimeUnit.Minute);
-		}
-		catch
-		{
-			voiceExpr = "a **very** long time";
-		}
+    private static string LevelTargetExpression(long currentXP, long targetXP, GuildLevelConfig config)
+    {
+        string textExpr;
+        try
+        {
+            var textTime = TimeSpan.FromMinutes((targetXP - currentXP) /
+                                                ((config.MinimumTextXpGiven + config.MaximumTextXpGiven) >> 1));
+            textExpr = textTime.Humanize(2, minUnit: TimeUnit.Minute);
+        }
+        catch
+        {
+            textExpr = "a **very** long time";
+        }
 
-		if (targetXP > currentXP)
-			return
-				$"**Text:** {textExpr} (averagely sustained).\n" +
-				$"**Voice:** {voiceExpr} (averagely sustained).\n" +
-				$"**Experience:** {currentXP} out of {targetXP}, missing {targetXP - currentXP}.";
-		else return $"**Exceeded target** by {currentXP - targetXP} experience ({currentXP}/{targetXP}).";
-	}
+        string voiceExpr;
+        try
+        {
+            var voiceTime = TimeSpan.FromMinutes((targetXP - currentXP) /
+                                                 ((config.MinimumVoiceXpGiven + config.MaximumVoiceXpGiven) >> 1));
+            voiceExpr = voiceTime.Humanize(2, minUnit: TimeUnit.Minute);
+        }
+        catch
+        {
+            voiceExpr = "a **very** long time";
+        }
+
+        if (targetXP > currentXP)
+            return
+                $"**Text:** {textExpr} (averagely sustained).\n" +
+                $"**Voice:** {voiceExpr} (averagely sustained).\n" +
+                $"**Experience:** {currentXP} out of {targetXP}, missing {targetXP - currentXP}.";
+        return $"**Exceeded target** by {currentXP - targetXP} experience ({currentXP}/{targetXP}).";
+    }
 }

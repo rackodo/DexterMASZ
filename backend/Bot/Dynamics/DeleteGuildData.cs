@@ -2,5 +2,5 @@
 
 public interface DeleteGuildData
 {
-	public Task DeleteGuildData(ulong guildId);
+    public Task DeleteGuildData(ulong guildId);
 }

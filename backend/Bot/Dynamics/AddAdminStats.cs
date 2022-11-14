@@ -2,5 +2,5 @@
 
 public interface AddAdminStats
 {
-	public Task AddAdminStatistics(dynamic adminStats);
+    public Task AddAdminStatistics(dynamic adminStats);
 }

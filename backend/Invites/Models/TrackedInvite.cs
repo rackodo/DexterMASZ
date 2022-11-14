@@ -4,63 +4,60 @@ namespace Invites.Models;
 
 public class TrackedInvite
 {
-	public TrackedInvite(IInviteMetadata invite, ulong guildId)
-	{
-		GuildId = guildId;
-		Code = invite.Code;
+    public string Code { get; set; }
+    public ulong CreatorId { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public int Uses { get; set; }
+    public int? MaxUses { get; set; }
+    public ulong TargetChannelId { get; set; }
+    public ulong GuildId { get; set; }
+    public DateTime? ExpiresAt { get; set; }
 
-		if (invite.Inviter is not null)
-			CreatorId = invite.Inviter.Id;
-		else
-			CreatorId = 0;
+    public TrackedInvite(IInviteMetadata invite, ulong guildId)
+    {
+        GuildId = guildId;
+        Code = invite.Code;
 
-		CreatedAt = invite.CreatedAt.GetValueOrDefault().UtcDateTime;
-		Uses = invite.Uses.GetValueOrDefault();
-		MaxUses = invite.MaxUses;
+        if (invite.Inviter is not null)
+            CreatorId = invite.Inviter.Id;
+        else
+            CreatorId = 0;
 
-		try
-		{
-			TargetChannelId = invite.ChannelId;
-		}
-		catch (NullReferenceException)
-		{
-			TargetChannelId = 0;
-		}
+        CreatedAt = invite.CreatedAt.GetValueOrDefault().UtcDateTime;
+        Uses = invite.Uses.GetValueOrDefault();
+        MaxUses = invite.MaxUses;
 
-		ExpiresAt = invite.CreatedAt.GetValueOrDefault().UtcDateTime.AddSeconds(invite.MaxAge.GetValueOrDefault());
-	}
+        try
+        {
+            TargetChannelId = invite.ChannelId;
+        }
+        catch (NullReferenceException)
+        {
+            TargetChannelId = 0;
+        }
 
-	public TrackedInvite(ulong guildId, string vanityUrl, int uses)
-	{
-		GuildId = guildId;
-		Code = vanityUrl;
-		Uses = uses;
-		CreatorId = 0;
-		CreatedAt = null;
-		MaxUses = null;
-		TargetChannelId = 0;
-		ExpiresAt = null;
-	}
+        ExpiresAt = invite.CreatedAt.GetValueOrDefault().UtcDateTime.AddSeconds(invite.MaxAge.GetValueOrDefault());
+    }
 
-	public string Code { get; set; }
-	public ulong CreatorId { get; set; }
-	public DateTime? CreatedAt { get; set; }
-	public int Uses { get; set; }
-	public int? MaxUses { get; set; }
-	public ulong TargetChannelId { get; set; }
-	public ulong GuildId { get; set; }
-	public DateTime? ExpiresAt { get; set; }
+    public TrackedInvite(ulong guildId, string vanityUrl, int uses)
+    {
+        GuildId = guildId;
+        Code = vanityUrl;
+        Uses = uses;
+        CreatorId = 0;
+        CreatedAt = null;
+        MaxUses = null;
+        TargetChannelId = 0;
+        ExpiresAt = null;
+    }
 
-	public bool IsExpired()
-	{
-		if (ExpiresAt == null)
-			return false;
+    public bool IsExpired()
+    {
+        if (ExpiresAt == null)
+            return false;
 
-		return ExpiresAt < DateTime.UtcNow;
-	}
+        return ExpiresAt < DateTime.UtcNow;
+    }
 
-	public bool HasNewUses(int currentUses)
-	{
-		return currentUses != Uses;
-	}
+    public bool HasNewUses(int currentUses) => currentUses != Uses;
 }

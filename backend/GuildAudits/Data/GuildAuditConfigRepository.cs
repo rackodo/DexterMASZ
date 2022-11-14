@@ -13,80 +13,76 @@ namespace GuildAudits.Data;
 
 public class GuildAuditConfigRepository : Repository, DeleteGuildData
 {
-	private readonly GuildAuditEventHandler _eventHandler;
-	private readonly GuildAuditDatabase _guildAuditDatabase;
+    private readonly GuildAuditEventHandler _eventHandler;
+    private readonly GuildAuditDatabase _guildAuditDatabase;
 
-	public GuildAuditConfigRepository(DiscordRest discordRest, GuildAuditDatabase guildAuditDatabase,
-		GuildAuditEventHandler eventHandler) : base(discordRest)
-	{
-		_guildAuditDatabase = guildAuditDatabase;
-		_eventHandler = eventHandler;
-	}
+    public GuildAuditConfigRepository(DiscordRest discordRest, GuildAuditDatabase guildAuditDatabase,
+        GuildAuditEventHandler eventHandler) : base(discordRest)
+    {
+        _guildAuditDatabase = guildAuditDatabase;
+        _eventHandler = eventHandler;
+    }
 
-	public async Task DeleteGuildData(ulong guildId)
-	{
-		await _guildAuditDatabase.DeleteAllAuditLogConfigsForGuild(guildId);
-	}
+    public async Task DeleteGuildData(ulong guildId) =>
+        await _guildAuditDatabase.DeleteAllAuditLogConfigsForGuild(guildId);
 
-	public async Task<List<GuildAuditConfig>> GetConfigsByGuild(ulong guildId)
-	{
-		return await _guildAuditDatabase.SelectAllAuditLogConfigsForGuild(guildId);
-	}
+    public async Task<List<GuildAuditConfig>> GetConfigsByGuild(ulong guildId) =>
+        await _guildAuditDatabase.SelectAllAuditLogConfigsForGuild(guildId);
 
-	public async Task<GuildAuditConfig> GetConfigsByGuildAndType(ulong guildId, GuildAuditLogEvent type)
-	{
-		var config = await _guildAuditDatabase.SelectAuditLogConfigForGuildAndType(guildId, type);
+    public async Task<GuildAuditConfig> GetConfigsByGuildAndType(ulong guildId, GuildAuditLogEvent type)
+    {
+        var config = await _guildAuditDatabase.SelectAuditLogConfigForGuildAndType(guildId, type);
 
-		if (config == null)
-			throw new ResourceNotFoundException($"GuildAudit config {guildId}/{type} does not exist.");
+        if (config == null)
+            throw new ResourceNotFoundException($"GuildAudit config {guildId}/{type} does not exist.");
 
-		return config;
-	}
+        return config;
+    }
 
-	public async Task<GuildAuditConfig> UpdateConfig(GuildAuditConfig newValue)
-	{
-		if (!Enum.IsDefined(typeof(GuildAuditLogEvent), newValue.GuildAuditLogEvent))
-			throw new InvalidAuditLogEventException();
+    public async Task<GuildAuditConfig> UpdateConfig(GuildAuditConfig newValue)
+    {
+        if (!Enum.IsDefined(typeof(GuildAuditLogEvent), newValue.GuildAuditLogEvent))
+            throw new InvalidAuditLogEventException();
 
-		var action = RestAction.Updated;
-		GuildAuditConfig auditLogConfig;
+        var action = RestAction.Updated;
+        GuildAuditConfig auditLogConfig;
 
-		try
-		{
-			auditLogConfig = await GetConfigsByGuildAndType(newValue.GuildId, newValue.GuildAuditLogEvent);
-		}
-		catch (ResourceNotFoundException)
-		{
-			auditLogConfig = new GuildAuditConfig();
-			action = RestAction.Created;
-		}
+        try
+        {
+            auditLogConfig = await GetConfigsByGuildAndType(newValue.GuildId, newValue.GuildAuditLogEvent);
+        }
+        catch (ResourceNotFoundException)
+        {
+            auditLogConfig = new GuildAuditConfig();
+            action = RestAction.Created;
+        }
 
-		auditLogConfig.GuildId = newValue.GuildId;
-		auditLogConfig.GuildAuditLogEvent = newValue.GuildAuditLogEvent;
-		auditLogConfig.ChannelId = newValue.ChannelId;
-		auditLogConfig.PingRoles = newValue.PingRoles;
-		auditLogConfig.IgnoreChannels = newValue.IgnoreChannels;
-		auditLogConfig.IgnoreRoles = newValue.IgnoreRoles;
+        auditLogConfig.GuildId = newValue.GuildId;
+        auditLogConfig.GuildAuditLogEvent = newValue.GuildAuditLogEvent;
+        auditLogConfig.ChannelId = newValue.ChannelId;
+        auditLogConfig.PingRoles = newValue.PingRoles;
+        auditLogConfig.IgnoreChannels = newValue.IgnoreChannels;
+        auditLogConfig.IgnoreRoles = newValue.IgnoreRoles;
 
 
-		await _guildAuditDatabase.PutAuditLogConfig(auditLogConfig);
+        await _guildAuditDatabase.PutAuditLogConfig(auditLogConfig);
 
-		if (action == RestAction.Created)
-			_eventHandler.GuildAuditConfigCreatedEvent.Invoke(auditLogConfig, Identity);
-		else
-			_eventHandler.GuildAuditUpdatedEvent.Invoke(auditLogConfig, Identity);
+        if (action == RestAction.Created)
+            _eventHandler.GuildAuditConfigCreatedEvent.Invoke(auditLogConfig, Identity);
+        else
+            _eventHandler.GuildAuditUpdatedEvent.Invoke(auditLogConfig, Identity);
 
-		return auditLogConfig;
-	}
+        return auditLogConfig;
+    }
 
-	public async Task<GuildAuditConfig> DeleteConfigForGuild(ulong guildId, GuildAuditLogEvent type)
-	{
-		var config = await GetConfigsByGuildAndType(guildId, type);
+    public async Task<GuildAuditConfig> DeleteConfigForGuild(ulong guildId, GuildAuditLogEvent type)
+    {
+        var config = await GetConfigsByGuildAndType(guildId, type);
 
-		await _guildAuditDatabase.DeleteSpecificAuditLogConfig(config);
+        await _guildAuditDatabase.DeleteSpecificAuditLogConfig(config);
 
-		_eventHandler.GuildAuditConfigDeletedEvent.Invoke(config, Identity);
+        _eventHandler.GuildAuditConfigDeletedEvent.Invoke(config, Identity);
 
-		return config;
-	}
+        return config;
+    }
 }

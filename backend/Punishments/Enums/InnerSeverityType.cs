@@ -2,6 +2,6 @@
 
 public enum InnerSeverityType
 {
-	Low = SeverityType.Low,
-	High = SeverityType.High
+    Low = SeverityType.Low,
+    High = SeverityType.High
 }

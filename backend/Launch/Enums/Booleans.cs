@@ -2,6 +2,6 @@
 
 public enum Booleans
 {
-	False,
-	True
+    False,
+    True
 }

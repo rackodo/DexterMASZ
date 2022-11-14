@@ -13,86 +13,86 @@ namespace Punishments.Controllers;
 [Route("api/v1/guilds/{guildId}/cases/{caseId}/files")]
 public class ModCaseFileController : AuthenticatedController
 {
-	private readonly ModCaseFileRepository _caseFileRepository;
-	private readonly ModCaseRepository _modCaseRepository;
+    private readonly ModCaseFileRepository _caseFileRepository;
+    private readonly ModCaseRepository _modCaseRepository;
 
-	public ModCaseFileController(IdentityManager identityManager, ModCaseFileRepository caseFileRepository,
-		ModCaseRepository modCaseRepository) :
-		base(identityManager, caseFileRepository, modCaseRepository)
-	{
-		_caseFileRepository = caseFileRepository;
-		_modCaseRepository = modCaseRepository;
-	}
+    public ModCaseFileController(IdentityManager identityManager, ModCaseFileRepository caseFileRepository,
+        ModCaseRepository modCaseRepository) :
+        base(identityManager, caseFileRepository, modCaseRepository)
+    {
+        _caseFileRepository = caseFileRepository;
+        _modCaseRepository = modCaseRepository;
+    }
 
-	[Authorize]
-	[HttpDelete("{filename}")]
-	public async Task<IActionResult> DeleteSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId,
-		[FromRoute] string filename)
-	{
-		var identity = await SetupAuthentication();
+    [Authorize]
+    [HttpDelete("{filename}")]
+    public async Task<IActionResult> DeleteSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId,
+        [FromRoute] string filename)
+    {
+        var identity = await SetupAuthentication();
 
-		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
+        var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
 
-		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
+        await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 
-		await _caseFileRepository.DeleteFile(guildId, caseId, filename);
+        await _caseFileRepository.DeleteFile(guildId, caseId, filename);
 
-		return Ok();
-	}
+        return Ok();
+    }
 
-	[HttpGet("{filename}")]
-	public async Task<IActionResult> GetSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId,
-		[FromRoute] string filename)
-	{
-		var identity = await SetupAuthentication();
+    [HttpGet("{filename}")]
+    public async Task<IActionResult> GetSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId,
+        [FromRoute] string filename)
+    {
+        var identity = await SetupAuthentication();
 
-		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
+        var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
 
-		await identity.RequirePermission(ApiActionPermission.View, modCase);
+        await identity.RequirePermission(ApiActionPermission.View, modCase);
 
-		var fileInfo = await _caseFileRepository.GetCaseFile(guildId, caseId, filename);
+        var fileInfo = await _caseFileRepository.GetCaseFile(guildId, caseId, filename);
 
-		HttpContext.Response.Headers.Add("Content-Disposition", fileInfo.ContentDisposition.ToString());
-		HttpContext.Response.Headers.Add("Content-Type", fileInfo.ContentType);
+        HttpContext.Response.Headers.Add("Content-Disposition", fileInfo.ContentDisposition.ToString());
+        HttpContext.Response.Headers.Add("Content-Type", fileInfo.ContentType);
 
-		return File(fileInfo.FileContent, fileInfo.ContentType);
-	}
+        return File(fileInfo.FileContent, fileInfo.ContentType);
+    }
 
-	[Authorize]
-	[HttpGet]
-	public async Task<IActionResult> GetAllItems([FromRoute] ulong guildId, [FromRoute] int caseId)
-	{
-		var identity = await SetupAuthentication();
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> GetAllItems([FromRoute] ulong guildId, [FromRoute] int caseId)
+    {
+        var identity = await SetupAuthentication();
 
-		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
+        var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
 
-		await identity.RequirePermission(ApiActionPermission.View, modCase);
+        await identity.RequirePermission(ApiActionPermission.View, modCase);
 
-		var files = new List<string>();
+        var files = new List<string>();
 
-		try
-		{
-			files = await _caseFileRepository.GetCaseFiles(guildId, caseId);
-		}
-		catch (ResourceNotFoundException)
-		{
-		}
+        try
+        {
+            files = await _caseFileRepository.GetCaseFiles(guildId, caseId);
+        }
+        catch (ResourceNotFoundException)
+        {
+        }
 
-		return Ok(new { names = files });
-	}
+        return Ok(new { names = files });
+    }
 
-	[Authorize]
-	[HttpPost]
-	[RequestSizeLimit(10485760)]
-	public async Task<IActionResult> PostItem([FromRoute] ulong guildId, [FromRoute] int caseId,
-		[FromForm] UploadedFileDto uploadedFile)
-	{
-		var identity = await SetupAuthentication();
+    [Authorize]
+    [HttpPost]
+    [RequestSizeLimit(10485760)]
+    public async Task<IActionResult> PostItem([FromRoute] ulong guildId, [FromRoute] int caseId,
+        [FromForm] UploadedFileDto uploadedFile)
+    {
+        var identity = await SetupAuthentication();
 
-		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
+        var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
 
-		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
+        await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 
-		return Ok(new { path = await _caseFileRepository.UploadFile(uploadedFile.File, guildId, caseId) });
-	}
+        return Ok(new { path = await _caseFileRepository.UploadFile(uploadedFile.File, guildId, caseId) });
+    }
 }

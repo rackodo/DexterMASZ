@@ -2,7 +2,7 @@ namespace Punishments.Enums;
 
 public enum MarkedToDeleteStatus
 {
-	None,
-	Unmarked,
-	Marked
+    None,
+    Unmarked,
+    Marked
 }

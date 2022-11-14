@@ -2,10 +2,10 @@ namespace Bot.Enums;
 
 public enum Language
 {
-	En,
-	De,
-	Fr,
-	Es,
-	It,
-	Ru
+    En,
+    De,
+    Fr,
+    Es,
+    It,
+    Ru
 }

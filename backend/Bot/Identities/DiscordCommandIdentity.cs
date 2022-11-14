@@ -10,123 +10,121 @@ namespace Bot.Identities;
 
 public class DiscordCommandIdentity : Identity
 {
-	private readonly Dictionary<ulong, IGuildUser> _guildMemberships = new();
+    private readonly Dictionary<ulong, IGuildUser> _guildMemberships = new();
 
-	public DiscordCommandIdentity(IUser currentUser,
-		List<UserGuild> userGuilds, IServiceProvider serviceProvider) : base(currentUser.Id.ToString(), serviceProvider)
-	{
-		CurrentUser = currentUser;
-		CurrentUserGuilds = userGuilds;
-	}
+    public DiscordCommandIdentity(IUser currentUser,
+        List<UserGuild> userGuilds, IServiceProvider serviceProvider) : base(currentUser.Id.ToString(), serviceProvider)
+    {
+        CurrentUser = currentUser;
+        CurrentUserGuilds = userGuilds;
+    }
 
-	public IGuildUser GetGuildMembership(ulong guildId)
-	{
-		if (_guildMemberships.ContainsKey(guildId))
-			return _guildMemberships[guildId];
+    public IGuildUser GetGuildMembership(ulong guildId)
+    {
+        if (_guildMemberships.ContainsKey(guildId))
+            return _guildMemberships[guildId];
 
-		if (CurrentUser is null)
-			return null;
+        if (CurrentUser is null)
+            return null;
 
-		var guildUser = DiscordRest.FetchGuildUserInfo(guildId, CurrentUser.Id, CacheBehavior.Default);
+        var guildUser = DiscordRest.FetchGuildUserInfo(guildId, CurrentUser.Id, CacheBehavior.Default);
 
-		if (guildUser is null)
-			return null;
+        if (guildUser is null)
+            return null;
 
-		_guildMemberships[guildId] = guildUser;
-		return guildUser;
-	}
+        _guildMemberships[guildId] = guildUser;
+        return guildUser;
+    }
 
-	public override async Task<bool> HasAdminRoleOnGuild(ulong guildId)
-	{
-		if (!IsOnGuild(guildId))
-			return false;
+    public override async Task<bool> HasAdminRoleOnGuild(ulong guildId)
+    {
+        if (!IsOnGuild(guildId))
+            return false;
 
-		try
-		{
-			using var scope = ServiceProvider.CreateScope();
-			var guildConfigRepo = scope.ServiceProvider.GetRequiredService<GuildConfigRepository>();
+        try
+        {
+            using var scope = ServiceProvider.CreateScope();
+            var guildConfigRepo = scope.ServiceProvider.GetRequiredService<GuildConfigRepository>();
 
-			var guildConfig = await guildConfigRepo.GetGuildConfig(guildId);
+            var guildConfig = await guildConfigRepo.GetGuildConfig(guildId);
 
-			var guildUser = GetGuildMembership(guildId);
+            var guildUser = GetGuildMembership(guildId);
 
-			if (guildUser is null)
-				return false;
+            if (guildUser is null)
+                return false;
 
-			return guildUser.Guild.OwnerId == guildUser.Id || guildUser.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x));
-		}
-		catch (ResourceNotFoundException)
-		{
-			return false;
-		}
-	}
+            return guildUser.Guild.OwnerId == guildUser.Id ||
+                   guildUser.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x));
+        }
+        catch (ResourceNotFoundException)
+        {
+            return false;
+        }
+    }
 
-	public override async Task<bool> HasModRoleOrHigherOnGuild(ulong guildId)
-	{
-		if (!IsOnGuild(guildId))
-			return false;
+    public override async Task<bool> HasModRoleOrHigherOnGuild(ulong guildId)
+    {
+        if (!IsOnGuild(guildId))
+            return false;
 
-		try
-		{
-			using var scope = ServiceProvider.CreateScope();
-			var guildConfigRepo = scope.ServiceProvider.GetRequiredService<GuildConfigRepository>();
+        try
+        {
+            using var scope = ServiceProvider.CreateScope();
+            var guildConfigRepo = scope.ServiceProvider.GetRequiredService<GuildConfigRepository>();
 
-			var guildConfig = await guildConfigRepo.GetGuildConfig(guildId);
+            var guildConfig = await guildConfigRepo.GetGuildConfig(guildId);
 
-			var guildUser = GetGuildMembership(guildId);
+            var guildUser = GetGuildMembership(guildId);
 
-			if (guildUser is null)
-				return false;
+            if (guildUser is null)
+                return false;
 
-			if (guildUser.Guild.OwnerId == guildUser.Id)
-				return true;
+            if (guildUser.Guild.OwnerId == guildUser.Id)
+                return true;
 
-			return guildUser.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x) ||
-											  guildConfig.ModRoles.Contains(x));
-		}
-		catch (ResourceNotFoundException)
-		{
-			return false;
-		}
-	}
+            return guildUser.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x) ||
+                                              guildConfig.ModRoles.Contains(x));
+        }
+        catch (ResourceNotFoundException)
+        {
+            return false;
+        }
+    }
 
-	public override bool IsOnGuild(ulong guildId)
-	{
-		return CurrentUser != null && CurrentUserGuilds.Any(x => x.Id == guildId);
-	}
+    public override bool IsOnGuild(ulong guildId) => CurrentUser != null && CurrentUserGuilds.Any(x => x.Id == guildId);
 
-	public override async Task<bool> IsSiteAdmin()
-	{
-		if (CurrentUser is null)
-			return false;
+    public override async Task<bool> IsSiteAdmin()
+    {
+        if (CurrentUser is null)
+            return false;
 
-		using var scope = ServiceProvider.CreateScope();
+        using var scope = ServiceProvider.CreateScope();
 
-		var config = await scope.ServiceProvider
-			.GetRequiredService<SettingsRepository>().GetAppSettings();
+        var config = await scope.ServiceProvider
+            .GetRequiredService<SettingsRepository>().GetAppSettings();
 
-		return config.SiteAdmins.Contains(CurrentUser.Id);
-	}
+        return config.SiteAdmins.Contains(CurrentUser.Id);
+    }
 
-	public override void RemoveGuildMembership(ulong guildId)
-	{
-		CurrentUserGuilds.RemoveAll(x => x.Id == guildId);
-		_guildMemberships.Remove(guildId);
-	}
+    public override void RemoveGuildMembership(ulong guildId)
+    {
+        CurrentUserGuilds.RemoveAll(x => x.Id == guildId);
+        _guildMemberships.Remove(guildId);
+    }
 
-	public override void AddGuildMembership(IGuildUser user)
-	{
-		if (CurrentUserGuilds.All(x => x.Id != user.Guild.Id))
-			CurrentUserGuilds.Add(UserGuild.GetUserGuild(user));
+    public override void AddGuildMembership(IGuildUser user)
+    {
+        if (CurrentUserGuilds.All(x => x.Id != user.Guild.Id))
+            CurrentUserGuilds.Add(UserGuild.GetUserGuild(user));
 
-		_guildMemberships[user.Guild.Id] = user;
-	}
+        _guildMemberships[user.Guild.Id] = user;
+    }
 
-	public override void UpdateGuildMembership(IGuildUser user)
-	{
-		if (CurrentUserGuilds.All(x => x.Id != user.Guild.Id))
-			CurrentUserGuilds.Add(UserGuild.GetUserGuild(user));
+    public override void UpdateGuildMembership(IGuildUser user)
+    {
+        if (CurrentUserGuilds.All(x => x.Id != user.Guild.Id))
+            CurrentUserGuilds.Add(UserGuild.GetUserGuild(user));
 
-		_guildMemberships[user.Guild.Id] = user;
-	}
+        _guildMemberships[user.Guild.Id] = user;
+    }
 }

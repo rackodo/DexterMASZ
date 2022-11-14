@@ -2,8 +2,8 @@ namespace Bot.Enums;
 
 public enum ApiActionPermission
 {
-	View,
-	Edit,
-	Delete,
-	ForceDelete
+    View,
+    Edit,
+    Delete,
+    ForceDelete
 }

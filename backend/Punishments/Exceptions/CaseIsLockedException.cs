@@ -5,7 +5,7 @@ namespace Punishments.Exceptions;
 
 public class CaseIsLockedException : ApiException
 {
-	public CaseIsLockedException() : base("Case is locked.", ApiError.ModCaseDoesNotAllowComments)
-	{
-	}
+    public CaseIsLockedException() : base("Case is locked.", ApiError.ModCaseDoesNotAllowComments)
+    {
+    }
 }

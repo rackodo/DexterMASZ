@@ -5,32 +5,31 @@ namespace Bot.Models;
 
 public class DiscordApplication
 {
-	public ulong Id { get; set; }
-	public string Name { get; set; }
-	public string Description { get; set; }
-	public string IconUrl { get; set; }
-	public string IconHash { get; set; }
-	public string PrivacyPolicyUrl { get; set; }
-	public string TermsOfServiceUrl { get; set; }
+    public ulong Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string IconUrl { get; set; }
+    public string IconHash { get; set; }
+    public string PrivacyPolicyUrl { get; set; }
+    public string TermsOfServiceUrl { get; set; }
 
-	public static DiscordApplication GetDiscordApplication(IApplication application)
-	{
-		if (application is null)
-			return null;
-		else if (application.Id is 0)
-			return null;
-		else
-			return new DiscordApplication(application);
-	}
+    private DiscordApplication(IApplication application)
+    {
+        Id = application.Id;
+        Name = application.Name;
+        Description = application.Description;
+        IconUrl = application.IconUrl.GetAnimatedOrDefaultAvatar();
+        IconHash = application.IconUrl?.GetAnimatedOrDefaultAvatar().Split('/').Last();
+        PrivacyPolicyUrl = application.PrivacyPolicy ?? "";
+        TermsOfServiceUrl = application.TermsOfService ?? "";
+    }
 
-	private DiscordApplication(IApplication application)
-	{
-		Id = application.Id;
-		Name = application.Name;
-		Description = application.Description;
-		IconUrl = application.IconUrl.GetAnimatedOrDefaultAvatar();
-		IconHash = application.IconUrl?.GetAnimatedOrDefaultAvatar().Split('/').Last();
-		PrivacyPolicyUrl = application.PrivacyPolicy ?? "";
-		TermsOfServiceUrl = application.TermsOfService ?? "";
-	}
+    public static DiscordApplication GetDiscordApplication(IApplication application)
+    {
+        if (application is null)
+            return null;
+        if (application.Id is 0)
+            return null;
+        return new DiscordApplication(application);
+    }
 }

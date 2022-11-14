@@ -11,36 +11,33 @@ namespace Messaging.Controllers;
 [Route("api/v1/enums")]
 public class ScheduledEnumController : BaseController
 {
-	private readonly Translation _translator;
+    private readonly Translation _translator;
 
-	public ScheduledEnumController(Translation translator)
-	{
-		_translator = translator;
-	}
+    public ScheduledEnumController(Translation translator) => _translator = translator;
 
-	[HttpGet("scheduledmessagefailurereason")]
-	public IActionResult FailureReason([FromQuery] Language? language = null)
-	{
-		_translator.SetLanguage(language);
+    [HttpGet("scheduledmessagefailurereason")]
+    public IActionResult FailureReason([FromQuery] Language? language = null)
+    {
+        _translator.SetLanguage(language);
 
-		var enums = new List<EnumDto>();
+        var enums = new List<EnumDto>();
 
-		foreach (var enumValue in Enum.GetValues<ScheduledMessageFailureReason>())
-			enums.Add(new EnumDto((int)enumValue, _translator.Get<MessagingEnumTranslator>().Enum(enumValue)));
+        foreach (var enumValue in Enum.GetValues<ScheduledMessageFailureReason>())
+            enums.Add(new EnumDto((int)enumValue, _translator.Get<MessagingEnumTranslator>().Enum(enumValue)));
 
-		return Ok(enums);
-	}
+        return Ok(enums);
+    }
 
-	[HttpGet("scheduledmessagestatus")]
-	public IActionResult Status([FromQuery] Language? language = null)
-	{
-		_translator.SetLanguage(language);
+    [HttpGet("scheduledmessagestatus")]
+    public IActionResult Status([FromQuery] Language? language = null)
+    {
+        _translator.SetLanguage(language);
 
-		var enums = new List<EnumDto>();
+        var enums = new List<EnumDto>();
 
-		foreach (var enumValue in Enum.GetValues<ScheduledMessageStatus>())
-			enums.Add(new EnumDto((int)enumValue, _translator.Get<MessagingEnumTranslator>().Enum(enumValue)));
+        foreach (var enumValue in Enum.GetValues<ScheduledMessageStatus>())
+            enums.Add(new EnumDto((int)enumValue, _translator.Get<MessagingEnumTranslator>().Enum(enumValue)));
 
-		return Ok(enums);
-	}
+        return Ok(enums);
+    }
 }

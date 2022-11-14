@@ -2,43 +2,43 @@ namespace Bot.Enums;
 
 public enum ApiError
 {
-	Unknown,
+    Unknown,
 
-	// INTERNAL
-	InvalidDiscordUser,
-	ResourceNotFound,
-	InvalidIdentity,
-	GuildUnregistered,
-	Unauthorized,
-	GuildAlreadyRegistered,
-	RoleNotFound,
-	ResourceAlreadyExists,
-	InvalidFilePath,
-	NoGuildsRegistered,
-	InvalidAuditLogEvent,
-	NotFoundInCache,
-	GuildNotFound,
+    // INTERNAL
+    InvalidDiscordUser,
+    ResourceNotFound,
+    InvalidIdentity,
+    GuildUnregistered,
+    Unauthorized,
+    GuildAlreadyRegistered,
+    RoleNotFound,
+    ResourceAlreadyExists,
+    InvalidFilePath,
+    NoGuildsRegistered,
+    InvalidAuditLogEvent,
+    NotFoundInCache,
+    GuildNotFound,
 
-	// USER MAPS
-	CannotBeSameUser,
+    // USER MAPS
+    CannotBeSameUser,
 
-	// MODCASES
-	ProtectedModCaseSuspect,
-	ProtectedModCaseSuspectIsBot,
-	ProtectedModCaseSuspectIsSiteAdmin,
-	ProtectedModCaseSuspectIsTeam,
-	ModCaseIsMarkedToBeDeleted,
-	ModCaseIsNotMarkedToBeDeleted,
-	ModCaseDoesNotAllowComments,
-	TooManyTemplates,
-	LastCommentAlreadyFromSuspect,
-	AlreadyFinalWarned,
+    // MODCASES
+    ProtectedModCaseSuspect,
+    ProtectedModCaseSuspectIsBot,
+    ProtectedModCaseSuspectIsSiteAdmin,
+    ProtectedModCaseSuspectIsTeam,
+    ModCaseIsMarkedToBeDeleted,
+    ModCaseIsNotMarkedToBeDeleted,
+    ModCaseDoesNotAllowComments,
+    TooManyTemplates,
+    LastCommentAlreadyFromSuspect,
+    AlreadyFinalWarned,
 
-	// AUTOMOD
-	InvalidAutoModAction,
-	InvalidAutoModType,
+    // AUTOMOD
+    InvalidAutoModAction,
+    InvalidAutoModType,
 
-	// SCHEDULED MESSAGES
-	ProtectedScheduledMessage,
-	InvalidDateForScheduledMessage
+    // SCHEDULED MESSAGES
+    ProtectedScheduledMessage,
+    InvalidDateForScheduledMessage
 }

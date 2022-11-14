@@ -2,8 +2,8 @@ namespace AutoMods.Enums;
 
 public enum AutoModAction
 {
-	None,
-	ContentDeleted,
-	CaseCreated,
-	ContentDeletedAndCaseCreated
+    None,
+    ContentDeleted,
+    CaseCreated,
+    ContentDeletedAndCaseCreated
 }

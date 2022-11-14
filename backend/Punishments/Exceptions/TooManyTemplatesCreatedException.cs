@@ -5,7 +5,7 @@ namespace Punishments.Exceptions;
 
 public class TooManyTemplatesCreatedException : ApiException
 {
-	public TooManyTemplatesCreatedException() : base("Too many templates created.", ApiError.TooManyTemplates)
-	{
-	}
+    public TooManyTemplatesCreatedException() : base("Too many templates created.", ApiError.TooManyTemplates)
+    {
+    }
 }

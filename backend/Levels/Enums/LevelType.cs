@@ -2,7 +2,7 @@
 
 public enum LevelType
 {
-	Total,
-	Text,
-	Voice
+    Total,
+    Text,
+    Voice
 }

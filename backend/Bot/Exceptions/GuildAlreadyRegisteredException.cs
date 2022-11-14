@@ -5,11 +5,9 @@ namespace Bot.Exceptions;
 
 public class GuildAlreadyRegisteredException : ApiException
 {
-	public GuildAlreadyRegisteredException(ulong guildId) : base($"Guild {guildId} is already registered.",
-		ApiError.GuildUnregistered)
-	{
-		GuildId = guildId;
-	}
+    public ulong GuildId { get; set; }
 
-	public ulong GuildId { get; set; }
+    public GuildAlreadyRegisteredException(ulong guildId) : base($"Guild {guildId} is already registered.",
+        ApiError.GuildUnregistered) =>
+        GuildId = guildId;
 }

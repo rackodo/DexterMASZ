@@ -12,32 +12,35 @@ namespace MOTDs.Extensions;
 
 public static class MotdEmbedCreator
 {
-	public static async Task<EmbedBuilder> CreateMotdEmbed(this GuildMotd motd, IUser actor, RestAction action,
-		IServiceProvider provider)
-	{
-		var translator = provider.GetRequiredService<Translation>();
+    public static async Task<EmbedBuilder> CreateMotdEmbed(this GuildMotd motd, IUser actor, RestAction action,
+        IServiceProvider provider)
+    {
+        var translator = provider.GetRequiredService<Translation>();
 
-		await translator.SetLanguage(motd.GuildId);
+        await translator.SetLanguage(motd.GuildId);
 
-		var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
+        var embed = await EmbedCreator.CreateActionEmbed(action, provider, actor);
 
-		embed.WithTitle(translator.Get<MotdTranslator>().MessageOfTheDay());
+        embed.WithTitle(translator.Get<MotdTranslator>().MessageOfTheDay());
 
-		switch (action)
-		{
-			case RestAction.Created:
-				embed.WithDescription(translator.Get<MotdNotificationTranslator>().NotificationMotdInternalCreate(actor));
-				break;
-			case RestAction.Updated:
-				embed.WithDescription(translator.Get<MotdNotificationTranslator>().NotificationMotdInternalEdited(actor));
-				break;
-			default:
-				throw new ArgumentOutOfRangeException(nameof(action), action, null);
-		}
+        switch (action)
+        {
+            case RestAction.Created:
+                embed.WithDescription(
+                    translator.Get<MotdNotificationTranslator>().NotificationMotdInternalCreate(actor));
+                break;
+            case RestAction.Updated:
+                embed.WithDescription(
+                    translator.Get<MotdNotificationTranslator>().NotificationMotdInternalEdited(actor));
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(action), action, null);
+        }
 
-		embed.AddField(translator.Get<MotdNotificationTranslator>().NotificationMotdShow(), motd.ShowMotd.GetCheckEmoji());
-		embed.AddField(translator.Get<BotTranslator>().Message(), motd.Message.Truncate(1000));
+        embed.AddField(translator.Get<MotdNotificationTranslator>().NotificationMotdShow(),
+            motd.ShowMotd.GetCheckEmoji());
+        embed.AddField(translator.Get<BotTranslator>().Message(), motd.Message.Truncate(1000));
 
-		return embed;
-	}
+        return embed;
+    }
 }

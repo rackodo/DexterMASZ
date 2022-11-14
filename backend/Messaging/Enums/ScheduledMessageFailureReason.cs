@@ -2,7 +2,7 @@
 
 public enum ScheduledMessageFailureReason
 {
-	Unknown,
-	ChannelNotFound,
-	InsufficientPermission
+    Unknown,
+    ChannelNotFound,
+    InsufficientPermission
 }

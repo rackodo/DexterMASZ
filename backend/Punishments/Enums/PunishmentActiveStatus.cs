@@ -2,7 +2,7 @@ namespace Punishments.Enums;
 
 public enum PunishmentActiveStatus
 {
-	None,
-	Inactive,
-	Active
+    None,
+    Inactive,
+    Active
 }

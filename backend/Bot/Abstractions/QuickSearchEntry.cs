@@ -2,5 +2,5 @@
 
 public interface QuickSearchEntry
 {
-	DateTime CreatedAt { get; set; }
+    DateTime CreatedAt { get; set; }
 }

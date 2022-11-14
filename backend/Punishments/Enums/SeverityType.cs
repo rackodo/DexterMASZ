@@ -2,7 +2,7 @@
 
 public enum SeverityType
 {
-	None,
-	Low,
-	High
+    None,
+    Low,
+    High
 }

@@ -11,93 +11,91 @@ namespace UserMaps.Controllers;
 [Route("api/v1/guilds/{guildId}/usermap")]
 public class UserMapController : AuthenticatedController
 {
-	private readonly UserMapRepository _userMapRepo;
+    private readonly UserMapRepository _userMapRepo;
 
-	public UserMapController(IdentityManager identityManager, UserMapRepository userMapRepo) :
-		base(identityManager, userMapRepo)
-	{
-		_userMapRepo = userMapRepo;
-	}
+    public UserMapController(IdentityManager identityManager, UserMapRepository userMapRepo) :
+        base(identityManager, userMapRepo) =>
+        _userMapRepo = userMapRepo;
 
-	[HttpGet]
-	public async Task<IActionResult> GetUserMap([FromRoute] ulong guildId)
-	{
-		var identity = await SetupAuthentication();
+    [HttpGet]
+    public async Task<IActionResult> GetUserMap([FromRoute] ulong guildId)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
+        await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		var userMaps = await _userMapRepo.GetUserMapsByGuild(guildId);
+        var userMaps = await _userMapRepo.GetUserMapsByGuild(guildId);
 
-		return Ok(userMaps);
-	}
+        return Ok(userMaps);
+    }
 
-	[HttpGet("{userId}")]
-	public async Task<IActionResult> GetUserMaps([FromRoute] ulong guildId, [FromRoute] ulong userId)
-	{
-		var identity = await SetupAuthentication();
+    [HttpGet("{userId}")]
+    public async Task<IActionResult> GetUserMaps([FromRoute] ulong guildId, [FromRoute] ulong userId)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
+        await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		var userMaps = await _userMapRepo.GetUserMapsByGuildAndUser(guildId, userId);
+        var userMaps = await _userMapRepo.GetUserMapsByGuildAndUser(guildId, userId);
 
-		return Ok(userMaps);
-	}
+        return Ok(userMaps);
+    }
 
-	[HttpPost]
-	public async Task<IActionResult> CreateUserMap([FromRoute] ulong guildId, [FromBody] UserMapForCreateDto userMapDto)
-	{
-		var identity = await SetupAuthentication();
+    [HttpPost]
+    public async Task<IActionResult> CreateUserMap([FromRoute] ulong guildId, [FromBody] UserMapForCreateDto userMapDto)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
+        await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		try
-		{
-			await _userMapRepo.GetUserMap(guildId, userMapDto.UserA, userMapDto.UserB);
-			throw new ResourceAlreadyExists();
-		}
-		catch (ResourceNotFoundException)
-		{
-		}
+        try
+        {
+            await _userMapRepo.GetUserMap(guildId, userMapDto.UserA, userMapDto.UserB);
+            throw new ResourceAlreadyExists();
+        }
+        catch (ResourceNotFoundException)
+        {
+        }
 
-		var userMap =
-			await _userMapRepo.CreateOrUpdateUserMap(guildId, userMapDto.UserA, userMapDto.UserB, userMapDto.Reason);
+        var userMap =
+            await _userMapRepo.CreateOrUpdateUserMap(guildId, userMapDto.UserA, userMapDto.UserB, userMapDto.Reason);
 
-		return StatusCode(201, userMap);
-	}
+        return StatusCode(201, userMap);
+    }
 
-	[HttpPut("{id}")]
-	public async Task<IActionResult> UpdateUserMap([FromRoute] ulong guildId, [FromRoute] int id,
-		[FromBody] UserMapForUpdateDto userMapDto)
-	{
-		var identity = await SetupAuthentication();
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateUserMap([FromRoute] ulong guildId, [FromRoute] int id,
+        [FromBody] UserMapForUpdateDto userMapDto)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
+        await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		var userMap = await _userMapRepo.GetUserMap(id);
+        var userMap = await _userMapRepo.GetUserMap(id);
 
-		if (userMap.GuildId != guildId)
-			throw new ResourceNotFoundException();
+        if (userMap.GuildId != guildId)
+            throw new ResourceNotFoundException();
 
-		var result = await _userMapRepo.CreateOrUpdateUserMap(guildId, userMap.UserA, userMap.UserB, userMapDto.Reason);
+        var result = await _userMapRepo.CreateOrUpdateUserMap(guildId, userMap.UserA, userMap.UserB, userMapDto.Reason);
 
-		return Ok(result);
-	}
+        return Ok(result);
+    }
 
 
-	[HttpDelete("{id}")]
-	public async Task<IActionResult> DeleteUserMap([FromRoute] ulong guildId, [FromRoute] int id)
-	{
-		var identity = await SetupAuthentication();
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUserMap([FromRoute] ulong guildId, [FromRoute] int id)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
+        await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		var userMap = await _userMapRepo.GetUserMap(id);
+        var userMap = await _userMapRepo.GetUserMap(id);
 
-		if (userMap.GuildId != guildId)
-			throw new ResourceNotFoundException();
+        if (userMap.GuildId != guildId)
+            throw new ResourceNotFoundException();
 
-		await _userMapRepo.DeleteUserMap(id);
+        await _userMapRepo.DeleteUserMap(id);
 
-		return Ok();
-	}
+        return Ok();
+    }
 }

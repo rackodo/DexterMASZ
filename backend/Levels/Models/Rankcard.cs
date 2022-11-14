@@ -1,4 +1,6 @@
-﻿using Bot.Data;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
+using Bot.Data;
 using Bot.Extensions;
 using Discord;
 using Levels.Data;
@@ -9,368 +11,403 @@ using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using System.Text.RegularExpressions;
 using Color = SixLabors.ImageSharp.Color;
 using Image = SixLabors.ImageSharp.Image;
 using IOPath = System.IO.Path;
-using Path = System.IO.Path;
 
 namespace Levels.Models;
 
-public static partial class Rankcard
+public static class Rankcard
 {
-	public static readonly Size RankCardSize = new(widthmain + pfpside, height);
+    private const int widthmain = 1000;
+    private const int height = 450;
+    private const int pfpside = 350;
+    private const int normalMargin = 25;
+    private const int levelHeight = (pfpside - 3 * normalMargin) / 2;
+    private const int maxTitleXpWidth = widthmain / 2;
 
-	private const int widthmain = 1000;
-	private const int height = 450;
-	private const int pfpside = 350;
-	private const int normalMargin = 25;
-	private const int levelHeight = (pfpside - 3 * normalMargin) / 2;
-	private const int maxTitleXpWidth = widthmain / 2;
+    private const int miniLabelWidth = 80;
+    private const int labelIntrusionPixels = 0;
+    private const int labelHeight = 60;
+    private const int typeLabelWidth = 175;
+    private const int labelMiniMargin = 10;
+    private const int labelBaselineDeltaTitle = 8;
+    private const int labelBaselineDeltaNormal = 3;
 
-	private static readonly Size titleSize = new(RankCardSize.Width - 2 * normalMargin, labelHeight);
-	private static Rectangle TitleRect(UserRankcardConfig config) => new(config.TitleOffset + normalMargin, titleSize);
-	private static readonly Size levelsSize = new(widthmain - 2 * normalMargin, pfpside - 2 * normalMargin);
-	private static Rectangle LevelsRect(UserRankcardConfig config) => new(config.LevelOffset + normalMargin, levelsSize);
-	private static int PfpMargin(UserRankcardConfig config) => (int)(pfpside * (1 - (config.PfpRadiusFactor < 0.1 ? 0.1 : config.PfpRadiusFactor))) / 2;
-	private static Size PfpSize(UserRankcardConfig config) => new(pfpside - 2 * PfpMargin(config));
-	private static Rectangle PfpRect(UserRankcardConfig config) => new(config.PfpOffset + PfpMargin(config), PfpSize(config));
+    private const int barMarginVertical = 9;
+    private const int barMarginHorizontal = 125;
+    private const int barHeight = 75 - 3 * barMarginVertical;
+    public static readonly Size RankCardSize = new(widthmain + pfpside, height);
 
-	private static LevelRect MainLevel(Rectangle container) => new(container, LevelRect.LevelBarType.Normal);
-	private static LevelRect MainHybridLevel(Rectangle container) => new(container, LevelRect.LevelBarType.HybridMain);
-	private static LevelRect SecondaryHybridLevel(Rectangle container) => new(container, LevelRect.LevelBarType.HybridSecondary);
+    private static readonly Size titleSize = new(RankCardSize.Width - 2 * normalMargin, labelHeight);
+    private static readonly Size levelsSize = new(widthmain - 2 * normalMargin, pfpside - 2 * normalMargin);
+    private static Rectangle TitleRect(UserRankcardConfig config) => new(config.TitleOffset + normalMargin, titleSize);
 
-	private const int miniLabelWidth = 80;
-	private const int labelIntrusionPixels = 0;
-	private const int labelHeight = 60;
-	private const int typeLabelWidth = 175;
-	private const int labelMiniMargin = 10;
-	private const int labelBaselineDeltaTitle = 8;
-	private const int labelBaselineDeltaNormal = 3;
+    private static Rectangle LevelsRect(UserRankcardConfig config) =>
+        new(config.LevelOffset + normalMargin, levelsSize);
 
-	private static Rectangle LevelLabelRect(UserRankcardConfig config) => new(config.TitleOffsetX + normalMargin, config.TitleOffsetY + normalMargin, miniLabelWidth + labelIntrusionPixels, labelHeight);
-	private static Rectangle LevelTextRect(UserRankcardConfig config) => new(config.TitleOffsetX + miniLabelWidth + normalMargin, config.TitleOffsetY + normalMargin, maxTitleXpWidth - miniLabelWidth, labelHeight + labelBaselineDeltaTitle);
-	private static Rectangle NameRect(UserRankcardConfig config) => new(config.TitleOffsetX + normalMargin, config.TitleOffsetY + normalMargin, RankCardSize.Width - 2 * normalMargin, labelHeight + labelBaselineDeltaNormal);
+    private static int PfpMargin(UserRankcardConfig config) =>
+        (int)(pfpside * (1 - (config.PfpRadiusFactor < 0.1 ? 0.1 : config.PfpRadiusFactor))) / 2;
 
-	private const int barMarginVertical = 9;
-	private const int barMarginHorizontal = 125;
-	private const int barHeight = 75 - 3 * barMarginVertical;
+    private static Size PfpSize(UserRankcardConfig config) => new(pfpside - 2 * PfpMargin(config));
 
-	internal class LevelRect
-	{
-		public Rectangle fullRect;
-		public Func<float, Rectangle> Bar;
-		public Rectangle currentLevel;
-		public Rectangle nextLevel;
-		public Rectangle typeLabel;
-		public Rectangle rankLabel;
-		public Rectangle rankText;
-		public Rectangle expText;
-		public LevelBarType leveltype;
+    private static Rectangle PfpRect(UserRankcardConfig config) =>
+        new(config.PfpOffset + PfpMargin(config), PfpSize(config));
 
-		public LevelRect(Rectangle container, LevelBarType leveltype = LevelBarType.Normal)
-		{
-			var originX = container.X;
-			var originY = container.Y;
-			int width;
-			int barwidth;
+    private static LevelRect MainLevel(Rectangle container) => new(container);
+    private static LevelRect MainHybridLevel(Rectangle container) => new(container, LevelRect.LevelBarType.HybridMain);
 
-			this.leveltype = leveltype;
-			if (leveltype == LevelBarType.Normal)
-			{
-				width = container.Width;
-				barwidth = width - 2 * barMarginHorizontal;
+    private static LevelRect SecondaryHybridLevel(Rectangle container) =>
+        new(container, LevelRect.LevelBarType.HybridSecondary);
 
-				nextLevel = new Rectangle(originX + width - barMarginHorizontal, originY + levelHeight - barHeight - barMarginVertical, barMarginHorizontal, barHeight + 2 * barMarginVertical);
-			}
-			else
-			{
-				width = (container.Width - normalMargin) / 2;
-				if (leveltype == LevelBarType.HybridSecondary)
-					originX += width + normalMargin;
-				originY += (container.Height + normalMargin) / 2;
-				barwidth = width - barMarginHorizontal - labelMiniMargin;
+    private static Rectangle LevelLabelRect(UserRankcardConfig config) => new(config.TitleOffsetX + normalMargin,
+        config.TitleOffsetY + normalMargin, miniLabelWidth + labelIntrusionPixels, labelHeight);
 
-				nextLevel = default;
-			}
+    private static Rectangle LevelTextRect(UserRankcardConfig config) => new(
+        config.TitleOffsetX + miniLabelWidth + normalMargin, config.TitleOffsetY + normalMargin,
+        maxTitleXpWidth - miniLabelWidth, labelHeight + labelBaselineDeltaTitle);
 
-			fullRect = new Rectangle(originX, originY, width, levelHeight);
+    private static Rectangle NameRect(UserRankcardConfig config) => new(config.TitleOffsetX + normalMargin,
+        config.TitleOffsetY + normalMargin, RankCardSize.Width - 2 * normalMargin,
+        labelHeight + labelBaselineDeltaNormal);
 
-			Bar = (p) => new Rectangle(originX + barMarginHorizontal, originY + levelHeight - barHeight - barMarginVertical
-			, (int)(barwidth * p), barHeight);
-			currentLevel = new Rectangle(originX, originY + levelHeight - barHeight - barMarginVertical, barMarginHorizontal, barHeight + 2 * barMarginVertical);
-			typeLabel = new Rectangle(originX + labelMiniMargin, originY + labelMiniMargin, typeLabelWidth, labelHeight);
-			rankLabel = new Rectangle(originX + typeLabelWidth, originY, miniLabelWidth + labelIntrusionPixels, labelHeight);
-			rankText = new Rectangle(originX + miniLabelWidth + typeLabelWidth, originY, width * 2 / 3 - miniLabelWidth - typeLabelWidth - normalMargin, labelHeight + labelBaselineDeltaTitle);
-			expText = leveltype == LevelBarType.Normal ?
-				new Rectangle(originX + width / 3, originY, width * 2 / 3 - labelMiniMargin, labelHeight) :
-				Bar(1);
-		}
+    public static async Task<Image> RenderRankCard(IUser user, CalculatedGuildUserLevel ul,
+        UserRankcardConfig rankcardConfig, GuildUserLevelRepository levelsRepo, SettingsRepository configRepo)
+    {
+        var appconfig = await configRepo.GetAppSettings();
+        var fontPath = IOPath.Join(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Fonts", "rankcardfont.ttf");
 
-		public enum LevelBarType
-		{
-			Normal,
-			HybridMain,
-			HybridSecondary
-		}
-	}
+        FontCollection fontCollection = new();
+        fontCollection.Add(fontPath);
+        var fontfamily = fontCollection.Families.First();
 
-	internal class RankcardLevelData : LevelData
-	{
-		public bool isHybrid = false;
-		public float Percent => ResidualXp / (float)LevelXp;
-		public string XpExpr => $"{ResidualXp.ToUnit()} / {LevelXp.ToUnit()}{(isHybrid ? "" : " XP")}";
-		public string xpType = "";
+        Font fontTitle = new(fontfamily, 55);
+        Font fontDefault = new(fontfamily, 40);
+        Font fontMini = new(fontfamily, 22);
 
-		public int rank;
+        List<RankcardLevelData> levelsData = new();
+        int totallevel;
+        var totalxp = ul.TotalXP;
 
-		public LevelRect rects;
+        string totallevelstr;
 
-		public RankcardLevelData(long xp, LevelRect rects, GuildLevelConfig guildConfig, bool isHybrid = false) : base(xp, guildConfig)
-		{
-			this.rects = rects;
-			this.isHybrid = isHybrid;
-		}
-	}
+        var allUsers = levelsRepo.GetAllLevelsInGuild(ul.GuildId).ToList();
+        var rank = 1;
+        var txtrank = 1;
+        var vcrank = 1;
+        allUsers.ForEach(u =>
+        {
+            if (u.TotalXP > totalxp)
+                rank++;
+            if (u.TextXp > ul.TextXp)
+                txtrank++;
+            if (u.VoiceXp > ul.VoiceXp)
+                vcrank++;
+        });
 
-	public static async Task<Image> RenderRankCard(IUser user, CalculatedGuildUserLevel ul, UserRankcardConfig rankcardConfig, GuildUserLevelRepository levelsRepo, SettingsRepository configRepo)
-	{
-		var appconfig = await configRepo.GetAppSettings();
-		var fontPath = IOPath.Join(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Fonts", "rankcardfont.ttf");
+        var levelsContainer = LevelsRect(rankcardConfig);
+        levelsData.Add(new RankcardLevelData(ul.TotalXP, MainLevel(levelsContainer), ul.Config!));
 
-		FontCollection fontCollection = new();
-		fontCollection.Add(fontPath);
-		var fontfamily = fontCollection.Families.First();
+        levelsData[0].rank = rank;
+        levelsData[0].xpType = "Level";
+        totallevel = levelsData[0].Level;
+        totallevelstr = $"({ul.TotalXP.ToUnit()} XP)";
 
-		Font fontTitle = new(fontfamily, 55);
-		Font fontDefault = new(fontfamily, 40);
-		Font fontMini = new(fontfamily, 22);
+        if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.ShowHybrid))
+        {
+            levelsData.Add(new RankcardLevelData(ul.TextXp > ul.VoiceXp ? ul.TextXp : ul.VoiceXp,
+                MainHybridLevel(levelsContainer), ul.Config!, true));
+            levelsData.Add(new RankcardLevelData(ul.TextXp > ul.VoiceXp ? ul.VoiceXp : ul.TextXp,
+                SecondaryHybridLevel(levelsContainer), ul.Config!, true));
 
-		List<RankcardLevelData> levelsData = new();
-		int totallevel;
-		var totalxp = ul.TotalXP;
+            if (ul.TextXp > ul.VoiceXp)
+            {
+                levelsData[1].rank = txtrank;
+                levelsData[1].xpType = "Txt";
+                levelsData[2].rank = vcrank;
+                levelsData[2].xpType = "VC";
+            }
+            else
+            {
+                levelsData[1].rank = vcrank;
+                levelsData[1].xpType = "VC";
+                levelsData[2].rank = txtrank;
+                levelsData[2].xpType = "Txt";
+            }
+        }
 
-		string totallevelstr;
+        Func<IImageProcessingContext, IImageProcessingContext> bgTransform;
+        Func<IImageProcessingContext, IImageProcessingContext> pfpTransform;
 
-		var allUsers = levelsRepo.GetAllLevelsInGuild(ul.GuildId).ToList();
-		var rank = 1;
-		var txtrank = 1;
-		var vcrank = 1;
-		allUsers.ForEach(u =>
-		{
-			if (u.TotalXP > totalxp)
-				rank++;
-			if (u.TextXp > ul.TextXp)
-				txtrank++;
-			if (u.VoiceXp > ul.VoiceXp)
-				vcrank++;
-		});
+        var xpColor = rankcardConfig.XpColor.ColorFromArgb();
+        var offColor = rankcardConfig.OffColor.ColorFromArgb();
+        var lvlBgColor = rankcardConfig.LevelBgColor.ColorFromArgb();
 
-		var levelsContainer = LevelsRect(rankcardConfig);
-		levelsData.Add(new RankcardLevelData(ul.TotalXP, MainLevel(levelsContainer), ul.Config!));
+        Image bg = null;
+        try
+        {
+            if (rankcardConfig.Background.StartsWith("http"))
+                throw new FileLoadException();
 
-		levelsData[0].rank = rank;
-		levelsData[0].xpType = "Level";
-		totallevel = levelsData[0].Level;
-		totallevelstr = $"({ul.TotalXP.ToUnit()} XP)";
+            var fileName = IOPath.Join(LevelsImageRepository.GetDefaultBackgroundDir(),
+                (rankcardConfig.Background ?? "default") + ".png");
+            bg = Image.Load(File.ReadAllBytes(fileName));
+            bg.Mutate(ctx => ctx.Resize(RankCardSize));
+            bgTransform = g => g.DrawImage(bg, 1);
+        }
+        catch (FileNotFoundException)
+        {
+            Color bgc;
+            if (Regex.IsMatch(rankcardConfig.Background, @"^(#|0x)?[0-9A-F]{6}$", RegexOptions.IgnoreCase))
+                bgc = (0xff000000 | uint.Parse(rankcardConfig.Background[^6..], NumberStyles.HexNumber))
+                    .ColorFromArgb();
+            else
+                bgc = (0xff000000 | rankcardConfig.XpColor).ColorFromArgb();
+            bgTransform = g => g.BackgroundColor(bgc);
+        }
+        catch (FileLoadException)
+        {
+            using HttpClient client = new();
 
-		if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.ShowHybrid))
-		{
-			levelsData.Add(new RankcardLevelData(ul.TextXp > ul.VoiceXp ? ul.TextXp : ul.VoiceXp, MainHybridLevel(levelsContainer), ul.Config!, true));
-			levelsData.Add(new RankcardLevelData(ul.TextXp > ul.VoiceXp ? ul.VoiceXp : ul.TextXp, SecondaryHybridLevel(levelsContainer), ul.Config!, true));
+            Console.WriteLine(rankcardConfig.Background);
+            try
+            {
+                var req = new HttpRequestMessage(HttpMethod.Get, rankcardConfig.Background);
+                var resp = await client.SendAsync(req);
+                if (!resp.IsSuccessStatusCode)
+                    throw new HttpRequestException(
+                        "Received unsuccessful response to rankcard background image request.\n" +
+                        $"Code: {(int)resp.StatusCode} ({resp.ReasonPhrase})\n" +
+                        $"Headers: {string.Join("\n".PadRight("\nHeaders: ".Length), resp.Headers.Select(h => $"{h.Key}={string.Join(", ", h.Value)}"))}\n" +
+                        $"Content: {resp.Content}");
+                bg = Image.Load(await resp.Content.ReadAsByteArrayAsync());
+                bg.Mutate(ctx => ctx.Resize(RankCardSize));
+                bgTransform = g => g.DrawImage(bg, 1);
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(e);
+                Console.ForegroundColor = ConsoleColor.White;
+                bgTransform = g => g.BackgroundColor((0xff000000 | rankcardConfig.XpColor).ColorFromArgb());
+            }
+        }
 
-			if (ul.TextXp > ul.VoiceXp)
-			{
-				levelsData[1].rank = txtrank;
-				levelsData[1].xpType = "Txt";
-				levelsData[2].rank = vcrank;
-				levelsData[2].xpType = "VC";
-			}
-			else
-			{
-				levelsData[1].rank = vcrank;
-				levelsData[1].xpType = "VC";
-				levelsData[2].rank = txtrank;
-				levelsData[2].xpType = "Txt";
-			}
-		}
+        var rectPfp = PfpRect(rankcardConfig);
 
-		Func<IImageProcessingContext, IImageProcessingContext> bgTransform;
-		Func<IImageProcessingContext, IImageProcessingContext> pfpTransform;
+        Image pfp = null;
+        using (HttpClient client = new())
+        {
+            try
+            {
+                var dataArr = await client.GetByteArrayAsync(user.GetAvatarOrDefaultUrl(size: 512));
+                pfp = Image.Load(dataArr);
+                pfp.Mutate(ctx => ctx.Resize(rectPfp.Size));
 
-		var xpColor = rankcardConfig.XpColor.ColorFromArgb();
-		var offColor = rankcardConfig.OffColor.ColorFromArgb();
-		var lvlBgColor = rankcardConfig.LevelBgColor.ColorFromArgb();
+                if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.ClipPfp))
+                    pfpTransform = g => g.Clip(new PathBuilder().AddArc(rectPfp, 0, 0, 360).Build(),
+                        clipg => clipg.DrawImage(pfp, new Point(rectPfp.Left, rectPfp.Top), 1)
+                    );
+                else
+                    pfpTransform = g => g.DrawImage(pfp, new Point(rectPfp.Left, rectPfp.Top), 1);
+            }
+            catch (HttpRequestException)
+            {
+                pfpTransform = g => g.Draw(new Pen(xpColor, 5),
+                    new EllipsePolygon(rectPfp.Left, rectPfp.Top, rectPfp.Width, rectPfp.Height));
+            }
+        }
 
-		Image bg = null;
-		try
-		{
-			if (rankcardConfig.Background.StartsWith("http"))
-				throw new FileLoadException();
+        var rectLevelLabel = LevelLabelRect(rankcardConfig);
+        var rectLevelText = LevelTextRect(rankcardConfig);
 
-			var fileName = Path.Join(LevelsImageRepository.GetDefaultBackgroundDir(), (rankcardConfig.Background ?? "default") + ".png");
-			bg = Image.Load(File.ReadAllBytes(fileName));
-			bg.Mutate(ctx => ctx.Resize(RankCardSize));
-			bgTransform = g => g.DrawImage(bg, 1);
-		}
-		catch (FileNotFoundException)
-		{
-			Color bgc;
-			if (Regex.IsMatch(rankcardConfig.Background, @"^(#|0x)?[0-9A-F]{6}$", RegexOptions.IgnoreCase))
-			{
-				bgc = (0xff000000 | uint.Parse(rankcardConfig.Background[^6..], System.Globalization.NumberStyles.HexNumber)).ColorFromArgb();
-			}
-			else
-			{
-				bgc = (0xff000000 | rankcardConfig.XpColor).ColorFromArgb();
-			}
-			bgTransform = g => g.BackgroundColor(bgc);
-		}
-		catch (FileLoadException)
-		{
-			using HttpClient client = new();
+        Image result = new Image<Rgba32>(RankCardSize.Width, RankCardSize.Height);
+        result.Mutate(g =>
+        {
+            var offset = TextMeasurer.Measure(totallevel.ToString(), new TextOptions(fontTitle));
+            const int margin = 5;
 
-			Console.WriteLine(rankcardConfig.Background);
-			try
-			{
-				var req = new HttpRequestMessage(HttpMethod.Get, rankcardConfig.Background);
-				var resp = await client.SendAsync(req);
-				if (!resp.IsSuccessStatusCode)
-				{
-					throw new HttpRequestException($"Received unsuccessful response to rankcard background image request.\n" +
-						$"Code: {(int)resp.StatusCode} ({resp.ReasonPhrase})\n" +
-						$"Headers: {string.Join("\n".PadRight("\nHeaders: ".Length), resp.Headers.Select(h => $"{h.Key}={string.Join(", ", h.Value)}"))}\n" +
-						$"Content: {resp.Content}");
-				}
-				bg = Image.Load(await resp.Content.ReadAsByteArrayAsync());
-				bg.Mutate(ctx => ctx.Resize(RankCardSize));
-				bgTransform = g => g.DrawImage(bg, 1);
-			}
-			catch (Exception e)
-			{
-				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.WriteLine(e);
-				Console.ForegroundColor = ConsoleColor.White;
-				bgTransform = g => g.BackgroundColor((0xff000000 | rankcardConfig.XpColor).ColorFromArgb());
-			}
-		}
-		var rectPfp = PfpRect(rankcardConfig);
+            g = bgTransform(g);
 
-		Image pfp = null;
-		using (HttpClient client = new())
-		{
-			try
-			{
-				var dataArr = await client.GetByteArrayAsync(user.GetAvatarOrDefaultUrl(size: 512));
-				pfp = Image.Load(dataArr);
-				pfp.Mutate(ctx => ctx.Resize(rectPfp.Size));
+            g = g.Fill(lvlBgColor, TitleRect(rankcardConfig))
+                .DrawTextInRect("LEVEL", rectLevelLabel, fontMini, offColor, HorizontalAlignment.Right,
+                    VerticalAlignment.Bottom)
+                .DrawTextInRect(totallevel.ToString(), rectLevelText, fontTitle, xpColor, HorizontalAlignment.Left,
+                    VerticalAlignment.Bottom)
+                .DrawTextInRect(totallevelstr,
+                    new Rectangle(rectLevelText.X + (int)offset.Width + margin, rectLevelText.Y,
+                        widthmain / 2 - miniLabelWidth - margin - (int)offset.Width,
+                        labelHeight + labelBaselineDeltaNormal),
+                    fontDefault, xpColor, HorizontalAlignment.Left, VerticalAlignment.Bottom);
 
-				if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.ClipPfp))
-				{
-					pfpTransform = g => g.Clip(new PathBuilder().AddArc(rectPfp, 0, 0, 360).Build(),
-						clipg => clipg.DrawImage(pfp, new Point(rectPfp.Left, rectPfp.Top), 1)
-					);
-				}
-				else
-				{
-					pfpTransform = g => g.DrawImage(pfp, new Point(rectPfp.Left, rectPfp.Top), 1);
-				}
-			}
-			catch (HttpRequestException)
-			{
-				pfpTransform = g => g.Draw(new Pen(xpColor, 5), new EllipsePolygon(rectPfp.Left, rectPfp.Top, rectPfp.Width, rectPfp.Height));
-			}
-		}
+            g = g.DrawLevels(fontTitle, fontDefault, fontMini, levelsData, rankcardConfig);
 
-		var rectLevelLabel = LevelLabelRect(rankcardConfig);
-		var rectLevelText = LevelTextRect(rankcardConfig);
+            bg?.Dispose();
 
-		Image result = new Image<Rgba32>(RankCardSize.Width, RankCardSize.Height);
-		result.Mutate(g =>
-		{
-			var offset = TextMeasurer.Measure(totallevel.ToString(), new TextOptions(fontTitle));
-			const int margin = 5;
+            const int pfpmargin = 3;
+            if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.PfpBackground))
+                g = g.Fill(0xff3f3f3f.ColorFromArgb()
+                    , new EllipsePolygon(rectPfp.X + rectPfp.Width / 2, rectPfp.Y + rectPfp.Height / 2, rectPfp.Width + 2 * pfpmargin, rectPfp.Height + 2 * pfpmargin));
 
-			g = bgTransform(g);
+            if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.DisplayPfp))
+                g = pfpTransform(g);
 
-			g = g.Fill(lvlBgColor, TitleRect(rankcardConfig))
-			.DrawTextInRect("LEVEL", rectLevelLabel, fontMini, offColor, HorizontalAlignment.Right, VerticalAlignment.Bottom)
-			.DrawTextInRect(totallevel.ToString(), rectLevelText, fontTitle, xpColor, HorizontalAlignment.Left, VerticalAlignment.Bottom)
-			.DrawTextInRect(totallevelstr,
-				new Rectangle(rectLevelText.X + (int)offset.Width + margin, rectLevelText.Y, widthmain / 2 - miniLabelWidth - margin - (int)offset.Width, labelHeight + labelBaselineDeltaNormal),
-				fontDefault, xpColor, HorizontalAlignment.Left, VerticalAlignment.Bottom);
+            pfp?.Dispose();
 
-			g = g.DrawLevels(fontTitle, fontDefault, fontMini, levelsData, rankcardConfig);
+            g = g.DrawTextInRect($"{user.Username}#{user.Discriminator}", NameRect(rankcardConfig), fontDefault,
+                offColor,
+                HorizontalAlignment.Right, VerticalAlignment.Bottom);
+        });
+        return result;
+    }
 
-			bg?.Dispose();
+    private static IImageProcessingContext DrawLevels(this IImageProcessingContext g, Font fontTitle, Font fontDefault,
+        Font fontMini, IEnumerable<RankcardLevelData> levels, UserRankcardConfig prefs)
+    {
+        var xpColor = prefs.XpColor.ColorFromArgb();
+        var offColor = prefs.OffColor.ColorFromArgb();
 
-			const int pfpmargin = 3;
-			if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.PfpBackground))
-				g = g.Fill(0xff3f3f3f.ColorFromArgb()
-					, new EllipsePolygon(rectPfp.X + rectPfp.Width / 2, rectPfp.Y + rectPfp.Height / 2, rectPfp.Width + 2 * pfpmargin, rectPfp.Height + 2 * pfpmargin));
+        foreach (var ld in levels)
+        {
+            if (ld is null) continue;
+            var barRect = ld.rects.Bar(1);
+            var levelPath = Graphics.RoundedRect(ld.rects.fullRect, ld.rects.fullRect.Height / 3);
+            var barWholePath = Graphics.RoundedRect(barRect, barRect.Height / 2);
+            var barXPGPath = Graphics.RoundedRect(ld.rects.Bar(ld.Percent), barRect.Height / 2);
+            var barInnerClipPath =
+                Graphics.RoundedRect(new Rectangle(barRect.X + 2, barRect.Y + 2, barRect.Width - 4, barRect.Height - 4),
+                    barRect.Height / 2 - 2);
+            var levelRenderArea = levelPath.Clip(barWholePath);
 
-			if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.DisplayPfp))
-				g = pfpTransform(g);
+            g = g.Fill(0xe0000000.ColorFromArgb(), barWholePath)
+                .Clip(barInnerClipPath,
+                    gclip => gclip.Fill(xpColor, barXPGPath))
+                .Fill(prefs.LevelBgColor.ColorFromArgb(), levelRenderArea)
+                .DrawTextInRect(ld.xpType, ld.rects.typeLabel, fontTitle, offColor, HorizontalAlignment.Center,
+                    VerticalAlignment.Center);
 
-			pfp?.Dispose();
+            if (ld.rects.rankLabel != default)
+                g = g.DrawTextInRect("RANK", ld.rects.rankLabel, fontMini, offColor, HorizontalAlignment.Right,
+                    VerticalAlignment.Bottom);
 
-			g = g.DrawTextInRect($"{user.Username}#{user.Discriminator}", NameRect(rankcardConfig), fontDefault, offColor,
-				HorizontalAlignment.Right, VerticalAlignment.Bottom);
-		});
-		return result;
-	}
+            if (ld.rects.rankText != default)
+                g = g.DrawTextInRect($"#{ld.rank}", ld.rects.rankText, fontTitle, offColor, HorizontalAlignment.Left,
+                    VerticalAlignment.Bottom);
 
-	private static IImageProcessingContext DrawLevels(this IImageProcessingContext g, Font fontTitle, Font fontDefault, Font fontMini, IEnumerable<RankcardLevelData> levels, UserRankcardConfig prefs)
-	{
-		var xpColor = prefs.XpColor.ColorFromArgb();
-		var offColor = prefs.OffColor.ColorFromArgb();
+            g = g.DrawTextInRect(ld.Level.ToString(), ld.rects.currentLevel, fontTitle, xpColor,
+                HorizontalAlignment.Center, VerticalAlignment.Center);
+            if (ld.rects.nextLevel != default)
+                g = g.DrawTextInRect((ld.Level + 1).ToString(), ld.rects.nextLevel, fontTitle, xpColor,
+                    HorizontalAlignment.Center, VerticalAlignment.Center);
 
-		foreach (var ld in levels)
-		{
-			if (ld is null) continue;
-			var barRect = ld.rects.Bar(1);
-			var levelPath = Graphics.RoundedRect(ld.rects.fullRect, ld.rects.fullRect.Height / 3);
-			var barWholePath = Graphics.RoundedRect(barRect, barRect.Height / 2);
-			var barXPGPath = Graphics.RoundedRect(ld.rects.Bar(ld.Percent), barRect.Height / 2);
-			var barInnerClipPath = Graphics.RoundedRect(new Rectangle(barRect.X + 2, barRect.Y + 2, barRect.Width - 4, barRect.Height - 4), barRect.Height / 2 - 2);
-			var levelRenderArea = levelPath.Clip(barWholePath);
+            var textXPTarget = ld.rects.expText;
+            if (!ld.isHybrid && prefs.RankcardFlags.HasFlag(RankcardFlags.InsetMainXP))
+            {
+                ld.isHybrid = true;
+                textXPTarget = barRect;
+            }
 
-			g = g.Fill(0xe0000000.ColorFromArgb(), barWholePath)
-			.Clip(barInnerClipPath,
-				gclip => gclip.Fill(xpColor, barXPGPath))
-			.Fill(prefs.LevelBgColor.ColorFromArgb(), levelRenderArea)
-			.DrawTextInRect(ld.xpType, ld.rects.typeLabel, fontTitle, offColor, HorizontalAlignment.Center, VerticalAlignment.Center);
+            if (ld.isHybrid)
+            {
+                var overXPColor = xpColor.GetBrightness() < 0.5 ? Color.White : Color.Black;
+                g = g.DrawTextInRect(ld.XpExpr, textXPTarget, fontDefault, xpColor, HorizontalAlignment.Center,
+                        VerticalAlignment.Bottom)
+                    .Clip(barXPGPath,
+                        gclip => gclip.DrawTextInRect(ld.XpExpr, textXPTarget, fontDefault, overXPColor,
+                            HorizontalAlignment.Center, VerticalAlignment.Bottom));
+            }
+            else
+            {
+                g = g.DrawTextInRect(ld.XpExpr, textXPTarget, fontDefault, xpColor, HorizontalAlignment.Right,
+                    VerticalAlignment.Bottom);
+            }
+        }
 
-			if (ld.rects.rankLabel != default)
-				g = g.DrawTextInRect("RANK", ld.rects.rankLabel, fontMini, offColor, HorizontalAlignment.Right, VerticalAlignment.Bottom);
+        return g;
+    }
 
-			if (ld.rects.rankText != default)
-				g = g.DrawTextInRect($"#{ld.rank}", ld.rects.rankText, fontTitle, offColor, HorizontalAlignment.Left, VerticalAlignment.Bottom);
+    internal class LevelRect
+    {
+        public enum LevelBarType
+        {
+            Normal,
+            HybridMain,
+            HybridSecondary
+        }
 
-			g = g.DrawTextInRect(ld.Level.ToString(), ld.rects.currentLevel, fontTitle, xpColor, HorizontalAlignment.Center, VerticalAlignment.Center);
-			if (ld.rects.nextLevel != default)
-				g = g.DrawTextInRect((ld.Level + 1).ToString(), ld.rects.nextLevel, fontTitle, xpColor, HorizontalAlignment.Center, VerticalAlignment.Center);
+        public Func<float, Rectangle> Bar;
+        public Rectangle currentLevel;
+        public Rectangle expText;
+        public Rectangle fullRect;
+        public LevelBarType leveltype;
+        public Rectangle nextLevel;
+        public Rectangle rankLabel;
+        public Rectangle rankText;
+        public Rectangle typeLabel;
 
-			var textXPTarget = ld.rects.expText;
-			if (!ld.isHybrid && prefs.RankcardFlags.HasFlag(RankcardFlags.InsetMainXP))
-			{
-				ld.isHybrid = true;
-				textXPTarget = barRect;
-			}
+        public LevelRect(Rectangle container, LevelBarType leveltype = LevelBarType.Normal)
+        {
+            var originX = container.X;
+            var originY = container.Y;
+            int width;
+            int barwidth;
 
-			if (ld.isHybrid)
-			{
-				var overXPColor = xpColor.GetBrightness() < 0.5 ? Color.White : Color.Black;
-				g = g.DrawTextInRect(ld.XpExpr, textXPTarget, fontDefault, xpColor, HorizontalAlignment.Center, VerticalAlignment.Bottom)
-				.Clip(barXPGPath,
-					gclip => gclip.DrawTextInRect(ld.XpExpr, textXPTarget, fontDefault, overXPColor, HorizontalAlignment.Center, VerticalAlignment.Bottom));
-			}
-			else
-			{
-				g = g.DrawTextInRect(ld.XpExpr, textXPTarget, fontDefault, xpColor, HorizontalAlignment.Right, VerticalAlignment.Bottom);
-			}
-		}
+            this.leveltype = leveltype;
+            if (leveltype == LevelBarType.Normal)
+            {
+                width = container.Width;
+                barwidth = width - 2 * barMarginHorizontal;
 
-		return g;
-	}
+                nextLevel = new Rectangle(originX + width - barMarginHorizontal,
+                    originY + levelHeight - barHeight - barMarginVertical, barMarginHorizontal,
+                    barHeight + 2 * barMarginVertical);
+            }
+            else
+            {
+                width = (container.Width - normalMargin) / 2;
+                if (leveltype == LevelBarType.HybridSecondary)
+                    originX += width + normalMargin;
+                originY += (container.Height + normalMargin) / 2;
+                barwidth = width - barMarginHorizontal - labelMiniMargin;
+
+                nextLevel = default;
+            }
+
+            fullRect = new Rectangle(originX, originY, width, levelHeight);
+
+            Bar = p => new Rectangle(originX + barMarginHorizontal,
+                originY + levelHeight - barHeight - barMarginVertical
+                , (int)(barwidth * p), barHeight);
+            currentLevel = new Rectangle(originX, originY + levelHeight - barHeight - barMarginVertical,
+                barMarginHorizontal, barHeight + 2 * barMarginVertical);
+            typeLabel = new Rectangle(originX + labelMiniMargin, originY + labelMiniMargin, typeLabelWidth,
+                labelHeight);
+            rankLabel = new Rectangle(originX + typeLabelWidth, originY, miniLabelWidth + labelIntrusionPixels,
+                labelHeight);
+            rankText = new Rectangle(originX + miniLabelWidth + typeLabelWidth, originY,
+                width * 2 / 3 - miniLabelWidth - typeLabelWidth - normalMargin, labelHeight + labelBaselineDeltaTitle);
+            expText = leveltype == LevelBarType.Normal
+                ? new Rectangle(originX + width / 3, originY, width * 2 / 3 - labelMiniMargin, labelHeight)
+                : Bar(1);
+        }
+    }
+
+    internal class RankcardLevelData : LevelData
+    {
+        public bool isHybrid;
+
+        public int rank;
+
+        public LevelRect rects;
+        public string xpType = "";
+        public float Percent => ResidualXp / (float)LevelXp;
+        public string XpExpr => $"{ResidualXp.ToUnit()} / {LevelXp.ToUnit()}{(isHybrid ? "" : " XP")}";
+
+        public RankcardLevelData(long xp, LevelRect rects, GuildLevelConfig guildConfig, bool isHybrid = false) : base(
+            xp, guildConfig)
+        {
+            this.rects = rects;
+            this.isHybrid = isHybrid;
+        }
+    }
 }

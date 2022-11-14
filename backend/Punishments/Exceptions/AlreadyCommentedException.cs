@@ -5,7 +5,7 @@ namespace Punishments.Exceptions;
 
 public class AlreadyCommentedException : ApiException
 {
-	public AlreadyCommentedException() : base("Already commented", ApiError.LastCommentAlreadyFromSuspect)
-	{
-	}
+    public AlreadyCommentedException() : base("Already commented", ApiError.LastCommentAlreadyFromSuspect)
+    {
+    }
 }

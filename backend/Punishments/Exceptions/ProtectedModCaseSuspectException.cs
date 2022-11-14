@@ -6,11 +6,9 @@ namespace Punishments.Exceptions;
 
 public class ProtectedModCaseSuspectException : ApiException
 {
-	public ProtectedModCaseSuspectException(string message, ModCase modCase) : base(message,
-		ApiError.ProtectedModCaseSuspect)
-	{
-		ModCase = modCase;
-	}
+    public ModCase ModCase { get; set; }
 
-	public ModCase ModCase { get; set; }
+    public ProtectedModCaseSuspectException(string message, ModCase modCase) : base(message,
+        ApiError.ProtectedModCaseSuspect) =>
+        ModCase = modCase;
 }

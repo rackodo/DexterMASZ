@@ -2,5 +2,5 @@
 
 public interface AddGuildStats
 {
-	public Task AddGuildStatistics(dynamic stats, ulong guildId);
+    public Task AddGuildStatistics(dynamic stats, ulong guildId);
 }

@@ -13,29 +13,26 @@ namespace Utilities.Commands;
 
 public class WhoIs : Command<WhoIs>
 {
-	public CachedServices CachedServices { get; set; }
-	public IServiceProvider ServiceProvider { get; set; }
+    public CachedServices CachedServices { get; set; }
+    public IServiceProvider ServiceProvider { get; set; }
 
-	[Require(RequireCheck.GuildModerator)]
-	[SlashCommand("whois", "Who is information about a user.")]
-	public async Task WhoIsCommand([Summary("user", "user to scan")] IGuildUser user)
-	{
-		await Context.Interaction.DeferAsync(ephemeral: !GuildConfig.StaffChannels.Contains(Context.Channel.Id));
+    [Require(RequireCheck.GuildModerator)]
+    [SlashCommand("whois", "Who is information about a user.")]
+    public async Task WhoIsCommand([Summary("user", "user to scan")] IGuildUser user)
+    {
+        await Context.Interaction.DeferAsync(!GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 
-		var embed = new EmbedBuilder()
-			.WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {user.Id}")
-			.WithTitle($"{Translator.Get<UtilityTranslator>().UserProfile()} {user.Username}#{user.Discriminator}")
-			.WithCurrentTimestamp()
-			.WithColor(Color.Blue)
-			.WithThumbnailUrl(user.GetAvatarOrDefaultUrl(size: 1024))
-			.AddField(Translator.Get<BotTranslator>().Registered(), user.CreatedAt.DateTime.ToDiscordTs(), true);
+        var embed = new EmbedBuilder()
+            .WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {user.Id}")
+            .WithTitle($"{Translator.Get<UtilityTranslator>().UserProfile()} {user.Username}#{user.Discriminator}")
+            .WithCurrentTimestamp()
+            .WithColor(Color.Blue)
+            .WithThumbnailUrl(user.GetAvatarOrDefaultUrl(size: 1024))
+            .AddField(Translator.Get<BotTranslator>().Registered(), user.CreatedAt.DateTime.ToDiscordTs(), true);
 
-		foreach (var repo in CachedServices.GetInitializedAuthenticatedClasses<WhoIsResults>(ServiceProvider, Identity))
-			await repo.AddWhoIsInformation(embed, user, Context, Translator);
+        foreach (var repo in CachedServices.GetInitializedAuthenticatedClasses<WhoIsResults>(ServiceProvider, Identity))
+            await repo.AddWhoIsInformation(embed, user, Context, Translator);
 
-		await Context.Interaction.ModifyOriginalResponseAsync(message =>
-		{
-			message.Embed = embed.Build();
-		});
-	}
+        await Context.Interaction.ModifyOriginalResponseAsync(message => { message.Embed = embed.Build(); });
+    }
 }

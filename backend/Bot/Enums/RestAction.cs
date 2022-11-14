@@ -2,7 +2,7 @@ namespace Bot.Enums;
 
 public enum RestAction
 {
-	Created,
-	Updated,
-	Deleted
+    Created,
+    Updated,
+    Deleted
 }

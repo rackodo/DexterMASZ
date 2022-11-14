@@ -13,49 +13,49 @@ namespace MOTDs.Events;
 
 public class MotdEventAnnouncer : Event
 {
-	private readonly MotdEventHandler _eventHandler;
-	private readonly ILogger<MotdEventAnnouncer> _logger;
-	private readonly IServiceProvider _serviceProvider;
-	private readonly DiscordSocketClient _client;
+    private readonly DiscordSocketClient _client;
+    private readonly MotdEventHandler _eventHandler;
+    private readonly ILogger<MotdEventAnnouncer> _logger;
+    private readonly IServiceProvider _serviceProvider;
 
-	public MotdEventAnnouncer(MotdEventHandler eventHandler, ILogger<MotdEventAnnouncer> logger,
-		IServiceProvider serviceProvider, DiscordSocketClient client)
-	{
-		_eventHandler = eventHandler;
-		_logger = logger;
-		_serviceProvider = serviceProvider;
-		_client = client;
-	}
+    public MotdEventAnnouncer(MotdEventHandler eventHandler, ILogger<MotdEventAnnouncer> logger,
+        IServiceProvider serviceProvider, DiscordSocketClient client)
+    {
+        _eventHandler = eventHandler;
+        _logger = logger;
+        _serviceProvider = serviceProvider;
+        _client = client;
+    }
 
-	public void RegisterEvents()
-	{
-		_eventHandler.OnGuildMotdCreated += async (a, b) => await AnnounceMotd(a, b, RestAction.Created);
+    public void RegisterEvents()
+    {
+        _eventHandler.OnGuildMotdCreated += async (a, b) => await AnnounceMotd(a, b, RestAction.Created);
 
-		_eventHandler.OnGuildMotdUpdated += async (a, b) => await AnnounceMotd(a, b, RestAction.Updated);
-	}
+        _eventHandler.OnGuildMotdUpdated += async (a, b) => await AnnounceMotd(a, b, RestAction.Updated);
+    }
 
-	private async Task AnnounceMotd(GuildMotd motd, IUser actor, RestAction action)
-	{
-		using var scope = _serviceProvider.CreateScope();
+    private async Task AnnounceMotd(GuildMotd motd, IUser actor, RestAction action)
+    {
+        using var scope = _serviceProvider.CreateScope();
 
-		_logger.LogInformation($"Announcing motd {motd.GuildId} ({motd.Id}).");
+        _logger.LogInformation($"Announcing motd {motd.GuildId} ({motd.Id}).");
 
-		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
-			.GetGuildConfig(motd.GuildId);
+        var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
+            .GetGuildConfig(motd.GuildId);
 
-		_logger.LogInformation(
-			$"Sending internal webhook for motd {motd.GuildId} ({motd.Id}) to {guildConfig.StaffAnnouncements}.");
+        _logger.LogInformation(
+            $"Sending internal webhook for motd {motd.GuildId} ({motd.Id}) to {guildConfig.StaffAnnouncements}.");
 
-		try
-		{
-			var embed = await motd.CreateMotdEmbed(actor, action, _serviceProvider);
+        try
+        {
+            var embed = await motd.CreateMotdEmbed(actor, action, _serviceProvider);
 
-			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
-		}
-		catch (Exception e)
-		{
-			_logger.LogError(e,
-				$"Error while announcing motd {motd.GuildId} ({motd.Id}) to {guildConfig.StaffAnnouncements}.");
-		}
-	}
+            await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e,
+                $"Error while announcing motd {motd.GuildId} ({motd.Id}) to {guildConfig.StaffAnnouncements}.");
+        }
+    }
 }

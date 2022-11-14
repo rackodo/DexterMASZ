@@ -15,21 +15,19 @@ namespace Launch;
 
 public static class ImportModules
 {
-	public static List<Module> GetModules()
-	{
-		return new List<Module>
-		{
-			new BotModule(),
-			new AutoModModule(),
-			new GuildAuditModule(),
-			new InviteModule(),
-			new MotdModule(),
-			new PunishmentModule(),
-			new UserMapModule(),
-			new UserNoteModule(),
-			new UtilityModule(),
-			new MessagingModule(),
-			new LevelsModule(),
-		};
-	}
+    public static List<Module> GetModules() =>
+        new()
+        {
+            new BotModule(),
+            new AutoModModule(),
+            new GuildAuditModule(),
+            new InviteModule(),
+            new MotdModule(),
+            new PunishmentModule(),
+            new UserMapModule(),
+            new UserNoteModule(),
+            new UtilityModule(),
+            new MessagingModule(),
+            new LevelsModule()
+        };
 }

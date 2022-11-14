@@ -6,12 +6,13 @@ namespace Levels.Commands;
 
 public class Rankcard : Command<Rankcard>
 {
-	public SettingsRepository? SettingsRepository { get; set; }
+    public SettingsRepository? SettingsRepository { get; set; }
 
-	[SlashCommand("rankcard", "Customize your rankcard.")]
-	public async Task LeaderboardCommand()
-	{
-		var settings = await SettingsRepository!.GetAppSettings();
-		await RespondAsync($"{settings.GetServiceUrl().Replace("5565", "4200")}/profile?selectedTab=rankcard", ephemeral: true);
-	}
+    [SlashCommand("rankcard", "Customize your rankcard.")]
+    public async Task LeaderboardCommand()
+    {
+        var settings = await SettingsRepository!.GetAppSettings();
+        await RespondAsync($"{settings.GetServiceUrl().Replace("5565", "4200")}/profile?selectedTab=rankcard",
+            ephemeral: true);
+    }
 }

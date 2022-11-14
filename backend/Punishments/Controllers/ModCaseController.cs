@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
@@ -9,238 +10,239 @@ using Punishments.Enums;
 using Punishments.Exceptions;
 using Punishments.Extensions;
 using Punishments.Models;
-using System.ComponentModel.DataAnnotations;
 
 namespace Punishments.Controllers;
 
 [Route("api/v1/guilds/{guildId}/cases/")]
 public class ModCaseController : AuthenticatedController
 {
-	private readonly GuildConfigRepository _guildConfigRepository;
-	private readonly PunishmentConfigRepository _punishmentConfigRepository;
-	private readonly ModCaseRepository _modCaseRepository;
+    private readonly GuildConfigRepository _guildConfigRepository;
+    private readonly ModCaseRepository _modCaseRepository;
+    private readonly PunishmentConfigRepository _punishmentConfigRepository;
 
-	public ModCaseController(ModCaseRepository modCaseRepository, GuildConfigRepository guildConfigRepository,
-		PunishmentConfigRepository punishmentConfigRepository, IdentityManager identityManager) :
-		base(identityManager, modCaseRepository, guildConfigRepository, punishmentConfigRepository)
-	{
-		_modCaseRepository = modCaseRepository;
-		_guildConfigRepository = guildConfigRepository;
-		_punishmentConfigRepository = punishmentConfigRepository;
-	}
+    public ModCaseController(ModCaseRepository modCaseRepository, GuildConfigRepository guildConfigRepository,
+        PunishmentConfigRepository punishmentConfigRepository, IdentityManager identityManager) :
+        base(identityManager, modCaseRepository, guildConfigRepository, punishmentConfigRepository)
+    {
+        _modCaseRepository = modCaseRepository;
+        _guildConfigRepository = guildConfigRepository;
+        _punishmentConfigRepository = punishmentConfigRepository;
+    }
 
-	[HttpGet("labels")]
-	public async Task<IActionResult> Get([FromRoute] ulong guildId)
-	{
-		var identity = await SetupAuthentication();
-
-		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
-
-		return Ok(await _modCaseRepository.GetLabelUsages(guildId));
-	}
-
-	[HttpGet("{caseId}")]
-	public async Task<IActionResult> GetSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId)
-	{
-		var identity = await SetupAuthentication();
-
-		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
-
-		await identity.RequirePermission(ApiActionPermission.View, modCase);
-
-		var caseView = await _modCaseRepository.GetModCase(guildId, caseId);
-
-		if ((await _guildConfigRepository.GetGuildConfig(guildId)).PublishModeratorInfo)
-			return Ok(caseView);
-
-		if (!await identity.HasPermission(DiscordPermission.Moderator, guildId))
-			caseView.RemoveModeratorInfo();
+    [HttpGet("labels")]
+    public async Task<IActionResult> Get([FromRoute] ulong guildId)
+    {
+        var identity = await SetupAuthentication();
+
+        await identity.RequirePermission(DiscordPermission.Moderator, guildId);
+
+        return Ok(await _modCaseRepository.GetLabelUsages(guildId));
+    }
+
+    [HttpGet("{caseId}")]
+    public async Task<IActionResult> GetSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId)
+    {
+        var identity = await SetupAuthentication();
 
-		return Ok(caseView);
-	}
+        var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
+
+        await identity.RequirePermission(ApiActionPermission.View, modCase);
+
+        var caseView = await _modCaseRepository.GetModCase(guildId, caseId);
+
+        if ((await _guildConfigRepository.GetGuildConfig(guildId)).PublishModeratorInfo)
+            return Ok(caseView);
+
+        if (!await identity.HasPermission(DiscordPermission.Moderator, guildId))
+            caseView.RemoveModeratorInfo();
+
+        return Ok(caseView);
+    }
+
+    [HttpDelete("{caseId}")]
+    public async Task<IActionResult> DeleteSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId,
+        [FromQuery] bool handlePunishment = true, [FromQuery] bool forceDelete = false)
+    {
+        var identity = await SetupAuthentication();
+
+        var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
+
+        await identity.RequirePermission(forceDelete ? ApiActionPermission.ForceDelete : ApiActionPermission.Delete,
+            modCase);
+
+        var deletedCase =
+            await _modCaseRepository.DeleteModCase(guildId, caseId, forceDelete, handlePunishment);
 
-	[HttpDelete("{caseId}")]
-	public async Task<IActionResult> DeleteSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId,
-		[FromQuery] bool handlePunishment = true, [FromQuery] bool forceDelete = false)
-	{
-		var identity = await SetupAuthentication();
+        return Ok(deletedCase);
+    }
 
-		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
+    [HttpPut("{caseId}")]
+    public async Task<IActionResult> PutSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId,
+        [FromBody] ModCaseForPutDto newValue, [FromQuery] bool handlePunishment = true)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(forceDelete ? ApiActionPermission.ForceDelete : ApiActionPermission.Delete,
-			modCase);
+        var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
 
-		var deletedCase =
-			await _modCaseRepository.DeleteModCase(guildId, caseId, forceDelete, handlePunishment);
+        await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 
-		return Ok(deletedCase);
-	}
+        modCase.Title = newValue.Title;
+        modCase.Description = newValue.Description;
+        modCase.UserId = newValue.UserId;
 
-	[HttpPut("{caseId}")]
-	public async Task<IActionResult> PutSpecificItem([FromRoute] ulong guildId, [FromRoute] int caseId,
-		[FromBody] ModCaseForPutDto newValue, [FromQuery] bool handlePunishment = true)
-	{
-		var identity = await SetupAuthentication();
+        if (newValue.OccurredAt.HasValue)
+            modCase.OccurredAt = newValue.OccurredAt.Value;
 
-		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
+        modCase.Labels = newValue.Labels.Distinct().ToArray();
+        modCase.Others = newValue.Others;
+        modCase.PunishmentType = newValue.PunishmentType;
+        modCase.PunishedUntil = newValue.PunishedUntil;
+        modCase.LastEditedByModId = identity.GetCurrentUser().Id;
+        modCase.Severity = newValue.SeverityType;
 
-		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
+        modCase = await _modCaseRepository.UpdateModCase(modCase, handlePunishment);
 
-		modCase.Title = newValue.Title;
-		modCase.Description = newValue.Description;
-		modCase.UserId = newValue.UserId;
+        return Ok(modCase);
+    }
 
-		if (newValue.OccurredAt.HasValue)
-			modCase.OccurredAt = newValue.OccurredAt.Value;
+    [HttpGet("{userId}/finalWarn")]
+    public async Task<int> GetFinalWarn([FromRoute] ulong guildId, [FromRoute] ulong userId)
+    {
+        await SetupAuthentication();
+        var finalWarn = await _modCaseRepository.GetFinalWarn(userId, guildId);
 
-		modCase.Labels = newValue.Labels.Distinct().ToArray();
-		modCase.Others = newValue.Others;
-		modCase.PunishmentType = newValue.PunishmentType;
-		modCase.PunishedUntil = newValue.PunishedUntil;
-		modCase.LastEditedByModId = identity.GetCurrentUser().Id;
-		modCase.Severity = newValue.SeverityType;
+        if (finalWarn != null)
+            return finalWarn.CaseId;
+        return -1;
+    }
 
-		modCase = await _modCaseRepository.UpdateModCase(modCase, handlePunishment);
+    [HttpPost]
+    public async Task<IActionResult> CreateItem([FromRoute] ulong guildId, [FromBody] ModCaseForCreateDto modCaseDto)
+    {
+        var identity = await SetupAuthentication();
 
-		return Ok(modCase);
-	}
+        if (await _modCaseRepository.GetFinalWarn(modCaseDto.UserId, guildId) != null)
+            throw new AlreadyFinalWarnedException();
 
-	[HttpGet("{userId}/finalWarn")]
-	public async Task<int> GetFinalWarn([FromRoute] ulong guildId, [FromRoute] ulong userId)
-	{
-		await SetupAuthentication();
-		var finalWarn = await _modCaseRepository.GetFinalWarn(userId, guildId);
+        var modCase = new ModCase
+        {
+            Title = modCaseDto.Title,
+            Description = modCaseDto.Description,
+            GuildId = guildId,
+            ModId = identity.GetCurrentUser().Id,
+            UserId = modCaseDto.UserId,
+            Labels = modCaseDto.Labels.Distinct().ToArray(),
+            Others = modCaseDto.Others,
+            Severity = modCaseDto.SeverityType
+        };
 
-		if (finalWarn != null)
-			return finalWarn.CaseId;
-		else
-			return -1;
-	}
+        if (modCaseDto.OccurredAt.HasValue)
+            modCase.OccurredAt = modCaseDto.OccurredAt.Value;
 
-	[HttpPost]
-	public async Task<IActionResult> CreateItem([FromRoute] ulong guildId, [FromBody] ModCaseForCreateDto modCaseDto)
-	{
-		var identity = await SetupAuthentication();
+        modCase.CreationType = CaseCreationType.Default;
+        modCase.PunishmentType = modCaseDto.PunishmentType;
+        modCase.PunishedUntil = modCaseDto.PunishedUntil;
 
-		if (await _modCaseRepository.GetFinalWarn(modCaseDto.UserId, guildId) != null)
-			throw new AlreadyFinalWarnedException();
+        if (modCaseDto.PunishmentType == PunishmentType.FinalWarn)
+        {
+            _punishmentConfigRepository.AsUser(identity);
+            var punishmentConfig = await _punishmentConfigRepository.GetGuildPunishmentConfig(guildId);
+            modCase.PunishedUntil = punishmentConfig.FinalWarnMuteTime == default
+                ? null
+                : DateTime.UtcNow + punishmentConfig.FinalWarnMuteTime;
+        }
 
-		var modCase = new ModCase
-		{
-			Title = modCaseDto.Title,
-			Description = modCaseDto.Description,
-			GuildId = guildId,
-			ModId = identity.GetCurrentUser().Id,
-			UserId = modCaseDto.UserId,
-			Labels = modCaseDto.Labels.Distinct().ToArray(),
-			Others = modCaseDto.Others,
-			Severity = modCaseDto.SeverityType
-		};
+        await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 
-		if (modCaseDto.OccurredAt.HasValue)
-			modCase.OccurredAt = modCaseDto.OccurredAt.Value;
+        modCase = (await _modCaseRepository.CreateModCase(modCase)).Item1;
 
-		modCase.CreationType = CaseCreationType.Default;
-		modCase.PunishmentType = modCaseDto.PunishmentType;
-		modCase.PunishedUntil = modCaseDto.PunishedUntil;
+        return StatusCode(201, modCase);
+    }
 
-		if (modCaseDto.PunishmentType == PunishmentType.FinalWarn)
-		{
-			_punishmentConfigRepository.AsUser(identity);
-			var punishmentConfig = await _punishmentConfigRepository.GetGuildPunishmentConfig(guildId);
-			modCase.PunishedUntil = punishmentConfig.FinalWarnMuteTime == default ? null : DateTime.UtcNow + punishmentConfig.FinalWarnMuteTime;
-		}
+    [HttpGet]
+    public async Task<IActionResult> GetAllItems([FromRoute] ulong guildId,
+        [FromQuery] [Range(0, int.MaxValue)] int startPage = 0)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
+        ulong userOnly = 0;
 
-		modCase = (await _modCaseRepository.CreateModCase(modCase)).Item1;
+        if (!await identity.HasPermission(DiscordPermission.Moderator, guildId))
+            userOnly = identity.GetCurrentUser().Id;
 
-		return StatusCode(201, modCase);
-	}
+        List<ModCase> modCases;
 
-	[HttpGet]
-	public async Task<IActionResult> GetAllItems([FromRoute] ulong guildId,
-		[FromQuery][Range(0, int.MaxValue)] int startPage = 0)
-	{
-		var identity = await SetupAuthentication();
+        if (userOnly == 0)
+            modCases = (await _modCaseRepository.GetCasePagination(guildId, startPage)).ToList();
+        else
+            modCases =
+                (await _modCaseRepository.GetCasePaginationFilteredForUser(guildId, userOnly, startPage)).ToList();
 
-		ulong userOnly = 0;
+        if ((await _guildConfigRepository.GetGuildConfig(guildId)).PublishModeratorInfo)
+            return Ok(modCases);
 
-		if (!await identity.HasPermission(DiscordPermission.Moderator, guildId))
-			userOnly = identity.GetCurrentUser().Id;
+        if (await identity.HasPermission(DiscordPermission.Moderator, guildId))
+            return Ok(modCases);
 
-		List<ModCase> modCases;
+        foreach (var modCase in modCases)
+            modCase.RemoveModeratorInfo();
 
-		if (userOnly == 0)
-			modCases = (await _modCaseRepository.GetCasePagination(guildId, startPage)).ToList();
-		else
-			modCases = (await _modCaseRepository.GetCasePaginationFilteredForUser(guildId, userOnly, startPage)).ToList();
+        return Ok(modCases);
+    }
 
-		if ((await _guildConfigRepository.GetGuildConfig(guildId)).PublishModeratorInfo)
-			return Ok(modCases);
+    [HttpPost("{caseId}/lock")]
+    public async Task<IActionResult> LockComments([FromRoute] ulong guildId, [FromRoute] int caseId)
+    {
+        var identity = await SetupAuthentication();
 
-		if (await identity.HasPermission(DiscordPermission.Moderator, guildId))
-			return Ok(modCases);
+        var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
 
-		foreach (var modCase in modCases)
-			modCase.RemoveModeratorInfo();
+        await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 
-		return Ok(modCases);
-	}
+        modCase = await _modCaseRepository.LockCaseComments(guildId, caseId);
 
-	[HttpPost("{caseId}/lock")]
-	public async Task<IActionResult> LockComments([FromRoute] ulong guildId, [FromRoute] int caseId)
-	{
-		var identity = await SetupAuthentication();
+        return Ok(modCase);
+    }
 
-		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
+    [HttpDelete("{caseId}/lock")]
+    public async Task<IActionResult> UnlockComments([FromRoute] ulong guildId, [FromRoute] int caseId)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
+        var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
 
-		modCase = await _modCaseRepository.LockCaseComments(guildId, caseId);
+        await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 
-		return Ok(modCase);
-	}
+        modCase = await _modCaseRepository.UnlockCaseComments(guildId, caseId);
 
-	[HttpDelete("{caseId}/lock")]
-	public async Task<IActionResult> UnlockComments([FromRoute] ulong guildId, [FromRoute] int caseId)
-	{
-		var identity = await SetupAuthentication();
+        return Ok(modCase);
+    }
 
-		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
+    [HttpPost("{caseId}/active")]
+    public async Task<IActionResult> ActivateCase([FromRoute] ulong guildId, [FromRoute] int caseId)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
+        var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
 
-		modCase = await _modCaseRepository.UnlockCaseComments(guildId, caseId);
+        await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 
-		return Ok(modCase);
-	}
+        modCase = await _modCaseRepository.ActivateModCase(guildId, caseId);
 
-	[HttpPost("{caseId}/active")]
-	public async Task<IActionResult> ActivateCase([FromRoute] ulong guildId, [FromRoute] int caseId)
-	{
-		var identity = await SetupAuthentication();
+        return Ok(modCase);
+    }
 
-		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
+    [HttpDelete("{caseId}/active")]
+    public async Task<IActionResult> DeactivateCase([FromRoute] ulong guildId, [FromRoute] int caseId)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
+        var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
 
-		modCase = await _modCaseRepository.ActivateModCase(guildId, caseId);
+        await identity.RequirePermission(ApiActionPermission.Edit, modCase);
 
-		return Ok(modCase);
-	}
+        modCase = await _modCaseRepository.DeactivateModCase(guildId, caseId);
 
-	[HttpDelete("{caseId}/active")]
-	public async Task<IActionResult> DeactivateCase([FromRoute] ulong guildId, [FromRoute] int caseId)
-	{
-		var identity = await SetupAuthentication();
-
-		var modCase = await _modCaseRepository.GetModCase(guildId, caseId);
-
-		await identity.RequirePermission(ApiActionPermission.Edit, modCase);
-
-		modCase = await _modCaseRepository.DeactivateModCase(guildId, caseId);
-
-		return Ok(modCase);
-	}
+        return Ok(modCase);
+    }
 }

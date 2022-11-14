@@ -5,11 +5,11 @@ namespace Bot.Exceptions;
 
 public class GuildNotFoundException : ApiException
 {
-	public GuildNotFoundException(string message) : base(message, ApiError.GuildNotFound)
-	{
-	}
+    public GuildNotFoundException(string message) : base(message, ApiError.GuildNotFound)
+    {
+    }
 
-	public GuildNotFoundException() : base("GuildNotFound.", ApiError.GuildNotFound)
-	{
-	}
+    public GuildNotFoundException() : base("GuildNotFound.", ApiError.GuildNotFound)
+    {
+    }
 }

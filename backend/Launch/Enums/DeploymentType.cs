@@ -2,6 +2,6 @@
 
 public enum DeploymentType
 {
-	Local,
-	Domain
+    Local,
+    Domain
 }

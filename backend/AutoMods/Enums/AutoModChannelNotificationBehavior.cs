@@ -2,7 +2,7 @@ namespace AutoMods.Enums;
 
 public enum AutoModChannelNotificationBehavior
 {
-	SendNotification,
-	SendNotificationAndDelete,
-	NoNotification
+    SendNotification,
+    SendNotificationAndDelete,
+    NoNotification
 }

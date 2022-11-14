@@ -16,149 +16,150 @@ namespace Punishments.Events;
 
 public class PunishmentEventAnnouncer : Event
 {
-	private readonly DiscordRest _discordRest;
-	private readonly PunishmentEventHandler _eventHandler;
-	private readonly ILogger<PunishmentEventAnnouncer> _logger;
-	private readonly IServiceProvider _serviceProvider;
-	private readonly DiscordSocketClient _client;
+    private readonly DiscordSocketClient _client;
+    private readonly DiscordRest _discordRest;
+    private readonly PunishmentEventHandler _eventHandler;
+    private readonly ILogger<PunishmentEventAnnouncer> _logger;
+    private readonly IServiceProvider _serviceProvider;
 
-	public PunishmentEventAnnouncer(DiscordRest discordRest, PunishmentEventHandler eventHandler,
-		ILogger<PunishmentEventAnnouncer> logger, IServiceProvider serviceProvider,
-		DiscordSocketClient client)
-	{
-		_discordRest = discordRest;
-		_eventHandler = eventHandler;
-		_logger = logger;
-		_serviceProvider = serviceProvider;
-		_client = client;
-	}
+    public PunishmentEventAnnouncer(DiscordRest discordRest, PunishmentEventHandler eventHandler,
+        ILogger<PunishmentEventAnnouncer> logger, IServiceProvider serviceProvider,
+        DiscordSocketClient client)
+    {
+        _discordRest = discordRest;
+        _eventHandler = eventHandler;
+        _logger = logger;
+        _serviceProvider = serviceProvider;
+        _client = client;
+    }
 
-	public void RegisterEvents()
-	{
-		_eventHandler.OnModCaseCreated += AnnounceModCaseCreated;
+    public void RegisterEvents()
+    {
+        _eventHandler.OnModCaseCreated += AnnounceModCaseCreated;
 
-		_eventHandler.OnModCaseUpdated += async (a, b) => await AnnounceModCase(a, b, RestAction.Updated);
+        _eventHandler.OnModCaseUpdated += async (a, b) => await AnnounceModCase(a, b, RestAction.Updated);
 
-		_eventHandler.OnModCaseDeleted += async (a, b) => await AnnounceModCase(a, b, RestAction.Deleted);
+        _eventHandler.OnModCaseDeleted += async (a, b) => await AnnounceModCase(a, b, RestAction.Deleted);
 
-		_eventHandler.OnModCaseMarkedToBeDeleted += async (a, b) => await AnnounceModCase(a, b, RestAction.Deleted);
+        _eventHandler.OnModCaseMarkedToBeDeleted += async (a, b) => await AnnounceModCase(a, b, RestAction.Deleted);
 
-		_eventHandler.OnModCaseCommentCreated += async (a, b) => await AnnounceComment(a, b, RestAction.Created);
+        _eventHandler.OnModCaseCommentCreated += async (a, b) => await AnnounceComment(a, b, RestAction.Created);
 
-		_eventHandler.OnModCaseCommentUpdated += async (a, b) => await AnnounceComment(a, b, RestAction.Updated);
+        _eventHandler.OnModCaseCommentUpdated += async (a, b) => await AnnounceComment(a, b, RestAction.Updated);
 
-		_eventHandler.OnModCaseCommentDeleted += async (a, b) => await AnnounceComment(a, b, RestAction.Deleted);
+        _eventHandler.OnModCaseCommentDeleted += async (a, b) => await AnnounceComment(a, b, RestAction.Deleted);
 
-		_eventHandler.OnFileUploaded += async (a, b, c) => await AnnounceFile(a, b, c, RestAction.Created);
+        _eventHandler.OnFileUploaded += async (a, b, c) => await AnnounceFile(a, b, c, RestAction.Created);
 
-		_eventHandler.OnFileDeleted += async (a, b, c) => await AnnounceFile(a, b, c, RestAction.Deleted);
-	}
+        _eventHandler.OnFileDeleted += async (a, b, c) => await AnnounceFile(a, b, c, RestAction.Deleted);
+    }
 
-	private async Task AnnounceModCaseCreated(ModCase modCase, IUser actor, AnnouncementResult result)
-	{
-		using var scope = _serviceProvider.CreateScope();
+    private async Task AnnounceModCaseCreated(ModCase modCase, IUser actor, AnnouncementResult result)
+    {
+        using var scope = _serviceProvider.CreateScope();
 
-		_logger.LogInformation($"Announcing mod case {modCase.Id} in guild {modCase.GuildId}.");
+        _logger.LogInformation($"Announcing mod case {modCase.Id} in guild {modCase.GuildId}.");
 
-		var caseUser = await _discordRest.FetchUserInfo(modCase.UserId, false);
+        var caseUser = await _discordRest.FetchUserInfo(modCase.UserId, false);
 
-		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
-			.GetGuildConfig(modCase.GuildId);
+        var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
+            .GetGuildConfig(modCase.GuildId);
 
-		var settings = await scope.ServiceProvider.GetRequiredService<SettingsRepository>()
-			.GetAppSettings();
+        var settings = await scope.ServiceProvider.GetRequiredService<SettingsRepository>()
+            .GetAppSettings();
 
-		_logger.LogInformation(
-			$"Sending webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
+        _logger.LogInformation(
+            $"Sending webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
 
-		try
-		{
-			var (embed, _) = await modCase.CreateNewModCaseEmbed(guildConfig, settings, result, _discordRest, scope.ServiceProvider);
+        try
+        {
+            var (embed, _) =
+                await modCase.CreateNewModCaseEmbed(guildConfig, settings, result, _discordRest, scope.ServiceProvider);
 
-			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
-		}
-		catch (Exception e)
-		{
-			_logger.LogError(e,
-				$"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
-		}
-	}
+            await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e,
+                $"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
+        }
+    }
 
-	private async Task AnnounceModCase(ModCase modCase, IUser actor, RestAction action)
-	{
-		using var scope = _serviceProvider.CreateScope();
+    private async Task AnnounceModCase(ModCase modCase, IUser actor, RestAction action)
+    {
+        using var scope = _serviceProvider.CreateScope();
 
-		_logger.LogInformation($"Announcing mod case {modCase.Id} in guild {modCase.GuildId}.");
+        _logger.LogInformation($"Announcing mod case {modCase.Id} in guild {modCase.GuildId}.");
 
-		var caseUser = await _discordRest.FetchUserInfo(modCase.UserId, false);
+        var caseUser = await _discordRest.FetchUserInfo(modCase.UserId, false);
 
-		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
-			.GetGuildConfig(modCase.GuildId);
+        var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
+            .GetGuildConfig(modCase.GuildId);
 
-		_logger.LogInformation(
-			$"Sending webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
+        _logger.LogInformation(
+            $"Sending webhook for mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
 
-		try
-		{
-			var embed = await modCase.CreateModCaseEmbed(action, _discordRest, scope.ServiceProvider);
+        try
+        {
+            var embed = await modCase.CreateModCaseEmbed(action, _discordRest, scope.ServiceProvider);
 
-			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
-		}
-		catch (Exception e)
-		{
-			_logger.LogError(e,
-				$"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
-		}
-	}
+            await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e,
+                $"Error while announcing mod case {modCase.GuildId}/{modCase.CaseId} to {guildConfig.StaffLogs}.");
+        }
+    }
 
-	private async Task AnnounceComment(ModCaseComment comment, IUser actor, RestAction action)
-	{
-		using var scope = _serviceProvider.CreateScope();
+    private async Task AnnounceComment(ModCaseComment comment, IUser actor, RestAction action)
+    {
+        using var scope = _serviceProvider.CreateScope();
 
-		_logger.LogInformation(
-			$"Announcing comment {comment.Id} in case {comment.ModCase.GuildId}/{comment.ModCase.CaseId}.");
+        _logger.LogInformation(
+            $"Announcing comment {comment.Id} in case {comment.ModCase.GuildId}/{comment.ModCase.CaseId}.");
 
-		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
-			.GetGuildConfig(comment.ModCase.GuildId);
+        var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
+            .GetGuildConfig(comment.ModCase.GuildId);
 
-		_logger.LogInformation(
-			$"Sending webhook for comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.StaffLogs}.");
+        _logger.LogInformation(
+            $"Sending webhook for comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.StaffLogs}.");
 
-		try
-		{
-			var embed = await comment.CreateCommentEmbed(action, actor, scope.ServiceProvider);
+        try
+        {
+            var embed = await comment.CreateCommentEmbed(action, actor, scope.ServiceProvider);
 
-			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
-		}
-		catch (Exception e)
-		{
-			_logger.LogError(e,
-				$"Error while announcing comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.StaffLogs}.");
-		}
-	}
+            await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffAnnouncements, embed);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e,
+                $"Error while announcing comment {comment.ModCase.GuildId}/{comment.ModCase.CaseId}/{comment.Id} to {guildConfig.StaffLogs}.");
+        }
+    }
 
-	private async Task AnnounceFile(UploadedFile file, ModCase modCase, IUser actor, RestAction action)
-	{
-		using var scope = _serviceProvider.CreateScope();
+    private async Task AnnounceFile(UploadedFile file, ModCase modCase, IUser actor, RestAction action)
+    {
+        using var scope = _serviceProvider.CreateScope();
 
-		_logger.LogInformation($"Announcing file {modCase.GuildId}/{modCase.CaseId}/{file.Name}.");
+        _logger.LogInformation($"Announcing file {modCase.GuildId}/{modCase.CaseId}/{file.Name}.");
 
-		var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
-			.GetGuildConfig(modCase.GuildId);
+        var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
+            .GetGuildConfig(modCase.GuildId);
 
-		_logger.LogInformation(
-			$"Sending webhook for file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.StaffLogs}.");
+        _logger.LogInformation(
+            $"Sending webhook for file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.StaffLogs}.");
 
-		try
-		{
-			var embed = await file.CreateFileEmbed(modCase, action, actor, scope.ServiceProvider);
+        try
+        {
+            var embed = await file.CreateFileEmbed(modCase, action, actor, scope.ServiceProvider);
 
-			await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
-		}
-		catch (Exception e)
-		{
-			_logger.LogError(e,
-				$"Error while announcing file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.StaffLogs}.");
-		}
-	}
+            await _client.SendEmbed(guildConfig.GuildId, guildConfig.StaffLogs, embed);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e,
+                $"Error while announcing file {modCase.GuildId}/{modCase.CaseId}/{file.Name} to {guildConfig.StaffLogs}.");
+        }
+    }
 }

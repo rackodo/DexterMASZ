@@ -13,87 +13,83 @@ namespace AutoMods.Data;
 
 public class AutoModConfigRepository : Repository, DeleteGuildData
 {
-	private readonly AutoModDatabase _autoModDatabase;
-	private readonly AutoModEventHandler _eventHandler;
+    private readonly AutoModDatabase _autoModDatabase;
+    private readonly AutoModEventHandler _eventHandler;
 
-	public AutoModConfigRepository(DiscordRest discordRest, AutoModDatabase autoModDatabase,
-		AutoModEventHandler eventHandler) : base(discordRest)
-	{
-		_autoModDatabase = autoModDatabase;
-		_eventHandler = eventHandler;
-	}
+    public AutoModConfigRepository(DiscordRest discordRest, AutoModDatabase autoModDatabase,
+        AutoModEventHandler eventHandler) : base(discordRest)
+    {
+        _autoModDatabase = autoModDatabase;
+        _eventHandler = eventHandler;
+    }
 
-	public async Task<List<AutoModConfig>> GetConfigsByGuild(ulong guildId)
-	{
-		return await _autoModDatabase.SelectAllPunishmentsConfigsForGuild(guildId);
-	}
+    public async Task DeleteGuildData(ulong guildId) =>
+        await _autoModDatabase.DeleteAllPunishmentsConfigsForGuild(guildId);
 
-	public async Task<AutoModConfig> GetConfigsByGuildAndType(ulong guildId, AutoModType type)
-	{
-		var config = await _autoModDatabase.SelectPunishmentsConfigForGuildAndType(guildId, type);
+    public async Task<List<AutoModConfig>> GetConfigsByGuild(ulong guildId) =>
+        await _autoModDatabase.SelectAllPunishmentsConfigsForGuild(guildId);
 
-		if (config == null)
-			throw new ResourceNotFoundException($"Automod config {guildId}/{type} does not exist.");
+    public async Task<AutoModConfig> GetConfigsByGuildAndType(ulong guildId, AutoModType type)
+    {
+        var config = await _autoModDatabase.SelectPunishmentsConfigForGuildAndType(guildId, type);
 
-		return config;
-	}
+        if (config == null)
+            throw new ResourceNotFoundException($"Automod config {guildId}/{type} does not exist.");
 
-	public async Task<AutoModConfig> UpdateConfig(AutoModConfig newValue)
-	{
-		if (!Enum.IsDefined(typeof(AutoModType), newValue.AutoModType))
-			throw new InvalidAutoModTypeException();
+        return config;
+    }
 
-		if (!Enum.IsDefined(typeof(AutoModAction), newValue.AutoModAction))
-			throw new InvalidAutoModActionException();
+    public async Task<AutoModConfig> UpdateConfig(AutoModConfig newValue)
+    {
+        if (!Enum.IsDefined(typeof(AutoModType), newValue.AutoModType))
+            throw new InvalidAutoModTypeException();
 
-		var action = RestAction.Updated;
-		AutoModConfig autoModConfig;
+        if (!Enum.IsDefined(typeof(AutoModAction), newValue.AutoModAction))
+            throw new InvalidAutoModActionException();
 
-		try
-		{
-			autoModConfig = await GetConfigsByGuildAndType(newValue.GuildId, newValue.AutoModType);
-		}
-		catch (ResourceNotFoundException)
-		{
-			autoModConfig = new AutoModConfig();
-			action = RestAction.Created;
-		}
+        var action = RestAction.Updated;
+        AutoModConfig autoModConfig;
 
-		autoModConfig.GuildId = newValue.GuildId;
-		autoModConfig.AutoModType = newValue.AutoModType;
-		autoModConfig.AutoModAction = newValue.AutoModAction;
-		autoModConfig.PunishmentType = newValue.PunishmentType;
-		autoModConfig.PunishmentDurationMinutes = newValue.PunishmentDurationMinutes;
-		autoModConfig.IgnoreChannels = newValue.IgnoreChannels;
-		autoModConfig.IgnoreRoles = newValue.IgnoreRoles;
-		autoModConfig.TimeLimitMinutes = newValue.TimeLimitMinutes;
-		autoModConfig.Limit = newValue.Limit;
-		autoModConfig.CustomWordFilter = newValue.CustomWordFilter;
-		autoModConfig.ChannelNotificationBehavior = newValue.ChannelNotificationBehavior;
+        try
+        {
+            autoModConfig = await GetConfigsByGuildAndType(newValue.GuildId, newValue.AutoModType);
+        }
+        catch (ResourceNotFoundException)
+        {
+            autoModConfig = new AutoModConfig();
+            action = RestAction.Created;
+        }
 
-		await _autoModDatabase.PutPunishmentsConfig(autoModConfig);
+        autoModConfig.GuildId = newValue.GuildId;
+        autoModConfig.AutoModType = newValue.AutoModType;
+        autoModConfig.AutoModAction = newValue.AutoModAction;
+        autoModConfig.PunishmentType = newValue.PunishmentType;
+        autoModConfig.PunishmentDurationMinutes = newValue.PunishmentDurationMinutes;
+        autoModConfig.IgnoreChannels = newValue.IgnoreChannels;
+        autoModConfig.IgnoreRoles = newValue.IgnoreRoles;
+        autoModConfig.TimeLimitMinutes = newValue.TimeLimitMinutes;
+        autoModConfig.Limit = newValue.Limit;
+        autoModConfig.CustomWordFilter = newValue.CustomWordFilter;
+        autoModConfig.ChannelNotificationBehavior = newValue.ChannelNotificationBehavior;
 
-		if (action == RestAction.Created)
-			_eventHandler.AutoModConfigCreatedEvent.Invoke(autoModConfig, Identity);
-		else
-			_eventHandler.AutoModConfigUpdatedEvent.Invoke(autoModConfig, Identity);
+        await _autoModDatabase.PutPunishmentsConfig(autoModConfig);
 
-		return autoModConfig;
-	}
+        if (action == RestAction.Created)
+            _eventHandler.AutoModConfigCreatedEvent.Invoke(autoModConfig, Identity);
+        else
+            _eventHandler.AutoModConfigUpdatedEvent.Invoke(autoModConfig, Identity);
 
-	public async Task<AutoModConfig> DeleteConfigForGuild(ulong guildId, AutoModType type)
-	{
-		var config = await GetConfigsByGuildAndType(guildId, type);
+        return autoModConfig;
+    }
 
-		await _autoModDatabase.DeleteSpecificPunishmentsConfig(config);
+    public async Task<AutoModConfig> DeleteConfigForGuild(ulong guildId, AutoModType type)
+    {
+        var config = await GetConfigsByGuildAndType(guildId, type);
 
-		_eventHandler.AutoModConfigDeletedEvent.Invoke(config, Identity);
+        await _autoModDatabase.DeleteSpecificPunishmentsConfig(config);
 
-		return config;
-	}
+        _eventHandler.AutoModConfigDeletedEvent.Invoke(config, Identity);
 
-	public async Task DeleteGuildData(ulong guildId)
-	{
-		await _autoModDatabase.DeleteAllPunishmentsConfigsForGuild(guildId);
-	}
+        return config;
+    }
 }

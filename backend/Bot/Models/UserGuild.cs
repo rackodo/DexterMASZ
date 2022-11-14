@@ -5,44 +5,42 @@ namespace Bot.Models;
 
 public class UserGuild
 {
-	public static UserGuild GetUserGuild(IGuildUser guildUser)
-	{
-		if (guildUser is null)
-			return null;
-		else if (guildUser.Id is 0)
-			return null;
-		else
-			return new UserGuild(guildUser);
-	}
+    public ulong Id { get; set; }
+    public string Name { get; set; }
+    public string IconUrl { get; set; }
+    public bool IsAdmin { get; set; }
 
-	public static UserGuild GetUserGuild(IUserGuild userGuild)
-	{
-		if (userGuild is null)
-			return null;
-		else if (userGuild.Id is 0)
-			return null;
-		else
-			return new UserGuild(userGuild);
-	}
+    private UserGuild(IGuildUser user)
+    {
+        Id = user.Guild.Id;
+        Name = user.Guild.Name;
+        IconUrl = user.Guild.IconUrl.GetAnimatedOrDefaultAvatar();
+        IsAdmin = user.GuildPermissions.Administrator;
+    }
 
-	private UserGuild(IGuildUser user)
-	{
-		Id = user.Guild.Id;
-		Name = user.Guild.Name;
-		IconUrl = user.Guild.IconUrl.GetAnimatedOrDefaultAvatar();
-		IsAdmin = user.GuildPermissions.Administrator;
-	}
+    private UserGuild(IUserGuild guild)
+    {
+        Id = guild.Id;
+        Name = guild.Name;
+        IconUrl = guild.IconUrl.GetAnimatedOrDefaultAvatar();
+        IsAdmin = guild.Permissions.Administrator;
+    }
 
-	private UserGuild(IUserGuild guild)
-	{
-		Id = guild.Id;
-		Name = guild.Name;
-		IconUrl = guild.IconUrl.GetAnimatedOrDefaultAvatar();
-		IsAdmin = guild.Permissions.Administrator;
-	}
+    public static UserGuild GetUserGuild(IGuildUser guildUser)
+    {
+        if (guildUser is null)
+            return null;
+        if (guildUser.Id is 0)
+            return null;
+        return new UserGuild(guildUser);
+    }
 
-	public ulong Id { get; set; }
-	public string Name { get; set; }
-	public string IconUrl { get; set; }
-	public bool IsAdmin { get; set; }
+    public static UserGuild GetUserGuild(IUserGuild userGuild)
+    {
+        if (userGuild is null)
+            return null;
+        if (userGuild.Id is 0)
+            return null;
+        return new UserGuild(userGuild);
+    }
 }

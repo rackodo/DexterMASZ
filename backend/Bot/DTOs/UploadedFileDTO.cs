@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace Bot.DTOs;
 
 public class UploadedFileDto
 {
-	[Required] public IFormFile File { set; get; }
+    [Required] public IFormFile File { set; get; }
 }

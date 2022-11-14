@@ -9,95 +9,82 @@ namespace Messaging.Data;
 
 public class MessagingRepository : Repository, DeleteGuildData
 {
-	private readonly MessagingDatabase _messagingDatabase;
+    private readonly MessagingDatabase _messagingDatabase;
 
-	public MessagingRepository(MessagingDatabase messagingDatabase, DiscordRest discordRest) : base(discordRest)
-	{
-		_messagingDatabase = messagingDatabase;
-	}
+    public MessagingRepository(MessagingDatabase messagingDatabase, DiscordRest discordRest) : base(discordRest) =>
+        _messagingDatabase = messagingDatabase;
 
-	public async Task<List<ScheduledMessage>> GetDueMessages()
-	{
-		return await _messagingDatabase.GetDueMessages();
-	}
+    public async Task DeleteGuildData(ulong guildId) => await DeleteMessagesForGuild(guildId);
 
-	public async Task<List<ScheduledMessage>> GetAllMessages(ulong guildId, int page = 0)
-	{
-		return await _messagingDatabase.GetScheduledMessages(guildId, page);
-	}
+    public async Task<List<ScheduledMessage>> GetDueMessages() => await _messagingDatabase.GetDueMessages();
 
-	public async Task<ScheduledMessage> GetMessage(int id)
-	{
-		var message = await _messagingDatabase.GetMessage(id);
+    public async Task<List<ScheduledMessage>> GetAllMessages(ulong guildId, int page = 0) =>
+        await _messagingDatabase.GetScheduledMessages(guildId, page);
 
-		if (message == null)
-			throw new ResourceNotFoundException($"ScheduledMessage with id {id} not found.");
+    public async Task<ScheduledMessage> GetMessage(int id)
+    {
+        var message = await _messagingDatabase.GetMessage(id);
 
-		return message;
-	}
+        if (message == null)
+            throw new ResourceNotFoundException($"ScheduledMessage with id {id} not found.");
 
-	public async Task<ScheduledMessage> CreateMessage(ScheduledMessage message)
-	{
-		message.CreatedAt = DateTime.UtcNow;
-		message.LastEditedAt = message.CreatedAt;
-		message.CreatorId = Identity.Id;
-		message.LastEditedById = Identity.Id;
-		message.Status = ScheduledMessageStatus.Pending;
+        return message;
+    }
 
-		await _messagingDatabase.SaveMessage(message);
+    public async Task<ScheduledMessage> CreateMessage(ScheduledMessage message)
+    {
+        message.CreatedAt = DateTime.UtcNow;
+        message.LastEditedAt = message.CreatedAt;
+        message.CreatorId = Identity.Id;
+        message.LastEditedById = Identity.Id;
+        message.Status = ScheduledMessageStatus.Pending;
 
-		return message;
-	}
+        await _messagingDatabase.SaveMessage(message);
 
-	public async Task<ScheduledMessage> UpdateMessage(ScheduledMessage message)
-	{
-		message.LastEditedAt = DateTime.UtcNow;
-		message.LastEditedById = Identity.Id;
+        return message;
+    }
 
-		await _messagingDatabase.UpdateMessage(message);
+    public async Task<ScheduledMessage> UpdateMessage(ScheduledMessage message)
+    {
+        message.LastEditedAt = DateTime.UtcNow;
+        message.LastEditedById = Identity.Id;
 
-		return message;
-	}
+        await _messagingDatabase.UpdateMessage(message);
 
-	public async Task<ScheduledMessage> SetMessageAsSent(int id)
-	{
-		var message = await GetMessage(id);
+        return message;
+    }
 
-		message.Status = ScheduledMessageStatus.Sent;
+    public async Task<ScheduledMessage> SetMessageAsSent(int id)
+    {
+        var message = await GetMessage(id);
 
-		await _messagingDatabase.UpdateMessage(message);
+        message.Status = ScheduledMessageStatus.Sent;
 
-		return message;
-	}
+        await _messagingDatabase.UpdateMessage(message);
 
-	public async Task<ScheduledMessage> SetMessageAsFailed(int id, ScheduledMessageFailureReason reason)
-	{
-		var message = await GetMessage(id);
+        return message;
+    }
 
-		message.Status = ScheduledMessageStatus.Failed;
-		message.FailureReason = reason;
+    public async Task<ScheduledMessage> SetMessageAsFailed(int id, ScheduledMessageFailureReason reason)
+    {
+        var message = await GetMessage(id);
 
-		await _messagingDatabase.UpdateMessage(message);
+        message.Status = ScheduledMessageStatus.Failed;
+        message.FailureReason = reason;
 
-		return message;
-	}
+        await _messagingDatabase.UpdateMessage(message);
 
-	public async Task<ScheduledMessage> DeleteMessage(int id)
-	{
-		var message = await GetMessage(id);
+        return message;
+    }
 
-		await _messagingDatabase.DeleteMessage(message);
+    public async Task<ScheduledMessage> DeleteMessage(int id)
+    {
+        var message = await GetMessage(id);
 
-		return message;
-	}
+        await _messagingDatabase.DeleteMessage(message);
 
-	public async Task DeleteMessagesForGuild(ulong guildId)
-	{
-		await _messagingDatabase.DeleteMessagesForGuild(guildId);
-	}
+        return message;
+    }
 
-	public async Task DeleteGuildData(ulong guildId)
-	{
-		await DeleteMessagesForGuild(guildId);
-	}
+    public async Task DeleteMessagesForGuild(ulong guildId) => await _messagingDatabase.DeleteMessagesForGuild(guildId);
 }

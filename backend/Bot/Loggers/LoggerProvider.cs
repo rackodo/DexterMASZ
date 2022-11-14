@@ -4,13 +4,7 @@ namespace Bot.Loggers;
 
 public class LoggerProvider : ILoggerProvider
 {
-	public ILogger CreateLogger(string categoryName)
-	{
-		return new ConsoleLogger(categoryName);
-	}
+    public ILogger CreateLogger(string categoryName) => new ConsoleLogger(categoryName);
 
-	public void Dispose()
-	{
-		GC.SuppressFinalize(this);
-	}
+    public void Dispose() => GC.SuppressFinalize(this);
 }

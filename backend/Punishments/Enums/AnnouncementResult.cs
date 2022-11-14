@@ -2,7 +2,7 @@
 
 public enum AnnouncementResult
 {
-	None,
-	Announced,
-	Failed
+    None,
+    Announced,
+    Failed
 }

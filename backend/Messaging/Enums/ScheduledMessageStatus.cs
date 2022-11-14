@@ -2,7 +2,7 @@
 
 public enum ScheduledMessageStatus
 {
-	Pending,
-	Sent,
-	Failed
+    Pending,
+    Sent,
+    Failed
 }

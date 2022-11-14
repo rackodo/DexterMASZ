@@ -10,58 +10,56 @@ namespace UserNotes.Controllers;
 [Route("api/v1/guilds/{guildId}/usernote")]
 public class UserNoteController : AuthenticatedController
 {
-	private readonly UserNoteRepository _userNoteRepo;
+    private readonly UserNoteRepository _userNoteRepo;
 
-	public UserNoteController(IdentityManager identityManager, UserNoteRepository userNoteRepo) :
-		base(identityManager, userNoteRepo)
-	{
-		_userNoteRepo = userNoteRepo;
-	}
+    public UserNoteController(IdentityManager identityManager, UserNoteRepository userNoteRepo) :
+        base(identityManager, userNoteRepo) =>
+        _userNoteRepo = userNoteRepo;
 
-	[HttpGet]
-	public async Task<IActionResult> GetUserNote([FromRoute] ulong guildId)
-	{
-		var identity = await SetupAuthentication();
+    [HttpGet]
+    public async Task<IActionResult> GetUserNote([FromRoute] ulong guildId)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
+        await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		var userNotes = await _userNoteRepo.GetUserNotesByGuild(guildId);
+        var userNotes = await _userNoteRepo.GetUserNotesByGuild(guildId);
 
-		return Ok(userNotes);
-	}
+        return Ok(userNotes);
+    }
 
-	[HttpGet("{userId}")]
-	public async Task<IActionResult> GetUserNote([FromRoute] ulong guildId, [FromRoute] ulong userId)
-	{
-		var identity = await SetupAuthentication();
+    [HttpGet("{userId}")]
+    public async Task<IActionResult> GetUserNote([FromRoute] ulong guildId, [FromRoute] ulong userId)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
+        await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		return Ok(await _userNoteRepo.GetUserNote(guildId, userId));
-	}
+        return Ok(await _userNoteRepo.GetUserNote(guildId, userId));
+    }
 
-	[HttpPut]
-	public async Task<IActionResult> CreateUserNote([FromRoute] ulong guildId, [FromBody] UserNoteForUpdateDto userNote)
-	{
-		var identity = await SetupAuthentication();
+    [HttpPut]
+    public async Task<IActionResult> CreateUserNote([FromRoute] ulong guildId, [FromBody] UserNoteForUpdateDto userNote)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
+        await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		var createdUserNote =
-			await _userNoteRepo.CreateOrUpdateUserNote(guildId, userNote.UserId, userNote.Description);
+        var createdUserNote =
+            await _userNoteRepo.CreateOrUpdateUserNote(guildId, userNote.UserId, userNote.Description);
 
-		return StatusCode(201, createdUserNote);
-	}
+        return StatusCode(201, createdUserNote);
+    }
 
-	[HttpDelete("{userId}")]
-	public async Task<IActionResult> DeleteUserNote([FromRoute] ulong guildId, [FromRoute] ulong userId)
-	{
-		var identity = await SetupAuthentication();
+    [HttpDelete("{userId}")]
+    public async Task<IActionResult> DeleteUserNote([FromRoute] ulong guildId, [FromRoute] ulong userId)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
+        await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		await _userNoteRepo.DeleteUserNote(guildId, userId);
+        await _userNoteRepo.DeleteUserNote(guildId, userId);
 
-		return Ok();
-	}
+        return Ok();
+    }
 }

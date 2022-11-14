@@ -9,26 +9,24 @@ namespace AutoMods.Controllers;
 [Route("api/v1/guilds/{guildId}/dashboard")]
 public class AutoModGuildDashboardController : AuthenticatedController
 {
-	private readonly AutoModEventRepository _autoModRepo;
+    private readonly AutoModEventRepository _autoModRepo;
 
-	public AutoModGuildDashboardController(IdentityManager identityManager, AutoModEventRepository autoModRepo) :
-		base(identityManager, autoModRepo)
-	{
-		_autoModRepo = autoModRepo;
-	}
+    public AutoModGuildDashboardController(IdentityManager identityManager, AutoModEventRepository autoModRepo) :
+        base(identityManager, autoModRepo) =>
+        _autoModRepo = autoModRepo;
 
-	[HttpGet("autoModChart")]
-	public async Task<IActionResult> GetAutoModSplitChart([FromRoute] ulong guildId, [FromQuery] long? since = null)
-	{
-		var identity = await SetupAuthentication();
+    [HttpGet("autoModChart")]
+    public async Task<IActionResult> GetAutoModSplitChart([FromRoute] ulong guildId, [FromQuery] long? since = null)
+    {
+        var identity = await SetupAuthentication();
 
-		await identity.RequirePermission(DiscordPermission.Moderator, guildId);
+        await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-		var sinceTime = DateTime.UtcNow.AddYears(-1);
+        var sinceTime = DateTime.UtcNow.AddYears(-1);
 
-		if (since != null)
-			sinceTime = DateTime.UnixEpoch.AddSeconds(since.Value);
+        if (since != null)
+            sinceTime = DateTime.UnixEpoch.AddSeconds(since.Value);
 
-		return Ok(await _autoModRepo.GetCountsByType(guildId, sinceTime));
-	}
+        return Ok(await _autoModRepo.GetCountsByType(guildId, sinceTime));
+    }
 }
