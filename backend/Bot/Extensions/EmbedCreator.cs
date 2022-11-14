@@ -8,41 +8,30 @@ namespace Bot.Extensions;
 
 public static class EmbedCreator
 {
-    public static EmbedBuilder CreateColoredEmbed(Color color, Type type)
-    {
-        var ns = type.Namespace.Split('.');
+	public static async Task<EmbedBuilder> CreateActionEmbed(RestAction action, IServiceProvider provider,
+		IUser author = null) => CreateActionEmbed(action, await provider.GetRequiredService<SettingsRepository>().GetAppSettings(), author);
 
-        return new EmbedBuilder()
-            .WithCurrentTimestamp()
-            .WithColor(color)
-            .WithFooter($"{ns.First()} {ns.Last()}");
-    }
+	public static EmbedBuilder CreateActionEmbed(RestAction action, AppSettings settings,
+		IUser author = null)
+	{
+		var embed = new EmbedBuilder()
+			.WithCurrentTimestamp()
+			.WithColor(action switch
+			{
+				RestAction.Updated => Color.Orange,
+				RestAction.Deleted => Color.Red,
+				RestAction.Created => Color.Green,
+				_ => Color.Blue
+			});
 
-    public static async Task<EmbedBuilder> CreateActionEmbed(RestAction action, IServiceProvider provider,
-        IUser author = null) => CreateActionEmbed(action,
-        await provider.GetRequiredService<SettingsRepository>().GetAppSettings(), author);
+		if (author != null)
+			embed.WithAuthor(author);
 
-    public static EmbedBuilder CreateActionEmbed(RestAction action, AppSettings settings,
-        IUser author = null)
-    {
-        var embed = new EmbedBuilder()
-            .WithCurrentTimestamp()
-            .WithColor(action switch
-            {
-                RestAction.Updated => Color.Orange,
-                RestAction.Deleted => Color.Red,
-                RestAction.Created => Color.Green,
-                _ => Color.Blue
-            });
+		var url = settings.GetServiceUrl();
 
-        if (author != null)
-            embed.WithAuthor(author);
+		if (!string.IsNullOrEmpty(url))
+			embed.Url = url;
 
-        var url = settings.GetServiceUrl();
-
-        if (!string.IsNullOrEmpty(url))
-            embed.Url = url;
-
-        return embed;
-    }
+		return embed;
+	}
 }

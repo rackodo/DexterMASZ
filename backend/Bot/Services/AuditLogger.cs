@@ -4,7 +4,6 @@ using System.Text;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Events;
-using Bot.Exceptions;
 using Bot.Extensions;
 using Bot.Models;
 using Discord;
@@ -25,16 +24,19 @@ public class AuditLogger : IHostedService, Event
     private readonly ILogger<AuditLogger> _logger;
     private readonly IServiceProvider _serviceProvider;
 
-    public AuditLogger(DiscordSocketClient client, ILogger<AuditLogger> logger,
-        IServiceProvider serviceProvider, BotEventHandler eventHandler)
-    {
-        _client = client;
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _eventHandler = eventHandler;
+	private List<Module> _modules;
 
-        _currentMessage = new StringBuilder();
-    }
+	public AuditLogger(DiscordSocketClient client, ILogger<AuditLogger> logger,
+		IServiceProvider serviceProvider, BotEventHandler eventHandler)
+	{
+		_client = client;
+		_logger = logger;
+		_serviceProvider = serviceProvider;
+		_eventHandler = eventHandler;
+
+		_modules = new List<Module>();
+		_currentMessage = new StringBuilder();
+	}
 
     public void RegisterEvents()
     {
@@ -130,10 +132,10 @@ public class AuditLogger : IHostedService, Event
         if (e == null)
             return;
 
-        if (e is GatewayReconnectException || e is UnregisteredGuildException)
-            return;
-
-        var descript = e.ToString().NormalizeMarkdown();
+		if (e is GatewayReconnectException || _modules.Where(x => e.GetType().Namespace.Contains(x.GetType().Namespace)).Any() || e is HttpException)
+			return;
+		
+		var descript = e.ToString().NormalizeMarkdown();
 
         if (e.InnerException is ExternalException ee)
             if (ee is WebSocketException &&
@@ -176,7 +178,13 @@ public class AuditLogger : IHostedService, Event
 
     private async Task OnDisconnect(Exception _) => await QueueLog("Bot **disconnected** from discord sockets.", true);
 
-    private async Task OnBotReady() =>
-        await QueueLog($"Bot **connected** to `{_client.Guilds.Count} guild(s)` with `{_client.Latency}ms` latency.",
-            true);
+	private async Task OnBotReady()
+	{
+		await QueueLog($"Bot **connected** to `{_client.Guilds.Count} guild(s)` with `{_client.Latency}ms` latency.", true);
+	}
+
+	public void SetModules(List<Module> modules)
+	{
+		_modules = modules;
+	}
 }

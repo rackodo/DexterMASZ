@@ -8,366 +8,366 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Module = Bot.Abstractions.Module;
 
 namespace Launch;
 
 public class Initialize
 {
-    public static async Task Main()
-    {
-        try
-        {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("============ Launching =============");
-
-            var builder = WebApplication.CreateBuilder();
-
-            ConsoleHelper.AddHeading("Get Modules");
-            var modules = GetModules();
-
-            var cachedServices = new CachedServices();
-
-            builder.Services.AddSingleton(cachedServices);
-
-            ShouldEdit(builder.Environment);
-
-            ConsoleHelper.AddHeading("Getting Client Id");
-            var clientId = GetClientId();
+	public static async Task Main()
+	{
+		try
+		{
+			Console.ForegroundColor = ConsoleColor.Cyan;
+			Console.WriteLine("============ Launching =============");
+
+			var builder = WebApplication.CreateBuilder();
+
+			ConsoleHelper.AddHeading("Get Modules");
+			var modules = GetModules();
+
+			var cachedServices = new CachedServices();
+
+			builder.Services.AddSingleton(cachedServices);
+
+			ShouldEdit(builder.Environment);
+
+			ConsoleHelper.AddHeading("Getting Client Id");
+			var clientId = GetClientId();
 
-            ConsoleHelper.AddHeading("Getting Database Info");
-            var database = GetDatabaseOptions();
+			ConsoleHelper.AddHeading("Getting Database Info");
+			var database = GetDatabaseOptions();
 
-            AppSettings appSettings;
-
-            try
-            {
-                ConsoleHelper.AddHeading("Getting App Settings");
-                appSettings = await GetAppSettings(clientId, database);
-
-                builder.Services.AddSingleton(appSettings);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine();
+			AppSettings appSettings;
+
+			try
+			{
+				ConsoleHelper.AddHeading("Getting App Settings");
+				appSettings = await GetAppSettings(clientId, database);
+
+				builder.Services.AddSingleton(appSettings);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine();
 
-                ConsoleHelper.AddSubHeading("Failed to get app settings", e.ToString());
+				ConsoleHelper.AddSubHeading("Failed to get app settings", e.ToString());
 
-                ConsoleHelper.AddHeading("Trying to add migrations, in the case of an error!");
+				ConsoleHelper.AddHeading("Trying to add migrations, in the case of an error!");
 
-                await TryAddMigrations(cachedServices, builder, database);
-                return;
-            }
-
-            ConsoleHelper.AddHeading("Importing Modules");
-            InitializeModules(modules, database, cachedServices, appSettings, builder);
-
-            ConsoleHelper.AddHeading("Get Authorization Policies");
-            var authorizationPolicies = GetAuthorizationPolicies(modules);
-
-            ConsoleHelper.AddHeading("Initializing Web Modules");
-            InitializeWeb(cachedServices, builder, authorizationPolicies, appSettings);
-
-            ConsoleHelper.AddHeading("Building Application");
-            var app = builder.Build();
-            ConsoleHelper.AddSubHeading("Successfully built", app.GetType().Name);
-
-            ConsoleHelper.AddHeading("Adding Migrations");
-            await AddMigrations(cachedServices, app);
+				await TryAddMigrations(cachedServices, builder, database);
+				return;
+			}
 
-            ConsoleHelper.AddHeading("Configuring App");
-            ConfigureApp(modules, cachedServices, appSettings, app);
+			ConsoleHelper.AddHeading("Importing Modules");
+			InitializeModules(modules, database, cachedServices, appSettings, builder);
+
+			ConsoleHelper.AddHeading("Get Authorization Policies");
+			var authorizationPolicies = GetAuthorizationPolicies(modules);
+
+			ConsoleHelper.AddHeading("Initializing Web Modules");
+			InitializeWeb(cachedServices, builder, authorizationPolicies, appSettings);
+
+			ConsoleHelper.AddHeading("Building Application");
+			var app = builder.Build();
+			ConsoleHelper.AddSubHeading("Successfully built", app.GetType().Name);
+
+			ConsoleHelper.AddHeading("Adding Migrations");
+			await AddMigrations(cachedServices, app);
 
-            ConsoleHelper.AddHeading("Running App");
-
-            await app.RunAsync();
-        }
-        catch (Exception e)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(e.ToString());
-        }
+			ConsoleHelper.AddHeading("Configuring Modules");
+			foreach (var startup in modules)
+				startup.ConfigureModules(modules, app);
 
-        Console.ResetColor();
-    }
+			ConsoleHelper.AddHeading("Configuring App");
+			ConfigureApp(modules, cachedServices, appSettings, app);
 
-    private static void ShouldEdit(IWebHostEnvironment env)
-    {
-        try
-        {
-            if (!env.IsDevelopment())
-                if (ConsoleHelper.WaitForUser("edit settings", 10))
-                    ConsoleHelper.ShouldEdit = true;
-        }
-        catch (InvalidOperationException)
-        {
-        }
-    }
+			ConsoleHelper.AddHeading("Running App");
 
-    private static ulong GetClientId()
-    {
-        while (true)
-        {
-            var client =
-                ConsoleHelper.AskAndSet("Discord OAuth Client ID", "DISCORD_OAUTH_CLIENT_ID");
-            if (ulong.TryParse(client.Key, out var clientId))
-            {
-                ConsoleHelper.AddSubHeading("Found Client ID", clientId.ToString());
-                return clientId;
-            }
-        }
-    }
+			await app.RunAsync();
+		}
+		catch (Exception e)
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine(e.ToString());
+		}
 
-    private static async Task TryAddMigrations(CachedServices cachedServices,
-        WebApplicationBuilder builder, Action<DbContextOptionsBuilder> database)
-    {
-        foreach (var type in cachedServices.GetClassTypes<DataContextInitialize>())
-            type.GetMethod("AddContextToServiceProvider")?.Invoke(null, new object[] { database, builder.Services });
+		Console.ResetColor();
+	}
 
-        var app = builder.Build();
+	private static void ShouldEdit(IWebHostEnvironment env)
+	{
+		try
+		{
+			if (!env.IsDevelopment())
+				if (ConsoleHelper.WaitForUser($"edit settings", 10))
+					ConsoleHelper.ShouldEdit = true;
+		}
+		catch (InvalidOperationException)
+		{ }
+	}
 
-        Console.WriteLine();
+	private static ulong GetClientId()
+	{
+		while (true)
+		{
+			var client =
+				ConsoleHelper.AskAndSet("Discord OAuth Client ID", "DISCORD_OAUTH_CLIENT_ID");
+			if (ulong.TryParse(client.Key, out var clientId))
+			{
+				ConsoleHelper.AddSubHeading("Found Client ID", clientId.ToString());
+				return clientId;
+			}
+		}
+	}
 
-        await AddMigrations(cachedServices, app);
+	private static async Task TryAddMigrations(CachedServices cachedServices,
+		WebApplicationBuilder builder, Action<DbContextOptionsBuilder> database)
+	{
+		foreach (var type in cachedServices.GetClassTypes<DataContextInitialize>())
+			type.GetMethod("AddContextToServiceProvider")?.Invoke(null, new object[] { database, builder.Services });
 
-        ConsoleHelper.AddHeading("Exiting Application");
-    }
+		var app = builder.Build();
 
-    private static Action<DbContextOptionsBuilder> GetDatabaseOptions()
-    {
-        var (databaseSettings, hasUpdatedDbSettings) = ConsoleHelper.CreateDatabaseSettings();
+		Console.WriteLine();
 
-        if (hasUpdatedDbSettings)
-            ConsoleHelper.AddSubHeading("You are finished creating the database settings for", databaseSettings.User);
-        else
-            ConsoleHelper.AddSubHeading("Found database settings for",
-                $"{databaseSettings.User} // {databaseSettings.Database}");
+		await AddMigrations(cachedServices, app);
 
-        ConsoleHelper.AddSubHeading("Successfully created", "MySQL database provider");
+		ConsoleHelper.AddHeading("Exiting Application");
+	}
 
-        var connectionString = $"Server={databaseSettings.Host};Port={databaseSettings.Port};" +
-                               $"Database={databaseSettings.Database};Uid={databaseSettings.User};Pwd={databaseSettings.Pass};";
+	private static Action<DbContextOptionsBuilder> GetDatabaseOptions()
+	{
+		var (databaseSettings, hasUpdatedDbSettings) = ConsoleHelper.CreateDatabaseSettings();
 
-        var dbBuilder = new DbContextOptionsBuilder<BotDatabase>();
+		if (hasUpdatedDbSettings)
+			ConsoleHelper.AddSubHeading("You are finished creating the database settings for", databaseSettings.User);
+		else
+			ConsoleHelper.AddSubHeading("Found database settings for", $"{databaseSettings.User} // {databaseSettings.Database}");
 
-        return x =>
-        {
-            x.UseMySql(
-                connectionString,
-                ServerVersion.AutoDetect(connectionString),
-                o =>
-                {
-                    o.SchemaBehavior(MySqlSchemaBehavior.Translate, (schema, table) => $"{schema}_{table}");
-                    o.EnableRetryOnFailure();
-                }
-            );
+		ConsoleHelper.AddSubHeading("Successfully created", "MySQL database provider");
 
-            x.EnableSensitiveDataLogging();
-        };
-    }
+		var connectionString = $"Server={databaseSettings.Host};Port={databaseSettings.Port};" +
+			$"Database={databaseSettings.Database};Uid={databaseSettings.User};Pwd={databaseSettings.Pass};";
 
-    private static async Task<AppSettings> GetAppSettings(ulong clientId, Action<DbContextOptionsBuilder> dbOptions)
-    {
-        AppSettings settings;
+		var dbBuilder = new DbContextOptionsBuilder<BotDatabase>();
 
-        ConsoleHelper.AddSubHeading("Querying database for", nameof(AppSettings));
+		return x =>
+		{
+			x.UseMySql(
+				connectionString,
+				ServerVersion.AutoDetect(connectionString),
+				o =>
+				{
+					o.SchemaBehavior(MySqlSchemaBehavior.Translate, (schema, table) => $"{schema}_{table}");
+					o.EnableRetryOnFailure();
+				}
+			);
 
-        var dbBuilder = new DbContextOptionsBuilder<BotDatabase>();
+			x.EnableSensitiveDataLogging();
+		};
+	}
 
-        dbOptions.Invoke(dbBuilder);
+	private static async Task<AppSettings> GetAppSettings(ulong clientId, Action<DbContextOptionsBuilder> dbOptions)
+	{
+		AppSettings settings;
 
-        await using (var dataContext = new BotDatabase(dbBuilder.Options))
-        {
-            await dataContext.Database.MigrateAsync();
+		ConsoleHelper.AddSubHeading("Querying database for", nameof(AppSettings));
 
-            var appSettingRepo = new SettingsRepository(dataContext, new AppSettings { ClientId = clientId }, null);
+		var dbBuilder = new DbContextOptionsBuilder<BotDatabase>();
 
-            settings = await appSettingRepo.GetAppSettings();
+		dbOptions.Invoke(dbBuilder);
 
-            if (settings is null)
-            {
-                ConsoleHelper.AddHeading("Running First Time Setup");
+		await using (var dataContext = new BotDatabase(dbBuilder.Options))
+		{
+			await dataContext.Database.MigrateAsync();
 
-                ConsoleHelper.AddSubHeading("Welcome to", "Dexter!");
-                ConsoleHelper.AddSubHeading("Support Discord", "https://discord.gg/DBS664yjWN");
+			var appSettingRepo = new SettingsRepository(dataContext, new AppSettings() { ClientId = clientId }, null);
 
-                settings = ConsoleHelper.CreateAppSettings(clientId);
+			settings = await appSettingRepo.GetAppSettings();
 
-                await appSettingRepo.AddAppSetting(settings);
+			if (settings is null)
+			{
+				ConsoleHelper.AddHeading("Running First Time Setup");
 
-                ConsoleHelper.AddSubHeading("You are finished creating the app settings for client",
-                    clientId.ToString());
+				ConsoleHelper.AddSubHeading("Welcome to", "Dexter!");
+				ConsoleHelper.AddSubHeading("Support Discord", "https://discord.gg/DBS664yjWN");
 
-                ConsoleHelper.AddSubHeading("You can now access the panel at", settings.GetServiceUrl());
+				settings = ConsoleHelper.CreateAppSettings(clientId);
 
-                ConsoleHelper.AddSubHeading("You can always change these settings",
-                    "by pressing any key on next reboot");
-            }
-            else
-            {
-                ConsoleHelper.AddSubHeading("Found app settings for client", clientId.ToString());
+				await appSettingRepo.AddAppSetting(settings);
 
-                if (ConsoleHelper.ShouldEdit)
-                {
-                    settings = ConsoleHelper.CreateAppSettings(clientId);
-                    await appSettingRepo.UpdateAppSetting(settings);
-                    Console.WriteLine();
-                }
-            }
-        }
+				ConsoleHelper.AddSubHeading("You are finished creating the app settings for client", clientId.ToString());
 
-        return settings;
-    }
+				ConsoleHelper.AddSubHeading("You can now access the panel at", settings.GetServiceUrl());
 
-    private static List<Module> GetModules()
-    {
-        var modules = ImportModules.GetModules();
+				ConsoleHelper.AddSubHeading("You can always change these settings", "by pressing any key on next reboot");
+			}
+			else
+			{
+				ConsoleHelper.AddSubHeading("Found app settings for client", clientId.ToString());
 
-        foreach (var module in modules)
-        {
-            ConsoleHelper.AddSubHeading("Imported",
-                $"{module.GetType().Namespace}{(module is WebModule ? " (WEB)" : "")}");
+				if (ConsoleHelper.ShouldEdit)
+				{
+					settings = ConsoleHelper.CreateAppSettings(clientId);
+					await appSettingRepo.UpdateAppSetting(settings);
+					Console.WriteLine();
+				}
+			}
+		}
 
-            if (module.Contributors.Length > 0)
-            {
-                Console.Write("   Contributed By:      ");
+		return settings;
+	}
 
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                Console.WriteLine(string.Join(", ", module.Contributors));
-            }
+	private static List<Module> GetModules()
+	{
+		var modules = ImportModules.GetModules();
 
-            Console.ResetColor();
-        }
+		foreach (var module in modules)
+		{
+			ConsoleHelper.AddSubHeading("Imported", $"{module.GetType().Namespace}{(module is WebModule ? " (WEB)" : "")}");
 
-        return modules;
-    }
+			if (module.Contributors.Length > 0)
+			{
+				Console.Write("   Contributed By:      ");
 
-    private static List<string> GetAuthorizationPolicies(List<Module> modules)
-    {
-        var authorizationPolicies = new List<string>();
+				Console.ForegroundColor = ConsoleColor.DarkMagenta;
+				Console.WriteLine(string.Join(", ", module.Contributors));
+			}
 
-        foreach (var startup in modules)
-        {
-            if (startup is WebModule module)
-            {
-                var authorizationPolicy = module.AddAuthorizationPolicy();
+			Console.ResetColor();
+		}
 
-                if (authorizationPolicy.Length > 0)
-                    authorizationPolicies = authorizationPolicies.Union(authorizationPolicy).ToList();
-            }
-        }
+		return modules;
+	}
 
-        ConsoleHelper.AddSubHeading("Successfully added", "authentication policies");
+	private static List<string> GetAuthorizationPolicies(List<Module> modules)
+	{
+		var authorizationPolicies = new List<string>();
 
-        return authorizationPolicies;
-    }
+		foreach (var startup in modules)
+			if (startup is WebModule module)
+			{
+				var authorizationPolicy = module.AddAuthorizationPolicy();
 
-    private static void InitializeModules(List<Module> modules, Action<DbContextOptionsBuilder> dbOptions,
-        CachedServices cachedServices, AppSettings appSettings, WebApplicationBuilder builder)
-    {
-        try
-        {
-            foreach (var startup in modules)
-                startup.AddLogging(builder.Logging);
+				if (authorizationPolicy.Length > 0)
+					authorizationPolicies = authorizationPolicies.Union(authorizationPolicy).ToList();
+			}
 
-            ConsoleHelper.AddSubHeading("Successfully initialized", "logging");
+		ConsoleHelper.AddSubHeading("Successfully added", "authentication policies");
 
-            foreach (var startup in modules)
-                startup.AddPreServices(builder.Services, cachedServices, dbOptions);
+		return authorizationPolicies;
+	}
 
-            ConsoleHelper.AddSubHeading("Successfully initialized", "pre-services");
+	private static void InitializeModules(List<Module> modules, Action<DbContextOptionsBuilder> dbOptions,
+		CachedServices cachedServices, AppSettings appSettings, WebApplicationBuilder builder)
+	{
+		try
+		{
+			foreach (var startup in modules)
+				startup.AddLogging(builder.Logging);
 
-            foreach (var startup in modules)
-                startup.AddServices(builder.Services, cachedServices, appSettings);
+			ConsoleHelper.AddSubHeading("Successfully initialized", "logging");
 
-            ConsoleHelper.AddSubHeading("Successfully initialized", "services");
+			foreach (var startup in modules)
+				startup.AddPreServices(builder.Services, cachedServices, dbOptions);
 
-            foreach (var startup in modules)
-                startup.ConfigureServices(builder.Configuration, builder.Services);
+			ConsoleHelper.AddSubHeading("Successfully initialized", "pre-services");
 
-            ConsoleHelper.AddSubHeading("Successfully configured", "services");
-        }
-        catch (Exception ex)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(ex.ToString());
-        }
-    }
+			foreach (var startup in modules)
+				startup.AddServices(builder.Services, cachedServices, appSettings);
 
-    private static void InitializeWeb(CachedServices cachedServices, WebApplicationBuilder builder,
-        List<string> authorizationPolicies, AppSettings settings)
-    {
-        builder.WebHost.CaptureStartupErrors(true);
+			ConsoleHelper.AddSubHeading("Successfully initialized", "services");
 
-        builder.WebHost.UseUrls($"http://{settings.ServiceDomain}");
+			foreach (var startup in modules)
+				startup.ConfigureServices(builder.Configuration, builder.Services);
 
-        builder.Services.AddMemoryCache();
+			ConsoleHelper.AddSubHeading("Successfully configured", "services");
+		}
+		catch (Exception ex)
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine(ex.ToString());
+			return;
+		}
+	}
 
-        builder.Services.AddDataProtection().UseCryptographicAlgorithms(
-            new AuthenticatedEncryptorConfiguration
-            {
-                EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
-                ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
-            }
-        );
+	private static void InitializeWeb(CachedServices cachedServices, WebApplicationBuilder builder,
+		List<string> authorizationPolicies, AppSettings settings)
+	{
+		builder.WebHost.CaptureStartupErrors(true);
 
-        var controller = builder.Services.AddControllers()
-            .AddNewtonsoftJson(x =>
-            {
-                x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                x.SerializerSettings.Converters.Add(new UlongConverter());
-            });
+		builder.WebHost.UseUrls($"http://{settings.ServiceDomain}");
 
-        foreach (var assembly in cachedServices.Dependents)
-            controller.AddApplicationPart(assembly);
+		builder.Services.AddMemoryCache();
 
-        builder.Services.AddAuthorization(options =>
-        {
-            options.DefaultPolicy = new AuthorizationPolicyBuilder(authorizationPolicies.ToArray())
-                .RequireAuthenticatedUser().Build();
-        });
+		builder.Services.AddDataProtection().UseCryptographicAlgorithms(
+			new AuthenticatedEncryptorConfiguration
+			{
+				EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+				ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+			}
+		);
 
-        ConsoleHelper.AddSubHeading("Started authorization policies for", string.Join(',', authorizationPolicies));
-    }
+		var controller = builder.Services.AddControllers()
+			.AddNewtonsoftJson(x =>
+			{
+				x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+				x.SerializerSettings.Converters.Add(new UlongConverter());
+			});
 
-    private static async Task AddMigrations(CachedServices cachedServices, WebApplication app)
-    {
-        ConsoleHelper.AddSubHeading("Heads up!", "This might take a while on a first install...\n");
+		foreach (var assembly in cachedServices.Dependents)
+			controller.AddApplicationPart(assembly);
 
-        using (var scope = app.Services.CreateScope())
-        {
-            foreach (var dataContext in cachedServices.GetInitializedClasses<DbContext>(scope.ServiceProvider))
-            {
-                ConsoleHelper.AddSubHeading("Adding migrations for", dataContext.GetType().Name);
+		builder.Services.AddAuthorization(options =>
+		{
+			options.DefaultPolicy = new AuthorizationPolicyBuilder(authorizationPolicies.ToArray())
+				.RequireAuthenticatedUser().Build();
+		});
 
-                await dataContext.Database.MigrateAsync();
-            }
-        }
+		ConsoleHelper.AddSubHeading("Started authorization policies for", string.Join(',', authorizationPolicies));
+	}
 
-        Console.WriteLine();
+	private static async Task AddMigrations(CachedServices cachedServices, WebApplication app)
+	{
+		ConsoleHelper.AddSubHeading("Heads up!", "This might take a while on a first install...\n");
 
-        ConsoleHelper.AddSubHeading("Successfully added", "migrations to databases");
-    }
+		using (var scope = app.Services.CreateScope())
+		{
+			foreach (var dataContext in cachedServices.GetInitializedClasses<DbContext>(scope.ServiceProvider))
+			{
+				ConsoleHelper.AddSubHeading("Adding migrations for", dataContext.GetType().Name);
 
-    private static void ConfigureApp(List<Module> modules, CachedServices cachedServices, AppSettings appSettings,
-        WebApplication app)
-    {
-        foreach (var startup in modules)
-        {
-            startup.PostBuild(app.Services, cachedServices);
+				await dataContext.Database.MigrateAsync();
+			}
+		}
 
-            if (startup is WebModule module)
-                module.PostWebBuild(app, appSettings);
-        }
+		Console.WriteLine();
 
-        ConsoleHelper.AddSubHeading("Successfully post built", "application");
+		ConsoleHelper.AddSubHeading("Successfully added", "migrations to databases");
+	}
 
-        app.UseRouting();
+	private static void ConfigureApp(List<Module> modules, CachedServices cachedServices, AppSettings appSettings, WebApplication app)
+	{
+		foreach (var startup in modules)
+		{
+			startup.PostBuild(app.Services, cachedServices);
 
-        app.UseAuthentication();
-        app.UseAuthorization();
+			if (startup is WebModule module)
+				module.PostWebBuild(app, appSettings);
+		}
 
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-    }
+		ConsoleHelper.AddSubHeading("Successfully post built", "application");
+
+		app.UseRouting();
+
+		app.UseAuthentication();
+		app.UseAuthorization();
+
+		app.UseEndpoints(endpoints =>
+		{
+			endpoints.MapControllers();
+		});
+	}
 }
