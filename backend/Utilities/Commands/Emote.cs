@@ -4,7 +4,7 @@ using Bot.Extensions;
 using Discord;
 using Discord.Interactions;
 
-namespace DexterSlash.Commands.UtilityCommands;
+namespace Utilities.Commands;
 
 public class Emote : Command<Emote>
 {

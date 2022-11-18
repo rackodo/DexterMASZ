@@ -5,7 +5,7 @@ using Bot.Models;
 using Launch.Enums;
 using Launch.Models;
 
-namespace Launch;
+namespace Launch.Helpers;
 
 public static class ConsoleHelper
 {

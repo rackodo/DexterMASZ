@@ -3,6 +3,7 @@ using Bot.Data;
 using Bot.Services;
 using Discord;
 using Punishments.Data;
+using Punishments.Enums;
 using Punishments.Extensions;
 using Punishments.Models;
 
@@ -27,7 +28,7 @@ public class PunishmentCommand<T> : Command<T>
             var (created, result, finalWarned) =
                 await ModCaseRepository.CreateModCase(modCase);
 
-            if (finalWarned)
+            if (finalWarned && modCase.PunishmentType != PunishmentType.FinalWarn)
             {
                 var textChannel = Context.Guild.GetTextChannel(GuildConfig.StaffAnnouncements);
 

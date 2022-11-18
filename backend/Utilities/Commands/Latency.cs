@@ -3,7 +3,7 @@ using Bot.Enums;
 using Bot.Extensions;
 using Discord.Interactions;
 
-namespace DexterSlash.Commands.UtilityCommands;
+namespace Utilities.Commands;
 
 public class Latency : Command<Latency>
 {

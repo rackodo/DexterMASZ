@@ -346,7 +346,7 @@ public class ModCaseRepository : Repository,
 
             await _punishmentDatabase.SaveModCase(modCase);
 
-            var announceResult = AnnouncementResult.None;
+            AnnouncementResult announceResult;
 
             _logger.LogInformation(
                 $"Sending dm notification to {modCase.UserId} for case {modCase.GuildId}/{modCase.CaseId}");

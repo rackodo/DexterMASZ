@@ -42,7 +42,7 @@ public class BotEnumTranslator : Translator
                 Language.Es => "El usuario está protegido. El es un bot.",
                 Language.Ru => "Пользователь защищен. Он бот.",
                 Language.It => "L'utente è protetto. Lui è un bot.",
-                _ => "User is protected. He is a bot."
+                _ => "User is protected. They are a bot."
             },
             ApiError.ProtectedModCaseSuspectIsSiteAdmin => PreferredLanguage switch
             {
@@ -51,7 +51,7 @@ public class BotEnumTranslator : Translator
                 Language.Es => "El usuario está protegido. Es administrador de un sitio.",
                 Language.Ru => "Пользователь защищен. Он администратор сайта.",
                 Language.It => "L'utente è protetto. È un amministratore del sito.",
-                _ => "User is protected. He is a site admin."
+                _ => "User is protected. They are a site admin."
             },
             ApiError.AlreadyFinalWarned => PreferredLanguage switch
             {
@@ -69,7 +69,7 @@ public class BotEnumTranslator : Translator
                 Language.Es => "El usuario está protegido. Es un miembro del equipo.",
                 Language.Ru => "Пользователь защищен. Он член команды.",
                 Language.It => "L'utente è protetto. È un membro della squadra.",
-                _ => "User is protected. He is a team user."
+                _ => "User is protected. They are a team user."
             },
             ApiError.ResourceNotFound => PreferredLanguage switch
             {

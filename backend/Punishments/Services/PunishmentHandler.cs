@@ -226,9 +226,6 @@ public class PunishmentHandler : Event
 
         try
         {
-            var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
-                .GetGuildConfig(user.Guild.Id);
-
             var modCases = await database.SelectAllModCasesWithActiveMuteForGuildAndUser(user.Guild.Id, user.Id);
 
             if (modCases.Count == 0)
