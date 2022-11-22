@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using AutoMods.Data;
 using AutoMods.Models;
 using Bot.Abstractions;
@@ -6,6 +5,7 @@ using Bot.Data;
 using Bot.Enums;
 using Bot.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AutoMods.Controllers;
 

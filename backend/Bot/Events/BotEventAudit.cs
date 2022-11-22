@@ -7,7 +7,7 @@ using Bot.Services;
 
 namespace Bot.Events;
 
-public class BotEventAudit : Event
+public class BotEventAudit : IEvent
 {
     private readonly AuditLogger _auditLogger;
     private readonly DiscordRest _discordRest;

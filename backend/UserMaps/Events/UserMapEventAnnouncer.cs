@@ -11,7 +11,7 @@ using UserMaps.Models;
 
 namespace UserMaps.Events;
 
-public class UserMapEventAnnouncer : Event
+public class UserMapEventAnnouncer : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly UserMapEventHandler _eventHandler;

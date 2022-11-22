@@ -11,7 +11,7 @@ using GuildAudits.Models;
 
 namespace GuildAudits.Data;
 
-public class GuildAuditConfigRepository : Repository, DeleteGuildData
+public class GuildAuditConfigRepository : Repository, IDeleteGuildData
 {
     private readonly GuildAuditEventHandler _eventHandler;
     private readonly GuildAuditDatabase _guildAuditDatabase;

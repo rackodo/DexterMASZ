@@ -7,7 +7,7 @@ using Punishments.Models;
 
 namespace Punishments.Data;
 
-public class PunishmentDatabase : DataContext<PunishmentDatabase>, DataContextCreate
+public class PunishmentDatabase : DataContext<PunishmentDatabase>, IDataContextCreate
 {
     public DbSet<ModCaseTemplate> ModCaseTemplates { get; set; }
 

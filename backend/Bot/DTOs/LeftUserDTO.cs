@@ -1,12 +1,12 @@
-﻿using System.Collections.Immutable;
-using Bot.Models;
+﻿using Bot.Models;
 using Discord;
+using System.Collections.Immutable;
 
 namespace Bot.DTOs;
 
-public class LeftUserDTO : IUser
+public class LeftUserDto : IUser
 {
-    public LeftUserDTO(IUser user)
+    public LeftUserDto(IUser user)
     {
         IsBot = user.IsBot;
         Username = user.Username;
@@ -16,7 +16,7 @@ public class LeftUserDTO : IUser
         Id = user.Id;
     }
 
-    public LeftUserDTO(LeftUser user)
+    public LeftUserDto(LeftUser user)
     {
         IsBot = user.IsBot;
         Username = user.Username;

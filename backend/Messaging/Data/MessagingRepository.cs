@@ -7,7 +7,7 @@ using Messaging.Models;
 
 namespace Messaging.Data;
 
-public class MessagingRepository : Repository, DeleteGuildData
+public class MessagingRepository : Repository, IDeleteGuildData
 {
     private readonly MessagingDatabase _messagingDatabase;
 

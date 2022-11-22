@@ -1,4 +1,3 @@
-using System.Text;
 using Bot.Abstractions;
 using Bot.Dynamics;
 using Bot.Enums;
@@ -7,6 +6,7 @@ using Bot.Extensions;
 using Bot.Services;
 using Discord;
 using Humanizer;
+using System.Text;
 using UserMaps.Events;
 using UserMaps.Exceptions;
 using UserMaps.Models;
@@ -16,7 +16,7 @@ using Utilities.Dynamics;
 namespace UserMaps.Data;
 
 public class UserMapRepository : Repository,
-    AddAdminStats, AddGuildStats, AddSearch, AddNetworks, WhoIsResults, DeleteGuildData
+    IAddAdminStats, IAddGuildStats, IAddSearch, IAddNetworks, IWhoIsResults, IDeleteGuildData
 {
     private readonly DiscordRest _discordRest;
     private readonly UserMapEventHandler _eventHandler;

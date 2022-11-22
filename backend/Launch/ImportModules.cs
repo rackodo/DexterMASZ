@@ -6,6 +6,7 @@ using Invites;
 using Levels;
 using Messaging;
 using MOTDs;
+using Music;
 using Punishments;
 using UserMaps;
 using UserNotes;
@@ -23,6 +24,7 @@ public static class ImportModules
             new GuildAuditModule(),
             new InviteModule(),
             new MotdModule(),
+            new MusicModule(),
             new PunishmentModule(),
             new UserMapModule(),
             new UserNoteModule(),

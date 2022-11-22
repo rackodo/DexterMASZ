@@ -10,7 +10,7 @@ using Punishments.Models;
 
 namespace Punishments.Data;
 
-public class ModCaseTemplateRepository : Repository, DeleteGuildData
+public class ModCaseTemplateRepository : Repository, IDeleteGuildData
 {
     private const int MaxAllowedModCaseTemplatesPerUser = 20;
     private readonly PunishmentEventHandler _eventHandler;

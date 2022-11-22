@@ -1,4 +1,3 @@
-using System.Net;
 using Bot.Abstractions;
 using Bot.Attributes;
 using Bot.Enums;
@@ -11,6 +10,7 @@ using Discord.WebSocket;
 using Messaging.Extensions;
 using Messaging.Translators;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace Messaging.Commands;
 

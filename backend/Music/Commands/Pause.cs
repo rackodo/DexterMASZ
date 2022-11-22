@@ -1,46 +1,34 @@
-﻿using Discord;
-using Discord.Interactions;
-using Humanizer;
+﻿using Discord.Interactions;
+using Lavalink4NET.Player;
+using Music.Abstractions;
+using Music.Utils;
 
-namespace DexterSlash.Commands.MusicCommands
+namespace Music.Commands;
+
+public class Pause : MusicCommand<Pause>
 {
-	public partial class BaseMusicCommand
-	{
+    [SlashCommand("pause", "Pause this session")]
+    public async Task MusicPlaybackPauseCommand()
+    {
+        await Context.Interaction.DeferAsync();
 
-		[SlashCommand("pause", "Pauses the current track.")]
-		[ComponentInteraction("pause-button")]
+        var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
+        if (!await mmu.EnsureUserInVoiceAsync()) return;
+        if (!await mmu.EnsureClientInVoiceAsync()) return;
 
-		public async Task Pause()
-		{
-			var player = AudioService.TryGetPlayer(Context, "resume player");
+        var player = Lavalink.GetPlayer(Context.Guild.Id);
 
-			var button = new ComponentBuilder().WithButton("Resume", "resume-button");
+        if (player!.State == PlayerState.Paused)
+        {
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                x.Content = "Paused earlier");
 
-			switch (player.State)
-			{
-				case PlayerState.Playing:
-					await player.PauseAsync();
+            return;
+        }
 
-					await CreateEmbed(EmojiEnum.Love)
-						.WithTitle("Paused the player.")
-						.WithDescription($"Successfully paused {player.CurrentTrack.Title}.")
-						.SendEmbed(Context.Interaction, component: button);
-					break;
-				case PlayerState.Paused:
-				case PlayerState.NotPlaying:
-					await CreateEmbed(EmojiEnum.Love)
-						.WithTitle("Could not pause the player.")
-						.WithDescription($"The track is already paused!")
-						.SendEmbed(Context.Interaction);
-					break;
-				default:
-					await CreateEmbed(EmojiEnum.Annoyed)
-						.WithTitle("Unable to pause the player!")
-						.WithDescription("The player must be either in a playing or paused state to use this command.\n" +
-							$"Current state is **{player.State.Humanize()}**.")
-						.SendEmbed(Context.Interaction);
-					break;
-			}
-		}
-	}
+        await player.PauseAsync();
+
+        await Context.Interaction.ModifyOriginalResponseAsync(x =>
+            x.Content = "Pausing");
+    }
 }

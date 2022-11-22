@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GuildAudits.Data;
 
-public class GuildAuditDatabase : DataContext<GuildAuditDatabase>, DataContextCreate
+public class GuildAuditDatabase : DataContext<GuildAuditDatabase>, IDataContextCreate
 {
     public DbSet<GuildAuditConfig> GuildAuditConfigs { get; set; }
 

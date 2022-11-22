@@ -5,7 +5,7 @@ using UserMaps.Models;
 
 namespace UserMaps.Data;
 
-public class UserMapDatabase : DataContext<UserMapDatabase>, DataContextCreate
+public class UserMapDatabase : DataContext<UserMapDatabase>, IDataContextCreate
 {
     public DbSet<UserMap> UserMaps { get; set; }
 

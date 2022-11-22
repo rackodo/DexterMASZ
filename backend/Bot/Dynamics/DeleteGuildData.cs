@@ -1,6 +1,6 @@
 ﻿namespace Bot.Dynamics;
 
-public interface DeleteGuildData
+public interface IDeleteGuildData
 {
     public Task DeleteGuildData(ulong guildId);
 }

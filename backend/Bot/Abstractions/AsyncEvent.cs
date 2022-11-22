@@ -1,5 +1,5 @@
-using System.Collections.Immutable;
 using Bot.Extensions;
+using System.Collections.Immutable;
 
 namespace Bot.Abstractions;
 

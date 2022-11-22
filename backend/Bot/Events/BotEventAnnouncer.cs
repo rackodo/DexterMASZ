@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Bot.Events;
 
-public class BotEventAnnouncer : Event
+public class BotEventAnnouncer : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly BotEventHandler _eventHandler;

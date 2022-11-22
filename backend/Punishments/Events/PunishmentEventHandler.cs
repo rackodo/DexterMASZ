@@ -6,7 +6,7 @@ using Punishments.Models;
 
 namespace Punishments.Events;
 
-public class PunishmentEventHandler : InternalEventHandler
+public class PunishmentEventHandler : INternalEventHandler
 {
     internal readonly AsyncEvent<Func<ModCaseTemplate, Task>> CaseTemplateCreatedEvent = new();
 

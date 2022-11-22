@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Bot.Services;
 
-public class DiscordBot : IHostedService, Event
+public class DiscordBot : IHostedService, IEvent
 {
     private readonly CachedServices _cacher;
     private readonly DiscordSocketClient _client;

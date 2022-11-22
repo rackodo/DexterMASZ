@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Bot.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using Bot.Enums;
 
 namespace Bot.Models;
 
@@ -15,7 +15,7 @@ public class AppSettings
     public ulong[] SiteAdmins { get; set; }
     public string AuditLogWebhookUrl { get; set; } = string.Empty;
     public bool CorsEnabled { get; set; } = false;
-    public EncryptionType EncryptionType { get; set; } = EncryptionType.HTTP;
+    public EncryptionType EncryptionType { get; set; } = EncryptionType.Http;
     [JsonIgnore] public string Lang { get; set; } = "en";
     public string EmbedTitle { get; set; } = "Dexter - a discord moderation bot";
 
@@ -48,7 +48,7 @@ public class AppSettings
     }
 
     public string GetServiceUrl() =>
-        $"http{(EncryptionType == EncryptionType.HTTPS ? "s" : "")}://{ServiceDomain}";
+        $"http{(EncryptionType == EncryptionType.Https ? "s" : "")}://{ServiceDomain}";
 
     public string GetEmbedData(string url) =>
         "<html>" +

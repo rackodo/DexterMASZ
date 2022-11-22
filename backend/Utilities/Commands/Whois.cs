@@ -30,7 +30,8 @@ public class WhoIs : Command<WhoIs>
             .WithThumbnailUrl(user.GetAvatarOrDefaultUrl(size: 1024))
             .AddField(Translator.Get<BotTranslator>().Registered(), user.CreatedAt.DateTime.ToDiscordTs(), true);
 
-        foreach (var repo in CachedServices.GetInitializedAuthenticatedClasses<WhoIsResults>(ServiceProvider, Identity))
+        foreach (var repo in
+                 CachedServices.GetInitializedAuthenticatedClasses<IWhoIsResults>(ServiceProvider, Identity))
             await repo.AddWhoIsInformation(embed, user, Context, Translator);
 
         await Context.Interaction.ModifyOriginalResponseAsync(message => { message.Embed = embed.Build(); });

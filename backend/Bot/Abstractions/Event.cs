@@ -1,6 +1,6 @@
 namespace Bot.Abstractions;
 
-public interface Event
+public interface IEvent
 {
     public void RegisterEvents();
 }

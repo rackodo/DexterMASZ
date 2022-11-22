@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Bot.Data;
 
-public class BotDatabase : DataContext<BotDatabase>, DataContextCreate
+public class BotDatabase : DataContext<BotDatabase>, IDataContextCreate
 {
     private DbSet<AppSettings> AppSettings { get; set; }
 

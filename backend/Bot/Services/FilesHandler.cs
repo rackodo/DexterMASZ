@@ -1,15 +1,15 @@
-using System.Security.Cryptography;
-using System.Text;
 using Bot.Data;
 using Bot.Dynamics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Bot.Services;
 
-public class FilesHandler : DeleteGuildData
+public class FilesHandler : IDeleteGuildData
 {
     private readonly ILogger<FilesHandler> _logger;
     private readonly IServiceProvider _services;

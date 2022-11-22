@@ -2,6 +2,6 @@
 
 public enum EncryptionType
 {
-    HTTP,
-    HTTPS
+    Http,
+    Https
 }

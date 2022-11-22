@@ -48,7 +48,7 @@ public class GuildConfigController : AuthenticatedController
         await _guildConfigRepo.RequireGuildRegistered(guildId);
 
         if (deleteData)
-            foreach (var repo in _cachedServices.GetInitializedAuthenticatedClasses<DeleteGuildData>(_serviceProvider,
+            foreach (var repo in _cachedServices.GetInitializedAuthenticatedClasses<IDeleteGuildData>(_serviceProvider,
                          identity))
                 await repo.DeleteGuildData(guildId);
 

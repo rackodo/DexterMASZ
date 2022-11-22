@@ -1,41 +1,24 @@
-﻿using DexterSlash.Attributes;
-using Discord.Interactions;
+﻿using Discord.Interactions;
+using Music.Abstractions;
+using Music.Utils;
 
-namespace DexterSlash.Commands.MusicCommands
+namespace Music.Commands;
+
+public class Stop : MusicCommand<Stop>
 {
-	public partial class BaseMusicCommand
-	{
+    [SlashCommand("stop", "Stop this session")]
+    public async Task StopMusic()
+    {
+        await Context.Interaction.DeferAsync();
 
-		[SlashCommand("stop", "Displays the current music queue.")]
-		[AttributeDJ]
+        var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
+        if (!await mmu.EnsureUserInVoiceAsync()) return;
+        if (!await mmu.EnsureClientInVoiceAsync()) return;
 
-		public async Task Stop()
-		{
-			var player = AudioService.TryGetPlayer(Context, "stop songs");
+        var player = Lavalink.GetPlayer(Context.Guild.Id);
+        await player!.StopAsync();
 
-			var vcName = $"**{Context.Guild.GetVoiceChannel(player.VoiceChannelId.Value).Name}**";
-
-			try
-			{
-				string prevTrack = player.CurrentTrack.Title;
-
-				await player.StopAsync();
-
-				await CreateEmbed(EmojiEnum.Love)
-					.WithTitle("Playback halted.")
-					.WithDescription($"Stopped {prevTrack} from playing in {vcName}.").SendEmbed(Context.Interaction);
-			}
-			catch (Exception)
-			{
-				await CreateEmbed(EmojiEnum.Annoyed)
-					.WithTitle("Unable to stop songs!")
-					.WithDescription($"Failed to disconnect from {vcName}.\nIf the issue persists, please contact the developers for support.")
-					.SendEmbed(Context.Interaction);
-
-				Logger.LogError($"Failed to disconnect from voice channel '{vcName}' in {Context.Guild.Id}.");
-
-				return;
-			}
-		}
-	}
+        await Context.Interaction.ModifyOriginalResponseAsync(x =>
+            x.Content = "Stopped this session, the queue will be cleaned");
+    }
 }

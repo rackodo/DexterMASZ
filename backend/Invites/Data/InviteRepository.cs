@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Dynamics;
 using Bot.Extensions;
 using Bot.Services;
@@ -8,12 +7,13 @@ using Discord;
 using Invites.Events;
 using Invites.Models;
 using Invites.Translators;
+using System.Text;
 using Utilities.Dynamics;
 
 namespace Invites.Data;
 
 public class InviteRepository : Repository,
-    AddAdminStats, AddGuildStats, AddNetworks, WhoIsResults, DeleteGuildData
+    IAddAdminStats, IAddGuildStats, IAddNetworks, IWhoIsResults, IDeleteGuildData
 {
     private readonly DiscordRest _discordRest;
     private readonly InviteEventHandler _eventHandler;

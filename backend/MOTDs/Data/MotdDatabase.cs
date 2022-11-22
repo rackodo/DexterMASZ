@@ -5,7 +5,7 @@ using MOTDs.Models;
 
 namespace MOTDs.Data;
 
-public class MotdDatabase : DataContext<MotdDatabase>, DataContextCreate
+public class MotdDatabase : DataContext<MotdDatabase>, IDataContextCreate
 {
     private DbSet<GuildMotd> GuildMotDs { get; set; }
 

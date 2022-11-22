@@ -2,6 +2,7 @@
 using Bot.Data;
 using Bot.Models;
 using Bot.Services;
+using Launch.Helpers;
 using Launch.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
@@ -126,7 +127,7 @@ public class Initialize
     private static async Task TryAddMigrations(CachedServices cachedServices,
         WebApplicationBuilder builder, Action<DbContextOptionsBuilder> database)
     {
-        foreach (var type in cachedServices.GetClassTypes<DataContextInitialize>())
+        foreach (var type in cachedServices.GetClassTypes<IDataContextInitialize>())
             type.GetMethod("AddContextToServiceProvider")?.Invoke(null, new object[] { database, builder.Services });
 
         var app = builder.Build();

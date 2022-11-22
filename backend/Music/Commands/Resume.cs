@@ -1,66 +1,34 @@
-﻿using Discord;
-using Discord.Interactions;
-using Humanizer;
+﻿using Discord.Interactions;
+using Lavalink4NET.Player;
+using Music.Abstractions;
+using Music.Utils;
 
-namespace DexterSlash.Commands.MusicCommands
+namespace Music.Commands;
+
+public class Resume : MusicCommand<Resume>
 {
-	public partial class BaseMusicCommand
-	{
+    [SlashCommand("resume", "Resume this session")]
+    public async Task ResumeMusic()
+    {
+        await Context.Interaction.DeferAsync();
 
-		[SlashCommand("resume", "Resumes the track if the track is paused.")]
-		[ComponentInteraction("resume-button")]
+        var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
+        if (!await mmu.EnsureUserInVoiceAsync()) return;
+        if (!await mmu.EnsureClientInVoiceAsync()) return;
 
-		public async Task Resume()
-		{
-			var player = AudioService.TryGetPlayer(Context, "resume player");
+        var player = Lavalink.GetPlayer(Context.Guild.Id);
 
-			var button = new ComponentBuilder().WithButton("Pause", "pause-button", ButtonStyle.Danger);
+        if (player!.State != PlayerState.Paused)
+        {
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                x.Content = "Resumed earlier");
 
-			switch (player.State)
-			{
-				case PlayerState.Paused:
-					await player.ResumeAsync();
+            return;
+        }
 
-					await CreateEmbed(EmojiEnum.Love)
-						.WithTitle("Resumed the player.")
-						.WithDescription($"Successfully resumed {player.CurrentTrack.Title}.")
-						.SendEmbed(Context.Interaction, component: button);
-					break;
-				case PlayerState.Playing:
-					await CreateEmbed(EmojiEnum.Love)
-						.WithTitle("Already playing.")
-						.WithDescription($"The current track is already playing!")
-						.SendEmbed(Context.Interaction, component: button);
-					break;
-				case PlayerState.NotPlaying:
-					var track = player.Queue.FirstOrDefault();
+        await player.ResumeAsync();
 
-					if (track is not null)
-					{
-						await player.PlayAsync(track);
-
-						await player.SkipAsync();
-					}
-
-					if (player.CurrentTrack is not null && track is not null)
-						await CreateEmbed(EmojiEnum.Love)
-							.WithTitle("Resumed the player.")
-							.WithDescription($"Successfully resumed {player.CurrentTrack.Title}")
-							.SendEmbed(Context.Interaction, component: button);
-					else
-						await CreateEmbed(EmojiEnum.Love)
-							.WithTitle("Could not resume the player.")
-							.WithDescription($"No tracks currently in queue!")
-							.SendEmbed(Context.Interaction);
-					break;
-				default:
-					await CreateEmbed(EmojiEnum.Annoyed)
-						.WithTitle("Unable to resume the player!")
-						.WithDescription("The player must be either in a paused state to use this command.\n" +
-							$"Current state is **{player.State.Humanize()}**.")
-						.SendEmbed(Context.Interaction);
-					break;
-			}
-		}
-	}
+        await Context.Interaction.ModifyOriginalResponseAsync(x =>
+            x.Content = "Resuming");
+    }
 }

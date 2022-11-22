@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Attributes;
 using Bot.Data;
 using Bot.Enums;
@@ -8,6 +7,7 @@ using Bot.Identities;
 using Discord;
 using Discord.Interactions;
 using Humanizer;
+using System.Text;
 using Utilities.Translators;
 
 namespace Utilities.Commands;

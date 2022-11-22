@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using GuildAudits.DTOs;
 using GuildAudits.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace GuildAudits.Models;
 

@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Invites.Services;
 
-public class InviteTracker : Event
+public class InviteTracker : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly InviteEventHandler _eventHandler;
@@ -180,10 +180,10 @@ public class InviteTracker : Event
 
         var changedInvites = invites.Where(x =>
             // Invite is in current invites and has new uses.
-            (currentInvites.Find(c => c.Code == x.Code) != null &&
-             x.HasNewUses(currentInvites.Find(c => c.Code == x.Code)!.Uses)) ||
+            currentInvites.Find(c => c.Code == x.Code) != null &&
+            x.HasNewUses(currentInvites.Find(c => c.Code == x.Code)!.Uses) ||
             // Invite is not in current invites and has expired via max uses.
-            (x.MaxUses.GetValueOrDefault(0) - 1 == x.Uses && currentInvites.Find(c => c.Code == x.Code) == null)
+            x.MaxUses.GetValueOrDefault(0) - 1 == x.Uses && currentInvites.Find(c => c.Code == x.Code) == null
         ).ToList();
 
         if (changedInvites.Count == 1)

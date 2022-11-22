@@ -18,7 +18,7 @@ public class Experience : Command<Experience>
     public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
     public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
     public SettingsRepository? SettingsRepository { get; set; }
-    public DiscordRest? _client { get; set; }
+    public DiscordRest? Client { get; set; }
 
     [SlashCommand("xp", "Display detailed experience information.")]
     public async Task RankCommand(
@@ -37,12 +37,12 @@ public class Experience : Command<Experience>
 
         var totalLevel = calclevel.Total.Level;
         if (levelTarget < 0) levelTarget = totalLevel + 1;
-        var targetXp = GuildUserLevel.XPFromLevel(levelTarget, guildlevelconfig);
+        var targetXp = GuildUserLevel.XpFromLevel(levelTarget, guildlevelconfig);
 
         var roleTargetLevel = 0;
         var roleTargetName = "Unknown";
         var found = false;
-        var guildInfo = _client.FetchGuildInfo(guildlevelconfig.Id, CacheBehavior.Default);
+        var guildInfo = Client.FetchGuildInfo(guildlevelconfig.Id, CacheBehavior.Default);
         if (roleTarget != null)
         {
             var entry = guildlevelconfig.Levels.FirstOrDefault(e =>
@@ -92,7 +92,7 @@ public class Experience : Command<Experience>
             }
         }
 
-        var roleTargetXp = GuildUserLevel.XPFromLevel(roleTargetLevel, guildlevelconfig);
+        var roleTargetXp = GuildUserLevel.XpFromLevel(roleTargetLevel, guildlevelconfig);
 
         var embed = new EmbedBuilder()
             .WithTitle($"{user.Username}#{user.Discriminator}'s Experience Summary")
@@ -101,9 +101,9 @@ public class Experience : Command<Experience>
                 $"{LevelDataExpression(LevelType.Total, calclevel)}\n" +
                 $"{LevelDataExpression(LevelType.Text, calclevel)}\n" +
                 $"{LevelDataExpression(LevelType.Voice, calclevel)}")
-            .AddField($"Till Level {levelTarget}:", LevelTargetExpression(level.TotalXP, targetXp, guildlevelconfig))
+            .AddField($"Till Level {levelTarget}:", LevelTargetExpression(level.TotalXp, targetXp, guildlevelconfig))
             .AddField($"Till {roleTargetName} Rank:",
-                LevelTargetExpression(level.TotalXP, roleTargetXp, guildlevelconfig))
+                LevelTargetExpression(level.TotalXp, roleTargetXp, guildlevelconfig))
             .WithColor(Color.Blue)
             .Build();
 
@@ -125,12 +125,12 @@ public class Experience : Command<Experience>
         return $"**{type} Level: {data.Level} ({data.Xp})**, {data.ResidualXp}/{data.LevelXp} till next level.";
     }
 
-    private static string LevelTargetExpression(long currentXP, long targetXP, GuildLevelConfig config)
+    private static string LevelTargetExpression(long currentXp, long targetXp, GuildLevelConfig config)
     {
         string textExpr;
         try
         {
-            var textTime = TimeSpan.FromMinutes((targetXP - currentXP) /
+            var textTime = TimeSpan.FromMinutes((targetXp - currentXp) /
                                                 ((config.MinimumTextXpGiven + config.MaximumTextXpGiven) >> 1));
             textExpr = textTime.Humanize(2, minUnit: TimeUnit.Minute);
         }
@@ -142,7 +142,7 @@ public class Experience : Command<Experience>
         string voiceExpr;
         try
         {
-            var voiceTime = TimeSpan.FromMinutes((targetXP - currentXP) /
+            var voiceTime = TimeSpan.FromMinutes((targetXp - currentXp) /
                                                  ((config.MinimumVoiceXpGiven + config.MaximumVoiceXpGiven) >> 1));
             voiceExpr = voiceTime.Humanize(2, minUnit: TimeUnit.Minute);
         }
@@ -151,11 +151,11 @@ public class Experience : Command<Experience>
             voiceExpr = "a **very** long time";
         }
 
-        if (targetXP > currentXP)
+        if (targetXp > currentXp)
             return
                 $"**Text:** {textExpr} (averagely sustained).\n" +
                 $"**Voice:** {voiceExpr} (averagely sustained).\n" +
-                $"**Experience:** {currentXP} out of {targetXP}, missing {targetXP - currentXP}.";
-        return $"**Exceeded target** by {currentXP - targetXP} experience ({currentXP}/{targetXP}).";
+                $"**Experience:** {currentXp} out of {targetXp}, missing {targetXp - currentXp}.";
+        return $"**Exceeded target** by {currentXp - targetXp} experience ({currentXp}/{targetXp}).";
     }
 }

@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
@@ -11,6 +10,7 @@ using Punishments.DTOs;
 using Punishments.Enums;
 using Punishments.Models;
 using Punishments.Translators;
+using System.ComponentModel.DataAnnotations;
 
 namespace Punishments.Controllers;
 

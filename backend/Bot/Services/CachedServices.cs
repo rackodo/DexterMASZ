@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Bot.Services;
 
@@ -39,8 +39,8 @@ public class CachedServices
         {
             classes.AddRange(
                 assembly.GetTypes()
-                    .Where(c => c.IsClass && ((!c.IsAbstract && c.IsSubclassOf(type)) ||
-                                              (!c.IsInterface && c.GetInterfaces().Contains(type))))
+                    .Where(c => c.IsClass && (!c.IsAbstract && c.IsSubclassOf(type) ||
+                                              !c.IsInterface && c.GetInterfaces().Contains(type)))
             );
         }
 

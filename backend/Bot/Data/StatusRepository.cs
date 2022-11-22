@@ -1,13 +1,13 @@
-using System.Diagnostics;
 using Bot.Abstractions;
 using Bot.Dynamics;
 using Bot.Models;
 using Bot.Services;
 using Discord;
+using System.Diagnostics;
 
 namespace Bot.Data;
 
-public class StatusRepository : Repository, AddAdminStats
+public class StatusRepository : Repository, IAddAdminStats
 {
     private readonly BotDatabase _context;
     private readonly DiscordBot _discordBot;

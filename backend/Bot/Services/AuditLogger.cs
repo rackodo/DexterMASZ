@@ -1,7 +1,4 @@
-﻿using System.Net.WebSockets;
-using System.Runtime.InteropServices;
-using System.Text;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Events;
 using Bot.Extensions;
@@ -13,10 +10,13 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Net.WebSockets;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Bot.Services;
 
-public class AuditLogger : IHostedService, Event
+public class AuditLogger : IHostedService, IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly StringBuilder _currentMessage;

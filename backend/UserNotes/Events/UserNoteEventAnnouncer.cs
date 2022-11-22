@@ -12,7 +12,7 @@ using UserNotes.Models;
 
 namespace UserNotes.Events;
 
-public class UserNoteEventAnnouncer : Event
+public class UserNoteEventAnnouncer : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly DiscordRest _discordRest;

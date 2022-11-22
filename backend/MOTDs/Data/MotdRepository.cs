@@ -9,7 +9,7 @@ using MOTDs.Models;
 
 namespace MOTDs.Data;
 
-public class MotdRepository : Repository, DeleteGuildData
+public class MotdRepository : Repository, IDeleteGuildData
 {
     private readonly MotdEventHandler _eventHandler;
     private readonly MotdDatabase _guildMotdDatabase;

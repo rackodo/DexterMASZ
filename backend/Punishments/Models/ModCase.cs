@@ -1,5 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using Punishments.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Punishments.Models;
 

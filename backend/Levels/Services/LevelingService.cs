@@ -1,5 +1,4 @@
-﻿using System.Timers;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Events;
 using Bot.Extensions;
 using Discord;
@@ -9,20 +8,21 @@ using Levels.Events;
 using Levels.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace Levels.Services;
 
-public class LevelingService : Event
+public class LevelingService : IEvent
 {
     private readonly BotEventHandler _botEventHandler;
     private readonly DiscordSocketClient _client;
     private readonly LevelsEventHandler _eventHandler;
+    private readonly Dictionary<ulong, GuildCooldowns> _guildCooldowns = new();
     private readonly ILogger<LevelingService> _logger;
 
     private readonly Random _random;
     private readonly IServiceProvider _serviceProvider;
-    private readonly Dictionary<ulong, GuildCooldowns> guildCooldowns = new();
 
     public LevelingService(DiscordSocketClient client, ILogger<LevelingService> logger, IServiceProvider services,
         BotEventHandler botEventHandler,
@@ -48,18 +48,18 @@ public class LevelingService : Event
         _client.UserJoined += HandleUpdateRoles;
     }
 
-    public async Task GrantXP(int xp, XPType xptype, GuildUserLevel level, GuildLevelConfig config, IGuildUser user,
+    public async Task GrantXp(int xp, XpType xptype, GuildUserLevel level, GuildLevelConfig config, IGuildUser user,
         IGuildChannel channel, IServiceScope scope)
     {
         // REQUEST ITEMS FROM THE INVENTORY DATABASE TO RECALCULATE XP
 
         var grantedxp = 0;
-        if (xptype.HasFlag(XPType.Text))
+        if (xptype.HasFlag(XpType.Text))
         {
             level.TextXp += xp;
             grantedxp += xp;
         }
-        else if (xptype.HasFlag(XPType.Voice))
+        else if (xptype.HasFlag(XpType.Voice))
         {
             level.VoiceXp += xp;
             grantedxp += xp;
@@ -177,7 +177,7 @@ public class LevelingService : Event
         foreach (var config in configs)
         {
             _logger.LogInformation($"Registering XP Timer for Guild {config.Id}");
-            guildCooldowns.Add(config.Id, new GuildCooldowns(config.Id, config.XpInterval));
+            _guildCooldowns.Add(config.Id, new GuildCooldowns(config.Id, config.XpInterval));
         }
 
         return Task.CompletedTask;
@@ -194,11 +194,11 @@ public class LevelingService : Event
             return;
 
         var guild = guildChannel.Guild;
-        if (!guildCooldowns.ContainsKey(guild.Id))
+        if (!_guildCooldowns.ContainsKey(guild.Id))
             return;
 
-        var gcds = guildCooldowns[guild.Id];
-        if (gcds.textUsers.Contains(message.Author.Id))
+        var gcds = _guildCooldowns[guild.Id];
+        if (gcds.TextUsers.Contains(message.Author.Id))
             return;
 
         using var scope = _serviceProvider.CreateScope();
@@ -208,36 +208,36 @@ public class LevelingService : Event
         if (config.DisabledXpChannels.Contains(message.Channel.Id))
             return;
 
-        gcds.textUsers.Add(message.Author.Id);
+        gcds.TextUsers.Add(message.Author.Id);
 
         var user = await guild.GetUserAsync(message.Author.Id) ??
                    await _client.Rest.GetGuildUserAsync(guild.Id, message.Author.Id);
 
         var levelrepo = scope.ServiceProvider.GetRequiredService<GuildUserLevelRepository>();
-        await GrantXP(_random.Next(config.MinimumTextXpGiven, config.MaximumTextXpGiven + 1),
-            XPType.Text, await levelrepo.GetOrCreateLevel(user), config, user, guildChannel, scope);
+        await GrantXp(_random.Next(config.MinimumTextXpGiven, config.MaximumTextXpGiven + 1),
+            XpType.Text, await levelrepo.GetOrCreateLevel(user), config, user, guildChannel, scope);
     }
 
     private async Task PeriodicCheck()
     {
         var timenow = DateTimeOffset.Now.ToUnixTimeSeconds();
-        foreach (var cds in guildCooldowns.Values)
+        foreach (var cds in _guildCooldowns.Values)
         {
-            if (timenow < cds.nextRefresh) continue;
-            cds.nextRefresh += cds.refreshInterval;
-            cds.textUsers.Clear();
+            if (timenow < cds.NextRefresh) continue;
+            cds.NextRefresh += cds.RefreshInterval;
+            cds.TextUsers.Clear();
 
             using var scope = _serviceProvider.CreateScope();
             var configrepo = scope.ServiceProvider.GetRequiredService<GuildLevelConfigRepository>();
             var levelrepo = scope.ServiceProvider.GetRequiredService<GuildUserLevelRepository>();
 
-            var config = await configrepo.GetOrCreateConfig(cds.guildId);
-            var guild = _client.GetGuild(cds.guildId);
+            var config = await configrepo.GetOrCreateConfig(cds.GuildId);
+            var guild = _client.GetGuild(cds.GuildId);
             if (guild == null)
             {
-                var guildName = (await _client.Rest.GetGuildAsync(cds.guildId))?.Name;
+                var guildName = (await _client.Rest.GetGuildAsync(cds.GuildId))?.Name;
                 _logger.LogError(
-                    $"Unable to retrieve guild vc data for guild {guildName ?? "Unknown"} ({cds.guildId})");
+                    $"Unable to retrieve guild vc data for guild {guildName ?? "Unknown"} ({cds.GuildId})");
                 continue;
             }
 
@@ -266,8 +266,8 @@ public class LevelingService : Event
 
                 foreach (var u in toLevel)
                 {
-                    await GrantXP(_random.Next(config.MinimumVoiceXpGiven, config.MaximumVoiceXpGiven + 1),
-                        XPType.Voice,
+                    await GrantXp(_random.Next(config.MinimumVoiceXpGiven, config.MaximumVoiceXpGiven + 1),
+                        XpType.Voice,
                         await levelrepo.GetOrCreateLevel(u.GuildId, u.Id),
                         config,
                         u,
@@ -281,18 +281,18 @@ public class LevelingService : Event
 
     private Task HandleGuildConfigChanged(GuildLevelConfig guildLevelConfig)
     {
-        if (!guildCooldowns.ContainsKey(guildLevelConfig.Id))
+        if (!_guildCooldowns.ContainsKey(guildLevelConfig.Id))
         {
-            guildCooldowns.Add(guildLevelConfig.Id,
+            _guildCooldowns.Add(guildLevelConfig.Id,
                 new GuildCooldowns(guildLevelConfig.Id, guildLevelConfig.XpInterval));
         }
         else
         {
-            var gcds = guildCooldowns[guildLevelConfig.Id];
-            if (gcds.refreshInterval == guildLevelConfig.XpInterval) return Task.CompletedTask;
-            gcds.refreshInterval = guildLevelConfig.XpInterval;
-            guildCooldowns[guildLevelConfig.Id].nextRefresh =
-                DateTimeOffset.Now.ToUnixTimeSeconds() + gcds.refreshInterval;
+            var gcds = _guildCooldowns[guildLevelConfig.Id];
+            if (gcds.RefreshInterval == guildLevelConfig.XpInterval) return Task.CompletedTask;
+            gcds.RefreshInterval = guildLevelConfig.XpInterval;
+            _guildCooldowns[guildLevelConfig.Id].NextRefresh =
+                DateTimeOffset.Now.ToUnixTimeSeconds() + gcds.RefreshInterval;
         }
 
         return Task.CompletedTask;
@@ -300,25 +300,25 @@ public class LevelingService : Event
 
     private Task HandleGuildConfigDeleted(GuildLevelConfig guildLevelConfig)
     {
-        if (guildCooldowns.ContainsKey(guildLevelConfig.Id))
-            guildCooldowns.Remove(guildLevelConfig.Id);
+        if (_guildCooldowns.ContainsKey(guildLevelConfig.Id))
+            _guildCooldowns.Remove(guildLevelConfig.Id);
         return Task.CompletedTask;
     }
 
     private class GuildCooldowns
     {
-        public readonly ulong guildId;
-        public readonly HashSet<ulong> textUsers;
-        public long nextRefresh;
-        public int refreshInterval;
+        public readonly ulong GuildId;
+        public readonly HashSet<ulong> TextUsers;
+        public long NextRefresh;
+        public int RefreshInterval;
 
         public GuildCooldowns(ulong guildId, int refreshInterval)
         {
-            this.guildId = guildId;
-            this.refreshInterval = refreshInterval;
+            GuildId = guildId;
+            RefreshInterval = refreshInterval;
 
-            nextRefresh = DateTimeOffset.Now.ToUnixTimeSeconds() + refreshInterval;
-            textUsers = new HashSet<ulong>();
+            NextRefresh = DateTimeOffset.Now.ToUnixTimeSeconds() + refreshInterval;
+            TextUsers = new HashSet<ulong>();
         }
     }
 }

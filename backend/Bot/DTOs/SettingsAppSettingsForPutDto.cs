@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Bot.Enums;
+﻿using Bot.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bot.DTOs;
 

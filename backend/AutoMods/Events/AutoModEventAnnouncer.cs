@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AutoMods.Events;
 
-public class AutoModEventAnnouncer : Event
+public class AutoModEventAnnouncer : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly DiscordRest _discordRest;

@@ -44,13 +44,13 @@ public class LevelData : IComparable<LevelData>
     public void SetLevel(int value, GuildLevelConfig config)
     {
         Level = value;
-        Xp = GuildUserLevel.XPFromLevel(value, config);
-        _levelxp = GuildUserLevel.XPFromLevel(value + 1, config) - 1;
+        Xp = GuildUserLevel.XpFromLevel(value, config);
+        _levelxp = GuildUserLevel.XpFromLevel(value + 1, config) - 1;
         _residualxp = 0;
     }
 
     private void Recalculate(GuildLevelConfig config) =>
-        Level = GuildUserLevel.LevelFromXP(Xp, config, out _residualxp, out _levelxp);
+        Level = GuildUserLevel.LevelFromXp(Xp, config, out _residualxp, out _levelxp);
 
-    public ExperienceRecordDTO toDTO() => new(Xp, Level, _levelxp, _residualxp);
+    public ExperienceRecordDto ToDto() => new(Xp, Level, _levelxp, _residualxp);
 }

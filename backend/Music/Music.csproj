@@ -1,14 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>preview</LangVersion>
-		<EnablePreviewFeatures>True</EnablePreviewFeatures>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>preview</LangVersion>
+        <EnablePreviewFeatures>True</EnablePreviewFeatures>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\Bot\Bot.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Fergun.Interactive" Version="1.6.0" />
+      <PackageReference Include="Lavalink4NET" Version="3.0.0-preview.13" />
+      <PackageReference Include="Lavalink4NET.Discord.NET" Version="3.0.0-preview.13" />
+      <PackageReference Include="Lavalink4NET.MemoryCache" Version="3.0.0-preview.13" />
+      <PackageReference Include="Lavalink4NET.Integrations.SponsorBlock" Version="3.0.0-preview.13" />
+      <PackageReference Include="Lavalink4NET.Logging.Microsoft" Version="3.0.0-preview.13" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Bot\Bot.csproj" />
+    </ItemGroup>
 
 </Project>

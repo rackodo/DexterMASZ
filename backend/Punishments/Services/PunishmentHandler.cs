@@ -17,7 +17,7 @@ using Timer = System.Timers.Timer;
 
 namespace Punishments.Services;
 
-public class PunishmentHandler : Event
+public class PunishmentHandler : IEvent
 {
     private readonly BotEventHandler _botEventHandler;
     private readonly DiscordSocketClient _client;

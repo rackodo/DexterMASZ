@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Bot.Enums;
+﻿using Bot.Enums;
 using Bot.Extensions;
 using Bot.Models;
 using Bot.Services;
@@ -11,6 +10,7 @@ using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Models;
 using Punishments.Translators;
+using System.Text;
 
 namespace Punishments.Extensions;
 
@@ -29,7 +29,7 @@ public static class PunishmentEmbedCreator
         var embed = await modCase.CreateModCaseEmbed(RestAction.Created, rest, provider);
 
         if (result != AnnouncementResult.None)
-            embed.AddField($"📣 - {translator.Get<PunishmentTranslator>().DMReceipt()}",
+            embed.AddField($"📣 - {translator.Get<PunishmentTranslator>().DmReceipt()}",
                 translator.Get<PunishmentEnumTranslator>().Enum(result), true);
 
         var url = $"{settings.GetServiceUrl()}/guilds/{modCase.GuildId}/cases/{modCase.CaseId}";

@@ -13,7 +13,7 @@ public class UserRepository : Repository
     public UserRepository(DiscordRest discordRest, BotDatabase context) : base(discordRest)
         => _context = context;
 
-    public async Task<LeftUserDTO> TryGetUser(ulong userId)
+    public async Task<LeftUserDto> TryGetUser(ulong userId)
     {
         var user = await _context.GetLeftUser(userId);
 
@@ -22,16 +22,16 @@ public class UserRepository : Repository
 
         _context.Entry(user).State = EntityState.Detached;
 
-        return new LeftUserDTO(user);
+        return new LeftUserDto(user);
     }
 
     public async Task UpdateUser(IUser user)
-        => await _context.UpdateUser(new LeftUserDTO(user).CreateUserFromDto());
+        => await _context.UpdateUser(new LeftUserDto(user).CreateUserFromDto());
 
     public async Task AddUser(IUser user)
     {
         await RemoveUserIfExists(user);
-        await _context.AddLeftUser(new LeftUserDTO(user).CreateUserFromDto());
+        await _context.AddLeftUser(new LeftUserDto(user).CreateUserFromDto());
     }
 
     public async Task RemoveUserIfExists(IUser user)

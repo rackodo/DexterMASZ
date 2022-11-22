@@ -1,4 +1,3 @@
-using System.Text;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Exceptions;
@@ -16,13 +15,14 @@ using Humanizer;
 using Invites.Events;
 using Invites.Models;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 
 namespace GuildAudits.Services;
 
-public class GuildAuditer : Event
+public class GuildAuditer : IEvent
 {
-    private static readonly string CHECK = "\u2705";
-    private static readonly string X_CHECK = "\u274C";
+    private static readonly string Check = "\u2705";
+    private static readonly string XCheck = "\u274C";
 
     private readonly DiscordSocketClient _client;
     private readonly InviteEventHandler _eventHandler;
@@ -904,7 +904,7 @@ public class GuildAuditer : Event
                     .WithDescription(description.ToString())
                     .WithAuthor(messageAfter.Author)
                     .WithFooter($"{translator.Get<BotTranslator>().UserId()}: {messageAfter.Author.Id}")
-                    .AddField(translator.Get<GuildAuditTranslator>().Pinned(), messageAfter.IsPinned ? CHECK : X_CHECK);
+                    .AddField(translator.Get<GuildAuditTranslator>().Pinned(), messageAfter.IsPinned ? Check : XCheck);
 
                 var before = await messageBefore.GetOrDownloadAsync();
 

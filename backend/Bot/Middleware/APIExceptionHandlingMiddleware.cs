@@ -1,8 +1,8 @@
-using System.Text.Json;
 using Bot.Abstractions;
 using Bot.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace Bot.Middleware;
 

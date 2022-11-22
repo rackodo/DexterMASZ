@@ -11,7 +11,7 @@ using MOTDs.Models;
 
 namespace MOTDs.Events;
 
-public class MotdEventAnnouncer : Event
+public class MotdEventAnnouncer : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly MotdEventHandler _eventHandler;

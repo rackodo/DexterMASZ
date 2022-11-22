@@ -20,6 +20,7 @@
 		<ProjectReference Include="..\Levels\Levels.csproj" />
 		<ProjectReference Include="..\Messaging\Messaging.csproj" />
 		<ProjectReference Include="..\MOTDs\MOTDs.csproj" />
+		<ProjectReference Include="..\Music\Music.csproj" />
 		<ProjectReference Include="..\Punishments\Punishments.csproj" />
 		<ProjectReference Include="..\UserMaps\UserMaps.csproj" />
 		<ProjectReference Include="..\UserNotes\UserNotes.csproj" />

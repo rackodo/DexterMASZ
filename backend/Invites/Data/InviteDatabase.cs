@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Invites.Data;
 
-public class InviteDatabase : DataContext<InviteDatabase>, DataContextCreate
+public class InviteDatabase : DataContext<InviteDatabase>, IDataContextCreate
 {
     public DbSet<UserInvite> UserInvites { get; set; }
 

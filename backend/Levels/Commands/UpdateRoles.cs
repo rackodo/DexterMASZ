@@ -18,7 +18,7 @@ public class UpdateRoles : Command<UpdateRoles>
     public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
     public SettingsRepository? SettingsRepository { get; set; }
     public LevelingService? LevelingService { get; set; }
-    public DiscordRest? _client { get; set; }
+    public DiscordRest? Client { get; set; }
 
     [SlashCommand("updateroles", "Update a user's roles to match their level.", runMode: RunMode.Async)]
     public async Task RankCommand(

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AutoMods.Services;
 
-public class AutoModChecker : Event
+public class AutoModChecker : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly ILogger<AutoModChecker> _logger;

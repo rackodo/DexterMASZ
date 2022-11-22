@@ -9,7 +9,7 @@ using Bot.Services;
 
 namespace Bot.Data;
 
-public class GuildConfigRepository : Repository, AddAdminStats
+public class GuildConfigRepository : Repository, IAddAdminStats
 {
     private readonly BotDatabase _context;
     private readonly DiscordRest _discordRest;

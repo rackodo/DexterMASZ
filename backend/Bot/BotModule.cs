@@ -33,7 +33,7 @@ public class BotModule : WebModule
     public override void AddPreServices(IServiceCollection services, CachedServices cachedServices,
         Action<DbContextOptionsBuilder> dbOption)
     {
-        foreach (var type in cachedServices.GetClassTypes<DataContextInitialize>())
+        foreach (var type in cachedServices.GetClassTypes<IDataContextInitialize>())
         {
             type.GetMethod("AddContextToServiceProvider")
                 .Invoke(null, new object[] { dbOption, services });
@@ -46,19 +46,20 @@ public class BotModule : WebModule
 
         foreach (var type in cachedServices.GetClassTypes<Translator>())
             services.AddScoped(type);
-    }
 
-    public override void AddServices(IServiceCollection services, CachedServices cachedServices, AppSettings settings)
-    {
         services.AddSingleton(new DiscordSocketConfig
         {
+            LogLevel = LogSeverity.Verbose,
+            LogGatewayIntentWarnings = true,
+            UseInteractionSnowflakeDate = false,
             AlwaysDownloadUsers = true,
+            UseSystemClock = false,
+            ConnectionTimeout = 24 * 60 * 60 * 1000,
+            FormatUsersInBidirectionalUnicode = false,
             MessageCacheSize = 10240,
-            LogLevel = LogSeverity.Debug,
             GatewayIntents = (GatewayIntents)((int)GatewayIntents.AllUnprivileged | (int)GatewayIntents.GuildMembers |
                                               (int)GatewayIntents.GuildMessages | (int)GatewayIntents.DirectMessages |
-                                              (1 << 15)),
-            LogGatewayIntentWarnings = false
+                                              (1 << 15))
         });
 
         services.AddSingleton<DiscordSocketClient>();
@@ -66,15 +67,18 @@ public class BotModule : WebModule
         services.AddSingleton(new InteractionServiceConfig
         {
             DefaultRunMode = RunMode.Async,
-            LogLevel = LogSeverity.Debug
+            LogLevel = LogSeverity.Verbose
         });
 
         services.AddSingleton<InteractionService>();
+    }
 
-        foreach (var type in cachedServices.GetClassTypes<InternalEventHandler>())
+    public override void AddServices(IServiceCollection services, CachedServices cachedServices, AppSettings settings)
+    {
+        foreach (var type in cachedServices.GetClassTypes<INternalEventHandler>())
             services.AddSingleton(type);
 
-        foreach (var type in cachedServices.GetClassTypes<Event>())
+        foreach (var type in cachedServices.GetClassTypes<IEvent>())
             services.AddSingleton(type);
 
         services.AddHostedService(s => s.GetRequiredService<DiscordBot>());
@@ -140,7 +144,7 @@ public class BotModule : WebModule
 
     public override void PostBuild(IServiceProvider services, CachedServices cachedServices)
     {
-        foreach (var initEvent in cachedServices.GetInitializedClasses<Event>(services))
+        foreach (var initEvent in cachedServices.GetInitializedClasses<IEvent>(services))
             initEvent.RegisterEvents();
     }
 

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GuildAudits.Events;
 
-public class GuildAuditEventAnnouncer : Event
+public class GuildAuditEventAnnouncer : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly GuildAuditEventHandler _eventHandler;

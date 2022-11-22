@@ -1,6 +1,6 @@
 ﻿namespace Bot.Dynamics;
 
-public interface AddChart
+public interface IAddChart
 {
     public Task AddChartData(dynamic chart, ulong guildId, DateTime since);
 }

@@ -50,7 +50,7 @@ public class PunishmentTranslator : Translator
             _ => "This user is already final warned!"
         };
 
-    public string DMReceipt() =>
+    public string DmReceipt() =>
         PreferredLanguage switch
         {
             Language.De => "DM-Quittung",

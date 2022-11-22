@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Bot.Abstractions;
 
-public interface DataContextCreate : DataContextInitialize
+public interface IDataContextCreate : IDataContextInitialize
 {
     public static abstract void AddContextToServiceProvider(
         Action<DbContextOptionsBuilder> optionsAction,

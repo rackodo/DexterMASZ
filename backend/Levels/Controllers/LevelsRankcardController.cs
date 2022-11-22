@@ -23,7 +23,7 @@ public class LevelsRankcardController : AuthenticatedController
     {
         var config = _levelsRankcardRepository.GetOrDefaultRankcard(userId);
 
-        var result = new UserRankcardConfigDTO(
+        var result = new UserRankcardConfigDto(
             config.Id,
             config.XpColor,
             config.OffColor,
@@ -53,7 +53,7 @@ public class LevelsRankcardController : AuthenticatedController
     }
 
     [HttpPost("")]
-    public async Task<IActionResult> PutRankcardConfig([FromBody] UserRankcardConfigDTO rankcardConfig)
+    public async Task<IActionResult> PutRankcardConfig([FromBody] UserRankcardConfigDto rankcardConfig)
     {
         var identity = await SetupAuthentication();
 

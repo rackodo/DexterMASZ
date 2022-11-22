@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using AutoMods.DTOs;
 using AutoMods.Enums;
 using Punishments.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace AutoMods.Models;
 

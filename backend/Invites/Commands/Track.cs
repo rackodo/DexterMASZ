@@ -1,5 +1,3 @@
-using System.Net;
-using System.Text;
 using Bot.Abstractions;
 using Bot.Attributes;
 using Bot.Enums;
@@ -10,6 +8,8 @@ using Discord.Interactions;
 using Discord.Net;
 using Invites.Data;
 using Invites.Translators;
+using System.Net;
+using System.Text;
 
 namespace Invites.Commands;
 

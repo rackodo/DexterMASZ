@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Enums;
 using Bot.Events;
 using Bot.Services;
@@ -9,11 +8,12 @@ using Messaging.Data;
 using Messaging.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Net;
 using Timer = System.Timers.Timer;
 
 namespace Messaging.Services;
 
-public class ScheduledMessages : Event
+public class ScheduledMessages : IEvent
 {
     private readonly DiscordRest _discordRest;
     private readonly BotEventHandler _eventHandler;
@@ -33,15 +33,15 @@ public class ScheduledMessages : Event
 
     private async Task StartScheduledTimers()
     {
-        Timer MinuteEventTimer = new(TimeSpan.FromMinutes(1).TotalMilliseconds)
+        Timer minuteEventTimer = new(TimeSpan.FromMinutes(1).TotalMilliseconds)
         {
             AutoReset = true,
             Enabled = true
         };
 
-        MinuteEventTimer.Elapsed += async (s, e) => await CheckDueScheduledMessages();
+        minuteEventTimer.Elapsed += async (s, e) => await CheckDueScheduledMessages();
 
-        await Task.Run(() => MinuteEventTimer.Start());
+        await Task.Run(() => minuteEventTimer.Start());
     }
 
     public async Task CheckDueScheduledMessages()

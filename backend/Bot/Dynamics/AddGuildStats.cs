@@ -1,6 +1,6 @@
 ﻿namespace Bot.Dynamics;
 
-public interface AddGuildStats
+public interface IAddGuildStats
 {
     public Task AddGuildStatistics(dynamic stats, ulong guildId);
 }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Exceptions;
@@ -10,6 +9,7 @@ using Messaging.Enums;
 using Messaging.Exceptions;
 using Messaging.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Messaging.Controllers;
 

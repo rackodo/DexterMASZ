@@ -17,11 +17,11 @@ public abstract class AuthenticatedController : BaseController
 
     protected async Task<Identity> SetupAuthentication()
     {
-        var _identity = await _identityManager.GetIdentity(HttpContext);
+        var identity = await _identityManager.GetIdentity(HttpContext);
 
         foreach (var repo in _repositories)
-            repo.AsUser(_identity);
+            repo.AsUser(identity);
 
-        return _identity;
+        return identity;
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Levels.Models;
 
 [Flags]
-public enum XPType
+public enum XpType
 {
     None = 0,
     Text = 1,

@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using Bot.Enums;
 using Punishments.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Punishments.DTOs;
 

@@ -2,7 +2,7 @@
 
 namespace Bot.Dynamics;
 
-public interface AddQuickEntrySearch
+public interface IAddQuickEntrySearch
 {
-    public Task AddQuickSearchResults(List<QuickSearchEntry> entries, ulong guildId, string search);
+    public Task AddQuickSearchResults(List<IQuickSearchEntry> entries, ulong guildId, string search);
 }

@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Messaging.Data;
 
-public class MessagingDatabase : DataContext<MessagingDatabase>, DataContextCreate
+public class MessagingDatabase : DataContext<MessagingDatabase>, IDataContextCreate
 {
     public DbSet<ScheduledMessage> ScheduledMessages { get; set; }
 

@@ -5,7 +5,7 @@ using Discord;
 
 namespace AutoMods.Events;
 
-public class AutoModEventHandler : InternalEventHandler
+public class AutoModEventHandler : INternalEventHandler
 {
     internal readonly AsyncEvent<Func<AutoModConfig, IUser, Task>> AutoModConfigCreatedEvent = new();
 

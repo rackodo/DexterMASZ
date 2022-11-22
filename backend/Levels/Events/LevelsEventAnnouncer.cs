@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Levels.Events;
 
-public class LevelsEventAnnouncer : Event
+public class LevelsEventAnnouncer : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly LevelsEventHandler _eventHandler;

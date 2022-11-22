@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Text;
 using Bot.Abstractions;
 using Bot.Attributes;
 using Bot.Data;
@@ -13,6 +11,8 @@ using Humanizer;
 using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Translators;
+using System.Globalization;
+using System.Text;
 
 namespace Punishments.Commands;
 

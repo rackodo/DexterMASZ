@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Enums;
 using Bot.Models;
 using Bot.Services;
 using Invites.Data;
 using Invites.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Invites.Controllers;
 

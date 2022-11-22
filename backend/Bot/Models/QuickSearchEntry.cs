@@ -3,7 +3,7 @@ using Bot.Enums;
 
 namespace Bot.Models;
 
-public class QuickSearchEntry<T> : QuickSearchEntry
+public class QuickSearchEntry<T> : IQuickSearchEntry
 {
     public T Entry { get; set; }
     public QuickSearchEntryType QuickSearchEntryType { get; set; }

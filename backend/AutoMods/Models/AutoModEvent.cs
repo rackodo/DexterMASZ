@@ -1,5 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using AutoMods.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace AutoMods.Models;
 

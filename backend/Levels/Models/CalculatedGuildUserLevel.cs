@@ -37,7 +37,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
     {
         get
         {
-            _textLevel ??= LevelFromXP(TextXp);
+            _textLevel ??= LevelFromXp(TextXp);
             return _textLevel;
         }
     }
@@ -46,7 +46,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
     {
         get
         {
-            _voiceLevel ??= LevelFromXP(VoiceXp);
+            _voiceLevel ??= LevelFromXp(VoiceXp);
             return _voiceLevel;
         }
     }
@@ -55,7 +55,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
     {
         get
         {
-            _totalLevel ??= LevelFromXP(TextXp + VoiceXp);
+            _totalLevel ??= LevelFromXp(TextXp + VoiceXp);
             return _totalLevel;
         }
     }
@@ -70,20 +70,20 @@ public class CalculatedGuildUserLevel : GuildUserLevel
         Config = config;
     }
 
-    public LevelData LevelFromXP(long xp)
+    public LevelData LevelFromXp(long xp)
     {
         if (Config is null)
             throw new NullReferenceException("_config is null. Unable to get level from XP before running SetConfig");
         return new LevelData(xp, Config);
     }
 
-    public long XPFromLevel(int level)
+    public long XpFromLevel(int level)
     {
         if (Config is null)
             throw new NullReferenceException("_config is null. Unable to get XP from level before running SetConfig");
-        return XPFromLevel(level, Config);
+        return XpFromLevel(level, Config);
     }
 
-    public GuildUserLevelDTO ToDTO(DiscordUser user) =>
-        new(GuildId, UserId, Text.toDTO(), Voice.toDTO(), Total.toDTO(), user);
+    public GuildUserLevelDto ToDto(DiscordUser user) =>
+        new(GuildId, UserId, Text.ToDto(), Voice.ToDto(), Total.ToDto(), user);
 }

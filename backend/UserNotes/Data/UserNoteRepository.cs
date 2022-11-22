@@ -14,7 +14,7 @@ using Utilities.Dynamics;
 namespace UserNotes.Data;
 
 public class UserNoteRepository : Repository,
-    AddAdminStats, AddGuildStats, AddSearch, AddNetworks, WhoIsResults, DeleteGuildData
+    IAddAdminStats, IAddGuildStats, IAddSearch, IAddNetworks, IWhoIsResults, IDeleteGuildData
 {
     private readonly DiscordRest _discordRest;
     private readonly UserNoteEventHandler _eventHandler;

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AutoMods.Data;
 
-public class AutoModDatabase : DataContext<AutoModDatabase>, DataContextCreate
+public class AutoModDatabase : DataContext<AutoModDatabase>, IDataContextCreate
 {
     public DbSet<AutoModConfig> AutoModConfigs { get; set; }
 

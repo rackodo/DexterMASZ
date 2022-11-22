@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Discord;
+﻿using Discord;
+using System.ComponentModel.DataAnnotations;
 
 namespace Levels.Models;
 

@@ -1,4 +1,3 @@
-using System.Dynamic;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Dynamics;
@@ -6,6 +5,7 @@ using Bot.Identities;
 using Bot.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Dynamic;
 
 namespace Bot.Controllers;
 
@@ -67,7 +67,7 @@ public class AdminStatsController : AuthenticatedController
         adminStats.nextCache = _scheduler.GetNextCacheSchedule();
         adminStats.cachedDataFromDiscord = _discordRest.GetCache().Keys;
 
-        foreach (var repo in _cachedServices.GetInitializedAuthenticatedClasses<AddAdminStats>(_serviceProvider,
+        foreach (var repo in _cachedServices.GetInitializedAuthenticatedClasses<IAddAdminStats>(_serviceProvider,
                      identity))
             await repo.AddAdminStatistics(adminStats);
 

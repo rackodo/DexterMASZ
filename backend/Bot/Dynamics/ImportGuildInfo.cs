@@ -2,7 +2,7 @@
 
 namespace Bot.Dynamics;
 
-public interface ImportGuildInfo
+public interface IMportGuildInfo
 {
     public Task ImportGuildInfo(GuildConfig guildConfig);
 }

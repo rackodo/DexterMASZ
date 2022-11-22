@@ -5,7 +5,7 @@ using UserNotes.Models;
 
 namespace UserNotes.Data;
 
-public class UserNoteDatabase : DataContext<UserNoteDatabase>, DataContextCreate
+public class UserNoteDatabase : DataContext<UserNoteDatabase>, IDataContextCreate
 {
     public DbSet<UserNote> UserNotes { get; set; }
 

@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Bot.Services;
 
-public class IdentityManager : Event
+public class IdentityManager : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly BotEventHandler _eventHandler;

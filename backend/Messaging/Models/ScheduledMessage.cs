@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Messaging.Enums;
+﻿using Messaging.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Messaging.Models;
 

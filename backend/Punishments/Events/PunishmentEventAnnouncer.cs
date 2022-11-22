@@ -14,7 +14,7 @@ using Punishments.Models;
 
 namespace Punishments.Events;
 
-public class PunishmentEventAnnouncer : Event
+public class PunishmentEventAnnouncer : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly DiscordRest _discordRest;

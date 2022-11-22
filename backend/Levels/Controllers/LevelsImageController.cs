@@ -11,7 +11,7 @@ namespace Levels.Controllers;
 [Route("api/v1/levels/{userId}/images")]
 public class LevelsImageController : AuthenticatedController
 {
-    private const int MAXIMUM_FILE_SIZE = 10485760; //10 MiB
+    private const int MaximumFileSize = 10485760; //10 MiB
     private readonly LevelsImageRepository _levelsImageRepository;
     private readonly UserRankcardConfigRepository _levelsRankcardRepository;
 
@@ -37,7 +37,7 @@ public class LevelsImageController : AuthenticatedController
 
     [Authorize]
     [HttpPost]
-    [RequestSizeLimit(MAXIMUM_FILE_SIZE)]
+    [RequestSizeLimit(MaximumFileSize)]
     public async Task<IActionResult> PostImage([FromRoute] ulong userId, [FromForm] UploadedFileDto uploadedFile)
     {
         var identity = await SetupAuthentication();

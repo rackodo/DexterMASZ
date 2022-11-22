@@ -1,5 +1,5 @@
 ﻿namespace Bot.Abstractions;
 
-public interface DataContextInitialize
+public interface IDataContextInitialize
 {
 }

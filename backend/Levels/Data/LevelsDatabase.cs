@@ -1,13 +1,13 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Levels.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Levels.Data;
 
-public class LevelsDatabase : DataContext<LevelsDatabase>, DataContextCreate
+public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
 {
     public DbSet<GuildUserLevel>? GuildUserLevels { get; set; }
     public DbSet<GuildLevelConfig>? GuildLevelConfigs { get; set; }

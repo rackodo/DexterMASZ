@@ -1,6 +1,6 @@
 ﻿namespace Bot.Dynamics;
 
-public interface LoopCaches
+public interface ILoopCaches
 {
     public Task LoopCaches();
 }

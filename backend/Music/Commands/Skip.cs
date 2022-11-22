@@ -1,74 +1,38 @@
-﻿using DexterSlash.Attributes;
+﻿using Discord;
 using Discord.Interactions;
+using Lavalink4NET.Player;
+using Music.Abstractions;
+using Music.Utils;
 
-namespace DexterSlash.Commands.MusicCommands
+namespace Music.Commands;
+
+public class Skip : MusicCommand<Skip>
 {
-	public partial class BaseMusicCommand
-	{
+    [SlashCommand("skip", "Skip this track")]
+    public async Task SkipMusic()
+    {
+        await Context.Interaction.DeferAsync();
 
-		[SlashCommand("skip", "[DJ version of /voteskip] Skips the number of songs specified at once.")]
-		[AttributeDJ]
+        var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
+        if (!await mmu.EnsureUserInVoiceAsync()) return;
+        if (!await mmu.EnsureClientInVoiceAsync()) return;
+        if (!await mmu.EnsureQueuedPlayerAsync()) return;
 
-		public async Task Skip(int skipCount = 1)
-		{
-			var player = AudioService.TryGetPlayer(Context, "skip song");
+        var player = Lavalink.GetPlayer<QueuedLavalinkPlayer>(Context.Guild.Id);
+        var track = player!.CurrentTrack;
 
-			var curTrack = player.CurrentTrack;
-			var emptyQueue = player.Queue.Count == 0;
+        if (track == null)
+        {
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                x.Content = "Unable to get the track, maybe because I am not playing anything");
 
-			if (curTrack == null)
-			{
-				await CreateEmbed(EmojiEnum.Annoyed)
-					.WithTitle("Unable to skip song!")
-					.WithDescription("There isn't anything to skip.")
-					.SendEmbed(Context.Interaction);
+            return;
+        }
 
-				return;
-			}
+        await player.SkipAsync();
 
-			if (emptyQueue)
-			{
-				await player.StopAsync();
-				await CreateEmbed(EmojiEnum.Love)
-					.WithTitle($"Skipped {curTrack.Title}.")
-					.WithDescription("No more tracks remaining.")
-					.SendEmbed(Context.Interaction);
-			}
-			else if (skipCount == 1)
-			{
-				await player.SkipAsync();
-
-				await CreateEmbed(EmojiEnum.Love)
-					.GetNowPlaying(player.CurrentTrack)
-					.AddField("Skipped", curTrack.Title)
-					.SendEmbed(Context.Interaction);
-			}
-			else
-			{
-				var actualSkipCount = 0;
-
-				for (var i = 0; i < skipCount; i++)
-				{
-					try
-					{
-						await player.SkipAsync();
-						actualSkipCount++;
-					}
-					catch (InvalidOperationException)
-					{
-						await player.StopAsync();
-						break;
-					}
-				}
-
-				var s = actualSkipCount == 1 ? "" : "s";
-
-				await CreateEmbed(EmojiEnum.Love)
-					.WithTitle("Songs have been skipped!")
-					.WithDescription($"Skipped {actualSkipCount:N0} track{s}.")
-					.SendEmbed(Context.Interaction);
-			}
-		}
-
-	}
+        await Context.Interaction.ModifyOriginalResponseAsync(x =>
+            x.Content =
+                $"Skipped - {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
+    }
 }

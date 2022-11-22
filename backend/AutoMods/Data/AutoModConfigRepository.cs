@@ -11,7 +11,7 @@ using Bot.Services;
 
 namespace AutoMods.Data;
 
-public class AutoModConfigRepository : Repository, DeleteGuildData
+public class AutoModConfigRepository : Repository, IDeleteGuildData
 {
     private readonly AutoModDatabase _autoModDatabase;
     private readonly AutoModEventHandler _eventHandler;

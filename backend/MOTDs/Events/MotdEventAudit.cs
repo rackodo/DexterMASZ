@@ -5,7 +5,7 @@ using MOTDs.Models;
 
 namespace MOTDs.Events;
 
-public class MotdEventAudit : Event
+public class MotdEventAudit : IEvent
 {
     private readonly AuditLogger _auditLogger;
     private readonly MotdEventHandler _eventHandler;

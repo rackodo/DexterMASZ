@@ -1,6 +1,6 @@
 ﻿namespace Bot.Dynamics;
 
-public interface AddAdminStats
+public interface IAddAdminStats
 {
     public Task AddAdminStatistics(dynamic adminStats);
 }

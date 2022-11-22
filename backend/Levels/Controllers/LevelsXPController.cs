@@ -8,14 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace Levels.Controllers;
 
 [Route("api/v1/levels")]
-public class LevelsXPController : AuthenticatedController
+public class LevelsXpController : AuthenticatedController
 {
-    private const int MAX_PAGE_SIZE = 500;
+    private const int MaxPageSize = 500;
     private readonly GuildLevelConfigRepository _levelsConfigRepository;
     private readonly GuildUserLevelRepository _levelsRepository;
     private readonly DiscordRest _rest;
 
-    public LevelsXPController(IdentityManager identityManager, GuildUserLevelRepository levelsRepository,
+    public LevelsXpController(IdentityManager identityManager, GuildUserLevelRepository levelsRepository,
         GuildLevelConfigRepository levelsConfigRepository, DiscordRest rest) :
         base(identityManager, levelsRepository, levelsConfigRepository)
     {
@@ -34,7 +34,7 @@ public class LevelsXPController : AuthenticatedController
 
         var user = await _rest.FetchUserInfo(level.UserId, false);
 
-        return Ok(new CalculatedGuildUserLevel(level, guildLevelConfig).ToDTO(DiscordUser.GetDiscordUser(user)));
+        return Ok(new CalculatedGuildUserLevel(level, guildLevelConfig).ToDto(DiscordUser.GetDiscordUser(user)));
     }
 
     [HttpGet("guilds/{guildId}/users")]
@@ -43,13 +43,13 @@ public class LevelsXPController : AuthenticatedController
     {
         Console.WriteLine($"Received Leaderboard req for guild {guildId}, page {page} with size {pageSize}");
         if (pageSize < 1) pageSize = 1;
-        else if (pageSize > MAX_PAGE_SIZE) pageSize = MAX_PAGE_SIZE;
+        else if (pageSize > MaxPageSize) pageSize = MaxPageSize;
 
         Func<GuildUserLevel, long> func = order switch
         {
             "text" => l => l.TextXp,
             "voice" => l => l.VoiceXp,
-            _ => l => l.TotalXP
+            _ => l => l.TotalXp
         };
 
         var guildLevelConfig = await _levelsConfigRepository.GetOrCreateConfig(guildId);
@@ -60,7 +60,7 @@ public class LevelsXPController : AuthenticatedController
         return Ok(selRecords.AsParallel().Select(async l =>
             {
                 var user = await _rest.FetchUserInfo(l.UserId, true);
-                return new CalculatedGuildUserLevel(l, guildLevelConfig).ToDTO(DiscordUser.GetDiscordUser(user));
+                return new CalculatedGuildUserLevel(l, guildLevelConfig).ToDto(DiscordUser.GetDiscordUser(user));
             }).Select(t => t.Result)
             .Where(r => r != null)
             .ToList());

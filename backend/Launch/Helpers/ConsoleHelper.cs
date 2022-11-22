@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using Bot.Enums;
+﻿using Bot.Enums;
 using Bot.Models;
 using Launch.Enums;
 using Launch.Models;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Launch.Helpers;
 
@@ -142,7 +142,7 @@ public static class ConsoleHelper
                 break;
             case DeploymentType.Local:
                 settings.ServiceDomain = "127.0.0.1:5565";
-                settings.EncryptionType = EncryptionType.HTTP;
+                settings.EncryptionType = EncryptionType.Http;
                 settings.CorsEnabled = true;
                 break;
             default:

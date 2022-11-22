@@ -9,7 +9,7 @@ using Punishments.Models;
 
 namespace Punishments.Data;
 
-public class ModCaseCommentRepository : Repository, AddGuildStats
+public class ModCaseCommentRepository : Repository, IAddGuildStats
 {
     private readonly PunishmentEventHandler _eventHandler;
     private readonly ModCaseRepository _modCaseRepository;

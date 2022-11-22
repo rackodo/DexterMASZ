@@ -1,5 +1,3 @@
-using System.Collections.Concurrent;
-using System.Net;
 using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
@@ -12,11 +10,13 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Collections.Concurrent;
+using System.Net;
 using Timer = System.Timers.Timer;
 
 namespace Bot.Services;
 
-public class DiscordRest : IHostedService, Event
+public class DiscordRest : IHostedService, IEvent
 {
     private const int DownloadIntervalMinutes = 1;
     private readonly Dictionary<string, CacheApiResponse> _cache;

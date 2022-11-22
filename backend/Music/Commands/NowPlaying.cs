@@ -1,29 +1,59 @@
-﻿using Discord.Interactions;
+﻿using Discord;
+using Discord.Interactions;
+using Humanizer;
+using Lavalink4NET.Artwork;
+using Lavalink4NET.Player;
+using Music.Abstractions;
+using Music.Data;
+using Music.Extensions;
+using Music.Utils;
 
-namespace DexterSlash.Commands.MusicCommands
+namespace Music.Commands;
+
+public class NowPlaying : MusicCommand<NowPlaying>
 {
-	public partial class BaseMusicCommand
-	{
+    public ArtworkService ArtworkService { get; set; }
 
-		[SlashCommand("nowplaying", "Display the currently playing song.")]
+    public StartRepository StartRepo { get; set; }
 
-		public async Task NowPlaying()
-		{
-			var player = AudioService.TryGetPlayer(Context, "find the current song");
+    [SlashCommand("now_playing", "View now playing track")]
+    public async Task NowPlayingMusic()
+    {
+        await Context.Interaction.DeferAsync();
 
-			if (player.State != PlayerState.Playing)
-			{
-				await CreateEmbed(EmojiEnum.Annoyed)
-					.WithTitle("Unable to find current song!")
-					.WithDescription("The player must be actively playing a track in order to see its information.")
-					.SendEmbed(Context.Interaction);
+        var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
+        if (!await mmu.EnsureUserInVoiceAsync()) return;
+        if (!await mmu.EnsureClientInVoiceAsync()) return;
 
-				return;
-			}
+        var player = Lavalink.GetPlayer(Context.Guild.Id);
+        var track = player!.CurrentTrack;
 
-			await CreateEmbed(EmojiEnum.Unknown)
-				.GetNowPlaying(player.CurrentTrack)
-				.SendEmbed(Context.Interaction);
-		}
-	}
+        if (track == null)
+        {
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                x.Content = "Unable to get the playing track");
+
+            return;
+        }
+
+        var isStream = track.IsLiveStream;
+        var art = await ArtworkService.ResolveAsync(track);
+
+        var startTime = await StartRepo.GetGuildStartTime(Context.Guild.Id);
+
+        await Context.Interaction.ModifyOriginalResponseAsync(x =>
+            x.Embed = Context.User.CreateEmbedWithUserData()
+                .WithAuthor("Currently playing track", Context.Client.CurrentUser.GetAvatarUrl())
+                .WithThumbnailUrl(art?.OriginalString ?? "")
+                .AddField("Title", Format.Sanitize(track.Title))
+                .AddField("Author", Format.Sanitize(track.Author), true)
+                .AddField("Source", Format.Sanitize(track.Uri?.AbsoluteUri ?? "Unknown"), true)
+                .AddField(isStream ? "Playtime" : "Position", isStream
+                    ? DateTime.UtcNow.Subtract(startTime.RadioStartTime).Humanize()
+                    : $"{player.Position.RelativePosition:g}/{track.Duration:g}", true)
+                .AddField("Is looping", player is QueuedLavalinkPlayer lavalinkPlayer
+                    ? $"{lavalinkPlayer.IsLooping}"
+                    : "This is not a queued player", true)
+                .AddField("Is paused", $"{player.State == PlayerState.Paused}", true).Build());
+    }
 }

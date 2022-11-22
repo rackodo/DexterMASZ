@@ -1,52 +1,39 @@
-﻿using DexterSlash.Attributes;
-using Discord;
+﻿using Discord;
 using Discord.Interactions;
+using Lavalink4NET.Player;
+using Music.Abstractions;
+using Music.Utils;
 
-namespace DexterSlash.Commands.MusicCommands
+namespace Music.Commands;
+
+public class Loop : MusicCommand<Loop>
 {
-	public partial class BaseMusicCommand
-	{
+    [SlashCommand("loop", "Toggle current track loop")]
+    public async Task LoopMusic()
+    {
+        await Context.Interaction.DeferAsync();
 
-		[SlashCommand("loop", "Toggles looping of the current playlist between on and off.")]
-		[ComponentInteraction("loop-button")]
-		[AttributeDJ]
+        var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
 
-		public async Task Loop()
-		{
-			var player = AudioService.TryGetPlayer(Context, "loop song");
+        if (!await mmu.EnsureUserInVoiceAsync()) return;
+        if (!await mmu.EnsureClientInVoiceAsync()) return;
+        if (!await mmu.EnsureQueuedPlayerAsync()) return;
 
-			if (player.State != PlayerState.Playing)
-			{
-				await CreateEmbed(EmojiEnum.Annoyed)
-					.WithTitle("Unable to loop songs!")
-					.WithDescription("The player must be actively playing a track in order to loop it.")
-					.SendEmbed(Context.Interaction);
+        var player = Lavalink.GetPlayer<QueuedLavalinkPlayer>(Context.Guild.Id);
+        var track = player!.CurrentTrack;
 
-				return;
-			}
+        if (track == null)
+        {
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                x.Content = "Unable to get the track, maybe because I am not playing anything");
 
-			if (!player.IsLooping)
-			{
-				player.IsLooping = true;
+            return;
+        }
 
-				var button = new ComponentBuilder().WithButton("Stop Looping", "loop-button", ButtonStyle.Secondary);
+        player.IsLooping = !player.IsLooping;
 
-				await CreateEmbed(EmojiEnum.Unknown)
-						.WithTitle($"🔂 Looping Tracks")
-						.WithDescription($"Successfully started looping **{player.Queue.Count + 1} tracks**.")
-						.SendEmbed(Context.Interaction, component: button);
-			}
-			else
-			{
-				player.IsLooping = false;
-
-				var button = new ComponentBuilder().WithButton("Loop", "loop-button", ButtonStyle.Secondary);
-
-				await CreateEmbed(EmojiEnum.Unknown)
-					.WithTitle($"🔂 Stopped Looping Tracks")
-					.WithDescription($"Successfully stopped looping the current queue.")
-					.SendEmbed(Context.Interaction, component: button);
-			}
-		}
-	}
+        await Context.Interaction.ModifyOriginalResponseAsync(x =>
+            x.Content =
+                $"{(player.IsLooping ? "Looping" : "Removed the loop of")} the track: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
+    }
 }

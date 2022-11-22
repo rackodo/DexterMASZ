@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Dynamics;
 using Bot.Enums;
@@ -18,13 +17,14 @@ using Punishments.Extensions;
 using Punishments.Models;
 using Punishments.Services;
 using Punishments.Translators;
+using System.Text;
 using Utilities.Dynamics;
 
 namespace Punishments.Data;
 
 public class ModCaseRepository : Repository,
-    AddAdminStats, ImportGuildInfo, LoopCaches, AddChart, AddGuildStats, AddQuickEntrySearch,
-    AddNetworks, WhoIsResults, DeleteGuildData
+    IAddAdminStats, IMportGuildInfo, ILoopCaches, IAddChart, IAddGuildStats, IAddQuickEntrySearch,
+    IAddNetworks, IWhoIsResults, IDeleteGuildData
 {
     private readonly DiscordRest _discordRest;
     private readonly PunishmentEventHandler _eventHandler;
@@ -74,7 +74,7 @@ public class ModCaseRepository : Repository,
     public async Task AddNetworkData(dynamic network, List<string> modGuilds, ulong userId) => network.modCases =
         (await GetCasesForUser(userId)).Where(x => modGuilds.Contains(x.GuildId.ToString())).ToList();
 
-    public async Task AddQuickSearchResults(List<QuickSearchEntry> entries, ulong guildId, string search)
+    public async Task AddQuickSearchResults(List<IQuickSearchEntry> entries, ulong guildId, string search)
     {
         foreach (var item in await SearchCases(guildId, search))
         {
@@ -95,6 +95,30 @@ public class ModCaseRepository : Repository,
     }
 
     public async Task DeleteGuildData(ulong guildId) => await _punishmentDatabase.DeleteAllModCasesForGuild(guildId);
+
+    public async Task LoopCaches()
+    {
+        _logger.LogInformation("Case bin | Checking case bin and delete old cases.");
+
+        var config = await _settingsRepository.GetAppSettings();
+
+        foreach (var modCase in await _punishmentDatabase.SelectAllModCasesMarkedAsDeleted())
+        {
+            try
+            {
+                FilesHandler.DeleteDirectory(Path.Combine(config.AbsolutePathToFileUpload, modCase.GuildId.ToString(),
+                    modCase.CaseId.ToString()));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Failed to delete files directory for mod case.");
+            }
+
+            await _punishmentDatabase.DeleteSpecificModCase(modCase);
+        }
+
+        _logger.LogInformation("Case bin | Done.");
+    }
 
     public async Task ImportGuildInfo(GuildConfig guildConfig)
     {
@@ -119,30 +143,6 @@ public class ModCaseRepository : Repository,
                          PunishedUntil = null
                      }))
             await ImportModCase(modCase);
-    }
-
-    public async Task LoopCaches()
-    {
-        _logger.LogInformation("Case bin | Checking case bin and delete old cases.");
-
-        var config = await _settingsRepository.GetAppSettings();
-
-        foreach (var modCase in await _punishmentDatabase.SelectAllModCasesMarkedAsDeleted())
-        {
-            try
-            {
-                FilesHandler.DeleteDirectory(Path.Combine(config.AbsolutePathToFileUpload, modCase.GuildId.ToString(),
-                    modCase.CaseId.ToString()));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Failed to delete files directory for mod case.");
-            }
-
-            await _punishmentDatabase.DeleteSpecificModCase(modCase);
-        }
-
-        _logger.LogInformation("Case bin | Done.");
     }
 
     public async Task AddWhoIsInformation(EmbedBuilder embed, IGuildUser user, IInteractionContext context,
@@ -581,7 +581,7 @@ public class ModCaseRepository : Repository,
 
             _eventHandler.ModCaseUpdatedEvent.Invoke(modCase, Identity);
 
-            if (!handlePunishment || (!modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick))
+            if (!handlePunishment || !modCase.PunishmentActive && modCase.PunishmentType != PunishmentType.Kick)
                 return modCase;
 
             if (modCase.PunishedUntil == null || modCase.PunishedUntil > DateTime.UtcNow)

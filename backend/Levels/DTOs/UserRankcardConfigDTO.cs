@@ -3,7 +3,7 @@ using Levels.Models;
 
 namespace Levels.DTOs;
 
-public class UserRankcardConfigDTO
+public class UserRankcardConfigDto
 {
     public ulong Id { get; set; }
     public uint XpColor { get; set; }
@@ -17,7 +17,7 @@ public class UserRankcardConfigDTO
     public float PfpRadiusFactor { get; set; }
     public RankcardFlags RankcardFlags { get; set; }
 
-    public UserRankcardConfigDTO(ulong id, uint xpColor, uint offColor, uint levelBgColor, uint titleBgColor,
+    public UserRankcardConfigDto(ulong id, uint xpColor, uint offColor, uint levelBgColor, uint titleBgColor,
         string background, float pfpRadiusFactor, Offset2D titleOffset, Offset2D levelOffset, Offset2D pfpOffset,
         RankcardFlags rankcardFlags)
     {

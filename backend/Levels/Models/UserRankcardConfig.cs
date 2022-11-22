@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Discord;
+﻿using Discord;
 using Levels.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Levels.Models;
 
@@ -31,8 +31,8 @@ public class UserRankcardConfig
         get => new(TitleOffsetX, TitleOffsetY);
         set
         {
-            TitleOffsetX = value.x;
-            TitleOffsetY = value.y;
+            TitleOffsetX = value.X;
+            TitleOffsetY = value.Y;
         }
     }
 
@@ -42,8 +42,8 @@ public class UserRankcardConfig
         get => new(LevelOffsetX, LevelOffsetY);
         set
         {
-            LevelOffsetX = value.x;
-            LevelOffsetY = value.y;
+            LevelOffsetX = value.X;
+            LevelOffsetY = value.Y;
         }
     }
 
@@ -53,8 +53,8 @@ public class UserRankcardConfig
         get => new(PfpOffsetX, PfpOffsetY);
         set
         {
-            PfpOffsetX = value.x;
-            PfpOffsetY = value.y;
+            PfpOffsetX = value.X;
+            PfpOffsetY = value.Y;
         }
     }
 

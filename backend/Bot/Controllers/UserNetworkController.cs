@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Dynamic;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Dynamics;
 using Bot.Enums;
@@ -8,6 +6,8 @@ using Bot.Exceptions;
 using Bot.Models;
 using Bot.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Dynamic;
 
 namespace Bot.Controllers;
 
@@ -64,7 +64,7 @@ public class UserNetworkController : AuthenticatedController
         data.user = searchedUser;
 
         foreach (var repo in
-                 _cachedServices.GetInitializedAuthenticatedClasses<AddNetworks>(_serviceProvider, identity))
+                 _cachedServices.GetInitializedAuthenticatedClasses<IAddNetworks>(_serviceProvider, identity))
             await repo.AddNetworkData(data, modGuilds, userId);
 
         return Ok(data);

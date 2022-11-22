@@ -7,7 +7,7 @@ using Punishments.Models;
 
 namespace Punishments.Events;
 
-public class PunishmentEventAudit : Event
+public class PunishmentEventAudit : IEvent
 {
     private readonly AuditLogger _auditLogger;
     private readonly PunishmentEventHandler _punishmentEventHandler;

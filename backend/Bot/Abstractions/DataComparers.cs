@@ -1,12 +1,12 @@
-﻿using System.Runtime.Serialization;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace Bot.Abstractions;
 
-public class JSONDataComparer<T> : ValueComparer<T> where T : ISerializable
+public class JsonDataComparer<T> : ValueComparer<T> where T : ISerializable
 {
-    public JSONDataComparer() : base(
+    public JsonDataComparer() : base(
         (v1, v2) => JsonConvert.SerializeObject(v1) == JsonConvert.SerializeObject(v2),
         v => v.GetHashCode(),
         v => JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(v))

@@ -1,6 +1,6 @@
 ﻿namespace Bot.Dynamics;
 
-public interface AddSearch
+public interface IAddSearch
 {
     public Task AddSearchData(dynamic data, ulong guildId, string search);
 }

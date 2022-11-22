@@ -1,4 +1,3 @@
-using System.Text;
 using AutoMods.Enums;
 using AutoMods.Events;
 using AutoMods.Extensions;
@@ -17,11 +16,12 @@ using Microsoft.Extensions.Logging;
 using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Models;
+using System.Text;
 
 namespace AutoMods.Data;
 
 public class AutoModEventRepository : Repository,
-    AddAdminStats, AddChart, AddGuildStats, AddQuickEntrySearch, AddNetworks, DeleteGuildData
+    IAddAdminStats, IAddChart, IAddGuildStats, IAddQuickEntrySearch, IAddNetworks, IDeleteGuildData
 {
     private readonly AutoModConfigRepository _autoModConfigRepo;
     private readonly AutoModDatabase _autoModDatabase;
@@ -62,7 +62,7 @@ public class AutoModEventRepository : Repository,
     public async Task AddNetworkData(dynamic network, List<string> modGuilds, ulong userId) => network.modEvents =
         (await GetAllEventsForUser(userId)).Where(x => modGuilds.Contains(x.GuildId.ToString())).ToList();
 
-    public async Task AddQuickSearchResults(List<QuickSearchEntry> entries, ulong guildId, string search)
+    public async Task AddQuickSearchResults(List<IQuickSearchEntry> entries, ulong guildId, string search)
     {
         foreach (var item in await SearchInGuild(guildId, search))
         {

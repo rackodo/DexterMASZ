@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Data;
 using Bot.Enums;
 using Bot.Exceptions;
@@ -13,6 +12,7 @@ using Punishments.Data;
 using Punishments.Enums;
 using Punishments.Extensions;
 using Punishments.Translators;
+using System.Text;
 
 namespace Punishments.Commands;
 

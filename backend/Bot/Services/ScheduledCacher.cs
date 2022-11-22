@@ -13,7 +13,7 @@ using Timer = System.Timers.Timer;
 
 namespace Bot.Services;
 
-public class ScheduledCacher : Event
+public class ScheduledCacher : IEvent
 {
     private const int CacheIntervalMinutes = 15;
     private readonly CachedServices _cachedServices;
@@ -79,7 +79,7 @@ public class ScheduledCacher : Event
         using var scope = _serviceProvider.CreateScope();
 
         if (importExistingBans)
-            foreach (var repo in _cachedServices.GetInitializedClasses<ImportGuildInfo>(scope.ServiceProvider))
+            foreach (var repo in _cachedServices.GetInitializedClasses<IMportGuildInfo>(scope.ServiceProvider))
                 await repo.ImportGuildInfo(guildConfig);
     }
 
@@ -120,7 +120,7 @@ public class ScheduledCacher : Event
 
             using (var scope = _serviceProvider.CreateScope())
             {
-                foreach (var repo in _cachedServices.GetInitializedClasses<LoopCaches>(scope.ServiceProvider))
+                foreach (var repo in _cachedServices.GetInitializedClasses<ILoopCaches>(scope.ServiceProvider))
                     await repo.LoopCaches();
             }
 

@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Discord;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Discord;
 
 namespace Levels.Models;
 
@@ -12,7 +12,7 @@ public class GuildUserLevel
     public ulong GuildId { get; set; }
     public long TextXp { get; set; }
     public long VoiceXp { get; set; }
-    public long TotalXP => TextXp + VoiceXp;
+    public long TotalXp => TextXp + VoiceXp;
 
     protected GuildUserLevel() => Token = "";
 
@@ -54,11 +54,11 @@ public class GuildUserLevel
         return new string(chars);
     }
 
-    public static int LevelFromXP(long xp, GuildLevelConfig config, out long residualxp, out long levelxp)
+    public static int LevelFromXp(long xp, GuildLevelConfig config, out long residualxp, out long levelxp)
     {
         var min = 0;
         var max = 100;
-        while (xp > XPFromLevel(max, config))
+        while (xp > XpFromLevel(max, config))
         {
             min = max;
             max <<= 1;
@@ -69,8 +69,8 @@ public class GuildUserLevel
         {
             var middle = (min + max) / 2;
 
-            var xpmiddle = XPFromLevel(middle, config);
-            var xpmaxmiddle = XPFromLevel(middle + 1, config);
+            var xpmiddle = XpFromLevel(middle, config);
+            var xpmaxmiddle = XpFromLevel(middle + 1, config);
 
             if (xp >= xpmaxmiddle)
             {
@@ -93,7 +93,7 @@ public class GuildUserLevel
         return -1;
     }
 
-    public static long XPFromLevel(int level, GuildLevelConfig config)
+    public static long XpFromLevel(int level, GuildLevelConfig config)
     {
         float xp = 0;
         long mult = 1;

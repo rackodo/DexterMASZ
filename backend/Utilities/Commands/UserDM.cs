@@ -1,22 +1,22 @@
-﻿using System.Text;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Attributes;
 using Bot.Enums;
 using Bot.Services;
 using Bot.Translators;
 using Discord;
 using Discord.Interactions;
+using System.Text;
 
-namespace DexterSlash.Commands.ModeratorCommands;
+namespace Utilities.Commands;
 
-public class UserDM : Command<UserDM>
+public class UserDm : Command<UserDm>
 {
     public IServiceProvider ServiceProvider { get; set; }
     public DiscordRest DiscordRest { get; set; }
 
     [Require(RequireCheck.GuildModerator)]
     [SlashCommand("dm", "Sends a direct message to a user specified.")]
-    public async Task UserDMCommand(
+    public async Task UserDmCommand(
         [Summary("user", "The user you wish to be direct messaged.")]
         IUser user,
         [Summary("message", "The message you wish to be sent to the user.")]
