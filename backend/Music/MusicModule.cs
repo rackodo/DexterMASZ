@@ -41,5 +41,5 @@ public class MusicModule : Module
             });
 
     public override void PostBuild(IServiceProvider services, CachedServices cachedServices) =>
-        services.GetRequiredService<LavalinkNode>().UseSponsorBlock();
+        services.GetRequiredService<IAudioService>().UseSponsorBlock();
 }
