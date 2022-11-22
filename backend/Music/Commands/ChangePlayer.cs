@@ -1,13 +1,12 @@
 ﻿using Discord.Interactions;
 using Discord.WebSocket;
 using Lavalink4NET.Player;
-using Music.Abstractions;
 using Music.Enums;
 using Music.Utils;
 
 namespace Music.Commands;
 
-public class ChangePlayer : MusicCommand<ChangePlayer>
+public partial class MusicCommand
 {
     [SlashCommand("change_player", "Change current player")]
     public async Task ChangePlayerMusic(

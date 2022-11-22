@@ -3,18 +3,14 @@ using Discord.Interactions;
 using Humanizer;
 using Lavalink4NET.Artwork;
 using Lavalink4NET.Player;
-using Music.Abstractions;
-using Music.Data;
 using Music.Extensions;
 using Music.Utils;
 
 namespace Music.Commands;
 
-public class NowPlaying : MusicCommand<NowPlaying>
+public partial class MusicCommand
 {
     public ArtworkService ArtworkService { get; set; }
-
-    public StartRepository StartRepo { get; set; }
 
     [SlashCommand("now_playing", "View now playing track")]
     public async Task NowPlayingMusic()

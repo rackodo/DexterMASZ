@@ -1,10 +1,9 @@
 ﻿using Discord.Interactions;
-using Music.Abstractions;
 using Music.Utils;
 
 namespace Music.Commands;
 
-public class Disconnect : MusicCommand<Disconnect>
+public partial class MusicCommand
 {
     [SlashCommand("disconnect", "Leave current voice channel")]
     public async Task DisconnectMusic()

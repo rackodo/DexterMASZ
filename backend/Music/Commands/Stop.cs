@@ -1,10 +1,9 @@
 ﻿using Discord.Interactions;
-using Music.Abstractions;
 using Music.Utils;
 
 namespace Music.Commands;
 
-public class Stop : MusicCommand<Stop>
+public partial class MusicCommand
 {
     [SlashCommand("stop", "Stop this session")]
     public async Task StopMusic()

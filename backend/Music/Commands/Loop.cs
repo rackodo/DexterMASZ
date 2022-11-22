@@ -1,12 +1,11 @@
 ﻿using Discord;
 using Discord.Interactions;
 using Lavalink4NET.Player;
-using Music.Abstractions;
 using Music.Utils;
 
 namespace Music.Commands;
 
-public class Loop : MusicCommand<Loop>
+public partial class MusicCommand
 {
     [SlashCommand("loop", "Toggle current track loop")]
     public async Task LoopMusic()

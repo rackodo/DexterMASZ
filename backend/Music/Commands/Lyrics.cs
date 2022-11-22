@@ -3,12 +3,11 @@ using Discord.Interactions;
 using Fergun.Interactive;
 using Fergun.Interactive.Pagination;
 using Lavalink4NET.Lyrics;
-using Music.Abstractions;
 using Music.Extensions;
 
 namespace Music.Commands;
 
-public class Lyrics : MusicCommand<Lyrics>
+public partial class MusicCommand
 {
     public InteractiveService InteractiveService { get; set; }
     public LyricsService LyricService { get; set; }

@@ -1,11 +1,10 @@
 ﻿using Discord.Interactions;
 using Lavalink4NET.Player;
-using Music.Abstractions;
 using Music.Utils;
 
 namespace Music.Commands;
 
-public class Pause : MusicCommand<Pause>
+public partial class MusicCommand
 {
     [SlashCommand("pause", "Pause this session")]
     public async Task MusicPlaybackPauseCommand()

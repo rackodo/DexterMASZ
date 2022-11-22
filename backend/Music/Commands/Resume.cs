@@ -1,11 +1,10 @@
 ﻿using Discord.Interactions;
 using Lavalink4NET.Player;
-using Music.Abstractions;
 using Music.Utils;
 
 namespace Music.Commands;
 
-public class Resume : MusicCommand<Resume>
+public partial class MusicCommand
 {
     [SlashCommand("resume", "Resume this session")]
     public async Task ResumeMusic()

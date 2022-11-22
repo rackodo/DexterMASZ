@@ -1,14 +1,10 @@
 ﻿using Discord.Interactions;
-using Music.Abstractions;
-using Music.Data;
 using Music.Utils;
 
 namespace Music.Commands;
 
-public class PlayStream : MusicCommand<PlayStream>
+public partial class MusicCommand
 {
-    public StartRepository StartRepo { get; set; }
-
     [SlashCommand("play_stream", "Play a stream")]
     public async Task PlayStreamMusic(
         [Summary("stream_url", "Stream URL")] string streamUrl)

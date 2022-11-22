@@ -1,13 +1,12 @@
 ﻿using Discord.Interactions;
 using Discord.WebSocket;
 using Lavalink4NET.Player;
-using Music.Abstractions;
 using Music.Enums;
 using Music.Utils;
 
 namespace Music.Commands;
 
-public class Connect : MusicCommand<Connect>
+public partial class MusicCommand
 {
     [SlashCommand("connect", "Connect to your current voice channel")]
     public async Task ConnectMusic(
