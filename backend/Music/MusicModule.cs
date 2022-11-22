@@ -20,7 +20,7 @@ public class MusicModule : Module
 
     public override void AddServices(IServiceCollection services, CachedServices cachedServices,
         AppSettings appSettings) =>
-        services.AddSingleton(x => new InteractiveService(x.GetRequiredService<DiscordShardedClient>()))
+        services.AddSingleton(x => new InteractiveService(x.GetRequiredService<DiscordSocketClient>()))
             .AddSingleton<ILavalinkCache, LavalinkCache>()
             .AddSingleton<IAudioService, LavalinkNode>()
             .AddSingleton<LyricsOptions>()
@@ -32,7 +32,7 @@ public class MusicModule : Module
             })
             .AddSingleton<InactivityTrackingService>()
             .AddSingleton<IDiscordClientWrapper, DiscordClientWrapper>(x =>
-                new DiscordClientWrapper(x.GetRequiredService<DiscordShardedClient>()))
+                new DiscordClientWrapper(x.GetRequiredService<DiscordSocketClient>()))
             .AddMicrosoftExtensionsLavalinkLogging()
             .AddSingleton(new LavalinkNodeOptions
             {

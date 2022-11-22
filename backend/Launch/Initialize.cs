@@ -156,20 +156,15 @@ public class Initialize
 
         var dbBuilder = new DbContextOptionsBuilder<BotDatabase>();
 
-        return x =>
-        {
-            x.UseMySql(
-                connectionString,
-                ServerVersion.AutoDetect(connectionString),
-                o =>
-                {
-                    o.SchemaBehavior(MySqlSchemaBehavior.Translate, (schema, table) => $"{schema}_{table}");
-                    o.EnableRetryOnFailure();
-                }
-            );
-
-            x.EnableSensitiveDataLogging();
-        };
+        return x => x.UseMySql(
+            connectionString,
+            ServerVersion.AutoDetect(connectionString),
+            o =>
+            {
+                o.SchemaBehavior(MySqlSchemaBehavior.Translate, (schema, table) => $"{schema}_{table}");
+                o.EnableRetryOnFailure();
+            }
+        );
     }
 
     private static async Task<AppSettings> GetAppSettings(ulong clientId, Action<DbContextOptionsBuilder> dbOptions)
