@@ -15,7 +15,7 @@ public partial class MusicCommand
     [SlashCommand("lyrics", "Check lyrics of a track")]
     public async Task LyricsMusic(
         [Summary("artist", "Artist name")] string artist,
-        [Summary("trackName", "Track name")] string trackName)
+        [Summary("track-name", "Track name")] string trackName)
     {
         await Context.Interaction.DeferAsync();
 

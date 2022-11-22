@@ -10,7 +10,7 @@ public partial class MusicCommand
 {
     [SlashCommand("join", "Connect to your current voice channel")]
     public async Task ConnectMusic(
-        [Summary("connectionType", "Connection type")]
+        [Summary("connection-type", "Connection type")]
         MusicConnectionType connectionType = MusicConnectionType.Normal)
     {
         await Context.Interaction.DeferAsync();
