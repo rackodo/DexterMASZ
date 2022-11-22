@@ -17,7 +17,7 @@ namespace Music;
 public class MusicModule : Module
 {
     public const string Host = "lavalink.usfurries.com";
-    public const int Port = 2332;
+    public const int Port = 2333;
 
     public override string[] Contributors { get; } = { "Swyreee", "Ferox" };
 
