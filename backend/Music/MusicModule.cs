@@ -16,6 +16,9 @@ namespace Music;
 
 public class MusicModule : Module
 {
+    public const string Host = "lavalink.usfurries.com";
+    public const int Port = 2332;
+
     public override string[] Contributors { get; } = { "Swyreee", "Ferox" };
 
     public override void AddServices(IServiceCollection services, CachedServices cachedServices,
@@ -37,7 +40,9 @@ public class MusicModule : Module
             .AddSingleton(new LavalinkNodeOptions
             {
                 DebugPayloads = true,
-                DisconnectOnStop = false
+                DisconnectOnStop = false,
+                RestUri = $"http://{Host}:{Port}",
+                WebSocketUri = $"ws://{Host}:{Port}"
             });
 
     public override void PostBuild(IServiceProvider services, CachedServices cachedServices) =>
