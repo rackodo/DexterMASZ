@@ -7,5 +7,5 @@ namespace Music.Abstractions;
 [Group("music", "Music commands")]
 public abstract class MusicCommand<T> : Command<T>
 {
-    public LavalinkNode Lavalink { get; set; }
+    public IAudioService Lavalink { get; set; }
 }
