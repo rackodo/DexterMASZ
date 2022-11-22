@@ -8,7 +8,7 @@ public partial class MusicCommand
 {
     public partial class QueueCommand
     {
-        [SlashCommand("make_unique", "Remove duplicating tracks from the list")]
+        [SlashCommand("makeUnique", "Remove duplicating tracks from the list")]
         public async Task MakeUniqueMusic()
         {
             await Context.Interaction.DeferAsync();

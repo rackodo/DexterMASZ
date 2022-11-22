@@ -14,7 +14,7 @@ public partial class MusicCommand
 {
     public partial class QueueCommand
     {
-        [SlashCommand("add_tracks", "Add tracks to queue")]
+        [SlashCommand("play", "Add tracks to queue")]
         public async Task AddMusic(
             [Summary("query", "Music query")] string query,
             [Summary("source", "Music source")] MusicSource source = MusicSource.YouTube)

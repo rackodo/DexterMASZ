@@ -5,9 +5,9 @@ namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("play_stream", "Play a stream")]
+    [SlashCommand("playStream", "Play a stream")]
     public async Task PlayStreamMusic(
-        [Summary("stream_url", "Stream URL")] string streamUrl)
+        [Summary("streamUrl", "Stream URL")] string streamUrl)
     {
         await Context.Interaction.DeferAsync();
 

@@ -12,9 +12,9 @@ public partial class MusicCommand
 {
     public partial class QueueCommand
     {
-        [SlashCommand("add_playlist", "Add tracks from a playlist to queue")]
+        [SlashCommand("playPlaylist", "Add tracks from a playlist to queue")]
         public async Task AddPlaylistMusic(
-            [Summary("playlist_url", "Playlist URL")]
+            [Summary("playlistUrl", "Playlist URL")]
             string playlistUrl)
         {
             await Context.Interaction.DeferAsync();

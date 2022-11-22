@@ -8,9 +8,9 @@ namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("connect", "Connect to your current voice channel")]
+    [SlashCommand("join", "Connect to your current voice channel")]
     public async Task ConnectMusic(
-        [Summary("connection_type", "Connection type")]
+        [Summary("connectionType", "Connection type")]
         MusicConnectionType connectionType = MusicConnectionType.Normal)
     {
         await Context.Interaction.DeferAsync();

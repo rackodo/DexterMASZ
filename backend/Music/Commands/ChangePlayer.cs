@@ -8,9 +8,9 @@ namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("change_player", "Change current player")]
+    [SlashCommand("changePlayer", "Change current player")]
     public async Task ChangePlayerMusic(
-        [Summary("connection_type", "Connection type")]
+        [Summary("connectionType", "Connection type")]
         MusicConnectionType connectionType = MusicConnectionType.Normal)
     {
         await Context.Interaction.DeferAsync();

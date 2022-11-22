@@ -12,7 +12,7 @@ public partial class MusicCommand
 {
     public ArtworkService ArtworkService { get; set; }
 
-    [SlashCommand("now_playing", "View now playing track")]
+    [SlashCommand("nowPlaying", "View now playing track")]
     public async Task NowPlayingMusic()
     {
         await Context.Interaction.DeferAsync();
