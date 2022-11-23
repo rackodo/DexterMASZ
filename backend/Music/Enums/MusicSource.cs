@@ -12,7 +12,7 @@ public enum MusicSource
 
     [ChoiceDisplay("deezer")] Deezer,
 
-    [ChoiceDisplay("yandex-music"] YandexMusic,
+    [ChoiceDisplay("yandex-music")] YandexMusic,
 
     [ChoiceDisplay("raw")] None
 }
