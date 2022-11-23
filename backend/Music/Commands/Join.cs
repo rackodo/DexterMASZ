@@ -27,7 +27,7 @@ public partial class MusicCommand
             return;
         }
 
-        await Lavalink.JoinAsync<VoteLavalinkPlayer>(Context.Guild.Id,
+        _player = await Lavalink.JoinAsync<VoteLavalinkPlayer>(Context.Guild.Id,
             ((SocketGuildUser)Context.User).VoiceState!.Value.VoiceChannel.Id, true);
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
