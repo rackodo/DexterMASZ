@@ -33,7 +33,7 @@ public partial class MusicCommand : Command<MusicCommand>
 
     public async Task<bool> EnsureClientInVoiceAsync()
     {
-        if (_player == null) await ConnectMusic();
+        if (_player == null) await RunConnect();
         return true;
     }
 

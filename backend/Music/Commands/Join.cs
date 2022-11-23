@@ -10,7 +10,11 @@ public partial class MusicCommand
     public async Task ConnectMusic()
     {
         await Context.Interaction.DeferAsync();
+        await RunConnect();
+    }
 
+    public async Task RunConnect()
+    {
         if (!await EnsureUserInVoiceAsync()) return;
 
         var player = Lavalink.GetPlayer(Context.Guild.Id);
