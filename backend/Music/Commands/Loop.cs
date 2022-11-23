@@ -1,7 +1,5 @@
 ﻿using Discord;
 using Discord.Interactions;
-using Lavalink4NET.Player;
-using Music.Utils;
 
 namespace Music.Commands;
 
@@ -12,14 +10,10 @@ public partial class MusicCommand
     {
         await Context.Interaction.DeferAsync();
 
-        var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
+        if (!await EnsureUserInVoiceAsync()) return;
+        if (!await EnsureClientInVoiceAsync()) return;
 
-        if (!await mmu.EnsureUserInVoiceAsync()) return;
-        if (!await mmu.EnsureClientInVoiceAsync()) return;
-        if (!await mmu.EnsureQueuedPlayerAsync()) return;
-
-        var player = Lavalink.GetPlayer<QueuedLavalinkPlayer>(Context.Guild.Id);
-        var track = player!.CurrentTrack;
+        var track = _player!.CurrentTrack;
 
         if (track == null)
         {
@@ -29,10 +23,10 @@ public partial class MusicCommand
             return;
         }
 
-        player.IsLooping = !player.IsLooping;
+        _player.IsLooping = !_player.IsLooping;
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content =
-                $"{(player.IsLooping ? "Looping" : "Removed the loop of")} the track: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
+                $"{(_player.IsLooping ? "Looping" : "Removed the loop of")} the track: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
     }
 }

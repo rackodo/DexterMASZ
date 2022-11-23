@@ -1,6 +1,5 @@
 ﻿using Discord;
 using Discord.Interactions;
-using Fergun.Interactive;
 using Fergun.Interactive.Pagination;
 using Lavalink4NET.Lyrics;
 using Music.Extensions;
@@ -9,13 +8,12 @@ namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    public InteractiveService InteractiveService { get; set; }
     public LyricsService LyricService { get; set; }
 
     [SlashCommand("lyrics", "Check lyrics of a track")]
     public async Task LyricsMusic(
         [Summary("artist", "Artist name")] string artist,
-        [Summary("track-name", "Track name")] string trackName)
+        [Summary("track name", "Track name")] string trackName)
     {
         await Context.Interaction.DeferAsync();
 

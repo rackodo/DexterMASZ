@@ -1,45 +1,36 @@
 ﻿using Discord;
 using Discord.Interactions;
-using Lavalink4NET.Player;
-using Music.Utils;
 
 namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    public partial class QueueCommand
+    [SlashCommand("remove", "Remove a track from the queue")]
+    public async Task RemoveMusic(
+        [Summary("index", "Index to remove from 0 (first track)")]
+        long index)
     {
-        [SlashCommand("remove", "Remove a track from the queue")]
-        public async Task RemoveMusic(
-            [Summary("index", "Index to remove from 0 (first track)")]
-            long index)
+        await Context.Interaction.DeferAsync();
+
+        if (!await EnsureUserInVoiceAsync()) return;
+        if (!await EnsureClientInVoiceAsync()) return;
+        if (!await EnsureQueueIsNotEmptyAsync()) return;
+
+        if (index < 0 || index >= _player!.Queue.Count)
         {
-            await Context.Interaction.DeferAsync();
-
-            var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
-            if (!await mmu.EnsureUserInVoiceAsync()) return;
-            if (!await mmu.EnsureClientInVoiceAsync()) return;
-            if (!await mmu.EnsureQueuedPlayerAsync()) return;
-            if (!await mmu.EnsureQueueIsNotEmptyAsync()) return;
-
-            var player = Lavalink.GetPlayer<QueuedLavalinkPlayer>(Context.Guild.Id);
-
-            if (index < 0 || index >= player!.Queue.Count)
-            {
-                await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                    x.Content = "Invalid index");
-
-                return;
-            }
-
-            var posInt = Convert.ToInt32(index);
-
-            var track = player.Queue[posInt];
-            player.Queue.RemoveAt(posInt);
-
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content =
-                    $"Removed track at index {index}: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
+                x.Content = "Invalid index");
+
+            return;
         }
+
+        var posInt = Convert.ToInt32(index);
+
+        var track = _player.Queue[posInt];
+        _player.Queue.RemoveAt(posInt);
+
+        await Context.Interaction.ModifyOriginalResponseAsync(x =>
+            x.Content =
+                $"Removed track at index {index}: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
     }
 }

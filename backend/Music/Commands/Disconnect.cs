@@ -1,5 +1,4 @@
 ﻿using Discord.Interactions;
-using Music.Utils;
 
 namespace Music.Commands;
 
@@ -10,16 +9,14 @@ public partial class MusicCommand
     {
         await Context.Interaction.DeferAsync();
 
-        var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
-        if (!await mmu.EnsureUserInVoiceAsync()) return;
+        if (!await EnsureUserInVoiceAsync()) return;
 
-        var player = Lavalink.GetPlayer(Context.Guild.Id);
-        Lavalink.TrackStarted -= mmu.OnTrackStarted;
-        Lavalink.TrackStuck -= mmu.OnTrackStuck;
-        Lavalink.TrackEnd -= mmu.OnTrackEnd;
-        Lavalink.TrackException -= mmu.OnTrackException;
+        Lavalink.TrackStarted -= OnTrackStarted;
+        Lavalink.TrackStuck -= OnTrackStuck;
+        Lavalink.TrackEnd -= OnTrackEnd;
+        Lavalink.TrackException -= OnTrackException;
 
-        await player!.DisconnectAsync();
+        await _player!.DisconnectAsync();
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Left the voice channel");

@@ -1,24 +1,19 @@
 ﻿using Discord;
 using Discord.Interactions;
-using Lavalink4NET.Player;
-using Music.Utils;
 
 namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("skip", "Skip this track")]
+    [SlashCommand("vote skip", "Skip this track")]
     public async Task SkipMusic()
     {
         await Context.Interaction.DeferAsync();
 
-        var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
-        if (!await mmu.EnsureUserInVoiceAsync()) return;
-        if (!await mmu.EnsureClientInVoiceAsync()) return;
-        if (!await mmu.EnsureQueuedPlayerAsync()) return;
+        if (!await EnsureUserInVoiceAsync()) return;
+        if (!await EnsureClientInVoiceAsync()) return;
 
-        var player = Lavalink.GetPlayer<QueuedLavalinkPlayer>(Context.Guild.Id);
-        var track = player!.CurrentTrack;
+        var track = _player!.CurrentTrack;
 
         if (track == null)
         {
@@ -28,10 +23,14 @@ public partial class MusicCommand
             return;
         }
 
-        await player.SkipAsync();
+        var info = await _player.VoteAsync(Context.User.Id);
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
+        if (info.WasSkipped)
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                x.Content =
+                    $"Skipped - {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
+        else await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content =
-                $"Skipped - {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
+                $"Votes required: {info.Votes.Count}/{Math.Floor(info.Percentage * info.TotalUsers)}")
     }
 }

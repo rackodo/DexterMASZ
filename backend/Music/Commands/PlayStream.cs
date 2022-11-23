@@ -1,22 +1,17 @@
 ﻿using Discord.Interactions;
-using Music.Utils;
 
 namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("play-stream", "Play a stream")]
+    [SlashCommand("play stream", "Play a stream")]
     public async Task PlayStreamMusic(
-        [Summary("stream-url", "Stream URL")] string streamUrl)
+        [Summary("stream url", "Stream URL")] string streamUrl)
     {
         await Context.Interaction.DeferAsync();
 
-        var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
-        var player = Lavalink.GetPlayer(Context.Guild.Id);
-
-        if (!await mmu.EnsureUserInVoiceAsync()) return;
-        if (!await mmu.EnsureClientInVoiceAsync()) return;
-        if (!await mmu.EnsureNormalPlayerAsync()) return;
+        if (!await EnsureUserInVoiceAsync()) return;
+        if (!await EnsureClientInVoiceAsync()) return;
 
         if (!Uri.IsWellFormedUriString(streamUrl, UriKind.Absolute))
         {
@@ -36,7 +31,7 @@ public partial class MusicCommand
             return;
         }
 
-        await player!.PlayAsync(track);
+        await _player!.PlayAsync(track);
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = $"Now streaming from {streamUrl}");

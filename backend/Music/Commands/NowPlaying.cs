@@ -4,7 +4,6 @@ using Humanizer;
 using Lavalink4NET.Artwork;
 using Lavalink4NET.Player;
 using Music.Extensions;
-using Music.Utils;
 
 namespace Music.Commands;
 
@@ -12,17 +11,15 @@ public partial class MusicCommand
 {
     public ArtworkService ArtworkService { get; set; }
 
-    [SlashCommand("now-playing", "View now playing track")]
+    [SlashCommand("now playing", "View now playing track")]
     public async Task NowPlayingMusic()
     {
         await Context.Interaction.DeferAsync();
 
-        var mmu = new MusicModuleUtils(Context.Interaction, Lavalink.GetPlayer(Context.Guild.Id));
-        if (!await mmu.EnsureUserInVoiceAsync()) return;
-        if (!await mmu.EnsureClientInVoiceAsync()) return;
+        if (!await EnsureUserInVoiceAsync()) return;
+        if (!await EnsureClientInVoiceAsync()) return;
 
-        var player = Lavalink.GetPlayer(Context.Guild.Id);
-        var track = player!.CurrentTrack;
+        var track = _player!.CurrentTrack;
 
         if (track == null)
         {
@@ -46,10 +43,8 @@ public partial class MusicCommand
                 .AddField("Source", Format.Sanitize(track.Uri?.AbsoluteUri ?? "Unknown"), true)
                 .AddField(isStream ? "Playtime" : "Position", isStream
                     ? DateTime.UtcNow.Subtract(startTime.RadioStartTime).Humanize()
-                    : $"{player.Position.RelativePosition:g}/{track.Duration:g}", true)
-                .AddField("Is looping", player is QueuedLavalinkPlayer lavalinkPlayer
-                    ? $"{lavalinkPlayer.IsLooping}"
-                    : "This is not a queued player", true)
-                .AddField("Is paused", $"{player.State == PlayerState.Paused}", true).Build());
+                    : $"{_player.Position.RelativePosition:g}/{track.Duration:g}", true)
+                .AddField("Is looping", _player.IsLooping, true)
+                .AddField("Is paused", $"{_player.State == PlayerState.Paused}", true).Build());
     }
 }
