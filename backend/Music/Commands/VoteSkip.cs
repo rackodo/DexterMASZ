@@ -5,7 +5,7 @@ namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("vote skip", "Skip this track")]
+    [SlashCommand("vote-skip", "Skip this track")]
     public async Task SkipMusic()
     {
         await Context.Interaction.DeferAsync();

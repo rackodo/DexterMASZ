@@ -4,7 +4,7 @@ namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("remove duplicates", "Remove duplicating tracks from the list")]
+    [SlashCommand("remove-duplicates", "Remove duplicating tracks from the list")]
     public async Task MakeUniqueMusic()
     {
         await Context.Interaction.DeferAsync();

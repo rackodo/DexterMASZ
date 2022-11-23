@@ -7,11 +7,11 @@ namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("remove range", "Remove a range of tracks from the queue")]
+    [SlashCommand("remove-range", "Remove a range of tracks from the queue")]
     public async Task RemoveRangeMusic(
-        [Summary("start index", "Starting index to remove from 0 (first track)")]
+        [Summary("start-index", "Starting index to remove from 0 (first track)")]
         long startIndex,
-        [Summary("end index", "Ending index to remove from 0 (first track)")]
+        [Summary("end-index", "Ending index to remove from 0 (first track)")]
         long endIndex)
     {
         await Context.Interaction.DeferAsync();
