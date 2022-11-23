@@ -18,7 +18,7 @@ public partial class MusicCommand
     {
         if (!await EnsureUserInVoiceAsync()) return;
         if (!await EnsureClientInVoiceAsync()) return;
-        if (!_player.Queue.IsEmpty) return;
+        if (_player.Queue.IsEmpty) return;
 
         var track = _player.Queue.Dequeue();
 
