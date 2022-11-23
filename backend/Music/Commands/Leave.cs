@@ -16,7 +16,7 @@ public partial class MusicCommand
         Lavalink.TrackEnd -= OnTrackEnd;
         Lavalink.TrackException -= OnTrackException;
 
-        await _player!.DisconnectAsync();
+        await _player.DisconnectAsync();
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Left the voice channel");

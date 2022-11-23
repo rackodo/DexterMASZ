@@ -13,7 +13,7 @@ public partial class MusicCommand
         if (!await EnsureUserInVoiceAsync()) return;
         if (!await EnsureClientInVoiceAsync()) return;
 
-        var track = _player!.CurrentTrack;
+        var track = _player.CurrentTrack;
 
         if (track == null)
         {

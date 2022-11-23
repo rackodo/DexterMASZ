@@ -13,7 +13,7 @@ public partial class MusicCommand
         if (!await EnsureClientInVoiceAsync()) return;
         if (!await EnsureQueueIsNotEmptyAsync()) return;
 
-        _player!.Queue.Clear();
+        _player.Queue.Clear();
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Cleared all tracks of the queue");

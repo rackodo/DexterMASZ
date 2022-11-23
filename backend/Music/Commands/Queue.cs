@@ -17,7 +17,7 @@ public partial class MusicCommand
         if (!await EnsureClientInVoiceAsync()) return;
         if (!await EnsureQueueIsNotEmptyAsync()) return;
 
-        var queue = _player!.Queue;
+        var queue = _player.Queue;
 
         var idx = 0;
 

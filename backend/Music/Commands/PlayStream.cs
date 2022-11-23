@@ -31,7 +31,7 @@ public partial class MusicCommand
             return;
         }
 
-        await _player!.PlayAsync(track);
+        await _player.PlayAsync(track);
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = $"Now streaming from {streamUrl}");

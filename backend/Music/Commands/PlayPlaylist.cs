@@ -57,7 +57,7 @@ public partial class MusicCommand
             postProcessedTracks.Add(track);
         }
 
-        _player!.Queue.AddRange(postProcessedTracks);
+        _player.Queue.AddRange(postProcessedTracks);
 
         var pages = MusicPages.CreatePagesFromString($"{text}");
 

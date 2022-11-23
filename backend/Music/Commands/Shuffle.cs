@@ -13,7 +13,7 @@ public partial class MusicCommand
         if (!await EnsureClientInVoiceAsync()) return;
         if (!await EnsureQueueIsNotEmptyAsync()) return;
 
-        _player!.Queue.Shuffle();
+        _player.Queue.Shuffle();
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Shuffled the queue");

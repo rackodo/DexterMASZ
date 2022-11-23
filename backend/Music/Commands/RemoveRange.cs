@@ -23,7 +23,7 @@ public partial class MusicCommand
         var startIndexInt = Convert.ToInt32(startIndex);
         var endIndexInt = Convert.ToInt32(endIndex);
 
-        if (startIndexInt < 0 || endIndexInt >= _player!.Queue.Count || startIndexInt > endIndexInt)
+        if (startIndexInt < 0 || endIndexInt >= _player.Queue.Count || startIndexInt > endIndexInt)
         {
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
                 x.Content = "Invalid index");

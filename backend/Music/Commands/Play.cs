@@ -101,7 +101,7 @@ public partial class MusicCommand
             text.AppendLine($"{Format.Bold(Format.Sanitize(track!.Title))} by {Format.Bold(track.Author)}");
         }
 
-        _player!.Queue.AddRange(tracksList);
+        _player.Queue.AddRange(tracksList);
 
         await res.UpdateAsync(x =>
         {

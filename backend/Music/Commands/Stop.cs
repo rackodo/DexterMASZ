@@ -12,7 +12,7 @@ public partial class MusicCommand
         if (!await EnsureUserInVoiceAsync()) return;
         if (!await EnsureClientInVoiceAsync()) return;
 
-        await _player!.StopAsync();
+        await _player.StopAsync();
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Stopped this session, the queue will be cleaned");

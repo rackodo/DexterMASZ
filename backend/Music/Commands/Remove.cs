@@ -16,7 +16,7 @@ public partial class MusicCommand
         if (!await EnsureClientInVoiceAsync()) return;
         if (!await EnsureQueueIsNotEmptyAsync()) return;
 
-        if (index < 0 || index >= _player!.Queue.Count)
+        if (index < 0 || index >= _player.Queue.Count)
         {
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
                 x.Content = "Invalid index");

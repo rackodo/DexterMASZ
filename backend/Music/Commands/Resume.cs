@@ -13,7 +13,7 @@ public partial class MusicCommand
         if (!await EnsureUserInVoiceAsync()) return;
         if (!await EnsureClientInVoiceAsync()) return;
 
-        if (_player!.State != PlayerState.Paused)
+        if (_player.State != PlayerState.Paused)
         {
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
                 x.Content = "Resumed earlier");

@@ -13,7 +13,7 @@ public partial class MusicCommand
         if (!await EnsureClientInVoiceAsync()) return;
         if (!await EnsureQueueIsNotEmptyAsync()) return;
 
-        _player!.Queue.Distinct();
+        _player.Queue.Distinct();
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Removed duplicating tracks with same source from the queue");
