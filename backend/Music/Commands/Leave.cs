@@ -4,7 +4,7 @@ namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("disconnect", "Leave current voice channel")]
+    [SlashCommand("leave", "Leave current voice channel")]
     public async Task DisconnectMusic()
     {
         await Context.Interaction.DeferAsync();

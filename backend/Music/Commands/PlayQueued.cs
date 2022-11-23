@@ -4,7 +4,7 @@ namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("play queue", "Play queued tracks")]
+    [SlashCommand("play queued", "Play queued tracks")]
     public async Task PlayQueueMusic()
     {
         await Context.Interaction.DeferAsync();

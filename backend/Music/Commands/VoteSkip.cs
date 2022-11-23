@@ -29,8 +29,9 @@ public partial class MusicCommand
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
                 x.Content =
                     $"Skipped - {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
-        else await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content =
-                $"Votes required: {info.Votes.Count}/{Math.Floor(info.Percentage * info.TotalUsers)}")
+        else
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                x.Content =
+                    $"Votes required: {info.Votes.Count}/{Math.Floor(info.Percentage * info.TotalUsers)}");
     }
 }
