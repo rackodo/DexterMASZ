@@ -28,12 +28,12 @@ public partial class MusicCommand
         foreach (var track in queue)
         {
             var testStr =
-                $"{idx + 1} - {Format.Url($"{Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(track.Author)}", track.Uri?.AbsolutePath ?? "https://example.com")}";
+                $"{idx + 1} - {Format.Url($"{Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(track.Author)}", track.Uri?.AbsoluteUri ?? "https://example.com")}";
             text.AppendLine(testStr);
             ++idx;
         }
 
-        var pages = MusicPages.CreatePagesFromString($"{text}");
+        var pages = MusicPages.CreatePagesFromString(text);
 
         var paginator = new StaticPaginatorBuilder()
             .AddUser(Context.User)

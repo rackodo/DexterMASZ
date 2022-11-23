@@ -5,10 +5,12 @@ namespace Music.Extensions;
 
 internal class MusicPages
 {
-    public static IEnumerable<PageBuilder> CreatePagesFromString(string content, int fixedPageSplit = 15,
+    public static IEnumerable<PageBuilder> CreatePagesFromString(StringBuilder content, int fixedPageSplit = 15,
         int threshold = 2000)
     {
-        var lines = content.Split("\r\n", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        var lines = content.ToString()
+            .Split(Environment.NewLine.ToCharArray(),
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         var idx = 0;
         List<PageBuilder> pages = new();
         StringBuilder text = new();
@@ -17,7 +19,7 @@ internal class MusicPages
         {
             if (idx != 0 && idx % fixedPageSplit == 0 || text.Length + line.Length > threshold)
             {
-                pages.Add(new PageBuilder().WithText($"{text}"));
+                pages.Add(new PageBuilder().WithText(text.ToString()));
                 text.Clear();
             }
 
@@ -25,7 +27,7 @@ internal class MusicPages
             ++idx;
         }
 
-        pages.Add(new PageBuilder().WithText($"{text}"));
+        pages.Add(new PageBuilder().WithText(text.ToString()));
         return pages;
     }
 }
