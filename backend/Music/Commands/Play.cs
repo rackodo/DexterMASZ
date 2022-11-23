@@ -54,7 +54,8 @@ public partial class MusicCommand
         {
             if (track.IsLiveStream) continue;
             var title = $"{track.Title} - {track.Author}";
-            menuBuilder.AddOption(title.Length <= 100 ? title : string.Join("", title.Take(97)) + "...", $"{idx}");
+            menuBuilder.AddOption(title.Length <= 100 ? title : string.Join("", title.Take(97)) + "...", $"{idx}",
+                track.Uri?.AbsoluteUri);
             options.Add(track);
             ++idx;
         }
