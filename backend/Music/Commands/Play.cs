@@ -95,6 +95,14 @@ public partial class MusicCommand
                 }
 
                 var track = await Lavalink.GetTrackAsync(options[iidx]);
+
+                if (track == null)
+                {
+                    await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                        x.Content = "Error: Track was null!");
+                    return;
+                }
+
                 tracksList.Add(track);
                 text.AppendLine($"{Format.Bold(Format.Sanitize(track!.Title))} by {Format.Bold(track.Author)}");
             }

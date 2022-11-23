@@ -136,7 +136,7 @@ public class AuditLogger : IHostedService, IEvent
             _modules.Where(x => e.GetType().Namespace.Contains(x.GetType().Namespace)).Any() || e is HttpException)
             return;
 
-        var descript = e.ToString().NormalizeMarkdown();
+        var descript = Format.Sanitize(e.ToString());
 
         if (e.InnerException is ExternalException ee)
             if (ee is WebSocketException &&
