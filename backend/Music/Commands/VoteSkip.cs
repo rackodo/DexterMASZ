@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using Bot.Attributes;
+using Discord;
 using Discord.Interactions;
 
 namespace Music.Commands;
@@ -6,6 +7,7 @@ namespace Music.Commands;
 public partial class MusicCommand
 {
     [SlashCommand("vote-skip", "Skip this track")]
+    [BotChannel]
     public async Task SkipMusic()
     {
         await Context.Interaction.DeferAsync();

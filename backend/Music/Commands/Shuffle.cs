@@ -1,10 +1,12 @@
-﻿using Discord.Interactions;
+﻿using Bot.Attributes;
+using Discord.Interactions;
 
 namespace Music.Commands;
 
 public partial class MusicCommand
 {
     [SlashCommand("shuffle", "Shuffle the queue")]
+    [BotChannel]
     public async Task ShuffleMusic()
     {
         await Context.Interaction.DeferAsync();

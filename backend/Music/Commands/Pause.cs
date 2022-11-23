@@ -1,4 +1,5 @@
-﻿using Discord.Interactions;
+﻿using Bot.Attributes;
+using Discord.Interactions;
 using Lavalink4NET.Player;
 
 namespace Music.Commands;
@@ -6,6 +7,7 @@ namespace Music.Commands;
 public partial class MusicCommand
 {
     [SlashCommand("pause", "Pause this session")]
+    [BotChannel]
     public async Task MusicPlaybackPauseCommand()
     {
         await Context.Interaction.DeferAsync();

@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using Bot.Attributes;
+using Discord;
 using Discord.Interactions;
 
 namespace Music.Commands;
@@ -6,6 +7,7 @@ namespace Music.Commands;
 public partial class MusicCommand
 {
     [SlashCommand("remove", "Remove a track from the queue")]
+    [BotChannel]
     public async Task RemoveMusic(
         [Summary("index", "Index to remove from 0 (first track)")]
         long index)

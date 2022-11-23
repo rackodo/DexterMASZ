@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using Bot.Attributes;
+using Discord;
 using Discord.Interactions;
 using Humanizer;
 using Lavalink4NET.Artwork;
@@ -12,6 +13,7 @@ public partial class MusicCommand
     public ArtworkService ArtworkService { get; set; }
 
     [SlashCommand("now-playing", "View now playing track")]
+    [BotChannel]
     public async Task NowPlayingMusic()
     {
         await Context.Interaction.DeferAsync();

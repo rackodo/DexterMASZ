@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using Bot.Attributes;
+using Discord;
 using Discord.Interactions;
 using Fergun.Interactive.Pagination;
 using Lavalink4NET.Player;
@@ -10,6 +11,7 @@ namespace Music.Commands;
 public partial class MusicCommand
 {
     [SlashCommand("play-playlist", "Add tracks from a playlist to queue")]
+    [BotChannel]
     public async Task AddPlaylistMusic(
         [Summary("playlist-url", "Playlist URL")]
         string playlistUrl)

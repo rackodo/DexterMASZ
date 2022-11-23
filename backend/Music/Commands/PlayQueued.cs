@@ -1,10 +1,12 @@
-﻿using Discord.Interactions;
+﻿using Bot.Attributes;
+using Discord.Interactions;
 
 namespace Music.Commands;
 
 public partial class MusicCommand
 {
     [SlashCommand("play-queued", "Play queued tracks")]
+    [BotChannel]
     public async Task PlayQueueMusic()
     {
         if (!await EnsureQueueIsNotEmptyAsync()) return;

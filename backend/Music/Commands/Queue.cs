@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using Bot.Attributes;
+using Discord;
 using Discord.Interactions;
 using Fergun.Interactive.Pagination;
 using Music.Extensions;
@@ -9,6 +10,7 @@ namespace Music.Commands;
 public partial class MusicCommand
 {
     [SlashCommand("queue", "Check the queue of current playing session")]
+    [BotChannel]
     public async Task ViewMusic()
     {
         await Context.Interaction.DeferAsync();

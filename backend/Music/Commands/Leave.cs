@@ -1,15 +1,16 @@
-﻿using Discord.Interactions;
+﻿using Bot.Attributes;
+using Discord.Interactions;
 
 namespace Music.Commands;
 
 public partial class MusicCommand
 {
     [SlashCommand("leave", "Leave current voice channel")]
+    [BotChannel]
     public async Task DisconnectMusic()
     {
         await Context.Interaction.DeferAsync();
 
-        if (!await EnsureUserInVoiceAsync()) return;
         if (!await EnsureClientInVoiceAsync()) return;
 
         Lavalink.TrackStarted -= OnTrackStarted;

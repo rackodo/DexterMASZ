@@ -1,10 +1,12 @@
-﻿using Discord.Interactions;
+﻿using Bot.Attributes;
+using Discord.Interactions;
 
 namespace Music.Commands;
 
 public partial class MusicCommand
 {
     [SlashCommand("clear", "Clear the queue")]
+    [BotChannel]
     public async Task ClearMusic()
     {
         await Context.Interaction.DeferAsync();

@@ -1,4 +1,5 @@
-﻿using Discord.Interactions;
+﻿using Bot.Attributes;
+using Discord.Interactions;
 using Discord.WebSocket;
 using Lavalink4NET.Player;
 
@@ -7,6 +8,7 @@ namespace Music.Commands;
 public partial class MusicCommand
 {
     [SlashCommand("join", "Connect to your current voice channel")]
+    [BotChannel]
     public async Task ConnectMusic()
     {
         await Context.Interaction.DeferAsync();

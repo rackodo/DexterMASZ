@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using Bot.Attributes;
+using Discord;
 using Discord.Interactions;
 using Fergun.Interactive.Pagination;
 using Lavalink4NET.Lyrics;
@@ -11,6 +12,7 @@ public partial class MusicCommand
     public LyricsService LyricService { get; set; }
 
     [SlashCommand("lyrics", "Check lyrics of a track")]
+    [BotChannel]
     public async Task LyricsMusic(
         [Summary("artist", "Artist name")] string artist,
         [Summary("track-name", "Track name")] string trackName)

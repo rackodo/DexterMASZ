@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using Bot.Attributes;
+using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Lavalink4NET.Player;
@@ -12,6 +13,7 @@ namespace Music.Commands;
 public partial class MusicCommand
 {
     [SlashCommand("play", "Add tracks to queue")]
+    [BotChannel]
     public async Task AddMusic(
         [Summary("query", "Music query")] string query,
         [Summary("source", "Music source")] MusicSource source = MusicSource.YouTube)

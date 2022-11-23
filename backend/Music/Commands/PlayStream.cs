@@ -1,10 +1,12 @@
-﻿using Discord.Interactions;
+﻿using Bot.Attributes;
+using Discord.Interactions;
 
 namespace Music.Commands;
 
 public partial class MusicCommand
 {
     [SlashCommand("play-stream", "Play a stream")]
+    [BotChannel]
     public async Task PlayStreamMusic(
         [Summary("stream-url", "Stream URL")] string streamUrl)
     {

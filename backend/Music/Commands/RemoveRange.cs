@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using Bot.Attributes;
+using Discord;
 using Discord.Interactions;
 using Fergun.Interactive;
 using Fergun.Interactive.Pagination;
@@ -8,6 +9,7 @@ namespace Music.Commands;
 public partial class MusicCommand
 {
     [SlashCommand("remove-range", "Remove a range of tracks from the queue")]
+    [BotChannel]
     public async Task RemoveRangeMusic(
         [Summary("start-index", "Starting index to remove from 0 (first track)")]
         long startIndex,

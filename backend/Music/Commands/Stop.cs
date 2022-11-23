@@ -1,10 +1,12 @@
-﻿using Discord.Interactions;
+﻿using Bot.Attributes;
+using Discord.Interactions;
 
 namespace Music.Commands;
 
 public partial class MusicCommand
 {
     [SlashCommand("stop", "Stop this session")]
+    [BotChannel]
     public async Task StopMusic()
     {
         await Context.Interaction.DeferAsync();
