@@ -81,7 +81,7 @@ public class LevelsRankcardController : AuthenticatedController
         newConfig.PfpOffset = rankcardConfig.PfpOffset;
 
         var existing = _levelsRankcardRepository.GetRankcard(newConfig.Id) is not null;
-        Console.WriteLine($"Rankcard for ID {newConfig.Id} {(existing ? "exists" : "doesn't exist")}.");
+        Console.WriteLine($"RankCard for ID {newConfig.Id} {(existing ? "exists" : "doesn't exist")}.");
         if (existing)
             await _levelsRankcardRepository.DeleteRankcard(newConfig.Id);
 

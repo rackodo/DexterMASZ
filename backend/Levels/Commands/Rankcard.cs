@@ -4,15 +4,13 @@ using Discord.Interactions;
 
 namespace Levels.Commands;
 
-public class Rankcard : Command<Rankcard>
+public class RankCard : Command<RankCard>
 {
     public SettingsRepository? SettingsRepository { get; set; }
 
     [SlashCommand("rankcard", "Customize your rankcard.")]
-    public async Task LeaderboardCommand()
-    {
-        var settings = await SettingsRepository!.GetAppSettings();
-        await RespondAsync($"{settings.GetServiceUrl().Replace("5565", "4200")}/profile?selectedTab=rankcard",
-            ephemeral: true);
-    }
+    public async Task RankCardCommand() => await RespondAsync(await GetRankCard(SettingsRepository), ephemeral: true);
+
+    public static async Task<string> GetRankCard(SettingsRepository settingRepo) =>
+        $"{(await settingRepo!.GetAppSettings()).GetServiceUrl().Replace("5565", "4200")}/profile?selectedTab=rankcard";
 }

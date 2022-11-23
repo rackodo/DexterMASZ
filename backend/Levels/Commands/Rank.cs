@@ -27,7 +27,16 @@ public class Rank : Command<Rank>
 
         user ??= Context.User;
 
-        var rankCardConfig = UserRankcardConfigRepository!.GetOrDefaultRankcard(user);
+        var rankCardConfig = UserRankcardConfigRepository!.GetRankcard(user.Id);
+        var buttons = new ComponentBuilder();
+
+        if (rankCardConfig == null)
+        {
+            rankCardConfig = new UserRankcardConfig();
+            buttons.WithButton("Customize Card", url: await RankCard.GetRankCard(SettingsRepository),
+                style: ButtonStyle.Link);
+        }
+
         var level = await GuildUserLevelRepository!.GetOrCreateLevel(Context.Guild.Id, user.Id);
         var guildLevelConfig = await GuildLevelConfigRepository!.GetOrCreateConfig(Context.Guild.Id);
         var calcLevel = new CalculatedGuildUserLevel(level, guildLevelConfig);
@@ -36,14 +45,15 @@ public class Rank : Command<Rank>
 
         try
         {
-            var appconfig = await SettingsRepository!.GetAppSettings();
             path = Storage(user, AppDomain.CurrentDomain.BaseDirectory);
 
             Directory.CreateDirectory(Path.GetDirectoryName(path));
 
-            using (var rankcardimg = await Models.Rankcard.RenderRankCard(user, calcLevel, rankCardConfig,
+            using (var rankcardimg = await Rankcard.RenderRankCard(user, calcLevel, rankCardConfig,
                        GuildUserLevelRepository, SettingsRepository))
                 await rankcardimg.SaveAsPngAsync(path);
+
+
             await FollowupWithFileAsync(path);
         }
         catch (Exception ex)
