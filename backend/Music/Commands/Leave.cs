@@ -10,6 +10,7 @@ public partial class MusicCommand
         await Context.Interaction.DeferAsync();
 
         if (!await EnsureUserInVoiceAsync()) return;
+        if (!await EnsureClientInVoiceAsync()) return;
 
         Lavalink.TrackStarted -= OnTrackStarted;
         Lavalink.TrackStuck -= OnTrackStuck;
