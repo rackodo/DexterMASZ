@@ -16,18 +16,38 @@ public partial class MusicCommand
     [BotChannel]
     public async Task AddMusic(
         [Summary("query", "Music query")] string query,
-        [Summary("source", "Music source")] MusicSource source = MusicSource.YouTube)
+        [Summary("source", "Music source")] MusicSource source)
     {
         await Context.Interaction.DeferAsync();
 
         if (!await EnsureUserInVoiceAsync()) return;
         if (!await EnsureClientInVoiceAsync()) return;
 
-        if (!Enum.TryParse(source.ToString(), out SearchMode searchMode))
+        var searchMode = SearchMode.None;
+
+        switch (source)
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Unable to get search mode");
-            return;
+            case MusicSource.SoundCloud:
+                searchMode = SearchMode.SoundCloud;
+                break;
+            case MusicSource.YouTube:
+                searchMode = SearchMode.YouTube;
+                break;
+            case MusicSource.Spotify:
+                query = $"spsearch:{query}";
+                break;
+            case MusicSource.Deezer:
+                query = $"dzsearch:{query}";
+                break;
+            case MusicSource.YandexMusic:
+                query = $"ymsearch:{query}";
+                break;
+            case MusicSource.None:
+                break;
+            default:
+                await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                    x.Content = "Unable to get search mode");
+                return;
         }
 
         var tracks = await Lavalink.GetTracksAsync(query, searchMode);

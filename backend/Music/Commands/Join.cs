@@ -32,6 +32,8 @@ public partial class MusicCommand
         _player = await Lavalink.JoinAsync<VoteLavalinkPlayer>(Context.Guild.Id,
             ((SocketGuildUser)Context.User).VoiceState!.Value.VoiceChannel.Id, true);
 
+        _player.GetCategories().AddAll();
+
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Done establishing the connection.");
     }

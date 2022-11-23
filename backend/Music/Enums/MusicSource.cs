@@ -4,9 +4,15 @@ namespace Music.Enums;
 
 public enum MusicSource
 {
+    [ChoiceDisplay("youtube")] YouTube,
+
     [ChoiceDisplay("soundcloud")] SoundCloud,
 
-    [ChoiceDisplay("youtube")] YouTube,
+    [ChoiceDisplay("spotify")] Spotify,
+
+    [ChoiceDisplay("deezer")] Deezer,
+
+    [ChoiceDisplay("yandex-music"] YandexMusic,
 
     [ChoiceDisplay("raw")] None
 }
