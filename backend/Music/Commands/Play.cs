@@ -112,5 +112,7 @@ public partial class MusicCommand
                 .WithDescription(string.IsNullOrWhiteSpace($"{text}") ? "Nothing" : $"{text}")
                 .Build();
         });
+
+        await PlayQueue();
     }
 }

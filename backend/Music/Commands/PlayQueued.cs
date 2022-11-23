@@ -7,11 +7,18 @@ public partial class MusicCommand
     [SlashCommand("play-queued", "Play queued tracks")]
     public async Task PlayQueueMusic()
     {
+        if (!await EnsureQueueIsNotEmptyAsync()) return;
+
         await Context.Interaction.DeferAsync();
 
+        await PlayQueue();
+    }
+
+    public async Task PlayQueue()
+    {
         if (!await EnsureUserInVoiceAsync()) return;
         if (!await EnsureClientInVoiceAsync()) return;
-        if (!await EnsureQueueIsNotEmptyAsync()) return;
+        if (!_player.Queue.IsEmpty) return;
 
         var track = _player.Queue.Dequeue();
 
