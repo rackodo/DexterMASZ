@@ -18,7 +18,24 @@ public class MusicService : IEvent
         _inactivityTracker = inactivityTracker;
     }
 
-    public void RegisterEvents() => _client.Ready += SetupLavalink;
+    public void RegisterEvents()
+    {
+        _client.Ready += SetupLavalink;
+        _client.UserVoiceStateUpdated += CheckLeft;
+    }
+
+    private async Task CheckLeft(SocketUser user, SocketVoiceState originalState, SocketVoiceState newState)
+    {
+        if (newState.VoiceChannel == null)
+            if (originalState.VoiceChannel != null)
+                if (originalState.VoiceChannel.ConnectedUsers.Count == 1)
+                    if (originalState.VoiceChannel.ConnectedUsers.First().Id == _client.CurrentUser.Id)
+                    {
+                        var player = _lavalink.GetPlayer(originalState.VoiceChannel.Guild.Id);
+                        if (player != null)
+                            await player.DisconnectAsync();
+                    }
+    }
 
     private async Task SetupLavalink()
     {
