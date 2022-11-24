@@ -33,7 +33,10 @@ public partial class MusicCommand
             ++idx;
         }
 
-        var pages = MusicPages.CreatePagesFromString(text.ToString(), "Song Queue", Color.Gold);
+        var pages = MusicPages.CreatePagesFromString(text.ToString(), "Song Queue", Color.Gold).ToList();
+
+        if (_player.CurrentTrack != null)
+            pages.First().AddField("Current Track", _player.CurrentTrack.Title);
 
         var paginator = new StaticPaginatorBuilder()
             .AddUser(Context.User)
