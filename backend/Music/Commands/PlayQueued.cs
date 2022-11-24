@@ -1,5 +1,6 @@
 ﻿using Bot.Attributes;
 using Discord.Interactions;
+using Lavalink4NET.Player;
 
 namespace Music.Commands;
 
@@ -16,11 +17,14 @@ public partial class MusicCommand
         await PlayQueue();
     }
 
-    public async Task PlayQueue()
+    public async Task<bool> PlayQueue()
     {
-        if (!await EnsureUserInVoiceAsync()) return;
-        if (!await EnsureClientInVoiceAsync()) return;
-        if (_player.Queue.IsEmpty) return;
+        if (!await EnsureUserInVoiceAsync()) return false;
+        if (!await EnsureClientInVoiceAsync()) return false;
+        if (_player.Queue.IsEmpty) return false;
+
+        if (_player.CurrentTrack != null && _player.State == PlayerState.Playing)
+            return false;
 
         var track = _player.Queue.Dequeue();
 
@@ -30,5 +34,7 @@ public partial class MusicCommand
         Lavalink.TrackStuck += OnTrackStuck;
         Lavalink.TrackEnd += OnTrackEnd;
         Lavalink.TrackException += OnTrackException;
+
+        return true;
     }
 }

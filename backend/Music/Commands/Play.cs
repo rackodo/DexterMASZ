@@ -126,17 +126,22 @@ public partial class MusicCommand
 
         _player.Queue.AddRange(tracksList);
 
-        await res.UpdateAsync(x =>
-        {
-            x.Content = "Tracks added";
-            x.Components = new ComponentBuilder().Build();
-            x.Embed = Context.User.CreateEmbedWithUserData()
+        await res.UpdateAsync(x => x.Components = new ComponentBuilder().Build());
+
+        var embed =
+            Context.User.CreateEmbedWithUserData()
                 .WithAuthor("Added tracks to queue", Context.Client.CurrentUser.GetAvatarUrl())
                 .WithDescription(string.IsNullOrWhiteSpace($"{text}") ? "Nothing" : $"{text}")
                 .AddField("Music From", source.Humanize())
                 .Build();
-        });
 
-        await PlayQueue();
+        if (await PlayQueue())
+            await Context.Channel.SendMessageAsync(embed: embed);
+        else
+            await res.UpdateAsync(x =>
+            {
+                x.Embed = embed;
+                x.Content = "Tracks added";
+            });
     }
 }
