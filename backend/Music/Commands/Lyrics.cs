@@ -34,7 +34,7 @@ public partial class MusicCommand
 
             var paginator = new StaticPaginatorBuilder()
                 .AddUser(Context.User)
-                .WithPages(MusicPages.CreatePagesFromString(lyrics))
+                .WithPages(MusicPages.CreatePagesFromString(lyrics, $"Lyrics for {trackName}", Color.Magenta))
                 .Build();
 
             await InteractiveService.SendPaginatorAsync(paginator, Context.Interaction,

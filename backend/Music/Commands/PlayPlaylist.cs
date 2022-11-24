@@ -61,7 +61,7 @@ public partial class MusicCommand
 
         _player.Queue.AddRange(postProcessedTracks);
 
-        var pages = MusicPages.CreatePagesFromString($"{text}");
+        var pages = MusicPages.CreatePagesFromString(text.ToString(), "Queued Playlist", Color.Gold);
 
         var paginator = new StaticPaginatorBuilder()
             .AddUser(Context.User)

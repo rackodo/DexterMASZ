@@ -1,14 +1,15 @@
-﻿using Fergun.Interactive;
+﻿using Discord;
+using Fergun.Interactive;
 using System.Text;
 
 namespace Music.Extensions;
 
-internal class MusicPages
+public static class MusicPages
 {
-    public static IEnumerable<PageBuilder> CreatePagesFromString(StringBuilder content, int fixedPageSplit = 15,
-        int threshold = 2000)
+    public static IEnumerable<PageBuilder> CreatePagesFromString(string content, string title, Color color,
+        int fixedPageSplit = 15, int threshold = 2000)
     {
-        var lines = content.ToString()
+        var lines = content
             .Split(Environment.NewLine.ToCharArray(),
                 StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         var idx = 0;
@@ -19,7 +20,7 @@ internal class MusicPages
         {
             if (idx != 0 && idx % fixedPageSplit == 0 || text.Length + line.Length > threshold)
             {
-                pages.Add(new PageBuilder().WithText(text.ToString()));
+                pages.Add(text.GetCurrentPage(title, color));
                 text.Clear();
             }
 
@@ -27,7 +28,13 @@ internal class MusicPages
             ++idx;
         }
 
-        pages.Add(new PageBuilder().WithText(text.ToString()));
+        pages.Add(text.GetCurrentPage(title, color));
         return pages;
     }
+
+    public static PageBuilder GetCurrentPage(this StringBuilder text, string title, Color color) =>
+        new PageBuilder()
+            .WithDescription(text.ToString())
+            .WithColor(color)
+            .WithTitle(title);
 }
