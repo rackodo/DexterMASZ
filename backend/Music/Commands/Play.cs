@@ -58,7 +58,8 @@ public partial class MusicCommand
         if (!lavalinkTracks.Any())
         {
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Unable to get the tracks");
+                x.Content =
+                    "Unable to get the tracks. If this was a link to a stream or playlist, please use `/music play-stream` or `play-playlist`.");
 
             return;
         }
@@ -131,8 +132,8 @@ public partial class MusicCommand
         var embed =
             Context.User.CreateEmbedWithUserData()
                 .WithAuthor("Added tracks to queue", Context.Client.CurrentUser.GetAvatarUrl())
-                .WithDescription(string.IsNullOrWhiteSpace($"{text}") ? "Nothing" : $"{text}")
-                .AddField("Music From", source.Humanize())
+                .WithDescription((string.IsNullOrWhiteSpace($"{text}") ? "Nothing" : $"{text}") +
+                                 $". Music from {Format.Bold(source.Humanize())}.")
                 .Build();
 
         if (await PlayQueue())
