@@ -68,7 +68,10 @@ public partial class MusicCommand
             .WithPages(pages)
             .Build();
 
-        await InteractiveService.SendPaginatorAsync(paginator, Context.Interaction,
-            responseType: InteractionResponseType.DeferredChannelMessageWithSource);
+        if (await PlayQueue())
+            await InteractiveService.SendPaginatorAsync(paginator, Context.Channel);
+        else
+            await InteractiveService.SendPaginatorAsync(paginator, Context.Interaction,
+                responseType: InteractionResponseType.DeferredChannelMessageWithSource);
     }
 }

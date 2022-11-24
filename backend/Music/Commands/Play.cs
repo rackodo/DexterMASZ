@@ -59,7 +59,7 @@ public partial class MusicCommand
         {
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
                 x.Content =
-                    "Unable to get the tracks. If this was a link to a stream or playlist, please use `/music play-stream` or `play-playlist`.");
+                    "Unable to get tracks. If this was a link to a stream or playlist, please use `/music play-stream` or `play-playlist`.");
 
             return;
         }
