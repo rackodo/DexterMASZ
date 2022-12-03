@@ -301,13 +301,10 @@ public class DiscordBot : IHostedService, IEvent
 
                     try
                     {
-                        if (context is IInteractionContext iContext)
-                            if (!iContext.Interaction.HasResponded)
-                                await iContext.Interaction.RespondAsync(embed: builder.Build());
-                            else
-                                await context.Interaction.ModifyOriginalResponseAsync(x => x.Embed = builder.Build());
+                        if (!context.Interaction.HasResponded)
+                            await context.Interaction.RespondAsync(embed: builder.Build());
                         else
-                            await context.Channel.SendMessageAsync(embed: builder.Build());
+                            await context.Interaction.ModifyOriginalResponseAsync(x => x.Embed = builder.Build());
                     }
                     catch (Exception)
                     {
@@ -326,7 +323,7 @@ public class DiscordBot : IHostedService, IEvent
             else
             {
                 _logger.LogError(
-                    $"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed due to {result.Error}.");
+                    $"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed due to {result.Error}: {result.ErrorReason}.");
             }
         }
     }
