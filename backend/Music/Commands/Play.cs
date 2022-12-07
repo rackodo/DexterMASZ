@@ -143,7 +143,7 @@ public partial class MusicCommand
                 await Context.Interaction.ModifyOriginalResponseAsync(x =>
                 {
                     x.Embed = embed;
-                    x.Content = "Tracks added";
+                    x.Content = string.Empty;
                 });
         }
         else
