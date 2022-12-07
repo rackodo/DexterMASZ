@@ -100,50 +100,58 @@ public partial class MusicCommand
         List<LavalinkTrack> tracksList = new();
         StringBuilder text = new();
 
-        foreach (var value in res.Data.Values)
+        if (res?.Data?.Values != null)
         {
-            var iidx = Convert.ToInt32(value);
-
-            if (iidx == -1)
+            foreach (var value in res.Data.Values)
             {
-                await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                    x.Content = "No tracks added");
+                var iidx = Convert.ToInt32(value);
 
-                text.Clear();
-                break;
+                if (iidx == -1)
+                {
+                    await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                        x.Content = "No tracks added");
+
+                    text.Clear();
+                    break;
+                }
+
+                var track = options[iidx];
+
+                if (track == null)
+                {
+                    await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                        x.Content = "Error: Track was null!");
+                    return;
+                }
+
+                tracksList.Add(track);
+                text.AppendLine($"{Format.Bold(Format.Sanitize(track!.Title))} by {Format.Bold(track.Author)}");
             }
 
-            var track = options[iidx];
+            _player.Queue.AddRange(tracksList);
 
-            if (track == null)
-            {
+            var embed =
+                Context.User.CreateEmbedWithUserData()
+                    .WithAuthor("Added tracks to queue", Context.Client.CurrentUser.GetAvatarUrl())
+                    .WithDescription((string.IsNullOrWhiteSpace($"{text}") ? "Nothing" : $"{text}") +
+                                     $"Music from {Format.Bold(source.Humanize(LetterCasing.Title))}.")
+                    .Build();
+
+            if (await PlayQueue())
+                await Context.Channel.SendMessageAsync(embed: embed);
+            else
                 await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                    x.Content = "Error: Track was null!");
-                return;
-            }
-
-            tracksList.Add(track);
-            text.AppendLine($"{Format.Bold(Format.Sanitize(track!.Title))} by {Format.Bold(track.Author)}");
+                {
+                    x.Embed = embed;
+                    x.Content = "Tracks added";
+                });
+        }
+        else
+        {
+            await Context.Interaction.ModifyOriginalResponseAsync(x => x.Content = "Timed out!");
         }
 
-        _player.Queue.AddRange(tracksList);
-
-        await res.UpdateAsync(x => x.Components = new ComponentBuilder().Build());
-
-        var embed =
-            Context.User.CreateEmbedWithUserData()
-                .WithAuthor("Added tracks to queue", Context.Client.CurrentUser.GetAvatarUrl())
-                .WithDescription((string.IsNullOrWhiteSpace($"{text}") ? "Nothing" : $"{text}") +
-                                 $". Music from {Format.Bold(source.Humanize())}.")
-                .Build();
-
-        if (await PlayQueue())
-            await Context.Channel.SendMessageAsync(embed: embed);
-        else
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            {
-                x.Embed = embed;
-                x.Content = "Tracks added";
-            });
+        if (res != null)
+            await res.UpdateAsync(x => x.Components = new ComponentBuilder().Build());
     }
 }
