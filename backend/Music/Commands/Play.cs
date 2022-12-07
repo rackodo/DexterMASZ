@@ -1,4 +1,5 @@
 ﻿using Bot.Attributes;
+using Bot.Extensions;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
@@ -78,8 +79,8 @@ public partial class MusicCommand
         {
             if (track.IsLiveStream) continue;
             var title = $"{track.Title} - {track.Author}";
-            menuBuilder.AddOption(title.Length <= 100 ? title : string.Join("", title.Take(97)) + "...", $"{idx}",
-                track.Uri?.AbsoluteUri);
+            menuBuilder.AddOption(title.CropText(100), $"{idx}",
+                track.Uri?.AbsoluteUri.CropText(100));
             options.Add(track);
             ++idx;
         }
