@@ -140,7 +140,7 @@ public partial class MusicCommand
         if (await PlayQueue())
             await Context.Channel.SendMessageAsync(embed: embed);
         else
-            await res.UpdateAsync(x =>
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
             {
                 x.Embed = embed;
                 x.Content = "Tracks added";

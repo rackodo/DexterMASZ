@@ -23,13 +23,9 @@ public partial class MusicCommand
         if (!await EnsureClientInVoiceAsync()) return false;
         if (_player.Queue.IsEmpty) return false;
 
-        Console.WriteLine(_player.CurrentTrack);
-        Console.WriteLine(_player.State);
-
         if (_player.CurrentTrack != null && _player.State == PlayerState.Playing)
             return false;
 
-        Console.WriteLine("TRUE");
         var track = _player.Queue.Dequeue();
 
         await _player.PlayAsync(track, false);
