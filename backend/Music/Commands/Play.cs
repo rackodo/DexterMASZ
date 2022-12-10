@@ -40,6 +40,7 @@ public partial class MusicCommand
             }
 
             _player.Queue.Add(track);
+            AddTrackToSb(text, track);
         }
         else
         {
@@ -145,7 +146,7 @@ public partial class MusicCommand
                         }
 
                         tracksList.Add(track);
-                        text.AppendLine($"{Format.Bold(Format.Sanitize(track!.Title))} by {Format.Bold(track.Author)}");
+                        AddTrackToSb(text, track);
                     }
 
                     _player.Queue.AddRange(tracksList);
@@ -161,7 +162,7 @@ public partial class MusicCommand
         var embed =
             Context.User.CreateEmbedWithUserData()
                 .WithAuthor("Added tracks to queue", Context.Client.CurrentUser.GetAvatarUrl())
-                .WithDescription((string.IsNullOrWhiteSpace($"{text}") ? "Nothing" : $"{text}") +
+                .WithDescription((string.IsNullOrWhiteSpace($"{text}") ? "Nothing\n" : $"{text}") +
                                  $"Music from {Format.Bold(source.Humanize(LetterCasing.Title))}.")
                 .Build();
 
@@ -174,4 +175,7 @@ public partial class MusicCommand
                 x.Content = string.Empty;
             });
     }
+
+    public void AddTrackToSb(StringBuilder builder, LavalinkTrack track) =>
+        builder.AppendLine($"{Format.Bold(Format.Sanitize(track!.Title))} by {Format.Bold(track.Author)}");
 }
