@@ -3,7 +3,6 @@ using Bot.Extensions;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Humanizer;
 using Lavalink4NET.Player;
 using Lavalink4NET.Rest;
 using Music.Enums;
@@ -163,7 +162,7 @@ public partial class MusicCommand
             Context.User.CreateEmbedWithUserData()
                 .WithAuthor("Added tracks to queue", Context.Client.CurrentUser.GetAvatarUrl())
                 .WithDescription((string.IsNullOrWhiteSpace($"{text}") ? "Nothing\n" : $"{text}") +
-                                 $"Music from {Format.Bold(source.Humanize(LetterCasing.Title))}.")
+                                 $"Music from {Format.Bold(Enum.GetName(source))}.")
                 .Build();
 
         if (await PlayQueue())
