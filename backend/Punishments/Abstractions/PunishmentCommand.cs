@@ -34,7 +34,7 @@ public class PunishmentCommand<T> : Command<T>
 
                 await Context.Interaction.ModifyOriginalResponseAsync(msg =>
                     msg.Content =
-                        $"This user is on a final warning! Please check {textChannel.Mention} for this modlog."
+                        $"Check {textChannel.Mention} for this modlog, as this user is on their final warning."
                 );
             }
             else
