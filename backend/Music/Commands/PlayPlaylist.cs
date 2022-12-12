@@ -1,7 +1,6 @@
 ﻿using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
-using Fergun.Interactive.Pagination;
 using Lavalink4NET.Player;
 using Music.Extensions;
 using System.Text;
@@ -63,15 +62,8 @@ public partial class MusicCommand
 
         var pages = MusicPages.CreatePagesFromString(text.ToString(), "Queued Playlist", Color.Gold);
 
-        var paginator = new StaticPaginatorBuilder()
-            .AddUser(Context.User)
-            .WithPages(pages)
-            .Build();
+        await PlayQueue();
 
-        if (await PlayQueue())
-            await InteractiveService.SendPaginatorAsync(paginator, Context.Channel);
-        else
-            await InteractiveService.SendPaginatorAsync(paginator, Context.Interaction,
-                responseType: InteractionResponseType.DeferredChannelMessageWithSource);
+        await InteractiveService.SendPaginator(pages, Context);
     }
 }

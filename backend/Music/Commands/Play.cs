@@ -25,7 +25,7 @@ public partial class MusicCommand
         if (!await EnsureClientInVoiceAsync()) return;
 
         var searchMode = SearchMode.None;
-        StringBuilder text = new();
+        StringBuilder tInfoSb = new();
 
         if (Uri.IsWellFormedUriString(query, UriKind.Absolute))
         {
@@ -39,7 +39,7 @@ public partial class MusicCommand
             }
 
             _player.Queue.Add(track);
-            AddTrackToSb(text, track);
+            track.AddTrackToSb(tInfoSb);
         }
         else
         {
@@ -131,7 +131,7 @@ public partial class MusicCommand
                             await Context.Interaction.ModifyOriginalResponseAsync(x =>
                                 x.Content = "No tracks added");
 
-                            text.Clear();
+                            tInfoSb.Clear();
                             break;
                         }
 
@@ -145,7 +145,7 @@ public partial class MusicCommand
                         }
 
                         tracksList.Add(track);
-                        AddTrackToSb(text, track);
+                        track.AddTrackToSb(tInfoSb);
                     }
 
                     _player.Queue.AddRange(tracksList);
@@ -161,7 +161,7 @@ public partial class MusicCommand
         var embed =
             Context.User.CreateEmbedWithUserData()
                 .WithAuthor("Added tracks to queue", Context.Client.CurrentUser.GetAvatarUrl())
-                .WithDescription((string.IsNullOrWhiteSpace($"{text}") ? "Nothing\n" : $"{text}") +
+                .WithDescription((string.IsNullOrWhiteSpace($"{tInfoSb}") ? "Nothing\n" : $"{tInfoSb}") +
                                  $"Music from {Format.Bold(Enum.GetName(source))}.")
                 .Build();
 
@@ -174,7 +174,4 @@ public partial class MusicCommand
                 x.Content = string.Empty;
             });
     }
-
-    public void AddTrackToSb(StringBuilder builder, LavalinkTrack track) =>
-        builder.AppendLine($"{Format.Bold(Format.Sanitize(track!.Title))} by {Format.Bold(track.Author)}");
 }

@@ -23,7 +23,9 @@ public class MusicModule : Module
 
     public override void AddServices(IServiceCollection services, CachedServices cachedServices,
         AppSettings appSettings) =>
-        services.AddSingleton(x => new InteractiveService(x.GetRequiredService<DiscordSocketClient>()))
+        services
+            .AddSingleton(new InteractiveConfig { DefaultTimeout = TimeSpan.FromMinutes(5) })
+            .AddSingleton<InteractiveService>()
             .AddSingleton<ILavalinkCache, LavalinkCache>()
             .AddSingleton<IAudioService, LavalinkNode>()
             .AddSingleton<LyricsOptions>()

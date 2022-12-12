@@ -1,7 +1,6 @@
 ﻿using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
-using Fergun.Interactive.Pagination;
 using Lavalink4NET.Lyrics;
 using Music.Extensions;
 
@@ -32,13 +31,8 @@ public partial class MusicCommand
                 return;
             }
 
-            var paginator = new StaticPaginatorBuilder()
-                .AddUser(Context.User)
-                .WithPages(MusicPages.CreatePagesFromString(lyrics, $"Lyrics for {trackName}", Color.Magenta))
-                .Build();
-
-            await InteractiveService.SendPaginatorAsync(paginator, Context.Interaction,
-                responseType: InteractionResponseType.DeferredChannelMessageWithSource);
+            await InteractiveService.SendPaginator(
+                MusicPages.CreatePagesFromString(lyrics, $"Lyrics for {trackName}", Color.Magenta), Context);
         }
         catch
         {

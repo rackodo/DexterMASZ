@@ -1,7 +1,6 @@
 ﻿using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
-using Fergun.Interactive.Pagination;
 using Music.Extensions;
 using System.Text;
 
@@ -38,12 +37,6 @@ public partial class MusicCommand
         if (_player.CurrentTrack != null)
             pages.First().AddField("Current Track", _player.CurrentTrack.Title);
 
-        var paginator = new StaticPaginatorBuilder()
-            .AddUser(Context.User)
-            .WithPages(pages)
-            .Build();
-
-        await InteractiveService.SendPaginatorAsync(paginator, Context.Interaction,
-            responseType: InteractionResponseType.DeferredChannelMessageWithSource);
+        await InteractiveService.SendPaginator(pages, Context);
     }
 }

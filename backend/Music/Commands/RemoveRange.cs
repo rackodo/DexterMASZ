@@ -2,7 +2,7 @@
 using Discord;
 using Discord.Interactions;
 using Fergun.Interactive;
-using Fergun.Interactive.Pagination;
+using Music.Extensions;
 
 namespace Music.Commands;
 
@@ -46,11 +46,6 @@ public partial class MusicCommand
 
         _player.Queue.RemoveRange(startIndexInt, endIndexInt - startIndexInt + 1);
 
-        var paginator = new StaticPaginatorBuilder()
-            .AddUser(Context.User)
-            .WithPages(pages)
-            .Build();
-
-        await InteractiveService.SendPaginatorAsync(paginator, Context.Channel);
+        await InteractiveService.SendPaginator(pages, Context);
     }
 }
