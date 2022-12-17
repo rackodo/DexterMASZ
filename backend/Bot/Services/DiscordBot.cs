@@ -324,6 +324,8 @@ public class DiscordBot : IHostedService, IEvent
             {
                 _logger.LogError(
                     $"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed due to {result.Error}: {result.ErrorReason}.");
+
+                _eventHandler.CommandErroredEvent.Invoke(new Exception(result.ErrorReason));
             }
         }
     }
