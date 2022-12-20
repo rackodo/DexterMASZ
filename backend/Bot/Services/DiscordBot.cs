@@ -12,6 +12,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace Bot.Services;
 
@@ -270,46 +271,25 @@ public class DiscordBot : IHostedService, IEvent
     {
         if (!result.IsSuccess)
         {
+            using var scope = _serviceProvider.CreateScope();
+            var translation = scope.ServiceProvider.GetRequiredService<Translation>();
+
+            if (context.Guild != null)
+                try
+                {
+                    await translation.SetLanguage(context.Guild.Id);
+                }
+                catch (UnregisteredGuildException)
+                {
+                    translation.SetLanguage(Language.En);
+                }
+
             if (result is ExecuteResult eResult)
             {
                 if (eResult.Exception is ApiException exception)
                 {
-                    _logger.LogError(
-                        $"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed: {exception.Error}");
-
-                    using var scope = _serviceProvider.CreateScope();
-                    var translator = scope.ServiceProvider.GetRequiredService<Translation>();
-
-                    if (context.Guild != null)
-                        try
-                        {
-                            await translator.SetLanguage(context.Guild.Id);
-                        }
-                        catch (UnregisteredGuildException)
-                        {
-                            translator.SetLanguage(Language.En);
-                        }
-
                     var errorCode = "#" + ((int)exception.Error).ToString("D4");
-
-                    var builder = new EmbedBuilder()
-                        .WithTitle(translator.Get<BotTranslator>().SomethingWentWrong())
-                        .WithColor(Color.Red)
-                        .WithDescription(translator.Get<BotEnumTranslator>().Enum(exception.Error))
-                        .WithCurrentTimestamp()
-                        .WithFooter($"{translator.Get<BotTranslator>().Code()} {errorCode}");
-
-                    try
-                    {
-                        if (!context.Interaction.HasResponded)
-                            await context.Interaction.RespondAsync(embed: builder.Build());
-                        else
-                            await context.Interaction.ModifyOriginalResponseAsync(x => x.Embed = builder.Build());
-                    }
-                    catch (Exception)
-                    {
-                        await context.Channel.SendMessageAsync(embed: builder.Build());
-                    }
+                    await SendError(info, translation, context, translation.Get<BotEnumTranslator>().Enum(exception.Error), errorCode);
                 }
                 else
                 {
@@ -320,6 +300,10 @@ public class DiscordBot : IHostedService, IEvent
 
                 _eventHandler.CommandErroredEvent.Invoke(eResult.Exception);
             }
+            else if (result is PreconditionResult preResult)
+            {
+                await SendError(info, translation, context, preResult.ErrorReason);
+            }
             else
             {
                 _logger.LogError(
@@ -327,6 +311,31 @@ public class DiscordBot : IHostedService, IEvent
 
                 _eventHandler.CommandErroredEvent.Invoke(new Exception($"{result.ErrorReason}\nResult Type: {result.GetType()}"));
             }
+        }
+    }
+
+    private async Task SendError(SlashCommandInfo info, Translation translation, IInteractionContext context, string errorReason, string code = "UNKNOWN")
+    {
+        _logger.LogError(
+            $"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed: {errorReason}");
+
+        var builder = new EmbedBuilder()
+            .WithTitle(translation.Get<BotTranslator>().SomethingWentWrong())
+            .WithColor(Color.Red)
+            .WithDescription(errorReason)
+            .WithCurrentTimestamp()
+            .WithFooter($"{translation.Get<BotTranslator>().Code()} {code}");
+
+        try
+        {
+            if (!context.Interaction.HasResponded)
+                await context.Interaction.RespondAsync(embed: builder.Build());
+            else
+                await context.Interaction.ModifyOriginalResponseAsync(x => x.Embed = builder.Build());
+        }
+        catch (Exception)
+        {
+            await context.Channel.SendMessageAsync(embed: builder.Build());
         }
     }
 }
