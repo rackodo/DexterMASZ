@@ -302,7 +302,7 @@ public class DiscordBot : IHostedService, IEvent
             }
             else if (result is PreconditionResult preResult)
             {
-                await SendError(info, translation, context, preResult.ErrorReason);
+                await SendError(info, translation, context, preResult.ErrorReason, "PRECON");
             }
             else
             {
@@ -314,7 +314,7 @@ public class DiscordBot : IHostedService, IEvent
         }
     }
 
-    private async Task SendError(SlashCommandInfo info, Translation translation, IInteractionContext context, string errorReason, string code = "UNKNOWN")
+    private async Task SendError(SlashCommandInfo info, Translation translation, IInteractionContext context, string errorReason, string code)
     {
         _logger.LogError(
             $"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed: {errorReason}");
