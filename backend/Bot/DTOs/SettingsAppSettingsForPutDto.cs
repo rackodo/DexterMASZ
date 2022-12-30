@@ -10,5 +10,5 @@ public class SettingsAppSettingsForPutDto
 
     [RegularExpression(@"https://(.*\.)?discord(app)?.com/api/webhooks/[0-9]+/.+",
         ErrorMessage = "Must be a valid webhook url")]
-    public string? AuditLogWebhookUrl { get; set; }
+    public string AuditLogWebhookUrl { get; set; }
 }

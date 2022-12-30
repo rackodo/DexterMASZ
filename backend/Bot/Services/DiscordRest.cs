@@ -812,12 +812,8 @@ public class DiscordRest : IHostedService, IEvent
     }
 
     public T GetFromCache<T>(CacheKey key)
-    {
-        if (_cache.ContainsKey(key.GetValue()))
-            return _cache[key.GetValue()].GetContent<T>();
-
-        throw new NotFoundInCacheException();
-    }
+        => _cache.ContainsKey(key.GetValue()) ? _cache[key.GetValue()].GetContent<T>()
+            : throw new NotFoundInCacheException();
 
     public async Task<IApplication> GetCurrentApplicationInfo() => await _client.GetApplicationInfoAsync();
 

@@ -19,10 +19,9 @@ public class BotChannelAttribute : PreconditionAttribute
         var translator = scope.ServiceProvider.GetService<Translation>();
         translator.SetLanguage(guildConfig);
 
-        if (!guildConfig.BotChannels.Contains(context.Channel.Id))
-            return PreconditionResult.FromError(
-                new UnauthorizedException(translator.Get<BotTranslator>().OnlyBotChannel()));
-
-        return PreconditionResult.FromSuccess();
+        return !guildConfig.BotChannels.Contains(context.Channel.Id)
+            ? PreconditionResult.FromError(
+                new UnauthorizedException(translator.Get<BotTranslator>().OnlyBotChannel()))
+            : PreconditionResult.FromSuccess();
     }
 }
