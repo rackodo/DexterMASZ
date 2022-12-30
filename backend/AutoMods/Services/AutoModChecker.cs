@@ -247,10 +247,15 @@ public class AutoModChecker : IEvent
         var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
             .GetGuildConfig(guild.Id);
 
-        return user.RoleIds.Any(x => guildConfig.ModRoles.Contains(x) ||
-                                     guildConfig.AdminRoles.Contains(x) ||
-                                     autoModConfig.IgnoreRoles.Contains(x)) ||
-               autoModConfig.IgnoreChannels.Contains(((ITextChannel)message.Channel).Id);
+        return user.RoleIds.Any(x =>
+                   guildConfig.ModRoles.Contains(x) ||
+                   guildConfig.AdminRoles.Contains(x) ||
+                   autoModConfig.IgnoreRoles.Contains(x)
+               ) ||
+               (message.Channel is ITextChannel { CategoryId: { } } textChannel
+                   ? autoModConfig.IgnoreChannels.Contains(message.Channel.Id) ||
+                     autoModConfig.IgnoreChannels.Contains(textChannel.CategoryId.Value)
+                   : autoModConfig.IgnoreChannels.Contains(((ITextChannel)message.Channel)!.Id));
     }
 
     private static async Task<bool> CheckMultipleEvents(IMessage message, AutoModConfig config, IServiceScope scope)
