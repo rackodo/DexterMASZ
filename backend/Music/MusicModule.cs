@@ -46,7 +46,4 @@ public class MusicModule : Module
                 RestUri = $"http://{Host}:{Port}",
                 WebSocketUri = $"ws://{Host}:{Port}"
             });
-
-    public override void PostBuild(IServiceProvider services, CachedServices cachedServices) =>
-        services.GetRequiredService<IAudioService>().UseSponsorBlock();
 }

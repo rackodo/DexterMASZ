@@ -62,8 +62,10 @@ public partial class MusicCommand
 
         var pages = MusicPages.CreatePagesFromString(text.ToString(), "Queued Playlist", Color.Gold);
 
-        await PlayQueue();
-
-        await InteractiveService.SendPaginator(pages, Context);
+        if (await PlayQueue())
+            await InteractiveService.SendPaginator(pages, Context);
+        else
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                x.Content = "Could not play queue!");
     }
 }

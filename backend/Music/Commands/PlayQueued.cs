@@ -1,6 +1,5 @@
 ﻿using Bot.Attributes;
 using Discord.Interactions;
-using Lavalink4NET.Player;
 
 namespace Music.Commands;
 
@@ -10,25 +9,20 @@ public partial class MusicCommand
     [BotChannel]
     public async Task PlayQueueMusic()
     {
-        if (!await EnsureQueueIsNotEmptyAsync()) return;
-
         await Context.Interaction.DeferAsync();
 
-        await PlayQueue();
+        if (!await PlayQueue())
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                x.Content = "Could not play queue!");
     }
 
     public async Task<bool> PlayQueue()
     {
         if (!await EnsureUserInVoiceAsync()) return false;
         if (!await EnsureClientInVoiceAsync()) return false;
-        if (_player.Queue.IsEmpty) return false;
+        if (!await EnsureQueueIsNotEmptyAsync()) return false;
 
-        if (_player.CurrentTrack != null && _player.State == PlayerState.Playing)
-            return false;
-
-        var track = _player.Queue.Dequeue();
-
-        await _player.PlayAsync(track, false);
+        await _player.SkipAsync();
 
         Lavalink.TrackStarted += OnTrackStarted;
         Lavalink.TrackStuck += OnTrackStuck;
