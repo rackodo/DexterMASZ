@@ -1,0 +1,13 @@
+.game-header {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+  height: 70px;
+}
+
+.game-display {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 70px);
+}
