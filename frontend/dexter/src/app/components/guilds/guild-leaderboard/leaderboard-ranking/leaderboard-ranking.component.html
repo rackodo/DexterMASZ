@@ -6,7 +6,9 @@
   <mat-icon>keyboard_arrow_up</mat-icon>
 </button>
 
+<app-leaderboard-item *ngIf="TESTING && (loading && !loadingAfter)" [order]="order" [index]="0" [userLevel]="loadingUserLevel" ></app-leaderboard-item>
 <app-leaderboard-item *ngFor="let userLevel of loadedUsers; let j = index" [order]="order" [userLevel]="userLevel" [index]="(page - 1) * DEFAULT_PAGE_SIZE + j"></app-leaderboard-item>
+<app-leaderboard-item *ngIf="TESTING && (loading && loadingAfter)" [order]="order" [index]="(page - 1) * DEFAULT_PAGE_SIZE" [userLevel]="loadingUserLevel" ></app-leaderboard-item>
 
 <button mat-button *ngIf="TESTING || canLoadMoreUsersAfter && !loading" (click)="loadMoreUsersAfter()" class="load-more-btn">
   <mat-icon>keyboard_arrow_down</mat-icon>

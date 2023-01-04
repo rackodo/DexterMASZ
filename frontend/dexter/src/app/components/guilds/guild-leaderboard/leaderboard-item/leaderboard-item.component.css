@@ -38,11 +38,39 @@
 }
 
 .name {
-
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 5px;
 }
 
 .xp {
+  white-space: nowrap;
+  overflow: hidden;
+  height: 50%;
+  align-self: flex-end;
+  font-size: 0.5em;
+  margin: 0px;
+  color: var(--theme)
+}
 
+@media screen and (min-width: 700px) {
+  .name {
+    align-self: center;
+    height: auto;
+    max-width: 40%;
+  }
+  .xp {
+    align-self: center;
+    height: auto;
+    font-size: 1em;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .name {
+    max-width: 55%;
+  }
 }
 
 .side-right {

@@ -15,6 +15,7 @@ export class LeaderboardRankingComponent implements OnInit {
   @Input() order : string = "total";
 
   TESTING = false;
+  bigint = BigInt;
 
   private guildId!: string;
 
@@ -79,5 +80,20 @@ export class LeaderboardRankingComponent implements OnInit {
       }
       this.loading = false;
     })
+  }
+
+  loadingXpLevel = {
+    xp: 50n,
+    level: 0n,
+    xpLevel: 100n,
+    xpResidual: 50n
+  }
+
+  loadingUserLevel: CalcGuildUserLevel = {
+    userId: 0n,
+    guildId: 0n,
+    textXp: this.loadingXpLevel,
+    voiceXp: this.loadingXpLevel,
+    totalXp: this.loadingXpLevel
   }
 }

@@ -40,9 +40,9 @@ export class LeaderboardItemComponent implements OnInit {
   }
 
   rankColor(): string {
-    if (this.index == 0) return "C9B037";
-    if (this.index == 1) return "D7D7D7";
-    if (this.index == 2) return "AD8A56";
+    if (this.index == 0) return "#C9B037";
+    if (this.index == 1) return "#D7D7D7";
+    if (this.index == 2) return "#AD8A56";
     return "white";
   }
 
