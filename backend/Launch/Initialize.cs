@@ -322,11 +322,8 @@ public class Initialize
         foreach (var assembly in cachedServices.Dependents)
             controller.AddApplicationPart(assembly);
 
-        builder.Services.AddAuthorization(options =>
-        {
-            options.DefaultPolicy = new AuthorizationPolicyBuilder(authorizationPolicies.ToArray())
-                .RequireAuthenticatedUser().Build();
-        });
+        builder.Services.AddAuthorization(options => options.DefaultPolicy = new AuthorizationPolicyBuilder(authorizationPolicies.ToArray())
+                .RequireAuthenticatedUser().Build());
 
         ConsoleHelper.AddSubHeading("Started authorization policies for", string.Join(',', authorizationPolicies));
     }

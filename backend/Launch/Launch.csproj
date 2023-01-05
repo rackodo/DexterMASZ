@@ -6,7 +6,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>preview</LangVersion>
 		<EnablePreviewFeatures>True</EnablePreviewFeatures>
-	</PropertyGroup>
+        <ApplicationIcon>Dex.ico</ApplicationIcon>
+    </PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.10" />
