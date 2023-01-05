@@ -1122,3 +1122,4 @@ webinterface/app/composer.lock
 /backend/Dexter/Properties/launchSettings.json
 
 *.bak
+*.ini
