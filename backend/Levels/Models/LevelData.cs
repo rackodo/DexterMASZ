@@ -26,8 +26,7 @@ public class LevelData : IComparable<LevelData>
 
     public int CompareTo(LevelData? other)
     {
-        if (other is null) return 1;
-        return Xp.CompareTo(other.Xp);
+        return other is null ? 1 : Xp.CompareTo(other.Xp);
     }
 
     public void AddXp(long increment, GuildLevelConfig config)

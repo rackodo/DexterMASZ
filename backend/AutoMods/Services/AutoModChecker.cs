@@ -34,7 +34,7 @@ public class AutoModChecker : IEvent
     {
         if (message.Channel is ITextChannel channel)
         {
-            if (message.Type != MessageType.Default && message.Type != MessageType.Reply)
+            if (message.Type is not MessageType.Default and not MessageType.Reply)
                 return;
 
             if (message.Author.IsBot)
@@ -52,7 +52,7 @@ public class AutoModChecker : IEvent
     {
         if (channel is ITextChannel txtChannel)
         {
-            if (newMsg.Type != MessageType.Default && newMsg.Type != MessageType.Reply)
+            if (newMsg.Type is not MessageType.Default and not MessageType.Reply)
                 return;
 
             if (newMsg.Author.IsBot)
@@ -67,7 +67,7 @@ public class AutoModChecker : IEvent
 
     public async Task HandleAutoMod(IMessage message, bool onEdit = false)
     {
-        if (message.Type != MessageType.Default && message.Type != MessageType.Reply)
+        if (message.Type is not MessageType.Default and not MessageType.Reply)
             return;
 
         if (message.Author.IsBot)

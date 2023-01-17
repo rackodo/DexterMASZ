@@ -111,9 +111,7 @@ public class ModCaseController : AuthenticatedController
         await SetupAuthentication();
         var finalWarn = await _modCaseRepository.GetFinalWarn(userId, guildId);
 
-        if (finalWarn != null)
-            return finalWarn.CaseId;
-        return -1;
+        return finalWarn != null ? finalWarn.CaseId : -1;
     }
 
     [HttpPost]

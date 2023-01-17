@@ -182,9 +182,7 @@ public static class ConsoleHelper
         Console.ResetColor();
         option = Console.ReadLine();
 
-        if (option == string.Empty && !ignoreIfEmpty)
-            return Ask(name, envVar, ignoreIfEmpty);
-        return option;
+        return option == string.Empty && !ignoreIfEmpty ? Ask(name, envVar, ignoreIfEmpty) : option;
     }
 
     public static T AskDefinedChoice<T>(string name, string envVar) where T : Enum

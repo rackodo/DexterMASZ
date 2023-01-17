@@ -51,7 +51,7 @@ public class View : Command<View>
                 .AddField($"⚖️ - {Translator.Get<PunishmentTranslator>().Punishment()}",
                     Translator.Get<PunishmentEnumTranslator>().Enum(modCase.PunishmentType), true);
 
-            if (modCase.PunishmentType == PunishmentType.Mute || modCase.PunishmentType == PunishmentType.Warn)
+            if (modCase.PunishmentType is PunishmentType.Mute or PunishmentType.Warn)
                 embed.AddField($"⚠️ - {Translator.Get<PunishmentTranslator>().Severity()}",
                     Translator.Get<PunishmentEnumTranslator>().Enum(modCase.Severity), true);
 

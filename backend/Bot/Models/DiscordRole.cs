@@ -4,12 +4,6 @@ namespace Bot.Models;
 
 public class DiscordRole
 {
-    public ulong Id { get; set; }
-    public string Name { get; set; }
-    public int Color { get; set; }
-    public int Position { get; set; }
-    public string Permissions { get; set; }
-
     public DiscordRole(IRole role)
     {
         Id = role.Id;
@@ -19,12 +13,16 @@ public class DiscordRole
         Permissions = role.Permissions.GetHashCode().ToString();
     }
 
+    public ulong Id { get; set; }
+    public string Name { get; set; }
+    public int Color { get; set; }
+    public int Position { get; set; }
+    public string Permissions { get; set; }
+
     public static DiscordRole GetDiscordRole(IRole role)
     {
         if (role is null)
             return null;
-        if (role.Id is 0)
-            return null;
-        return new DiscordRole(role);
+        return role.Id is 0 ? null : new DiscordRole(role);
     }
 }

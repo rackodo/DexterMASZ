@@ -38,10 +38,7 @@ public class ModCaseCommentRepository : Repository, IAddGuildStats
     {
         var comment = await _punishmentDatabase.SelectSpecificModCaseComment(commentId);
 
-        if (comment == null)
-            throw new ResourceNotFoundException();
-
-        return comment;
+        return comment == null ? throw new ResourceNotFoundException() : comment;
     }
 
     public async Task<ModCaseComment> CreateComment(ulong guildId, int caseId, string comment)

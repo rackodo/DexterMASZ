@@ -87,8 +87,8 @@ export class LevelsConfigComponent implements OnInit {
       this.toastr.error("Failed to load guild data");
     });
 
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}/channels`).subscribe((data: DiscordChannel[]) => {
-      this.guildChannels = data.filter(x => x.type === 0).sort((a, b) => (a.position > b.position) ? 1 : -1);
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}/textChannels`).subscribe((data: DiscordChannel[]) => {
+      this.guildChannels = data.sort((a, b) => (a.position > b.position) ? 1 : -1);
     }, () => {
       this.toastr.error("Failed to load channels");
     });

@@ -40,8 +40,6 @@ public class DiscordGuild
     {
         if (guild is null)
             return null;
-        if (guild.Id is 0)
-            return null;
-        return new DiscordGuild(guild);
+        return guild.Id is 0 ? null : new DiscordGuild(guild);
     }
 }

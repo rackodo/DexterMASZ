@@ -97,7 +97,7 @@ public class LevelsConfigController : AuthenticatedController
 
     private IActionResult? ValidateConfig(GuildLevelConfig config)
     {
-        if (config.Coefficients.Length < 2 || config.Coefficients.Length > 10)
+        if (config.Coefficients.Length is < 2 or > 10)
             return BadRequest("Leveling coefficients must have between 2 and 10 elements!");
 
         config.Coefficients[0] = 0;
@@ -133,9 +133,6 @@ public class LevelsConfigController : AuthenticatedController
         if (string.IsNullOrWhiteSpace(config.LevelUpTemplate))
             return BadRequest("Level Up Template must not be empty.");
 
-        if (config.LevelUpTemplate.Length > 250)
-            return BadRequest("The Length of Level Up Template may not exceed 200 characters.");
-
-        return null;
+        return config.LevelUpTemplate.Length > 250 ? BadRequest("The Length of Level Up Template may not exceed 200 characters.") : (IActionResult)null;
     }
 }

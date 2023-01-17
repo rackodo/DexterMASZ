@@ -9,6 +9,16 @@ public class CalculatedGuildUserLevel : GuildUserLevel
     private LevelData? _totalLevel;
     private LevelData? _voiceLevel;
 
+    public CalculatedGuildUserLevel(GuildUserLevel guildUserLevel, GuildLevelConfig? config = null)
+    {
+        Token = guildUserLevel.Token;
+        UserId = guildUserLevel.UserId;
+        GuildId = guildUserLevel.GuildId;
+        TextXp = guildUserLevel.TextXp;
+        VoiceXp = guildUserLevel.VoiceXp;
+        Config = config;
+    }
+
     public GuildLevelConfig? Config { get; set; }
 
     public new long TextXp
@@ -60,30 +70,22 @@ public class CalculatedGuildUserLevel : GuildUserLevel
         }
     }
 
-    public CalculatedGuildUserLevel(GuildUserLevel guildUserLevel, GuildLevelConfig? config = null)
-    {
-        Token = guildUserLevel.Token;
-        UserId = guildUserLevel.UserId;
-        GuildId = guildUserLevel.GuildId;
-        TextXp = guildUserLevel.TextXp;
-        VoiceXp = guildUserLevel.VoiceXp;
-        Config = config;
-    }
-
     public LevelData LevelFromXp(long xp)
     {
-        if (Config is null)
-            throw new NullReferenceException("_config is null. Unable to get level from XP before running SetConfig");
-        return new LevelData(xp, Config);
+        return Config is null
+            ? throw new NullReferenceException("_config is null. Unable to get level from XP before running SetConfig")
+            : new LevelData(xp, Config);
     }
 
     public long XpFromLevel(int level)
     {
-        if (Config is null)
-            throw new NullReferenceException("_config is null. Unable to get XP from level before running SetConfig");
-        return XpFromLevel(level, Config);
+        return Config is null
+            ? throw new NullReferenceException("_config is null. Unable to get XP from level before running SetConfig")
+            : XpFromLevel(level, Config);
     }
 
     public GuildUserLevelDto ToDto(DiscordUser user) =>
-        new(GuildId, UserId, Text.ToDto(), Voice.ToDto(), Total.ToDto(), user);
+        new(GuildId, UserId, Text.ToDto(), Voice.ToDto(), Total.ToDto(), us
+)
+
 }

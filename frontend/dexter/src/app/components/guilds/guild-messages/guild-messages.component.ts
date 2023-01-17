@@ -45,8 +45,8 @@ export class GuildMessagesComponent implements OnInit {
       this.messages.push(...data);
     });
 
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}/channels`).subscribe((data: DiscordChannel[]) => {
-      this.channels = data.filter(x => x.type === 0).sort((a, b) => (a.position > b.position) ? 1 : -1);
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}/textChannels`).subscribe((data: DiscordChannel[]) => {
+      this.channels = data.sort((a, b) => (a.position > b.position) ? 1 : -1);
     });
   }
 

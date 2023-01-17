@@ -19,8 +19,6 @@ public class DiscordUserPartial
     {
         if (user is null)
             return null;
-        if (user.Id is 0)
-            return null;
-        return new DiscordUserPartial(user);
+        return user.Id is 0 ? null : new DiscordUserPartial(user);
     }
 }

@@ -9,13 +9,13 @@ namespace Levels.Data;
 
 public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
 {
-    public DbSet<GuildUserLevel>? GuildUserLevels { get; set; }
-    public DbSet<GuildLevelConfig>? GuildLevelConfigs { get; set; }
-    public DbSet<UserRankcardConfig>? UserRankcardConfigs { get; set; }
-
     public LevelsDatabase(DbContextOptions<LevelsDatabase> options) : base(options)
     {
     }
+
+    public DbSet<GuildUserLevel>? GuildUserLevels { get; set; }
+    public DbSet<GuildLevelConfig>? GuildLevelConfigs { get; set; }
+    public DbSet<UserRankcardConfig>? UserRankcardConfigs { get; set; }
 
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
         IServiceCollection serviceCollection) =>
@@ -68,12 +68,10 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
         return GuildUserLevels.Find(token);
     }
 
-    public GuildUserLevel[] GetGuildUserLevelByGuild(ulong guildid)
-    {
-        if (CheckNullAndReport(GuildUserLevels, "GuildUserLevels"))
-            return Array.Empty<GuildUserLevel>();
-        return GuildUserLevels.AsQueryable().Where(x => x.GuildId == guildid).ToArray();
-    }
+    public GuildUserLevel[] GetGuildUserLevelByGuild(ulong guildid) =>
+        CheckNullAndReport(GuildUserLevels, "GuildUserLevels")
+            ? Array.Empty<GuildUserLevel>()
+            : GuildUserLevels.AsQueryable().Where(x => x.GuildId == guildid).ToArray();
 
     public async Task UpdateGuildUserLevel(GuildUserLevel guildUserLevel)
     {
@@ -113,12 +111,8 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
         await SaveChangesAsync();
     }
 
-    public UserRankcardConfig? GetUserRankcardConfig(ulong userid)
-    {
-        if (CheckNullAndReport(UserRankcardConfigs, "UserRankcardConfigs"))
-            return null;
-        return UserRankcardConfigs.Find(userid);
-    }
+    public UserRankcardConfig? GetUserRankcardConfig(ulong userid) =>
+        CheckNullAndReport(UserRankcardConfigs, "UserRankcardConfigs") ? null : UserRankcardConfigs.Find(userid);
 
     public async Task UpdateUserRankcardConfig(UserRankcardConfig rankcardConfig)
     {
@@ -148,19 +142,12 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
         await SaveChangesAsync();
     }
 
-    public GuildLevelConfig? GetGuildLevelConfig(ulong guildid)
-    {
-        if (CheckNullAndReport(GuildLevelConfigs, "GuildLevelsConfigs"))
-            return null;
-        return GuildLevelConfigs.Find(guildid);
-    }
+    public GuildLevelConfig? GetGuildLevelConfig(ulong guildid) =>
+        CheckNullAndReport(GuildLevelConfigs, "GuildLevelsConfigs") ? null : GuildLevelConfigs.Find(guildid);
 
-    public GuildLevelConfig[] GetAllGuildLevelConfigs()
-    {
-        if (CheckNullAndReport(GuildLevelConfigs, "GuildLevelsConfigs"))
-            return Array.Empty<GuildLevelConfig>();
-        return GuildLevelConfigs.ToArray();
-    }
+    public GuildLevelConfig[] GetAllGuildLevelConfigs() => CheckNullAndReport(GuildLevelConfigs, "GuildLevelsConfigs")
+        ? Array.Empty<GuildLevelConfig>()
+        : GuildLevelConfigs.ToArray();
 
     public async Task UpdateGuildLevelConfig()
     {

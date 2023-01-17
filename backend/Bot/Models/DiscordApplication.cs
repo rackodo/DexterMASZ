@@ -28,8 +28,6 @@ public class DiscordApplication
     {
         if (application is null)
             return null;
-        if (application.Id is 0)
-            return null;
-        return new DiscordApplication(application);
+        return application.Id is 0 ? null : new DiscordApplication(application);
     }
 }

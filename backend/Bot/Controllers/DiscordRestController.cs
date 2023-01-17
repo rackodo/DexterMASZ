@@ -88,10 +88,7 @@ public class DiscordRestController : AuthenticatedController
     {
         var user = await _discordRest.FetchUserInfo(userid, false);
 
-        if (user != null)
-            return Ok(DiscordUser.GetDiscordUser(user));
-
-        return NotFound();
+        return user != null ? Ok(DiscordUser.GetDiscordUser(user)) : NotFound();
     }
 
     [HttpGet("guilds/{guildId}")]
@@ -99,10 +96,7 @@ public class DiscordRestController : AuthenticatedController
     {
         var guild = _discordRest.FetchGuildInfo(guildId, CacheBehavior.Default);
 
-        if (guild != null)
-            return Ok(DiscordGuild.GetDiscordGuild(guild));
-
-        return NotFound();
+        return guild != null ? Ok(DiscordGuild.GetDiscordGuild(guild)) : NotFound();
     }
 
     [HttpGet("guilds/{guildId}/channels")]
@@ -110,10 +104,27 @@ public class DiscordRestController : AuthenticatedController
     {
         var channels = _discordRest.FetchGuildChannels(guildId, CacheBehavior.Default);
 
-        if (channels != null)
-            return Ok(channels.Select(x => DiscordChannel.GetDiscordChannel(x)));
+        return channels != null ? Ok(channels.Select(DiscordChannel.GetDiscordChannel)) : NotFound();
+    }
 
-        return NotFound();
+    [HttpGet("guilds/{guildId}/textableChannels")]
+    public IActionResult GetAllTextableChannels([FromRoute] ulong guildId)
+    {
+        var channels = _discordRest.FetchGuildChannels(guildId, CacheBehavior.Default);
+
+        return channels != null
+            ? Ok(channels.Select(DiscordChannel.GetDiscordChannel).Where(x => x.Type is 0 or 5))
+            : NotFound();
+    }
+
+    [HttpGet("guilds/{guildId}/textChannels")]
+    public IActionResult GetAllTextChannels([FromRoute] ulong guildId)
+    {
+        var channels = _discordRest.FetchGuildChannels(guildId, CacheBehavior.Default);
+
+        return channels != null
+            ? Ok(channels.Select(DiscordChannel.GetDiscordChannel).Where(x => x.Type is 0 or 5 or 15))
+            : NotFound();
     }
 
     [HttpGet("guilds/{guildId}/users")]
@@ -123,11 +134,10 @@ public class DiscordRestController : AuthenticatedController
 
         var users = await _discordRest.FetchGuildUsers(guildId, CacheBehavior.OnlyCache);
 
-        if (users != null)
-            return Ok(users.Select(x =>
-                partial ? DiscordUserPartial.GetPartialDiscordUser(x) : DiscordUser.GetDiscordUser(x)));
-
-        return NotFound();
+        return users != null
+            ? Ok(users.Select(x =>
+                partial ? DiscordUserPartial.GetPartialDiscordUser(x) : DiscordUser.GetDiscordUser(x)))
+            : NotFound();
     }
 
     [HttpGet("guilds")]

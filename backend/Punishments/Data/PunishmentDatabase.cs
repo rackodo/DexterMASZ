@@ -9,6 +9,10 @@ namespace Punishments.Data;
 
 public class PunishmentDatabase : DataContext<PunishmentDatabase>, IDataContextCreate
 {
+    public PunishmentDatabase(DbContextOptions<PunishmentDatabase> options) : base(options)
+    {
+    }
+
     public DbSet<ModCaseTemplate> ModCaseTemplates { get; set; }
 
     public DbSet<ModCaseComment> ModCaseComments { get; set; }
@@ -16,10 +20,6 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, IDataContextC
     public DbSet<ModCase> ModCases { get; set; }
 
     public DbSet<PunishmentConfig> PunishmentConfig { get; set; }
-
-    public PunishmentDatabase(DbContextOptions<PunishmentDatabase> options) : base(options)
-    {
-    }
 
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
         IServiceCollection serviceCollection) =>
@@ -181,10 +181,7 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, IDataContextC
     {
         var query = ModCases.AsQueryable().Where(x => x.GuildId == guildId);
 
-        if (!await query.AnyAsync())
-            return 0;
-
-        return await query.MaxAsync(p => p.CaseId);
+        return !await query.AnyAsync() ? 0 : await query.MaxAsync(p => p.CaseId);
     }
 
     public async Task DeleteAllModCasesForGuild(ulong guildId)

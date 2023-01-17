@@ -66,11 +66,10 @@ public static class IdentityPermissions
                         _ => GuildPermission.CreateInstantInvite
                     };
 
-                    if (await identity.HasPermission(DiscordPermission.Admin, modCase.GuildId))
-                        return true;
-
-                    return await identity.HasPermission(DiscordPermission.Moderator, modCase.GuildId) &&
-                           identity.HasPermission(x, modCase.GuildId);
+                    return await identity.HasPermission(DiscordPermission.Admin, modCase.GuildId)
+                        ? true
+                        : await identity.HasPermission(DiscordPermission.Moderator, modCase.GuildId) &&
+                          identity.HasPermission(x, modCase.GuildId);
                 }
                 catch (ResourceNotFoundException)
                 {

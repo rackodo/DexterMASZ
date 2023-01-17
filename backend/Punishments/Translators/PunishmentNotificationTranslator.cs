@@ -219,10 +219,9 @@ public class PunishmentNotificationTranslator : Translator
             _ => $"Punishment for mod case #{caseId} undone: \"{reason}\""
         };
 
-    public string NotificationModCaseDmBanTemp(ModCase modCase, IGuild guild, string reason, string caseUrl)
-    {
-        if (modCase.PunishedUntil != null)
-            return PreferredLanguage switch
+    public string NotificationModCaseDmBanTemp(ModCase modCase, IGuild guild, string reason, string caseUrl) =>
+        modCase.PunishedUntil != null
+            ? PreferredLanguage switch
             {
                 Language.De =>
                     $"Die moderatoren von **{guild.Name}** haben dich temporär gebannt bis {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
@@ -236,14 +235,12 @@ public class PunishmentNotificationTranslator : Translator
                     $"I moderatori della gilda **{guild.Name}** ti hanno temporaneamente bannato fino al {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
                 _ =>
                     $"The moderators of **{guild.Name}** have temporarily banned you until {modCase.PunishedUntil.Value.ToDiscordTs()} for {reason}.\nFor more information or rehabilitation visit {caseUrl}"
-            };
-        return string.Empty;
-    }
+            }
+            : string.Empty;
 
-    public string NotificationModCaseDmMuteTemp(ModCase modCase, IGuild guild, string reason, string caseUrl)
-    {
-        if (modCase.PunishedUntil != null)
-            return PreferredLanguage switch
+    public string NotificationModCaseDmMuteTemp(ModCase modCase, IGuild guild, string reason, string caseUrl) =>
+        modCase.PunishedUntil != null
+            ? PreferredLanguage switch
             {
                 Language.De =>
                     $"Die moderatoren von **{guild.Name}** haben dich temporär stummgeschalten bis {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nFür weitere Informationen besuche: {caseUrl}",
@@ -257,9 +254,8 @@ public class PunishmentNotificationTranslator : Translator
                     $"I moderatori della gilda **{guild.Name}** ti hanno temporaneamente disattivato l'audio fino a {modCase.PunishedUntil.Value.ToDiscordTs()} - {reason}.\nPer maggiori informazioni o visita riabilitativa: {caseUrl}",
                 _ =>
                     $"The moderators of **{guild.Name}** have temporarily muted you until {modCase.PunishedUntil.Value.ToDiscordTs()} for {reason}.\nFor more information, visit {caseUrl}"
-            };
-        return string.Empty;
-    }
+            }
+            : string.Empty;
 
     public string NotificationModCase(ModCase modCase, IUser moderator) =>
         PreferredLanguage switch

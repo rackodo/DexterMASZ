@@ -27,10 +27,7 @@ public class DiscordOAuthIdentity : Identity
 
     public static string TryGetKey(HttpContext context)
     {
-        if (context is not null)
-            return context.Request.Cookies["dexter_access_token"];
-
-        return string.Empty;
+        return context is not null ? context.Request.Cookies["dexter_access_token"] : string.Empty;
     }
 
     public static async Task<Identity> TryMakeIdentity(HttpContext httpContext, IServiceProvider services)
@@ -86,9 +83,9 @@ public class DiscordOAuthIdentity : Identity
 
             var guildUser = GetGuildMembership(guildId);
 
-            if (guildUser is null)
-                return false;
-            return guildUser.Guild.OwnerId == guildUser.Id ||
+            return guildUser is null
+                ? false
+                : guildUser.Guild.OwnerId == guildUser.Id ||
                    guildUser.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x));
         }
         catch (ResourceNotFoundException)
@@ -115,10 +112,9 @@ public class DiscordOAuthIdentity : Identity
             if (guildUser is null)
                 return false;
 
-            if (guildUser.Guild.OwnerId == guildUser.Id)
-                return true;
-
-            return guildUser.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x) ||
+            return guildUser.Guild.OwnerId == guildUser.Id
+                ? true
+                : guildUser.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x) ||
                                               guildConfig.ModRoles.Contains(x));
         }
         catch (ResourceNotFoundException)

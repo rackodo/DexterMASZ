@@ -130,9 +130,7 @@ public class GuildAuditer : IEvent
         try
         {
             auditLogConfig = await auditLogRepository.GetConfigsByGuildAndType(guildId, eventType);
-            if (auditLogConfig == null)
-                return false;
-            return auditLogConfig.IgnoreRoles?.Any(role => roles.Contains(role)) ?? false;
+            return auditLogConfig == null ? false : auditLogConfig.IgnoreRoles?.Any(role => roles.Contains(role)) ?? false;
         }
         catch (ResourceNotFoundException)
         {
@@ -156,9 +154,7 @@ public class GuildAuditer : IEvent
         try
         {
             auditLogConfig = await auditLogRepository.GetConfigsByGuildAndType(guildId, eventType);
-            if (auditLogConfig == null)
-                return false;
-            return auditLogConfig.IgnoreChannels?.Contains(channelId) ?? false;
+            return auditLogConfig == null ? false : auditLogConfig.IgnoreChannels?.Contains(channelId) ?? false;
         }
         catch (ResourceNotFoundException)
         {

@@ -84,10 +84,9 @@ public class UserNoteRepository : Repository,
     {
         var userNote = await _userNoteDatabase.GetUserNoteByUserIdAndGuildId(userId, guildId);
 
-        if (userNote == null)
-            throw new ResourceNotFoundException($"UserNote for guild {guildId} and user {userId} not found.");
-
-        return userNote;
+        return userNote == null
+            ? throw new ResourceNotFoundException($"UserNote for guild {guildId} and user {userId} not found.")
+            : userNote;
     }
 
     public async Task<List<UserNote>> GetUserNotesByGuild(ulong guildId) =>

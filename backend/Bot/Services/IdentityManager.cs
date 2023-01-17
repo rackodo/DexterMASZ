@@ -164,10 +164,7 @@ public class IdentityManager : IEvent
 
         identity = await RegisterNewIdentity(httpContext);
 
-        if (identity is null)
-            throw new InvalidIdentityException();
-
-        return identity;
+        return identity is null ? throw new InvalidIdentityException() : identity;
     }
 
     public List<Identity> GetCurrentIdentities() => _identities.Values.ToList();

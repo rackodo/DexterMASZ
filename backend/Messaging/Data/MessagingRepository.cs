@@ -25,10 +25,9 @@ public class MessagingRepository : Repository, IDeleteGuildData
     {
         var message = await _messagingDatabase.GetMessage(id);
 
-        if (message == null)
-            throw new ResourceNotFoundException($"ScheduledMessage with id {id} not found.");
-
-        return message;
+        return message == null
+            ? throw new ResourceNotFoundException($"ScheduledMessage with id {id} not found.")
+            : message;
     }
 
     public async Task<ScheduledMessage> CreateMessage(ScheduledMessage message)

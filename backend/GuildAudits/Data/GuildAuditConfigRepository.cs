@@ -33,10 +33,9 @@ public class GuildAuditConfigRepository : Repository, IDeleteGuildData
     {
         var config = await _guildAuditDatabase.SelectAuditLogConfigForGuildAndType(guildId, type);
 
-        if (config == null)
-            throw new ResourceNotFoundException($"GuildAudit config {guildId}/{type} does not exist.");
-
-        return config;
+        return config == null
+            ? throw new ResourceNotFoundException($"GuildAudit config {guildId}/{type} does not exist.")
+            : config;
     }
 
     public async Task<GuildAuditConfig> UpdateConfig(GuildAuditConfig newValue)

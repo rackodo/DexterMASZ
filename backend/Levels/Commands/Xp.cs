@@ -151,11 +151,10 @@ public class Experience : Command<Experience>
             voiceExpr = "a **very** long time";
         }
 
-        if (targetXp > currentXp)
-            return
-                $"**Text:** {textExpr} (averagely sustained).\n" +
-                $"**Voice:** {voiceExpr} (averagely sustained).\n" +
-                $"**Experience:** {currentXp} out of {targetXp}, missing {targetXp - currentXp}.";
-        return $"**Exceeded target** by {currentXp - targetXp} experience ({currentXp}/{targetXp}).";
+        return targetXp > currentXp
+            ? $"**Text:** {textExpr} (averagely sustained).\n" +
+              $"**Voice:** {voiceExpr} (averagely sustained).\n" +
+              $"**Experience:** {currentXp} out of {targetXp}, missing {targetXp - currentXp}."
+            : $"**Exceeded target** by {currentXp - targetXp} experience ({currentXp}/{targetXp}).";
     }
 }

@@ -4,15 +4,6 @@ namespace Invites.Models;
 
 public class TrackedInvite
 {
-    public string Code { get; set; }
-    public ulong CreatorId { get; set; }
-    public DateTime? CreatedAt { get; set; }
-    public int Uses { get; set; }
-    public int? MaxUses { get; set; }
-    public ulong TargetChannelId { get; set; }
-    public ulong GuildId { get; set; }
-    public DateTime? ExpiresAt { get; set; }
-
     public TrackedInvite(IInviteMetadata invite, ulong guildId)
     {
         GuildId = guildId;
@@ -51,13 +42,16 @@ public class TrackedInvite
         ExpiresAt = null;
     }
 
-    public bool IsExpired()
-    {
-        if (ExpiresAt == null)
-            return false;
+    public string Code { get; set; }
+    public ulong CreatorId { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public int Uses { get; set; }
+    public int? MaxUses { get; set; }
+    public ulong TargetChannelId { get; set; }
+    public ulong GuildId { get; set; }
+    public DateTime? ExpiresAt { get; set; }
 
-        return ExpiresAt < DateTime.UtcNow;
-    }
+    public bool IsExpired() => ExpiresAt == null ? false : ExpiresAt < DateTime.UtcNow;
 
     public bool HasNewUses(int currentUses) => currentUses != Uses;
 }

@@ -147,10 +147,9 @@ public class DiscordRest : IHostedService, IEvent
     private T TryGetFromCache<T>(CacheKey cacheKey, CacheBehavior cacheBehavior)
     {
         if (cacheBehavior is CacheBehavior.OnlyCache)
-            if (_cache.ContainsKey(cacheKey.GetValue()))
-                return _cache[cacheKey.GetValue()].GetContent<T>();
-            else
-                throw new NotFoundInCacheException(cacheKey.GetValue());
+            return _cache.ContainsKey(cacheKey.GetValue())
+                ? _cache[cacheKey.GetValue()].GetContent<T>()
+                : throw new NotFoundInCacheException(cacheKey.GetValue());
 
         if (!_cache.ContainsKey(cacheKey.GetValue()) || cacheBehavior is not CacheBehavior.Default) return default;
 
@@ -366,9 +365,7 @@ public class DiscordRest : IHostedService, IEvent
 
         if (response.IsSuccessStatusCode)
             return true;
-        if (response.StatusCode == HttpStatusCode.NotFound)
-            return false;
-        throw new UnauthorizedException();
+        return response.StatusCode == HttpStatusCode.NotFound ? false : throw new UnauthorizedException();
     }
 
     public async Task<List<IGuildUser>> FetchGuildUsers(ulong guildId, CacheBehavior cacheBehavior)

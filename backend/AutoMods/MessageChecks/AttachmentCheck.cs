@@ -11,9 +11,6 @@ public static class AttachmentCheck
         if (config.Limit == null)
             return false;
 
-        if (message.Attachments == null)
-            return false;
-
-        return message.Attachments.Count > config.Limit;
+        return message.Attachments == null ? false : message.Attachments.Count > config.Limit;
     }
 }

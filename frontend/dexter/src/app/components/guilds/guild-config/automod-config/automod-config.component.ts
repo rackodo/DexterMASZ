@@ -106,8 +106,8 @@ export class AutoModConfigComponent implements OnInit {
     }, () => {
       this.toastr.error(this.translator.instant('AutoModConfig.FailedToLoadGuild'));
     });
-    this.api.getSimpleData(`/discord/guilds/${this.guildId}/channels`).subscribe((data: DiscordChannel[]) => {
-      this.guildChannels = data.filter(x => x.type === 0).sort((a, b) => (a.position > b.position) ? 1 : -1);
+    this.api.getSimpleData(`/discord/guilds/${this.guildId}/textableChannels`).subscribe((data: DiscordChannel[]) => {
+      this.guildChannels = data.sort((a, b) => (a.position > b.position) ? 1 : -1);
     }, () => {
       this.toastr.error(this.translator.instant('AutoModConfig.FailedToLoadChannels'));
     });

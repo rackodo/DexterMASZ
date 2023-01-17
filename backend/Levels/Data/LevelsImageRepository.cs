@@ -102,10 +102,7 @@ public class LevelsImageRepository : Repository
 
         var files = FilesHandler.GetFilesByDirectory(fullPath);
 
-        if (files == null)
-            throw new ResourceNotFoundException();
-
-        return files.Select(f => f.Name).ToList();
+        return files == null ? throw new ResourceNotFoundException() : files.Select(f => f.Name).ToList();
     }
 
     public async Task<string> UploadFile(ulong userId, IFormFile file)

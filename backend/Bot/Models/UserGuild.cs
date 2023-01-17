@@ -30,17 +30,13 @@ public class UserGuild
     {
         if (guildUser is null)
             return null;
-        if (guildUser.Id is 0)
-            return null;
-        return new UserGuild(guildUser);
+        return guildUser.Id is 0 ? null : new UserGuild(guildUser);
     }
 
     public static UserGuild GetUserGuild(IUserGuild userGuild)
     {
         if (userGuild is null)
             return null;
-        if (userGuild.Id is 0)
-            return null;
-        return new UserGuild(userGuild);
+        return userGuild.Id is 0 ? null : new UserGuild(userGuild);
     }
 }

@@ -82,7 +82,7 @@ public class ScheduledMessages : IEvent
             }
             catch (HttpException e)
             {
-                if (e.HttpCode == HttpStatusCode.Unauthorized || e.HttpCode == HttpStatusCode.Forbidden)
+                if (e.HttpCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden)
                 {
                     _logger.LogInformation($"Failed scheduled message {message.Id}. Reason insufficient permission.");
                     await repo.SetMessageAsFailed(message.Id, ScheduledMessageFailureReason.InsufficientPermission);

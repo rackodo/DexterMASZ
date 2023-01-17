@@ -11,9 +11,6 @@ public static class MentionCheck
         if (config.Limit == null)
             return false;
 
-        if (message.MentionedUserIds == null)
-            return false;
-
-        return message.MentionedUserIds.Count > config.Limit;
+        return message.MentionedUserIds == null ? false : message.MentionedUserIds.Count > config.Limit;
     }
 }

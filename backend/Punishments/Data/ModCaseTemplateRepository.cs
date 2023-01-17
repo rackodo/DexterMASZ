@@ -47,10 +47,7 @@ public class ModCaseTemplateRepository : Repository, IDeleteGuildData
     {
         var template = await _punishmentDatabase.GetSpecificCaseTemplate(id);
 
-        if (template == null)
-            throw new ResourceNotFoundException();
-
-        return template;
+        return template == null ? throw new ResourceNotFoundException() : template;
     }
 
     public async Task DeleteTemplate(ModCaseTemplate template)
@@ -82,10 +79,9 @@ public class ModCaseTemplateRepository : Repository, IDeleteGuildData
         if (await identity.IsSiteAdmin())
             return true;
 
-        if (template.UserId == Identity.Id)
-            return true;
-
-        return template.ViewPermission switch
+        return template.UserId == Identity.Id
+            ? true
+            : template.ViewPermission switch
         {
             ViewPermission.Self => false,
             ViewPermission.Global => true,

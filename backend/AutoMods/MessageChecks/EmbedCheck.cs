@@ -11,9 +11,6 @@ public static class EmbedCheck
         if (config.Limit == null)
             return false;
 
-        if (message.Embeds == null)
-            return false;
-
-        return message.Embeds.Count > config.Limit;
+        return message.Embeds == null ? false : message.Embeds.Count > config.Limit;
     }
 }

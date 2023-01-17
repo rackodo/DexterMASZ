@@ -27,10 +27,7 @@ public class MotdRepository : Repository, IDeleteGuildData
     {
         var motd = await _guildMotdDatabase.GetMotdForGuild(guildId);
 
-        if (motd == null)
-            throw new ResourceNotFoundException();
-
-        return motd;
+        return motd == null ? throw new ResourceNotFoundException() : motd;
     }
 
     public async Task<GuildMotd> CreateOrUpdateMotd(ulong guildId, string content, bool visible)

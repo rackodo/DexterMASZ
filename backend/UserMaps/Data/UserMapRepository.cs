@@ -116,20 +116,16 @@ public class UserMapRepository : Repository,
     {
         var userMaps = await _userMapsDatabase.GetUserMapByUserIdsAndGuildId(userA, userB, guildId);
 
-        if (userMaps == null)
-            throw new ResourceNotFoundException($"UserMap for guild {guildId} and users {userA}/{userB} not found.");
-
-        return userMaps;
+        return userMaps == null
+            ? throw new ResourceNotFoundException($"UserMap for guild {guildId} and users {userA}/{userB} not found.")
+            : userMaps;
     }
 
     public async Task<UserMap> GetUserMap(int id)
     {
         var userMaps = await _userMapsDatabase.GetUserMapById(id);
 
-        if (userMaps == null)
-            throw new ResourceNotFoundException($"UserMap for id {id} not found.");
-
-        return userMaps;
+        return userMaps == null ? throw new ResourceNotFoundException($"UserMap for id {id} not found.") : userMaps;
     }
 
     public async Task<List<UserMap>> GetUserMapsByGuild(ulong guildId) =>
