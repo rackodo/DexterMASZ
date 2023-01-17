@@ -17,12 +17,10 @@ public class DiscordChannel
         Type = (int)channel.GetChannelType();
     }
 
-    public static DiscordChannel GetDiscordChannel(IGuildChannel channel)
-    {
-        if (channel is null)
-            return null;
-        if (channel.Id is 0)
-            return null;
-        return new DiscordChannel(channel);
-    }
+    public static DiscordChannel GetDiscordChannel(IGuildChannel channel) =>
+        channel is null
+            ? null
+            : channel.Id is 0 || !channel.GetChannelType().HasValue ?
+                null :
+                new DiscordChannel(channel);
 }
