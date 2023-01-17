@@ -92,15 +92,9 @@ public abstract class Identity
 
     public abstract Task<bool> IsSiteAdmin();
 
-    public IUser GetCurrentUser()
-    {
-        return CurrentUser is null ? throw new InvalidIdentityException(Token) : CurrentUser;
-    }
+    public IUser GetCurrentUser() => CurrentUser is null ? throw new InvalidIdentityException(Token) : CurrentUser;
 
-    public List<UserGuild> GetCurrentUserGuilds()
-    {
-        return CurrentUserGuilds is null ? throw new InvalidIdentityException(Token) : CurrentUserGuilds;
-    }
+    public List<UserGuild> GetCurrentUserGuilds() => CurrentUserGuilds is null ? throw new InvalidIdentityException(Token) : CurrentUserGuilds;
 
     public virtual void RemoveGuildMembership(ulong guildId) => CurrentUserGuilds.RemoveAll(x => x.Id == guildId);
 

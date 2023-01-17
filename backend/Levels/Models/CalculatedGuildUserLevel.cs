@@ -70,19 +70,13 @@ public class CalculatedGuildUserLevel : GuildUserLevel
         }
     }
 
-    public LevelData LevelFromXp(long xp)
-    {
-        return Config is null
-            ? throw new NullReferenceException("_config is null. Unable to get level from XP before running SetConfig")
-            : new LevelData(xp, Config);
-    }
+    public LevelData LevelFromXp(long xp) => Config is null
+        ? throw new NullReferenceException("_config is null. Unable to get level from XP before running SetConfig")
+        : new LevelData(xp, Config);
 
-    public long XpFromLevel(int level)
-    {
-        return Config is null
-            ? throw new NullReferenceException("_config is null. Unable to get XP from level before running SetConfig")
-            : XpFromLevel(level, Config);
-    }
+    public long XpFromLevel(int level) => Config is null
+        ? throw new NullReferenceException("_config is null. Unable to get XP from level before running SetConfig")
+        : XpFromLevel(level, Config);
 
     public GuildUserLevelDto ToDto(DiscordUser user) =>
         new(GuildId, UserId, Text.ToDto(), Voice.ToDto(), Total.ToDto(), user);

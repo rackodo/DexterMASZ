@@ -32,11 +32,8 @@ namespace Music.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
+        protected override void Down(MigrationBuilder migrationBuilder) => migrationBuilder.DropTable(
                 name: "StartTimes",
                 schema: "Music");
-        }
     }
 }

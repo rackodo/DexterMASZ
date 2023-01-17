@@ -25,10 +25,8 @@ public class DiscordOAuthIdentity : Identity
         _guildMemberships = new Dictionary<ulong, IGuildUser>();
     }
 
-    public static string TryGetKey(HttpContext context)
-    {
-        return context is not null ? context.Request.Cookies["dexter_access_token"] : string.Empty;
-    }
+    public static string TryGetKey(HttpContext context) =>
+        context is not null ? context.Request.Cookies["dexter_access_token"] : string.Empty;
 
     public static async Task<Identity> TryMakeIdentity(HttpContext httpContext, IServiceProvider services)
     {

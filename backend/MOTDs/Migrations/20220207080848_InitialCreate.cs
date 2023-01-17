@@ -36,10 +36,7 @@ public partial class InitialCreate : Migration
 			.Annotation("MySql:CharSet", "utf8mb4");
 	}
 
-	protected override void Down(MigrationBuilder migrationBuilder)
-	{
-		migrationBuilder.DropTable(
-			name: "GuildMotDs",
-			schema: "MOTDs");
-	}
+    protected override void Down(MigrationBuilder migrationBuilder) => migrationBuilder.DropTable(
+            name: "GuildMotDs",
+            schema: "MOTDs");
 }
