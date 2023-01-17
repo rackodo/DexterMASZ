@@ -113,7 +113,7 @@ public class DiscordRestController : AuthenticatedController
         var channels = _discordRest.FetchGuildChannels(guildId, CacheBehavior.Default);
 
         return channels != null
-            ? Ok(channels.Select(DiscordChannel.GetDiscordChannel).Where(x => x.Type is 0 or 5))
+            ? Ok(channels.Select(DiscordChannel.GetDiscordChannel).Where(x => x.Type is 0 or 5 or 15))
             : NotFound();
     }
 
@@ -123,7 +123,7 @@ public class DiscordRestController : AuthenticatedController
         var channels = _discordRest.FetchGuildChannels(guildId, CacheBehavior.Default);
 
         return channels != null
-            ? Ok(channels.Select(DiscordChannel.GetDiscordChannel).Where(x => x.Type is 0 or 5 or 15))
+            ? Ok(channels.Select(DiscordChannel.GetDiscordChannel).Where(x => x.Type is 0 or 5))
             : NotFound();
     }
 
