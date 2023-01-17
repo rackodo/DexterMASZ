@@ -85,7 +85,5 @@ public class CalculatedGuildUserLevel : GuildUserLevel
     }
 
     public GuildUserLevelDto ToDto(DiscordUser user) =>
-        new(GuildId, UserId, Text.ToDto(), Voice.ToDto(), Total.ToDto(), us
-)
-
+        new(GuildId, UserId, Text.ToDto(), Voice.ToDto(), Total.ToDto(), user);
 }
