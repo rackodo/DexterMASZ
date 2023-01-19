@@ -454,7 +454,7 @@ public class ModCaseRepository : Repository,
     {
         var modCase = await _punishmentDatabase.SelectSpecificModCase(guildId, caseId);
 
-        return modCase == null ? throw new ResourceNotFoundException($"Mod case with id {caseId} does not exist.") : modCase;
+        return modCase ?? throw new ResourceNotFoundException($"Mod case with id {caseId} does not exist.");
     }
 
     public async Task<ModCase> DeleteModCase(ulong guildId, int caseId, bool forceDelete = false,

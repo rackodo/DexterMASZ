@@ -43,7 +43,7 @@ public abstract class Identity
 
         var user = DiscordRest.FetchGuildUserInfo(guildId, CurrentUser.Id, CacheBehavior.Default);
 
-        return user is null ? false : user.Guild.OwnerId == user.Id || user.GuildPermissions.Has(permission);
+        return user is not null && (user.Guild.OwnerId == user.Id || user.GuildPermissions.Has(permission));
     }
 
     public async Task<bool> HasPermission(DiscordPermission permission, ulong guildId)
@@ -92,9 +92,9 @@ public abstract class Identity
 
     public abstract Task<bool> IsSiteAdmin();
 
-    public IUser GetCurrentUser() => CurrentUser is null ? throw new InvalidIdentityException(Token) : CurrentUser;
+    public IUser GetCurrentUser() => CurrentUser ?? throw new InvalidIdentityException(Token);
 
-    public List<UserGuild> GetCurrentUserGuilds() => CurrentUserGuilds is null ? throw new InvalidIdentityException(Token) : CurrentUserGuilds;
+    public List<UserGuild> GetCurrentUserGuilds() => CurrentUserGuilds ?? throw new InvalidIdentityException(Token);
 
     public virtual void RemoveGuildMembership(ulong guildId) => CurrentUserGuilds.RemoveAll(x => x.Id == guildId);
 

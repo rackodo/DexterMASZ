@@ -1,10 +1,10 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /backend
 
 COPY ./ ./
 RUN dotnet publish -c Release -o ./bin
 
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:6.0
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:7.0
 WORKDIR /backend/bin
 COPY --from=build-env /backend/bin/ .
 

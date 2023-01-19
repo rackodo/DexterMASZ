@@ -107,7 +107,7 @@ public class FilesHandler : IDeleteGuildData
         file.OpenReadStream().CopyTo(stream);
 
         // Compute md5 hash of the file's byte array.
-        var bytes = SHA1.Create().ComputeHash(stream.ToArray());
+        var bytes = SHA1.HashData(stream.ToArray());
 
         stream.Close();
         return BitConverter.ToString(bytes).Replace("-", string.Empty).ToLower();

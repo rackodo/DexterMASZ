@@ -4,6 +4,7 @@ using Bot.Exceptions;
 using Bot.Services;
 using Discord;
 using Discord.Interactions;
+using Humanizer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bot.Attributes;
@@ -43,12 +44,12 @@ public class RequireAttribute : PreconditionAttribute
                 RequireCheck.GuildStrictModeKick => identity.HasPermission(GuildPermission.KickMembers,
                     context.Guild.Id),
                 RequireCheck.GuildStrictModeBan => identity.HasPermission(GuildPermission.BanMembers, context.Guild.Id),
-                RequireCheck.SiteAdmin => throw new UnauthorizedException("Only site admins allowed."),
+                RequireCheck.SiteAdmin => throw new UnauthorizedException("Only site admins are allowed."),
                 _ => throw new NotImplementedException()
             };
 
             if (!canRun)
-                throw new UnauthorizedException("You are not allowed to do that.");
+                throw new UnauthorizedException($"You are not allowed to do that, missing {check.Humanize()}.");
         }
 
         return PreconditionResult.FromSuccess();

@@ -47,7 +47,7 @@ public class ModCaseTemplateRepository : Repository, IDeleteGuildData
     {
         var template = await _punishmentDatabase.GetSpecificCaseTemplate(id);
 
-        return template == null ? throw new ResourceNotFoundException() : template;
+        return template ?? throw new ResourceNotFoundException();
     }
 
     public async Task DeleteTemplate(ModCaseTemplate template)

@@ -56,15 +56,12 @@ public class IdentityManager : IEvent
         var database = scope.ServiceProvider.GetRequiredService<BotDatabase>();
 
         var guildConfigs = await database.SelectAllGuildConfigs();
-        List<UserGuild> guilds = new();
 
-        foreach (var guildConfig in guildConfigs)
-        {
-            var gUser = discordRest.FetchGuildUserInfo(guildConfig.GuildId, user.Id, CacheBehavior.Default);
-
-            if (gUser is not null)
-                guilds.Add(UserGuild.GetUserGuild(gUser));
-        }
+        var guilds = (from guildConfig in guildConfigs
+            select discordRest.FetchGuildUserInfo(guildConfig.GuildId, user.Id, CacheBehavior.Default)
+            into gUser
+            where gUser is not null
+            select UserGuild.GetUserGuild(gUser)).ToList();
 
         var identity = new DiscordCommandIdentity(user, guilds, _serviceProvider);
         _identities[key] = identity;
@@ -119,9 +116,6 @@ public class IdentityManager : IEvent
 
         var identity = new DiscordOAuthIdentity(token, _serviceProvider, user, guilds);
 
-        if (identity is null)
-            return null;
-
         _identities[key] = identity;
 
         _eventHandler.IdentityRegisteredEvent.Invoke(identity);
@@ -164,7 +158,7 @@ public class IdentityManager : IEvent
 
         identity = await RegisterNewIdentity(httpContext);
 
-        return identity is null ? throw new InvalidIdentityException() : identity;
+        return identity ?? throw new InvalidIdentityException();
     }
 
     public List<Identity> GetCurrentIdentities() => _identities.Values.ToList();

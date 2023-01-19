@@ -25,7 +25,7 @@ public class UserRankcardConfigRepository : Repository
     public UserRankcardConfig GetOrDefaultRankcard(ulong userid)
     {
         var config = _database.GetUserRankcardConfig(userid);
-        return config is null ? new UserRankcardConfig(userid) : config;
+        return config ?? new UserRankcardConfig(userid);
     }
 
     public async Task<UserRankcardConfig> GetOrCreateRankcard(IUser user) => await GetOrCreateRankcard(user.Id);

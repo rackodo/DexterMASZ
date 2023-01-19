@@ -14,9 +14,16 @@ public class BotChannelAttribute : PreconditionAttribute
         ICommandInfo commandInfo, IServiceProvider services)
     {
         using var scope = services.CreateScope();
+
         var guildConfig = await scope.ServiceProvider
-            .GetService<GuildConfigRepository>().GetGuildConfig(context.Guild.Id);
+            .GetService<GuildConfigRepository>()
+            ?.GetGuildConfig(context.Guild.Id)!;
+
         var translator = scope.ServiceProvider.GetService<Translation>();
+
+        if (translator == null)
+            throw new ResourceNotFoundException();
+
         translator.SetLanguage(guildConfig);
 
         return !guildConfig.BotChannels.Contains(context.Channel.Id)
