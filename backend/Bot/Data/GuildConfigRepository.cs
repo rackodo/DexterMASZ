@@ -31,7 +31,8 @@ public class GuildConfigRepository : Repository, IAddAdminStats
     {
         var guildConfig = await _context.SelectSpecificGuildConfig(guildId);
 
-        return guildConfig ?? throw new UnregisteredGuildException($"GuildConfig with id {guildId} not found.", guildId);
+        return guildConfig ??
+               throw new UnregisteredGuildException($"GuildConfig with id {guildId} not found.", guildId);
     }
 
     public async Task<List<GuildConfig>> GetAllGuildConfigs() => await _context.SelectAllGuildConfigs();

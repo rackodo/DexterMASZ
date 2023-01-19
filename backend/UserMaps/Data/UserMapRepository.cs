@@ -116,7 +116,8 @@ public class UserMapRepository : Repository,
     {
         var userMaps = await _userMapsDatabase.GetUserMapByUserIdsAndGuildId(userA, userB, guildId);
 
-        return userMaps ?? throw new ResourceNotFoundException($"UserMap for guild {guildId} and users {userA}/{userB} not found.");
+        return userMaps ??
+               throw new ResourceNotFoundException($"UserMap for guild {guildId} and users {userA}/{userB} not found.");
     }
 
     public async Task<UserMap> GetUserMap(int id)
