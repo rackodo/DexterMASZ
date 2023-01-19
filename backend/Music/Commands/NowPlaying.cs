@@ -46,7 +46,7 @@ public partial class MusicCommand
                 .AddField(isStream ? "Playtime" : "Position", isStream
                     ? DateTime.UtcNow.Subtract(startTime.RadioStartTime).Humanize()
                     : $"{_player.Position.RelativePosition:g}/{track.Duration:g}", true)
-                .AddField("Is looping", _player.IsLooping, true)
+                .AddField("Is looping", $"{_player.LoopMode != PlayerLoopMode.None} ({_player.LoopMode})", true)
                 .AddField("Is paused", $"{_player.State == PlayerState.Paused}", true).Build());
     }
 }

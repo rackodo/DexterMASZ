@@ -1,14 +1,15 @@
 ﻿using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
+using Lavalink4NET.Player;
 
 namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("loop", "Toggle current track loop")]
+    [SlashCommand("loop", "Toggles loop")]
     [BotChannel]
-    public async Task LoopMusic()
+    public async Task LoopMusic(PlayerLoopMode loopMode)
     {
         await Context.Interaction.DeferAsync();
 
@@ -25,10 +26,10 @@ public partial class MusicCommand
             return;
         }
 
-        _player.IsLooping = !_player.IsLooping;
+        _player.LoopMode = loopMode;
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content =
-                $"{(_player.IsLooping ? "Looping" : "Removed the loop of")} the track: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
+                $"{(_player.LoopMode != PlayerLoopMode.None ? $"Looping the {_player.LoopMode switch { PlayerLoopMode.Track => "track", PlayerLoopMode.Queue => "queue", _ => "UNKNOWN" }}" : "Removed the loop of")}: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
     }
 }
