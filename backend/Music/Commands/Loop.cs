@@ -7,7 +7,7 @@ namespace Music.Commands;
 
 public partial class MusicCommand
 {
-    [SlashCommand("loop", "Toggles loop")]
+    [SlashCommand("loop", "Changes the current loop mode")]
     [BotChannel]
     public async Task LoopMusic(PlayerLoopMode loopMode)
     {
