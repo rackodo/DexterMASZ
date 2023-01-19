@@ -322,13 +322,11 @@ public class DiscordRest : IHostedService, IEvent
                 }
             }
 
-            if (user != null)
-            {
-                SetCacheValue(cacheKey, new CacheApiResponse(user));
-                return user;
-            }
+            if (user == null)
+                throw new NullReferenceException();
 
-            throw new NullReferenceException();
+            SetCacheValue(cacheKey, new CacheApiResponse(user));
+            return user;
         }
         catch (Exception e)
         {
@@ -527,7 +525,7 @@ public class DiscordRest : IHostedService, IEvent
         {
             var client = await GetOAuthClient(token);
             guilds = (await client.GetGuildSummariesAsync().FlattenAsync())
-                .Select(guild => UserGuild.GetUserGuild(guild))
+                .Select(UserGuild.GetUserGuild)
                 .ToList();
         }
         catch (Exception e)
@@ -596,7 +594,7 @@ public class DiscordRest : IHostedService, IEvent
         return true;
     }
 
-    public async Task<bool> UnbanUser(ulong guildId, ulong userId, string reason = null)
+    public async Task<bool> UnBanUser(ulong guildId, ulong userId, string reason = null)
     {
         try
         {
@@ -611,7 +609,7 @@ public class DiscordRest : IHostedService, IEvent
         }
         catch (Exception e)
         {
-            _logger.LogError(e, $"Failed to Unban user '{userId}' from guild '{guildId}'.");
+            _logger.LogError(e, $"Failed to unban user '{userId}' from guild '{guildId}'.");
             return false;
         }
 
@@ -665,68 +663,6 @@ public class DiscordRest : IHostedService, IEvent
         catch (Exception e)
         {
             _logger.LogError(e, $"Failed to revoke user '{userId}' from guild '{guildId}' timeout.");
-            return false;
-        }
-
-        return true;
-    }
-
-    public async Task<bool> GrantGuildUserRole(ulong guildId, ulong userId, ulong roleId, string reason = null)
-    {
-        try
-        {
-            var guild = _client.GetGuild(guildId);
-            var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
-
-            if (user is null)
-                return false;
-
-            IRole role = guild.Roles.FirstOrDefault(r => r.Id == roleId);
-
-            if (role is null)
-                return false;
-
-            RequestOptions options = new();
-
-            if (!string.IsNullOrEmpty(reason))
-                options.AuditLogReason = reason;
-
-            await user.AddRoleAsync(role, options);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, $"Failed to grant user '{userId}' from guild '{guildId}' role '{roleId}'.");
-            return false;
-        }
-
-        return true;
-    }
-
-    public async Task<bool> RemoveGuildUserRole(ulong guildId, ulong userId, ulong roleId, string reason = null)
-    {
-        try
-        {
-            var guild = _client.GetGuild(guildId);
-            var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
-
-            if (user is null)
-                return false;
-
-            IRole role = guild.Roles.FirstOrDefault(r => r.Id == roleId);
-
-            if (role is null)
-                return false;
-
-            RequestOptions options = new();
-
-            if (!string.IsNullOrEmpty(reason))
-                options.AuditLogReason = reason;
-
-            await user.RemoveRoleAsync(role, options);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, $"Failed to revoke user '{userId}' from guild '{guildId}' role '{roleId}'.");
             return false;
         }
 

@@ -133,22 +133,25 @@ public class AuditLogger : IHostedService, IEvent
             return;
 
         if (e is GatewayReconnectException ||
-            _modules.Where(x => e.GetType().Namespace.Contains(x.GetType().Namespace)).Any() || e is HttpException)
+            _modules.Any(x => e.GetType().Namespace.Contains(x.GetType().Namespace)) || e is HttpException)
             return;
 
-        var descript = Format.Sanitize(e.ToString());
+        var description = Format.Sanitize(e.ToString());
 
-        if (e.InnerException is ExternalException ee)
-            if (ee is WebSocketException &&
-                e.Message.Contains("WebSocket connection was closed"))
+        switch (e.InnerException)
+        {
+            case WebSocketException when e.Message.Contains("WebSocket connection was closed"):
                 return;
-            else
-                descript = $"Error Code: {ee.ErrorCode}\n" + descript;
+            case ExternalException ee:
+                description = $"Error Code: {ee.ErrorCode}\n" + description;
+                break;
+            case WebSocketClosedException:
+                return;
+            case HttpRequestException:
+                return;
+        }
 
-        if (e.InnerException is WebSocketClosedException)
-            return;
-
-        descript = descript[..Math.Min(1000, descript.Length)];
+        description = description[..Math.Min(1000, description.Length)];
 
         await QueueLog("======= ERROR ENCOUNTERED =======", true);
 
@@ -161,7 +164,7 @@ public class AuditLogger : IHostedService, IEvent
 
         var embed = new EmbedBuilder()
             .WithTitle("Error Encountered")
-            .WithDescription(descript)
+            .WithDescription(description)
             .WithCurrentTimestamp()
             .WithColor(Color.Red)
             .WithFooter("View logs for more information");

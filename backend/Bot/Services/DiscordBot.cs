@@ -12,13 +12,12 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace Bot.Services;
 
 public class DiscordBot : IHostedService, IEvent
 {
-    private readonly CachedServices _cacher;
+    private readonly CachedServices _cachedServices;
     private readonly DiscordSocketClient _client;
     private readonly BotEventHandler _eventHandler;
     private readonly InteractionService _interactions;
@@ -30,14 +29,14 @@ public class DiscordBot : IHostedService, IEvent
     private DateTime? _lastDisconnect;
 
     public DiscordBot(ILogger<DiscordBot> logger, DiscordSocketClient client, InteractionService interactions,
-        IServiceProvider serviceProvider, BotEventHandler eventHandler, CachedServices cacher)
+        IServiceProvider serviceProvider, BotEventHandler eventHandler, CachedServices cachedServices)
     {
         _logger = logger;
         _client = client;
         _interactions = interactions;
         _serviceProvider = serviceProvider;
         _eventHandler = eventHandler;
-        _cacher = cacher;
+        _cachedServices = cachedServices;
 
         _firstReady = true;
         _isRunning = false;
@@ -78,7 +77,7 @@ public class DiscordBot : IHostedService, IEvent
 
         try
         {
-            foreach (var assembly in _cacher.Dependents)
+            foreach (var assembly in _cachedServices.Dependents)
                 await _interactions.AddModulesAsync(assembly, scope.ServiceProvider);
         }
         catch (Exception ex)
@@ -206,7 +205,7 @@ public class DiscordBot : IHostedService, IEvent
     {
         using var scope = _serviceProvider.CreateScope();
 
-        // Refresh ban cache
+        // Refresh ban cachedServices
         var discordRest = scope.ServiceProvider.GetRequiredService<DiscordRest>();
         discordRest.RemoveFromCache(CacheKey.GuildBan(guild.Id, user.Id));
 
@@ -217,7 +216,7 @@ public class DiscordBot : IHostedService, IEvent
     {
         using var scope = _serviceProvider.CreateScope();
 
-        // Refresh ban cache
+        // Refresh ban cachedServices
         var discordRest = scope.ServiceProvider.GetRequiredService<DiscordRest>();
         await discordRest.GetGuildUserBan(guild.Id, user.Id, CacheBehavior.IgnoreCache);
         discordRest.RemoveFromCache(CacheKey.GuildUser(guild.Id, user.Id));
@@ -252,7 +251,7 @@ public class DiscordBot : IHostedService, IEvent
                      .Where(identity => identity.GetCurrentUser().Id == newUsr.Id))
             identity.UpdateGuildMembership(newUsr);
 
-        // Refresh user cache
+        // Refresh user cachedServices
         var discordRest = scope.ServiceProvider.GetRequiredService<DiscordRest>();
         discordRest.AddOrUpdateCache(CacheKey.GuildUser(newUsr.Id, newUsr.Id), new CacheApiResponse(newUsr));
 
@@ -284,37 +283,43 @@ public class DiscordBot : IHostedService, IEvent
                     translation.SetLanguage(Language.En);
                 }
 
-            if (result is ExecuteResult eResult)
+            switch (result)
             {
-                if (eResult.Exception is ApiException exception)
+                case ExecuteResult eResult:
                 {
-                    var errorCode = "#" + ((int)exception.Error).ToString("D4");
-                    await SendError(info, translation, context, translation.Get<BotEnumTranslator>().Enum(exception.Error), errorCode);
+                    if (eResult.Exception is ApiException exception)
+                    {
+                        var errorCode = "#" + ((int)exception.Error).ToString("D4");
+                        await SendError(info, translation, context,
+                            $"{translation.Get<BotEnumTranslator>().Enum(exception.Error)}: {exception.Message}",
+                            errorCode);
+                    }
+                    else
+                    {
+                        _logger.LogError(
+                            $"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed: " +
+                            eResult.Exception.Message + "\n" + eResult.Exception.StackTrace);
+                    }
+
+                    _eventHandler.CommandErroredEvent.Invoke(eResult.Exception);
+                    break;
                 }
-                else
-                {
+                case PreconditionResult preResult:
+                    await SendError(info, translation, context, preResult.ErrorReason, "PRECON");
+                    break;
+                default:
                     _logger.LogError(
-                        $"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed: " +
-                        eResult.Exception.Message + "\n" + eResult.Exception.StackTrace);
-                }
+                        $"Command '{info.Name}' ({result.GetType()}) invoked by '{context.User.Username}#{context.User.Discriminator}' failed due to {result.Error}: {result.ErrorReason}.");
 
-                _eventHandler.CommandErroredEvent.Invoke(eResult.Exception);
-            }
-            else if (result is PreconditionResult preResult)
-            {
-                await SendError(info, translation, context, preResult.ErrorReason, "PRECON");
-            }
-            else
-            {
-                _logger.LogError(
-                    $"Command '{info.Name}' ({result.GetType()}) invoked by '{context.User.Username}#{context.User.Discriminator}' failed due to {result.Error}: {result.ErrorReason}.");
-
-                _eventHandler.CommandErroredEvent.Invoke(new Exception($"{result.ErrorReason}\nResult Type: {result.GetType()}"));
+                    _eventHandler.CommandErroredEvent.Invoke(
+                        new Exception($"{result.ErrorReason}\nResult Type: {result.GetType()}"));
+                    break;
             }
         }
     }
 
-    private async Task SendError(SlashCommandInfo info, Translation translation, IInteractionContext context, string errorReason, string code)
+    private async Task SendError(ICommandInfo info, Translation translation, IInteractionContext context,
+        string errorReason, string code)
     {
         _logger.LogError(
             $"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed: {errorReason}");

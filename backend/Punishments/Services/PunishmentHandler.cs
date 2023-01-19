@@ -172,7 +172,7 @@ public class PunishmentHandler : IEvent
                             break;
                         case RestAction.Deleted:
                             _logger.LogInformation($"Unbanned user {modCase.UserId} in guild {modCase.GuildId}.");
-                            await _discordRest.UnbanUser(modCase.GuildId, modCase.UserId, reason);
+                            await _discordRest.UnBanUser(modCase.GuildId, modCase.UserId, reason);
                             _discordRest.RemoveFromCache(CacheKey.GuildBan(modCase.GuildId, modCase.UserId));
                             break;
                     }
