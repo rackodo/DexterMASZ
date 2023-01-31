@@ -18,6 +18,7 @@ public class Status : Command<Status>
 
     [Require(RequireCheck.SiteAdmin)]
     [SlashCommand("status", "See the current status of the bot.")]
+    [BotChannel]
     public async Task StatusCommand()
     {
         await Context.Interaction.DeferAsync(true);

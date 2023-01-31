@@ -1,4 +1,5 @@
 ﻿using Bot.Abstractions;
+using Bot.Attributes;
 using Bot.Enums;
 using Bot.Extensions;
 using Discord;
@@ -11,13 +12,14 @@ public class Emote : Command<Emote>
     public IServiceProvider ServiceProvider { get; set; }
 
     [SlashCommand("emote", "Gets the full image of an emote.")]
+    [BotChannel]
     public async Task EmoteCommand(
         [Summary("emote", "The Discord emote you wish to be enlargened!")]
-        string emoji)
+        string emote)
     {
         EmbedBuilder embed;
 
-        if (Discord.Emote.TryParse(emoji, out var emojis))
+        if (Discord.Emote.TryParse(emote, out var emojis))
             embed = (await EmbedCreator.CreateActionEmbed(RestAction.Created, ServiceProvider))
                 .WithImageUrl(emojis.Url)
                 .WithUrl(emojis.Url)

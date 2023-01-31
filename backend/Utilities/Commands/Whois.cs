@@ -18,6 +18,7 @@ public class WhoIs : Command<WhoIs>
 
     [Require(RequireCheck.GuildModerator)]
     [SlashCommand("whois", "Who is information about a user.")]
+    [BotChannel]
     public async Task WhoIsCommand([Summary("user", "user to scan")] IGuildUser user)
     {
         await Context.Interaction.DeferAsync(!GuildConfig.StaffChannels.Contains(Context.Channel.Id));

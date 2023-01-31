@@ -16,6 +16,7 @@ public class UserDm : Command<UserDm>
 
     [Require(RequireCheck.GuildModerator)]
     [SlashCommand("dm", "Sends a direct message to a user specified.")]
+    [BotChannel]
     public async Task UserDmCommand(
         [Summary("user", "The user you wish to be direct messaged.")]
         IUser user,

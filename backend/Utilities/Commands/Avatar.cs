@@ -1,16 +1,20 @@
 using Bot.Abstractions;
+using Bot.Attributes;
 using Bot.Extensions;
+using Bot.Services;
 using Bot.Translators;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Utilities.Translators;
 
 namespace Utilities.Commands;
 
 public class Avatar : Command<Avatar>
 {
+    public DiscordRest Client { get; set; }
+
     [SlashCommand("avatar", "Get the high resolution avatar of a user.")]
+    [BotChannel]
     public async Task AvatarCommand([Summary("user", "User to get the avatar from")] IUser user = null)
     {
         user ??= Context.User;
@@ -21,18 +25,17 @@ public class Avatar : Command<Avatar>
     [ComponentInteraction("avatar-user:*,*")]
     public async Task UserAvatar(string userId, bool isGuild)
     {
-        IUser user = Context.Client.GetUser(ulong.Parse(userId));
-        IGuildUser gUser = Context.Guild.GetUser(ulong.Parse(userId));
-        var guildAvail = false;
+        var id = ulong.Parse(userId);
 
-        if (gUser is { GuildAvatarId: { } })
-            guildAvail = true;
+        var user = await Client.GetRestClient().GetUserAsync(id);
+        var gUser = await Client.GetRestClient().GetGuildUserAsync(Context.Guild.Id, id);
+
+        var guildAvail = gUser != null;
 
         if (isGuild && !guildAvail)
             isGuild = false;
 
         var avatarUrl = isGuild ? gUser.GetGuildAvatarUrl(size: 1024) : user.GetAvatarOrDefaultUrl(size: 1024);
-        var translator = Translator.Get<UtilityTranslator>();
 
         var embed = new EmbedBuilder()
             .WithTitle((isGuild ? "Guild" : "User") + " Avatar URL")
