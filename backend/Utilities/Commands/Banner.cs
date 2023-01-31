@@ -1,4 +1,5 @@
 ﻿using Bot.Abstractions;
+using Bot.Attributes;
 using Bot.Services;
 using Bot.Translators;
 using Discord;
@@ -12,6 +13,7 @@ public class Banner : Command<Banner>
     public DiscordRest Client { get; set; }
 
     [SlashCommand("banner", "Get the high resolution banner of a user.")]
+    [BotChannel]
     public async Task BannerCommand([Summary("user", "User to get the banner from")] IUser user = null)
     {
         user ??= Context.User;
