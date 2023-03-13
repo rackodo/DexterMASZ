@@ -9,6 +9,7 @@ using Humanizer.Localisation;
 using Levels.Data;
 using Levels.Enums;
 using Levels.Models;
+using Color = Discord.Color;
 
 namespace Levels.Commands;
 

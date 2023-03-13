@@ -7,6 +7,7 @@ using Discord;
 using Discord.Interactions;
 using Levels.Data;
 using Levels.Models;
+using Color = Discord.Color;
 
 namespace Levels.Commands;
 

@@ -5,7 +5,7 @@ using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.Processing;
 using System.Numerics;
 
-namespace Bot.Extensions;
+namespace Levels.Extensions;
 
 public static class Graphics
 {

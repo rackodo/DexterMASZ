@@ -3,6 +3,7 @@ using Bot.Extensions;
 using Discord;
 using Levels.Data;
 using Levels.Enums;
+using Levels.Extensions;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
