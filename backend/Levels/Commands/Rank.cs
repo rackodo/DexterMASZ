@@ -12,16 +12,16 @@ namespace Levels.Commands;
 
 public class Rank : Command<Rank>
 {
-    public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
-    public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
-    public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
-    public SettingsRepository? SettingsRepository { get; set; }
+    public GuildLevelConfigRepository GuildLevelConfigRepository { get; set; }
+    public GuildUserLevelRepository GuildUserLevelRepository { get; set; }
+    public UserRankcardConfigRepository UserRankcardConfigRepository { get; set; }
+    public SettingsRepository SettingsRepository { get; set; }
 
     private static string Storage(IUser user, string root) => Path.Combine(root, "Cache", $"Rankcard{user.Id}.png");
 
     [SlashCommand("rank", "Display your rankcard and experience information.", runMode: RunMode.Async)]
     [BotChannel]
-    public async Task RankCommand([Summary("user", "Target user to get rank from.")] IUser? user = null)
+    public async Task RankCommand([Summary("user", "Target user to get rank from.")] IUser user = null)
     {
         await DeferAsync();
 

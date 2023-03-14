@@ -18,7 +18,7 @@ public class UserRankcardConfigRepository : Repository
         _eventHandler = eventHandler;
     }
 
-    public UserRankcardConfig? GetRankcard(ulong userid) => _database.GetUserRankcardConfig(userid);
+    public UserRankcardConfig GetRankcard(ulong userid) => _database.GetUserRankcardConfig(userid);
 
     public UserRankcardConfig GetOrDefaultRankcard(IUser user) => GetOrDefaultRankcard(user.Id);
 

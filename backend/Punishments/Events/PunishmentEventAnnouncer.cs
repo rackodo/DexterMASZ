@@ -60,7 +60,7 @@ public class PunishmentEventAnnouncer : IEvent
 
         _logger.LogInformation($"Announcing mod case {modCase.Id} in guild {modCase.GuildId}.");
 
-        var caseUser = await _discordRest.FetchUserInfo(modCase.UserId, false);
+        await _discordRest.FetchUserInfo(modCase.UserId, false);
 
         var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
             .GetGuildConfig(modCase.GuildId);
@@ -91,7 +91,7 @@ public class PunishmentEventAnnouncer : IEvent
 
         _logger.LogInformation($"Announcing mod case {modCase.Id} in guild {modCase.GuildId}.");
 
-        var caseUser = await _discordRest.FetchUserInfo(modCase.UserId, false);
+        await _discordRest.FetchUserInfo(modCase.UserId, false);
 
         var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
             .GetGuildConfig(modCase.GuildId);

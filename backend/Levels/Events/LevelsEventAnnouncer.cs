@@ -31,7 +31,7 @@ public class LevelsEventAnnouncer : IEvent
     public void RegisterEvents() => _eventHandler.OnUserLevelUp += AnnounceLevelUp;
 
     private async Task AnnounceLevelUp(GuildUserLevel guildUserLevel, int level, IGuildUser guildUser,
-        IChannel? channel)
+        IChannel channel)
     {
         using var scope = _serviceProvider.CreateScope();
 

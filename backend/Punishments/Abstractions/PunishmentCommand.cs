@@ -25,7 +25,7 @@ public class PunishmentCommand<T> : Command<T>
 
         try
         {
-            var (created, result, finalWarned) =
+            var (_, result, finalWarned) =
                 await ModCaseRepository.CreateModCase(modCase);
 
             if (finalWarned && modCase.PunishmentType != PunishmentType.FinalWarn)

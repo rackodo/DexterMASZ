@@ -17,7 +17,7 @@ public class LevelsImageServerController : BaseController
     [HttpGet("{userId}/images/{fileName}")]
     public async Task<IActionResult> GetImage([FromRoute] ulong userId, [FromRoute] string fileName)
     {
-        UploadedFile? fileInfo;
+        UploadedFile fileInfo;
         try
         {
             fileInfo = await _levelsImageRepository.GetUserFile(userId, fileName);
@@ -37,7 +37,7 @@ public class LevelsImageServerController : BaseController
     [HttpGet("default/images/{fileName}")]
     public IActionResult GetDefaultImage([FromRoute] string fileName)
     {
-        UploadedFile? fileInfo;
+        UploadedFile fileInfo;
         try
         {
             fileInfo = _levelsImageRepository.GetDefaultFile(fileName);

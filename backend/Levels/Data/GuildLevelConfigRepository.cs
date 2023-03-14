@@ -38,7 +38,7 @@ public class GuildLevelConfigRepository : Repository
         return config;
     }
 
-    public GuildLevelConfig? GetConfig(ulong guildid) => _database.GetGuildLevelConfig(guildid);
+    public GuildLevelConfig GetConfig(ulong guildid) => _database.GetGuildLevelConfig(guildid);
 
     public GuildLevelConfig[] GetAllRegistered() => _database.GetAllGuildLevelConfigs();
 

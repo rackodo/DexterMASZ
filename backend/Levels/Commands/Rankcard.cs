@@ -6,7 +6,7 @@ namespace Levels.Commands;
 
 public class RankCard : Command<RankCard>
 {
-    public SettingsRepository? SettingsRepository { get; set; }
+    public SettingsRepository SettingsRepository { get; set; }
 
     [SlashCommand("rankcard", "Customize your rankcard.")]
     public async Task RankCardCommand() => await RespondAsync(await GetRankCard(SettingsRepository), ephemeral: true);

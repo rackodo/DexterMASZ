@@ -27,7 +27,7 @@ public class GuildUserLevelRepository : Repository
         return level;
     }
 
-    public GuildUserLevel? GetLevel(ulong guildid, ulong userid) => _database.GetGuildUserLevel(guildid, userid);
+    public GuildUserLevel GetLevel(ulong guildid, ulong userid) => _database.GetGuildUserLevel(guildid, userid);
 
     public async Task UpdateLevel(GuildUserLevel guildUserLevel)
     {

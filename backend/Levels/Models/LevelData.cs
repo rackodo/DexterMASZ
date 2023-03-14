@@ -24,7 +24,7 @@ public class LevelData : IComparable<LevelData>
     public long LevelXp => _levelxp;
     public long ResidualXp => _residualxp;
 
-    public int CompareTo(LevelData? other) => other is null ? 1 : Xp.CompareTo(other.Xp);
+    public int CompareTo(LevelData other) => other is null ? 1 : Xp.CompareTo(other.Xp);
 
     public void AddXp(long increment, GuildLevelConfig config)
     {

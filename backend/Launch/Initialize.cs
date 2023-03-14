@@ -154,7 +154,7 @@ public class Initialize
         var connectionString = $"Server={databaseSettings.Host};Port={databaseSettings.Port};" +
                                $"Database={databaseSettings.Database};Uid={databaseSettings.User};Pwd={databaseSettings.Pass};";
 
-        var dbBuilder = new DbContextOptionsBuilder<BotDatabase>();
+        new DbContextOptionsBuilder<BotDatabase>();
 
         return x => x.UseMySql(
             connectionString,

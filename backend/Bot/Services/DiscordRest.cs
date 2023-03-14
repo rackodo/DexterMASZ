@@ -621,7 +621,7 @@ public class DiscordRest : IHostedService, IEvent
     {
         try
         {
-            var guild = _client.GetGuild(guildId);
+            _client.GetGuild(guildId);
             var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
             if (user is null)
@@ -647,7 +647,7 @@ public class DiscordRest : IHostedService, IEvent
     {
         try
         {
-            var guild = _client.GetGuild(guildId);
+            _client.GetGuild(guildId);
             var user = FetchGuildUserInfo(guildId, userId, CacheBehavior.Default);
 
             if (user is null)

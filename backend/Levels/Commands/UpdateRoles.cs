@@ -14,17 +14,17 @@ namespace Levels.Commands;
 
 public class UpdateRoles : Command<UpdateRoles>
 {
-    public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
-    public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
-    public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
-    public SettingsRepository? SettingsRepository { get; set; }
-    public LevelingService? LevelingService { get; set; }
-    public DiscordRest? Client { get; set; }
+    public GuildLevelConfigRepository GuildLevelConfigRepository { get; set; }
+    public GuildUserLevelRepository GuildUserLevelRepository { get; set; }
+    public UserRankcardConfigRepository UserRankcardConfigRepository { get; set; }
+    public SettingsRepository SettingsRepository { get; set; }
+    public LevelingService LevelingService { get; set; }
+    public DiscordRest Client { get; set; }
 
     [SlashCommand("updateroles", "Update a user's roles to match their level.", runMode: RunMode.Async)]
     public async Task RankCommand(
         [Summary("user", "User to update roles for. Defaults to oneself.")]
-        IGuildUser? user = null
+        IGuildUser user = null
     )
     {
         user ??= Context.Guild.GetUser(Context.User.Id);

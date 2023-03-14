@@ -5,11 +5,11 @@ namespace Levels.Models;
 
 public class CalculatedGuildUserLevel : GuildUserLevel
 {
-    private LevelData? _textLevel;
-    private LevelData? _totalLevel;
-    private LevelData? _voiceLevel;
+    private LevelData _textLevel;
+    private LevelData _totalLevel;
+    private LevelData _voiceLevel;
 
-    public CalculatedGuildUserLevel(GuildUserLevel guildUserLevel, GuildLevelConfig? config = null)
+    public CalculatedGuildUserLevel(GuildUserLevel guildUserLevel, GuildLevelConfig config = null)
     {
         Token = guildUserLevel.Token;
         UserId = guildUserLevel.UserId;
@@ -19,7 +19,7 @@ public class CalculatedGuildUserLevel : GuildUserLevel
         Config = config;
     }
 
-    public GuildLevelConfig? Config { get; set; }
+    public GuildLevelConfig Config { get; set; }
 
     public new long TextXp
     {

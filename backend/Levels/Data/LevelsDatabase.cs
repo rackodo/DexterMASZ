@@ -13,9 +13,9 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
     {
     }
 
-    public DbSet<GuildUserLevel>? GuildUserLevels { get; set; }
-    public DbSet<GuildLevelConfig>? GuildLevelConfigs { get; set; }
-    public DbSet<UserRankcardConfig>? UserRankcardConfigs { get; set; }
+    public DbSet<GuildUserLevel> GuildUserLevels { get; set; }
+    public DbSet<GuildLevelConfig> GuildLevelConfigs { get; set; }
+    public DbSet<UserRankcardConfig> UserRankcardConfigs { get; set; }
 
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
         IServiceCollection serviceCollection) =>
@@ -36,7 +36,7 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
                 new DictionaryDataComparer<int, string>());
     }
 
-    private static bool CheckNullAndReport([NotNullWhen(false)] object? o, string name)
+    private static bool CheckNullAndReport([NotNullWhen(false)] object o, string name)
     {
         if (o is null)
         {
@@ -60,7 +60,7 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
         await SaveChangesAsync();
     }
 
-    public GuildUserLevel? GetGuildUserLevel(ulong guildid, ulong userid)
+    public GuildUserLevel GetGuildUserLevel(ulong guildid, ulong userid)
     {
         if (CheckNullAndReport(GuildUserLevels, "GuildUserLevels"))
             return null;
@@ -111,7 +111,7 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
         await SaveChangesAsync();
     }
 
-    public UserRankcardConfig? GetUserRankcardConfig(ulong userid) =>
+    public UserRankcardConfig GetUserRankcardConfig(ulong userid) =>
         CheckNullAndReport(UserRankcardConfigs, "UserRankcardConfigs") ? null : UserRankcardConfigs.Find(userid);
 
     public async Task UpdateUserRankcardConfig(UserRankcardConfig rankcardConfig)
@@ -142,7 +142,7 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
         await SaveChangesAsync();
     }
 
-    public GuildLevelConfig? GetGuildLevelConfig(ulong guildid) =>
+    public GuildLevelConfig GetGuildLevelConfig(ulong guildid) =>
         CheckNullAndReport(GuildLevelConfigs, "GuildLevelsConfigs") ? null : GuildLevelConfigs.Find(guildid);
 
     public GuildLevelConfig[] GetAllGuildLevelConfigs() => CheckNullAndReport(GuildLevelConfigs, "GuildLevelsConfigs")

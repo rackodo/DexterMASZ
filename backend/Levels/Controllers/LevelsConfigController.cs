@@ -95,7 +95,7 @@ public class LevelsConfigController : AuthenticatedController
         return Ok();
     }
 
-    private IActionResult? ValidateConfig(GuildLevelConfig config)
+    private IActionResult ValidateConfig(GuildLevelConfig config)
     {
         if (config.Coefficients.Length is < 2 or > 10)
             return BadRequest("Leveling coefficients must have between 2 and 10 elements!");

@@ -11,9 +11,9 @@ public class LevelsEventHandler : INternalEventHandler
     internal readonly AsyncEvent<Func<GuildLevelConfig, Task>> GuildLevelConfigDeletedEvent = new();
 
     internal readonly AsyncEvent<Func<GuildLevelConfig, Task>> GuildLevelConfigUpdatedEvent = new();
-    internal readonly AsyncEvent<Func<GuildUserLevel, int, IGuildUser, IChannel?, Task>> UserLevelUpEvent = new();
+    internal readonly AsyncEvent<Func<GuildUserLevel, int, IGuildUser, IChannel, Task>> UserLevelUpEvent = new();
 
-    public event Func<GuildUserLevel, int, IGuildUser, IChannel?, Task> OnUserLevelUp
+    public event Func<GuildUserLevel, int, IGuildUser, IChannel, Task> OnUserLevelUp
     {
         add => UserLevelUpEvent.Add(value);
         remove => UserLevelUpEvent.Remove(value);

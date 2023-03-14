@@ -135,7 +135,6 @@ public class LevelingService : IEvent
                 toAdd.Remove(config.NicknameDisabledReplacement);
 
             var guild = guildUser.Guild;
-            var guildRoles = guild.Roles;
             var guildRoleIds = guild.Roles.Select(x => x.Id);
 
             toAdd.IntersectWith(guildRoleIds);
@@ -183,7 +182,7 @@ public class LevelingService : IEvent
         return Task.CompletedTask;
     }
 
-    private void TimerCallback(object? source, ElapsedEventArgs e) => Task.Run(PeriodicCheck);
+    private void TimerCallback(object source, ElapsedEventArgs e) => Task.Run(PeriodicCheck);
 
     private async Task ProcessMessage(IMessage message)
     {

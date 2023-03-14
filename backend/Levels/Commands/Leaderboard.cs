@@ -8,7 +8,7 @@ namespace Levels.Commands;
 
 public class Leaderboard : Command<Leaderboard>
 {
-    public SettingsRepository? SettingsRepository { get; set; }
+    public SettingsRepository SettingsRepository { get; set; }
 
     [SlashCommand("leaderboard", "Get a link to the Dexter leaderboard")]
     [BotChannel]

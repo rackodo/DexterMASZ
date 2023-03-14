@@ -75,7 +75,7 @@ public static class Rankcard
     public static async Task<Image> RenderRankCard(IUser user, CalculatedGuildUserLevel ul,
         UserRankcardConfig rankcardConfig, GuildUserLevelRepository levelsRepo, SettingsRepository configRepo)
     {
-        var appconfig = await configRepo.GetAppSettings();
+        await configRepo.GetAppSettings();
         var fontPath = IOPath.Join(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Fonts", "rankcardfont.ttf");
 
         FontCollection fontCollection = new();
@@ -158,12 +158,10 @@ public static class Rankcard
         }
         catch (FileNotFoundException)
         {
-            Color bgc;
-            if (Regex.IsMatch(rankcardConfig.Background, @"^(#|0x)?[0-9A-F]{6}$", RegexOptions.IgnoreCase))
-                bgc = (0xff000000 | uint.Parse(rankcardConfig.Background[^6..], NumberStyles.HexNumber))
-                    .ColorFromArgb();
-            else
-                bgc = (0xff000000 | rankcardConfig.XpColor).ColorFromArgb();
+            var bgc = Regex.IsMatch(rankcardConfig.Background, @"^(#|0x)?[0-9A-F]{6}$", RegexOptions.IgnoreCase)
+                ? (0xff000000 | uint.Parse(rankcardConfig.Background[^6..], NumberStyles.HexNumber))
+                .ColorFromArgb()
+                : (0xff000000 | rankcardConfig.XpColor).ColorFromArgb();
             bgTransform = g => g.BackgroundColor(bgc);
         }
         catch (FileLoadException)
@@ -205,12 +203,11 @@ public static class Rankcard
                 pfp = Image.Load(dataArr);
                 pfp.Mutate(ctx => ctx.Resize(rectPfp.Size));
 
-                if (rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.ClipPfp))
-                    pfpTransform = g => g.Clip(new PathBuilder().AddArc(rectPfp, 0, 0, 360).Build(),
+                pfpTransform = rankcardConfig.RankcardFlags.HasFlag(RankcardFlags.ClipPfp)
+                    ? g => g.Clip(new PathBuilder().AddArc(rectPfp, 0, 0, 360).Build(),
                         clipg => clipg.DrawImage(pfp, new Point(rectPfp.Left, rectPfp.Top), 1)
-                    );
-                else
-                    pfpTransform = g => g.DrawImage(pfp, new Point(rectPfp.Left, rectPfp.Top), 1);
+                    )
+                    : g => g.DrawImage(pfp, new Point(rectPfp.Left, rectPfp.Top), 1);
             }
             catch (HttpRequestException)
             {

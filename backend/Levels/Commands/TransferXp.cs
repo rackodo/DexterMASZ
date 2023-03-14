@@ -13,11 +13,11 @@ namespace Levels.Commands;
 
 public class TransferXp : Command<TransferXp>
 {
-    public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
-    public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
-    public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
-    public SettingsRepository? SettingsRepository { get; set; }
-    public DiscordRest? Client { get; set; }
+    public GuildLevelConfigRepository GuildLevelConfigRepository { get; set; }
+    public GuildUserLevelRepository GuildUserLevelRepository { get; set; }
+    public UserRankcardConfigRepository UserRankcardConfigRepository { get; set; }
+    public SettingsRepository SettingsRepository { get; set; }
+    public DiscordRest Client { get; set; }
 
     [Require(RequireCheck.GuildModerator)]
     [SlashCommand("transferxp", "Transfer experience from a source user to a target user.")]

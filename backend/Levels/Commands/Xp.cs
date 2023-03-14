@@ -15,16 +15,16 @@ namespace Levels.Commands;
 
 public class Experience : Command<Experience>
 {
-    public GuildLevelConfigRepository? GuildLevelConfigRepository { get; set; }
-    public GuildUserLevelRepository? GuildUserLevelRepository { get; set; }
-    public UserRankcardConfigRepository? UserRankcardConfigRepository { get; set; }
-    public SettingsRepository? SettingsRepository { get; set; }
-    public DiscordRest? Client { get; set; }
+    public GuildLevelConfigRepository GuildLevelConfigRepository { get; set; }
+    public GuildUserLevelRepository GuildUserLevelRepository { get; set; }
+    public UserRankcardConfigRepository UserRankcardConfigRepository { get; set; }
+    public SettingsRepository SettingsRepository { get; set; }
+    public DiscordRest Client { get; set; }
 
     [SlashCommand("xp", "Display detailed experience information.")]
     public async Task RankCommand(
         [Summary("user", "Target user to get rank from.")]
-        IUser? user = null,
+        IUser user = null,
         [Summary("level", "The level you wish to get information about")]
         int levelTarget = -1,
         [Summary("rank", "The rank you wish to get information about")]
@@ -46,7 +46,7 @@ public class Experience : Command<Experience>
         var guildInfo = Client.FetchGuildInfo(guildlevelconfig.Id, CacheBehavior.Default);
         if (roleTarget != null)
         {
-            var entry = guildlevelconfig.Levels.FirstOrDefault(e =>
+            guildlevelconfig.Levels.FirstOrDefault(e =>
             {
                 if (e.Value.Contains(roleTarget.Id))
                 {
