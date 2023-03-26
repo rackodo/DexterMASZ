@@ -70,10 +70,13 @@ public class MusicService : IEvent
     {
         var currentTrack = e.Player.CurrentTrack;
 
+        if (currentTrack == null)
+            return;
+
         await GetMusicChannel(e.Player)
             .SendMessageAsync(
-                $"Finished playing: {Format.Bold(Format.Sanitize(currentTrack?.Title ?? "Unknown"))} by " +
-                $"{Format.Bold(Format.Sanitize(currentTrack?.Author ?? "Unknown"))}"
+                $"Finished playing: {Format.Bold(Format.Sanitize(currentTrack.Title))} by " +
+                $"{Format.Bold(Format.Sanitize(currentTrack.Author))}"
             );
     }
 
