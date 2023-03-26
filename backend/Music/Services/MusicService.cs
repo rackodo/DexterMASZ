@@ -5,7 +5,6 @@ using Lavalink4NET;
 using Lavalink4NET.Events;
 using Lavalink4NET.Player;
 using Lavalink4NET.Tracking;
-using Microsoft.AspNetCore.Components.Routing;
 
 namespace Music.Services;
 

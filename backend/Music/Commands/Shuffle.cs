@@ -1,7 +1,6 @@
 ﻿using Bot.Attributes;
 using Discord.Interactions;
 using Music.Attributes;
-using System.Numerics;
 
 namespace Music.Commands;
 

@@ -2,7 +2,6 @@
 using Bot.Exceptions;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Fergun.Interactive;
 using Lavalink4NET;
 using Lavalink4NET.Player;
 using Music.Data;
@@ -17,7 +16,8 @@ public class MusicCommand<T> : Command<T>
     public VoteLavalinkPlayer Player;
     public IAudioService Lavalink { get; set; }
     public MusicService Music { get; set; }
-    
+    public StartRepository StartRepository { get; set; }
+
     public override async Task BeforeExecuteAsync(ICommandInfo command)
     {
         await Context.Interaction.DeferAsync();
@@ -27,7 +27,7 @@ public class MusicCommand<T> : Command<T>
         if (((SocketGuildUser)Context.Interaction.User).VoiceState == null)
             throw new UserNotInVoiceChannel();
 
-        Player = await Lavalink.EnsureConnected(Context);
+        Player = await Lavalink.EnsureConnected(Context, StartRepository);
 
         lock (Music.ChannelLocker)
         {

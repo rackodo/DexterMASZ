@@ -3,7 +3,6 @@ using Discord;
 using Discord.Interactions;
 using Fergun.Interactive;
 using Music.Attributes;
-using Music.Data;
 using Music.Extensions;
 using System.Text;
 

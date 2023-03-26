@@ -1,7 +1,6 @@
 ﻿using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
-using Fergun.Interactive;
 using Humanizer;
 using Lavalink4NET.Artwork;
 using Lavalink4NET.Player;
