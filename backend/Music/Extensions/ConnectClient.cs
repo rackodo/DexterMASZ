@@ -2,13 +2,14 @@
 using Discord.WebSocket;
 using Lavalink4NET;
 using Lavalink4NET.Player;
-using Music.Data;
+using Music.Services;
 
 namespace Music.Extensions;
 
 public static class ConnectClient
 {
-    public static async Task<VoteLavalinkPlayer> EnsureConnected(this IAudioService lavalink, IInteractionContext context, StartRepository startRepo)
+    public static async Task<VoteLavalinkPlayer> EnsureConnected(this IAudioService lavalink,
+        IInteractionContext context, MusicService music)
     {
         var player = lavalink.GetPlayer(context.Guild.Id);
 
@@ -23,7 +24,7 @@ public static class ConnectClient
         var newPlayer = await lavalink.JoinAsync<VoteLavalinkPlayer>(context.Guild.Id,
             ((SocketGuildUser)context.User).VoiceState!.Value.VoiceChannel.Id, true);
 
-        await startRepo.SetGuildStartTime(context.Guild.Id, DateTime.UtcNow);
+        music.SetStartTimeAsCurrent(context.Guild.Id);
 
         await context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Done establishing the connection.");

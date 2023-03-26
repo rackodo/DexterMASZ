@@ -17,6 +17,9 @@ public class MusicService : IEvent
     public readonly Dictionary<ulong, ulong> GuildMusicChannel;
     public object ChannelLocker;
 
+    public readonly Dictionary<ulong, DateTime> StartTimes;
+    public object StartLocker;
+
     public MusicService(DiscordSocketClient client, IAudioService lavalink, InactivityTrackingService inactivityTracker)
     {
         _client = client;
@@ -25,6 +28,9 @@ public class MusicService : IEvent
 
         GuildMusicChannel = new Dictionary<ulong, ulong>();
         ChannelLocker = new object();
+
+        StartTimes = new Dictionary<ulong, DateTime>();
+        StartLocker = new object();
     }
 
     public void RegisterEvents()
@@ -113,5 +119,26 @@ public class MusicService : IEvent
     {
         await _lavalink.InitializeAsync();
         if (!_inactivityTracker.IsTracking) _inactivityTracker.BeginTracking();
+    }
+
+    public void SetStartTimeAsCurrent(ulong guildId)
+    {
+        lock (StartTimes)
+        {
+            if (!StartTimes.ContainsKey(guildId))
+                StartTimes.Add(guildId, DateTime.UtcNow);
+            else
+                StartTimes[guildId] = DateTime.UtcNow;
+        }
+    }
+    
+    public DateTime GetStartTime(ulong guildId)
+    {
+        lock (StartTimes)
+        {
+            return StartTimes.ContainsKey(guildId) ?
+                StartTimes[guildId] :
+                DateTime.UtcNow;
+        }
     }
 }
