@@ -244,21 +244,25 @@ public class BotEnumTranslator : Translator
             },
             ApiError.ProtectedScheduledMessage => PreferredLanguage switch
             {
-                Language.De => "Die geplante Nachricht ist geschützt und kann nicht gelöscht werden.",
-                Language.Fr => "Le message planifié est protégé et ne peut pas être supprimé.",
-                Language.Es => "El mensaje programado está protegido y no se puede eliminar.",
-                Language.Ru => "Запланированное сообщение защищено и не может быть удалено.",
-                Language.It => "Il messaggio programmato è protetto e non può essere eliminato.",
-                _ => "The scheduled message is protected and cannot be deleted."
+                Language.De => "Die geplante Nachricht ist geschützt und kann nicht gelöscht werden",
+                Language.Fr => "Le message planifié est protégé et ne peut pas être supprimé",
+                Language.Es => "El mensaje programado está protegido y no se puede eliminar",
+                Language.Ru => "Запланированное сообщение защищено и не может быть удалено",
+                Language.It => "Il messaggio programmato è protetto e non può essere eliminato",
+                _ => "The scheduled message is protected and cannot be deleted"
             },
             ApiError.InvalidDateForScheduledMessage => PreferredLanguage switch
             {
-                Language.De => "Das Ausführungsdatum muss mindestens eine Minute in der Zukunft liegen.",
-                Language.Fr => "La date d'exécution doit être au moins une minute dans le futur.",
-                Language.Es => "La fecha de ejecución debe ser al menos un minuto en el futuro.",
-                Language.Ru => "Дата выполнения должна быть не менее одной минуты в будущем.",
-                Language.It => "La data di esecuzione deve essere almeno un minuto nel futuro.",
-                _ => "The execution date has to be at least one minute in the future."
+                Language.De => "Das Ausführungsdatum muss mindestens eine Minute in der Zukunft liegen",
+                Language.Fr => "La date d'exécution doit être au moins une minute dans le futur",
+                Language.Es => "La fecha de ejecución debe ser al menos un minuto en el futuro",
+                Language.Ru => "Дата выполнения должна быть не менее одной минуты в будущем",
+                Language.It => "La data di esecuzione deve essere almeno un minuto nel futuro",
+                _ => "The execution date has to be at least one minute in the future"
+            },
+            ApiError.UserNotInVoiceChannel => PreferredLanguage switch
+            {
+                _ => "User voice channel not found"
             },
             _ => "Unknown"
         };
