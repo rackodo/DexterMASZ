@@ -20,7 +20,7 @@ public class Ban : PunishmentCommand<Ban>
         string description = "",
         [Summary("time", "The time to punish the user for")]
         TimeSpan time = default) =>
-        await RunModcase(new ModCase
+        await RunModCase(new ModCase
         {
             Title = title,
             GuildId = Context.Guild.Id,

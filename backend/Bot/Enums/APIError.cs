@@ -22,7 +22,7 @@ public enum ApiError
     // USER MAPS
     CannotBeSameUser,
 
-    // MODCASES
+    // MOD CASES
     ProtectedModCaseSuspect,
     ProtectedModCaseSuspectIsBot,
     ProtectedModCaseSuspectIsSiteAdmin,
@@ -34,11 +34,13 @@ public enum ApiError
     LastCommentAlreadyFromSuspect,
     AlreadyFinalWarned,
 
-    // AUTOMOD
+    // AUTO MOD
     InvalidAutoModAction,
     InvalidAutoModType,
 
     // SCHEDULED MESSAGES
     ProtectedScheduledMessage,
-    InvalidDateForScheduledMessage
+    InvalidDateForScheduledMessage,
+
+    UserNotInVoiceChannel
 }

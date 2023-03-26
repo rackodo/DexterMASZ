@@ -16,13 +16,12 @@ public class PunishmentCommand<T> : Command<T>
     public IServiceProvider ServiceProvider { get; set; }
     public DiscordRest DiscordRest { get; set; }
 
-    public async Task RunModcase(ModCase modCase)
+    public async Task RunModCase(ModCase modCase)
     {
-        ModCaseRepository.AsUser(Identity);
-        GuildConfigRepository.AsUser(Identity);
-
         await Context.Interaction.DeferAsync(!GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 
+        ModCaseRepository.AsUser(Identity);
+        
         try
         {
             var (_, result, finalWarned) =

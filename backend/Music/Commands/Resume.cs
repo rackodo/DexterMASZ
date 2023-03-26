@@ -1,21 +1,18 @@
 ﻿using Bot.Attributes;
 using Discord.Interactions;
 using Lavalink4NET.Player;
+using Music.Attributes;
 
 namespace Music.Commands;
 
-public partial class MusicCommand
+public class ResumeCommand : MusicCommand<ResumeCommand>
 {
     [SlashCommand("resume", "Resume this session")]
     [BotChannel]
-    public async Task ResumeMusic()
+    [QueueNotEmpty]
+    public async Task Resume()
     {
-        await Context.Interaction.DeferAsync();
-
-        if (!await EnsureUserInVoiceAsync()) return;
-        if (!await EnsureClientInVoiceAsync()) return;
-
-        if (_player.State != PlayerState.Paused)
+        if (Player.State != PlayerState.Paused)
         {
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
                 x.Content = "Resumed earlier");
@@ -23,7 +20,7 @@ public partial class MusicCommand
             return;
         }
 
-        await _player.ResumeAsync();
+        await Player.ResumeAsync();
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Resuming");

@@ -1,21 +1,18 @@
 ﻿using Bot.Attributes;
 using Discord.Interactions;
+using Music.Attributes;
+using System.Numerics;
 
 namespace Music.Commands;
 
-public partial class MusicCommand
+public class ShuffleCommand : MusicCommand<ShuffleCommand>
 {
     [SlashCommand("shuffle", "Shuffle the queue")]
     [BotChannel]
-    public async Task ShuffleMusic()
+    [QueueNotEmpty]
+    public async Task Shuffle()
     {
-        await Context.Interaction.DeferAsync();
-
-        if (!await EnsureUserInVoiceAsync()) return;
-        if (!await EnsureClientInVoiceAsync()) return;
-        if (!await EnsureQueueIsNotEmptyAsync()) return;
-
-        _player.Queue.Shuffle();
+        Player.Queue.Shuffle();
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Shuffled the queue");

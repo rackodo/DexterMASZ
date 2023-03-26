@@ -1,27 +1,25 @@
 ﻿using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
+using Fergun.Interactive;
 using Humanizer;
 using Lavalink4NET.Artwork;
 using Lavalink4NET.Player;
+using Music.Data;
 using Music.Extensions;
 
 namespace Music.Commands;
 
-public partial class MusicCommand
+public class NowPlayingCommand : MusicCommand<NowPlayingCommand>
 {
+    public StartRepository StartRepo { get; set; }
     public ArtworkService ArtworkService { get; set; }
 
     [SlashCommand("now-playing", "View now playing track")]
     [BotChannel]
-    public async Task NowPlayingMusic()
+    public async Task NowPlaying()
     {
-        await Context.Interaction.DeferAsync();
-
-        if (!await EnsureUserInVoiceAsync()) return;
-        if (!await EnsureClientInVoiceAsync()) return;
-
-        var track = _player.CurrentTrack;
+        var track = Player.CurrentTrack;
 
         if (track == null)
         {
@@ -45,8 +43,8 @@ public partial class MusicCommand
                 .AddField("Source", Format.Sanitize(track.Uri?.AbsoluteUri ?? "Unknown"), true)
                 .AddField(isStream ? "Playtime" : "Position", isStream
                     ? DateTime.UtcNow.Subtract(startTime.RadioStartTime).Humanize()
-                    : $"{_player.Position.RelativePosition:g}/{track.Duration:g}", true)
-                .AddField("Is looping", $"{_player.LoopMode != PlayerLoopMode.None} ({_player.LoopMode})", true)
-                .AddField("Is paused", $"{_player.State == PlayerState.Paused}", true).Build());
+                    : $"{Player.Position.RelativePosition:g}/{track.Duration:g}", true)
+                .AddField("Is Looping", $"{Player.LoopMode != PlayerLoopMode.None} ({Player.LoopMode})", true)
+                .AddField("Is Paused", $"{Player.State == PlayerState.Paused}", true).Build());
     }
 }

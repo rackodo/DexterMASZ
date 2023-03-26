@@ -1,21 +1,17 @@
 ﻿using Bot.Attributes;
 using Discord.Interactions;
+using Music.Attributes;
 
 namespace Music.Commands;
 
-public partial class MusicCommand
+public class RemoveDuplicatesCommand : MusicCommand<RemoveDuplicatesCommand>
 {
     [SlashCommand("remove-duplicates", "Remove duplicating tracks from the list")]
     [BotChannel]
-    public async Task MakeUniqueMusic()
+    [QueueNotEmpty]
+    public async Task RemoveDuplicates()
     {
-        await Context.Interaction.DeferAsync();
-
-        if (!await EnsureUserInVoiceAsync()) return;
-        if (!await EnsureClientInVoiceAsync()) return;
-        if (!await EnsureQueueIsNotEmptyAsync()) return;
-
-        _player.Queue.Distinct();
+        Player.Queue.Distinct();
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Removed duplicating tracks with same source from the queue");

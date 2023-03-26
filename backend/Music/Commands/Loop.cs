@@ -5,18 +5,13 @@ using Lavalink4NET.Player;
 
 namespace Music.Commands;
 
-public partial class MusicCommand
+public class LoopCommand : MusicCommand<LoopCommand>
 {
     [SlashCommand("loop", "Changes the current loop mode")]
     [BotChannel]
-    public async Task LoopMusic(PlayerLoopMode loopMode)
+    public async Task Loop(PlayerLoopMode loopMode)
     {
-        await Context.Interaction.DeferAsync();
-
-        if (!await EnsureUserInVoiceAsync()) return;
-        if (!await EnsureClientInVoiceAsync()) return;
-
-        var track = _player.CurrentTrack;
+        var track = Player.CurrentTrack;
 
         if (track == null)
         {
@@ -26,10 +21,18 @@ public partial class MusicCommand
             return;
         }
 
-        _player.LoopMode = loopMode;
+        Player.LoopMode = loopMode;
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content =
-                $"{(_player.LoopMode != PlayerLoopMode.None ? $"Looping the {_player.LoopMode switch { PlayerLoopMode.Track => "track", PlayerLoopMode.Queue => "queue", _ => "UNKNOWN" }}" : "Removed the loop of")}: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
+                $"{(Player.LoopMode != PlayerLoopMode.None ?
+                    $"Looping the {Player.LoopMode switch
+                    {
+                        PlayerLoopMode.Track => "track",
+                        PlayerLoopMode.Queue => "queue",
+                        _ => "UNKNOWN"
+                    }}" :
+                    "Removed the loop of")}: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}"
+        );
     }
 }

@@ -1,20 +1,19 @@
 ﻿using Bot.Attributes;
 using Discord.Interactions;
+using Fergun.Interactive;
+using Music.Data;
 
 namespace Music.Commands;
 
-public partial class MusicCommand
+public class PlayStreamCommand : MusicCommand<PlayStreamCommand>
 {
+    public StartRepository StartRepo { get; set; }
+
     [SlashCommand("play-stream", "Play a stream")]
     [BotChannel]
-    public async Task PlayStreamMusic(
+    public async Task PlayStream(
         [Summary("stream-url", "Stream URL")] string streamUrl)
     {
-        await Context.Interaction.DeferAsync();
-
-        if (!await EnsureUserInVoiceAsync()) return;
-        if (!await EnsureClientInVoiceAsync()) return;
-
         if (!Uri.IsWellFormedUriString(streamUrl, UriKind.Absolute))
         {
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
@@ -33,7 +32,7 @@ public partial class MusicCommand
             return;
         }
 
-        await _player.PlayAsync(track);
+        await Player.PlayAsync(track);
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = $"Now streaming from {streamUrl}");

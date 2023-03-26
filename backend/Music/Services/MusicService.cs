@@ -1,7 +1,11 @@
 ﻿using Bot.Abstractions;
+using Discord;
 using Discord.WebSocket;
 using Lavalink4NET;
+using Lavalink4NET.Events;
+using Lavalink4NET.Player;
 using Lavalink4NET.Tracking;
+using Microsoft.AspNetCore.Components.Routing;
 
 namespace Music.Services;
 
@@ -11,19 +15,88 @@ public class MusicService : IEvent
     private readonly InactivityTrackingService _inactivityTracker;
     private readonly IAudioService _lavalink;
 
+    public readonly Dictionary<ulong, ulong> GuildMusicChannel;
+    public object ChannelLocker;
+
     public MusicService(DiscordSocketClient client, IAudioService lavalink, InactivityTrackingService inactivityTracker)
     {
         _client = client;
         _lavalink = lavalink;
         _inactivityTracker = inactivityTracker;
+
+        GuildMusicChannel = new Dictionary<ulong, ulong>();
+        ChannelLocker = new object();
     }
 
     public void RegisterEvents()
     {
         _client.Ready += SetupLavalink;
         _client.UserVoiceStateUpdated += CheckLeft;
+
+        _lavalink.TrackStarted += OnTrackStarted;
+        _lavalink.TrackStuck += OnTrackStuck;
+        _lavalink.TrackEnd += OnTrackEnd;
+        _lavalink.TrackException += OnTrackException;
     }
 
+    public async Task OnTrackStarted(object _, TrackStartedEventArgs e)
+    {
+        var currentTrack = e.Player.CurrentTrack;
+
+        await GetMusicChannel(e.Player)
+            .SendMessageAsync(
+                $"Now playing: {Format.Bold(Format.Sanitize(currentTrack?.Title ?? "Unknown"))} " +
+                $"by {Format.Bold(Format.Sanitize(currentTrack?.Author ?? "Unknown"))}"
+            );
+    }
+
+    public async Task OnTrackStuck(object _, TrackStuckEventArgs e)
+    {
+        var currentTrack = e.Player.CurrentTrack;
+
+        await GetMusicChannel(e.Player)
+            .SendMessageAsync(
+                $"Track stuck: {Format.Bold(Format.Sanitize(currentTrack?.Title ?? "Unknown"))} " +
+                $"by {Format.Bold(Format.Sanitize(currentTrack?.Author ?? "Unknown"))}"
+            );
+    }
+
+    public async Task OnTrackEnd(object _, TrackEventArgs e)
+    {
+        var currentTrack = e.Player.CurrentTrack;
+
+        await GetMusicChannel(e.Player)
+            .SendMessageAsync(
+                $"Finished playing: {Format.Bold(Format.Sanitize(currentTrack?.Title ?? "Unknown"))} by " +
+                $"{Format.Bold(Format.Sanitize(currentTrack?.Author ?? "Unknown"))}"
+            );
+    }
+
+    public async Task OnTrackException(object _, TrackExceptionEventArgs e)
+    {
+        var currentTrack = e.Player.CurrentTrack;
+
+        await GetMusicChannel(e.Player)
+            .SendMessageAsync(
+                $"Error playing: {Format.Bold(Format.Sanitize(currentTrack?.Title ?? "Unknown"))} " +
+                $"by {Format.Bold(Format.Sanitize(currentTrack?.Author ?? "Unknown"))}",
+                embed: new EmbedBuilder()
+                    .WithTitle("Error message")
+                    .WithDescription(e.ErrorMessage)
+                    .Build()
+            );
+    }
+
+    public SocketTextChannel GetMusicChannel(LavalinkPlayer player)
+    {
+        ulong channelId;
+
+        lock (ChannelLocker)
+            channelId = GuildMusicChannel[player.GuildId];
+
+        return _client.GetGuild(player.GuildId).GetTextChannel(channelId);
+    }
+    
     private async Task CheckLeft(SocketUser user, SocketVoiceState originalState, SocketVoiceState newState)
     {
         if (newState.VoiceChannel == null)

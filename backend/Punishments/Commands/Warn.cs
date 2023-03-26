@@ -13,14 +13,14 @@ public class Warn : PunishmentCommand<Warn>
     [Require(RequireCheck.GuildModerator)]
     [SlashCommand("warn", "Warn a user and create a mod case")]
     public async Task WarnCommand(
-        [Summary("title", "The title of the modcase")] [MaxLength(200)]
+        [Summary("title", "The title of the mod case")] [MaxLength(200)]
         string title,
         [Summary("user", "User to punish")] IUser user,
         [Summary("severity-level", "Whether or not this is a higher or lower severity case")]
         InnerSeverityType severity,
-        [Summary("description", "The description of the modcase")]
+        [Summary("description", "The description of the mod case")]
         string description = "") =>
-        await RunModcase(new ModCase
+        await RunModCase(new ModCase
         {
             Title = title,
             GuildId = Context.Guild.Id,

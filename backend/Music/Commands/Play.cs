@@ -11,19 +11,14 @@ using System.Text;
 
 namespace Music.Commands;
 
-public partial class MusicCommand
+public class PlayCommand : MusicCommand<PlayCommand>
 {
     [SlashCommand("play", "Add tracks to queue")]
     [BotChannel]
-    public async Task AddMusic(
+    public async Task Play(
         [Summary("query", "Music query")] string query,
         [Summary("source", "Music source")] MusicSource source)
     {
-        await Context.Interaction.DeferAsync();
-
-        if (!await EnsureUserInVoiceAsync()) return;
-        if (!await EnsureClientInVoiceAsync()) return;
-
         var searchMode = SearchMode.None;
         StringBuilder tInfoSb = new();
 
@@ -38,7 +33,7 @@ public partial class MusicCommand
                 return;
             }
 
-            _player.Queue.Add(track);
+            Player.Queue.Add(track);
             track.AddTrackToSb(tInfoSb);
         }
         else
@@ -148,7 +143,7 @@ public partial class MusicCommand
                         track.AddTrackToSb(tInfoSb);
                     }
 
-                    _player.Queue.AddRange(tracksList);
+                    Player.Queue.AddRange(tracksList);
                 }
                 else
                 {
@@ -165,13 +160,19 @@ public partial class MusicCommand
                                  $"Music from {Format.Bold(Enum.GetName(source))}.")
                 .Build();
 
-        if (await PlayQueue())
+        if (!Player.Queue.IsEmpty)
+        {
+            await Player.SkipAsync();
             await Context.Channel.SendMessageAsync(embed: embed);
+        }
         else
+        {
+            await Player.ResumeAsync();
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
             {
                 x.Embed = embed;
                 x.Content = string.Empty;
             });
+        }
     }
 }

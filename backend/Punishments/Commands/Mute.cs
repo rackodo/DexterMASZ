@@ -11,18 +11,18 @@ namespace Punishments.Commands;
 public class Mute : PunishmentCommand<Mute>
 {
     [Require(RequireCheck.GuildModerator, RequireCheck.GuildStrictModeMute)]
-    [SlashCommand("mute", "Mute a user and create a modcase")]
+    [SlashCommand("mute", "Mute a user and create a mod case")]
     public async Task MuteCommand(
-        [Summary("title", "The title of the modcase")] [MaxLength(200)]
+        [Summary("title", "The title of the mod case")] [MaxLength(200)]
         string title,
         [Summary("user", "User to punish")] IUser user,
         [Summary("severity-level", "Whether this is a lower or higher severity case")]
         InnerSeverityType severity,
         [Summary("time", "The time to punish the user for")]
         TimeSpan time,
-        [Summary("description", "The description of the modcase")]
+        [Summary("description", "The description of the mod case")]
         string description = "") =>
-        await RunModcase(new ModCase
+        await RunModCase(new ModCase
         {
             Title = title,
             GuildId = Context.Guild.Id,

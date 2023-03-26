@@ -9,7 +9,7 @@ public class GuildNotFoundException : ApiException
     {
     }
 
-    public GuildNotFoundException() : base("GuildNotFound.", ApiError.GuildNotFound)
+    public GuildNotFoundException() : base("Guild not found.", ApiError.GuildNotFound)
     {
     }
 }

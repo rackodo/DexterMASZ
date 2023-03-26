@@ -1,23 +1,24 @@
 ﻿using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
+using Fergun.Interactive;
 using Lavalink4NET.Lyrics;
+using Music.Data;
 using Music.Extensions;
 
 namespace Music.Commands;
 
-public partial class MusicCommand
+public class LyricsCommand : MusicCommand<LyricsCommand>
 {
+    public InteractiveService InteractiveService { get; set; }
     public LyricsService LyricService { get; set; }
 
     [SlashCommand("lyrics", "Check lyrics of a track")]
     [BotChannel]
-    public async Task LyricsMusic(
+    public async Task Lyrics(
         [Summary("artist", "Artist name")] string artist,
         [Summary("track-name", "Track name")] string trackName)
     {
-        await Context.Interaction.DeferAsync();
-
         try
         {
             var lyrics = await LyricService.GetLyricsAsync(artist, trackName);

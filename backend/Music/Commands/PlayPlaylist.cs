@@ -1,25 +1,24 @@
 ﻿using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
+using Fergun.Interactive;
 using Lavalink4NET.Player;
+using Music.Data;
 using Music.Extensions;
 using System.Text;
 
 namespace Music.Commands;
 
-public partial class MusicCommand
+public class PlaylistCommand : MusicCommand<PlaylistCommand>
 {
+    public InteractiveService InteractiveService { get; set; }
+
     [SlashCommand("play-playlist", "Add tracks from a playlist to queue")]
     [BotChannel]
-    public async Task AddPlaylistMusic(
+    public async Task PlayPlaylist(
         [Summary("playlist-url", "Playlist URL")]
         string playlistUrl)
     {
-        await Context.Interaction.DeferAsync();
-
-        if (!await EnsureUserInVoiceAsync()) return;
-        if (!await EnsureClientInVoiceAsync()) return;
-
         if (!Uri.IsWellFormedUriString(playlistUrl, UriKind.Absolute))
         {
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
@@ -58,14 +57,19 @@ public partial class MusicCommand
             postProcessedTracks.Add(track);
         }
 
-        _player.Queue.AddRange(postProcessedTracks);
+        Player.Queue.AddRange(postProcessedTracks);
 
         var pages = MusicPages.CreatePagesFromString(text.ToString(), "Queued Playlist", Color.Gold);
-
-        if (await PlayQueue())
+        
+        if (!Player.Queue.IsEmpty)
+        {
+            await Player.SkipAsync();
             await InteractiveService.SendPaginator(pages, Context);
+        }
         else
+        {
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
                 x.Content = "Could not play queue!");
+        }
     }
 }

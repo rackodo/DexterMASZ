@@ -1,12 +1,10 @@
 ﻿using Bot.Abstractions;
 using Bot.Attributes;
-using Bot.Extensions;
 using Bot.Services;
 using Bot.Translators;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Utilities.Translators;
 
 namespace Utilities.Commands;
 

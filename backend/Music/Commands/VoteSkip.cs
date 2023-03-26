@@ -4,18 +4,13 @@ using Discord.Interactions;
 
 namespace Music.Commands;
 
-public partial class MusicCommand
+public class VoteSkipCommand : MusicCommand<VoteSkipCommand>
 {
     [SlashCommand("vote-skip", "Skip this track")]
     [BotChannel]
-    public async Task SkipMusic()
+    public async Task VoteSkip()
     {
-        await Context.Interaction.DeferAsync();
-
-        if (!await EnsureUserInVoiceAsync()) return;
-        if (!await EnsureClientInVoiceAsync()) return;
-
-        var track = _player.CurrentTrack;
+        var track = Player.CurrentTrack;
 
         if (track == null)
         {
@@ -25,7 +20,7 @@ public partial class MusicCommand
             return;
         }
 
-        var info = await _player.VoteAsync(Context.User.Id);
+        var info = await Player.VoteAsync(Context.User.Id);
 
         if (info.WasSkipped)
             await Context.Interaction.ModifyOriginalResponseAsync(x =>

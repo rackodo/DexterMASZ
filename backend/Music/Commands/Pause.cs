@@ -4,18 +4,13 @@ using Lavalink4NET.Player;
 
 namespace Music.Commands;
 
-public partial class MusicCommand
+public class PauseCommand : MusicCommand<PauseCommand>
 {
     [SlashCommand("pause", "Pause this session")]
     [BotChannel]
-    public async Task MusicPlaybackPauseCommand()
+    public async Task Pause()
     {
-        await Context.Interaction.DeferAsync();
-
-        if (!await EnsureUserInVoiceAsync()) return;
-        if (!await EnsureClientInVoiceAsync()) return;
-
-        if (_player.State == PlayerState.Paused)
+        if (Player.State == PlayerState.Paused)
         {
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
                 x.Content = "Paused earlier");
@@ -23,7 +18,7 @@ public partial class MusicCommand
             return;
         }
 
-        await _player.PauseAsync();
+        await Player.PauseAsync();
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Content = "Pausing");
