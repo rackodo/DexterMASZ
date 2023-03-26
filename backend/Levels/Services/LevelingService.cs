@@ -237,6 +237,7 @@ public class LevelingService : IEvent
                 var guildName = (await _client.Rest.GetGuildAsync(cds.GuildId))?.Name;
                 _logger.LogError(
                     $"Unable to retrieve guild vc data for guild {guildName ?? "Unknown"} ({cds.GuildId})");
+                _guildCooldowns.Remove(cds.GuildId);
                 continue;
             }
 

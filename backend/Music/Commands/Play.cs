@@ -163,12 +163,16 @@ public class PlayCommand : MusicCommand<PlayCommand>
 
         if (!Player.Queue.IsEmpty)
         {
-            await Player.SkipAsync();
+            if (Player.State != PlayerState.Playing)
+                await Player.SkipAsync();
+
             await Context.Channel.SendMessageAsync(embed: embed);
         }
         else
         {
-            await Player.ResumeAsync();
+            if (Player.State != PlayerState.Playing)
+                await Player.ResumeAsync();
+
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
             {
                 x.Embed = embed;

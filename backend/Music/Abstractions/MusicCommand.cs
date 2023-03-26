@@ -25,13 +25,8 @@ public class MusicCommand<T> : Command<T>
         if (((SocketGuildUser)Context.Interaction.User).VoiceState == null)
             throw new UserNotInVoiceChannel();
 
-        var playerConnected = await Lavalink.EnsureConnected(Context, Music);
-
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = playerConnected.Item2);
-
-        Player = playerConnected.Item1;
-
+        Player = await Lavalink.EnsureConnected(Context, Music);
+        
         Music.SetCurrentChannelId(Context.Guild.Id, Context.Channel.Id);
     }
 }
