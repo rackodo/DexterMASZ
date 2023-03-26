@@ -8,6 +8,5 @@ public static class MusicEmbeds
     public static EmbedBuilder CreateEmbedWithUserData(this SocketUser user) =>
         new EmbedBuilder()
             .WithTimestamp(DateTime.Now)
-            .WithColor(Color.DarkRed)
-            .WithFooter($"Requested by {user.Username}#{user.Discriminator}", user.GetAvatarUrl());
+            .WithColor(Color.DarkRed);
 }
