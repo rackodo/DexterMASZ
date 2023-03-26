@@ -34,18 +34,18 @@ public class NowPlayingCommand : MusicCommand<NowPlayingCommand>
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
             x.Embed = Context.User.CreateEmbedWithUserData()
-                .WithAuthor("Currently playing track", Context.Client.CurrentUser.GetAvatarUrl())
+                .WithAuthor("Playing Track", Context.Client.CurrentUser.GetAvatarUrl())
                 .WithThumbnailUrl(art?.OriginalString ?? "")
                 .AddField("Title", Format.Sanitize(track.Title))
-                .AddField("Author", Format.Sanitize(track.Author), true)
-                .AddField("Source", Format.Sanitize(track.Uri?.AbsoluteUri ?? "Unknown"), true)
+                .AddField("Author", Format.Sanitize(track.Author))
+                .AddField("Source", Format.Sanitize(track.Uri?.AbsoluteUri ?? "Unknown"))
                 .AddField(isStream ? "Playtime" : "Position", isStream
-                        ? DateTime.UtcNow.Subtract(startTime).Humanize()
-                        : $"{Player.Position.RelativePosition:g}".Split('.').First() +
-                          "/" +
-                          $"{track.Duration:g}".Split('.').First(),
-                    true)
-                .AddField("Is Looping", $"{Player.LoopMode != PlayerLoopMode.None} ({Player.LoopMode})", true)
-                .AddField("Is Paused", $"{Player.State == PlayerState.Paused}", true).Build());
+                    ? DateTime.UtcNow.Subtract(startTime).Humanize()
+                    : $"{Player.Position.RelativePosition:g}".Split('.').First() +
+                      "/" +
+                      $"{track.Duration:g}".Split('.').First()
+                )
+                .AddField("Loop Mode", Player.LoopMode)
+                .AddField("Player State", Player.State).Build());
     }
 }
