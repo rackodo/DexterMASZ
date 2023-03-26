@@ -45,6 +45,8 @@ public class RemoveRangeCommand : MusicCommand<RemoveRangeCommand>
 
         Player.Queue.RemoveRange(startIndexInt, endIndexInt - startIndexInt + 1);
 
+        await Context.Interaction.ModifyOriginalResponseAsync(x =>
+            x.Content = "Sending removed songs...");
         await InteractiveService.SendPaginator(pages, Context);
     }
 }

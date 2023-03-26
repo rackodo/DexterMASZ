@@ -161,23 +161,16 @@ public class PlayCommand : MusicCommand<PlayCommand>
                                  $"Music from {Format.Bold(Enum.GetName(source))}.")
                 .Build();
 
-        if (!Player.Queue.IsEmpty)
-        {
-            if (Player.State != PlayerState.Playing)
+        if (Player.State != PlayerState.Playing)
+            if (!Player.Queue.IsEmpty)
                 await Player.SkipAsync();
-
-            await Context.Channel.SendMessageAsync(embed: embed);
-        }
-        else
-        {
-            if (Player.State != PlayerState.Playing)
+            else
                 await Player.ResumeAsync();
 
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            {
-                x.Embed = embed;
-                x.Content = string.Empty;
-            });
-        }
+        await Context.Interaction.ModifyOriginalResponseAsync(x =>
+        {
+            x.Embed = embed;
+            x.Content = string.Empty;
+        });
     }
 }

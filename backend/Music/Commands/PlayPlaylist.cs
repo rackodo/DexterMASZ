@@ -64,6 +64,8 @@ public class PlaylistCommand : MusicCommand<PlaylistCommand>
         if (!Player.Queue.IsEmpty)
         {
             await Player.SkipAsync();
+            await Context.Interaction.ModifyOriginalResponseAsync(x =>
+                x.Content = "Playing playlist!");
             await InteractiveService.SendPaginator(pages, Context);
         }
         else
