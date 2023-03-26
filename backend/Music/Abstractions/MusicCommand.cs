@@ -26,13 +26,7 @@ public class MusicCommand<T> : Command<T>
             throw new UserNotInVoiceChannel();
 
         Player = await Lavalink.EnsureConnected(Context, Music);
-
-        lock (Music.ChannelLocker)
-        {
-            if (!Music.GuildMusicChannel.ContainsKey(Context.Guild.Id))
-                Music.GuildMusicChannel.Add(Context.Guild.Id, Context.Channel.Id);
-            else
-                Music.GuildMusicChannel[Context.Guild.Id] = Context.Channel.Id;
-        }
+        
+        Music.SetCurrentChannelId(Context.Guild.Id, Context.Channel.Id);
     }
 }

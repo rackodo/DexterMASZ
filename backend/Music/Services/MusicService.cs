@@ -141,4 +141,15 @@ public class MusicService : IEvent
                 DateTime.UtcNow;
         }
     }
+
+    public void SetCurrentChannelId(ulong guildId, ulong channelId)
+    {
+        lock (ChannelLocker)
+        {
+            if (!GuildMusicChannel.ContainsKey(guildId))
+                GuildMusicChannel.Add(guildId, channelId);
+            else
+                GuildMusicChannel[guildId] = channelId;
+        }
+    }
 }
