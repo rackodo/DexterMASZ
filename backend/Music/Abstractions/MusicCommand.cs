@@ -1,13 +1,13 @@
 ﻿using Bot.Abstractions;
-using Bot.Exceptions;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Lavalink4NET;
 using Lavalink4NET.Player;
+using Music.Exceptions;
 using Music.Extensions;
 using Music.Services;
 
-namespace Music.Commands;
+namespace Music.Abstractions;
 
 [Group("music", "Music commands")]
 public class MusicCommand<T> : Command<T>
@@ -25,8 +25,13 @@ public class MusicCommand<T> : Command<T>
         if (((SocketGuildUser)Context.Interaction.User).VoiceState == null)
             throw new UserNotInVoiceChannel();
 
-        Player = await Lavalink.EnsureConnected(Context, Music);
-        
+        var playerConnected = await Lavalink.EnsureConnected(Context, Music);
+
+        await Context.Interaction.ModifyOriginalResponseAsync(x =>
+            x.Content = playerConnected.Item2);
+
+        Player = playerConnected.Item1;
+
         Music.SetCurrentChannelId(Context.Guild.Id, Context.Channel.Id);
     }
 }

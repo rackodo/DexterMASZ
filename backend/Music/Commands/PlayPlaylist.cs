@@ -3,6 +3,7 @@ using Discord;
 using Discord.Interactions;
 using Fergun.Interactive;
 using Lavalink4NET.Player;
+using Music.Abstractions;
 using Music.Extensions;
 using System.Text;
 

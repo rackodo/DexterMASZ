@@ -1,6 +1,7 @@
 ﻿using Bot.Attributes;
 using Discord.Interactions;
 using Lavalink4NET.Player;
+using Music.Abstractions;
 using Music.Attributes;
 
 namespace Music.Commands;

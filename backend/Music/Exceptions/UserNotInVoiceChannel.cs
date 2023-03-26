@@ -1,7 +1,7 @@
 using Bot.Abstractions;
 using Bot.Enums;
 
-namespace Bot.Exceptions;
+namespace Music.Exceptions;
 
 public class UserNotInVoiceChannel : ApiException
 {

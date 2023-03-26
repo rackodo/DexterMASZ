@@ -2,6 +2,7 @@
 using Discord;
 using Discord.Interactions;
 using Fergun.Interactive;
+using Music.Abstractions;
 using Music.Attributes;
 using Music.Extensions;
 using System.Text;

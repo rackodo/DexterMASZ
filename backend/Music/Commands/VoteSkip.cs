@@ -1,6 +1,7 @@
 ﻿using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
+using Music.Abstractions;
 
 namespace Music.Commands;
 

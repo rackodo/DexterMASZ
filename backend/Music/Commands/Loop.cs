@@ -2,6 +2,7 @@
 using Discord;
 using Discord.Interactions;
 using Lavalink4NET.Player;
+using Music.Abstractions;
 
 namespace Music.Commands;
 

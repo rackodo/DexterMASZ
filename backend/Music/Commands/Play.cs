@@ -5,6 +5,7 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using Lavalink4NET.Player;
 using Lavalink4NET.Rest;
+using Music.Abstractions;
 using Music.Enums;
 using Music.Extensions;
 using System.Text;
