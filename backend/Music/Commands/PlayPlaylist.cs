@@ -45,9 +45,12 @@ public class PlaylistCommand : MusicCommand<PlaylistCommand>
 
         foreach (var track in lavalinkTracks)
         {
+            var url = Format.Url($"{Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(track.Author)}",
+                track.Uri?.AbsoluteUri ?? "https://unknown.com");
+
             var testStr = track.IsLiveStream
-                ? $"Live stream skipped: {Format.Url($"{Format.Bold(track.Title)} by {Format.Bold(track.Author)}", track.Uri?.AbsoluteUri ?? "https://example.com")}"
-                : $"{idx + 1} - {Format.Url($"{Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(track.Author)}", track.Uri?.AbsoluteUri ?? "https://example.com")}";
+                ? $"Live stream skipped: {url}"
+                : $"{idx + 1} - {url}";
 
             text.AppendLine(testStr);
 
@@ -64,8 +67,7 @@ public class PlaylistCommand : MusicCommand<PlaylistCommand>
         if (!Player.Queue.IsEmpty)
         {
             await Player.SkipAsync();
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Playing playlist!");
+            await Context.Interaction.ModifyOriginalResponseAsync(x => x.Content = "Playing playlist!");
             await InteractiveService.SendPaginator(pages, Context);
         }
         else
