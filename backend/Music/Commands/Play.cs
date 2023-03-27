@@ -162,7 +162,10 @@ public class PlayCommand : MusicCommand<PlayCommand>
                 .Build();
 
         if (Player.State != PlayerState.Playing)
-            await Player.ResumeAsync();
+            if (Player.CurrentTrack != null)
+                await Player.ResumeAsync();
+            else
+                await Player.SkipAsync();
 
         await Context.Interaction.ModifyOriginalResponseAsync(x =>
         {
