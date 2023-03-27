@@ -32,10 +32,20 @@ public class Avatar : Command<Avatar>
 
         var guildAvail = gUser != null;
 
+        var guildAvatar = string.Empty;
+
+        if (guildAvail)
+        {
+            guildAvatar = gUser.GetGuildAvatarUrl(size: 1024);
+
+            if (string.IsNullOrEmpty(guildAvatar))
+                guildAvail = false;
+        }
+
         if (isGuild && !guildAvail)
             isGuild = false;
 
-        var avatarUrl = isGuild ? gUser.GetGuildAvatarUrl(size: 1024) : user.GetAvatarOrDefaultUrl(size: 1024);
+        var avatarUrl = isGuild ? guildAvatar : user.GetAvatarOrDefaultUrl(size: 1024);
 
         var embed = new EmbedBuilder()
             .WithTitle((isGuild ? "Guild" : "User") + " Avatar URL")
