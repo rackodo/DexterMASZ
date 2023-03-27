@@ -30,6 +30,6 @@ public class VoteSkipCommand : MusicCommand<VoteSkipCommand>
         else
             await Context.Interaction.ModifyOriginalResponseAsync(x =>
                 x.Content =
-                    $"Votes required: {info.Votes.Count}/{Math.Floor(info.Percentage * info.TotalUsers)}");
+                    $"Votes required: {info.Votes.Count}/{Math.Ceiling(info.Percentage * info.TotalUsers)}");
     }
 }
