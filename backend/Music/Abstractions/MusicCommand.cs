@@ -16,11 +16,9 @@ public class MusicCommand<T> : Command<T>
     public IAudioService Lavalink { get; set; }
     public MusicService Music { get; set; }
 
-    public override async Task BeforeExecuteAsync(ICommandInfo command)
+    public override async Task BeforeCommandExecute()
     {
         await Context.Interaction.DeferAsync();
-
-        await base.BeforeExecuteAsync(command);
 
         if (((SocketGuildUser)Context.Interaction.User).VoiceState == null)
             throw new UserNotInVoiceChannel();

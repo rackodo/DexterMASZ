@@ -44,7 +44,7 @@ public static class AutoModEmbedCreator
         if (autoModEvent.MessageContent.Length > 0)
             embed.AddField(
                 translator.Get<BotTranslator>().MessageContent(),
-                autoModEvent.MessageContent
+                autoModEvent.MessageContent.Length > 1024 ? $"{autoModEvent.MessageContent[..1020]}..." : autoModEvent.MessageContent
             );
 
         embed.AddField(
