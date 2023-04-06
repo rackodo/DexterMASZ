@@ -4,6 +4,7 @@ using Discord;
 using Levels.Data;
 using Levels.Enums;
 using Levels.Extensions;
+using Microsoft.Extensions.Logging;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
@@ -73,7 +74,8 @@ public static class Rankcard
         LabelHeight + LabelBaselineDeltaNormal);
 
     public static async Task<Image> RenderRankCard(IUser user, CalculatedGuildUserLevel ul,
-        UserRankcardConfig rankcardConfig, GuildUserLevelRepository levelsRepo, SettingsRepository configRepo)
+        UserRankcardConfig rankcardConfig, GuildUserLevelRepository levelsRepo, SettingsRepository configRepo,
+        ILogger logger)
     {
         await configRepo.GetAppSettings();
         var fontPath = IOPath.Join(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Fonts", "rankcardfont.ttf");
@@ -168,7 +170,7 @@ public static class Rankcard
         {
             using HttpClient client = new();
 
-            Console.WriteLine(rankcardConfig.Background);
+            logger.LogInformation(rankcardConfig.Background);
             try
             {
                 var req = new HttpRequestMessage(HttpMethod.Get, rankcardConfig.Background);
@@ -186,7 +188,7 @@ public static class Rankcard
             catch (Exception e)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(e);
+                logger.LogError(e, e.Message);
                 Console.ForegroundColor = ConsoleColor.White;
                 bgTransform = g => g.BackgroundColor((0xff000000 | rankcardConfig.XpColor).ColorFromArgb());
             }

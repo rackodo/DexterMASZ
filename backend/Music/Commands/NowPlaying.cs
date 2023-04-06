@@ -21,8 +21,7 @@ public class NowPlayingCommand : MusicCommand<NowPlayingCommand>
 
         if (track == null)
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Unable to get the playing track");
+            await RespondInteraction("Unable to get the playing track");
 
             return;
         }
@@ -32,8 +31,9 @@ public class NowPlayingCommand : MusicCommand<NowPlayingCommand>
 
         var startTime = Music.GetStartTime(Context.Guild.Id);
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Embed = Context.User.CreateEmbedWithUserData()
+        await RespondInteraction(
+            string.Empty,
+            Context.User.CreateEmbedWithUserData()
                 .WithAuthor("Playing Track", Context.Client.CurrentUser.GetAvatarUrl())
                 .WithThumbnailUrl(art?.OriginalString ?? "")
                 .AddField("Title", Format.Sanitize(track.Title))
@@ -46,6 +46,7 @@ public class NowPlayingCommand : MusicCommand<NowPlayingCommand>
                       $"{track.Duration:g}".Split('.').First()
                 )
                 .AddField("Loop Mode", Player.LoopMode)
-                .AddField("Player State", Player.State).Build());
+                .AddField("Player State", Player.State)
+        );
     }
 }

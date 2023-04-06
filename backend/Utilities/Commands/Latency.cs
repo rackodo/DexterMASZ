@@ -10,6 +10,9 @@ public class Latency : Command<Latency>
 {
     public IServiceProvider ServiceProvider { get; set; }
 
+    public override async Task BeforeCommandExecute() =>
+        await Context.Interaction.DeferAsync(true);
+
     [SlashCommand("latency", "Gets the estimate round-trip latency to the gateway server.")]
     [BotChannel]
     public async Task LatencyCommand()
@@ -18,6 +21,6 @@ public class Latency : Command<Latency>
             .WithTitle("Gateway Ping")
             .WithDescription($"Current latency:\n**{Context.Client.Latency}ms**");
 
-        await Context.Interaction.RespondAsync(embed: embed.Build(), ephemeral: true);
+        await RespondInteraction(string.Empty, embed);
     }
 }

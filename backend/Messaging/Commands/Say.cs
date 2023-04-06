@@ -19,6 +19,8 @@ public class Say : Command<Say>
     public IServiceProvider ServiceProvider { get; set; }
     public DiscordSocketClient Client { get; set; }
 
+    public override async Task BeforeCommandExecute() => await DeferAsync(true);
+
     [Require(RequireCheck.GuildModerator)]
     [SlashCommand("say", "Let the bot send a message.")]
     public async Task SayCommand(
@@ -34,8 +36,7 @@ public class Say : Command<Say>
             }
             else
             {
-                await Context.Interaction.RespondAsync(Translator.Get<BotTranslator>().OnlyTextChannel(),
-                    ephemeral: true);
+                await RespondInteraction(Translator.Get<BotTranslator>().OnlyTextChannel());
                 return;
             }
 
@@ -43,8 +44,7 @@ public class Say : Command<Say>
         {
             var createdMessage = await channel.SendMessageAsync(message);
 
-            await Context.Interaction.RespondAsync(Translator.Get<MessagingTranslator>().MessageSent(),
-                ephemeral: true);
+            await RespondInteraction(Translator.Get<MessagingTranslator>().MessageSent());
 
             try
             {
@@ -61,14 +61,12 @@ public class Say : Command<Say>
         catch (HttpException e)
         {
             if (e.HttpCode == HttpStatusCode.Unauthorized)
-                await Context.Interaction.RespondAsync(Translator.Get<BotTranslator>().CannotViewOrDeleteInChannel(),
-                    ephemeral: true);
+                await RespondInteraction(Translator.Get<BotTranslator>().CannotViewOrDeleteInChannel());
         }
         catch (Exception e)
         {
             Logger.LogError(e, $"Error while writing message in channel {channel.Id}");
-            await Context.Interaction.RespondAsync(Translator.Get<MessagingTranslator>().FailedToSend(),
-                ephemeral: true);
+            await RespondInteraction(Translator.Get<MessagingTranslator>().FailedToSend());
         }
     }
 }

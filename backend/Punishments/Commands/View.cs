@@ -27,7 +27,7 @@ public class View : Command<View>
     {
         ModCaseRepository.AsUser(Identity);
 
-        await Context.Interaction.RespondAsync("Getting mod cases...");
+        await RespondInteraction("Getting mod cases...");
 
         try
         {
@@ -35,8 +35,7 @@ public class View : Command<View>
 
             if (!await Identity.HasPermission(ApiActionPermission.View, modCase))
             {
-                await Context.Interaction.ModifyOriginalResponseAsync(message =>
-                    message.Content = Translator.Get<PunishmentTranslator>().NotAllowedToViewCase());
+                await RespondInteraction(Translator.Get<PunishmentTranslator>().NotAllowedToViewCase());
                 return;
             }
 
@@ -79,16 +78,11 @@ public class View : Command<View>
                 embed.AddField($"📜 - {Translator.Get<BotTranslator>().Labels()}", labels.ToString());
             }
 
-            await Context.Interaction.ModifyOriginalResponseAsync(message =>
-            {
-                message.Content = "";
-                message.Embed = embed.Build();
-            });
+            await RespondInteraction(string.Empty, embed);
         }
         catch (ResourceNotFoundException)
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(message =>
-                message.Content = Translator.Get<BotTranslator>().NotFound());
+            await RespondInteraction(Translator.Get<BotTranslator>().NotFound());
         }
     }
 }

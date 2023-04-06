@@ -25,10 +25,7 @@ public class LyricsCommand : MusicCommand<LyricsCommand>
 
             if (string.IsNullOrWhiteSpace(lyrics))
             {
-                await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                    x.Content =
-                        $"No lyrics found for: {Format.Bold(Format.Sanitize(artist))} by {Format.Bold(Format.Sanitize(trackName))}");
-
+                await RespondInteraction($"No lyrics found for: {Format.Bold(Format.Sanitize(artist))} by {Format.Bold(Format.Sanitize(trackName))}");
                 return;
             }
 
@@ -37,9 +34,7 @@ public class LyricsCommand : MusicCommand<LyricsCommand>
         }
         catch
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content =
-                    $"Can not get lyrics for: {Format.Bold(Format.Sanitize(artist))} by {Format.Bold(Format.Sanitize(trackName))}");
+            await RespondInteraction($"Can not get lyrics for: {Format.Bold(Format.Sanitize(artist))} by {Format.Bold(Format.Sanitize(trackName))}");
         }
     }
 }

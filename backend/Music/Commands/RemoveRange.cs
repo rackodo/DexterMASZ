@@ -26,9 +26,7 @@ public class RemoveRangeCommand : MusicCommand<RemoveRangeCommand>
 
         if (startIndexInt < 0 || endIndexInt >= Player.Queue.Count || startIndexInt > endIndexInt)
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Invalid index");
-
+            await RespondInteraction("Invalid index");
             return;
         }
 
@@ -45,8 +43,7 @@ public class RemoveRangeCommand : MusicCommand<RemoveRangeCommand>
 
         Player.Queue.RemoveRange(startIndexInt, endIndexInt - startIndexInt + 1);
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = "Sending removed songs...");
+        await RespondInteraction("Sending removed songs...");
         await InteractiveService.SendPaginator(pages, Context);
     }
 }

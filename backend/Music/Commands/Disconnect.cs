@@ -12,7 +12,6 @@ public class DisconnectCommand : MusicCommand<DisconnectCommand>
     {
         await Player.DisconnectAsync();
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = "Left the voice channel");
+        await RespondInteraction("Left the voice channel");
     }
 }

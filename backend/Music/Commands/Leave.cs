@@ -12,7 +12,6 @@ public class LeaveCommand : MusicCommand<LeaveCommand>
     {
         await Player.StopAsync(true);
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = "Left this session, the queue has been cleaned");
+        await RespondInteraction("Left this session, the queue has been cleaned");
     }
 }

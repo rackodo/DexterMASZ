@@ -24,7 +24,7 @@ public class Track : Command<Track>
     {
         InviteRepository.AsUser(Identity);
 
-        await Context.Interaction.RespondAsync("Tracking invite code...");
+        await RespondInteraction("Tracking invite code...");
 
         if (!inviteCode.ToLower().Search("https://discord.gg/"))
             inviteCode = $"https://discord.gg/{inviteCode}";
@@ -61,8 +61,7 @@ public class Track : Command<Track>
                 var fetchedInvite = await Context.Client.GetInviteAsync(code);
                 if (fetchedInvite.GuildId != Context.Guild.Id)
                 {
-                    await Context.Interaction.ModifyOriginalResponseAsync(message =>
-                        message.Content = Translator.Get<InviteTranslator>().InviteNotFromThisGuild());
+                    await RespondInteraction(Translator.Get<InviteTranslator>().InviteNotFromThisGuild());
                     return;
                 }
 
@@ -78,11 +77,9 @@ public class Track : Command<Track>
             catch (HttpException e)
             {
                 if (e.HttpCode == HttpStatusCode.NotFound)
-                    await Context.Interaction.ModifyOriginalResponseAsync(message =>
-                        message.Content = Translator.Get<InviteTranslator>().CannotFindInvite());
+                    await RespondInteraction(Translator.Get<InviteTranslator>().CannotFindInvite());
                 else
-                    await Context.Interaction.ModifyOriginalResponseAsync(message =>
-                        message.Content = Translator.Get<InviteTranslator>().FailedToFetchInvite());
+                    await RespondInteraction(Translator.Get<InviteTranslator>().FailedToFetchInvite());
                 return;
             }
         }
@@ -130,10 +127,6 @@ public class Track : Command<Track>
         embed.WithCurrentTimestamp();
         embed.WithColor(Color.Gold);
 
-        await Context.Interaction.ModifyOriginalResponseAsync(message =>
-        {
-            message.Content = "";
-            message.Embed = embed.Build();
-        });
+        await RespondInteraction(string.Empty, embed);
     }
 }

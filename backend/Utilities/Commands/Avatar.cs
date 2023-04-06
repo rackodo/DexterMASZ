@@ -18,7 +18,6 @@ public class Avatar : Command<Avatar>
     public async Task AvatarCommand([Summary("user", "User to get the avatar from")] IUser user = null)
     {
         user ??= Context.User;
-        await Context.Interaction.DeferAsync();
         await UserAvatar(user.Id.ToString(), true);
     }
 
@@ -61,17 +60,6 @@ public class Avatar : Command<Avatar>
         if (guildAvail)
             buttons.WithButton($"Get {(isGuild ? "User" : "Guild")} Avatar", $"avatar-user:{user.Id},{!isGuild}");
 
-        if (Context.Interaction is SocketMessageComponent castInteraction)
-            await castInteraction.UpdateAsync(message =>
-            {
-                message.Embed = embed.Build();
-                message.Components = buttons.Build();
-            });
-        else
-            await Context.Interaction.ModifyOriginalResponseAsync(message =>
-            {
-                message.Embed = embed.Build();
-                message.Components = buttons.Build();
-            });
+        await RespondInteraction(string.Empty, embed, buttons);
     }
 }

@@ -37,8 +37,7 @@ public class QueueCommand : MusicCommand<QueueCommand>
         if (Player.CurrentTrack != null)
             pages.First().AddField("Current Track", Player.CurrentTrack.Title);
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = "Sending song queue...");
+        await RespondInteraction("Sending song queue...");
 
         await InteractiveService.SendPaginator(pages, Context);
     }

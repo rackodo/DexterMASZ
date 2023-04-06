@@ -204,7 +204,7 @@ public class DiscordRest : IHostedService, IEvent
                 .Select(x => x as IBan)
                 .Where(x => x is not null)
                 .ToListAsync();
-            Console.WriteLine(string.Join(", ", bans));
+            _logger.LogInformation(string.Join(", ", bans));
         }
         catch (Exception e)
         {
@@ -304,7 +304,6 @@ public class DiscordRest : IHostedService, IEvent
             }
             else
             {
-                Console.WriteLine(4.5);
                 var avatarUrl = user.GetAvatarUrl();
 
                 if (!string.IsNullOrEmpty(avatarUrl) && !await IsImageAvailable(avatarUrl))
@@ -315,7 +314,6 @@ public class DiscordRest : IHostedService, IEvent
                     }
                     else
                     {
-                        Console.WriteLine(6.5);
                         user = await _client.GetUserAsync(userId);
                         await userRepo.UpdateUser(user);
                     }

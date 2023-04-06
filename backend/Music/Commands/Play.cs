@@ -29,8 +29,7 @@ public class PlayCommand : MusicCommand<PlayCommand>
 
             if (track == null)
             {
-                await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                    x.Content = $"Could not find track for {query}!");
+                await RespondInteraction($"Could not find track for {query}!");
                 return;
             }
 
@@ -59,8 +58,7 @@ public class PlayCommand : MusicCommand<PlayCommand>
                 case MusicSource.None:
                     break;
                 default:
-                    await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                        x.Content = "Unable to get search mode");
+                    await RespondInteraction("Unable to get search mode");
                     return;
             }
 
@@ -72,9 +70,7 @@ public class PlayCommand : MusicCommand<PlayCommand>
 
                 if (!lavalinkTracks.Any())
                 {
-                    await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                        x.Content =
-                            "Unable to get tracks. If this was a link to a stream or playlist, please use `/music play-stream` or `play-playlist`.");
+                    await RespondInteraction("Unable to get tracks. If this was a link to a stream or playlist, please use `/music play-stream` or `play-playlist`.");
 
                     return;
                 }
@@ -99,22 +95,17 @@ public class PlayCommand : MusicCommand<PlayCommand>
                     ++idx;
                 }
 
-                var message = await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                {
-                    x.Content = "Choose your tracks";
-                    x.Components = new ComponentBuilder()
-                        .WithSelectMenu(menuBuilder)
-                        .Build();
-                });
+                var message = await RespondInteraction(
+                    "Choose your tracks",
+                    null,
+                    new ComponentBuilder().WithSelectMenu(menuBuilder)
+                );
 
                 var res = (SocketMessageComponent)await InteractionUtility.WaitForMessageComponentAsync(Context.Client,
                     message,
                     TimeSpan.FromMinutes(2));
 
                 List<LavalinkTrack> tracksList = new();
-
-                if (res != null)
-                    await res.UpdateAsync(x => x.Components = new ComponentBuilder().Build());
 
                 if (res?.Data?.Values != null)
                 {
@@ -124,8 +115,7 @@ public class PlayCommand : MusicCommand<PlayCommand>
 
                         if (newIdx == -1)
                         {
-                            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                                x.Content = "No tracks added");
+                            await RespondInteraction("No tracks added");
 
                             tInfoSb.Clear();
                             break;
@@ -135,8 +125,7 @@ public class PlayCommand : MusicCommand<PlayCommand>
 
                         if (track == null)
                         {
-                            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                                x.Content = $"Could not find track for {query}, index {newIdx}!");
+                            await RespondInteraction($"Could not find track for {query}, index {newIdx}!");
                             return;
                         }
 
@@ -148,7 +137,7 @@ public class PlayCommand : MusicCommand<PlayCommand>
                 }
                 else
                 {
-                    await Context.Interaction.ModifyOriginalResponseAsync(x => x.Content = "Timed out!");
+                    await RespondInteraction("Timed out!");
                     return;
                 }
             }
@@ -158,8 +147,7 @@ public class PlayCommand : MusicCommand<PlayCommand>
             Context.User.CreateEmbedWithUserData()
                 .WithAuthor("Added tracks to queue", Context.Client.CurrentUser.GetAvatarUrl())
                 .WithDescription((string.IsNullOrWhiteSpace($"{tInfoSb}") ? "Nothing\n" : $"{tInfoSb}") +
-                                 $"Music from {Format.Bold(Enum.GetName(source))}.")
-                .Build();
+                                 $"Music from {Format.Bold(Enum.GetName(source))}.");
 
         if (Player.State != PlayerState.Playing)
             if (Player.CurrentTrack != null)
@@ -167,10 +155,6 @@ public class PlayCommand : MusicCommand<PlayCommand>
             else
                 await Player.SkipAsync();
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-        {
-            x.Embed = embed;
-            x.Content = string.Empty;
-        });
+        await RespondInteraction(string.Empty, embed);
     }
 }

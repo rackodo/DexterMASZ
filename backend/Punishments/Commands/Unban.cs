@@ -32,7 +32,7 @@ public class Unban : Command<Unban>
 
         if (modCases.Count == 0)
         {
-            await Context.Interaction.RespondAsync(Translator.Get<PunishmentTranslator>().NoActiveModCases());
+            await RespondInteraction(Translator.Get<PunishmentTranslator>().NoActiveModCases());
             return;
         }
 
@@ -69,13 +69,13 @@ public class Unban : Command<Unban>
         embed.AddField(Translator.Get<PunishmentTranslator>().Result(),
             Translator.Get<PunishmentTranslator>().WaitingForApproval());
 
-        var button = new ComponentBuilder()
+        var buttons = new ComponentBuilder()
             .WithButton(Translator.Get<PunishmentTranslator>().DeleteBans(), $"unban-delete:{user.Id}")
             .WithButton(Translator.Get<PunishmentTranslator>().DeactivateBans(), $"unban-deactivate:{user.Id}",
                 ButtonStyle.Secondary)
             .WithButton(Translator.Get<PunishmentTranslator>().Cancel(), "unban-cancel", ButtonStyle.Danger);
 
-        await Context.Interaction.RespondAsync(embed: embed.Build(), components: button.Build());
+        await RespondInteraction(string.Empty, embed, buttons);
     }
 
     [ComponentInteraction("unban-delete:*")]
@@ -100,11 +100,7 @@ public class Unban : Command<Unban>
                     .WithValue(Translator.Get<PunishmentTranslator>().BansDeleted())
             };
 
-            await castInteraction.UpdateAsync(message =>
-            {
-                message.Embed = embed.Build();
-                message.Components = new ComponentBuilder().Build();
-            });
+            await RespondInteraction(string.Empty, embed);
         }
     }
 
@@ -128,11 +124,7 @@ public class Unban : Command<Unban>
                     .WithValue(Translator.Get<PunishmentTranslator>().BansDeactivated())
             };
 
-            await castInteraction.UpdateAsync(message =>
-            {
-                message.Embed = embed.Build();
-                message.Components = new ComponentBuilder().Build();
-            });
+            await RespondInteraction(string.Empty, embed);
         }
     }
 
@@ -149,11 +141,7 @@ public class Unban : Command<Unban>
                     .WithValue(Translator.Get<PunishmentTranslator>().Canceled())
             };
 
-            await castInteraction.UpdateAsync(message =>
-            {
-                message.Embed = embed.Build();
-                message.Components = new ComponentBuilder().Build();
-            });
+            await RespondInteraction(string.Empty, embed);
         }
     }
 }

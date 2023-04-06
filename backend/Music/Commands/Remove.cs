@@ -17,8 +17,7 @@ public class RemoveCommand : MusicCommand<RemoveCommand>
     {
         if (index < 0 || index >= Player.Queue.Count)
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Invalid index");
+            await RespondInteraction("Invalid index");
 
             return;
         }
@@ -28,8 +27,6 @@ public class RemoveCommand : MusicCommand<RemoveCommand>
         var track = Player.Queue[posInt];
         Player.Queue.RemoveAt(posInt);
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content =
-                $"Removed track at index {index}: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
+        await RespondInteraction($"Removed track at index {index}: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
     }
 }

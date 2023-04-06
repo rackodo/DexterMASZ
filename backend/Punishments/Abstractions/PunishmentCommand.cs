@@ -34,21 +34,14 @@ public class PunishmentCommand<T> : Command<T>
             {
                 var textChannel = Context.Guild.GetTextChannel(GuildConfig.StaffAnnouncements);
 
-                await Context.Interaction.ModifyOriginalResponseAsync(msg =>
-                    msg.Content =
-                        $"Check {textChannel.Mention} for this modlog, as this user is on their final warning."
-                );
+                await RespondInteraction($"Check {textChannel.Mention} for this modlog, as this user is on their final warning.");
             }
             else
             {
                 var (embed, buttons) = await modCase.CreateNewModCaseEmbed(GuildConfig,
                     await SettingsRepository.GetAppSettings(), result, DiscordRest, ServiceProvider);
 
-                await Context.Interaction.ModifyOriginalResponseAsync(msg =>
-                {
-                    msg.Embed = embed.Build();
-                    msg.Components = buttons.Build();
-                });
+                await RespondInteraction(string.Empty, embed, buttons);
             }
         }
         catch (Exception e)

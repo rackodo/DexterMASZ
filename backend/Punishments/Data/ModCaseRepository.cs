@@ -368,11 +368,10 @@ public class ModCaseRepository : Repository,
                 switch (modCase.PunishmentType)
                 {
                     case PunishmentType.Mute:
-                        if (modCase.PunishedUntil.HasValue)
-                            message = _translator.Get<PunishmentNotificationTranslator>()
-                                .NotificationModCaseDmMuteTemp(modCase, guild, reason, modCaseUrl);
-                        else
-                            message = _translator.Get<PunishmentNotificationTranslator>()
+                        message = modCase.PunishedUntil.HasValue
+                            ? _translator.Get<PunishmentNotificationTranslator>()
+                                .NotificationModCaseDmMuteTemp(modCase, guild, reason, modCaseUrl)
+                            : _translator.Get<PunishmentNotificationTranslator>()
                                 .NotificationModCaseDmMutePerm(guild, reason, modCaseUrl);
                         break;
                     case PunishmentType.Kick:
@@ -380,11 +379,10 @@ public class ModCaseRepository : Repository,
                             .NotificationModCaseDmKick(guild, reason, modCaseUrl);
                         break;
                     case PunishmentType.Ban:
-                        if (modCase.PunishedUntil.HasValue)
-                            message = _translator.Get<PunishmentNotificationTranslator>()
-                                .NotificationModCaseDmBanTemp(modCase, guild, reason, modCaseUrl);
-                        else
-                            message = _translator.Get<PunishmentNotificationTranslator>()
+                        message = modCase.PunishedUntil.HasValue
+                            ? _translator.Get<PunishmentNotificationTranslator>()
+                                .NotificationModCaseDmBanTemp(modCase, guild, reason, modCaseUrl)
+                            : _translator.Get<PunishmentNotificationTranslator>()
                                 .NotificationModCaseDmBanPerm(guild, reason, modCaseUrl);
                         break;
                     case PunishmentType.Warn:

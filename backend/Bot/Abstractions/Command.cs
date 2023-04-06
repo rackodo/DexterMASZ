@@ -2,7 +2,10 @@ using Bot.Data;
 using Bot.Exceptions;
 using Bot.Models;
 using Bot.Services;
+using Discord;
 using Discord.Interactions;
+using Discord.Rest;
+using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
 
 namespace Bot.Abstractions;
@@ -36,5 +39,28 @@ public abstract class Command<T> : InteractionModuleBase<SocketInteractionContex
         await BeforeCommandExecute();
     }
 
-    public virtual Task BeforeCommandExecute() => Task.CompletedTask;
+    public virtual async Task BeforeCommandExecute() => await DeferAsync();
+
+    public async Task<RestInteractionMessage> RespondInteraction(string content = default, EmbedBuilder embedBuilder = null, ComponentBuilder componentBuilder = null)
+    {
+        void properties(MessageProperties msg)
+        {
+            msg.Content = content;
+            msg.Embed = embedBuilder?.Build();
+            msg.Components = componentBuilder?.Build();
+        }
+
+        if (Context.Interaction is SocketMessageComponent castInteraction)
+        {
+            await castInteraction.UpdateAsync(properties);
+        }
+        else
+        {
+            if (Context.Interaction.HasResponded)
+                return await Context.Interaction.ModifyOriginalResponseAsync(properties);
+            else
+                await Context.Interaction.RespondAsync(content, embed: embedBuilder?.Build(), components: componentBuilder?.Build());
+        }
+        return null;
+    }
 }

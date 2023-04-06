@@ -12,7 +12,6 @@ public class StopCommand : MusicCommand<StopCommand>
     {
         await Player.StopAsync();
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = "Stopped this session, the queue has been cleaned");
+        await RespondInteraction("Stopped this session, the queue has been cleaned");
     }
 }

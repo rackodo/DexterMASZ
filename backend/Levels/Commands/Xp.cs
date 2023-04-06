@@ -21,6 +21,9 @@ public class Experience : Command<Experience>
     public SettingsRepository SettingsRepository { get; set; }
     public DiscordRest Client { get; set; }
 
+    public override async Task BeforeCommandExecute() =>
+        await Context.Interaction.DeferAsync(!GuildConfig.BotChannels.Contains(Context.Channel.Id));
+
     [SlashCommand("xp", "Display detailed experience information.")]
     public async Task RankCommand(
         [Summary("user", "Target user to get rank from.")]
@@ -60,9 +63,7 @@ public class Experience : Command<Experience>
 
             if (!found)
             {
-                await RespondAsync(
-                    "The role you provided isn't part of the rank system! Ensure you're choosing a leveling role.",
-                    ephemeral: true);
+                await RespondInteraction("The role you provided isn't part of the rank system! Ensure you're choosing a leveling role.");
                 return;
             }
 
@@ -105,12 +106,9 @@ public class Experience : Command<Experience>
             .AddField($"Till Level {levelTarget}:", LevelTargetExpression(level.TotalXp, targetXp, guildlevelconfig))
             .AddField($"Till {roleTargetName} Rank:",
                 LevelTargetExpression(level.TotalXp, roleTargetXp, guildlevelconfig))
-            .WithColor(Color.Blue)
-            .Build();
+            .WithColor(Color.Blue);
 
-        var guildconfig = await GuildConfigRepository.GetGuildConfig(Context.Guild.Id);
-        var ephemeral = !guildconfig.BotChannels.Contains(Context.Channel.Id);
-        await RespondAsync("", ephemeral: ephemeral, embed: embed);
+        await RespondInteraction(string.Empty, embed);
     }
 
     private static string LevelDataExpression(LevelType type, CalculatedGuildUserLevel level)

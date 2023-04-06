@@ -23,8 +23,6 @@ public class Rank : Command<Rank>
     [BotChannel]
     public async Task RankCommand([Summary("user", "Target user to get rank from.")] IUser user = null)
     {
-        await DeferAsync();
-
         user ??= Context.User;
 
         var rankCardConfig = UserRankcardConfigRepository!.GetRankcard(user.Id);
@@ -50,21 +48,19 @@ public class Rank : Command<Rank>
             Directory.CreateDirectory(Path.GetDirectoryName(path));
 
             using (var rankcardimg = await Rankcard.RenderRankCard(user, calcLevel, rankCardConfig,
-                       GuildUserLevelRepository, SettingsRepository))
+                       GuildUserLevelRepository, SettingsRepository, Logger))
                 await rankcardimg.SaveAsPngAsync(path);
 
-
-            await FollowupWithFileAsync(path);
+            await RespondWithFileAsync(path);
         }
         catch (Exception ex)
         {
-            await FollowupAsync("There was an error while rendering your rankcard!", new[]
-            {
-                new EmbedBuilder()
+            var error = new EmbedBuilder()
                     .WithTitle("An error has occurred!")
                     .WithDescription("An exception took place while handling rankcard rendering, please consult logs.")
-                    .Build()
-            });
+                    .AddField("Error", ex.Message);
+
+            await RespondInteraction("There was an error while rendering your rankcard!", error);
             Logger.LogError(ex, "Exception took place while handling rankcard rendering.");
         }
 

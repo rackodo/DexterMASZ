@@ -14,6 +14,9 @@ public class UserDm : Command<UserDm>
     public IServiceProvider ServiceProvider { get; set; }
     public DiscordRest DiscordRest { get; set; }
 
+    public override async Task BeforeCommandExecute() =>
+        await Context.Interaction.DeferAsync(!GuildConfig.StaffChannels.Contains(Context.Channel.Id));
+
     [Require(RequireCheck.GuildModerator)]
     [SlashCommand("dm", "Sends a direct message to a user specified.")]
     [BotChannel]
@@ -23,8 +26,6 @@ public class UserDm : Command<UserDm>
         [Summary("message", "The message you wish to be sent to the user.")]
         string message)
     {
-        await Context.Interaction.DeferAsync(!GuildConfig.StaffChannels.Contains(Context.Channel.Id));
-
         if (user is null)
         {
             var embed = new EmbedBuilder()
@@ -33,7 +34,7 @@ public class UserDm : Command<UserDm>
                 .WithTitle("Unable to find given user!")
                 .WithDescription("This may be due to caching! Try using their ID if you haven't.");
 
-            await Context.Interaction.RespondAsync(embed: embed.Build(), ephemeral: true);
+            await RespondInteraction(string.Empty, embed);
 
             return;
         }
@@ -46,7 +47,7 @@ public class UserDm : Command<UserDm>
                 .WithTitle("Empty message!")
                 .WithDescription("I received an empty message. It would be rude for me to send that; I believe.");
 
-            await Context.Interaction.RespondAsync(embed: embed.Build(), ephemeral: true);
+            await RespondInteraction(string.Empty, embed);
 
             return;
         }
@@ -87,6 +88,6 @@ public class UserDm : Command<UserDm>
                 .WithColor(Color.Red);
         }
 
-        await Context.Interaction.ModifyOriginalResponseAsync(message => { message.Embed = sendEmbed.Build(); });
+        await RespondInteraction(string.Empty, sendEmbed);
     }
 }

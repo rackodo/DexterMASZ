@@ -5,6 +5,7 @@ using Levels.Data;
 using Levels.DTOs;
 using Levels.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Levels.Controllers;
 
@@ -12,11 +13,15 @@ namespace Levels.Controllers;
 public class LevelsRankcardController : AuthenticatedController
 {
     private readonly UserRankcardConfigRepository _levelsRankcardRepository;
+    private readonly ILogger<LevelsRankcardController> _logger;
 
     public LevelsRankcardController(IdentityManager identityManager, GuildLevelConfigRepository levelsConfigRepository,
-        UserRankcardConfigRepository levelsRankcardRepository) :
-        base(identityManager, levelsConfigRepository, levelsRankcardRepository) =>
+        UserRankcardConfigRepository levelsRankcardRepository, ILogger<LevelsRankcardController> logger) :
+        base(identityManager, levelsConfigRepository, levelsRankcardRepository)
+    {
         _levelsRankcardRepository = levelsRankcardRepository;
+        _logger = logger;
+    }
 
     [HttpGet("{userId}")]
     public IActionResult GetRankcardConfig([FromRoute] ulong userId)
@@ -81,7 +86,8 @@ public class LevelsRankcardController : AuthenticatedController
         newConfig.PfpOffset = rankcardConfig.PfpOffset;
 
         var existing = _levelsRankcardRepository.GetRankcard(newConfig.Id) is not null;
-        Console.WriteLine($"RankCard for ID {newConfig.Id} {(existing ? "exists" : "doesn't exist")}.");
+        _logger.LogInformation($"RankCard for ID {newConfig.Id} {(existing ? "exists" : "doesn't exist")}.");
+
         if (existing)
             await _levelsRankcardRepository.DeleteRankcard(newConfig.Id);
 

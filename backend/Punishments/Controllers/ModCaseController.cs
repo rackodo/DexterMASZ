@@ -168,14 +168,9 @@ public class ModCaseController : AuthenticatedController
         if (!await identity.HasPermission(DiscordPermission.Moderator, guildId))
             userOnly = identity.GetCurrentUser().Id;
 
-        List<ModCase> modCases;
-
-        if (userOnly == 0)
-            modCases = (await _modCaseRepository.GetCasePagination(guildId, startPage)).ToList();
-        else
-            modCases =
-                (await _modCaseRepository.GetCasePaginationFilteredForUser(guildId, userOnly, startPage)).ToList();
-
+        var modCases = userOnly == 0
+            ? (await _modCaseRepository.GetCasePagination(guildId, startPage)).ToList()
+            : (await _modCaseRepository.GetCasePaginationFilteredForUser(guildId, userOnly, startPage)).ToList();
         if ((await _guildConfigRepository.GetGuildConfig(guildId)).PublishModeratorInfo)
             return Ok(modCases);
 

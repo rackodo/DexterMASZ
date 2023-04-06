@@ -21,9 +21,7 @@ public class PlaylistCommand : MusicCommand<PlaylistCommand>
     {
         if (!Uri.IsWellFormedUriString(playlistUrl, UriKind.Absolute))
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "You need to provide a valid URL");
-
+            await RespondInteraction("You need to provide a valid URL");
             return;
         }
 
@@ -32,9 +30,7 @@ public class PlaylistCommand : MusicCommand<PlaylistCommand>
 
         if (!lavalinkTracks.Any())
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Unable to get the tracks");
-
+            await RespondInteraction("Unable to get the tracks");
             return;
         }
 
@@ -72,13 +68,12 @@ public class PlaylistCommand : MusicCommand<PlaylistCommand>
                 else
                     await Player.SkipAsync();
 
-            await Context.Interaction.ModifyOriginalResponseAsync(x => x.Content = "Playing playlist!");
+            await RespondInteraction("Playing playlist!");
             await InteractiveService.SendPaginator(pages, Context);
         }
         else
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Could not play queue!");
+            await RespondInteraction("Could not play queue!");
         }
     }
 }
