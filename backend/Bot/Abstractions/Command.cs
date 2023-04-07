@@ -43,11 +43,14 @@ public abstract class Command<T> : InteractionModuleBase<SocketInteractionContex
 
     public async Task<RestInteractionMessage> RespondInteraction(string content = default, EmbedBuilder embedBuilder = null, ComponentBuilder componentBuilder = null)
     {
+        var embed = embedBuilder?.Build();
+        var components = componentBuilder?.Build();
+
         void properties(MessageProperties msg)
         {
             msg.Content = content;
-            msg.Embed = embedBuilder?.Build();
-            msg.Components = componentBuilder?.Build();
+            msg.Embed = embed;
+            msg.Components = components;
         }
 
         if (Context.Interaction is SocketMessageComponent castInteraction)
@@ -56,10 +59,17 @@ public abstract class Command<T> : InteractionModuleBase<SocketInteractionContex
         }
         else
         {
-            if (Context.Interaction.HasResponded)
-                return await Context.Interaction.ModifyOriginalResponseAsync(properties);
-            else
-                await Context.Interaction.FollowupAsync(content, embed: embedBuilder?.Build(), components: componentBuilder?.Build());
+            try
+            {
+                if (Context.Interaction.HasResponded)
+                    return await Context.Interaction.ModifyOriginalResponseAsync(properties);
+                else
+                    await Context.Interaction.RespondAsync(content, embed: embed, components: components);
+            }
+            catch
+            {
+                await Context.Interaction.FollowupAsync(content, embed: embed, components: components);
+            }
         }
         return null;
     }
