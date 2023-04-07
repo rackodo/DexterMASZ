@@ -59,7 +59,7 @@ public abstract class Command<T> : InteractionModuleBase<SocketInteractionContex
             if (Context.Interaction.HasResponded)
                 return await Context.Interaction.ModifyOriginalResponseAsync(properties);
             else
-                await Context.Interaction.RespondAsync(content, embed: embedBuilder?.Build(), components: componentBuilder?.Build());
+                await Context.Interaction.FollowupAsync(content, embed: embedBuilder?.Build(), components: componentBuilder?.Build());
         }
         return null;
     }

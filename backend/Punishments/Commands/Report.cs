@@ -28,10 +28,10 @@ public class Report : Command<Report>
         catch (Exception e)
         {
             Logger.LogError(e, "Failed to send internal notification to moderators for report command.");
-            await RespondAsync(Translator.Get<PunishmentTranslator>().ReportFailed());
+            await RespondInteraction(Translator.Get<PunishmentTranslator>().ReportFailed());
             return;
         }
 
-        await RespondAsync(Translator.Get<PunishmentTranslator>().ReportSent());
+        await RespondInteraction(Translator.Get<PunishmentTranslator>().ReportSent());
     }
 }

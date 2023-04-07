@@ -334,7 +334,7 @@ public class DiscordBot : IHostedService, IEvent
         try
         {
             if (!context.Interaction.HasResponded)
-                await context.Interaction.RespondAsync(embed: builder.Build());
+                await context.Interaction.FollowupAsync(embed: builder.Build());
             else
                 await context.Interaction.ModifyOriginalResponseAsync(msg => msg.Embed = builder.Build());
         }

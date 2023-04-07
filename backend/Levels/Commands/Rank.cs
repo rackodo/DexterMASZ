@@ -51,7 +51,7 @@ public class Rank : Command<Rank>
                        GuildUserLevelRepository, SettingsRepository, Logger))
                 await rankcardimg.SaveAsPngAsync(path);
 
-            await RespondWithFileAsync(path);
+            await FollowupWithFileAsync(path);
         }
         catch (Exception ex)
         {
