@@ -44,7 +44,7 @@ public class Rank : Command<Rank>
 
         await rankCard.SaveAsPngAsync(stream);
 
-        var attachment = new FileAttachment(stream, $"Rankcard {user.Id}");
+        var attachment = new FileAttachment(stream, $"Rankcard {user.Id}.png");
 
         await FollowupWithFileAsync(attachment, components: buttons.Build());
     }
