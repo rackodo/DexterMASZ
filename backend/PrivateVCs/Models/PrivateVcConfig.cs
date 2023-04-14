@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PrivateVcs.DTOs;
+using System.ComponentModel.DataAnnotations;
 
 namespace PrivateVcs.Models;
 
@@ -10,4 +11,14 @@ public class PrivateVcConfig
     public ulong[] AllowedRoles { get; set; }
     public ulong[] CreatorRoles { get; set; }
     public string ChannelFilterRegex { get; set; }
+
+    public PrivateVcConfig(PrivateVcConfigDto dto, ulong guildId)
+    {
+        GuildId = guildId;
+        WaitingVcName = dto.WaitingVcName;
+        PrivateCategoryId = dto.PrivateCategoryId;
+        AllowedRoles = dto.AllowedRoles;
+        CreatorRoles = dto.CreatorRoles;
+        ChannelFilterRegex = dto.ChannelFilterRegex;
+    }
 }

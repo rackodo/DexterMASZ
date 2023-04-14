@@ -3,7 +3,6 @@ using Bot.Data;
 using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using PrivateVcs.Data;
 using System.Collections.Concurrent;
 using System.Text.RegularExpressions;

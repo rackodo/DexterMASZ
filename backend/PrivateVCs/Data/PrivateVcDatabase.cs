@@ -17,9 +17,10 @@ public class PrivateVcDatabase : DataContext<PrivateVcDatabase>, IDataContextCre
         IServiceCollection serviceCollection) =>
         serviceCollection.AddDbContext<PrivateVcDatabase>(optionsAction);
 
-    public async Task PutPrivateVcConfig(PrivateVcConfig pvcConfig)
+    public async Task<PrivateVcConfig> PutPrivateVcConfig(PrivateVcConfig pvcConfig)
     {
         PrivateVcConfigs.Update(pvcConfig);
         await SaveChangesAsync();
+        return pvcConfig;
     }
 }
