@@ -1,10 +1,12 @@
-﻿using Bot.Abstractions;
+﻿using AutoMods.Data;
+using Bot.Abstractions;
 using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
 using PrivateVcs.Data;
 using PrivateVcs.Models;
 using PrivateVcs.Services;
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -13,7 +15,8 @@ namespace PrivateVcs.Commands;
 public class CreateVc : Command<CreateVc>
 {
     public PrivateVcConfigRepository ConfigRepository { get; set; }
-    public VcChecker PermissionChecker { get; set; }
+    public VcChecker VcChecker { get; set; }
+    public AutoModConfigRepository AutoModConfigRepository { get; set; }
 
     [SlashCommand("create-vc", "Creates a personal voice channel")]
     [BotChannel]
@@ -59,7 +62,11 @@ public class CreateVc : Command<CreateVc>
             return;
         }
 
-        if (Regex.IsMatch(vcName, config.ChannelFilterRegex))
+        var autoModConfigs = await AutoModConfigRepository.GetConfigsByGuild(Context.Guild.Id);
+
+        var autoMod = autoModConfigs.FirstOrDefault(a => a.AutoModType == AutoMods.Enums.AutoModType.CustomWordFilter);
+
+        if (VcChecker.IsNameAgainstFilter(vcName, config, autoMod))
         {
             await RespondInteraction(
                 embedBuilder: new EmbedBuilder()
@@ -117,7 +124,7 @@ public class CreateVc : Command<CreateVc>
 
         IVoiceChannel newChannel = await Context.Guild.CreateVoiceChannelAsync(vcName);
 
-        PermissionChecker.AddNewPrivateVc(newChannel.Id, Context.User.Id);
+        VcChecker.AddNewPrivateVc(newChannel.Id, Context.User.Id);
 
         await newChannel.ModifyAsync(properties => properties.CategoryId = config.PrivateCategoryId);
 

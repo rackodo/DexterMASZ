@@ -1,10 +1,14 @@
-﻿using Bot.Abstractions;
+﻿using AutoMods.Data;
+using AutoMods.Models;
+using Bot.Abstractions;
 using Bot.Data;
 using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.Logging;
 using PrivateVcs.Data;
+using PrivateVcs.Models;
 using System.Collections.Concurrent;
 using System.Text.RegularExpressions;
 
@@ -108,6 +112,43 @@ public class VcChecker : IEvent
 
     public void AddNewPrivateVc(ulong vcId, ulong creatorId) => _privateVcCreators.TryAdd(vcId, creatorId);
 
+    public bool IsNameAgainstFilter(string name, PrivateVcConfig privateVcConfig, AutoModConfig autoModConfig)
+    {
+        if (autoModConfig != null)
+            foreach (var word in autoModConfig.CustomWordFilter.Split('\n'))
+            {
+                if (string.IsNullOrWhiteSpace(word))
+                    continue;
+
+                try
+                {
+                    if (Regex.IsMatch(name, word, RegexOptions.IgnoreCase))
+                        return true;
+                }
+                catch (RegexParseException)
+                {
+                }
+            }
+
+        if (privateVcConfig != null)
+            foreach (var word in privateVcConfig.ChannelFilterRegex.Split('\n'))
+            {
+                if (string.IsNullOrWhiteSpace(word))
+                    continue;
+
+                try
+                {
+                    if (Regex.IsMatch(name, word, RegexOptions.IgnoreCase))
+                        return true;
+                }
+                catch (RegexParseException)
+                {
+                }
+            }
+
+        return false;
+    }
+
     private async Task ChannelUpdated(SocketChannel _, SocketChannel newChannel)
     {
         if (newChannel is not SocketVoiceChannel voiceChannel)
@@ -139,7 +180,12 @@ public class VcChecker : IEvent
 
         var creator = guild.GetUser(userId);
 
-        if (Regex.IsMatch(voiceChannel.Name, config.ChannelFilterRegex))
+        var autoModConfigs = await scope.ServiceProvider.GetRequiredService<AutoModConfigRepository>()
+            .GetConfigsByGuild(guild.Id);
+
+        var autoMod = autoModConfigs.FirstOrDefault(a => a.AutoModType == AutoMods.Enums.AutoModType.CustomWordFilter);
+
+        if (IsNameAgainstFilter(voiceChannel.Name, config, autoMod))
         {
             await announcementChannel.SendMessageAsync(embed:
                 new EmbedBuilder()
