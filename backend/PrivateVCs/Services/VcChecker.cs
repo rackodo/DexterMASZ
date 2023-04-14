@@ -46,7 +46,7 @@ public class VcChecker : IEvent
 
     public async Task CheckRemoveVCs(SocketGuild guild)
     {
-        _logger.LogDebug("Removing VCs for guild: {GuildName}", guild.Name);
+        _logger.LogInformation("Removing VCs for guild: {GuildName}", guild.Name);
 
         using var scope = _serviceProvider.CreateScope();
 
@@ -61,7 +61,7 @@ public class VcChecker : IEvent
         if (categoryChannel == null)
             return;
 
-        _logger.LogDebug("Found private vc category for guild: {GuildName}", guild.Name);
+        _logger.LogInformation("Found private vc category for guild: {GuildName}", guild.Name);
 
         var voiceChannels = categoryChannel.Guild.VoiceChannels
             .Where(check => check.CategoryId == config.PrivateCategoryId && check.Name != config.WaitingVcName);
@@ -70,12 +70,12 @@ public class VcChecker : IEvent
 
         foreach (var voiceChannel in voiceChannels)
         {
-            _logger.LogDebug("Checking private VC: {ChannelName}", voiceChannel.Name);
+            _logger.LogInformation("Checking private VC: {ChannelName}", voiceChannel.Name);
             var userCount = voiceChannel.Users.Count;
 
             if (userCount <= 0)
             {
-                _logger.LogDebug("Deleting private VC: {ChannelName}", voiceChannel.Name);
+                _logger.LogInformation("Deleting private VC: {ChannelName}", voiceChannel.Name);
                 await voiceChannel.DeleteAsync();
             }
             else
@@ -89,7 +89,7 @@ public class VcChecker : IEvent
             var waitingLobby = categoryChannel.Guild.VoiceChannels
                 .FirstOrDefault(check => check.Name == config.WaitingVcName);
 
-            _logger.LogDebug("Deleting welcome lobby for: {GuildName}", guild.Name);
+            _logger.LogInformation("Deleting welcome lobby for: {GuildName}", guild.Name);
 
             if (waitingLobby != null)
                 await waitingLobby.DeleteAsync();
