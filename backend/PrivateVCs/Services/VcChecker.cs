@@ -35,18 +35,18 @@ public class VcChecker : IEvent
         _client.Ready += async () =>
         {
             foreach (var guild in _client.Guilds)
-                await CheckRemoveVCs(guild);
+                await CheckRemoveVCs(guild, null);
         };
 
         _client.UserVoiceStateUpdated += async (_, _, voiceChannel) => {
             if (voiceChannel.VoiceChannel is not null)
-                await CheckRemoveVCs(voiceChannel.VoiceChannel.Guild);
+                await CheckRemoveVCs(voiceChannel.VoiceChannel.Guild, voiceChannel.VoiceChannel);
         };
     }
 
-    public async Task CheckRemoveVCs(SocketGuild guild)
+    public async Task CheckRemoveVCs(SocketGuild guild, SocketVoiceChannel changedVoiceChannel)
     {
-        _logger.LogInformation("Removing VCs for guild: {GuildName}", guild.Name);
+        _logger.LogInformation("Removing VCs for guild: '{GuildName}'", guild.Name);
 
         using var scope = _serviceProvider.CreateScope();
 
@@ -61,22 +61,28 @@ public class VcChecker : IEvent
         if (categoryChannel == null)
             return;
 
-        _logger.LogInformation("Found private vc category for guild: {GuildName}", guild.Name);
+        _logger.LogInformation("Found private vc category for guild: '{GuildName}'", guild.Name);
 
         var voiceChannels = categoryChannel.Guild.VoiceChannels
             .Where(check => check.CategoryId == config.PrivateCategoryId && check.Name != config.WaitingVcName);
 
         var voiceLobbyExists = false;
 
-        foreach (var voiceChannel in voiceChannels)
+        foreach (var voiceChannelNew in voiceChannels)
         {
+            var voiceChannel = voiceChannelNew;
+
+            if (changedVoiceChannel != null)
+                if (voiceChannel.Id == changedVoiceChannel.Id)
+                    voiceChannel = changedVoiceChannel;
+
             var userCount = voiceChannel.ConnectedUsers.Count;
 
-            _logger.LogInformation("Checking private VC: {ChannelName} with user count: '{UserCount}'", voiceChannel.Name, userCount);
+            _logger.LogInformation("Checking private VC '{ChannelName}' with user count: '{UserCount}'", voiceChannel.Name, userCount);
 
             if (userCount <= 0)
             {
-                _logger.LogInformation("Deleting private VC: {ChannelName}", voiceChannel.Name);
+                _logger.LogInformation("Deleting private VC: '{ChannelName}'", voiceChannel.Name);
                 await voiceChannel.DeleteAsync();
             }
             else
@@ -90,7 +96,7 @@ public class VcChecker : IEvent
             var waitingLobby = categoryChannel.Guild.VoiceChannels
                 .FirstOrDefault(check => check.Name == config.WaitingVcName);
 
-            _logger.LogInformation("Deleting welcome lobby for: {GuildName}", guild.Name);
+            _logger.LogInformation("Deleting welcome lobby for: '{GuildName}'", guild.Name);
 
             if (waitingLobby != null)
                 await waitingLobby.DeleteAsync();
