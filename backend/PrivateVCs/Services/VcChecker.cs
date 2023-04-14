@@ -144,8 +144,9 @@ public class VcChecker : IEvent
             await announcementChannel.SendMessageAsync(embed:
                 new EmbedBuilder()
                     .WithTitle("Punishable Private Vc Name")
-                    .WithDescription("The following user has tried to change their private vc name to something against the server's rules. " +
-                                     "The channel has since been deleted.")
+                    .WithDescription(
+                        $"{creator.Mention} tried to change their private vc name to something against the server's rules. " +
+                        "The channel has since been deleted.")
                     .AddField("User", creator.Mention)
                     .AddField("Channel Name", voiceChannel.Name)
                     .WithColor(Color.Red)
@@ -158,7 +159,8 @@ public class VcChecker : IEvent
             await dm.SendMessageAsync(
                 $"You are not allowed to change your private VC to the name: '{voiceChannel.Name}', " +
                 "as it is against the server's terms of service. " +
-                "It has since been deleted. You may be contacted by moderators resulting from this."
+                "The voice channel has since been deleted. " +
+                "You may be contacted by moderators resulting from this."
             );
 
             await voiceChannel.DeleteAsync();
@@ -199,10 +201,11 @@ public class VcChecker : IEvent
             await announcementChannel.SendMessageAsync(embed:
                 new EmbedBuilder()
                     .WithTitle("Punishable Private Vc Permission")
-                    .WithDescription("The following user has tried to change their private vc to allow everyone perms for the following. " +
-                                     "The channel has since been deleted.")
-                    .AddField("User", creator.Mention)
-                    .AddField("Unauthorized mention", mentionable.Mention)
+                    .WithDescription(
+                        $"{creator.Mention} tried to change their private vc to allow everyone perms for the following role. " +
+                        "The channel has since been deleted.")
+                    .AddField("Unauthorized Member/Role", mentionable.Mention)
+                    .AddField("Channel Name", voiceChannel.Name)
                     .WithColor(Color.Red)
                     .WithCurrentTimestamp()
                     .Build()
@@ -213,7 +216,8 @@ public class VcChecker : IEvent
             await dm.SendMessageAsync(
                 "You are not allowed to change your private VC to allow mentions to everyone, " +
                 "as it is against the server's terms of service. " +
-                "It has since been deleted. You may be contacted by moderators resulting from this."
+                "The voice channel has since been deleted. " +
+                "You may be contacted by moderators resulting from this."
             );
 
             await voiceChannel.DeleteAsync();
