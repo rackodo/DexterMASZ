@@ -15,9 +15,9 @@ public class CreateVc : Command<CreateVc>
     public PrivateVcConfigRepository ConfigRepository { get; set; }
     public VcChecker PermissionChecker { get; set; }
 
-    [SlashCommand("createvc", "Creates a personal voice channel")]
+    [SlashCommand("create-vc", "Creates a personal voice channel")]
     [BotChannel]
-    public async Task CreateVcCommand([Summary("The name of the voice channel")] string vcName)
+    public async Task CreateVcCommand([Summary("vc-name", "The name of the voice channel")] string vcName)
     {
         var config = await ConfigRepository.SelectPrivateVcConfig(Context.Guild.Id);
 
