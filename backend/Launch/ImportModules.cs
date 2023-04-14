@@ -7,6 +7,7 @@ using Levels;
 using Messaging;
 using MOTDs;
 using Music;
+using PrivateVCs;
 using Punishments;
 using UserMaps;
 using UserNotes;
@@ -30,6 +31,7 @@ public static class ImportModules
             new UserNoteModule(),
             new UtilityModule(),
             new MessagingModule(),
-            new LevelsModule()
+            new LevelsModule(),
+            new PrivateVcModule()
         };
 }

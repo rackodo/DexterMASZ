@@ -8,16 +8,6 @@ namespace Bot.Extensions;
 
 public static class EmbedCreator
 {
-    public static EmbedBuilder CreateColoredEmbed(Color color, Type type)
-    {
-        var ns = type.Namespace.Split('.');
-
-        return new EmbedBuilder()
-            .WithCurrentTimestamp()
-            .WithColor(color)
-            .WithFooter($"{ns.First()} {ns.Last()}");
-    }
-
     public static async Task<EmbedBuilder> CreateActionEmbed(RestAction action, IServiceProvider provider,
         IUser author = null) => CreateActionEmbed(action,
         await provider.GetRequiredService<SettingsRepository>().GetAppSettings(), author);

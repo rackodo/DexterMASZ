@@ -41,12 +41,13 @@ public abstract class Command<T> : InteractionModuleBase<SocketInteractionContex
 
     public virtual async Task BeforeCommandExecute() => await DeferAsync();
 
-    public async Task<RestInteractionMessage> RespondInteraction(string content = default, EmbedBuilder embedBuilder = null, ComponentBuilder componentBuilder = null)
+    public async Task<RestInteractionMessage> RespondInteraction(string content = default,
+        EmbedBuilder embedBuilder = null, ComponentBuilder componentBuilder = null)
     {
         var embed = embedBuilder?.Build();
         var components = componentBuilder?.Build();
 
-        void properties(MessageProperties msg)
+        void Properties(MessageProperties msg)
         {
             msg.Content = content;
             msg.Embed = embed;
@@ -54,23 +55,19 @@ public abstract class Command<T> : InteractionModuleBase<SocketInteractionContex
         }
 
         if (Context.Interaction is SocketMessageComponent castInteraction)
-        {
-            await castInteraction.UpdateAsync(properties);
-        }
+            await castInteraction.UpdateAsync(Properties);
         else
-        {
             try
             {
                 if (Context.Interaction.HasResponded)
-                    return await Context.Interaction.ModifyOriginalResponseAsync(properties);
-                else
-                    await Context.Interaction.RespondAsync(content, embed: embed, components: components);
+                    return await Context.Interaction.ModifyOriginalResponseAsync(Properties);
+                await Context.Interaction.RespondAsync(content, embed: embed, components: components);
             }
             catch
             {
                 await Context.Interaction.FollowupAsync(content, embed: embed, components: components);
             }
-        }
+
         return null;
     }
 }

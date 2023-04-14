@@ -1,0 +1,155 @@
+﻿using Bot.Abstractions;
+using Bot.Data;
+using Discord;
+using Discord.WebSocket;
+using Microsoft.Extensions.DependencyInjection;
+using PrivateVcs.Data;
+using System.Collections.Concurrent;
+using System.Text.RegularExpressions;
+
+namespace PrivateVcs.Services;
+
+public class PermissionChecker : IEvent
+{
+    private readonly DiscordSocketClient _client;
+    private readonly IServiceProvider _serviceProvider;
+
+    // Channel Id, User Id
+    private readonly ConcurrentDictionary<ulong, ulong> _privateVcCreators;
+
+    public PermissionChecker(DiscordSocketClient client, IServiceProvider serviceProvider)
+    {
+        _client = client;
+        _serviceProvider = serviceProvider;
+        _privateVcCreators = new ConcurrentDictionary<ulong, ulong>();
+    }
+
+    public void RegisterEvents()
+    {
+        _client.ChannelUpdated += ChannelUpdated;
+        _client.ChannelDestroyed += ChannelDestroyed;
+    }
+
+    private Task ChannelDestroyed(SocketChannel arg)
+    {
+        if (_privateVcCreators.ContainsKey(arg.Id))
+            if (_privateVcCreators.TryGetValue(arg.Id, out var value))
+                _privateVcCreators.TryRemove(new KeyValuePair<ulong, ulong>(arg.Id, value));
+        return Task.CompletedTask;
+    }
+
+    public void AddNewPrivateVc(ulong vcId, ulong creatorId) => _privateVcCreators.TryAdd(vcId, creatorId);
+
+    private async Task ChannelUpdated(SocketChannel _, SocketChannel newChannel)
+    {
+        if (newChannel is not SocketVoiceChannel voiceChannel)
+            return;
+
+        var guild = voiceChannel.Guild;
+        
+        using var scope = _serviceProvider.CreateScope();
+
+        var config = await scope.ServiceProvider.GetRequiredService<PrivateVcConfigRepository>()
+            .SelectPrivateVcConfig(guild.Id);
+
+        var guildConfig = await scope.ServiceProvider.GetRequiredService<GuildConfigRepository>()
+            .GetGuildConfig(guild.Id);
+
+        var announcementChannel = guild.GetTextChannel(guildConfig.StaffAnnouncements);
+
+        if (config is null)
+            return;
+
+        if (!voiceChannel.CategoryId.HasValue)
+            return;
+
+        if (voiceChannel.CategoryId != config.PrivateCategoryId)
+            return;
+
+        if (!_privateVcCreators.TryGetValue(voiceChannel.Id, out var userId))
+            return;
+
+        var creator = guild.GetUser(userId);
+
+        if (Regex.IsMatch(voiceChannel.Name, config.ChannelFilterRegex))
+        {
+            await announcementChannel.SendMessageAsync(embed:
+                new EmbedBuilder()
+                    .WithTitle("Punishable Private Vc Name")
+                    .WithDescription("The following user has tried to change their private vc name to something against the server's rules. " +
+                                     "The channel has since been deleted.")
+                    .AddField("User", creator.Mention)
+                    .AddField("Channel Name", voiceChannel.Name)
+                    .WithColor(Color.Red)
+                    .WithCurrentTimestamp()
+                    .Build()
+            );
+
+            var dm = await creator.CreateDMChannelAsync();
+
+            await dm.SendMessageAsync(
+                $"You are not allowed to change your private VC to the name: '{voiceChannel.Name}', " +
+                "as it is against the server's terms of service. " +
+                "It has since been deleted. You may be contacted by moderators resulting from this."
+            );
+
+            await voiceChannel.DeleteAsync();
+            return;
+        }
+
+        foreach (var authorized in voiceChannel.PermissionOverwrites
+                     .Where(a => a.Permissions.MentionEveryone == PermValue.Allow)
+                )
+        {
+            switch (authorized.TargetType)
+            {
+                case PermissionTarget.Role:
+                {
+                    var role = guild.GetRole(authorized.TargetId);
+                    if (role.Permissions.MentionEveryone)
+                        continue;
+                    break;
+                }
+                case PermissionTarget.User:
+                {
+                    var user = guild.GetUser(authorized.TargetId);
+                    if (user.GuildPermissions.MentionEveryone)
+                        continue;
+                    break;
+                }
+                default:
+                    throw new InvalidDataException($"Unknown target type for private VCs of: {authorized.TargetType}");
+            }
+
+            IMentionable mentionable = authorized.TargetType switch
+            {
+                PermissionTarget.Role => guild.GetRole(authorized.TargetId),
+                PermissionTarget.User => guild.GetUser(authorized.TargetId),
+                _ => throw new InvalidDataException($"Unknown target type for private VCs of: {authorized.TargetType}")
+            };
+
+            await announcementChannel.SendMessageAsync(embed:
+                new EmbedBuilder()
+                    .WithTitle("Punishable Private Vc Permission")
+                    .WithDescription("The following user has tried to change their private vc to allow everyone perms for the following. " +
+                                     "The channel has since been deleted.")
+                    .AddField("User", creator.Mention)
+                    .AddField("Unauthorized mention", mentionable.Mention)
+                    .WithColor(Color.Red)
+                    .WithCurrentTimestamp()
+                    .Build()
+            );
+
+            var dm = await creator.CreateDMChannelAsync();
+
+            await dm.SendMessageAsync(
+                "You are not allowed to change your private VC to allow mentions to everyone, " +
+                "as it is against the server's terms of service. " +
+                "It has since been deleted. You may be contacted by moderators resulting from this."
+            );
+
+            await voiceChannel.DeleteAsync();
+            return;
+        }
+    }
+}

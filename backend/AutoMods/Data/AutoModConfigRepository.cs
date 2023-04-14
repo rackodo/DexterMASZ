@@ -33,7 +33,7 @@ public class AutoModConfigRepository : Repository, IDeleteGuildData
     {
         var config = await _autoModDatabase.SelectPunishmentsConfigForGuildAndType(guildId, type);
 
-        return config ?? throw new ResourceNotFoundException($"Automod config {guildId}/{type} does not exist.");
+        return config ?? throw new ResourceNotFoundException($"Auto mod config {guildId}/{type} does not exist.");
     }
 
     public async Task<AutoModConfig> UpdateConfig(AutoModConfig newValue)
