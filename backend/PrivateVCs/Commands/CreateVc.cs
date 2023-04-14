@@ -25,7 +25,7 @@ public class CreateVc : Command<CreateVc>
         {
             await RespondInteraction(
                 embedBuilder: new EmbedBuilder()
-                    .WithTitle("Private VCs have not been set up in this server!")
+                    .WithTitle("Private VCs have not been set up in this server")
                     .WithDescription("Please contact a server administrator to set this up in the config options.")
                     .WithColor(Color.Red)
             );
@@ -60,7 +60,7 @@ public class CreateVc : Command<CreateVc>
         {
             await RespondInteraction(
                 embedBuilder: new EmbedBuilder()
-                .WithTitle("Channel Name Already Exists!")
+                .WithTitle("Channel Name Already Exists")
                 .WithDescription("Please ensure your channel name does not equal the name of another channel, " +
                                  "as this leads to confusion for other members.")
                 .WithColor(Color.Red)
@@ -74,14 +74,27 @@ public class CreateVc : Command<CreateVc>
         {
             await RespondInteraction(
                 embedBuilder: new EmbedBuilder()
-                    .WithTitle("You're not in a voice channel!")
+                    .WithTitle("You are not in a voice channel")
                     .WithDescription("To be able to create a voice channel, you have to be in one first. " +
-                                     "This is so we can drag you in. ")
+                                     "This is so we can drag you in.")
                     .WithColor(Color.Red)
             );
             return;
         }
-        
+
+        if (!user.RoleIds.Any(r => config.CreatorRoles.Contains(r)))
+        {
+            await RespondInteraction(
+                embedBuilder: new EmbedBuilder()
+                    .WithTitle("You are not allowed to create a private vc")
+                    .WithDescription("You do not have the correct permissions to run this command. \n\nYou must have either: " +
+                                     string.Join(", ", config.CreatorRoles.Select(Context.Guild.GetRole).Select(r => r.Mention)) +
+                                     ".")
+                    .WithColor(Color.Red)
+                );
+            return;
+        }
+
         IVoiceChannel waitingChannel = Context.Guild.VoiceChannels.FirstOrDefault(channel => channel.Name == config.WaitingVcName);
 
         if (waitingChannel is null)
