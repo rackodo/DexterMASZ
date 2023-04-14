@@ -12,6 +12,10 @@ public class PrivateVcConfig
     public ulong[] CreatorRoles { get; set; }
     public string ChannelFilterRegex { get; set; }
 
+    public PrivateVcConfig()
+    {
+    }
+
     public PrivateVcConfig(PrivateVcConfigDto dto, ulong guildId)
     {
         GuildId = guildId;

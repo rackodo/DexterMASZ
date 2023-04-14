@@ -15,6 +15,6 @@ public class PrivateVcConfigRepository : Repository
     public async Task<PrivateVcConfig> SelectPrivateVcConfig(ulong guildId) =>
         await _privateVcDatabase.PrivateVcConfigs.FindAsync(guildId);
 
-    public async Task PutPrivateVcConfig(PrivateVcConfig newPrivateVcConfig) =>
+    public async Task<PrivateVcConfig> PutPrivateVcConfig(PrivateVcConfig newPrivateVcConfig) =>
         await _privateVcDatabase.PutPrivateVcConfig(newPrivateVcConfig);
 }
