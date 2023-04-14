@@ -35,9 +35,9 @@ public class VcChecker : IEvent
                 await CheckRemoveVCs(guild);
         };
 
-        _client.UserVoiceStateUpdated += async (_, oldVoiceChannel, _) => {
-            if (oldVoiceChannel.VoiceChannel is not null)
-                await CheckRemoveVCs(oldVoiceChannel.VoiceChannel.Guild);
+        _client.UserVoiceStateUpdated += async (_, _, voiceChannel) => {
+            if (voiceChannel.VoiceChannel is not null)
+                await CheckRemoveVCs(voiceChannel.VoiceChannel.Guild);
         };
     }
 
