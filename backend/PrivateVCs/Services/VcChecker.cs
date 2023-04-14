@@ -35,16 +35,16 @@ public class VcChecker : IEvent
         _client.Ready += async () =>
         {
             foreach (var guild in _client.Guilds)
-                await CheckRemoveVCs(guild, null);
+                await CheckRemoveVCs(guild);
         };
 
-        _client.UserVoiceStateUpdated += async (_, _, voiceChannel) => {
+        _client.UserVoiceStateUpdated += async (_, voiceChannel, _) => {
             if (voiceChannel.VoiceChannel is not null)
-                await CheckRemoveVCs(voiceChannel.VoiceChannel.Guild, voiceChannel.VoiceChannel);
+                await CheckRemoveVCs(voiceChannel.VoiceChannel.Guild);
         };
     }
 
-    public async Task CheckRemoveVCs(SocketGuild guild, SocketVoiceChannel changedVoiceChannel)
+    public async Task CheckRemoveVCs(SocketGuild guild)
     {
         _logger.LogInformation("Removing VCs for guild: '{GuildName}'", guild.Name);
 
@@ -68,14 +68,8 @@ public class VcChecker : IEvent
 
         var voiceLobbyExists = false;
 
-        foreach (var voiceChannelNew in voiceChannels)
+        foreach (var voiceChannel in voiceChannels)
         {
-            var voiceChannel = voiceChannelNew;
-
-            if (changedVoiceChannel != null)
-                if (voiceChannel.Id == changedVoiceChannel.Id)
-                    voiceChannel = changedVoiceChannel;
-
             var userCount = voiceChannel.ConnectedUsers.Count;
 
             _logger.LogInformation("Checking private VC '{ChannelName}' with user count: '{UserCount}'", voiceChannel.Name, userCount);
