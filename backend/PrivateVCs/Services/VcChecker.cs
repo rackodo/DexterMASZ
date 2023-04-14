@@ -3,13 +3,14 @@ using Bot.Data;
 using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using PrivateVcs.Data;
 using System.Collections.Concurrent;
 using System.Text.RegularExpressions;
 
 namespace PrivateVcs.Services;
 
-public class PermissionChecker : IEvent
+public class VcChecker : IEvent
 {
     private readonly DiscordSocketClient _client;
     private readonly IServiceProvider _serviceProvider;
@@ -17,7 +18,7 @@ public class PermissionChecker : IEvent
     // Channel Id, User Id
     private readonly ConcurrentDictionary<ulong, ulong> _privateVcCreators;
 
-    public PermissionChecker(DiscordSocketClient client, IServiceProvider serviceProvider)
+    public VcChecker(DiscordSocketClient client, IServiceProvider serviceProvider)
     {
         _client = client;
         _serviceProvider = serviceProvider;
@@ -28,6 +29,57 @@ public class PermissionChecker : IEvent
     {
         _client.ChannelUpdated += ChannelUpdated;
         _client.ChannelDestroyed += ChannelDestroyed;
+
+        _client.Ready += async () =>
+        {
+            foreach (var guild in _client.Guilds)
+                await CheckRemoveVCs(guild);
+        };
+
+        _client.UserVoiceStateUpdated += async (_, oldVoiceChannel, _) => {
+            if (oldVoiceChannel.VoiceChannel is not null)
+                await CheckRemoveVCs(oldVoiceChannel.VoiceChannel.Guild);
+        };
+    }
+
+    public async Task CheckRemoveVCs(SocketGuild guild)
+    {
+        using var scope = _serviceProvider.CreateScope();
+
+        var config = await scope.ServiceProvider.GetRequiredService<PrivateVcConfigRepository>()
+            .SelectPrivateVcConfig(guild.Id);
+
+        if (config is null)
+            return;
+
+        var categoryChannel = guild.GetCategoryChannel(config.PrivateCategoryId);
+
+        if (categoryChannel == null)
+            return;
+
+        var voiceChannels = categoryChannel.Guild.VoiceChannels
+            .Where(check => check.CategoryId == config.PrivateCategoryId && check.Name != config.WaitingVcName);
+
+        var voiceLobbyExists = false;
+
+        foreach (var voiceChannel in voiceChannels)
+        {
+            var userCount = voiceChannel.Users.Count;
+
+            if (userCount <= 0)
+                await voiceChannel.DeleteAsync();
+            else
+                voiceLobbyExists = true;
+        }
+
+        if (!voiceLobbyExists)
+        {
+            var waitingLobby = categoryChannel.Guild.VoiceChannels
+                .FirstOrDefault(check => check.Name == config.WaitingVcName);
+
+            if (waitingLobby != null)
+                await waitingLobby.DeleteAsync();
+        }
     }
 
     private Task ChannelDestroyed(SocketChannel arg)
@@ -35,6 +87,7 @@ public class PermissionChecker : IEvent
         if (_privateVcCreators.ContainsKey(arg.Id))
             if (_privateVcCreators.TryGetValue(arg.Id, out var value))
                 _privateVcCreators.TryRemove(new KeyValuePair<ulong, ulong>(arg.Id, value));
+
         return Task.CompletedTask;
     }
 

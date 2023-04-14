@@ -13,7 +13,7 @@ namespace PrivateVcs.Commands;
 public class CreateVc : Command<CreateVc>
 {
     public PrivateVcConfigRepository ConfigRepository { get; set; }
-    public PermissionChecker PermissionChecker { get; set; }
+    public VcChecker PermissionChecker { get; set; }
 
     [SlashCommand("createvc", "Creates a personal voice channel")]
     [BotChannel]
