@@ -70,7 +70,7 @@ public class VcChecker : IEvent
 
         foreach (var voiceChannel in voiceChannels)
         {
-            var userCount = voiceChannel.Users.Count;
+            var userCount = voiceChannel.ConnectedUsers.Count;
 
             _logger.LogInformation("Checking private VC: {ChannelName} with user count: '{UserCount}'", voiceChannel.Name, userCount);
 
