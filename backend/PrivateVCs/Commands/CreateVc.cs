@@ -32,6 +32,21 @@ public class CreateVc : Command<CreateVc>
             return;
         }
 
+        IGuildUser user = Context.Guild.GetUser(Context.User.Id);
+
+        if (!user.RoleIds.Any(r => config.CreatorRoles.Contains(r)))
+        {
+            await RespondInteraction(
+                embedBuilder: new EmbedBuilder()
+                    .WithTitle("You are not allowed to create a private vc")
+                    .WithDescription("You do not have the correct permissions to run this command. \n\nYou must have either: " +
+                                     string.Join(", ", config.CreatorRoles.Select(Context.Guild.GetRole).Select(r => r.Mention)) +
+                                     ".")
+                    .WithColor(Color.Red)
+            );
+            return;
+        }
+
         if (vcName.Length is > 100 or 0)
         {
             await RespondInteraction(
@@ -67,9 +82,7 @@ public class CreateVc : Command<CreateVc>
             );
             return;
         }
-
-        IGuildUser user = Context.Guild.GetUser(Context.User.Id);
-
+        
         if (user.VoiceChannel == null)
         {
             await RespondInteraction(
@@ -81,20 +94,7 @@ public class CreateVc : Command<CreateVc>
             );
             return;
         }
-
-        if (!user.RoleIds.Any(r => config.CreatorRoles.Contains(r)))
-        {
-            await RespondInteraction(
-                embedBuilder: new EmbedBuilder()
-                    .WithTitle("You are not allowed to create a private vc")
-                    .WithDescription("You do not have the correct permissions to run this command. \n\nYou must have either: " +
-                                     string.Join(", ", config.CreatorRoles.Select(Context.Guild.GetRole).Select(r => r.Mention)) +
-                                     ".")
-                    .WithColor(Color.Red)
-                );
-            return;
-        }
-
+        
         IVoiceChannel waitingChannel = Context.Guild.VoiceChannels.FirstOrDefault(channel => channel.Name == config.WaitingVcName);
 
         if (waitingChannel is null)
