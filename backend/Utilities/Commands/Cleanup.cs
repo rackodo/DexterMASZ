@@ -83,9 +83,7 @@ public class Cleanup : Command<Cleanup>
     {
         var latestMessage = await channel.GetMessagesAsync(1).FirstOrDefaultAsync();
 
-        if (latestMessage is null)
-            return 0;
-        if (latestMessage.FirstOrDefault() is null)
+        if (latestMessage?.FirstOrDefault() is null)
             return 0;
 
         var lastId = latestMessage.First().Id;
@@ -102,33 +100,38 @@ public class Cleanup : Command<Cleanup>
             {
                 lastId = message.Id;
                 limit--;
+
                 if (filterUser != null && message.Author.Id != filterUser.Id)
                     continue;
-                if (predicate(message))
+
+                if (!predicate(message))
+                    continue;
+
+                deleted++;
+                if (message.CreatedAt.UtcDateTime.AddDays(14) > DateTime.UtcNow)
+                    toDelete.Add(message);
+                else
+                    await message.DeleteAsync();
+            }
+
+            switch (toDelete.Count)
+            {
+                case >= 2:
                 {
-                    deleted++;
-                    if (message.CreatedAt.UtcDateTime.AddDays(14) > DateTime.UtcNow)
-                        toDelete.Add(message);
-                    else
-                        await message.DeleteAsync();
+                    RequestOptions options = new()
+                    {
+                        AuditLogReason =
+                            $"Bulkdelete by {currentActor.Username}#{currentActor.Discriminator} ({currentActor.Id})."
+                    };
+
+                    await channel.DeleteMessagesAsync(toDelete, options);
+                    toDelete.Clear();
+                    break;
                 }
-            }
-
-            if (toDelete.Count >= 2)
-            {
-                RequestOptions options = new()
-                {
-                    AuditLogReason =
-                        $"Bulkdelete by {currentActor.Username}#{currentActor.Discriminator} ({currentActor.Id})."
-                };
-
-                await channel.DeleteMessagesAsync(toDelete, options);
-                toDelete.Clear();
-            }
-            else if (toDelete.Count > 0)
-            {
-                await toDelete.First().DeleteAsync();
-                toDelete.Clear();
+                case > 0:
+                    await toDelete.First().DeleteAsync();
+                    toDelete.Clear();
+                    break;
             }
         }
 

@@ -76,6 +76,7 @@ import { PunishmentConfigComponent } from './components/guilds/guild-config/puni
 import { AutoModRuleComponent } from './components/guilds/guild-config/automod-config/automod-rule/automod-rule.component';
 import { GuildConfigComponent } from './components/guilds/guild-config/guild-config.component';
 import { LevelsConfigComponent } from './components/guilds/guild-config/levels-config/levels-config.component';
+import { PrivateVcsConfigComponent } from './components/guilds/guild-config/private-vcs-config/private-vcs-config.component';
 import { MotdConfigComponent } from './components/guilds/guild-config/motd-config/motd-config.component';
 import { DashboardAutoModSplitComponent } from './components/guilds/guild-dashboard/dashboard-automod-split/dashboard-automod-split.component';
 import { DashboardCaseListComponent } from './components/guilds/guild-dashboard/dashboard-case-list/dashboard-case-list.component';
@@ -217,6 +218,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     GuildLeaderboardComponent,
     ComingSoonComponent,
     LevelsConfigComponent,
+    PrivateVcsConfigComponent,
     NumberInputDialogComponent,
     LeaderboardItemComponent,
     LeaderboardRankingComponent,
