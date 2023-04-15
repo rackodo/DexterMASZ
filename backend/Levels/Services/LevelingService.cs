@@ -142,6 +142,7 @@ public class LevelingService : IEvent
 
             toRemove.IntersectWith(currRoles);
             toAdd.ExceptWith(currRoles);
+            toRemove.ExceptWith(toAdd);
 
             Task.WaitAll(guildUser.AddRolesAsync(toAdd), guildUser.RemoveRolesAsync(toRemove));
 

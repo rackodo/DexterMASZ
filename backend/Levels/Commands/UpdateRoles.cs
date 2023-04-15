@@ -70,13 +70,13 @@ public class UpdateRoles : Command<UpdateRoles>
         if (!result.IsErrored)
             embed
                 .WithColor(Color.Green)
-                .WithDescription($"Successfully updated {user.Mention}'s roles (level {level})")
+                .WithDescription($"Successfully updated {user.Mention}'s roles (level {totalLevel})")
                 .AddField("Added Roles", result.AddedRoles)
                 .AddField("Removed Roles", result.RemovedRoles);
         else
             embed
                 .WithColor(Color.Red)
-                .WithDescription($"Unable to update {user.Mention}'s roles (level {level})")
+                .WithDescription($"Unable to update {user.Mention}'s roles (level {totalLevel})")
                 .AddField("Error", result.Error);
 
         await RespondInteraction(string.Empty, embed);
