@@ -121,13 +121,10 @@ public class CreateVc : Command<CreateVc>
             await waitingChannel.AddPermissionOverwriteAsync(Context.Guild.EveryoneRole, OverwritePermissions.DenyAll(waitingChannel));
 
             foreach (var role in allowedRoles)
-                await waitingChannel.AddPermissionOverwriteAsync(role, OverwritePermissions.DenyAll(waitingChannel).Modify(viewChannel: PermValue.Allow, connect: PermValue.Allow));
+                await waitingChannel.AddPermissionOverwriteAsync(role, OverwritePermissions.InheritAll.Modify(viewChannel: PermValue.Allow, connect: PermValue.Allow));
 
             foreach (var role in creatorRoles)
-                await waitingChannel.AddPermissionOverwriteAsync(role, OverwritePermissions.DenyAll(waitingChannel).Modify(viewChannel: PermValue.Allow, connect: PermValue.Allow, moveMembers: PermValue.Allow));
-
-            foreach (var staffRole in modRoles)
-                await waitingChannel.AddPermissionOverwriteAsync(staffRole, OverwritePermissions.InheritAll.Modify(manageChannel: PermValue.Allow, viewChannel: PermValue.Allow, connect: PermValue.Allow, speak: PermValue.Allow, muteMembers: PermValue.Allow, deafenMembers: PermValue.Allow, moveMembers: PermValue.Allow, useVoiceActivation: PermValue.Allow));
+                await waitingChannel.AddPermissionOverwriteAsync(role, OverwritePermissions.InheritAll.Modify(moveMembers: PermValue.Allow));
         }
 
         IVoiceChannel newChannel = await Context.Guild.CreateVoiceChannelAsync(vcName);
@@ -149,10 +146,14 @@ public class CreateVc : Command<CreateVc>
         foreach (var role in allowedRoles)
         {
             await newChannel.AddPermissionOverwriteAsync(role,
-                OverwritePermissions.DenyAll(newChannel).Modify(
+                OverwritePermissions.InheritAll.Modify(
                     speak: PermValue.Allow,
                     useVoiceActivation: PermValue.Allow,
-                    stream: PermValue.Allow
+                    stream: PermValue.Allow,
+                    sendMessages: PermValue.Allow,
+                    readMessageHistory: PermValue.Allow,
+                    useExternalEmojis: PermValue.Allow,
+                    addReactions: PermValue.Allow
                 )
             );
         }
@@ -161,14 +162,20 @@ public class CreateVc : Command<CreateVc>
         {
             await newChannel.AddPermissionOverwriteAsync(staffRole,
                 OverwritePermissions.InheritAll.Modify(
+                    speak: PermValue.Allow,
+                    useVoiceActivation: PermValue.Allow,
+                    stream: PermValue.Allow,
+                    sendMessages: PermValue.Allow,
+                    readMessageHistory: PermValue.Allow,
+                    useExternalEmojis: PermValue.Allow,
+                    addReactions: PermValue.Allow,
+
                     manageChannel: PermValue.Allow,
                     viewChannel: PermValue.Allow,
                     connect: PermValue.Allow,
-                    speak: PermValue.Allow,
                     muteMembers: PermValue.Allow,
                     deafenMembers: PermValue.Allow,
-                    moveMembers: PermValue.Allow,
-                    useVoiceActivation: PermValue.Allow
+                    moveMembers: PermValue.Allow
                 )
             );
         }
@@ -187,5 +194,6 @@ public class CreateVc : Command<CreateVc>
         );
     }
 
-    private string RoleToString(IEnumerable<IRole> roles) => string.Join(", ", roles.Select(role => $"{role.Name} ({role.Id})"));
+    private static string RoleToString(IEnumerable<IRole> roles) =>
+        string.Join(", ", roles.Select(role => $"{role.Name} ({role.Id})"));
 }
