@@ -3,6 +3,7 @@ using Bot.Abstractions;
 using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
+using Microsoft.Extensions.Logging;
 using PrivateVcs.Data;
 using PrivateVcs.Models;
 using PrivateVcs.Services;
@@ -101,7 +102,14 @@ public class CreateVc : Command<CreateVc>
             );
             return;
         }
-        
+
+        var allowedRoles = config.AllowedRoles.Select(Context.Guild.GetRole).Where(r => r != null);
+        var creatorRoles = config.CreatorRoles.Select(Context.Guild.GetRole).Where(r => r != null);
+        var modRoles = GuildConfig.ModRoles.Concat(GuildConfig.AdminRoles).Select(Context.Guild.GetRole);
+
+        Logger.LogInformation("Creating {Name} for {Users} by {Maker} as part of {Creators} monitored by {Mods}.",
+            vcName, RoleToString(allowedRoles), user.Username, RoleToString(creatorRoles), RoleToString(modRoles));
+
         IVoiceChannel waitingChannel = Context.Guild.VoiceChannels.FirstOrDefault(channel => channel.Name == config.WaitingVcName);
 
         if (waitingChannel is null)
@@ -112,13 +120,13 @@ public class CreateVc : Command<CreateVc>
 
             await waitingChannel.AddPermissionOverwriteAsync(Context.Guild.EveryoneRole, OverwritePermissions.DenyAll(waitingChannel));
 
-            foreach (var role in config.AllowedRoles.Select(Context.Guild.GetRole).Where(r => r != null))
+            foreach (var role in allowedRoles)
                 await waitingChannel.AddPermissionOverwriteAsync(role, OverwritePermissions.DenyAll(waitingChannel).Modify(viewChannel: PermValue.Allow, connect: PermValue.Allow));
 
-            foreach (var role in config.CreatorRoles.Select(Context.Guild.GetRole).Where(r => r != null))
+            foreach (var role in creatorRoles)
                 await waitingChannel.AddPermissionOverwriteAsync(role, OverwritePermissions.DenyAll(waitingChannel).Modify(viewChannel: PermValue.Allow, connect: PermValue.Allow, moveMembers: PermValue.Allow));
 
-            foreach (var staffRole in GuildConfig.ModRoles.Concat(GuildConfig.AdminRoles).Select(Context.Guild.GetRole))
+            foreach (var staffRole in modRoles)
                 await waitingChannel.AddPermissionOverwriteAsync(staffRole, OverwritePermissions.InheritAll.Modify(manageChannel: PermValue.Allow, viewChannel: PermValue.Allow, connect: PermValue.Allow, speak: PermValue.Allow, muteMembers: PermValue.Allow, deafenMembers: PermValue.Allow, moveMembers: PermValue.Allow, useVoiceActivation: PermValue.Allow));
         }
 
@@ -138,7 +146,7 @@ public class CreateVc : Command<CreateVc>
             )
         );
 
-        foreach (var role in config.AllowedRoles.Select(Context.Guild.GetRole).Where(r => r != null))
+        foreach (var role in allowedRoles)
         {
             await newChannel.AddPermissionOverwriteAsync(role,
                 OverwritePermissions.DenyAll(newChannel).Modify(
@@ -149,7 +157,7 @@ public class CreateVc : Command<CreateVc>
             );
         }
 
-        foreach (var staffRole in GuildConfig.ModRoles.Concat(GuildConfig.AdminRoles).Select(Context.Guild.GetRole))
+        foreach (var staffRole in modRoles)
         {
             await newChannel.AddPermissionOverwriteAsync(staffRole,
                 OverwritePermissions.InheritAll.Modify(
@@ -178,4 +186,6 @@ public class CreateVc : Command<CreateVc>
                 .WithColor(Color.Green)
         );
     }
+
+    private string RoleToString(IEnumerable<IRole> roles) => string.Join(", ", roles.Select(role => $"{role.Name} ({role.Id})"));
 }
