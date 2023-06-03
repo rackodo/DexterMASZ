@@ -5,7 +5,6 @@ using Bot.Services;
 using Bot.Translators;
 using Discord;
 using Discord.Interactions;
-using Discord.WebSocket;
 
 namespace Utilities.Commands;
 

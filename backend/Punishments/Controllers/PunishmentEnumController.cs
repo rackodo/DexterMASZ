@@ -1,5 +1,4 @@
 using Bot.Abstractions;
-using Bot.DTOs;
 using Bot.Enums;
 using Bot.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,26 +17,26 @@ public class PunishmentEnumController : EnumController<PunishmentEnumTranslator>
     }
 
     [HttpGet("punishment")]
-    public IActionResult Punishment([FromQuery] Language? language = null) =>
-        TranslateEnum<PunishmentType>();
+    public async Task<IActionResult> Punishment([FromQuery] Language? language = null) =>
+        await TranslateEnum<PunishmentType>(language);
 
     [HttpGet("severity")]
-    public IActionResult Severity([FromQuery] Language? language = null) =>
-        TranslateEnum<SeverityType>();
+    public async Task<IActionResult> Severity([FromQuery] Language? language = null) =>
+        await TranslateEnum<SeverityType>(language);
 
     [HttpGet("casecreationtype")]
-    public IActionResult CreationType([FromQuery] Language? language = null) =>
-        TranslateEnum<CaseCreationType>();
+    public async Task<IActionResult> CreationType([FromQuery] Language? language = null) =>
+        await TranslateEnum<CaseCreationType>(language);
 
     [HttpGet("lockedcommentstatus")]
-    public IActionResult ViewLockedCommentStatus([FromQuery] Language? language = null) =>
-        TranslateEnum<LockedCommentStatus>();
+    public async Task<IActionResult> ViewLockedCommentStatus([FromQuery] Language? language = null) =>
+        await TranslateEnum<LockedCommentStatus>(language);
 
     [HttpGet("markedtodeletestatus")]
-    public IActionResult ViewMarkedToDeleteStatus([FromQuery] Language? language = null) =>
-        TranslateEnum<MarkedToDeleteStatus>();
+    public async Task<IActionResult> ViewMarkedToDeleteStatus([FromQuery] Language? language = null) =>
+        await TranslateEnum<MarkedToDeleteStatus>(language);
 
     [HttpGet("punishmentactivestatus")]
-    public IActionResult ViewPunishmentActiveStatus([FromQuery] Language? language = null) =>
-        TranslateEnum<PunishmentActiveStatus>();
+    public async Task<IActionResult> ViewPunishmentActiveStatus([FromQuery] Language? language = null) =>
+        await TranslateEnum<PunishmentActiveStatus>(language);
 }

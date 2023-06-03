@@ -1,5 +1,4 @@
 using Bot.Abstractions;
-using Bot.DTOs;
 using Bot.Enums;
 using Bot.Services;
 using Bot.Translators;
@@ -17,18 +16,18 @@ public class BotEnumControllers : EnumController<BotEnumTranslator>
     }
 
     [HttpGet("apierror")]
-    public IActionResult ApiError([FromQuery] Language? language = null) =>
-        TranslateEnum<ApiError>(language);
+    public async Task<IActionResult> ApiError([FromQuery] Language? language = null) =>
+        await TranslateEnum<ApiError>(language);
 
     [HttpGet("editstatus")]
-    public IActionResult ViewEditStatus([FromQuery] Language? language = null) => 
-        TranslateEnum<EditStatus>(language);
+    public async Task<IActionResult> ViewEditStatus([FromQuery] Language? language = null) => 
+        await TranslateEnum<EditStatus>(language);
 
     [HttpGet("language")]
-    public IActionResult LanguageEnum([FromQuery] Language? language = null) =>
-        TranslateEnum<Language>(language);
+    public async Task<IActionResult> LanguageEnum([FromQuery] Language? language = null) =>
+        await TranslateEnum<Language>(language);
 
     [HttpGet("viewpermission")]
-    public IActionResult ViewPermissions([FromQuery] Language? language = null) =>
-        TranslateEnum<ViewPermission>(language);
+    public async Task<IActionResult> ViewPermissions([FromQuery] Language? language = null) =>
+        await TranslateEnum<ViewPermission>(language);
 }

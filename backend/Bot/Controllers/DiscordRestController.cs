@@ -53,16 +53,16 @@ public class DiscordRestController : AuthenticatedController
             {
                 var userGuildFetched = _discordRest.FetchGuildInfo(userGuild.Id, CacheBehavior.Default);
 
-                if (userGuildFetched != null)
-                {
-                    if (await identity.HasModRoleOrHigherOnGuild(guild.GuildId))
-                        if (await identity.HasAdminRoleOnGuild(guild.GuildId))
-                            adminGuilds.Add(DiscordGuild.GetDiscordGuild(userGuildFetched));
-                        else
-                            modGuilds.Add(DiscordGuild.GetDiscordGuild(userGuildFetched));
+                if (userGuildFetched == null)
+                    continue;
+
+                if (await identity.HasModRoleOrHigherOnGuild(guild.GuildId))
+                    if (await identity.HasAdminRoleOnGuild(guild.GuildId))
+                        adminGuilds.Add(DiscordGuild.GetDiscordGuild(userGuildFetched));
                     else
-                        userGuilds.Add(DiscordGuild.GetDiscordGuild(userGuildFetched));
-                }
+                        modGuilds.Add(DiscordGuild.GetDiscordGuild(userGuildFetched));
+                else
+                    userGuilds.Add(DiscordGuild.GetDiscordGuild(userGuildFetched));
             }
             else
             {

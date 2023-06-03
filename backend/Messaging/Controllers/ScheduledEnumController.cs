@@ -1,5 +1,4 @@
 ﻿using Bot.Abstractions;
-using Bot.DTOs;
 using Bot.Enums;
 using Bot.Services;
 using Messaging.Enums;
@@ -18,10 +17,10 @@ public class ScheduledEnumController : EnumController<MessagingEnumTranslator>
     }
 
     [HttpGet("scheduledmessagefailurereason")]
-    public IActionResult FailureReason([FromQuery] Language? language = null) =>
-        TranslateEnum<ScheduledMessageFailureReason>();
+    public async Task<IActionResult> FailureReason([FromQuery] Language? language = null) =>
+        await TranslateEnum<ScheduledMessageFailureReason>(language);
 
     [HttpGet("scheduledmessagestatus")]
-    public IActionResult Status([FromQuery] Language? language = null) =>
-        TranslateEnum<ScheduledMessageStatus>();
+    public async Task<IActionResult> Status([FromQuery] Language? language = null) =>
+        await TranslateEnum<ScheduledMessageStatus>(language);
 }

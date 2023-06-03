@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -116,12 +115,11 @@ public class BotModule : WebModule
 
         if (settings.CorsEnabled)
             services.AddCors(o => o.AddPolicy("AngularDevCors", builder =>
-            {
                 builder.WithOrigins("http://127.0.0.1:4200")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials();
-            }));
+                    .AllowCredentials()
+            ));
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();

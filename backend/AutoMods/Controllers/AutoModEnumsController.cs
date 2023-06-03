@@ -1,7 +1,6 @@
 ﻿using AutoMods.Enums;
 using AutoMods.Translators;
 using Bot.Abstractions;
-using Bot.DTOs;
 using Bot.Enums;
 using Bot.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +17,14 @@ public class AutoModEnumsController : EnumController<AutoModEnumTranslator>
     }
 
     [HttpGet("automodaction")]
-    public IActionResult AutoModActions([FromQuery] Language? language = null) =>
-        TranslateEnum<AutoModAction>();
+    public async Task<IActionResult> AutoModActions([FromQuery] Language? language = null) =>
+        await TranslateEnum<AutoModAction>(language);
 
     [HttpGet("automodchannelbehavior")]
-    public IActionResult ChannelNotificationBehavior([FromQuery] Language? language = null) =>
-        TranslateEnum<AutoModChannelNotificationBehavior>();
+    public async Task<IActionResult> ChannelNotificationBehavior([FromQuery] Language? language = null) =>
+        await TranslateEnum<AutoModChannelNotificationBehavior>(language);
 
     [HttpGet("automodtype")]
-    public IActionResult AutoModTypes([FromQuery] Language? language = null) =>
-        TranslateEnum<AutoModType>();
+    public async Task<IActionResult> AutoModTypes([FromQuery] Language? language = null) =>
+        await TranslateEnum<AutoModType>(language);
 }

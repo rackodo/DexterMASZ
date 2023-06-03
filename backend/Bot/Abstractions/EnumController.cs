@@ -18,7 +18,7 @@ public class EnumController<TTranslator> : BaseController
         _logger = logger;
     }
 
-    public ObjectResult TranslateEnum<TEnumType>([FromQuery] Language? language = null)
+    public Task<ObjectResult> TranslateEnum<TEnumType>(Language? language)
         where TEnumType : struct, Enum
     {
         _translator.SetLanguage(language);
@@ -41,7 +41,7 @@ public class EnumController<TTranslator> : BaseController
         {
             _logger.LogError("Could not find a method to translate the enum of {Enum} for {Translator}",
                 nameof(TEnumType), nameof(TTranslator));
-            return Problem("Translator does not exist for this enum.");
+            return Task.FromResult(Problem("Translator does not exist for this enum."));
         }
 
         var enums = Enum.GetValues<TEnumType>().Select(enumValue =>
@@ -51,7 +51,7 @@ public class EnumController<TTranslator> : BaseController
             )
         ).ToList();
 
-        return Ok(enums);
+        return Task.FromResult(Ok(enums) as ObjectResult);
     }
 
 }
