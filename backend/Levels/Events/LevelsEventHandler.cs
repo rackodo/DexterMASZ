@@ -4,7 +4,7 @@ using Levels.Models;
 
 namespace Levels.Events;
 
-public class LevelsEventHandler : INternalEventHandler
+public class LevelsEventHandler : IInternalEventHandler
 {
     internal readonly AsyncEvent<Func<GuildLevelConfig, Task>> GuildLevelConfigCreatedEvent = new();
 

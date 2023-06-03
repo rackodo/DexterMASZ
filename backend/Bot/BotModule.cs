@@ -73,7 +73,7 @@ public class BotModule : WebModule
 
     public override void AddServices(IServiceCollection services, CachedServices cachedServices, AppSettings settings)
     {
-        foreach (var type in cachedServices.GetClassTypes<INternalEventHandler>())
+        foreach (var type in cachedServices.GetClassTypes<IInternalEventHandler>())
             services.AddSingleton(type);
 
         foreach (var type in cachedServices.GetClassTypes<IEvent>())
@@ -124,21 +124,10 @@ public class BotModule : WebModule
                     .AllowCredentials();
             }));
 
-        services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
-        services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
-        services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
-
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
     }
 
-    public override void ConfigureServices(ConfigurationManager configuration, IServiceCollection services)
-    {
-        services.Configure<IpRateLimitOptions>(configuration.GetSection("IpRateLimiting"));
-        services.Configure<IpRateLimitPolicies>(configuration.GetSection("IpRateLimitPolicies"));
-    }
 
     public override void PostBuild(IServiceProvider services, CachedServices cachedServices)
     {
