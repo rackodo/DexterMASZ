@@ -25,9 +25,6 @@ public class Initialize
 
             var builder = WebApplication.CreateBuilder();
 
-            ThreadPool.GetMinThreads(out _, out var minIoc);
-            ThreadPool.SetMinThreads(30, minIoc);
-
             ConsoleHelper.AddHeading("Get Modules");
             var modules = GetModules();
 

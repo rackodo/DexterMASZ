@@ -15,9 +15,8 @@ public class UlongConverter : JsonConverter
     {
         var deserialized = serializer.Deserialize(reader);
 
-        if (deserialized is string deStr)
-            if (ulong.TryParse(deStr, out var value))
-                return value;
+        if (deserialized is string deStr && ulong.TryParse(deStr, out var value))
+            return value;
 
         return deserialized;
     }

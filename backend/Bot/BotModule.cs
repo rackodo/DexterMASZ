@@ -34,7 +34,7 @@ public class BotModule : WebModule
         foreach (var type in cachedServices.GetClassTypes<IDataContextInitialize>())
         {
             type.GetMethod("AddContextToServiceProvider")
-                .Invoke(null, new object[] { dbOption, services });
+                ?.Invoke(null, new object[] { dbOption, services });
         }
 
         foreach (var type in cachedServices.GetClassTypes<Repository>())
