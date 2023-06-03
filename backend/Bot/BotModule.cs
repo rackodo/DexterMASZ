@@ -1,5 +1,4 @@
-﻿using AspNetCoreRateLimit;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Loggers;
 using Bot.Middleware;
 using Bot.Models;
@@ -154,9 +153,7 @@ public class BotModule : WebModule
                 options.RoutePrefix = string.Empty;
             });
         }
-
-        app.UseIpRateLimiting();
-
+        
         app.UseMiddleware<HeaderMiddleware>();
         app.UseMiddleware<RequestLoggingMiddleware>();
         app.UseMiddleware<ApiExceptionHandlingMiddleware>();
