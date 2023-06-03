@@ -14,7 +14,6 @@ public class ShuffleCommand : MusicCommand<ShuffleCommand>
     {
         Player.Queue.Shuffle();
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = "Shuffled the queue");
+        await RespondInteraction("Shuffled the queue");
     }
 }

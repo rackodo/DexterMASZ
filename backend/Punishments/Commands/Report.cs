@@ -14,6 +14,8 @@ public class Report : Command<Report>
     public DiscordSocketClient Client { get; set; }
     public IServiceProvider Services { get; set; }
 
+    public override Task BeforeCommandExecute() => DeferAsync(true);
+
     [MessageCommand("Report to moderators")]
     public async Task ReportCommand(IMessage msg)
     {
@@ -26,11 +28,10 @@ public class Report : Command<Report>
         catch (Exception e)
         {
             Logger.LogError(e, "Failed to send internal notification to moderators for report command.");
-            await Context.Interaction.RespondAsync(Translator.Get<PunishmentTranslator>().ReportFailed(),
-                ephemeral: true);
+            await RespondInteraction(Translator.Get<PunishmentTranslator>().ReportFailed());
             return;
         }
 
-        await Context.Interaction.RespondAsync(Translator.Get<PunishmentTranslator>().ReportSent(), ephemeral: true);
+        await RespondInteraction(Translator.Get<PunishmentTranslator>().ReportSent());
     }
 }

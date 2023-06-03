@@ -2,7 +2,10 @@ using Bot.Data;
 using Bot.Exceptions;
 using Bot.Models;
 using Bot.Services;
+using Discord;
 using Discord.Interactions;
+using Discord.Rest;
+using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
 
 namespace Bot.Abstractions;
@@ -32,5 +35,39 @@ public abstract class Command<T> : InteractionModuleBase<SocketInteractionContex
 
         if (Identity == null)
             throw new InvalidIdentityException($"Failed to register command identity for '{Context.User.Id}'.");
+
+        await BeforeCommandExecute();
+    }
+
+    public virtual async Task BeforeCommandExecute() => await DeferAsync();
+
+    public async Task<RestInteractionMessage> RespondInteraction(string content = default,
+        EmbedBuilder embedBuilder = null, ComponentBuilder componentBuilder = null)
+    {
+        var embed = embedBuilder?.Build();
+        var components = componentBuilder?.Build();
+
+        void Properties(MessageProperties msg)
+        {
+            msg.Content = content;
+            msg.Embed = embed;
+            msg.Components = components;
+        }
+
+        if (Context.Interaction is SocketMessageComponent castInteraction)
+            await castInteraction.UpdateAsync(Properties);
+        else
+            try
+            {
+                if (Context.Interaction.HasResponded)
+                    return await Context.Interaction.ModifyOriginalResponseAsync(Properties);
+                await Context.Interaction.RespondAsync(content, embed: embed, components: components);
+            }
+            catch
+            {
+                await Context.Interaction.FollowupAsync(content, embed: embed, components: components);
+            }
+
+        return null;
     }
 }

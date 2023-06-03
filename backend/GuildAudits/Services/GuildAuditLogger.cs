@@ -485,10 +485,9 @@ public class GuildAuditer : IEvent
         string title;
         if (eventType == GuildAuditLogEvent.VoiceJoined)
             title = translator.Get<GuildAuditTranslator>().VoiceJoined();
-        else if (eventType == GuildAuditLogEvent.VoiceLeft)
-            title = translator.Get<GuildAuditTranslator>().VoiceLeft();
-        else
-            title = translator.Get<GuildAuditTranslator>().MovedVoiceChannel();
+        else title = eventType == GuildAuditLogEvent.VoiceLeft
+            ? translator.Get<GuildAuditTranslator>().VoiceLeft()
+            : translator.Get<GuildAuditTranslator>().MovedVoiceChannel();
 
         StringBuilder description = new();
         description.AppendLine(

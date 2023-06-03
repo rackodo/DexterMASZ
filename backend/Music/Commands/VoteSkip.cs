@@ -15,21 +15,15 @@ public class VoteSkipCommand : MusicCommand<VoteSkipCommand>
 
         if (track == null)
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Unable to get the track, maybe because I am not playing anything");
-
+            await RespondInteraction("Unable to get the track, maybe because I am not playing anything");
             return;
         }
 
         var info = await Player.VoteAsync(Context.User.Id);
 
         if (info.WasSkipped)
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content =
-                    $"Skipped - {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
+            await RespondInteraction($"Skipped - {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
         else
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content =
-                    $"Votes required: {info.Votes.Count}/{Math.Ceiling(info.Percentage * info.TotalUsers)}");
+            await RespondInteraction($"Votes required: {info.Votes.Count}/{Math.Ceiling(info.Percentage * info.TotalUsers)}");
     }
 }

@@ -14,7 +14,6 @@ public class RemoveDuplicatesCommand : MusicCommand<RemoveDuplicatesCommand>
     {
         Player.Queue.Distinct();
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = "Removed duplicating tracks with same source from the queue");
+        await RespondInteraction("Removed duplicating tracks with same source from the queue");
     }
 }

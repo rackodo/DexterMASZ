@@ -13,9 +13,7 @@ public class PlayStreamCommand : MusicCommand<PlayStreamCommand>
     {
         if (!Uri.IsWellFormedUriString(streamUrl, UriKind.Absolute))
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "I need a valid stream URL to function");
-
+            await RespondInteraction("I need a valid stream URL to function");
             return;
         }
 
@@ -23,15 +21,12 @@ public class PlayStreamCommand : MusicCommand<PlayStreamCommand>
 
         if (track == null)
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = $"Unable to get the stream from {streamUrl}");
-
+            await RespondInteraction($"Unable to get the stream from {streamUrl}");
             return;
         }
 
         await Player.PlayAsync(track);
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = $"Now streaming from {streamUrl}");
+        await RespondInteraction($"Now streaming from {streamUrl}");
     }
 }

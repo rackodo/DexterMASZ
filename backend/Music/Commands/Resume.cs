@@ -15,15 +15,12 @@ public class ResumeCommand : MusicCommand<ResumeCommand>
     {
         if (Player.State != PlayerState.Paused)
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Resumed earlier");
-
+            await RespondInteraction("Resumed earlier");
             return;
         }
 
         await Player.ResumeAsync();
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = "Resuming");
+        await RespondInteraction("Resuming");
     }
 }

@@ -55,8 +55,6 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, IDataContextC
         await ModCaseTemplates.AsQueryable().Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedAt)
             .ToListAsync();
 
-    public async Task<int> CountAllModCaseTemplates() => await ModCaseTemplates.AsQueryable().CountAsync();
-
     public async Task SaveCaseTemplate(ModCaseTemplate template)
     {
         await ModCaseTemplates.AddAsync(template);
@@ -75,7 +73,6 @@ public class PunishmentDatabase : DataContext<PunishmentDatabase>, IDataContextC
         ModCaseTemplates.RemoveRange(templates);
         await SaveChangesAsync();
     }
-
 
     public async Task<ModCaseComment> SelectSpecificModCaseComment(int commentId) =>
         await ModCaseComments.AsQueryable().FirstOrDefaultAsync(c => c.Id == commentId);

@@ -9,10 +9,7 @@ public class TrackedInvite
         GuildId = guildId;
         Code = invite.Code;
 
-        if (invite.Inviter is not null)
-            CreatorId = invite.Inviter.Id;
-        else
-            CreatorId = 0;
+        CreatorId = invite.Inviter is not null ? invite.Inviter.Id : 0;
 
         CreatedAt = invite.CreatedAt.GetValueOrDefault().UtcDateTime;
         Uses = invite.Uses.GetValueOrDefault();

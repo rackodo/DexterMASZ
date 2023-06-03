@@ -4,6 +4,7 @@ using Bot.Services;
 using Levels.Data;
 using Levels.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Levels.Controllers;
 
@@ -14,14 +15,16 @@ public class LevelsXpController : AuthenticatedController
     private readonly GuildLevelConfigRepository _levelsConfigRepository;
     private readonly GuildUserLevelRepository _levelsRepository;
     private readonly DiscordRest _rest;
+    private readonly ILogger<LevelsXpController> _logger;
 
     public LevelsXpController(IdentityManager identityManager, GuildUserLevelRepository levelsRepository,
-        GuildLevelConfigRepository levelsConfigRepository, DiscordRest rest) :
+        GuildLevelConfigRepository levelsConfigRepository, DiscordRest rest, ILogger<LevelsXpController> logger) :
         base(identityManager, levelsRepository, levelsConfigRepository)
     {
         _levelsRepository = levelsRepository;
         _levelsConfigRepository = levelsConfigRepository;
         _rest = rest;
+        _logger = logger;
     }
 
     [HttpGet("guilds/{guildId}/users/{userId}")]
@@ -41,7 +44,7 @@ public class LevelsXpController : AuthenticatedController
     public async Task<IActionResult> GetLeaderboard([FromRoute] ulong guildId, [FromQuery] string order = "total",
         [FromQuery] int page = 1, [FromQuery] int pageSize = 100)
     {
-        Console.WriteLine($"Received Leaderboard req for guild {guildId}, page {page} with size {pageSize}");
+        _logger.LogInformation($"Received Leaderboard req for guild {guildId}, page {page} with size {pageSize}");
         if (pageSize < 1) pageSize = 1;
         else if (pageSize > MaxPageSize) pageSize = MaxPageSize;
 

@@ -17,14 +17,10 @@ public class Rank : Command<Rank>
     public UserRankcardConfigRepository UserRankcardConfigRepository { get; set; }
     public SettingsRepository SettingsRepository { get; set; }
 
-    private static string Storage(IUser user, string root) => Path.Combine(root, "Cache", $"Rankcard{user.Id}.png");
-
     [SlashCommand("rank", "Display your rankcard and experience information.", runMode: RunMode.Async)]
     [BotChannel]
     public async Task RankCommand([Summary("user", "Target user to get rank from.")] IUser user = null)
     {
-        await DeferAsync();
-
         user ??= Context.User;
 
         var rankCardConfig = UserRankcardConfigRepository!.GetRankcard(user.Id);
@@ -41,34 +37,15 @@ public class Rank : Command<Rank>
         var guildLevelConfig = await GuildLevelConfigRepository!.GetOrCreateConfig(Context.Guild.Id);
         var calcLevel = new CalculatedGuildUserLevel(level, guildLevelConfig);
 
-        var path = "";
+        using var rankCard = await Rankcard.RenderRankCard(user, calcLevel, rankCardConfig,
+                   GuildUserLevelRepository, SettingsRepository, Logger);
 
-        try
-        {
-            path = Storage(user, AppDomain.CurrentDomain.BaseDirectory);
+        using var stream = new MemoryStream();
 
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+        await rankCard.SaveAsPngAsync(stream);
 
-            using (var rankcardimg = await Rankcard.RenderRankCard(user, calcLevel, rankCardConfig,
-                       GuildUserLevelRepository, SettingsRepository))
-                await rankcardimg.SaveAsPngAsync(path);
+        var attachment = new FileAttachment(stream, $"Rankcard {user.Id}.png");
 
-
-            await FollowupWithFileAsync(path);
-        }
-        catch (Exception ex)
-        {
-            await FollowupAsync("There was an error while rendering your rankcard!", new[]
-            {
-                new EmbedBuilder()
-                    .WithTitle("An error has occurred!")
-                    .WithDescription("An exception took place while handling rankcard rendering, please consult logs.")
-                    .Build()
-            });
-            Logger.LogError(ex, "Exception took place while handling rankcard rendering.");
-        }
-
-        if (File.Exists(path))
-            File.Delete(path);
+        await FollowupWithFileAsync(attachment, components: buttons.Build());
     }
 }

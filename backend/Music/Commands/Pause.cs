@@ -13,15 +13,12 @@ public class PauseCommand : MusicCommand<PauseCommand>
     {
         if (Player.State == PlayerState.Paused)
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Paused earlier");
-
+            await RespondInteraction("Paused earlier");
             return;
         }
 
         await Player.PauseAsync();
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = "Pausing");
+        await RespondInteraction("Pausing");
     }
 }

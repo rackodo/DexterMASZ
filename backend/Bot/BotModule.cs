@@ -57,9 +57,7 @@ public class BotModule : WebModule
             ConnectionTimeout = 24 * 60 * 60 * 1000,
             FormatUsersInBidirectionalUnicode = false,
             MessageCacheSize = 10240,
-            GatewayIntents = (GatewayIntents)((int)GatewayIntents.AllUnprivileged | (int)GatewayIntents.GuildMembers |
-                                              (int)GatewayIntents.GuildMessages | (int)GatewayIntents.DirectMessages |
-                                              (1 << 15))
+            GatewayIntents = GatewayIntents.All
         });
 
         services.AddSingleton<DiscordSocketClient>();

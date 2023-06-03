@@ -7,6 +7,7 @@ using Discord;
 using Discord.Interactions;
 using Levels.Data;
 using Levels.Models;
+using Microsoft.Extensions.Logging;
 using Color = Discord.Color;
 
 namespace Levels.Commands;
@@ -43,8 +44,7 @@ public class TransferXp : Command<TransferXp>
 
         if (textXp == 0 && voiceXp == 0)
         {
-            await RespondAsync($"No experience to transfer from {source.Mention} to {target.Mention}.",
-                ephemeral: true);
+            await RespondInteraction($"No experience to transfer from {source.Mention} to {target.Mention}.");
             return;
         }
 
@@ -53,9 +53,9 @@ public class TransferXp : Command<TransferXp>
         sourceLevel.TextXp -= textXp;
         sourceLevel.VoiceXp -= voiceXp;
 
-        var stringify = (GuildUserLevel l) => { return $"{l.UserId} ({l.TextXp}, {l.VoiceXp})"; };
-        Console.WriteLine(
-            $"Transferred ({textXp}, {voiceXp}) from {stringify(sourceLevel)} to {stringify(targetLevel)}.");
+        var stringify = (GuildUserLevel l) => $"{l.UserId} ({l.TextXp}, {l.VoiceXp})";
+
+        Logger.LogInformation($"Transferred ({textXp}, {voiceXp}) from {stringify(sourceLevel)} to {stringify(targetLevel)}.");
 
         try
         {
@@ -63,7 +63,7 @@ public class TransferXp : Command<TransferXp>
         }
         catch (Exception ex)
         {
-            await RespondAsync("**An error occurred**: " + ex.Message, ephemeral: true);
+            await RespondInteraction("**An error occurred**: " + ex.Message);
             return;
         }
 
@@ -72,9 +72,8 @@ public class TransferXp : Command<TransferXp>
             .WithTitle("XP Transfer Successful")
             .WithDescription(
                 $"Transferred {textXp} text XP and {voiceXp} voice XP from {source.Mention} to {target.Mention}")
-            .WithTimestamp(DateTime.UtcNow)
-            .Build();
+            .WithTimestamp(DateTime.UtcNow);
 
-        await RespondAsync(embed: embed);
+        await RespondInteraction(string.Empty, embed);
     }
 }

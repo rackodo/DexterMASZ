@@ -14,7 +14,6 @@ public class ClearMusicCommand : MusicCommand<ClearMusicCommand>
     {
         Player.Queue.Clear();
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content = "Cleared all tracks of the queue");
+        await RespondInteraction("Cleared all tracks of the queue");
     }
 }

@@ -16,13 +16,14 @@ public class WhoIs : Command<WhoIs>
     public CachedServices CachedServices { get; set; }
     public IServiceProvider ServiceProvider { get; set; }
 
+    public override async Task BeforeCommandExecute() =>
+        await Context.Interaction.DeferAsync(!GuildConfig.StaffChannels.Contains(Context.Channel.Id));
+
     [Require(RequireCheck.GuildModerator)]
     [SlashCommand("whois", "Who is information about a user.")]
     [BotChannel]
     public async Task WhoIsCommand([Summary("user", "user to scan")] IGuildUser user)
     {
-        await Context.Interaction.DeferAsync(!GuildConfig.StaffChannels.Contains(Context.Channel.Id));
-
         var embed = new EmbedBuilder()
             .WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {user.Id}")
             .WithTitle($"{Translator.Get<UtilityTranslator>().UserProfile()} {user.Username}#{user.Discriminator}")
@@ -35,6 +36,6 @@ public class WhoIs : Command<WhoIs>
                  CachedServices.GetInitializedAuthenticatedClasses<IWhoIsResults>(ServiceProvider, Identity))
             await repo.AddWhoIsInformation(embed, user, Context, Translator);
 
-        await Context.Interaction.ModifyOriginalResponseAsync(message => { message.Embed = embed.Build(); });
+        await RespondInteraction(string.Empty, embed);
     }
 }

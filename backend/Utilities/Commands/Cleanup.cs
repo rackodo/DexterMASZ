@@ -13,6 +13,9 @@ namespace Utilities.Commands;
 
 public class Cleanup : Command<Cleanup>
 {
+    public override async Task BeforeCommandExecute() =>
+        await Context.Interaction.DeferAsync(!GuildConfig.StaffChannels.Contains(Context.Channel.Id));
+
     [Require(RequireCheck.GuildModerator)]
     [SlashCommand("cleanup", "Cleanup specific data from the server and/or channel.")]
     public async Task CleanupCommand(
@@ -27,8 +30,7 @@ public class Cleanup : Command<Cleanup>
     {
         if (cleanupMode == CleanupMode.Messages && filterUser == null)
         {
-            await Context.Interaction.RespondAsync("I can't clean up all these messages! Please provide a filter...",
-                ephemeral: true);
+            await RespondInteraction("I can't clean up all these messages! Please provide a filter...");
             return;
         }
 
@@ -39,12 +41,9 @@ public class Cleanup : Command<Cleanup>
             }
             else
             {
-                await Context.Interaction.RespondAsync(Translator.Get<BotTranslator>().OnlyTextChannel(),
-                    ephemeral: true);
+                await RespondInteraction(Translator.Get<BotTranslator>().OnlyTextChannel());
                 return;
             }
-
-        await Context.Interaction.DeferAsync(!GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 
         if (count > 1000)
             count = 1000;
@@ -65,17 +64,14 @@ public class Cleanup : Command<Cleanup>
         catch (HttpException ex)
         {
             if (ex.HttpCode == HttpStatusCode.Forbidden)
-                await Context.Interaction.ModifyOriginalResponseAsync(msg =>
-                    msg.Content = Translator.Get<BotTranslator>().CannotViewOrDeleteInChannel());
+                await RespondInteraction(Translator.Get<BotTranslator>().CannotViewOrDeleteInChannel());
             else if (ex.HttpCode == HttpStatusCode.Forbidden)
-                await Context.Interaction.ModifyOriginalResponseAsync(msg =>
-                    msg.Content = Translator.Get<BotTranslator>().CannotFindChannel());
+                await RespondInteraction(Translator.Get<BotTranslator>().CannotFindChannel());
 
             return;
         }
 
-        await Context.Interaction.ModifyOriginalResponseAsync(msg =>
-            msg.Content = Translator.Get<UtilityTranslator>().DeletedMessages(deleted, channel));
+        await RespondInteraction(Translator.Get<UtilityTranslator>().DeletedMessages(deleted, channel));
     }
 
     private static bool HasAttachment(IMessage m) => m.Attachments.Count > 0;
@@ -87,9 +83,7 @@ public class Cleanup : Command<Cleanup>
     {
         var latestMessage = await channel.GetMessagesAsync(1).FirstOrDefaultAsync();
 
-        if (latestMessage is null)
-            return 0;
-        if (latestMessage.FirstOrDefault() is null)
+        if (latestMessage?.FirstOrDefault() is null)
             return 0;
 
         var lastId = latestMessage.First().Id;
@@ -106,33 +100,38 @@ public class Cleanup : Command<Cleanup>
             {
                 lastId = message.Id;
                 limit--;
+
                 if (filterUser != null && message.Author.Id != filterUser.Id)
                     continue;
-                if (predicate(message))
+
+                if (!predicate(message))
+                    continue;
+
+                deleted++;
+                if (message.CreatedAt.UtcDateTime.AddDays(14) > DateTime.UtcNow)
+                    toDelete.Add(message);
+                else
+                    await message.DeleteAsync();
+            }
+
+            switch (toDelete.Count)
+            {
+                case >= 2:
                 {
-                    deleted++;
-                    if (message.CreatedAt.UtcDateTime.AddDays(14) > DateTime.UtcNow)
-                        toDelete.Add(message);
-                    else
-                        await message.DeleteAsync();
+                    RequestOptions options = new()
+                    {
+                        AuditLogReason =
+                            $"Bulkdelete by {currentActor.Username}#{currentActor.Discriminator} ({currentActor.Id})."
+                    };
+
+                    await channel.DeleteMessagesAsync(toDelete, options);
+                    toDelete.Clear();
+                    break;
                 }
-            }
-
-            if (toDelete.Count >= 2)
-            {
-                RequestOptions options = new()
-                {
-                    AuditLogReason =
-                        $"Bulkdelete by {currentActor.Username}#{currentActor.Discriminator} ({currentActor.Id})."
-                };
-
-                await channel.DeleteMessagesAsync(toDelete, options);
-                toDelete.Clear();
-            }
-            else if (toDelete.Count > 0)
-            {
-                await toDelete.First().DeleteAsync();
-                toDelete.Clear();
+                case > 0:
+                    await toDelete.First().DeleteAsync();
+                    toDelete.Clear();
+                    break;
             }
         }
 

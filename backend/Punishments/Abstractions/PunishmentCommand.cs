@@ -16,12 +16,15 @@ public class PunishmentCommand<T> : Command<T>
     public IServiceProvider ServiceProvider { get; set; }
     public DiscordRest DiscordRest { get; set; }
 
-    public async Task RunModCase(ModCase modCase)
+    public override async Task BeforeCommandExecute()
     {
         await Context.Interaction.DeferAsync(!GuildConfig.StaffChannels.Contains(Context.Channel.Id));
 
         ModCaseRepository.AsUser(Identity);
-        
+    }
+
+    public async Task RunModCase(ModCase modCase)
+    {
         try
         {
             var (_, result, finalWarned) =
@@ -31,21 +34,14 @@ public class PunishmentCommand<T> : Command<T>
             {
                 var textChannel = Context.Guild.GetTextChannel(GuildConfig.StaffAnnouncements);
 
-                await Context.Interaction.ModifyOriginalResponseAsync(msg =>
-                    msg.Content =
-                        $"Check {textChannel.Mention} for this modlog, as this user is on their final warning."
-                );
+                await RespondInteraction($"Check {textChannel.Mention} for this modlog, as this user is on their final warning.");
             }
             else
             {
                 var (embed, buttons) = await modCase.CreateNewModCaseEmbed(GuildConfig,
                     await SettingsRepository.GetAppSettings(), result, DiscordRest, ServiceProvider);
 
-                await Context.Interaction.ModifyOriginalResponseAsync(msg =>
-                {
-                    msg.Embed = embed.Build();
-                    msg.Components = buttons.Build();
-                });
+                await RespondInteraction(string.Empty, embed, buttons);
             }
         }
         catch (Exception e)

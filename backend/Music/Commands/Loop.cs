@@ -16,16 +16,14 @@ public class LoopCommand : MusicCommand<LoopCommand>
 
         if (track == null)
         {
-            await Context.Interaction.ModifyOriginalResponseAsync(x =>
-                x.Content = "Unable to get the track, maybe because I am not playing anything");
+            await RespondInteraction("Unable to get the track, maybe because I am not playing anything");
 
             return;
         }
 
         Player.LoopMode = loopMode;
 
-        await Context.Interaction.ModifyOriginalResponseAsync(x =>
-            x.Content =
+        await RespondInteraction(
                 $"{(Player.LoopMode != PlayerLoopMode.None ?
                     $"Looping the {Player.LoopMode switch
                     {

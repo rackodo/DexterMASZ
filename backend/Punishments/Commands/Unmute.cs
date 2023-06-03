@@ -32,7 +32,7 @@ public class Unmute : Command<Unmute>
 
         if (modCases.Count == 0)
         {
-            await Context.Interaction.RespondAsync(Translator.Get<PunishmentTranslator>().NoActiveModCases());
+            await RespondInteraction(Translator.Get<PunishmentTranslator>().NoActiveModCases());
             return;
         }
 
@@ -69,13 +69,13 @@ public class Unmute : Command<Unmute>
         embed.AddField(Translator.Get<PunishmentTranslator>().Result(),
             Translator.Get<PunishmentTranslator>().WaitingForApproval());
 
-        var button = new ComponentBuilder()
+        var buttons = new ComponentBuilder()
             .WithButton(Translator.Get<PunishmentTranslator>().DeleteMutes(), $"unmute-delete:{user.Id}")
             .WithButton(Translator.Get<PunishmentTranslator>().DeactivateMutes(), $"unmute-deactivate:{user.Id}",
                 ButtonStyle.Secondary)
             .WithButton(Translator.Get<PunishmentTranslator>().Cancel(), "unmute-cancel", ButtonStyle.Danger);
 
-        await Context.Interaction.RespondAsync(embed: embed.Build(), components: button.Build());
+        await RespondInteraction(string.Empty, embed, buttons);
     }
 
     [ComponentInteraction("unmute-delete:*")]
@@ -100,11 +100,7 @@ public class Unmute : Command<Unmute>
                     .WithValue(Translator.Get<PunishmentTranslator>().MutesDeleted())
             };
 
-            await castInteraction.UpdateAsync(message =>
-            {
-                message.Embed = embed.Build();
-                message.Components = new ComponentBuilder().Build();
-            });
+            await RespondInteraction(string.Empty, embed);
         }
     }
 
@@ -128,11 +124,7 @@ public class Unmute : Command<Unmute>
                     .WithValue(Translator.Get<PunishmentTranslator>().MutesDeactivated())
             };
 
-            await castInteraction.UpdateAsync(message =>
-            {
-                message.Embed = embed.Build();
-                message.Components = new ComponentBuilder().Build();
-            });
+            await RespondInteraction(string.Empty, embed);
         }
     }
 
@@ -149,11 +141,7 @@ public class Unmute : Command<Unmute>
                     .WithValue(Translator.Get<PunishmentTranslator>().Canceled())
             };
 
-            await castInteraction.UpdateAsync(message =>
-            {
-                message.Embed = embed.Build();
-                message.Components = new ComponentBuilder().Build();
-            });
+            await RespondInteraction(string.Empty, embed);
         }
     }
 }

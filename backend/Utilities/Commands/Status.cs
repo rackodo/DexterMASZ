@@ -16,13 +16,14 @@ public class Status : Command<Status>
 {
     public StatusRepository StatusRepository { get; set; }
 
+    public override async Task BeforeCommandExecute() =>
+        await Context.Interaction.DeferAsync(true);
+
     [Require(RequireCheck.SiteAdmin)]
     [SlashCommand("status", "See the current status of the bot.")]
     [BotChannel]
     public async Task StatusCommand()
     {
-        await Context.Interaction.DeferAsync(true);
-
         var embed = new EmbedBuilder()
             .WithTitle(Translator.Get<UtilityTranslator>().Status())
             .WithColor(Color.Green)
@@ -74,6 +75,6 @@ public class Status : Command<Status>
                 loggedInString.ToString().Truncate(1024)
             );
 
-        await Context.Interaction.ModifyOriginalResponseAsync(msg => { msg.Embed = embed.Build(); });
+        await RespondInteraction(string.Empty, embed);
     }
 }

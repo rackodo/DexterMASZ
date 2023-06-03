@@ -17,7 +17,6 @@ public class Banner : Command<Banner>
     public async Task BannerCommand([Summary("user", "User to get the banner from")] IUser user = null)
     {
         user ??= Context.User;
-        await Context.Interaction.DeferAsync();
         await UserBanner(user.Id.ToString(), true);
     }
 
@@ -50,17 +49,6 @@ public class Banner : Command<Banner>
         if (guildAvail)
             buttons.WithButton($"Get {(isGuild ? "User" : "Guild")} Banner", $"banner-user:{user.Id},{!isGuild}");
 
-        if (Context.Interaction is SocketMessageComponent castInteraction)
-            await castInteraction.UpdateAsync(message =>
-            {
-                message.Embed = embed.Build();
-                message.Components = buttons.Build();
-            });
-        else
-            await Context.Interaction.ModifyOriginalResponseAsync(message =>
-            {
-                message.Embed = embed.Build();
-                message.Components = buttons.Build();
-            });
+        await RespondInteraction(string.Empty, embed, buttons);
     }
 }

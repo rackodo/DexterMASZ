@@ -107,7 +107,7 @@ public class DiscordBot : IHostedService, IEvent
         }
         catch (Exception)
         {
-            Console.WriteLine($"Unable to execute {arg.Type} in channel {arg.Channel}");
+            _logger.LogInformation($"Unable to execute {arg.Type} in channel {arg.Channel}");
 
             if (arg.Type is InteractionType.ApplicationCommand)
                 await arg.GetOriginalResponseAsync().ContinueWith(async msg => await msg.Result.DeleteAsync());
@@ -334,9 +334,9 @@ public class DiscordBot : IHostedService, IEvent
         try
         {
             if (!context.Interaction.HasResponded)
-                await context.Interaction.RespondAsync(embed: builder.Build());
+                await context.Interaction.FollowupAsync(embed: builder.Build());
             else
-                await context.Interaction.ModifyOriginalResponseAsync(x => x.Embed = builder.Build());
+                await context.Interaction.ModifyOriginalResponseAsync(msg => msg.Embed = builder.Build());
         }
         catch (Exception)
         {
