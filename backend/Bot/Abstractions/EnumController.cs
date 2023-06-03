@@ -18,7 +18,7 @@ public class EnumController<TTranslator> : BaseController
         _logger = logger;
     }
 
-    public ObjectResult ReturnEnumValue<TEnumType>([FromQuery] Language? language = null)
+    public ObjectResult TranslateEnum<TEnumType>([FromQuery] Language? language = null)
         where TEnumType : struct, Enum
     {
         _translator.SetLanguage(language);
