@@ -261,50 +261,50 @@ public class PunishmentNotificationTranslator : Translator
         PreferredLanguage switch
         {
             Language.De =>
-                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) erstellt.",
+                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}) wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) erstellt.",
             Language.Fr =>
-                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été créé par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}) a été créé par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             Language.Es =>
-                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) ha sido creado por <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username}) ha sido creado por <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             Language.Ru =>
-                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) был создан <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username}) был создан <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             Language.It =>
-                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) è stato creato da <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username}) è stato creato da <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             _ =>
-                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) has been created by <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator})."
+                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}) has been created by <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator})."
         };
 
     public string NotificationModCaseUpdate(ModCase modCase, IUser moderator) =>
         PreferredLanguage switch
         {
             Language.De =>
-                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) aktualisiert.",
+                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}) wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) aktualisiert.",
             Language.Fr =>
-                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été mis à jour par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}) a été mis à jour par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             Language.Es =>
-                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) ha sido actualizado por <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username}) ha sido actualizado por <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             Language.Ru =>
-                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) был обновлен <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username}) был обновлен <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             Language.It =>
-                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) è stato aggiornato da <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username}) è stato aggiornato da <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             _ =>
-                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) has been updated by <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator})."
+                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}) has been updated by <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator})."
         };
 
     public string NotificationModCaseDelete(ModCase modCase, IUser moderator) =>
         PreferredLanguage switch
         {
             Language.De =>
-                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) gelöscht.",
+                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username} wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) gelöscht.",
             Language.Fr =>
-                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) a été supprimé par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username} a été supprimé par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             Language.Es =>
-                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) ha sido eliminado por <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username} ha sido eliminado por <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             Language.Ru =>
-                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) был удален <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username} был удален <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             Language.It =>
-                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) è stato eliminato da <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username} è stato eliminato da <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
             _ =>
-                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}#{modCase.Discriminator}) has been deleted by <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator})."
+                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username} has been deleted by <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator})."
         };
 }

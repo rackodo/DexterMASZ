@@ -101,10 +101,7 @@ public class AutoModEventRepository : Repository,
         var user = await _discordRest.FetchUserInfo(modEvent.UserId, false);
 
         if (user != null)
-        {
             modEvent.Username = user.Username;
-            modEvent.Discriminator = user.Discriminator;
-        }
 
         modEvent.CreatedAt = DateTime.UtcNow;
 

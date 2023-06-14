@@ -17,7 +17,6 @@ public static class SearchContains
             : search.Search(obj.AutoModAction.ToString()) ||
               search.Search(obj.AutoModType.ToString()) ||
               search.Search(obj.CreatedAt) ||
-              search.Search(obj.Discriminator) ||
               search.Search(obj.Username) ||
               search.Search(obj.Nickname) ||
               search.Search(obj.UserId) ||
