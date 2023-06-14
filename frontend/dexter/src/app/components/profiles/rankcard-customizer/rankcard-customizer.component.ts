@@ -66,9 +66,9 @@ export class RankcardCustomizerComponent implements AfterViewInit {
     this.auth.getUserProfile().subscribe(async (data: AppUser) => {
       this.user = data.discordUser;
       this.userId = BigInt(data.discordUser.id);
-      this.username = `${data.discordUser.username}#${data.discordUser.discriminator}`;
+      this.username = `${data.discordUser.username}`;
       this.pfp = data.discordUser.imageUrl;
-      console.log(`Setting up existing values for user: ${this.user.username}#${this.user.discriminator}`)
+      console.log(`Setting up existing values for user: ${this.user.username}`)
       this.api.getSimpleData(`/levels/rankcard/${this.userId}`, true).subscribe((data: UserRankcardConfig) => {
         this.model = data;
         this.setUpValues(this.model);

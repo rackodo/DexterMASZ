@@ -6,5 +6,6 @@ namespace AutoMods.MessageChecks;
 
 public static class AttachmentCheck
 {
-    public static bool Check(IMessage message, AutoModConfig config, DiscordSocketClient _) => config.Limit == null ? false : message.Attachments == null ? false : message.Attachments.Count > config.Limit;
+    public static bool Check(IMessage message, AutoModConfig config, DiscordSocketClient _) =>
+        config.Limit != null && message.Attachments != null && message.Attachments.Count > config.Limit;
 }

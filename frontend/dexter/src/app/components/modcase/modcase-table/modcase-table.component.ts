@@ -52,8 +52,8 @@ export class ModCaseTableComponent implements OnInit {
   public severityTypeCtrl: FormControl = new FormControl();
 
   public userFilterPredicate = (user: DiscordUser, search: string) =>
-      `${user.username.toLowerCase()}#${user.discriminator}`.indexOf(search.toLowerCase()) > -1 || user.id.toString() == search;
-  public userDisplayPredicate = (user: DiscordUser) => `${user.username.toLowerCase()}#${user.discriminator}`;
+      `${user.username.toLowerCase()}`.indexOf(search.toLowerCase()) > -1 || user.id.toString() == search;
+  public userDisplayPredicate = (user: DiscordUser) => `${user.username.toLowerCase()}`;
   public userIdPredicate = (user: DiscordUser) => user.id;
   public userComparePredicate = (user: DiscordUser, user2: DiscordUser) => user?.id == user2?.id;
 

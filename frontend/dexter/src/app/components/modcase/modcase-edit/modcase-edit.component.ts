@@ -165,7 +165,7 @@ export class ModCaseEditComponent implements OnInit {
     const filterValue = value.trim().toLowerCase();
 
     return this.users.content?.filter(option =>
-       ((option.username + "#" + option.discriminator).toLowerCase().includes(filterValue) ||
+       ((option.username).toLowerCase().includes(filterValue) ||
        option.id.toString().includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
   }
 

@@ -11,7 +11,6 @@ export interface ModCase {
     description: string;
     userId: string;
     username: string;
-    discriminator?: string;
     nickname?: string;
     modId?: string;
     severity: SeverityType;

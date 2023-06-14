@@ -28,7 +28,7 @@ export class DashboardMotdComponent implements OnInit {
     this.motd = { loading: true, content: undefined };
     this.api.getSimpleData(`/guilds/${guildId}/motd`).subscribe((data: GuildMotdView) => {
       this.motd  = { loading: false, content: data };
-      this.motdParams.name = `${data.creator?.username}#${data.creator?.discriminator}`;
+      this.motdParams.name = `${data.creator?.username}`;
     }, error => {
       this.motd.loading = false;
       if (error?.error?.status !== 404 && error?.status !== 404) {

@@ -12,7 +12,6 @@ public class AutoModEvent
     public ulong UserId { get; set; }
     public string Username { get; set; }
     public string Nickname { get; set; }
-    public string Discriminator { get; set; }
     public ulong MessageId { get; set; }
     public string MessageContent { get; set; }
     public DateTime CreatedAt { get; set; }

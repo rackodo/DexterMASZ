@@ -17,5 +17,5 @@ public static class SearchContains
     public static bool Search(this string search, string[] obj) => obj != null && obj.Any(search.Search);
 
     public static bool Search(this string search, DiscordUser obj) =>
-        obj != null && search.Search($"{obj.Username}#{obj.Discriminator}");
+        obj != null && search.Search(obj.Username);
 }

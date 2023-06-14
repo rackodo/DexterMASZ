@@ -116,7 +116,7 @@ export class ModCaseAddComponent implements OnInit {
     const filterValue = value.trim().toLowerCase();
 
     return this.users.content?.filter(option =>
-       ((option.username + "#" + option.discriminator).toLowerCase().includes(filterValue) ||
+       (option.username.toLowerCase().includes(filterValue) ||
        option.id.toString().includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
   }
 
@@ -158,7 +158,7 @@ export class ModCaseAddComponent implements OnInit {
         x.caseTemplate.caseDescription.includes(search) ||
         x.caseTemplate.caseLabels.includes(search) ||
 
-        (x.creator?.username + "#" + x.creator?.discriminator).includes(search) ||
+        x.creator?.username.includes(search) ||
 
         x.guild.name.includes(search) ||
         x.guild.id.toString().includes(search)

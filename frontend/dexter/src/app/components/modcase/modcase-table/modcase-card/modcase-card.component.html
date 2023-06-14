@@ -29,7 +29,7 @@
                         {{ punishment }}
                     </span>
                     <span title="{{ entry.modCase.title }}" class="mat-h2 mb-0">
-                        {{ entry.suspect?.username || entry.modCase.username }}<ng-container *ngIf="entry.modCase.discriminator || entry.suspect">#{{ entry.suspect?.discriminator || entry.modCase.discriminator }}</ng-container><br/>
+                        {{ entry.suspect?.username || entry.modCase.username }}<br/>
                         #{{ entry.modCase.caseId }} - {{ entry.modCase.title.length > 35 ? entry.modCase.title.slice(0, 35) + ' [...]' : entry.modCase.title }}
                     </span>
                 </div>

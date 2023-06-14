@@ -62,7 +62,7 @@ export class GuildUserNotesComponent implements OnInit {
     const filterValue = value.trim().toLowerCase();
 
     return this.users.content?.filter(option =>
-       ((option.username + "#" + option.discriminator).toLowerCase().includes(filterValue) ||
+       (option.username.toLowerCase().includes(filterValue) ||
        option.id.toString().includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
   }
 
@@ -110,8 +110,8 @@ export class GuildUserNotesComponent implements OnInit {
         x => x.userNote.creatorId.toString().includes(tempSearch) ||
             x.userNote.userId.toString().includes(tempSearch) ||
             x.userNote.description.toLowerCase().includes(tempSearch) ||
-            (x.moderator?.username + "#" + x.moderator?.discriminator).toLowerCase().includes(tempSearch) ||
-            (x.user?.username + "#" + x.user?.discriminator).toLowerCase().includes(tempSearch)
+            x.moderator?.username.toLowerCase().includes(tempSearch) ||
+            x.user?.username.toLowerCase().includes(tempSearch)
       ));
     } else {
       this.$showUserNotes.next(this.allUserNotes);

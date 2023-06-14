@@ -12,7 +12,6 @@ public class ModCase
     public string Description { get; set; }
     public ulong UserId { get; set; }
     public string Username { get; set; }
-    public string Discriminator { get; set; }
     public string Nickname { get; set; }
     public ulong ModId { get; set; }
     public SeverityType Severity { get; set; }
