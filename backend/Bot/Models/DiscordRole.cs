@@ -19,8 +19,5 @@ public class DiscordRole
     public int Position { get; set; }
     public string Permissions { get; set; }
 
-    public static DiscordRole GetDiscordRole(IRole role)
-    {
-        return role is null ? null : role.Id is 0 ? null : new DiscordRole(role);
-    }
+    public static DiscordRole GetDiscordRole(IRole role) => role is null ? null : role.Id is 0 ? null : new DiscordRole(role);
 }

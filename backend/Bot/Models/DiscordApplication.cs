@@ -24,8 +24,5 @@ public class DiscordApplication
         TermsOfServiceUrl = application.TermsOfService ?? "";
     }
 
-    public static DiscordApplication GetDiscordApplication(IApplication application)
-    {
-        return application is null ? null : application.Id is 0 ? null : new DiscordApplication(application);
-    }
+    public static DiscordApplication GetDiscordApplication(IApplication application) => application is null ? null : application.Id is 0 ? null : new DiscordApplication(application);
 }

@@ -36,8 +36,5 @@ public class DiscordGuild
         Channels = new List<DiscordChannel>();
     }
 
-    public static DiscordGuild GetDiscordGuild(IGuild guild)
-    {
-        return guild is null ? null : guild.Id is 0 ? null : new DiscordGuild(guild);
-    }
+    public static DiscordGuild GetDiscordGuild(IGuild guild) => guild is null ? null : guild.Id is 0 ? null : new DiscordGuild(guild);
 }
