@@ -76,10 +76,9 @@ public class ModCaseTemplateRepository : Repository, IDeleteGuildData
         if (identity.GetCurrentUser().IsBot)
             return true;
 
-        if (await identity.IsSiteAdmin())
-            return true;
-
-        return template.UserId == Identity.Id
+        return await identity.IsSiteAdmin()
+            ? true
+            : template.UserId == Identity.Id
             ? true
             : template.ViewPermission switch
         {

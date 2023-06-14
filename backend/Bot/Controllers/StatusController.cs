@@ -23,16 +23,15 @@ public class StatusController : BaseController
 
         if (!HttpContext.Request.Headers.ContainsKey("Accept")) return Ok("OK");
 
-        if (HttpContext.Request.Headers["Accept"].ToString().Search("application/json"))
-            return Ok(new
+        return HttpContext.Request.Headers["Accept"].ToString().Search("application/json")
+            ? Ok(new
             {
                 status = "OK",
                 lang = config.DefaultLanguage,
                 name = config.GetServiceUrl(),
                 server_time = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                 server_time_utc = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)
-            });
-
-        return Ok("OK");
+            })
+            : (IActionResult)Ok("OK");
     }
 }

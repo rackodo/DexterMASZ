@@ -21,8 +21,6 @@ public class DiscordRole
 
     public static DiscordRole GetDiscordRole(IRole role)
     {
-        if (role is null)
-            return null;
-        return role.Id is 0 ? null : new DiscordRole(role);
+        return role is null ? null : role.Id is 0 ? null : new DiscordRole(role);
     }
 }

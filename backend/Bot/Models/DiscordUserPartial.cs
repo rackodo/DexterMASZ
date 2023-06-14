@@ -12,13 +12,8 @@ public class DiscordUserPartial
     {
         Id = user.Id;
         Username = user.Username;
-        Discriminator = user.Discriminator;
+        Discriminator = user.Discriminator == "0000" ? string.Empty : user.Discriminator;
     }
 
-    public static DiscordUserPartial GetPartialDiscordUser(IUser user)
-    {
-        if (user is null)
-            return null;
-        return user.Id is 0 ? null : new DiscordUserPartial(user);
-    }
+    public static DiscordUserPartial GetPartialDiscordUser(IUser user) => user is null ? null : user.Id is 0 ? null : new DiscordUserPartial(user);
 }

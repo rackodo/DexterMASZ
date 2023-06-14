@@ -26,8 +26,6 @@ public class DiscordApplication
 
     public static DiscordApplication GetDiscordApplication(IApplication application)
     {
-        if (application is null)
-            return null;
-        return application.Id is 0 ? null : new DiscordApplication(application);
+        return application is null ? null : application.Id is 0 ? null : new DiscordApplication(application);
     }
 }

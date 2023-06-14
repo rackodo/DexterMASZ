@@ -130,9 +130,8 @@ public class LevelsConfigController : AuthenticatedController
             if (!found) return BadRequest("Nickname Disabled Replacement must be a level role.");
         }
 
-        if (string.IsNullOrWhiteSpace(config.LevelUpTemplate))
-            return BadRequest("Level Up Template must not be empty.");
-
-        return config.LevelUpTemplate.Length > 250 ? BadRequest("The Length of Level Up Template may not exceed 200 characters.") : (IActionResult)null;
+        return string.IsNullOrWhiteSpace(config.LevelUpTemplate)
+            ? BadRequest("Level Up Template must not be empty.")
+            : config.LevelUpTemplate.Length > 250 ? BadRequest("The Length of Level Up Template may not exceed 200 characters.") : (IActionResult)null;
     }
 }

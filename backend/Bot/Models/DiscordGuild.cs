@@ -38,8 +38,6 @@ public class DiscordGuild
 
     public static DiscordGuild GetDiscordGuild(IGuild guild)
     {
-        if (guild is null)
-            return null;
-        return guild.Id is 0 ? null : new DiscordGuild(guild);
+        return guild is null ? null : guild.Id is 0 ? null : new DiscordGuild(guild);
     }
 }
