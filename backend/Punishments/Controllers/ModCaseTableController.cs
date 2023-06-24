@@ -94,7 +94,6 @@ public class ModCaseTableController : AuthenticatedController
                 search.CustomTextFilter.Search(_translator.Get<PunishmentEnumTranslator>()
                     .Enum(t.PunishmentType)) ||
                 search.CustomTextFilter.Search(t.Username) ||
-                search.CustomTextFilter.Search(t.Discriminator) ||
                 search.CustomTextFilter.Search(t.Nickname) ||
                 search.CustomTextFilter.Search(t.UserId) ||
                 search.CustomTextFilter.Search(t.ModId) ||

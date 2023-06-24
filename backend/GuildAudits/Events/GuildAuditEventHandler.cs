@@ -4,7 +4,7 @@ using GuildAudits.Models;
 
 namespace GuildAudits.Events;
 
-public class GuildAuditEventHandler : INternalEventHandler
+public class GuildAuditEventHandler : IInternalEventHandler
 {
     internal readonly AsyncEvent<Func<GuildAuditConfig, IUser, Task>> GuildAuditConfigCreatedEvent = new();
 

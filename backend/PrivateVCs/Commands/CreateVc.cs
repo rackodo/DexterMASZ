@@ -5,11 +5,7 @@ using Discord;
 using Discord.Interactions;
 using Microsoft.Extensions.Logging;
 using PrivateVcs.Data;
-using PrivateVcs.Models;
 using PrivateVcs.Services;
-using System;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace PrivateVcs.Commands;
 

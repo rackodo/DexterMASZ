@@ -6,19 +6,12 @@ public class DiscordUserPartial
 {
     public ulong Id { get; set; }
     public string Username { get; set; }
-    public string Discriminator { get; set; }
 
     protected DiscordUserPartial(IUser user)
     {
         Id = user.Id;
-        Username = user.Username;
-        Discriminator = user.Discriminator;
+        Username = user.Discriminator == "0000" ? user.Username : $"{user.Username}#{user.Discriminator}";
     }
 
-    public static DiscordUserPartial GetPartialDiscordUser(IUser user)
-    {
-        if (user is null)
-            return null;
-        return user.Id is 0 ? null : new DiscordUserPartial(user);
-    }
+    public static DiscordUserPartial GetPartialDiscordUser(IUser user) => user is null ? null : user.Id is 0 ? null : new DiscordUserPartial(user);
 }

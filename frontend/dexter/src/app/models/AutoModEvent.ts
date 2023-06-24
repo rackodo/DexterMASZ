@@ -8,7 +8,6 @@ export interface AutoModEvent {
     userId: string;
     username: string;
     nickname?: string;
-    discriminator: string;
     messageId: string;
     messageContent: string;
     createdAt: Date;

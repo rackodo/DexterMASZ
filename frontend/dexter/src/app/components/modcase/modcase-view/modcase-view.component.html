@@ -93,7 +93,7 @@
           </ng-container>
           <ng-container *ngIf="!this.modCase.loading">
             <span class="mat-h3 mb-0" style="word-break: break-all;">
-              {{ this.modCase.content?.suspect?.username || this.modCase.content?.modCase?.username }}#{{ this.modCase.content?.suspect?.discriminator || this.modCase.content?.modCase?.discriminator }}
+              {{ this.modCase.content?.suspect?.username || this.modCase.content?.modCase?.username }}
             </span>
             <span class="mat-h3 mb-0" style="word-break: break-all;" *ngIf="this.modCase.content?.modCase?.nickname"
                   title="Users cached nickname during case creation">
@@ -145,7 +145,7 @@
             <div class="waiting-for-text mb-2" style="width: 8rem"></div>
           </ng-container>
           <ng-container *ngIf="!this.modCase.loading">
-            <span class="mat-h3 mb-0" style="word-break: break-all;">{{ this.modCase.content?.moderator?.username }}#{{ this.modCase.content?.moderator?.discriminator }}</span>
+            <span class="mat-h3 mb-0" style="word-break: break-all;">{{ this.modCase.content?.moderator?.username }}</span>
             <span style="font-size: medium;" class="mat-h3 mb-0 text-white-50">ID: {{this.modCase.content?.modCase?.modId }}</span>
             <span style="font-size: medium; word-break: break-all;" class="mat-h3 mb-0 text-white-50"
                   *ngIf="this.modCase.content?.modCase?.creationType !== 0">
@@ -263,7 +263,7 @@
             {{ 'ModCaseView.LastEditModerator' | translate }}
           </span>
           <span class="mat-h3 mb-0" style="word-break: break-all;">
-            {{ this.modCase.content?.lastModerator?.username }}#{{ this.modCase.content?.lastModerator?.discriminator }}
+            {{ this.modCase.content?.lastModerator?.username }}
           </span>
           <span class="mat-h3 mb-0 text-white-50">
             {{ 'ModCaseView.ID' | translate }}: {{this.modCase.content?.modCase?.lastEditedByModId }}
@@ -362,7 +362,7 @@
             </ng-container>
 
             <div class="mat-h3" style="display: inline;" *ngIf="comment?.comment?.userId">
-              {{ comment?.commenter?.username || comment?.commenter?.id }}#{{ comment?.commenter?.discriminator || comment?.commenter?.id }}
+              {{ comment?.commenter?.username || comment?.commenter?.id }}
             </div>
             <div class="mat-h3" style="display: inline;" *ngIf="! comment?.comment?.userId">
               {{ 'ModCaseView.Moderators' | translate }}

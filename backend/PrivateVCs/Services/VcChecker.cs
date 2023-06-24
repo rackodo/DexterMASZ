@@ -5,7 +5,6 @@ using Bot.Data;
 using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.Logging;
 using PrivateVcs.Data;
 using PrivateVcs.Models;

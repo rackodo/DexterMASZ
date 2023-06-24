@@ -97,13 +97,15 @@ public class Initialize
         Console.ResetColor();
     }
 
-    private static void ShouldEdit(IWebHostEnvironment env)
+    private static void ShouldEdit(IHostEnvironment env)
     {
         try
         {
-            if (!env.IsDevelopment())
-                if (ConsoleHelper.WaitForUser("edit settings", 10))
-                    ConsoleHelper.ShouldEdit = true;
+            if (env.IsDevelopment())
+                return;
+
+            if (ConsoleHelper.WaitForUser("edit settings", 10))
+                ConsoleHelper.ShouldEdit = true;
         }
         catch (InvalidOperationException)
         {
@@ -114,13 +116,14 @@ public class Initialize
     {
         while (true)
         {
-            var client =
-                ConsoleHelper.AskAndSet("Discord OAuth Client ID", "DISCORD_OAUTH_CLIENT_ID");
-            if (ulong.TryParse(client.Key, out var clientId))
-            {
-                ConsoleHelper.AddSubHeading("Found Client ID", clientId.ToString());
-                return clientId;
-            }
+            var client = ConsoleHelper.AskAndSet("Discord OAuth Client ID", "DISCORD_OAUTH_CLIENT_ID");
+
+            if (!ulong.TryParse(client.Key, out var clientId))
+                continue;
+
+            ConsoleHelper.AddSubHeading("Found Client ID", clientId.ToString());
+
+            return clientId;
         }
     }
 
@@ -153,9 +156,7 @@ public class Initialize
 
         var connectionString = $"Server={databaseSettings.Host};Port={databaseSettings.Port};" +
                                $"Database={databaseSettings.Database};Uid={databaseSettings.User};Pwd={databaseSettings.Pass};";
-
-        new DbContextOptionsBuilder<BotDatabase>();
-
+        
         return x => x.UseMySql(
             connectionString,
             ServerVersion.AutoDetect(connectionString),
@@ -169,52 +170,49 @@ public class Initialize
 
     private static async Task<AppSettings> GetAppSettings(ulong clientId, Action<DbContextOptionsBuilder> dbOptions)
     {
-        AppSettings settings;
-
         ConsoleHelper.AddSubHeading("Querying database for", nameof(AppSettings));
 
         var dbBuilder = new DbContextOptionsBuilder<BotDatabase>();
 
         dbOptions.Invoke(dbBuilder);
 
-        await using (var dataContext = new BotDatabase(dbBuilder.Options))
+        await using var dataContext = new BotDatabase(dbBuilder.Options);
+
+        await dataContext.Database.MigrateAsync();
+
+        var appSettingRepo = new SettingsRepository(dataContext, new AppSettings { ClientId = clientId }, null);
+
+        var settings = await appSettingRepo.GetAppSettings();
+
+        if (settings is null)
         {
-            await dataContext.Database.MigrateAsync();
+            ConsoleHelper.AddHeading("Running First Time Setup");
 
-            var appSettingRepo = new SettingsRepository(dataContext, new AppSettings { ClientId = clientId }, null);
+            ConsoleHelper.AddSubHeading("Welcome to", "Dexter!");
+            ConsoleHelper.AddSubHeading("Support Discord", "https://discord.gg/DBS664yjWN");
 
-            settings = await appSettingRepo.GetAppSettings();
+            settings = ConsoleHelper.CreateAppSettings(clientId);
 
-            if (settings is null)
-            {
-                ConsoleHelper.AddHeading("Running First Time Setup");
+            await appSettingRepo.AddAppSetting(settings);
 
-                ConsoleHelper.AddSubHeading("Welcome to", "Dexter!");
-                ConsoleHelper.AddSubHeading("Support Discord", "https://discord.gg/DBS664yjWN");
+            ConsoleHelper.AddSubHeading("You are finished creating the app settings for client",
+                clientId.ToString());
 
-                settings = ConsoleHelper.CreateAppSettings(clientId);
+            ConsoleHelper.AddSubHeading("You can now access the panel at", settings.GetServiceUrl());
 
-                await appSettingRepo.AddAppSetting(settings);
+            ConsoleHelper.AddSubHeading("You can always change these settings",
+                "by pressing any key on next reboot");
+        }
+        else
+        {
+            ConsoleHelper.AddSubHeading("Found app settings for client", clientId.ToString());
 
-                ConsoleHelper.AddSubHeading("You are finished creating the app settings for client",
-                    clientId.ToString());
+            if (!ConsoleHelper.ShouldEdit)
+                return settings;
 
-                ConsoleHelper.AddSubHeading("You can now access the panel at", settings.GetServiceUrl());
-
-                ConsoleHelper.AddSubHeading("You can always change these settings",
-                    "by pressing any key on next reboot");
-            }
-            else
-            {
-                ConsoleHelper.AddSubHeading("Found app settings for client", clientId.ToString());
-
-                if (ConsoleHelper.ShouldEdit)
-                {
-                    settings = ConsoleHelper.CreateAppSettings(clientId);
-                    await appSettingRepo.UpdateAppSetting(settings);
-                    Console.WriteLine();
-                }
-            }
+            settings = ConsoleHelper.CreateAppSettings(clientId);
+            await appSettingRepo.UpdateAppSetting(settings);
+            Console.WriteLine();
         }
 
         return settings;
@@ -249,13 +247,13 @@ public class Initialize
 
         foreach (var startup in modules)
         {
-            if (startup is WebModule module)
-            {
-                var authorizationPolicy = module.AddAuthorizationPolicy();
+            if (startup is not WebModule module)
+                continue;
 
-                if (authorizationPolicy.Length > 0)
-                    authorizationPolicies = authorizationPolicies.Union(authorizationPolicy).ToList();
-            }
+            var authorizationPolicy = module.AddAuthorizationPolicy();
+
+            if (authorizationPolicy.Length > 0)
+                authorizationPolicies = authorizationPolicies.Union(authorizationPolicy).ToList();
         }
 
         ConsoleHelper.AddSubHeading("Successfully added", "authentication policies");
@@ -365,6 +363,6 @@ public class Initialize
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        app.UseEndpoints(endpoints => endpoints.MapControllers());
     }
 }

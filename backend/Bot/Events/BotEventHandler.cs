@@ -3,7 +3,7 @@ using Bot.Models;
 
 namespace Bot.Events;
 
-public class BotEventHandler : INternalEventHandler
+public class BotEventHandler : IInternalEventHandler
 {
     public readonly AsyncEvent<Func<Task>> BotLaunchedEvent = new();
 

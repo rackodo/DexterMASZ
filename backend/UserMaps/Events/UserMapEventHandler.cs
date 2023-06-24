@@ -4,7 +4,7 @@ using UserMaps.Models;
 
 namespace UserMaps.Events;
 
-public class UserMapEventHandler : INternalEventHandler
+public class UserMapEventHandler : IInternalEventHandler
 {
     internal readonly AsyncEvent<Func<UserMap, IUser, Task>> UserMapCreatedEvent = new();
 

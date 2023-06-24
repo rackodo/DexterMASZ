@@ -69,7 +69,7 @@ export class GuildUserMappingComponent implements OnInit {
     const filterValue = value.trim().toLowerCase();
 
     return this.users.content?.filter(option =>
-       ((option.username + "#" + option.discriminator).toLowerCase().includes(filterValue) ||
+       (option.username.toLowerCase().includes(filterValue) ||
        option.id.toString().includes(filterValue)) && !option.bot).slice(0, 10) as DiscordUser[];
   }
 
@@ -118,9 +118,9 @@ export class GuildUserMappingComponent implements OnInit {
             x.userMap.userA.toString().includes(tempSearch) ||
             x.userMap.userB.toString().includes(tempSearch) ||
             x.userMap.reason.toLowerCase().includes(tempSearch) ||
-            (x.moderator?.username + "#" + x.moderator?.discriminator).toLowerCase().includes(tempSearch) ||
-            (x.userA?.username + "#" + x.userA?.discriminator).toLowerCase().includes(tempSearch) ||
-            (x.userB?.username + "#" + x.userB?.discriminator).toLowerCase().includes(tempSearch)
+            x.moderator?.username.toLowerCase().includes(tempSearch) ||
+            x.userA?.username.toLowerCase().includes(tempSearch) ||
+            x.userB?.username.toLowerCase().includes(tempSearch)
       ));
     } else {
       this.$showUserMaps.next(this.allUserMaps);

@@ -26,17 +26,7 @@ public class UserGuild
         IsAdmin = guild.Permissions.Administrator;
     }
 
-    public static UserGuild GetUserGuild(IGuildUser guildUser)
-    {
-        if (guildUser is null)
-            return null;
-        return guildUser.Id is 0 ? null : new UserGuild(guildUser);
-    }
+    public static UserGuild GetUserGuild(IGuildUser guildUser) => guildUser is null ? null : guildUser.Id is 0 ? null : new UserGuild(guildUser);
 
-    public static UserGuild GetUserGuild(IUserGuild userGuild)
-    {
-        if (userGuild is null)
-            return null;
-        return userGuild.Id is 0 ? null : new UserGuild(userGuild);
-    }
+    public static UserGuild GetUserGuild(IUserGuild userGuild) => userGuild is null ? null : userGuild.Id is 0 ? null : new UserGuild(userGuild);
 }

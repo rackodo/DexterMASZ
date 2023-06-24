@@ -4,7 +4,7 @@ using Invites.Models;
 
 namespace Invites.Events;
 
-public class InviteEventHandler : INternalEventHandler
+public class InviteEventHandler : IInternalEventHandler
 {
     internal readonly AsyncEvent<Func<SocketGuildChannel, TrackedInvite, Task>> InviteDeletedEvent = new();
 

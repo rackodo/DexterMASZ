@@ -137,7 +137,6 @@ public class ModCaseRepository : Repository,
                          UserId = ban.User.Id,
                          Username = ban.User.Username,
                          Labels = new[] { _translator.Get<PunishmentTranslator>().Imported() },
-                         Discriminator = ban.User.Discriminator,
                          CreationType = CaseCreationType.Imported,
                          PunishmentType = PunishmentType.Ban,
                          PunishedUntil = null
@@ -301,7 +300,6 @@ public class ModCaseRepository : Repository,
             }
 
             modCase.Username = currentReportedUser.Username;
-            modCase.Discriminator = currentReportedUser.Discriminator;
 
             var reportedGuildUser =
                 _discordRest.FetchGuildUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);
@@ -539,7 +537,6 @@ public class ModCaseRepository : Repository,
             }
 
             modCase.Username = currentReportedUser.Username;
-            modCase.Discriminator = currentReportedUser.Discriminator;
 
             var reportedGuildUser =
                 _discordRest.FetchGuildUserInfo(modCase.GuildId, modCase.UserId, CacheBehavior.IgnoreButCacheOnError);

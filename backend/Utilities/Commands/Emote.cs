@@ -2,7 +2,6 @@
 using Bot.Attributes;
 using Bot.Enums;
 using Bot.Extensions;
-using Discord;
 using Discord.Interactions;
 
 namespace Utilities.Commands;

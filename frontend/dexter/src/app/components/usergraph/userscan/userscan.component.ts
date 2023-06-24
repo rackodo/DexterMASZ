@@ -319,7 +319,7 @@ export class UserScanComponent implements AfterViewInit, OnInit {
       shape: 'circularImage',
       group: group,
       image: user?.imageUrl ?? '/assets/img/default_profile.png',
-      label: user != null ? `${user.username}#${user.discriminator}` : backupUserId.toString(),
+      label: user != null ? `${user.username}` : backupUserId.toString(),
       title: (user?.id ?? backupUserId).toString(),
       size: size,
       searchFor: (user?.id ?? backupUserId).toString()

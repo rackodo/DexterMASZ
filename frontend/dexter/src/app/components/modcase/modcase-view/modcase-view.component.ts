@@ -196,10 +196,10 @@ export class ModCaseViewComponent implements OnInit {
 	  this.severity = convertModCaseToSeverityString(this.modCase.content?.modCase, this.severities?.content);
       this.creationType = this.creationTypes?.find(x => x.key == this.modCase.content?.modCase?.creationType)?.value ?? '';
       this.markedDeleteParams = {
-        user: data.deletedBy ? `${data.deletedBy.username}#${data.deletedBy.discriminator}` : this.translator.instant('ModCaseView.Moderators')
+        user: data.deletedBy ? `${data.deletedBy.username}` : this.translator.instant('ModCaseView.Moderators')
       };
       this.lockedCommentsParams = {
-        user: data.lockedBy ? `${data.lockedBy.username}#${data.lockedBy.discriminator}` : this.translator.instant('ModCaseView.Moderators')
+        user: data.lockedBy ? `${data.lockedBy.username}` : this.translator.instant('ModCaseView.Moderators')
       };
       if (this.modCase.content.modCase?.punishedUntil === null || moment(this.modCase.content.modCase?.punishedUntil).utc(true).isAfter(moment())) {
         this.showActivationSlider = true;

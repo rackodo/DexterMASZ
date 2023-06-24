@@ -107,10 +107,9 @@ public class DiscordOAuthIdentity : Identity
 
             var guildUser = GetGuildMembership(guildId);
 
-            if (guildUser is null)
-                return false;
-
-            return guildUser.Guild.OwnerId == guildUser.Id
+            return guildUser is null
+                ? false
+                : guildUser.Guild.OwnerId == guildUser.Id
                 ? true
                 : guildUser.RoleIds.Any(x => guildConfig.AdminRoles.Contains(x) ||
                                               guildConfig.ModRoles.Contains(x));

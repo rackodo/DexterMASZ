@@ -4,7 +4,7 @@ using MOTDs.Models;
 
 namespace MOTDs.Events;
 
-public class MotdEventHandler : INternalEventHandler
+public class MotdEventHandler : IInternalEventHandler
 {
     internal readonly AsyncEvent<Func<GuildMotd, IUser, Task>> GuildMotdCreatedEvent = new();
 

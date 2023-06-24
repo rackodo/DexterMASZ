@@ -18,10 +18,6 @@ public class DiscordUser : DiscordUserPartial
         Bot = user.IsBot;
     }
 
-    public static DiscordUser GetDiscordUser(IUser user)
-    {
-        if (user is null)
-            return null;
-        return user.Id is 0 ? null : new DiscordUser(user);
-    }
+    public static DiscordUser GetDiscordUser(IUser user) =>
+        user is null ? null : user.Id is 0 ? null : new DiscordUser(user);
 }

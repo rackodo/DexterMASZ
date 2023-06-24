@@ -44,7 +44,7 @@
                             [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let option of this.filteredUsers | async" [value]="option.id">
-                            {{option.username}}#{{option.discriminator}}
+                            {{option.username}}
                         </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>

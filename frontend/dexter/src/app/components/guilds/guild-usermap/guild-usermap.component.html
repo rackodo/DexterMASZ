@@ -12,7 +12,7 @@
                         [matAutocomplete]="autoA">
                     <mat-autocomplete #autoA="matAutocomplete">
                         <mat-option *ngFor="let option of this.filteredUsersA | async" [value]="option.id">
-                            {{option.username}}#{{option.discriminator}}
+                            {{option.username}}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
@@ -26,7 +26,7 @@
                         [matAutocomplete]="autoB">
                     <mat-autocomplete #autoB="matAutocomplete">
                         <mat-option *ngFor="let option of this.filteredUsersB | async" [value]="option.id">
-                            {{option.username}}#{{option.discriminator}}
+                            {{option.username}}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>

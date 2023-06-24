@@ -1,56 +1,30 @@
 ﻿using AutoMods.Enums;
 using AutoMods.Translators;
 using Bot.Abstractions;
-using Bot.DTOs;
 using Bot.Enums;
 using Bot.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AutoMods.Controllers;
 
 [Route("api/v1/enums")]
-public class AutoModEnumsController : BaseController
+public class AutoModEnumsController : EnumController<AutoModEnumTranslator>
 {
-    private readonly Translation _translator;
-
-    public AutoModEnumsController(Translation translator) => _translator = translator;
+    public AutoModEnumsController(Translation translator, ILogger<EnumController<AutoModEnumTranslator>> logger) :
+        base(translator, logger)
+    {
+    }
 
     [HttpGet("automodaction")]
-    public IActionResult AutoModActions([FromQuery] Language? language = null)
-    {
-        _translator.SetLanguage(language);
-
-        var enums = new List<EnumDto>();
-
-        foreach (var enumValue in Enum.GetValues<AutoModAction>())
-            enums.Add(new EnumDto((int)enumValue, _translator.Get<AutoModEnumTranslator>().Enum(enumValue)));
-
-        return Ok(enums);
-    }
+    public async Task<IActionResult> AutoModActions([FromQuery] Language? language = null) =>
+        await TranslateEnum<AutoModAction>(language);
 
     [HttpGet("automodchannelbehavior")]
-    public IActionResult ChannelNotificationBehavior([FromQuery] Language? language = null)
-    {
-        _translator.SetLanguage(language);
-
-        var enums = new List<EnumDto>();
-
-        foreach (var enumValue in Enum.GetValues<AutoModChannelNotificationBehavior>())
-            enums.Add(new EnumDto((int)enumValue, _translator.Get<AutoModEnumTranslator>().Enum(enumValue)));
-
-        return Ok(enums);
-    }
+    public async Task<IActionResult> ChannelNotificationBehavior([FromQuery] Language? language = null) =>
+        await TranslateEnum<AutoModChannelNotificationBehavior>(language);
 
     [HttpGet("automodtype")]
-    public IActionResult AutoModTypes([FromQuery] Language? language = null)
-    {
-        _translator.SetLanguage(language);
-
-        var enums = new List<EnumDto>();
-
-        foreach (var enumValue in Enum.GetValues<AutoModType>())
-            enums.Add(new EnumDto((int)enumValue, _translator.Get<AutoModEnumTranslator>().Enum(enumValue)));
-
-        return Ok(enums);
-    }
+    public async Task<IActionResult> AutoModTypes([FromQuery] Language? language = null) =>
+        await TranslateEnum<AutoModType>(language);
 }

@@ -1,5 +1,4 @@
-﻿using AspNetCoreRateLimit;
-using Bot.Abstractions;
+﻿using Bot.Abstractions;
 using Bot.Loggers;
 using Bot.Middleware;
 using Bot.Models;
@@ -11,7 +10,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -36,7 +34,7 @@ public class BotModule : WebModule
         foreach (var type in cachedServices.GetClassTypes<IDataContextInitialize>())
         {
             type.GetMethod("AddContextToServiceProvider")
-                .Invoke(null, new object[] { dbOption, services });
+                ?.Invoke(null, new object[] { dbOption, services });
         }
 
         foreach (var type in cachedServices.GetClassTypes<Repository>())
@@ -73,7 +71,7 @@ public class BotModule : WebModule
 
     public override void AddServices(IServiceCollection services, CachedServices cachedServices, AppSettings settings)
     {
-        foreach (var type in cachedServices.GetClassTypes<INternalEventHandler>())
+        foreach (var type in cachedServices.GetClassTypes<IInternalEventHandler>())
             services.AddSingleton(type);
 
         foreach (var type in cachedServices.GetClassTypes<IEvent>())
@@ -117,28 +115,16 @@ public class BotModule : WebModule
 
         if (settings.CorsEnabled)
             services.AddCors(o => o.AddPolicy("AngularDevCors", builder =>
-            {
                 builder.WithOrigins("http://127.0.0.1:4200")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials();
-            }));
-
-        services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
-        services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
-        services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+                    .AllowCredentials()
+            ));
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
     }
 
-    public override void ConfigureServices(ConfigurationManager configuration, IServiceCollection services)
-    {
-        services.Configure<IpRateLimitOptions>(configuration.GetSection("IpRateLimiting"));
-        services.Configure<IpRateLimitPolicies>(configuration.GetSection("IpRateLimitPolicies"));
-    }
 
     public override void PostBuild(IServiceProvider services, CachedServices cachedServices)
     {
@@ -165,9 +151,7 @@ public class BotModule : WebModule
                 options.RoutePrefix = string.Empty;
             });
         }
-
-        app.UseIpRateLimiting();
-
+        
         app.UseMiddleware<HeaderMiddleware>();
         app.UseMiddleware<RequestLoggingMiddleware>();
         app.UseMiddleware<ApiExceptionHandlingMiddleware>();

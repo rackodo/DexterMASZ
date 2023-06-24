@@ -4,7 +4,7 @@ using UserNotes.Models;
 
 namespace UserNotes.Events;
 
-public class UserNoteEventHandler : INternalEventHandler
+public class UserNoteEventHandler : IInternalEventHandler
 {
     internal readonly AsyncEvent<Func<UserNote, IUser, Task>> UserNoteCreatedEvent = new();
 
