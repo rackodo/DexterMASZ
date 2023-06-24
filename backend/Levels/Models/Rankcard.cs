@@ -254,7 +254,7 @@ public static class Rankcard
 
             pfp?.Dispose();
 
-            g = g.DrawTextInRect($"{user.Username}#{user.Discriminator}", NameRect(rankcardConfig), fontDefault,
+            g = g.DrawTextInRect(user.Username, NameRect(rankcardConfig), fontDefault,
                 offColor,
                 HorizontalAlignment.Right, VerticalAlignment.Bottom);
         });
