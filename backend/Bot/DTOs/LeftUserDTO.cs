@@ -65,6 +65,9 @@ public class LeftUserDto : IUser
     /// <inheritdoc />
     public virtual bool IsWebhook => false;
 
+    /// <inheritdoc />
+    public string GlobalName => Username;
+
     public Task<IDMChannel> CreateDMChannelAsync(RequestOptions options = null)
         => throw new NotImplementedException();
 
