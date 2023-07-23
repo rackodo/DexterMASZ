@@ -364,7 +364,7 @@ public class PunishmentTranslator : Translator
                 $"Обнаружены активные обращения `{caseCount}`. Вы хотите деактивировать или удалить их все, чтобы разблокировать пользователя?",
             Language.It =>
                 $"Trovati casi attivi di `{caseCount}`. Vuoi disattivarli o eliminarli tutti per riabilitare l'utente?",
-            _ => $"Found `{caseCount}` active cases. Do you want to deactivate or delete all of them to Unban the user?"
+            _ => $"Found `{caseCount}` active cases. Do you want to deactivate or delete all of them to unban the user?"
         };
 
     public string BansDeleted() =>
