@@ -64,12 +64,12 @@ public class BotEnumTranslator : Translator
             },
             ApiError.ProtectedModCaseSuspectIsTeam => PreferredLanguage switch
             {
-                Language.De => "Benutzer ist geschützt. Er ist ein Teammitglied.",
-                Language.Fr => "L'utilisateur est protégé. Il est membre de l'équipe.",
-                Language.Es => "El usuario está protegido. Es un miembro del equipo.",
-                Language.Ru => "Пользователь защищен. Он член команды.",
-                Language.It => "L'utente è protetto. È un membro della squadra.",
-                _ => "User is protected. They are a team user."
+                Language.De => "Benutzer ist geschützt. Er ist ein Teammitglied",
+                Language.Fr => "L'utilisateur est protégé. Il est membre de l'équipe",
+                Language.Es => "El usuario está protegido. Es un miembro del equipo",
+                Language.Ru => "Пользователь защищен. Он член команды",
+                Language.It => "L'utente è protetto. È un membro della squadra",
+                _ => "User is protected. They are a team user"
             },
             ApiError.ResourceNotFound => PreferredLanguage switch
             {
