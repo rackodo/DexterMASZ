@@ -247,7 +247,7 @@ public class VcChecker : IEvent
                 new EmbedBuilder()
                     .WithTitle("Punishable Private Vc Permission")
                     .WithDescription(
-                        $"{creator.Mention} tried to change their private vc to allow everyone perms for the following role. " +
+                        $"{creator.Mention} tried to change their private vc to alloW everyone mention perms for the following role. " +
                         "The channel has since been deleted.")
                     .AddField("Unauthorized Member/Role", mentionable.Mention)
                     .AddField("Channel Name", voiceChannel.Name)
