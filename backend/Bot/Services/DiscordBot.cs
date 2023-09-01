@@ -333,10 +333,22 @@ public class DiscordBot : IHostedService, IEvent
 
         try
         {
-            if (!context.Interaction.HasResponded)
-                await context.Interaction.FollowupAsync(embed: builder.Build());
-            else
+            context.Interaction.DeferAsync();
+        }
+        catch (Exception)
+        {
+        }
+
+        try
+        {
+            try
+            {
                 await context.Interaction.ModifyOriginalResponseAsync(msg => msg.Embed = builder.Build());
+            }
+            catch (Exception)
+            {
+                await context.Interaction.FollowupAsync(embed: builder.Build());
+            }
         }
         catch (Exception)
         {
