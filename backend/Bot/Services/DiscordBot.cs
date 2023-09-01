@@ -333,7 +333,7 @@ public class DiscordBot : IHostedService, IEvent
 
         try
         {
-            await context.Interaction.DeferAsync();
+            await context.Interaction.DeferAsync(true);
         }
         catch (Exception)
         {
