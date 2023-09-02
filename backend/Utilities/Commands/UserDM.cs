@@ -54,13 +54,13 @@ public class UserDm : Command<UserDm>
 
         StringBuilder recipient = new();
         recipient.AppendLine(
-            $"> **{Translator.Get<BotTranslator>().User()}:** {user.Username}#{user.Discriminator} - {user.Mention}");
+            $"> **{Translator.Get<BotTranslator>().User()}:** {user.Username} - {user.Mention}");
         recipient.AppendLine($"> **{Translator.Get<BotTranslator>().Id()}:** `{user.Id}`");
 
         StringBuilder sender = new();
 
         sender.AppendLine(
-            $"> **{Translator.Get<BotTranslator>().User()}:** {Context.User.Username}#{Context.User.Discriminator} - {Context.User.Mention}");
+            $"> **{Translator.Get<BotTranslator>().User()}:** {context.User.Username} - {Context.User.Mention}");
         sender.AppendLine($"> **{Translator.Get<BotTranslator>().Id()}:** `{Context.User.Id}`");
 
         var sendEmbed = new EmbedBuilder()

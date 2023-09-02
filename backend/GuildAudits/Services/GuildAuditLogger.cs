@@ -209,7 +209,7 @@ public class GuildAuditer : IEvent
 
         StringBuilder description = new();
         description.AppendLine(
-            $"> **{translator.Get<BotTranslator>().User()}:** {newU.Username}#{newU.Discriminator} - {newU.Mention}");
+            $"> **{translator.Get<BotTranslator>().User()}:** {newU.Username} - {newU.Mention}");
         description.AppendLine($"> **{translator.Get<BotTranslator>().Id()}:** `{newU.Id}`");
 
         var embed = new EmbedBuilder()
@@ -241,7 +241,7 @@ public class GuildAuditer : IEvent
 
         StringBuilder description = new();
         description.AppendLine(
-            $"> **{translator.Get<BotTranslator>().User()}:** {newU.Username}#{newU.Discriminator} - {newU.Mention}");
+            $"> **{translator.Get<BotTranslator>().User()}:** {newU.Username} - {newU.Mention}");
         description.AppendLine($"> **{translator.Get<BotTranslator>().Id()}:** `{newU.Id}`");
 
         var embed = new EmbedBuilder()
@@ -278,7 +278,7 @@ public class GuildAuditer : IEvent
 
         StringBuilder description = new();
         description.AppendLine(
-            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username}#{user.Discriminator} - {user.Mention}");
+            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username} - {user.Mention}");
         description.AppendLine($"> **{translator.Get<BotTranslator>().Id()}:** `{user.Id}`");
 
         var embed = new EmbedBuilder()
@@ -322,7 +322,7 @@ public class GuildAuditer : IEvent
 
                 StringBuilder description = new();
                 description.AppendLine(
-                    $"> **{translator.Get<BotTranslator>().User()}:** {newU.Username}#{newU.Discriminator} - {newU.Mention}");
+                    $"> **{translator.Get<BotTranslator>().User()}:** {newU.Username} - {newU.Mention}");
                 description.AppendLine($"> **{translator.Get<BotTranslator>().Id()}:** `{newU.Id}`");
 
                 var embed = new EmbedBuilder()
@@ -376,7 +376,7 @@ public class GuildAuditer : IEvent
 
         StringBuilder description = new();
         description.AppendLine(
-            $"> **{translator.Get<BotTranslator>().User()}:** {reaction.User.Value.Username}#{reaction.User.Value.Discriminator} - {reaction.User.Value.Mention}");
+            $"> **{translator.Get<BotTranslator>().User()}:** {reaction.User.Value.Username} - {reaction.User.Value.Mention}");
         if (message.HasValue)
             description.AppendLine(
                 $"> **{translator.Get<BotTranslator>().Message()}:** [{message.Id}]({message.Value.GetJumpUrl()})");
@@ -423,7 +423,7 @@ public class GuildAuditer : IEvent
 
         StringBuilder description = new();
         description.AppendLine(
-            $"> **{translator.Get<BotTranslator>().User()}:** {reaction.User.Value.Username}#{reaction.User.Value.Discriminator} - {reaction.User.Value.Mention}");
+            $"> **{translator.Get<BotTranslator>().User()}:** {reaction.User.Value.Username} - {reaction.User.Value.Mention}");
         if (message.HasValue)
             description.AppendLine(
                 $"> **{translator.Get<BotTranslator>().Message()}:** [{message.Id}]({message.Value.GetJumpUrl()})");
@@ -491,7 +491,7 @@ public class GuildAuditer : IEvent
 
         StringBuilder description = new();
         description.AppendLine(
-            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username}#{user.Discriminator} - {user.Mention}");
+            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username} - {user.Mention}");
 
         if (eventType == GuildAuditLogEvent.VoiceJoined)
         {
@@ -539,7 +539,7 @@ public class GuildAuditer : IEvent
 
         StringBuilder description = new();
         description.AppendLine(
-            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username}#{user.Discriminator} - {user.Mention}");
+            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username} - {user.Mention}");
 
         var embed = new EmbedBuilder()
             .WithTitle(translator.Get<GuildAuditTranslator>().UserBanned())
@@ -561,7 +561,7 @@ public class GuildAuditer : IEvent
 
         StringBuilder description = new();
         description.AppendLine(
-            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username}#{user.Discriminator} - {user.Mention}");
+            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username} - {user.Mention}");
 
         var embed = new EmbedBuilder()
             .WithTitle(translator.Get<GuildAuditTranslator>().UserUnbanned())
@@ -592,7 +592,7 @@ public class GuildAuditer : IEvent
         if (invite.Inviter != null)
         {
             description.AppendLine(
-                $"> **{translator.Get<BotTranslator>().User()}:** {invite.Inviter.Username}#{invite.Inviter.Discriminator} - {invite.Inviter.Mention}");
+                $"> **{translator.Get<BotTranslator>().User()}:** {invite.Inviter.Username} - {invite.Inviter.Mention}");
             embed.WithAuthor(invite.Inviter)
                 .WithFooter($"{translator.Get<BotTranslator>().UserId()}: {invite.Inviter.Id}");
         }
@@ -636,7 +636,7 @@ public class GuildAuditer : IEvent
         if (inviter != null)
         {
             description.AppendLine(
-                $"> **{translator.Get<BotTranslator>().User()}:** {inviter.Username}#{inviter.Discriminator} - {inviter.Mention}");
+                $"> **{translator.Get<BotTranslator>().User()}:** {inviter.Username} - {inviter.Mention}");
             embed.WithAuthor(inviter)
                 .WithFooter($"{translator.Get<BotTranslator>().UserId()}: {inviter.Id}");
         }
@@ -664,7 +664,7 @@ public class GuildAuditer : IEvent
 
         StringBuilder description = new();
         description.AppendLine(
-            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username}#{user.Discriminator} - {user.Mention}");
+            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username} - {user.Mention}");
         description.AppendLine($"> **{translator.Get<BotTranslator>().Id()}:** `{user.Id}`");
         description.AppendLine(
             $"> **{translator.Get<GuildAuditTranslator>().Registered()}:** {user.CreatedAt.DateTime.ToDiscordTs()}");
@@ -689,7 +689,7 @@ public class GuildAuditer : IEvent
 
         StringBuilder description = new();
         description.AppendLine(
-            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username}#{user.Discriminator} - {user.Mention}");
+            $"> **{translator.Get<BotTranslator>().User()}:** {user.Username} - {user.Mention}");
         description.AppendLine($"> **{translator.Get<BotTranslator>().Id()}:** `{user.Id}`");
         description.AppendLine(
             $"> **{translator.Get<GuildAuditTranslator>().Registered()}:** {user.CreatedAt.DateTime.ToDiscordTs()}");
@@ -736,7 +736,7 @@ public class GuildAuditer : IEvent
             if (message.Author != null)
             {
                 description.AppendLine(
-                    $"> **{translator.Get<BotTranslator>().Author()}:** {message.Author.Username}#{message.Author.Discriminator} - {message.Author.Mention}");
+                    $"> **{translator.Get<BotTranslator>().Author()}:** {message.Author.Username} - {message.Author.Mention}");
                 embed.WithAuthor(message.Author)
                     .WithFooter($"{translator.Get<BotTranslator>().UserId()}: {message.Author.Id}");
             }
@@ -812,7 +812,7 @@ public class GuildAuditer : IEvent
                 description.AppendLine(
                     $"> **{translator.Get<BotTranslator>().Id()}:** [{message.Id}]({message.GetJumpUrl()})");
                 description.AppendLine(
-                    $"> **{translator.Get<BotTranslator>().Author()}:** {message.Author.Username}#{message.Author.Discriminator} - {message.Author.Mention}");
+                    $"> **{translator.Get<BotTranslator>().Author()}:** {message.Author.Username} - {message.Author.Mention}");
 
                 var embed = new EmbedBuilder()
                     .WithTitle(translator.Get<GuildAuditTranslator>().MessageSent())
@@ -890,7 +890,7 @@ public class GuildAuditer : IEvent
                 description.AppendLine(
                     $"> **{translator.Get<BotTranslator>().Id()}:** [{messageAfter.Id}]({messageAfter.GetJumpUrl()})");
                 description.AppendLine(
-                    $"> **{translator.Get<BotTranslator>().Author()}:** {messageAfter.Author.Username}#{messageAfter.Author.Discriminator} - {messageAfter.Author.Mention}");
+                    $"> **{translator.Get<BotTranslator>().Author()}:** {messageAfter.Author.Username} - {messageAfter.Author.Mention}");
                 description.AppendLine(
                     $"> **{translator.Get<GuildAuditTranslator>().Created()}:** {messageAfter.CreatedAt.DateTime.ToDiscordTs()}");
 

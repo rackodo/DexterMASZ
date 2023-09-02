@@ -297,7 +297,7 @@ public class DiscordBot : IHostedService, IEvent
                     else
                     {
                         _logger.LogError(
-                            $"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed: " +
+                            $"Command '{info.Name}' invoked by '{context.User.Username}' failed: " +
                             eResult.Exception.Message + "\n" + eResult.Exception.StackTrace);
                     }
 
@@ -309,7 +309,7 @@ public class DiscordBot : IHostedService, IEvent
                     break;
                 default:
                     _logger.LogError(
-                        $"Command '{info.Name}' ({result.GetType()}) invoked by '{context.User.Username}#{context.User.Discriminator}' failed due to {result.Error}: {result.ErrorReason}.");
+                        $"Command '{info.Name}' ({result.GetType()}) invoked by '{context.User.Username}' failed due to {result.Error}: {result.ErrorReason}.");
 
                     _eventHandler.CommandErroredEvent.Invoke(
                         new Exception($"{result.ErrorReason}\nResult Type: {result.GetType()}"));
@@ -322,7 +322,7 @@ public class DiscordBot : IHostedService, IEvent
         string errorReason, string code)
     {
         _logger.LogError(
-            $"Command '{info.Name}' invoked by '{context.User.Username}#{context.User.Discriminator}' failed: {errorReason}");
+            $"Command '{info.Name}' invoked by '{context.User.Username}' failed: {errorReason}");
 
         var builder = new EmbedBuilder()
             .WithTitle(translation.Get<BotTranslator>().SomethingWentWrong())

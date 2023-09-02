@@ -78,38 +78,38 @@ public class PunishmentNotificationTranslator : Translator
         PreferredLanguage switch
         {
             Language.De =>
-                $"Eine **Datei** wurde von <@{actor.Id}> ({actor.Username}#{actor.Discriminator}) hochgeladen.",
+                $"Eine **Datei** wurde von <@{actor.Id}> ({actor.Username}) hochgeladen.",
             Language.Fr =>
-                $"Un **fichier** a été téléchargé par <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
-            Language.Es => $"<@{actor.Id}> ({actor.Username}#{actor.Discriminator} ha subido un **archivo**).",
+                $"Un **fichier** a été téléchargé par <@{actor.Id}> ({actor.Username}).",
+            Language.Es => $"<@{actor.Id}> ({actor.Username} ha subido un **archivo**).",
             Language.Ru =>
-                $"**файл** был загружен пользователем <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
-            Language.It => $"Un **file** è stato caricato da <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
-            _ => $"A **file** has been uploaded by <@{actor.Id}> ({actor.Username}#{actor.Discriminator})."
+                $"**файл** был загружен пользователем <@{actor.Id}> ({actor.Username}).",
+            Language.It => $"Un **file** è stato caricato da <@{actor.Id}> ({actor.Username}).",
+            _ => $"A **file** has been uploaded by <@{actor.Id}> ({actor.Username})."
         };
 
     public string NotificationModCaseFileDelete(IUser actor) =>
         PreferredLanguage switch
         {
-            Language.De => $"Eine **Datei** wurde von <@{actor.Id}> ({actor.Username}#{actor.Discriminator}) gelöscht.",
-            Language.Fr => $"Un **fichier** a été supprimé par <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
-            Language.Es => $"<@{actor.Id}> ({actor.Username}#{actor.Discriminator}) ha eliminado un **archivo**.",
-            Language.Ru => $"**файл** был удален <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
-            Language.It => $"Un **file** è stato eliminato da <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
-            _ => $"A **file** has been deleted by <@{actor.Id}> ({actor.Username}#{actor.Discriminator})."
+            Language.De => $"Eine **Datei** wurde von <@{actor.Id}> ({actor.Username}) gelöscht.",
+            Language.Fr => $"Un **fichier** a été supprimé par <@{actor.Id}> ({actor.Username}).",
+            Language.Es => $"<@{actor.Id}> ({actor.Username}) ha eliminado un **archivo**.",
+            Language.Ru => $"**файл** был удален <@{actor.Id}> ({actor.Username}).",
+            Language.It => $"Un **file** è stato eliminato da <@{actor.Id}> ({actor.Username}).",
+            _ => $"A **file** has been deleted by <@{actor.Id}> ({actor.Username})."
         };
 
     public string NotificationModCaseFileUpdate(IUser actor) =>
         PreferredLanguage switch
         {
             Language.De =>
-                $"Eine **Datei** wurde von <@{actor.Id}> ({actor.Username}#{actor.Discriminator}) aktualisiert.",
+                $"Eine **Datei** wurde von <@{actor.Id}> ({actor.Username}) aktualisiert.",
             Language.Fr =>
-                $"Un **fichier** a été mis à jour par <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
-            Language.Es => $"<@{actor.Id}> ({actor.Username}#{actor.Discriminator}) ha actualizado un **archivo**.",
-            Language.Ru => $"**файл** был обновлен <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
-            Language.It => $"Un **file** è stato aggiornato da <@{actor.Id}> ({actor.Username}#{actor.Discriminator}).",
-            _ => $"A **file** has been updated by <@{actor.Id}> ({actor.Username}#{actor.Discriminator})."
+                $"Un **fichier** a été mis à jour par <@{actor.Id}> ({actor.Username}).",
+            Language.Es => $"<@{actor.Id}> ({actor.Username}) ha actualizado un **archivo**.",
+            Language.Ru => $"**файл** был обновлен <@{actor.Id}> ({actor.Username}).",
+            Language.It => $"Un **file** è stato aggiornato da <@{actor.Id}> ({actor.Username}).",
+            _ => $"A **file** has been updated by <@{actor.Id}> ({actor.Username})."
         };
 
     public string NotificationModCaseDmWarn(IGuild guild, string reason, string caseUrl) =>
@@ -261,50 +261,50 @@ public class PunishmentNotificationTranslator : Translator
         PreferredLanguage switch
         {
             Language.De =>
-                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}) wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) erstellt.",
+                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}) wurde von <@{moderator.Id}> ({moderator.Username}) erstellt.",
             Language.Fr =>
-                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}) a été créé par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}) a été créé par <@{moderator.Id}> ({moderator.Username}).",
             Language.Es =>
-                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username}) ha sido creado por <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username}) ha sido creado por <@{moderator.Id}> ({moderator.Username}).",
             Language.Ru =>
-                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username}) был создан <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username}) был создан <@{moderator.Id}> ({moderator.Username}).",
             Language.It =>
-                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username}) è stato creato da <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username}) è stato creato da <@{moderator.Id}> ({moderator.Username}).",
             _ =>
-                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}) has been created by <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator})."
+                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}) has been created by <@{moderator.Id}> ({moderator.Username})."
         };
 
     public string NotificationModCaseUpdate(ModCase modCase, IUser moderator) =>
         PreferredLanguage switch
         {
             Language.De =>
-                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}) wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) aktualisiert.",
+                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username}) wurde von <@{moderator.Id}> ({moderator.Username}) aktualisiert.",
             Language.Fr =>
-                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}) a été mis à jour par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username}) a été mis à jour par <@{moderator.Id}> ({moderator.Username}).",
             Language.Es =>
-                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username}) ha sido actualizado por <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username}) ha sido actualizado por <@{moderator.Id}> ({moderator.Username}).",
             Language.Ru =>
-                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username}) был обновлен <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username}) был обновлен <@{moderator.Id}> ({moderator.Username}).",
             Language.It =>
-                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username}) è stato aggiornato da <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username}) è stato aggiornato da <@{moderator.Id}> ({moderator.Username}).",
             _ =>
-                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}) has been updated by <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator})."
+                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username}) has been updated by <@{moderator.Id}> ({moderator.Username})."
         };
 
     public string NotificationModCaseDelete(ModCase modCase, IUser moderator) =>
         PreferredLanguage switch
         {
             Language.De =>
-                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username} wurde von <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}) gelöscht.",
+                $"Ein **vorfall** für <@{modCase.UserId}> ({modCase.Username} wurde von <@{moderator.Id}> ({moderator.Username}) gelöscht.",
             Language.Fr =>
-                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username} a été supprimé par <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** pour <@{modCase.UserId}> ({modCase.Username} a été supprimé par <@{moderator.Id}> ({moderator.Username}).",
             Language.Es =>
-                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username} ha sido eliminado por <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** para <@{modCase.UserId}> ({modCase.Username} ha sido eliminado por <@{moderator.Id}> ({moderator.Username}).",
             Language.Ru =>
-                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username} был удален <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"**Modcase** для <@{modCase.UserId}> ({modCase.Username} был удален <@{moderator.Id}> ({moderator.Username}).",
             Language.It =>
-                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username} è stato eliminato da <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator}).",
+                $"Un **mod case** per <@{modCase.UserId}> ({modCase.Username} è stato eliminato da <@{moderator.Id}> ({moderator.Username}).",
             _ =>
-                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username} has been deleted by <@{moderator.Id}> ({moderator.Username}#{moderator.Discriminator})."
+                $"A **mod case** for <@{modCase.UserId}> ({modCase.Username} has been deleted by <@{moderator.Id}> ({moderator.Username})."
         };
 }

@@ -20,12 +20,12 @@ public class AutoModNotificationTranslator : Translator
     public string NotificationAutoModCase(IUser user) =>
         PreferredLanguage switch
         {
-            Language.De => $"{user.Username}#{user.Discriminator} hat die automod ausgelöst.",
-            Language.Fr => $"{user.Username}#{user.Discriminator} a déclenché la modération automatique.",
-            Language.Es => $"{user.Username}#{user.Discriminator} desencadenó la automoderación.",
-            Language.Ru => $"{user.Username}#{user.Discriminator} запускает автомодерацию.",
-            Language.It => $"{user.Username}#{user.Discriminator} ha attivato la moderazione automatica.",
-            _ => $"{user.Username}#{user.Discriminator} triggered the automod."
+            Language.De => $"{user.Username} hat die automod ausgelöst.",
+            Language.Fr => $"{user.Username} a déclenché la modération automatique.",
+            Language.Es => $"{user.Username} desencadenó la automoderación.",
+            Language.Ru => $"{user.Username} запускает автомодерацию.",
+            Language.It => $"{user.Username} ha attivato la moderazione automatica.",
+            _ => $"{user.Username} triggered the automod."
         };
 
     public string NotificationAutoModDm(IUser user, IMentionable channel, string reason, string action) =>

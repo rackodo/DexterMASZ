@@ -121,7 +121,7 @@ public class Cleanup : Command<Cleanup>
                     RequestOptions options = new()
                     {
                         AuditLogReason =
-                            $"Bulkdelete by {currentActor.Username}#{currentActor.Discriminator} ({currentActor.Id})."
+                            $"Bulkdelete by {currentActor.Username} ({currentActor.Id})."
                     };
 
                     await channel.DeleteMessagesAsync(toDelete, options);

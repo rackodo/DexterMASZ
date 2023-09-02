@@ -26,7 +26,7 @@ public class WhoIs : Command<WhoIs>
     {
         var embed = new EmbedBuilder()
             .WithFooter($"{Translator.Get<BotTranslator>().UserId()}: {user.Id}")
-            .WithTitle($"{Translator.Get<UtilityTranslator>().UserProfile()} {user.Username}#{user.Discriminator}")
+            .WithTitle($"{Translator.Get<UtilityTranslator>().UserProfile()} {user.Username}")
             .WithCurrentTimestamp()
             .WithColor(Color.Blue)
             .WithThumbnailUrl(user.GetAvatarOrDefaultUrl(size: 1024))

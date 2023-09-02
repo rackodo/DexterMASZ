@@ -97,7 +97,7 @@ public class Experience : Command<Experience>
         var roleTargetXp = GuildUserLevel.XpFromLevel(roleTargetLevel, guildlevelconfig);
 
         var embed = new EmbedBuilder()
-            .WithTitle($"{user.Username}#{user.Discriminator}'s Experience Summary")
+            .WithTitle($"{user.Username}'s Experience Summary")
             .WithThumbnailUrl(user.GetAvatarUrl())
             .WithDescription(
                 $"{LevelDataExpression(LevelType.Total, calclevel)}\n" +

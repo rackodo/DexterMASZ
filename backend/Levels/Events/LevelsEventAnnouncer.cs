@@ -36,7 +36,7 @@ public class LevelsEventAnnouncer : IEvent
         using var scope = _serviceProvider.CreateScope();
 
         _logger.LogInformation(
-            $"{guildUser.Username}#{guildUser.Discriminator} ({guildUser.Id}) leveled up in {guildUser.GuildId}/{channel?.Id.ToString() ?? "Unknown Channel"} to level {level}");
+            $"{guildUser.Username} ({guildUser.Id}) leveled up in {guildUser.GuildId}/{channel?.Id.ToString() ?? "Unknown Channel"} to level {level}");
 
         if (channel is not null)
             try

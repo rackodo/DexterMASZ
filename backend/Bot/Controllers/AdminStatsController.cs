@@ -49,7 +49,7 @@ public class AdminStatsController : AuthenticatedController
             {
                 var user = login.GetCurrentUser();
 
-                currentLogins.Add(user is null ? "Invalid user." : $"{user.Username}#{user.Discriminator}");
+                currentLogins.Add(user is null ? "Invalid user." : $"{user.Username}");
             }
             catch (Exception e)
             {

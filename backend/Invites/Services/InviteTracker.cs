@@ -98,7 +98,7 @@ public class InviteTracker : IEvent
                 };
 
                 _logger.LogInformation(
-                    $"User {user.Username}#{user.Discriminator} joined guild {user.Guild.Name} with ID: {user.Guild.Id} using invite {usedInvite.Code}");
+                    $"User {user.Username} joined guild {user.Guild.Name} with ID: {user.Guild.Id} using invite {usedInvite.Code}");
 
                 if (guildConfig.ExecuteWhoIsOnJoin)
                 {

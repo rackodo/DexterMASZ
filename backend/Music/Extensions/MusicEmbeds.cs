@@ -9,5 +9,5 @@ public static class MusicEmbeds
         new EmbedBuilder()
             .WithTimestamp(DateTime.Now)
             .WithColor(Color.DarkRed)
-            .WithFooter($"Run by {user.Username}#{user.Discriminator}", user.GetAvatarUrl());
+            .WithFooter($"Run by {user.Username}", user.GetAvatarUrl());
 }

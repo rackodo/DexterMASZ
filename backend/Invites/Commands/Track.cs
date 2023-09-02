@@ -110,7 +110,7 @@ public class Track : Command<Track>
             if (invitees.ContainsKey(invite.JoinedUserId))
             {
                 var user = invitees[invite.JoinedUserId];
-                usedBy.Append($"`{user.Username}#{user.Discriminator}` ");
+                usedBy.Append($"`{user.Username}` ");
             }
 
             usedBy.AppendLine($"`{invite.JoinedUserId}` - {invite.JoinedAt.ToDiscordTs()}");

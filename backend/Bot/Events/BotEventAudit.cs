@@ -36,7 +36,7 @@ public class BotEventAudit : IEvent
             return;
 
         var currentUser = dOauth.GetCurrentUser();
-        var userDefinition = $"`{currentUser.Username}#{currentUser.Discriminator}` (`{currentUser.Id}`)";
+        var userDefinition = $"`{currentUser.Username}` (`{currentUser.Id}`)";
         await _auditLogger.QueueLog($"{userDefinition} **logged in** using OAuth.");
     }
 
