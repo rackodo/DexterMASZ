@@ -60,7 +60,7 @@ public class UserDm : Command<UserDm>
         StringBuilder sender = new();
 
         sender.AppendLine(
-            $"> **{Translator.Get<BotTranslator>().User()}:** {context.User.Username} - {Context.User.Mention}");
+            $"> **{Translator.Get<BotTranslator>().User()}:** {Context.User.Username} - {Context.User.Mention}");
         sender.AppendLine($"> **{Translator.Get<BotTranslator>().Id()}:** `{Context.User.Id}`");
 
         var sendEmbed = new EmbedBuilder()
