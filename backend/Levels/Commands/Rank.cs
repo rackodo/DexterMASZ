@@ -28,7 +28,7 @@ public class Rank : Command<Rank>
         if (rankCardConfig == null)
         {
             rankCardConfig = new UserRankcardConfig();
-            buttons.WithButton("Customize Card", url: await RankCard.GetRankCard(SettingsRepository),
+            buttons.WithButton("✨ Customize card", url: await RankCard.GetRankCard(SettingsRepository),
                 style: ButtonStyle.Link);
         }
 
