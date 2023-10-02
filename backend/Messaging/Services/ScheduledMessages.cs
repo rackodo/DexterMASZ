@@ -41,7 +41,7 @@ public class ScheduledMessages : IEvent
 
         minuteEventTimer.Elapsed += async (s, e) => await CheckDueScheduledMessages();
 
-        await Task.Run(() => minuteEventTimer.Start());
+        await Task.Run(minuteEventTimer.Start);
     }
 
     public async Task CheckDueScheduledMessages()

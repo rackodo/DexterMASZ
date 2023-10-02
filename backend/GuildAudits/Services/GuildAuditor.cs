@@ -19,46 +19,35 @@ using System.Text;
 
 namespace GuildAudits.Services;
 
-public class GuildAuditer : IEvent
+public class GuildAuditor(DiscordSocketClient client, IServiceProvider serviceProvider,
+    InviteEventHandler eventHandler) : IEvent
 {
     private static readonly string Check = "\u2705";
     private static readonly string XCheck = "\u274C";
 
-    private readonly DiscordSocketClient _client;
-    private readonly InviteEventHandler _eventHandler;
-    private readonly IServiceProvider _serviceProvider;
-
-    public GuildAuditer(DiscordSocketClient client, IServiceProvider serviceProvider,
-        InviteEventHandler eventHandler)
-    {
-        _client = client;
-        _serviceProvider = serviceProvider;
-        _eventHandler = eventHandler;
-    }
-
     public void RegisterEvents()
     {
-        _client.UserBanned += HandleBanAdded;
-        _client.UserUnbanned += HandleBanRemoved;
-        _client.InviteCreated += HandleInviteCreated;
-        _client.UserJoined += HandleUserJoined;
-        _client.UserLeft += HandleUserRemoved;
-        _client.MessageReceived += HandleMessageSent;
-        _client.MessageDeleted += HandleMessageDeleted;
-        _client.MessageUpdated += HandleMessageUpdated;
-        _client.ThreadCreated += HandleThreadCreated;
-        _client.UserUpdated += HandleUsernameUpdated;
-        _client.GuildMemberUpdated += HandleGuildUserUpdated;
-        _client.UserVoiceStateUpdated += HandleVoiceStateUpdated;
-        _client.ReactionAdded += HandleReactionAdded;
-        _client.ReactionRemoved += HandleReactionRemoved;
+        client.UserBanned += HandleBanAdded;
+        client.UserUnbanned += HandleBanRemoved;
+        client.InviteCreated += HandleInviteCreated;
+        client.UserJoined += HandleUserJoined;
+        client.UserLeft += HandleUserRemoved;
+        client.MessageReceived += HandleMessageSent;
+        client.MessageDeleted += HandleMessageDeleted;
+        client.MessageUpdated += HandleMessageUpdated;
+        client.ThreadCreated += HandleThreadCreated;
+        client.UserUpdated += HandleUsernameUpdated;
+        client.GuildMemberUpdated += HandleGuildUserUpdated;
+        client.UserVoiceStateUpdated += HandleVoiceStateUpdated;
+        client.ReactionAdded += HandleReactionAdded;
+        client.ReactionRemoved += HandleReactionRemoved;
 
-        _eventHandler.OnInviteDeleted += HandleInviteDeleted;
+        eventHandler.OnInviteDeleted += HandleInviteDeleted;
     }
 
     public async Task SendEmbed(EmbedBuilder embed, ulong guildId, GuildAuditLogEvent eventType)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var guildConfigRepository = scope.ServiceProvider.GetRequiredService<GuildConfigRepository>();
 
@@ -111,7 +100,7 @@ public class GuildAuditer : IEvent
             foreach (var role in auditLogConfig.PingRoles)
                 rolePings.Append($"<@&{role}> ");
 
-            if (await _client.GetChannelAsync(auditLogConfig.ChannelId) is ITextChannel channel)
+            if (await client.GetChannelAsync(auditLogConfig.ChannelId) is ITextChannel channel)
                 await channel.SendMessageAsync(rolePings.ToString(), embed: embed.Build());
         }
         catch (ResourceNotFoundException)
@@ -121,16 +110,14 @@ public class GuildAuditer : IEvent
 
     public async Task<bool> CheckForIgnoredRoles(ulong guildId, GuildAuditLogEvent eventType, List<ulong> roles)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var auditLogRepository = scope.ServiceProvider.GetRequiredService<GuildAuditConfigRepository>();
 
-        GuildAuditConfig auditLogConfig = null;
-
         try
         {
-            auditLogConfig = await auditLogRepository.GetConfigsByGuildAndType(guildId, eventType);
-            return auditLogConfig == null ? false : auditLogConfig.IgnoreRoles?.Any(role => roles.Contains(role)) ?? false;
+            var auditLogConfig = await auditLogRepository.GetConfigsByGuildAndType(guildId, eventType);
+            return auditLogConfig != null && (auditLogConfig.IgnoreRoles?.Any(roles.Contains) ?? false);
         }
         catch (ResourceNotFoundException)
         {
@@ -145,16 +132,14 @@ public class GuildAuditer : IEvent
 
     public async Task<bool> CheckForIgnoredChannel(ulong guildId, GuildAuditLogEvent eventType, ulong channelId)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var auditLogRepository = scope.ServiceProvider.GetRequiredService<GuildAuditConfigRepository>();
 
-        GuildAuditConfig auditLogConfig = null;
-
         try
         {
-            auditLogConfig = await auditLogRepository.GetConfigsByGuildAndType(guildId, eventType);
-            return auditLogConfig == null ? false : auditLogConfig.IgnoreChannels?.Contains(channelId) ?? false;
+            var auditLogConfig = await auditLogRepository.GetConfigsByGuildAndType(guildId, eventType);
+            return auditLogConfig != null && (auditLogConfig.IgnoreChannels?.Contains(channelId) ?? false);
         }
         catch (ResourceNotFoundException)
         {
@@ -200,7 +185,7 @@ public class GuildAuditer : IEvent
 
     public async Task HandleAvatarUpdated(IGuildUser oldU, IGuildUser newU, ulong guildId)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var translator = await TryGetTranslation(scope, guildId);
 
@@ -232,7 +217,7 @@ public class GuildAuditer : IEvent
 
     public async Task HandleNicknameUpdated(IGuildUser oldU, IGuildUser newU, ulong guildId)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var translator = await TryGetTranslation(scope, guildId);
 
@@ -269,7 +254,7 @@ public class GuildAuditer : IEvent
     public async Task HandleUserRolesUpdated(IGuildUser user, IReadOnlyCollection<SocketRole> roleOld,
         IReadOnlyCollection<SocketRole> roleNew, ulong guildId)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var translator = await TryGetTranslation(scope, guildId);
 
@@ -311,7 +296,7 @@ public class GuildAuditer : IEvent
     {
         if (oldU.Username != newU.Username)
         {
-            using var scope = _serviceProvider.CreateScope();
+            using var scope = serviceProvider.CreateScope();
 
             foreach (var guild in newU.MutualGuilds)
             {
@@ -349,12 +334,12 @@ public class GuildAuditer : IEvent
     private async Task HandleReactionRemoved(Cacheable<IUserMessage, ulong> message,
         Cacheable<IMessageChannel, ulong> channel, SocketReaction reaction)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         IGuildChannel guildChannel;
         try
         {
-            guildChannel = (IGuildChannel)await _client.GetChannelAsync(channel.Id);
+            guildChannel = (IGuildChannel)await client.GetChannelAsync(channel.Id);
             if (guildChannel == null)
                 return;
         }
@@ -396,12 +381,12 @@ public class GuildAuditer : IEvent
     private async Task HandleReactionAdded(Cacheable<IUserMessage, ulong> message,
         Cacheable<IMessageChannel, ulong> channel, SocketReaction reaction)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         IGuildChannel guildChannel;
         try
         {
-            guildChannel = (IGuildChannel)await _client.GetChannelAsync(channel.Id);
+            guildChannel = (IGuildChannel)await client.GetChannelAsync(channel.Id);
             if (guildChannel == null)
                 return;
         }
@@ -443,7 +428,7 @@ public class GuildAuditer : IEvent
     private async Task HandleVoiceStateUpdated(SocketUser user, SocketVoiceState voiceStateBefore,
         SocketVoiceState voiceStateAfter)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         if (voiceStateBefore.VoiceChannel == voiceStateAfter.VoiceChannel)
             return;
@@ -482,13 +467,12 @@ public class GuildAuditer : IEvent
         if (translator == null)
             return;
 
-        string title;
-        if (eventType == GuildAuditLogEvent.VoiceJoined)
-            title = translator.Get<GuildAuditTranslator>().VoiceJoined();
-        else title = eventType == GuildAuditLogEvent.VoiceLeft
-            ? translator.Get<GuildAuditTranslator>().VoiceLeft()
-            : translator.Get<GuildAuditTranslator>().MovedVoiceChannel();
-
+        var title = eventType switch
+        {
+            GuildAuditLogEvent.VoiceJoined => translator.Get<GuildAuditTranslator>().VoiceJoined(),
+            GuildAuditLogEvent.VoiceLeft => translator.Get<GuildAuditTranslator>().VoiceLeft(),
+            _ => translator.Get<GuildAuditTranslator>().MovedVoiceChannel()
+        };
         StringBuilder description = new();
         description.AppendLine(
             $"> **{translator.Get<BotTranslator>().User()}:** {user.Username} - {user.Mention}");
@@ -530,7 +514,7 @@ public class GuildAuditer : IEvent
 
     public async Task HandleBanAdded(SocketUser user, SocketGuild guild)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var translator = await TryGetTranslation(scope, guild.Id);
 
@@ -552,7 +536,7 @@ public class GuildAuditer : IEvent
 
     public async Task HandleBanRemoved(SocketUser user, SocketGuild guild)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var translator = await TryGetTranslation(scope, guild.Id);
 
@@ -577,7 +561,7 @@ public class GuildAuditer : IEvent
         if (!invite.GuildId.HasValue)
             return;
 
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var translator = await TryGetTranslation(scope, invite.GuildId.Value);
 
@@ -619,7 +603,7 @@ public class GuildAuditer : IEvent
 
     public async Task HandleInviteDeleted(SocketGuildChannel channel, TrackedInvite invite)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var translator = await TryGetTranslation(scope, channel.Guild.Id);
 
@@ -655,7 +639,7 @@ public class GuildAuditer : IEvent
 
     public async Task HandleUserJoined(SocketGuildUser user)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var translator = await TryGetTranslation(scope, user.Guild.Id);
 
@@ -680,7 +664,7 @@ public class GuildAuditer : IEvent
 
     public async Task HandleUserRemoved(SocketGuild guild, SocketUser user)
     {
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var translator = await TryGetTranslation(scope, guild.Id);
 
@@ -713,12 +697,12 @@ public class GuildAuditer : IEvent
             if (await CheckForIgnoredChannel(textChannel.GuildId, GuildAuditLogEvent.MessageDeleted, textChannel.Id))
                 return;
 
-            if (message.Author is IGuildUser tauthor)
+            if (message.Author is IGuildUser msgAuthor)
                 if (await CheckForIgnoredRoles(textChannel.GuildId, GuildAuditLogEvent.MessageDeleted,
-                        tauthor.RoleIds.ToList()))
+                        msgAuthor.RoleIds.ToList()))
                     return;
 
-            using var scope = _serviceProvider.CreateScope();
+            using var scope = serviceProvider.CreateScope();
 
             var translator = await TryGetTranslation(scope, textChannel.GuildId);
 
@@ -794,12 +778,12 @@ public class GuildAuditer : IEvent
                 if (await CheckForIgnoredChannel(textChannel.GuildId, GuildAuditLogEvent.MessageSent, textChannel.Id))
                     return;
 
-                if (message.Author is IGuildUser tauthor)
+                if (message.Author is IGuildUser msgAuthor)
                     if (await CheckForIgnoredRoles(textChannel.GuildId, GuildAuditLogEvent.MessageSent,
-                            tauthor.RoleIds.ToList()))
+                            msgAuthor.RoleIds.ToList()))
                         return;
 
-                using var scope = _serviceProvider.CreateScope();
+                using var scope = serviceProvider.CreateScope();
 
                 var translator = await TryGetTranslation(scope, textChannel.GuildId);
 
@@ -822,13 +806,13 @@ public class GuildAuditer : IEvent
 
                 if (!string.IsNullOrEmpty(message.Content))
                 {
-                    if (message.Content.Length > 1024)
+                    if (message.Content.Length > 1000)
                         for (var i = 0; i < 4; i++)
                         {
-                            if (message.Content.Length > i * 1024)
+                            if (message.Content.Length > i * 1000)
                                 embed.AddField(
                                     $"{translator.Get<GuildAuditTranslator>().Content()} [{i + 1}]",
-                                    new string(message.Content.Skip(i * 1024).Take(1024).ToArray())
+                                    new string(message.Content.Skip(i * 1000).Take(1000).ToArray())
                                 );
                         }
                     else
@@ -852,7 +836,10 @@ public class GuildAuditer : IEvent
                         attachmentInfo.AppendLine(translator.Get<BotTranslator>()
                             .AndXMore(message.Attachments.Count - 5));
 
-                    embed.AddField(translator.Get<BotTranslator>().Attachments(), attachmentInfo.ToString());
+                    var attachInfo = attachmentInfo.ToString();
+
+                    embed.AddField(translator.Get<BotTranslator>().Attachments(),
+                        attachInfo.Length > 1000 ? attachInfo.Take(1000) : attachInfo);
                 }
 
                 await SendEmbed(embed, textChannel.GuildId, GuildAuditLogEvent.MessageSent);
@@ -872,12 +859,12 @@ public class GuildAuditer : IEvent
                         textChannel.Id))
                     return;
 
-                if (messageAfter.Author is IGuildUser tauthor)
+                if (messageAfter.Author is IGuildUser msgAuthor)
                     if (await CheckForIgnoredRoles(textChannel.GuildId, GuildAuditLogEvent.MessageUpdated,
-                            tauthor.RoleIds.ToList()))
+                            msgAuthor.RoleIds.ToList()))
                         return;
 
-                using var scope = _serviceProvider.CreateScope();
+                using var scope = serviceProvider.CreateScope();
 
                 var translator = await TryGetTranslation(scope, textChannel.GuildId);
 
@@ -911,17 +898,17 @@ public class GuildAuditer : IEvent
                     return;
                 else if (!string.Equals(before.Content, messageAfter.Content))
                     if (!string.IsNullOrEmpty(before.Content))
-                        embed.AddField(translator.Get<GuildAuditTranslator>().Before(), before.Content.Truncate(1024));
+                        embed.AddField(translator.Get<GuildAuditTranslator>().Before(), before.Content.Truncate(1000));
 
                 if (!string.IsNullOrEmpty(messageAfter.Content))
                 {
-                    if (messageAfter.Content.Length > 1024)
+                    if (messageAfter.Content.Length > 1000)
                         for (var i = 0; i < 4; i++)
                         {
-                            if (messageAfter.Content.Length > i * 1024)
+                            if (messageAfter.Content.Length > i * 1000)
                                 embed.AddField(
                                     $"{translator.Get<GuildAuditTranslator>().New()} [{i + 1}]",
-                                    new string(messageAfter.Content.Skip(i * 1024).Take(1024).ToArray())
+                                    new string(messageAfter.Content.Skip(i * 1000).Take(1000).ToArray())
                                 );
                         }
                     else
@@ -945,7 +932,10 @@ public class GuildAuditer : IEvent
                         attachmentInfo.AppendLine(translator.Get<BotTranslator>()
                             .AndXMore(messageAfter.Attachments.Count - 5));
 
-                    embed.AddField(translator.Get<BotTranslator>().Attachments(), attachmentInfo.ToString());
+                    var attachInfo = attachmentInfo.ToString();
+
+                    embed.AddField(translator.Get<BotTranslator>().Attachments(),
+                        attachInfo.Length > 1000 ? attachInfo.Take(1000) : attachInfo);
                 }
 
                 await SendEmbed(embed, textChannel.GuildId, GuildAuditLogEvent.MessageUpdated);
@@ -957,7 +947,7 @@ public class GuildAuditer : IEvent
         if (await CheckForIgnoredChannel(thread.Guild.Id, GuildAuditLogEvent.ThreadCreated, thread.ParentChannel.Id))
             return;
 
-        using var scope = _serviceProvider.CreateScope();
+        using var scope = serviceProvider.CreateScope();
 
         var translator = await TryGetTranslation(scope, thread.Guild.Id);
 

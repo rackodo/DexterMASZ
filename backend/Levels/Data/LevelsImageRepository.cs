@@ -11,7 +11,7 @@ namespace Levels.Data;
 
 public class LevelsImageRepository : Repository
 {
-    private static readonly string[] AllowedExtensions = { ".png", ".jpg", ".jpeg" };
+    private static readonly string[] AllowedExtensions = [".png", ".jpg", ".jpeg"];
     private readonly SettingsRepository _configRepo;
     private readonly GuildUserLevelRepository _levelsRepository;
     private readonly ILogger<LevelsImageRepository> _logger;

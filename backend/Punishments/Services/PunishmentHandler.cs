@@ -55,7 +55,7 @@ public class PunishmentHandler : IEvent
 
             eventTimer.Elapsed += (_, _) => CheckAllCurrentPunishments();
 
-            await Task.Run(() => eventTimer.Start());
+            await Task.Run(eventTimer.Start);
 
             CheckAllCurrentPunishments();
 

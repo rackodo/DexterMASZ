@@ -7,7 +7,7 @@ public class GuildLevelConfig
 {
     [Key] public ulong Id { get; set; }
 
-    public float[] Coefficients { get; set; } = { 0f, 75.83333f, 22.5f, 1.66667f };
+    public float[] Coefficients { get; set; } = [0f, 75.83333f, 22.5f, 1.66667f];
     public int XpInterval { get; set; } = 60;
     public int MinimumTextXpGiven { get; set; }
     public int MaximumTextXpGiven { get; set; }
@@ -17,7 +17,7 @@ public class GuildLevelConfig
     public ulong VoiceLevelUpChannel { get; set; }
     public ulong TextLevelUpChannel { get; set; }
 
-    public ulong[] DisabledXpChannels { get; set; } = { };
+    public ulong[] DisabledXpChannels { get; set; } = [];
     public bool HandleRoles { get; set; } = false;
     public bool SendTextLevelUps { get; set; } = true;
     public bool SendVoiceLevelUps { get; set; } = true;

@@ -4,5 +4,5 @@ namespace PrivateVCs;
 
 public class PrivateVcModule : Module
 {
-    public override string[] Contributors { get; } = { "Ferox" };
+    public override string[] Contributors { get; } = ["Ferox"];
 }

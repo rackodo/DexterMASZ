@@ -19,7 +19,7 @@ public class MusicModule : Module
     public const string Host = "lavalink.usfurries.com";
     public const int Port = 2333;
 
-    public override string[] Contributors { get; } = { "Swyreee", "Ferox" };
+    public override string[] Contributors { get; } = ["Swyreee", "Ferox"];
 
     public override void AddServices(IServiceCollection services, CachedServices cachedServices,
         AppSettings appSettings) =>

@@ -4,5 +4,5 @@ namespace Levels;
 
 public class LevelsModule : Module
 {
-    public override string[] Contributors { get; } = { "EnderFloof" };
+    public override string[] Contributors { get; } = ["EnderFloof"];
 }

@@ -136,7 +136,7 @@ public class ModCaseRepository : Repository,
                          GuildId = guildConfig.GuildId,
                          UserId = ban.User.Id,
                          Username = ban.User.Username,
-                         Labels = new[] { _translator.Get<PunishmentTranslator>().Imported() },
+                         Labels = [_translator.Get<PunishmentTranslator>().Imported()],
                          CreationType = CaseCreationType.Imported,
                          PunishmentType = PunishmentType.Ban,
                          PunishedUntil = null
