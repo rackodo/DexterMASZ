@@ -734,13 +734,13 @@ public class GuildAuditor(DiscordSocketClient client, IServiceProvider servicePr
 
             if (!string.IsNullOrEmpty(message.Content))
             {
-                if (message.Content.Length > 1024)
+                if (message.Content.Length > 1000)
                     for (var i = 0; i < 4; i++)
                     {
-                        if (message.Content.Length > i * 1024)
+                        if (message.Content.Length > i * 1000)
                             embed.AddField(
                                 $"{translator.Get<GuildAuditTranslator>().Content()} [{i + 1}]",
-                                new string(message.Content.Skip(i * 1024).Take(1024).ToArray())
+                                new string(message.Content.Skip(i * 1000).Take(1000).ToArray())
                             );
                     }
                 else
@@ -763,7 +763,10 @@ public class GuildAuditor(DiscordSocketClient client, IServiceProvider servicePr
                 if (message.Attachments.Count > 5)
                     attachmentInfo.AppendLine(translator.Get<BotTranslator>().AndXMore(message.Attachments.Count - 5));
 
-                embed.AddField(translator.Get<BotTranslator>().Attachments(), attachmentInfo.ToString());
+                var attachInfo = attachmentInfo.ToString();
+
+                embed.AddField(translator.Get<BotTranslator>().Attachments(),
+                    attachInfo.Length > 1000 ? attachInfo.Take(1000) : attachInfo);
             }
 
             await SendEmbed(embed, textChannel.GuildId, GuildAuditLogEvent.MessageDeleted);
