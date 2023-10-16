@@ -92,7 +92,6 @@ public class DiscordBot : IHostedService, IEvent
 
         await _client.LoginAsync(TokenType.Bot, config.DiscordBotToken);
         await _client.StartAsync();
-        await _client.SetStatusAsync(UserStatus.Offline);
     }
 
     public async Task StopAsync(CancellationToken cancellationToken) => await _client.LogoutAsync();
@@ -169,6 +168,8 @@ public class DiscordBot : IHostedService, IEvent
 
             _eventHandler.BotLaunchedEvent.Invoke();
         }
+
+        await _client.SetStatusAsync(UserStatus.Offline);
     }
 
     private static Task Log(LogMessage logMessage, ILogger logger)
