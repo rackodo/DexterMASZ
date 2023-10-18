@@ -169,8 +169,6 @@ public class DiscordBot : IHostedService, IEvent
 
             _eventHandler.BotLaunchedEvent.Invoke();
         }
-
-        await _client.SetStatusAsync(UserStatus.Invisible);
     }
 
     private static Task Log(LogMessage logMessage, ILogger logger)
