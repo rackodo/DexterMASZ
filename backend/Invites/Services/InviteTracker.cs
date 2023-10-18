@@ -140,6 +140,8 @@ public class InviteTracker : IEvent
         catch (HttpException)
         {
         }
+        catch (ArgumentNullException)
+        { }
 
         return invites;
     }
