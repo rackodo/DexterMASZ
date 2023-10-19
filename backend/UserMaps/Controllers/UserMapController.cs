@@ -9,13 +9,9 @@ using UserMaps.DTOs;
 namespace UserMaps.Controllers;
 
 [Route("api/v1/guilds/{guildId}/usermap")]
-public class UserMapController : AuthenticatedController
+public class UserMapController(IdentityManager identityManager, UserMapRepository userMapRepo) : AuthenticatedController(identityManager, userMapRepo)
 {
-    private readonly UserMapRepository _userMapRepo;
-
-    public UserMapController(IdentityManager identityManager, UserMapRepository userMapRepo) :
-        base(identityManager, userMapRepo) =>
-        _userMapRepo = userMapRepo;
+    private readonly UserMapRepository _userMapRepo = userMapRepo;
 
     [HttpGet]
     public async Task<IActionResult> GetUserMap([FromRoute] ulong guildId)

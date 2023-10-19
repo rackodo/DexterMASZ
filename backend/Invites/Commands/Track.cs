@@ -30,12 +30,12 @@ public class Track : Command<Track>
             inviteCode = $"https://discord.gg/{inviteCode}";
 
         var invites = await InviteRepository.GetInvitesByCode(inviteCode);
-        invites = invites.Where(x => x.GuildId == Context.Guild.Id).OrderByDescending(x => x.JoinedAt).ToList();
+        invites = [.. invites.Where(x => x.GuildId == Context.Guild.Id).OrderByDescending(x => x.JoinedAt)];
 
         DateTime? createdAt = null;
         IUser creator = null;
         int? usages = invites.Count;
-        Dictionary<ulong, IUser> invitees = new();
+        Dictionary<ulong, IUser> invitees = [];
 
         if (invites.Count > 0)
         {
@@ -107,9 +107,9 @@ public class Track : Command<Track>
         {
             usedBy.Append("- ");
 
-            if (invitees.ContainsKey(invite.JoinedUserId))
+            if (invitees.TryGetValue(invite.JoinedUserId, out var value))
             {
-                var user = invitees[invite.JoinedUserId];
+                var user = value;
                 usedBy.Append($"`{user.Username}` ");
             }
 

@@ -1,13 +1,12 @@
 ﻿using Discord;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Levels.Models;
 
+[PrimaryKey(nameof(GuildId), nameof(UserId))]
 public class GuildUserLevel
 {
-    [Key] [Column(TypeName = "char(22)")] public string Token { get; set; }
-
+    public string Token { get; set; }
     public ulong UserId { get; set; }
     public ulong GuildId { get; set; }
     public long TextXp { get; set; }
@@ -16,45 +15,23 @@ public class GuildUserLevel
 
     protected GuildUserLevel() => Token = "";
 
-    public GuildUserLevel(IGuildUser guilduser, long textxp = 0, long voicexp = 0)
+    public GuildUserLevel(IGuildUser guildUser, long textXp = 0, long voiceXp = 0)
     {
-        UserId = guilduser.Id;
-        GuildId = guilduser.GuildId;
-        TextXp = textxp;
-        VoiceXp = voicexp;
-        Token = GenerateToken(guilduser);
+        UserId = guildUser.Id;
+        GuildId = guildUser.GuildId;
+        TextXp = textXp;
+        VoiceXp = voiceXp;
     }
 
-    public GuildUserLevel(ulong guildid, ulong userid, long textxp = 0, long voicexp = 0)
+    public GuildUserLevel(ulong guildId, ulong userId, long textXp = 0, long voiceXp = 0)
     {
-        UserId = userid;
-        GuildId = guildid;
-        TextXp = textxp;
-        VoiceXp = voicexp;
-        Token = GenerateToken(guildid, userid);
+        UserId = userId;
+        GuildId = guildId;
+        TextXp = textXp;
+        VoiceXp = voiceXp;
     }
 
-    public static string GenerateToken(IGuildUser user) => GenerateToken(user.GuildId, user.Id);
-
-    public static string GenerateToken(ulong guildid, ulong userid)
-    {
-        var chars = new char[22];
-        for (var i = 10; i >= 0; i--)
-        {
-            chars[i] = (char)('0' + (guildid & 0x3f));
-            guildid >>= 6;
-        }
-
-        for (var i = 21; i >= 11; i--)
-        {
-            chars[i] = (char)('0' + (userid & 0x3f));
-            userid >>= 6;
-        }
-
-        return new string(chars);
-    }
-
-    public static int LevelFromXp(long xp, GuildLevelConfig config, out long residualxp, out long levelxp)
+    public static int LevelFromXp(long xp, GuildLevelConfig config, out long residualXp, out long levelXp)
     {
         var min = 0;
         var max = 100;
@@ -69,27 +46,27 @@ public class GuildUserLevel
         {
             var middle = (min + max) / 2;
 
-            var xpmiddle = XpFromLevel(middle, config);
-            var xpmaxmiddle = XpFromLevel(middle + 1, config);
+            var xpMiddle = XpFromLevel(middle, config);
+            var xpMaxMiddle = XpFromLevel(middle + 1, config);
 
-            if (xp >= xpmaxmiddle)
+            if (xp >= xpMaxMiddle)
             {
                 min = middle + 1;
             }
-            else if (xp < xpmiddle)
+            else if (xp < xpMiddle)
             {
                 max = middle;
             }
             else
             {
-                residualxp = xp - xpmiddle;
-                levelxp = xpmaxmiddle - xpmiddle;
+                residualXp = xp - xpMiddle;
+                levelXp = xpMaxMiddle - xpMiddle;
                 return middle;
             }
         }
 
-        residualxp = -1;
-        levelxp = -1;
+        residualXp = -1;
+        levelXp = -1;
         return -1;
     }
 

@@ -3,16 +3,10 @@ using Discord;
 
 namespace Punishments.Models;
 
-public class ModCaseCommentExpanded
+public class ModCaseCommentExpanded(ModCaseComment comment, IUser commenter)
 {
-    public ModCaseComment Comment { get; set; }
-    public DiscordUser Commenter { get; set; }
-
-    public ModCaseCommentExpanded(ModCaseComment comment, IUser commenter)
-    {
-        Comment = comment;
-        Commenter = DiscordUser.GetDiscordUser(commenter);
-    }
+    public ModCaseComment Comment { get; set; } = comment;
+    public DiscordUser Commenter { get; set; } = DiscordUser.GetDiscordUser(commenter);
 
     public void RemoveModeratorInfo(ulong suspectId)
     {

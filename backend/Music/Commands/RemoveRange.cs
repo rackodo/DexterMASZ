@@ -30,7 +30,7 @@ public class RemoveRangeCommand : MusicCommand<RemoveRangeCommand>
             return;
         }
 
-        List<PageBuilder> pages = new();
+        List<PageBuilder> pages = [];
 
         for (var p = startIndexInt; p <= endIndexInt; ++p)
         {

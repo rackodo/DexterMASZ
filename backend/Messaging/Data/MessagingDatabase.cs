@@ -6,13 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Messaging.Data;
 
-public class MessagingDatabase : DataContext<MessagingDatabase>, IDataContextCreate
+public class MessagingDatabase(DbContextOptions<MessagingDatabase> options) : DataContext<MessagingDatabase>(options), IDataContextCreate
 {
     public DbSet<ScheduledMessage> ScheduledMessages { get; set; }
-
-    public MessagingDatabase(DbContextOptions<MessagingDatabase> options) : base(options)
-    {
-    }
 
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
         IServiceCollection serviceCollection) =>

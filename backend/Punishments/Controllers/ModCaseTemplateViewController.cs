@@ -8,18 +8,11 @@ using Punishments.Models;
 namespace Punishments.Controllers;
 
 [Route("api/v1/templatesview")]
-public class ModCaseTemplateViewController : AuthenticatedController
+public class ModCaseTemplateViewController(ModCaseTemplateRepository templateRepository, DiscordRest discordRest,
+    IdentityManager identityManager) : AuthenticatedController(identityManager, templateRepository)
 {
-    private readonly DiscordRest _discordRest;
-    private readonly ModCaseTemplateRepository _templateRepository;
-
-    public ModCaseTemplateViewController(ModCaseTemplateRepository templateRepository, DiscordRest discordRest,
-        IdentityManager identityManager) :
-        base(identityManager, templateRepository)
-    {
-        _templateRepository = templateRepository;
-        _discordRest = discordRest;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly ModCaseTemplateRepository _templateRepository = templateRepository;
 
     [HttpGet]
     public async Task<IActionResult> GetTemplatesView([FromQuery] ulong userId = 0)

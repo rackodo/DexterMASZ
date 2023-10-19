@@ -25,7 +25,7 @@ public static class Graphics
         RectangleF rect, Font font, Color color = default, HorizontalAlignment horAlignment = HorizontalAlignment.Left,
         VerticalAlignment verAlignment = VerticalAlignment.Top)
     {
-        var opts = new TextOptions(font)
+        var opts = new RichTextOptions(font)
         {
             HorizontalAlignment = horAlignment,
             VerticalAlignment = verAlignment,

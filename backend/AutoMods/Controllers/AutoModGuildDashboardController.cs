@@ -7,13 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace AutoMods.Controllers;
 
 [Route("api/v1/guilds/{guildId}/dashboard")]
-public class AutoModGuildDashboardController : AuthenticatedController
+public class AutoModGuildDashboardController(IdentityManager identityManager, AutoModEventRepository autoModRepo) : AuthenticatedController(identityManager, autoModRepo)
 {
-    private readonly AutoModEventRepository _autoModRepo;
-
-    public AutoModGuildDashboardController(IdentityManager identityManager, AutoModEventRepository autoModRepo) :
-        base(identityManager, autoModRepo) =>
-        _autoModRepo = autoModRepo;
+    private readonly AutoModEventRepository _autoModRepo = autoModRepo;
 
     [HttpGet("autoModChart")]
     public async Task<IActionResult> GetAutoModSplitChart([FromRoute] ulong guildId, [FromQuery] long? since = null)

@@ -7,16 +7,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Bot.Abstractions;
 
-public class EnumController<TTranslator> : BaseController
+public class EnumController<TTranslator>(Translation translator, ILogger<EnumController<TTranslator>> logger) : BaseController
 {
-    private readonly Translation _translator;
-    private readonly ILogger<EnumController<TTranslator>> _logger;
-
-    public EnumController(Translation translator, ILogger<EnumController<TTranslator>> logger)
-    {
-        _translator = translator;
-        _logger = logger;
-    }
+    private readonly Translation _translator = translator;
+    private readonly ILogger<EnumController<TTranslator>> _logger = logger;
 
     public Task<ObjectResult> TranslateEnum<TEnumType>(Language? language)
         where TEnumType : struct, Enum

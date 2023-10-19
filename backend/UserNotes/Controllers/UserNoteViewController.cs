@@ -8,18 +8,11 @@ using UserNotes.Models;
 namespace UserNotes.Controllers;
 
 [Route("api/v1/guilds/{guildId}/usernoteview")]
-public class UserNoteViewController : AuthenticatedController
+public class UserNoteViewController(IdentityManager identityManager, UserNoteRepository userNoteRepo,
+    DiscordRest discordRest) : AuthenticatedController(identityManager, userNoteRepo)
 {
-    private readonly DiscordRest _discordRest;
-    private readonly UserNoteRepository _userNoteRepo;
-
-    public UserNoteViewController(IdentityManager identityManager, UserNoteRepository userNoteRepo,
-        DiscordRest discordRest) :
-        base(identityManager, userNoteRepo)
-    {
-        _userNoteRepo = userNoteRepo;
-        _discordRest = discordRest;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly UserNoteRepository _userNoteRepo = userNoteRepo;
 
     [HttpGet]
     public async Task<IActionResult> GetGuildUserNoteView([FromRoute] ulong guildId)
@@ -29,7 +22,7 @@ public class UserNoteViewController : AuthenticatedController
         await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
         var userNotes = await _userNoteRepo.GetUserNotesByGuild(guildId);
-        List<UserNoteExpanded> userNoteViews = new();
+        List<UserNoteExpanded> userNoteViews = [];
 
         foreach (var userNote in userNotes)
         {

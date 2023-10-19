@@ -5,13 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Invites.Data;
 
-public class InviteDatabase : DataContext<InviteDatabase>, IDataContextCreate
+public class InviteDatabase(DbContextOptions<InviteDatabase> options) : DataContext<InviteDatabase>(options), IDataContextCreate
 {
     public DbSet<UserInvite> UserInvites { get; set; }
-
-    public InviteDatabase(DbContextOptions<InviteDatabase> options) : base(options)
-    {
-    }
 
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
         IServiceCollection serviceCollection) =>

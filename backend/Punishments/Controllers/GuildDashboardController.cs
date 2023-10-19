@@ -8,18 +8,11 @@ using Punishments.Models;
 namespace Punishments.Controllers;
 
 [Route("api/v1/guilds/{guildId}/dashboard")]
-public class GuildDashboardController : AuthenticatedController
+public class GuildDashboardController(IdentityManager identityManager, ModCaseCommentRepository modCaseCommentRepo,
+    DiscordRest discordRest) : AuthenticatedController(identityManager, modCaseCommentRepo)
 {
-    private readonly DiscordRest _discordRest;
-    private readonly ModCaseCommentRepository _modCaseCommentRepo;
-
-    public GuildDashboardController(IdentityManager identityManager, ModCaseCommentRepository modCaseCommentRepo,
-        DiscordRest discordRest) :
-        base(identityManager, modCaseCommentRepo)
-    {
-        _modCaseCommentRepo = modCaseCommentRepo;
-        _discordRest = discordRest;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly ModCaseCommentRepository _modCaseCommentRepo = modCaseCommentRepo;
 
     [HttpGet("latestcomments")]
     public async Task<IActionResult> LatestComments([FromRoute] ulong guildId)
@@ -28,7 +21,7 @@ public class GuildDashboardController : AuthenticatedController
 
         await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
-        List<ModCaseCommentExpanded> view = new();
+        List<ModCaseCommentExpanded> view = [];
 
         foreach (var comment in await _modCaseCommentRepo.GetLastCommentsByGuild(guildId))
         {

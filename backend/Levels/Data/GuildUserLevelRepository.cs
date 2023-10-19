@@ -5,12 +5,9 @@ using Levels.Models;
 
 namespace Levels.Data;
 
-public class GuildUserLevelRepository : Repository
+public class GuildUserLevelRepository(DiscordRest discordRest, LevelsDatabase database) : Repository(discordRest)
 {
-    private readonly LevelsDatabase _database;
-
-    public GuildUserLevelRepository(DiscordRest discordRest, LevelsDatabase database) : base(discordRest) =>
-        _database = database;
+    private readonly LevelsDatabase _database = database;
 
     public async Task<GuildUserLevel> GetOrCreateLevel(IGuildUser guildUser) =>
         await GetOrCreateLevel(guildUser?.GuildId ?? 0, guildUser?.Id ?? 0);

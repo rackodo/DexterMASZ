@@ -10,13 +10,9 @@ using Punishments.Models;
 namespace Punishments.Controllers;
 
 [Route("api/v1/templates")]
-public class ModCaseTemplateController : AuthenticatedController
+public class ModCaseTemplateController(ModCaseTemplateRepository caseTemplateRepo, IdentityManager identityManager) : AuthenticatedController(identityManager, caseTemplateRepo)
 {
-    private readonly ModCaseTemplateRepository _caseTemplateRepo;
-
-    public ModCaseTemplateController(ModCaseTemplateRepository caseTemplateRepo, IdentityManager identityManager) :
-        base(identityManager, caseTemplateRepo) =>
-        _caseTemplateRepo = caseTemplateRepo;
+    private readonly ModCaseTemplateRepository _caseTemplateRepo = caseTemplateRepo;
 
     [HttpPost]
     public async Task<IActionResult> CreateTemplate([FromBody] ModCaseTemplateForCreateDto templateDto,

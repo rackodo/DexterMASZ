@@ -9,24 +9,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Levels.Events;
 
-public class LevelsEventAnnouncer : IEvent
+public class LevelsEventAnnouncer(LevelsEventHandler eventHandler, LevelingService levelService,
+    ILogger<LevelsEventAnnouncer> logger,
+    IServiceProvider serviceProvider, DiscordSocketClient client) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly LevelsEventHandler _eventHandler;
-    private readonly LevelingService _levelService;
-    private readonly ILogger<LevelsEventAnnouncer> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public LevelsEventAnnouncer(LevelsEventHandler eventHandler, LevelingService levelService,
-        ILogger<LevelsEventAnnouncer> logger,
-        IServiceProvider serviceProvider, DiscordSocketClient client)
-    {
-        _eventHandler = eventHandler;
-        _levelService = levelService;
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _client = client;
-    }
+    private readonly DiscordSocketClient _client = client;
+    private readonly LevelsEventHandler _eventHandler = eventHandler;
+    private readonly LevelingService _levelService = levelService;
+    private readonly ILogger<LevelsEventAnnouncer> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public void RegisterEvents() => _eventHandler.OnUserLevelUp += AnnounceLevelUp;
 

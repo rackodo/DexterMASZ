@@ -16,12 +16,12 @@ public class DiscordGuild
         Id = guild.Id;
         Name = guild.Name;
         IconUrl = guild.IconUrl.GetAnimatedOrDefaultAvatar();
-        Roles = new List<DiscordRole>();
+        Roles = [];
 
         foreach (var role in guild.Roles)
             Roles.Add(new DiscordRole(role));
 
-        Channels = new List<DiscordChannel>();
+        Channels = [];
 
         foreach (var channel in guild.GetTextChannelsAsync().GetAwaiter().GetResult())
             Channels.Add(DiscordChannel.GetDiscordChannel(channel));
@@ -32,8 +32,8 @@ public class DiscordGuild
         Id = guild.Id;
         Name = guild.Name;
         IconUrl = guild.IconUrl.GetAnimatedOrDefaultAvatar();
-        Roles = new List<DiscordRole>();
-        Channels = new List<DiscordChannel>();
+        Roles = [];
+        Channels = [];
     }
 
     public static DiscordGuild GetDiscordGuild(IGuild guild) => guild is null ? null : guild.Id is 0 ? null : new DiscordGuild(guild);

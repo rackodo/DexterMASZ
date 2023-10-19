@@ -12,30 +12,21 @@ using System.Dynamic;
 namespace Bot.Controllers;
 
 [Route("api/v1/network")]
-public class UserNetworkController : AuthenticatedController
+public class UserNetworkController(GuildConfigRepository guildConfigRepository, DiscordRest discordRest,
+    IdentityManager identityManager, CachedServices cachedServices, IServiceProvider serviceProvider) : AuthenticatedController(identityManager, guildConfigRepository)
 {
-    private readonly CachedServices _cachedServices;
-    private readonly DiscordRest _discordRest;
-    private readonly GuildConfigRepository _guildConfigRepository;
-    private readonly IServiceProvider _serviceProvider;
-
-    public UserNetworkController(GuildConfigRepository guildConfigRepository, DiscordRest discordRest,
-        IdentityManager identityManager, CachedServices cachedServices, IServiceProvider serviceProvider)
-        : base(identityManager, guildConfigRepository)
-    {
-        _guildConfigRepository = guildConfigRepository;
-        _discordRest = discordRest;
-        _cachedServices = cachedServices;
-        _serviceProvider = serviceProvider;
-    }
+    private readonly CachedServices _cachedServices = cachedServices;
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly GuildConfigRepository _guildConfigRepository = guildConfigRepository;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     [HttpGet("user")]
     public async Task<IActionResult> GetUserNetwork([FromQuery] [Required] ulong userId)
     {
         var identity = await SetupAuthentication();
 
-        List<string> modGuilds = new();
-        List<DiscordGuild> guildViews = new();
+        List<string> modGuilds = [];
+        List<DiscordGuild> guildViews = [];
 
         var guildConfigs = await _guildConfigRepository.GetAllGuildConfigs();
 

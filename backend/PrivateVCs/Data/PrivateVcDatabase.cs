@@ -5,12 +5,8 @@ using PrivateVcs.Models;
 
 namespace PrivateVcs.Data;
 
-public class PrivateVcDatabase : DataContext<PrivateVcDatabase>, IDataContextCreate
+public class PrivateVcDatabase(DbContextOptions<PrivateVcDatabase> options) : DataContext<PrivateVcDatabase>(options), IDataContextCreate
 {
-    public PrivateVcDatabase(DbContextOptions<PrivateVcDatabase> options) : base(options)
-    {
-    }
-    
     public DbSet<PrivateVcConfig> PrivateVcConfigs { get; set; }
     
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,

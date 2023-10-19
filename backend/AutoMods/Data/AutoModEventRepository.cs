@@ -131,7 +131,7 @@ public class AutoModEventRepository : Repository,
 
             modCase.Description = description.ToString();
 
-            modCase.Labels = new List<string> { "Automod", modEvent.AutoModType.ToString() }.ToArray();
+            modCase.Labels = ["Automod", modEvent.AutoModType.ToString()];
             modCase.CreationType = CaseCreationType.AutoMod;
             modCase.PunishmentType = PunishmentType.Warn;
             modCase.PunishedUntil = null;
@@ -188,7 +188,7 @@ public class AutoModEventRepository : Repository,
     public async Task<List<AutoModEvent>> SearchInGuild(ulong guildId, string searchString)
     {
         var events = await _autoModDatabase.SelectAllPunishmentsEventsForGuild(guildId);
-        List<AutoModEvent> filteredEvents = new();
+        List<AutoModEvent> filteredEvents = [];
 
         foreach (var c in events)
         {

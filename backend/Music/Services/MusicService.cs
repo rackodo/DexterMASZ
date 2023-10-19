@@ -8,30 +8,17 @@ using Lavalink4NET.Tracking;
 
 namespace Music.Services;
 
-public class MusicService : IEvent
+public class MusicService(DiscordSocketClient client, IAudioService lavalink, InactivityTrackingService inactivityTracker) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly InactivityTrackingService _inactivityTracker;
-    private readonly IAudioService _lavalink;
+    private readonly DiscordSocketClient _client = client;
+    private readonly InactivityTrackingService _inactivityTracker = inactivityTracker;
+    private readonly IAudioService _lavalink = lavalink;
 
-    public readonly Dictionary<ulong, ulong> GuildMusicChannel;
-    public object ChannelLocker;
+    public readonly Dictionary<ulong, ulong> GuildMusicChannel = [];
+    public object ChannelLocker = new();
 
-    public readonly Dictionary<ulong, DateTime> StartTimes;
-    public object StartLocker;
-
-    public MusicService(DiscordSocketClient client, IAudioService lavalink, InactivityTrackingService inactivityTracker)
-    {
-        _client = client;
-        _lavalink = lavalink;
-        _inactivityTracker = inactivityTracker;
-
-        GuildMusicChannel = new Dictionary<ulong, ulong>();
-        ChannelLocker = new object();
-
-        StartTimes = new Dictionary<ulong, DateTime>();
-        StartLocker = new object();
-    }
+    public readonly Dictionary<ulong, DateTime> StartTimes = [];
+    public object StartLocker = new();
 
     public void RegisterEvents()
     {
@@ -139,8 +126,7 @@ public class MusicService : IEvent
     {
         lock (StartTimes)
         {
-            return StartTimes.ContainsKey(guildId) ?
-                StartTimes[guildId] :
+            return StartTimes.TryGetValue(guildId, out var value) ? value :
                 DateTime.UtcNow;
         }
     }

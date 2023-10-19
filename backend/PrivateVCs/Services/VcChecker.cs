@@ -13,22 +13,14 @@ using System.Text.RegularExpressions;
 
 namespace PrivateVcs.Services;
 
-public class VcChecker : IEvent
+public class VcChecker(DiscordSocketClient client, IServiceProvider serviceProvider, ILogger<VcChecker> logger) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<VcChecker> _logger;
+    private readonly DiscordSocketClient _client = client;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly ILogger<VcChecker> _logger = logger;
 
     // Channel Id, User Id
-    private readonly ConcurrentDictionary<ulong, ulong> _privateVcCreators;
-
-    public VcChecker(DiscordSocketClient client, IServiceProvider serviceProvider, ILogger<VcChecker> logger)
-    {
-        _client = client;
-        _serviceProvider = serviceProvider;
-        _logger = logger;
-        _privateVcCreators = new ConcurrentDictionary<ulong, ulong>();
-    }
+    private readonly ConcurrentDictionary<ulong, ulong> _privateVcCreators = new();
 
     public void RegisterEvents()
     {

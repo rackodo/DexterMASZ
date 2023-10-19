@@ -9,19 +9,11 @@ using Bot.Services;
 
 namespace Bot.Data;
 
-public class GuildConfigRepository : Repository, IAddAdminStats
+public class GuildConfigRepository(BotDatabase context, DiscordRest discordRest, BotEventHandler eventHandler) : Repository(discordRest), IAddAdminStats
 {
-    private readonly BotDatabase _context;
-    private readonly DiscordRest _discordRest;
-    private readonly BotEventHandler _eventHandler;
-
-    public GuildConfigRepository(BotDatabase context, DiscordRest discordRest, BotEventHandler eventHandler) :
-        base(discordRest)
-    {
-        _context = context;
-        _discordRest = discordRest;
-        _eventHandler = eventHandler;
-    }
+    private readonly BotDatabase _context = context;
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly BotEventHandler _eventHandler = eventHandler;
 
     public async Task AddAdminStatistics(dynamic adminStats) => adminStats.guilds = await CountGuildConfigs();
 

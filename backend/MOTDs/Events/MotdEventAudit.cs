@@ -5,16 +5,10 @@ using MOTDs.Models;
 
 namespace MOTDs.Events;
 
-public class MotdEventAudit : IEvent
+public class MotdEventAudit(AuditLogger auditLogger, MotdEventHandler eventHandler) : IEvent
 {
-    private readonly AuditLogger _auditLogger;
-    private readonly MotdEventHandler _eventHandler;
-
-    public MotdEventAudit(AuditLogger auditLogger, MotdEventHandler eventHandler)
-    {
-        _auditLogger = auditLogger;
-        _eventHandler = eventHandler;
-    }
+    private readonly AuditLogger _auditLogger = auditLogger;
+    private readonly MotdEventHandler _eventHandler = eventHandler;
 
     public void RegisterEvents()
     {

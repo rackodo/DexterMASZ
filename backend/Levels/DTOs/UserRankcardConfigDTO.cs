@@ -3,34 +3,19 @@ using Levels.Models;
 
 namespace Levels.DTOs;
 
-public class UserRankcardConfigDto
+public class UserRankcardConfigDto(ulong id, uint xpColor, uint offColor, uint levelBgColor, uint titleBgColor,
+    string background, float pfpRadiusFactor, Offset2D titleOffset, Offset2D levelOffset, Offset2D pfpOffset,
+    RankcardFlags rankcardFlags)
 {
-    public ulong Id { get; set; }
-    public uint XpColor { get; set; }
-    public uint OffColor { get; set; }
-    public uint LevelBgColor { get; set; }
-    public uint TitleBgColor { get; set; }
-    public string Background { get; set; }
-    public Offset2D TitleOffset { get; set; }
-    public Offset2D LevelOffset { get; set; }
-    public Offset2D PfpOffset { get; set; }
-    public float PfpRadiusFactor { get; set; }
-    public RankcardFlags RankcardFlags { get; set; }
-
-    public UserRankcardConfigDto(ulong id, uint xpColor, uint offColor, uint levelBgColor, uint titleBgColor,
-        string background, float pfpRadiusFactor, Offset2D titleOffset, Offset2D levelOffset, Offset2D pfpOffset,
-        RankcardFlags rankcardFlags)
-    {
-        Id = id;
-        XpColor = xpColor;
-        OffColor = offColor;
-        LevelBgColor = levelBgColor;
-        TitleBgColor = titleBgColor;
-        Background = background;
-        PfpRadiusFactor = pfpRadiusFactor;
-        TitleOffset = titleOffset;
-        LevelOffset = levelOffset;
-        PfpOffset = pfpOffset;
-        RankcardFlags = rankcardFlags;
-    }
+    public ulong Id { get; set; } = id;
+    public uint XpColor { get; set; } = xpColor;
+    public uint OffColor { get; set; } = offColor;
+    public uint LevelBgColor { get; set; } = levelBgColor;
+    public uint TitleBgColor { get; set; } = titleBgColor;
+    public string Background { get; set; } = background;
+    public Offset2D TitleOffset { get; set; } = titleOffset;
+    public Offset2D LevelOffset { get; set; } = levelOffset;
+    public Offset2D PfpOffset { get; set; } = pfpOffset;
+    public float PfpRadiusFactor { get; set; } = pfpRadiusFactor;
+    public RankcardFlags RankcardFlags { get; set; } = rankcardFlags;
 }

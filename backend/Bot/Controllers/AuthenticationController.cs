@@ -8,11 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bot.Controllers;
 
 [Route("api/v1")]
-public class AuthenticationController : BaseController
+public class AuthenticationController(IdentityManager identityManager) : BaseController
 {
-    private readonly IdentityManager _identityManager;
-
-    public AuthenticationController(IdentityManager identityManager) => _identityManager = identityManager;
+    private readonly IdentityManager _identityManager = identityManager;
 
     [HttpGet("login")]
     public IActionResult Login([FromQuery] string returnUrl)

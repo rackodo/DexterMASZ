@@ -9,17 +9,10 @@ using MOTDs.Views;
 namespace MOTDs.Controllers;
 
 [Route("api/v1/guilds/{guildId}/motd")]
-public class MotdController : AuthenticatedController
+public class MotdController(IdentityManager identityManager, MotdRepository guildMotdRepo, DiscordRest discordRest) : AuthenticatedController(identityManager, guildMotdRepo)
 {
-    private readonly DiscordRest _discordRest;
-    private readonly MotdRepository _guildMotdRepo;
-
-    public MotdController(IdentityManager identityManager, MotdRepository guildMotdRepo, DiscordRest discordRest) :
-        base(identityManager, guildMotdRepo)
-    {
-        _guildMotdRepo = guildMotdRepo;
-        _discordRest = discordRest;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly MotdRepository _guildMotdRepo = guildMotdRepo;
 
     [HttpGet]
     public async Task<IActionResult> GetMotd([FromRoute] ulong guildId)

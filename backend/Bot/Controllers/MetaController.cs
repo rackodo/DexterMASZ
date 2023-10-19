@@ -7,16 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bot.Controllers;
 
 [Route("api/v1/meta")]
-public class MetaController : BaseController
+public class MetaController(DiscordRest discordRest, SettingsRepository settingsRepository) : BaseController
 {
-    private readonly DiscordRest _discordRest;
-    private readonly SettingsRepository _settingsRepository;
-
-    public MetaController(DiscordRest discordRest, SettingsRepository settingsRepository)
-    {
-        _discordRest = discordRest;
-        _settingsRepository = settingsRepository;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly SettingsRepository _settingsRepository = settingsRepository;
 
     [HttpGet("user")]
     public IActionResult GetBotUser() => Ok(DiscordUser.GetDiscordUser(_discordRest.GetCurrentBotInfo()));

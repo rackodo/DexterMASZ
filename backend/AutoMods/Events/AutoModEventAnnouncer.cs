@@ -16,23 +16,14 @@ using Microsoft.Extensions.Logging;
 
 namespace AutoMods.Events;
 
-public class AutoModEventAnnouncer : IEvent
+public class AutoModEventAnnouncer(DiscordRest discordRest, AutoModEventHandler eventHandler,
+    ILogger<AutoModEventAnnouncer> logger, IServiceProvider serviceProvider, DiscordSocketClient client) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly DiscordRest _discordRest;
-    private readonly AutoModEventHandler _eventHandler;
-    private readonly ILogger<AutoModEventAnnouncer> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public AutoModEventAnnouncer(DiscordRest discordRest, AutoModEventHandler eventHandler,
-        ILogger<AutoModEventAnnouncer> logger, IServiceProvider serviceProvider, DiscordSocketClient client)
-    {
-        _discordRest = discordRest;
-        _eventHandler = eventHandler;
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _client = client;
-    }
+    private readonly DiscordSocketClient _client = client;
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly AutoModEventHandler _eventHandler = eventHandler;
+    private readonly ILogger<AutoModEventAnnouncer> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public void RegisterEvents()
     {

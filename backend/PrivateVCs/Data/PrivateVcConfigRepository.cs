@@ -4,13 +4,10 @@ using PrivateVcs.Models;
 
 namespace PrivateVcs.Data;
 
-public class PrivateVcConfigRepository : Repository
+public class PrivateVcConfigRepository(PrivateVcDatabase privateVcDatabase,
+    DiscordRest discordRest) : Repository(discordRest)
 {
-    private readonly PrivateVcDatabase _privateVcDatabase;
-
-    public PrivateVcConfigRepository(PrivateVcDatabase privateVcDatabase,
-        DiscordRest discordRest) : base(discordRest) =>
-        _privateVcDatabase = privateVcDatabase;
+    private readonly PrivateVcDatabase _privateVcDatabase = privateVcDatabase;
 
     public async Task<PrivateVcConfig> SelectPrivateVcConfig(ulong guildId) =>
         await _privateVcDatabase.PrivateVcConfigs.FindAsync(guildId);

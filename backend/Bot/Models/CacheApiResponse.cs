@@ -1,15 +1,9 @@
 namespace Bot.Models;
 
-public class CacheApiResponse
+public class CacheApiResponse(object content, int cacheMinutes = 30)
 {
-    private object Content { get; }
-    private DateTime ExpiresAt { get; }
-
-    public CacheApiResponse(object content, int cacheMinutes = 30)
-    {
-        Content = content;
-        ExpiresAt = DateTime.Now.AddMinutes(cacheMinutes);
-    }
+    private object Content { get; } = content;
+    private DateTime ExpiresAt { get; } = DateTime.Now.AddMinutes(cacheMinutes);
 
     public T GetContent<T>() => (T)Content;
 

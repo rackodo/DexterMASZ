@@ -4,16 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Bot.Middleware;
 
-public class HeaderMiddleware
+public class HeaderMiddleware(RequestDelegate next, IServiceProvider services)
 {
-    private readonly RequestDelegate _next;
-    private readonly IServiceProvider _services;
-
-    public HeaderMiddleware(RequestDelegate next, IServiceProvider services)
-    {
-        _next = next;
-        _services = services;
-    }
+    private readonly RequestDelegate _next = next;
+    private readonly IServiceProvider _services = services;
 
     public async Task Invoke(HttpContext context)
     {

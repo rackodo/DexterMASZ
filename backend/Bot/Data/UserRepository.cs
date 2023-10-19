@@ -6,12 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bot.Data;
 
-public class UserRepository : Repository
+public class UserRepository(DiscordRest discordRest, BotDatabase context) : Repository(discordRest)
 {
-    private readonly BotDatabase _context;
-
-    public UserRepository(DiscordRest discordRest, BotDatabase context) : base(discordRest)
-        => _context = context;
+    private readonly BotDatabase _context = context;
 
     public async Task<LeftUserDto> TryGetUser(ulong userId)
     {

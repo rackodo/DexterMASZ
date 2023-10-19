@@ -10,18 +10,11 @@ using Microsoft.Extensions.Logging;
 namespace Levels.Controllers;
 
 [Route("api/v1/levels/rankcard")]
-public class LevelsRankcardController : AuthenticatedController
+public class LevelsRankcardController(IdentityManager identityManager, GuildLevelConfigRepository levelsConfigRepository,
+    UserRankcardConfigRepository levelsRankcardRepository, ILogger<LevelsRankcardController> logger) : AuthenticatedController(identityManager, levelsConfigRepository, levelsRankcardRepository)
 {
-    private readonly UserRankcardConfigRepository _levelsRankcardRepository;
-    private readonly ILogger<LevelsRankcardController> _logger;
-
-    public LevelsRankcardController(IdentityManager identityManager, GuildLevelConfigRepository levelsConfigRepository,
-        UserRankcardConfigRepository levelsRankcardRepository, ILogger<LevelsRankcardController> logger) :
-        base(identityManager, levelsConfigRepository, levelsRankcardRepository)
-    {
-        _levelsRankcardRepository = levelsRankcardRepository;
-        _logger = logger;
-    }
+    private readonly UserRankcardConfigRepository _levelsRankcardRepository = levelsRankcardRepository;
+    private readonly ILogger<LevelsRankcardController> _logger = logger;
 
     [HttpGet("{userId}")]
     public IActionResult GetRankcardConfig([FromRoute] ulong userId)

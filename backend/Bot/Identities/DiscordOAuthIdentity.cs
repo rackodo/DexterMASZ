@@ -22,7 +22,7 @@ public class DiscordOAuthIdentity : Identity
         CurrentUser = currentUser;
         CurrentUserGuilds = userGuilds;
 
-        _guildMemberships = new Dictionary<ulong, IGuildUser>();
+        _guildMemberships = [];
     }
 
     public static string TryGetKey(HttpContext context) =>
@@ -51,8 +51,8 @@ public class DiscordOAuthIdentity : Identity
 
     public IGuildUser GetGuildMembership(ulong guildId)
     {
-        if (_guildMemberships.ContainsKey(guildId))
-            return _guildMemberships[guildId];
+        if (_guildMemberships.TryGetValue(guildId, out var value))
+            return value;
         if (CurrentUser is null)
             return null;
 

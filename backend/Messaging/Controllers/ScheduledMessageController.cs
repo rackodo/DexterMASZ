@@ -14,20 +14,12 @@ using System.ComponentModel.DataAnnotations;
 namespace Messaging.Controllers;
 
 [Route("api/v1/guilds/{guildId}/scheduledmessages")]
-public class ScheduledMessageController : AuthenticatedController
+public class ScheduledMessageController(MessagingRepository messagingRepo, GuildConfigRepository guildConfigRepo,
+    DiscordRest discordRest, IdentityManager identityManager) : AuthenticatedController(identityManager, messagingRepo, guildConfigRepo)
 {
-    private readonly DiscordRest _discordRest;
-    private readonly GuildConfigRepository _guildConfigRepo;
-    private readonly MessagingRepository _messagingRepo;
-
-    public ScheduledMessageController(MessagingRepository messagingRepo, GuildConfigRepository guildConfigRepo,
-        DiscordRest discordRest, IdentityManager identityManager) :
-        base(identityManager, messagingRepo, guildConfigRepo)
-    {
-        _messagingRepo = messagingRepo;
-        _guildConfigRepo = guildConfigRepo;
-        _discordRest = discordRest;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly GuildConfigRepository _guildConfigRepo = guildConfigRepo;
+    private readonly MessagingRepository _messagingRepo = messagingRepo;
 
     [HttpGet]
     public async Task<IActionResult> GetMessages([FromRoute] ulong guildId,

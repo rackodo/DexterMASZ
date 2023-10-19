@@ -85,7 +85,7 @@ public class ModCaseRepository : Repository,
                     await _discordRest.FetchUserInfo(item.ModId, true),
                     await _discordRest.FetchUserInfo(item.LastEditedByModId, true),
                     await _discordRest.FetchUserInfo(item.UserId, true),
-                    new List<ModCaseCommentExpanded>(),
+                    [],
                     null
                 ),
                 CreatedAt = item.CreatedAt,
@@ -247,13 +247,13 @@ public class ModCaseRepository : Repository,
 
         foreach (var label in labels)
         {
-            if (countMap.ContainsKey(label))
-                countMap[label]++;
+            if (countMap.TryGetValue(label, out var value))
+                countMap[label] = ++value;
             else
                 countMap[label] = 1;
         }
 
-        List<ModCaseLabel> result = new();
+        List<ModCaseLabel> result = [];
         foreach (var label in countMap.Keys)
         {
             result.Add(new ModCaseLabel
@@ -263,7 +263,7 @@ public class ModCaseRepository : Repository,
             });
         }
 
-        return result.OrderByDescending(x => x.Count).ToList();
+        return [.. result.OrderByDescending(x => x.Count)];
     }
 
     public async Task<Tuple<ModCase, AnnouncementResult, bool>> CreateModCase(ModCase modCase)

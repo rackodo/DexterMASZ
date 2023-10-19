@@ -6,16 +6,10 @@ using System.Text.Json;
 
 namespace Bot.Middleware;
 
-public class ApiExceptionHandlingMiddleware
+public class ApiExceptionHandlingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
 {
-    private readonly ILogger _logger;
-    private readonly RequestDelegate _next;
-
-    public ApiExceptionHandlingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
-    {
-        _next = next;
-        _logger = loggerFactory.CreateLogger<ApiExceptionHandlingMiddleware>();
-    }
+    private readonly ILogger _logger = loggerFactory.CreateLogger<ApiExceptionHandlingMiddleware>();
+    private readonly RequestDelegate _next = next;
 
     public async Task Invoke(HttpContext context)
     {

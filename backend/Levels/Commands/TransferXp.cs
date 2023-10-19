@@ -53,7 +53,7 @@ public class TransferXp : Command<TransferXp>
         sourceLevel.TextXp -= textXp;
         sourceLevel.VoiceXp -= voiceXp;
 
-        var stringify = (GuildUserLevel l) => $"{l.UserId} ({l.TextXp}, {l.VoiceXp})";
+        static string stringify(GuildUserLevel l) => $"{l.UserId} ({l.TextXp}, {l.VoiceXp})";
 
         Logger.LogInformation($"Transferred ({textXp}, {voiceXp}) from {stringify(sourceLevel)} to {stringify(targetLevel)}.");
 

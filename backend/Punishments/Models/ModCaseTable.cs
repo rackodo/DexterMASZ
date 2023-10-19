@@ -1,13 +1,7 @@
 namespace Punishments.Models;
 
-public class ModCaseTable
+public class ModCaseTable(List<ModCaseTableEntry> modCase, int fullSize)
 {
-    public List<ModCaseTableEntry> Cases { get; set; }
-    public int FullSize { get; set; }
-
-    public ModCaseTable(List<ModCaseTableEntry> modCase, int fullSize)
-    {
-        Cases = modCase;
-        FullSize = fullSize;
-    }
+    public List<ModCaseTableEntry> Cases { get; set; } = modCase;
+    public int FullSize { get; set; } = fullSize;
 }

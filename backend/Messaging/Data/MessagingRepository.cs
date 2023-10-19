@@ -7,12 +7,9 @@ using Messaging.Models;
 
 namespace Messaging.Data;
 
-public class MessagingRepository : Repository, IDeleteGuildData
+public class MessagingRepository(MessagingDatabase messagingDatabase, DiscordRest discordRest) : Repository(discordRest), IDeleteGuildData
 {
-    private readonly MessagingDatabase _messagingDatabase;
-
-    public MessagingRepository(MessagingDatabase messagingDatabase, DiscordRest discordRest) : base(discordRest) =>
-        _messagingDatabase = messagingDatabase;
+    private readonly MessagingDatabase _messagingDatabase = messagingDatabase;
 
     public async Task DeleteGuildData(ulong guildId) => await DeleteMessagesForGuild(guildId);
 

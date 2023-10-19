@@ -3,16 +3,9 @@ using Discord;
 
 namespace Punishments.Models;
 
-public class ModCaseTemplateExpanded
+public class ModCaseTemplateExpanded(ModCaseTemplate template, IUser creator, IGuild guild)
 {
-    public ModCaseTemplate CaseTemplate { get; set; }
-    public DiscordUser Creator { get; set; }
-    public DiscordGuild Guild { get; set; }
-
-    public ModCaseTemplateExpanded(ModCaseTemplate template, IUser creator, IGuild guild)
-    {
-        CaseTemplate = template;
-        Creator = DiscordUser.GetDiscordUser(creator);
-        Guild = DiscordGuild.GetDiscordGuild(guild);
-    }
+    public ModCaseTemplate CaseTemplate { get; set; } = template;
+    public DiscordUser Creator { get; set; } = DiscordUser.GetDiscordUser(creator);
+    public DiscordGuild Guild { get; set; } = DiscordGuild.GetDiscordGuild(guild);
 }

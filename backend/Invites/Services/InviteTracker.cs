@@ -15,24 +15,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Invites.Services;
 
-public class InviteTracker : IEvent
+public class InviteTracker(ILogger<InviteTracker> logger, IServiceProvider serviceProvider, DiscordSocketClient client,
+    InviteEventHandler eventHandler) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly InviteEventHandler _eventHandler;
-    private readonly Dictionary<ulong, List<TrackedInvite>> _guildInvites;
-    private readonly ILogger<InviteTracker> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public InviteTracker(ILogger<InviteTracker> logger, IServiceProvider serviceProvider, DiscordSocketClient client,
-        InviteEventHandler eventHandler)
-    {
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _client = client;
-        _eventHandler = eventHandler;
-
-        _guildInvites = new Dictionary<ulong, List<TrackedInvite>>();
-    }
+    private readonly DiscordSocketClient _client = client;
+    private readonly InviteEventHandler _eventHandler = eventHandler;
+    private readonly Dictionary<ulong, List<TrackedInvite>> _guildInvites = [];
+    private readonly ILogger<InviteTracker> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public void RegisterEvents()
     {
@@ -117,7 +107,7 @@ public class InviteTracker : IEvent
 
     private async Task<List<TrackedInvite>> FetchInvites(IGuild guild)
     {
-        List<TrackedInvite> invites = new();
+        List<TrackedInvite> invites = [];
 
         try
         {
@@ -174,9 +164,9 @@ public class InviteTracker : IEvent
 
     private TrackedInvite GetUsedInvite(ulong guildId, List<TrackedInvite> currentInvites)
     {
-        if (!_guildInvites.ContainsKey(guildId)) return null;
+        if (!_guildInvites.TryGetValue(guildId, out var value)) return null;
 
-        var invites = _guildInvites[guildId];
+        var invites = value;
 
         var changedInvites = invites.Where(x =>
             // Invite is in current invites and has new uses.
@@ -198,13 +188,13 @@ public class InviteTracker : IEvent
 
     private void AddInvite(ulong guildId, TrackedInvite invite)
     {
-        if (!_guildInvites.ContainsKey(guildId))
+        if (!_guildInvites.TryGetValue(guildId, out var value))
         {
-            _guildInvites[guildId] = new List<TrackedInvite> { invite };
+            _guildInvites[guildId] = [invite];
         }
         else
         {
-            var invites = _guildInvites[guildId];
+            var invites = value;
             var filteredInvites = invites.Where(x => x.Code != invite.Code).ToList();
             filteredInvites.Add(invite);
             _guildInvites[guildId] = filteredInvites;
@@ -213,12 +203,11 @@ public class InviteTracker : IEvent
 
     private List<TrackedInvite> RemoveInvite(ulong guildId, string code)
     {
-        if (!_guildInvites.ContainsKey(guildId))
-            return new List<TrackedInvite>();
+        if (!_guildInvites.TryGetValue(guildId, out var value))
+            return [];
 
-        var invites = _guildInvites[guildId].Where(x => x.Code == code).ToList();
-
-        _guildInvites[guildId].RemoveAll(x => x.Code == code);
+        var invites = value.Where(x => x.Code == code).ToList();
+        value.RemoveAll(x => x.Code == code);
 
         return invites;
     }

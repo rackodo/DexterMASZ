@@ -14,20 +14,12 @@ using System.ComponentModel.DataAnnotations;
 namespace Punishments.Controllers;
 
 [Route("api/v1/guilds/{guildId}/cases/")]
-public class ModCaseController : AuthenticatedController
+public class ModCaseController(ModCaseRepository modCaseRepository, GuildConfigRepository guildConfigRepository,
+    PunishmentConfigRepository punishmentConfigRepository, IdentityManager identityManager) : AuthenticatedController(identityManager, modCaseRepository, guildConfigRepository, punishmentConfigRepository)
 {
-    private readonly GuildConfigRepository _guildConfigRepository;
-    private readonly ModCaseRepository _modCaseRepository;
-    private readonly PunishmentConfigRepository _punishmentConfigRepository;
-
-    public ModCaseController(ModCaseRepository modCaseRepository, GuildConfigRepository guildConfigRepository,
-        PunishmentConfigRepository punishmentConfigRepository, IdentityManager identityManager) :
-        base(identityManager, modCaseRepository, guildConfigRepository, punishmentConfigRepository)
-    {
-        _modCaseRepository = modCaseRepository;
-        _guildConfigRepository = guildConfigRepository;
-        _punishmentConfigRepository = punishmentConfigRepository;
-    }
+    private readonly GuildConfigRepository _guildConfigRepository = guildConfigRepository;
+    private readonly ModCaseRepository _modCaseRepository = modCaseRepository;
+    private readonly PunishmentConfigRepository _punishmentConfigRepository = punishmentConfigRepository;
 
     [HttpGet("labels")]
     public async Task<IActionResult> Get([FromRoute] ulong guildId)
@@ -170,7 +162,7 @@ public class ModCaseController : AuthenticatedController
 
         var modCases = userOnly == 0
             ? (await _modCaseRepository.GetCasePagination(guildId, startPage)).ToList()
-            : (await _modCaseRepository.GetCasePaginationFilteredForUser(guildId, userOnly, startPage)).ToList();
+            : [.. (await _modCaseRepository.GetCasePaginationFilteredForUser(guildId, userOnly, startPage))];
         if ((await _guildConfigRepository.GetGuildConfig(guildId)).PublishModeratorInfo)
             return Ok(modCases);
 

@@ -15,16 +15,16 @@ public static class InviteChecker
         if (string.IsNullOrEmpty(message.Content))
             return false;
 
-        List<string> ignoreGuilds = new();
+        List<string> ignoreGuilds = [];
 
         if (!string.IsNullOrEmpty(config.CustomWordFilter))
-            ignoreGuilds = config.CustomWordFilter.Split('\n').ToList();
+            ignoreGuilds = [.. config.CustomWordFilter.Split('\n')];
 
         var matches = InviteRegex.Matches(message.Content);
 
         if (matches.Count == 0) return false;
 
-        List<string> alreadyChecked = new();
+        List<string> alreadyChecked = [];
 
         foreach (var usedInvite in matches.Cast<Match>())
         {

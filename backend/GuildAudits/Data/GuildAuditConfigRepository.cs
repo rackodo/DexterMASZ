@@ -11,17 +11,11 @@ using GuildAudits.Models;
 
 namespace GuildAudits.Data;
 
-public class GuildAuditConfigRepository : Repository, IDeleteGuildData
+public class GuildAuditConfigRepository(DiscordRest discordRest, GuildAuditDatabase guildAuditDatabase,
+    GuildAuditEventHandler eventHandler) : Repository(discordRest), IDeleteGuildData
 {
-    private readonly GuildAuditEventHandler _eventHandler;
-    private readonly GuildAuditDatabase _guildAuditDatabase;
-
-    public GuildAuditConfigRepository(DiscordRest discordRest, GuildAuditDatabase guildAuditDatabase,
-        GuildAuditEventHandler eventHandler) : base(discordRest)
-    {
-        _guildAuditDatabase = guildAuditDatabase;
-        _eventHandler = eventHandler;
-    }
+    private readonly GuildAuditEventHandler _eventHandler = eventHandler;
+    private readonly GuildAuditDatabase _guildAuditDatabase = guildAuditDatabase;
 
     public async Task DeleteGuildData(ulong guildId) =>
         await _guildAuditDatabase.DeleteAllAuditLogConfigsForGuild(guildId);

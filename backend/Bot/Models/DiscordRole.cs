@@ -2,22 +2,13 @@ using Discord;
 
 namespace Bot.Models;
 
-public class DiscordRole
+public class DiscordRole(IRole role)
 {
-    public DiscordRole(IRole role)
-    {
-        Id = role.Id;
-        Name = role.Name;
-        Color = Convert.ToInt32(role.Color.RawValue);
-        Position = role.Position;
-        Permissions = role.Permissions.GetHashCode().ToString();
-    }
-
-    public ulong Id { get; set; }
-    public string Name { get; set; }
-    public int Color { get; set; }
-    public int Position { get; set; }
-    public string Permissions { get; set; }
+    public ulong Id { get; set; } = role.Id;
+    public string Name { get; set; } = role.Name;
+    public int Color { get; set; } = Convert.ToInt32(role.Color.RawValue);
+    public int Position { get; set; } = role.Position;
+    public string Permissions { get; set; } = role.Permissions.GetHashCode().ToString();
 
     public static DiscordRole GetDiscordRole(IRole role) => role is null ? null : role.Id is 0 ? null : new DiscordRole(role);
 }

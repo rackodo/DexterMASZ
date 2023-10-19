@@ -12,18 +12,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bot.Controllers;
 
 [Route("api/v1/discord")]
-public class DiscordRestController : AuthenticatedController
+public class DiscordRestController(DiscordRest discordRest, IdentityManager identityManager,
+    GuildConfigRepository guildConfigRepo) : AuthenticatedController(identityManager, guildConfigRepo)
 {
-    private readonly DiscordRest _discordRest;
-    private readonly GuildConfigRepository _guildConfigRepo;
-
-    public DiscordRestController(DiscordRest discordRest, IdentityManager identityManager,
-        GuildConfigRepository guildConfigRepo) :
-        base(identityManager, guildConfigRepo)
-    {
-        _discordRest = discordRest;
-        _guildConfigRepo = guildConfigRepo;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly GuildConfigRepository _guildConfigRepo = guildConfigRepo;
 
     [HttpGet("users/@me")]
     public async Task<IActionResult> GetUser()
@@ -34,10 +27,10 @@ public class DiscordRestController : AuthenticatedController
 
         var currentUserGuilds = identity.GetCurrentUserGuilds();
 
-        List<DiscordGuild> userGuilds = new();
-        List<DiscordGuild> modGuilds = new();
-        List<DiscordGuild> adminGuilds = new();
-        List<DiscordGuild> bannedGuilds = new();
+        List<DiscordGuild> userGuilds = [];
+        List<DiscordGuild> modGuilds = [];
+        List<DiscordGuild> adminGuilds = [];
+        List<DiscordGuild> bannedGuilds = [];
 
         if (identity is not DiscordOAuthIdentity)
             return Ok(new ApiUserDto(userGuilds, bannedGuilds, modGuilds, adminGuilds, currentUser,

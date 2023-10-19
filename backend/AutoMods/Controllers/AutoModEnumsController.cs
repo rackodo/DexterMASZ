@@ -9,13 +9,8 @@ using Microsoft.Extensions.Logging;
 namespace AutoMods.Controllers;
 
 [Route("api/v1/enums")]
-public class AutoModEnumsController : EnumController<AutoModEnumTranslator>
+public class AutoModEnumsController(Translation translator, ILogger<EnumController<AutoModEnumTranslator>> logger) : EnumController<AutoModEnumTranslator>(translator, logger)
 {
-    public AutoModEnumsController(Translation translator, ILogger<EnumController<AutoModEnumTranslator>> logger) :
-        base(translator, logger)
-    {
-    }
-
     [HttpGet("automodaction")]
     public async Task<IActionResult> AutoModActions([FromQuery] Language? language = null) =>
         await TranslateEnum<AutoModAction>(language);

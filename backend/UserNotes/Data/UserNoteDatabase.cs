@@ -5,13 +5,9 @@ using UserNotes.Models;
 
 namespace UserNotes.Data;
 
-public class UserNoteDatabase : DataContext<UserNoteDatabase>, IDataContextCreate
+public class UserNoteDatabase(DbContextOptions<UserNoteDatabase> options) : DataContext<UserNoteDatabase>(options), IDataContextCreate
 {
     public DbSet<UserNote> UserNotes { get; set; }
-
-    public UserNoteDatabase(DbContextOptions<UserNoteDatabase> options) : base(options)
-    {
-    }
 
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
         IServiceCollection serviceCollection) =>

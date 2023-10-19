@@ -11,21 +11,13 @@ using Microsoft.Extensions.Logging;
 
 namespace GuildAudits.Events;
 
-public class GuildAuditEventAnnouncer : IEvent
+public class GuildAuditEventAnnouncer(GuildAuditEventHandler eventHandler, ILogger<GuildAuditEventAnnouncer> logger,
+    IServiceProvider serviceProvider, DiscordSocketClient client) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly GuildAuditEventHandler _eventHandler;
-    private readonly ILogger<GuildAuditEventAnnouncer> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public GuildAuditEventAnnouncer(GuildAuditEventHandler eventHandler, ILogger<GuildAuditEventAnnouncer> logger,
-        IServiceProvider serviceProvider, DiscordSocketClient client)
-    {
-        _eventHandler = eventHandler;
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _client = client;
-    }
+    private readonly DiscordSocketClient _client = client;
+    private readonly GuildAuditEventHandler _eventHandler = eventHandler;
+    private readonly ILogger<GuildAuditEventAnnouncer> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public void RegisterEvents()
     {

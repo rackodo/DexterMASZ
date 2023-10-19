@@ -8,18 +8,11 @@ using UserMaps.Models;
 namespace UserMaps.Controllers;
 
 [Route("api/v1/guilds/{guildId}/usermapview")]
-public class UserMapViewController : AuthenticatedController
+public class UserMapViewController(IdentityManager identityManager, UserMapRepository userMapRepo,
+    DiscordRest discordRest) : AuthenticatedController(identityManager, userMapRepo)
 {
-    private readonly DiscordRest _discordRest;
-    private readonly UserMapRepository _userMapRepo;
-
-    public UserMapViewController(IdentityManager identityManager, UserMapRepository userMapRepo,
-        DiscordRest discordRest) :
-        base(identityManager, userMapRepo)
-    {
-        _userMapRepo = userMapRepo;
-        _discordRest = discordRest;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly UserMapRepository _userMapRepo = userMapRepo;
 
     [HttpGet]
     public async Task<IActionResult> GetGuildUserNoteView([FromRoute] ulong guildId)
@@ -29,7 +22,7 @@ public class UserMapViewController : AuthenticatedController
         await identity.RequirePermission(DiscordPermission.Moderator, guildId);
 
         var userMaps = await _userMapRepo.GetUserMapsByGuild(guildId);
-        List<UserMapExpanded> userMapsViews = new();
+        List<UserMapExpanded> userMapsViews = [];
 
         foreach (var userMap in userMaps)
         {

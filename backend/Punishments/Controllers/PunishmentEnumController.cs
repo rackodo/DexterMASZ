@@ -9,13 +9,8 @@ using Punishments.Translators;
 namespace Punishments.Controllers;
 
 [Route("api/v1/enums/")]
-public class PunishmentEnumController : EnumController<PunishmentEnumTranslator>
+public class PunishmentEnumController(Translation translator, ILogger<EnumController<PunishmentEnumTranslator>> logger) : EnumController<PunishmentEnumTranslator>(translator, logger)
 {
-    public PunishmentEnumController(Translation translator, ILogger<EnumController<PunishmentEnumTranslator>> logger) :
-        base(translator, logger)
-    {
-    }
-
     [HttpGet("punishment")]
     public async Task<IActionResult> Punishment([FromQuery] Language? language = null) =>
         await TranslateEnum<PunishmentType>(language);

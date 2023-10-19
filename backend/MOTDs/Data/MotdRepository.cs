@@ -9,17 +9,11 @@ using MOTDs.Models;
 
 namespace MOTDs.Data;
 
-public class MotdRepository : Repository, IDeleteGuildData
+public class MotdRepository(DiscordRest discordRest, MotdDatabase guildMotdDatabase,
+    MotdEventHandler eventHandler) : Repository(discordRest), IDeleteGuildData
 {
-    private readonly MotdEventHandler _eventHandler;
-    private readonly MotdDatabase _guildMotdDatabase;
-
-    public MotdRepository(DiscordRest discordRest, MotdDatabase guildMotdDatabase,
-        MotdEventHandler eventHandler) : base(discordRest)
-    {
-        _guildMotdDatabase = guildMotdDatabase;
-        _eventHandler = eventHandler;
-    }
+    private readonly MotdEventHandler _eventHandler = eventHandler;
+    private readonly MotdDatabase _guildMotdDatabase = guildMotdDatabase;
 
     public async Task DeleteGuildData(ulong guildId) => await _guildMotdDatabase.DeleteMotdForGuild(guildId);
 

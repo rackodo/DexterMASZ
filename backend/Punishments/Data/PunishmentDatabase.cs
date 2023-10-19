@@ -7,12 +7,8 @@ using Punishments.Models;
 
 namespace Punishments.Data;
 
-public class PunishmentDatabase : DataContext<PunishmentDatabase>, IDataContextCreate
+public class PunishmentDatabase(DbContextOptions<PunishmentDatabase> options) : DataContext<PunishmentDatabase>(options), IDataContextCreate
 {
-    public PunishmentDatabase(DbContextOptions<PunishmentDatabase> options) : base(options)
-    {
-    }
-
     public DbSet<ModCaseTemplate> ModCaseTemplates { get; set; }
 
     public DbSet<ModCaseComment> ModCaseComments { get; set; }

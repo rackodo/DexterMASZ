@@ -14,22 +14,13 @@ using UserNotes.Models;
 namespace Punishments.Controllers;
 
 [Route("api/v1/guilds/{guildId}/cases/{caseId}/view")]
-public class ModCaseViewController : AuthenticatedController
+public class ModCaseViewController(IdentityManager identityManager, GuildConfigRepository guildConfigRepository,
+    UserNoteRepository userNoteRepository, ModCaseRepository modCaseRepository, DiscordRest discordRest) : AuthenticatedController(identityManager, guildConfigRepository, userNoteRepository, modCaseRepository)
 {
-    private readonly DiscordRest _discordRest;
-    private readonly GuildConfigRepository _guildConfigRepository;
-    private readonly ModCaseRepository _modCaseRepository;
-    private readonly UserNoteRepository _userNoteRepository;
-
-    public ModCaseViewController(IdentityManager identityManager, GuildConfigRepository guildConfigRepository,
-        UserNoteRepository userNoteRepository, ModCaseRepository modCaseRepository, DiscordRest discordRest) :
-        base(identityManager, guildConfigRepository, userNoteRepository, modCaseRepository)
-    {
-        _guildConfigRepository = guildConfigRepository;
-        _userNoteRepository = userNoteRepository;
-        _modCaseRepository = modCaseRepository;
-        _discordRest = discordRest;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly GuildConfigRepository _guildConfigRepository = guildConfigRepository;
+    private readonly ModCaseRepository _modCaseRepository = modCaseRepository;
+    private readonly UserNoteRepository _userNoteRepository = userNoteRepository;
 
     [HttpGet]
     public async Task<IActionResult> GetModCaseView([FromRoute] ulong guildId, [FromRoute] int caseId)

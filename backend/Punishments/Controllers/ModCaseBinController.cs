@@ -7,13 +7,9 @@ using Punishments.Data;
 namespace Punishments.Controllers;
 
 [Route("api/v1/guilds/{guildId}/bin")]
-public class ModCaseBinController : AuthenticatedController
+public class ModCaseBinController(ModCaseRepository modCaseRepository, IdentityManager identityManager) : AuthenticatedController(identityManager, modCaseRepository)
 {
-    private readonly ModCaseRepository _modCaseRepository;
-
-    public ModCaseBinController(ModCaseRepository modCaseRepository, IdentityManager identityManager) :
-        base(identityManager, modCaseRepository) =>
-        _modCaseRepository = modCaseRepository;
+    private readonly ModCaseRepository _modCaseRepository = modCaseRepository;
 
     [HttpDelete("{caseId}/restore")]
     public async Task<IActionResult> RestoreModCase([FromRoute] ulong guildId, [FromRoute] int caseId)

@@ -6,13 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GuildAudits.Data;
 
-public class GuildAuditDatabase : DataContext<GuildAuditDatabase>, IDataContextCreate
+public class GuildAuditDatabase(DbContextOptions<GuildAuditDatabase> options) : DataContext<GuildAuditDatabase>(options), IDataContextCreate
 {
     public DbSet<GuildAuditConfig> GuildAuditConfigs { get; set; }
-
-    public GuildAuditDatabase(DbContextOptions<GuildAuditDatabase> options) : base(options)
-    {
-    }
 
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
         IServiceCollection serviceCollection) =>

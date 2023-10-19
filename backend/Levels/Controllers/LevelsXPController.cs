@@ -9,23 +9,14 @@ using Microsoft.Extensions.Logging;
 namespace Levels.Controllers;
 
 [Route("api/v1/levels")]
-public class LevelsXpController : AuthenticatedController
+public class LevelsXpController(IdentityManager identityManager, GuildUserLevelRepository levelsRepository,
+    GuildLevelConfigRepository levelsConfigRepository, DiscordRest rest, ILogger<LevelsXpController> logger) : AuthenticatedController(identityManager, levelsRepository, levelsConfigRepository)
 {
     private const int MaxPageSize = 500;
-    private readonly GuildLevelConfigRepository _levelsConfigRepository;
-    private readonly GuildUserLevelRepository _levelsRepository;
-    private readonly DiscordRest _rest;
-    private readonly ILogger<LevelsXpController> _logger;
-
-    public LevelsXpController(IdentityManager identityManager, GuildUserLevelRepository levelsRepository,
-        GuildLevelConfigRepository levelsConfigRepository, DiscordRest rest, ILogger<LevelsXpController> logger) :
-        base(identityManager, levelsRepository, levelsConfigRepository)
-    {
-        _levelsRepository = levelsRepository;
-        _levelsConfigRepository = levelsConfigRepository;
-        _rest = rest;
-        _logger = logger;
-    }
+    private readonly GuildLevelConfigRepository _levelsConfigRepository = levelsConfigRepository;
+    private readonly GuildUserLevelRepository _levelsRepository = levelsRepository;
+    private readonly DiscordRest _rest = rest;
+    private readonly ILogger<LevelsXpController> _logger = logger;
 
     [HttpGet("guilds/{guildId}/users/{userId}")]
     public async Task<IActionResult> GetGuildUserLevel([FromRoute] ulong guildId, [FromRoute] ulong userId)
