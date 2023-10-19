@@ -130,6 +130,8 @@ public class InviteTracker(ILogger<InviteTracker> logger, IServiceProvider servi
         catch (HttpException)
         {
         }
+        catch (ArgumentNullException)
+        { }
 
         return invites;
     }
@@ -145,6 +147,9 @@ public class InviteTracker(ILogger<InviteTracker> logger, IServiceProvider servi
             invite = await newG.GetVanityInviteAsync();
         }
         catch (HttpException)
+        {
+        }
+        catch (ArgumentNullException)
         {
         }
 
