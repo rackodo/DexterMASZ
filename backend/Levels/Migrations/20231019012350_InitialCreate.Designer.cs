@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Levels.Migrations
 {
     [DbContext(typeof(LevelsDatabase))]
-    [Migration("20231019005639_InitialCreate")]
+    [Migration("20231019012350_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -100,9 +100,6 @@ namespace Levels.Migrations
 
                     b.Property<long>("TextXp")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("longtext");
 
                     b.Property<long>("VoiceXp")
                         .HasColumnType("bigint");

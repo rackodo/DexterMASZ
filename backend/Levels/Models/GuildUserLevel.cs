@@ -6,14 +6,13 @@ namespace Levels.Models;
 [PrimaryKey(nameof(GuildId), nameof(UserId))]
 public class GuildUserLevel
 {
-    public string Token { get; set; }
     public ulong UserId { get; set; }
     public ulong GuildId { get; set; }
     public long TextXp { get; set; }
     public long VoiceXp { get; set; }
     public long TotalXp => TextXp + VoiceXp;
 
-    protected GuildUserLevel() => Token = "";
+    protected GuildUserLevel() { }
 
     public GuildUserLevel(IGuildUser guildUser, long textXp = 0, long voiceXp = 0)
     {

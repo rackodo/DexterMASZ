@@ -62,8 +62,6 @@ namespace Levels.Migrations
                 {
                     UserId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
                     GuildId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-                    Token = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     TextXp = table.Column<long>(type: "bigint", nullable: false),
                     VoiceXp = table.Column<long>(type: "bigint", nullable: false)
                 },

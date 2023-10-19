@@ -11,7 +11,6 @@ public class CalculatedGuildUserLevel : GuildUserLevel
 
     public CalculatedGuildUserLevel(GuildUserLevel guildUserLevel, GuildLevelConfig config = null)
     {
-        Token = guildUserLevel.Token;
         UserId = guildUserLevel.UserId;
         GuildId = guildUserLevel.GuildId;
         TextXp = guildUserLevel.TextXp;

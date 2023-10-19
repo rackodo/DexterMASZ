@@ -98,9 +98,6 @@ namespace Levels.Migrations
                     b.Property<long>("TextXp")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Token")
-                        .HasColumnType("longtext");
-
                     b.Property<long>("VoiceXp")
                         .HasColumnType("bigint");
 
