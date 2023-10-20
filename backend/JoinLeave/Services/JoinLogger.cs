@@ -29,6 +29,7 @@ public class JoinLogger(DiscordSocketClient client, IServiceProvider services) :
             if (channel != null)
             {
                 var message = config.JoinMessage
+                    .Replace("{SERVERNAME}", user.Guild.Name)
                     .Replace("{USERNAME}", user.Username)
                     .Replace("{MENTION}", user.Mention);
 
@@ -52,6 +53,7 @@ public class JoinLogger(DiscordSocketClient client, IServiceProvider services) :
             if (channel != null)
             {
                 var message = config.LeaveMessage
+                    .Replace("{SERVERNAME}", guild.Name)
                     .Replace("{USERNAME}", user.Username)
                     .Replace("{MENTION}", user.Mention);
 

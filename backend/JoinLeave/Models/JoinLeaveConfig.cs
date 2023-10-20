@@ -4,7 +4,7 @@ namespace JoinLeave.Models;
 
 public class JoinLeaveConfig
 {
-    [Key] public int GuildId { get; set; }
+    [Key] public ulong GuildId { get; set; }
 
     public bool Enabled { get; set; }
 

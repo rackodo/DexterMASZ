@@ -724,10 +724,7 @@ public class DiscordRest(ILogger<DiscordRest> logger, IServiceProvider servicePr
 
     public Dictionary<string, CacheApiResponse> GetCache() => _cache;
 
-    public void RemoveFromCache(CacheKey key)
-    {
-        _cache.Remove(key.GetValue());
-    }
+    public void RemoveFromCache(CacheKey key) => _cache.Remove(key.GetValue());
 
     public T GetFromCache<T>(CacheKey key)
         => _cache.ContainsKey(key.GetValue()) ? _cache[key.GetValue()].GetContent<T>()
