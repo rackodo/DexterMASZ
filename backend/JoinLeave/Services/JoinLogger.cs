@@ -24,6 +24,9 @@ public class JoinLogger(DiscordSocketClient client, IServiceProvider services) :
 
         if (config != null)
         {
+            if (!config.Enabled)
+                return;
+
             var channel = user.Guild.GetTextChannel(config.JoinChannelId);
 
             if (channel != null)
@@ -48,6 +51,9 @@ public class JoinLogger(DiscordSocketClient client, IServiceProvider services) :
 
         if (config != null)
         {
+            if (!config.Enabled)
+                return;
+
             var channel = guild.GetTextChannel(config.LeaveChannelId);
 
             if (channel != null)
