@@ -18,6 +18,7 @@
 
 		<ProjectReference Include="..\AutoMods\AutoMods.csproj" />
 		<ProjectReference Include="..\GuildAudits\GuildAudits.csproj" />
+		<ProjectReference Include="..\JoinLeave\JoinLeave.csproj" />
 		<ProjectReference Include="..\Levels\Levels.csproj" />
 		<ProjectReference Include="..\Messaging\Messaging.csproj" />
 		<ProjectReference Include="..\MOTDs\MOTDs.csproj" />

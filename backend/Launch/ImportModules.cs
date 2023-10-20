@@ -3,6 +3,7 @@ using Bot;
 using Bot.Abstractions;
 using GuildAudits;
 using Invites;
+using JoinLeave;
 using Levels;
 using Messaging;
 using MOTDs;
@@ -24,6 +25,7 @@ public static class ImportModules
             new AutoModModule(),
             new GuildAuditModule(),
             new InviteModule(),
+            new JoinLeaveModule(),
             new MotdModule(),
             new MusicModule(),
             new PunishmentModule(),
