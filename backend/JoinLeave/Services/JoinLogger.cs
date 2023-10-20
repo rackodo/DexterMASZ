@@ -1,8 +1,10 @@
 ﻿using Bot.Abstractions;
 using Bot.Services;
+using Discord;
 using Discord.WebSocket;
 using JoinLeave.Data;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace JoinLeave.Services;
 
@@ -30,14 +32,7 @@ public class JoinLogger(DiscordSocketClient client, IServiceProvider services) :
             var channel = user.Guild.GetTextChannel(config.JoinChannelId);
 
             if (channel != null)
-            {
-                var message = config.JoinMessage
-                    .Replace("{SERVERNAME}", user.Guild.Name)
-                    .Replace("{USERNAME}", user.Username)
-                    .Replace("{MENTION}", user.Mention);
-
-                await channel.SendMessageAsync(message);
-            }
+                await channel.SendMessageAsync(FormatMessage(config.JoinMessage, user.Guild, user));
         }
     }
 
@@ -57,14 +52,12 @@ public class JoinLogger(DiscordSocketClient client, IServiceProvider services) :
             var channel = guild.GetTextChannel(config.LeaveChannelId);
 
             if (channel != null)
-            {
-                var message = config.LeaveMessage
-                    .Replace("{SERVERNAME}", guild.Name)
-                    .Replace("{USERNAME}", user.Username)
-                    .Replace("{MENTION}", user.Mention);
-
-                await channel.SendMessageAsync(message);
-            }
+                await channel.SendMessageAsync(FormatMessage(config.LeaveMessage, guild, user));
         }
     }
+
+    private static string FormatMessage(string message, IGuild guild, IUser user) => message
+        .Replace("{SERVERNAME}", guild.Name)
+        .Replace("{USERNAME}", user.Username)
+        .Replace("{MENTION}", user.Mention);
 }

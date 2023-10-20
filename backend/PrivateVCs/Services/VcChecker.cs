@@ -103,7 +103,7 @@ public class VcChecker(DiscordSocketClient client, IServiceProvider serviceProvi
 
     public void AddNewPrivateVc(ulong vcId, ulong creatorId) => _privateVcCreators.TryAdd(vcId, creatorId);
 
-    public bool IsNameAgainstFilter(string name, PrivateVcConfig privateVcConfig, AutoModConfig autoModConfig)
+    public static bool IsNameAgainstFilter(string name, PrivateVcConfig privateVcConfig, AutoModConfig autoModConfig)
     {
         if (autoModConfig != null)
             foreach (var word in autoModConfig.CustomWordFilter.Split('\n'))
