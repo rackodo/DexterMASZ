@@ -22,7 +22,7 @@ public class JoinLogger(DiscordSocketClient client, IServiceProvider services) :
 
         var joinLeaveDb = scope.ServiceProvider.GetRequiredService<JoinLeaveDatabase>();
 
-        var config = joinLeaveDb.JoinLeaveConfig.Find(user);
+        var config = joinLeaveDb.JoinLeaveConfig.Find(user.Guild.Id);
 
         if (config != null)
         {
@@ -42,7 +42,7 @@ public class JoinLogger(DiscordSocketClient client, IServiceProvider services) :
 
         var joinLeaveDb = scope.ServiceProvider.GetRequiredService<JoinLeaveDatabase>();
 
-        var config = joinLeaveDb.JoinLeaveConfig.Find(user);
+        var config = joinLeaveDb.JoinLeaveConfig.Find(guild.Id);
 
         if (config != null)
         {
