@@ -47,6 +47,8 @@ public class Experience : Command<Experience>
         var roleTargetName = "Unknown";
         var found = false;
         var guildInfo = Client.FetchGuildInfo(guildlevelconfig.Id, CacheBehavior.Default);
+        long roleTargetXp = 0;
+
         if (roleTarget != null)
         {
             guildlevelconfig.Levels.FirstOrDefault(e =>
@@ -89,12 +91,19 @@ public class Experience : Command<Experience>
 
             if (!found)
             {
-                roleTargetLevel = maxLevel;
-                roleTargetName = guildInfo.GetRole(guildlevelconfig.Levels[maxLevel].First()).Name;
+                if (guildlevelconfig.Levels.ContainsKey(maxLevel))
+                {
+                    var levelXp = guildlevelconfig.Levels[maxLevel].FirstOrDefault();
+
+                    if (levelXp != default)
+                    {
+                        roleTargetLevel = maxLevel;
+                        roleTargetName = guildInfo.GetRole(levelXp).Name;
+                        found = true;
+                    }
+                }
             }
         }
-
-        var roleTargetXp = GuildUserLevel.XpFromLevel(roleTargetLevel, guildlevelconfig);
 
         var embed = new EmbedBuilder()
             .WithTitle($"{user.Username}'s Experience Summary")
@@ -104,9 +113,14 @@ public class Experience : Command<Experience>
                 $"{LevelDataExpression(LevelType.Text, calclevel)}\n" +
                 $"{LevelDataExpression(LevelType.Voice, calclevel)}")
             .AddField($"Till Level {levelTarget}:", LevelTargetExpression(level.TotalXp, targetXp, guildlevelconfig))
-            .AddField($"Till {roleTargetName} Rank:",
-                LevelTargetExpression(level.TotalXp, roleTargetXp, guildlevelconfig))
             .WithColor(Color.Blue);
+
+        if (found)
+        {
+            roleTargetXp = GuildUserLevel.XpFromLevel(roleTargetLevel, guildlevelconfig);
+            embed.AddField($"Till {roleTargetName} Rank:",
+                LevelTargetExpression(level.TotalXp, roleTargetXp, guildlevelconfig));
+        }
 
         await RespondInteraction(string.Empty, embed);
     }
