@@ -105,7 +105,7 @@ public class Unmute : Command<Unmute>
     }
 
     [ComponentInteraction("unmute-deactivate:*")]
-    public async Task Deactivatemute(string userId)
+    public async Task DeactivateMute(string userId)
     {
         ModCaseRepository.AsUser(Identity);
 

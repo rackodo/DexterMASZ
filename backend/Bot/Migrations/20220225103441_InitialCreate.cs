@@ -44,10 +44,7 @@ public partial class InitialCreate : Migration
 				EmbedContent = table.Column<string>(type: "longtext", nullable: true)
 					.Annotation("MySql:CharSet", "utf8mb4")
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_AppSettings", x => x.ClientId);
-			})
+			constraints: table => table.PrimaryKey("PK_AppSettings", x => x.ClientId))
 			.Annotation("MySql:CharSet", "utf8mb4");
 
 		migrationBuilder.CreateTable(
@@ -73,10 +70,7 @@ public partial class InitialCreate : Migration
 				PublishModeratorInfo = table.Column<bool>(type: "tinyint(1)", nullable: false),
 				PreferredLanguage = table.Column<int>(type: "int", nullable: false)
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_GuildConfigs", x => x.GuildId);
-			})
+			constraints: table => table.PrimaryKey("PK_GuildConfigs", x => x.GuildId))
 			.Annotation("MySql:CharSet", "utf8mb4");
 	}
 

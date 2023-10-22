@@ -37,10 +37,7 @@ public partial class InitialCreate : Migration
 					.Annotation("MySql:CharSet", "utf8mb4"),
 				ChannelNotificationBehavior = table.Column<int>(type: "int", nullable: false)
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_AutoModConfigs", x => x.Id);
-			})
+			constraints: table => table.PrimaryKey("PK_AutoModConfigs", x => x.Id))
 			.Annotation("MySql:CharSet", "utf8mb4");
 
 		migrationBuilder.CreateTable(
@@ -66,10 +63,7 @@ public partial class InitialCreate : Migration
 				CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
 				AssociatedCaseId = table.Column<int>(type: "int", nullable: true)
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_AutoModEvents", x => x.Id);
-			})
+			constraints: table => table.PrimaryKey("PK_AutoModEvents", x => x.Id))
 			.Annotation("MySql:CharSet", "utf8mb4");
 	}
 

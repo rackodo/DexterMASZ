@@ -29,10 +29,7 @@ public partial class InitialCreate : Migration
 				CreatorId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
 				UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_UserNotes", x => x.Id);
-			})
+			constraints: table => table.PrimaryKey("PK_UserNotes", x => x.Id))
 			.Annotation("MySql:CharSet", "utf8mb4");
 	}
 

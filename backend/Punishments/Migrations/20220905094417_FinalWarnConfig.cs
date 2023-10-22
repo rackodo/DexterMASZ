@@ -18,10 +18,7 @@ public partial class FinalWarnConfig : Migration
                 PointMuteTimes = table.Column<string>(type: "longtext", nullable: true)
                     .Annotation("MySql:CharSet", "utf8mb4")
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_PunishmentConfig", x => x.GuildId);
-            })
+            constraints: table => table.PrimaryKey("PK_PunishmentConfig", x => x.GuildId))
             .Annotation("MySql:CharSet", "utf8mb4");
 
     protected override void Down(MigrationBuilder migrationBuilder) => migrationBuilder.DropTable(

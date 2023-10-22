@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json;
-using System.Runtime.Serialization;
 
 namespace Bot.Abstractions;
 
-public class JsonDataConverter<T> : ValueConverter<T, string> where T : ISerializable
+public class JsonDataConverter<T> : ValueConverter<T, string> 
 {
     public JsonDataConverter() : base(
         v => JsonConvert.SerializeObject(v),
@@ -12,6 +11,10 @@ public class JsonDataConverter<T> : ValueConverter<T, string> where T : ISeriali
     )
     {
     }
+}
+
+public class ListDataConverter<TKey> : JsonDataConverter<List<TKey>>
+{
 }
 
 public class DictionaryDataConverter<TKey, TValue> : JsonDataConverter<Dictionary<TKey, TValue>>

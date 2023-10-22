@@ -9,7 +9,6 @@ using Discord.Net;
 using Discord.WebSocket;
 using GuildAudits.Data;
 using GuildAudits.Enums;
-using GuildAudits.Models;
 using GuildAudits.Translators;
 using Humanizer;
 using Invites.Events;

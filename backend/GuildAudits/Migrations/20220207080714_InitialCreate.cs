@@ -28,10 +28,7 @@ public partial class InitialCreate : Migration
 				PingRoles = table.Column<string>(type: "longtext", nullable: true)
 					.Annotation("MySql:CharSet", "utf8mb4")
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_GuildAuditConfigs", x => x.Id);
-			})
+			constraints: table => table.PrimaryKey("PK_GuildAuditConfigs", x => x.Id))
 			.Annotation("MySql:CharSet", "utf8mb4");
 	}
 

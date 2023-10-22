@@ -30,10 +30,7 @@ public partial class InitialCreate : Migration
 				Reason = table.Column<string>(type: "longtext", nullable: true)
 					.Annotation("MySql:CharSet", "utf8mb4")
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_UserMaps", x => x.Id);
-			})
+			constraints: table => table.PrimaryKey("PK_UserMaps", x => x.Id))
 			.Annotation("MySql:CharSet", "utf8mb4");
 	}
 

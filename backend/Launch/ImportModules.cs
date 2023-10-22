@@ -10,6 +10,7 @@ using MOTDs;
 using Music;
 using PrivateVCs;
 using Punishments;
+using RoleReactions;
 using UserMaps;
 using UserNotes;
 using Utilities;
@@ -29,11 +30,12 @@ public static class ImportModules
             new MotdModule(),
             new MusicModule(),
             new PunishmentModule(),
+            new PrivateVcModule(),
+            new RoleReactionsModule(),
             new UserMapModule(),
             new UserNoteModule(),
             new UtilityModule(),
             new MessagingModule(),
             new LevelsModule(),
-            new PrivateVcModule()
         };
 }

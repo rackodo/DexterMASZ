@@ -1,4 +1,5 @@
 ﻿using Bot.Abstractions;
+using Discord.Interactions;
 using Discord.WebSocket;
 using Lavalink4NET;
 using Lavalink4NET.Player;
@@ -8,6 +9,7 @@ using Music.Services;
 
 namespace Music.Abstractions;
 
+[Group("music", "Commands to run the inbuilt music player!")]
 public class MusicCommand<T> : Command<T>
 {
     public VoteLavalinkPlayer Player;

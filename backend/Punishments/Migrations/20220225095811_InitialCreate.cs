@@ -56,10 +56,7 @@ public partial class InitialCreate : Migration
 				MarkedToDeleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
 				DeletedByUserId = table.Column<ulong>(type: "bigint unsigned", nullable: false)
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_ModCases", x => x.Id);
-			})
+			constraints: table => table.PrimaryKey("PK_ModCases", x => x.Id))
 			.Annotation("MySql:CharSet", "utf8mb4");
 
 		migrationBuilder.CreateTable(
@@ -86,10 +83,7 @@ public partial class InitialCreate : Migration
 				HandlePunishment = table.Column<bool>(type: "tinyint(1)", nullable: false),
 				HighSeverity = table.Column<bool>(type: "tinyint(1)", nullable: true)
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_ModCaseTemplates", x => x.Id);
-			})
+			constraints: table => table.PrimaryKey("PK_ModCaseTemplates", x => x.Id))
 			.Annotation("MySql:CharSet", "utf8mb4");
 
 		migrationBuilder.CreateTable(

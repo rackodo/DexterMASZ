@@ -36,10 +36,7 @@ public partial class InitialCreate : Migration
 				LastEditedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
 				FailureReason = table.Column<int>(type: "int", nullable: true)
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_ScheduledMessages", x => x.Id);
-			})
+			constraints: table => table.PrimaryKey("PK_ScheduledMessages", x => x.Id))
 			.Annotation("MySql:CharSet", "utf8mb4");
 	}
 

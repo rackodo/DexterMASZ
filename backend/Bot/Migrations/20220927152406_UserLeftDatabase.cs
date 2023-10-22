@@ -22,10 +22,7 @@ public partial class UserLeftDatabase : Migration
                     .Annotation("MySql:CharSet", "utf8mb4"),
                 PublicFlags = table.Column<int>(type: "int", nullable: true)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_LeftUsers", x => x.Id);
-            })
+            constraints: table => table.PrimaryKey("PK_LeftUsers", x => x.Id))
             .Annotation("MySql:CharSet", "utf8mb4");
 
     protected override void Down(MigrationBuilder migrationBuilder) => migrationBuilder.DropTable(

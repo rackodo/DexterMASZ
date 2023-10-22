@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Bot.Abstractions;
 
-public class JsonDataComparer<T> : ValueComparer<T> where T : ISerializable
+public class JsonDataComparer<T> : ValueComparer<T>
 {
     public JsonDataComparer() : base(
         (v1, v2) => JsonConvert.SerializeObject(v1) == JsonConvert.SerializeObject(v2),
@@ -13,6 +13,11 @@ public class JsonDataComparer<T> : ValueComparer<T> where T : ISerializable
     )
     {
     }
+}
+
+public class ListDataComparer<T> : JsonDataComparer<List<T>>
+{
+
 }
 
 public class DictionaryDataComparer<TKey, TValue> : ValueComparer<Dictionary<TKey, TValue>>

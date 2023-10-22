@@ -49,10 +49,7 @@ public partial class InitialCreate : Migration
                 LevelUpMessageOverrides = table.Column<string>(type: "longtext", nullable: true)
                     .Annotation("MySql:CharSet", "utf8mb4")
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_GuildLevelConfigs", x => x.Id);
-            })
+            constraints: table => table.PrimaryKey("PK_GuildLevelConfigs", x => x.Id))
             .Annotation("MySql:CharSet", "utf8mb4");
 
         migrationBuilder.CreateTable(
@@ -65,10 +62,7 @@ public partial class InitialCreate : Migration
                 TextXp = table.Column<long>(type: "bigint", nullable: false),
                 VoiceXp = table.Column<long>(type: "bigint", nullable: false)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_GuildUserLevels", x => new { x.GuildId, x.UserId });
-            })
+            constraints: table => table.PrimaryKey("PK_GuildUserLevels", x => new { x.GuildId, x.UserId }))
             .Annotation("MySql:CharSet", "utf8mb4");
 
         migrationBuilder.CreateTable(
@@ -93,10 +87,7 @@ public partial class InitialCreate : Migration
                 PfpRadiusFactor = table.Column<float>(type: "float", nullable: false),
                 RankcardFlags = table.Column<int>(type: "int", nullable: false)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_UserRankcardConfigs", x => x.Id);
-            })
+            constraints: table => table.PrimaryKey("PK_UserRankcardConfigs", x => x.Id))
             .Annotation("MySql:CharSet", "utf8mb4");
     }
 

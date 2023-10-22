@@ -31,10 +31,7 @@ public partial class InitialCreate : Migration
 				JoinedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
 				InviteCreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_UserInvites", x => x.Id);
-			})
+			constraints: table => table.PrimaryKey("PK_UserInvites", x => x.Id))
 			.Annotation("MySql:CharSet", "utf8mb4");
 	}
 

@@ -32,10 +32,7 @@ public partial class InitialCreate : Migration
                     .Annotation("MySql:CharSet", "utf8mb4"),
                 LeaveChannelId = table.Column<ulong>(type: "bigint unsigned", nullable: false)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_JoinLeaveConfig", x => x.GuildId);
-            })
+            constraints: table => table.PrimaryKey("PK_JoinLeaveConfig", x => x.GuildId))
             .Annotation("MySql:CharSet", "utf8mb4");
     }
 

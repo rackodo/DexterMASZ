@@ -29,10 +29,7 @@ public partial class InitialCreate : Migration
 					.Annotation("MySql:CharSet", "utf8mb4"),
 				ShowMotd = table.Column<bool>(type: "tinyint(1)", nullable: false)
 			},
-			constraints: table =>
-			{
-				table.PrimaryKey("PK_GuildMotDs", x => x.Id);
-			})
+			constraints: table => table.PrimaryKey("PK_GuildMotDs", x => x.Id))
 			.Annotation("MySql:CharSet", "utf8mb4");
 	}
 
