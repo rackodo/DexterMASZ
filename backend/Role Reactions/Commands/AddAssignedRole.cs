@@ -22,117 +22,113 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
             if (Context.Channel is ITextChannel txtChannel)
                 channel = txtChannel;
 
-        if (channel != null)
-        {
-            var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuId);
-
-            if (menu == null)
-            {
-                await RespondInteraction($"Role menu `{menuId}` does not exist in this channel!");
-                return;
-            }
-
-            if (menu.RoleToEmote.ContainsKey(role.Id))
-            {
-                await RespondInteraction($"Role `{role.Name}` already exists for role menu `{menu.Name}`!");
-                return;
-            }
-
-            var message = await channel.GetMessageAsync(menu.MessageId);
-
-            if (message == null)
-            {
-                await RespondInteraction($"Role menu `{menu.Name}` does not have a message related to it! " +
-                    $"Please delete and recreate the menu.");
-                return;
-            }
-
-            if (!Emote.TryParse(emote, out var _) && !Emoji.TryParse(emote, out var _))
-            {
-                await RespondInteraction($"Emote `{emote}` could not be found!");
-                return;
-            }
-
-            if (message is IUserMessage userMessage)
-            {
-                var rows = new List<Dictionary<ulong, string>>();
-                var tempComp = new Dictionary<ulong, string>();
-
-                var count = 1;
-
-                foreach (var storeRole in menu.RoleToEmote)
-                {
-                    tempComp.Add(storeRole.Key, storeRole.Value);
-
-                    if (tempComp.Count >= 5)
-                    {
-                        rows.Add(tempComp);
-                        tempComp = [];
-                    }
-
-                    count++;
-                }
-
-                if (count > 25)
-                {
-                    await RespondInteraction($"Too many roles in manu `{menu.Name}`! " +
-                        $"Please create a new role menu.");
-                    return;
-                }
-
-                tempComp.Add(role.Id, emote);
-
-                rows.Add(tempComp);
-
-                var components = new ComponentBuilder();
-
-                foreach(var row in rows)
-                {
-                    var aRow = new ActionRowBuilder();
-
-                    foreach (var col in row)
-                    {
-                        IEmote intEmote = null;
-
-                        if (Emote.TryParse(col.Value, out var pEmote))
-                            intEmote = pEmote;
-
-                        if (Emoji.TryParse(col.Value, out var pEmoji))
-                            intEmote = pEmoji;
-
-                        var intRole = Context.Guild.GetRole(col.Key);
-
-                        if (intRole != null)
-                            aRow.WithButton(
-                                intRole.Name,
-                                $"add-rm-role:{intRole.Id},{Context.User.Id},{menu.Id}",
-                                emote: intEmote
-                            );
-                    }
-
-                    components.AddRow(aRow);
-                }
-
-                await userMessage.ModifyAsync(m => m.Components = components.Build());
-
-                menu.RoleToEmote.Add(role.Id, emote);
-
-                await Database.SaveChangesAsync();
-
-                await RespondInteraction($"Successfully added role `{role.Name}` to menu `{menu.Name}`!");
-            }
-            else
-            {
-                await RespondInteraction($"Message for role menu `{menu.Name}` was not created by me! " +
-                    $"Please delete and recreate the menu.");
-                return;
-            }
-        }
-        else
+        if (channel == null)
         {
             await RespondInteraction(Translator.Get<BotTranslator>().OnlyTextChannel());
             return;
         }
+
+        var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuId);
+
+        if (menu == null)
+        {
+            await RespondInteraction($"Role menu `{menuId}` does not exist in this channel!");
+            return;
+        }
+
+        if (menu.RoleToEmote.ContainsKey(role.Id))
+        {
+            await RespondInteraction($"Role `{role.Name}` already exists for role menu `{menu.Name}`!");
+            return;
+        }
+
+        var message = await channel.GetMessageAsync(menu.MessageId);
+
+        if (message == null)
+        {
+            await RespondInteraction($"Role menu `{menu.Name}` does not have a message related to it! " +
+                $"Please delete and recreate the menu.");
+            return;
+        }
+
+        if (!Emote.TryParse(emote, out var _) && !Emoji.TryParse(emote, out var _))
+        {
+            await RespondInteraction($"Emote `{emote}` could not be found!");
+            return;
+        }
+
+        if (message is not IUserMessage userMessage)
+        {
+            await RespondInteraction($"Message for role menu `{menu.Name}` was not created by me! " +
+                $"Please delete and recreate the menu.");
+            return;
+        }
+
+        var rows = new List<Dictionary<ulong, string>>();
+        var tempComp = new Dictionary<ulong, string>();
+
+        var count = 1;
+
+        foreach (var storeRole in menu.RoleToEmote)
+        {
+            tempComp.Add(storeRole.Key, storeRole.Value);
+
+            if (tempComp.Count >= 5)
+            {
+                rows.Add(tempComp);
+                tempComp = [];
+            }
+
+            count++;
+        }
+
+        if (count > 25)
+        {
+            await RespondInteraction($"Too many roles in manu `{menu.Name}`! " +
+                $"Please create a new role menu.");
+            return;
+        }
+
+        tempComp.Add(role.Id, emote);
+
+        rows.Add(tempComp);
+
+        var components = new ComponentBuilder();
+
+        foreach (var row in rows)
+        {
+            var aRow = new ActionRowBuilder();
+
+            foreach (var col in row)
+            {
+                IEmote intEmote = null;
+
+                if (Emote.TryParse(col.Value, out var pEmote))
+                    intEmote = pEmote;
+
+                if (Emoji.TryParse(col.Value, out var pEmoji))
+                    intEmote = pEmoji;
+
+                var intRole = Context.Guild.GetRole(col.Key);
+
+                if (intRole != null)
+                    aRow.WithButton(
+                        intRole.Name,
+                        $"add-rm-role:{intRole.Id},{Context.User.Id},{menu.Id}",
+                        emote: intEmote
+                    );
+            }
+
+            components.AddRow(aRow);
+        }
+
+        await userMessage.ModifyAsync(m => m.Components = components.Build());
+
+        menu.RoleToEmote.Add(role.Id, emote);
+
+        await Database.SaveChangesAsync();
+
+        await RespondInteraction($"Successfully added role `{role.Name}` to menu `{menu.Name}`!");
     }
 
     [ComponentInteraction("add-rm-role:*,*,*")]
