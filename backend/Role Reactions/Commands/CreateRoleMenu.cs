@@ -46,7 +46,15 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
 
             var msg = await channel.SendMessageAsync(embed: embed.Build());
 
-            var lowestId = Database.RoleReactionsMenu.Max(x => x.Id) + 1;
+            var lowestId = 1;
+
+            var allMenus = Database.RoleReactionsMenu.Where(
+                x => x.GuildId == Context.Guild.Id &&
+                x.ChannelId == channel.Id
+            );
+
+            if (allMenus.Any())
+                lowestId += allMenus.Max(x => x.Id);
 
             Database.RoleReactionsMenu.Add(
                 new RoleMenu()
