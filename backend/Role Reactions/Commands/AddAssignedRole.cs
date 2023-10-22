@@ -146,6 +146,8 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
             userInfo = new UserRoles()
             {
                 GuildId = Context.Guild.Id,
+                ChannelId = Context.Channel.Id,
+                Id = menuId,
                 UserId = userId,
                 RoleIds = new List<ulong>(),
             };
