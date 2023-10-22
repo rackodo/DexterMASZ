@@ -33,7 +33,7 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
             if (!menu.RoleToEmote.ContainsKey(role.Id))
             {
-                await RespondInteraction($"Role `{role.Name}` already exists for role menu `{menu.Name}`!");
+                await RespondInteraction($"Role `{role.Name}` does not exist for role menu `{menu.Name}`!");
                 return;
             }
 
