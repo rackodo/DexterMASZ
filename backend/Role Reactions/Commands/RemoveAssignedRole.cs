@@ -14,7 +14,7 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 {
     public RoleReactionsDatabase Database { get; set; }
 
-    [SlashCommand("removeRole", "Removes a role to a role menu")]
+    [SlashCommand("remove-rm-role", "Removes a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task RemoveAssignedRoleCommand(string menuName, string roleName,
         [Optional] IMessageChannel channel)

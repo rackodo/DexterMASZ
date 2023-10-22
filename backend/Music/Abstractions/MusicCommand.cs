@@ -9,7 +9,6 @@ using Music.Services;
 
 namespace Music.Abstractions;
 
-[Group("music", "Commands to run the inbuilt music player!")]
 public class MusicCommand<T> : Command<T>
 {
     public VoteLavalinkPlayer Player;

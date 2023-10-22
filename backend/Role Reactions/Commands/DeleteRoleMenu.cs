@@ -13,7 +13,7 @@ public class DeleteRoleMenu : RoleMenuCommand<DeleteRoleMenu>
 {
     public RoleReactionsDatabase Database { get; set; }
 
-    [SlashCommand("deletemenu", "Deletes a menu that users can pick their roles from!")]
+    [SlashCommand("delete-rm", "Deletes a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task RoleMenuCommand(string title, [Optional] IMessageChannel channel)
     {

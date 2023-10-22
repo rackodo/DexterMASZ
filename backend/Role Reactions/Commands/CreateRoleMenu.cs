@@ -14,7 +14,7 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
 {
     public RoleReactionsDatabase Database { get; set; }
 
-    [SlashCommand("createmenu", "Create a menu that users can pick their roles from!")]
+    [SlashCommand("create-rm", "Create a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task RoleMenuCommand(string title, string description,
         [Optional] IMessageChannel channel, [Optional] string colorHex)

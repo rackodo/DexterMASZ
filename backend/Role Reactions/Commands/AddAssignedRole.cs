@@ -14,7 +14,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 {
     public RoleReactionsDatabase Database { get; set; }
 
-    [SlashCommand("assignRole", "Assigns a role to a role menu")]
+    [SlashCommand("assign-rm-role", "Assigns a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task AddAssignedRoleCommand(string emote, string menuName, IRole role,
         string name, [Optional] IMessageChannel channel)
@@ -102,7 +102,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                         if (Emote.TryParse(col.Emote, out var pEmote))
                             intEmote = pEmote;
 
-                        aRow.WithButton(col.RoleName, $"add-role:{col.RoleId},{Context.User.Id}", emote: intEmote);
+                        aRow.WithButton(col.RoleName, $"add-rm-role:{col.RoleId},{Context.User.Id}", emote: intEmote);
                     }
 
                     components.AddRow(aRow);
@@ -130,7 +130,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         }
     }
 
-    [ComponentInteraction("add-role:*,*")]
+    [ComponentInteraction("add-rm-role:*,*")]
     public async Task AddRole(string sRoleId, string sUserId)
     {
         var userId = ulong.Parse(sUserId);
