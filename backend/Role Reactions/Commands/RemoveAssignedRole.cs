@@ -43,9 +43,6 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
             Database.SaveChanges();
 
-            foreach (var roles in menu.RoleToEmote)
-                Console.WriteLine(roles.Key + " " + roles.Value);
-
             var message = await channel.GetMessageAsync(menu.MessageId);
 
             if (message == null)
