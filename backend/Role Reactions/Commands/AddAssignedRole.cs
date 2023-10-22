@@ -131,12 +131,8 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         var roleId = ulong.Parse(sRoleId);
         var userId = ulong.Parse(sUserId);
 
-        Console.WriteLine(userId + " " + roleId);
-
         var user = Context.Guild.GetUser(userId);
         var role = Context.Guild.GetRole(roleId);
-
-        Console.WriteLine(user.Mention + " " + role.Mention);
 
         var userInfo = Database.UserRoles.Find(Context.Guild.Id, userId);
 
