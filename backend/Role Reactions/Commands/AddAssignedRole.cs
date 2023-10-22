@@ -128,15 +128,15 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
     [ComponentInteraction("add-rm-role:*,*")]
     public async Task AddRole(string sRoleId, string sUserId)
     {
-        var userId = ulong.Parse(sUserId);
         var roleId = ulong.Parse(sRoleId);
-
-        Console.WriteLine(sRoleId + " " + sUserId);
+        var userId = ulong.Parse(sUserId);
 
         Console.WriteLine(userId + " " + roleId);
 
         var user = Context.Guild.GetUser(userId);
-        var userRole = user.Roles.FirstOrDefault(r => r.Id == roleId);
+        var role = Context.Guild.GetRole(roleId);
+
+        Console.WriteLine(user.Mention + " " + role.Mention);
 
         var userInfo = Database.UserRoles.Find(Context.Guild.Id, userId);
 
@@ -152,14 +152,14 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
             Database.UserRoles.Add(userInfo);
         }
 
-        if (userRole != null)
+        if (user.Roles.Any(r => r.Id == role.Id))
         {
-            await user.RemoveRoleAsync(userRole);
+            await user.RemoveRoleAsync(role);
 
             var embed = new EmbedBuilder()
                 .WithColor(Color.Red)
                 .WithTitle("Removed Role")
-                .WithDescription($"{userRole.Mention} has been removed from {user.Mention}!")
+                .WithDescription($"{role.Mention} has been removed from {user.Mention}!")
                 .WithCurrentTimestamp();
 
             userInfo.RoleIds.Remove(roleId);
@@ -168,8 +168,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         }
         else
         {
-            var role = Context.Guild.GetRole(roleId);
-            await user.AddRoleAsync(userRole);
+            await user.AddRoleAsync(role);
 
             if (!userInfo.RoleIds.Contains(roleId))
                 userInfo.RoleIds.Add(roleId);
