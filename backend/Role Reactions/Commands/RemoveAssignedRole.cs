@@ -68,7 +68,10 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
                     tempComp.Add(storeRole.Key, storeRole.Value);
 
                     if (tempComp.Count >= 5)
+                    {
                         rows.Add(tempComp);
+                        tempComp = [];
+                    }
                 }
 
                 rows.Add(tempComp);

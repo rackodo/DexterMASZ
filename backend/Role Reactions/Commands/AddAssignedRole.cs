@@ -65,7 +65,10 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                     tempComp.Add(storeRole.Key, storeRole.Value);
 
                     if (tempComp.Count >= 5)
+                    {
                         rows.Add(tempComp);
+                        tempComp = [];
+                    }
 
                     count++;
                 }
