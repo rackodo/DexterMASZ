@@ -5,7 +5,6 @@ using Discord;
 using Discord.Interactions;
 using RoleReactions.Abstractions;
 using RoleReactions.Data;
-using System.Runtime.InteropServices;
 
 namespace RoleReactions.Commands;
 
@@ -37,6 +36,12 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
                 await RespondInteraction($"Role `{role.Name}` already exists for role menu `{menu.Name}`!");
                 return;
             }
+
+            var oldRoles = menu.RoleToEmote.ToDictionary(entry => entry.Key, entry => entry.Value);
+            oldRoles.Remove(role.Id);
+            menu.RoleToEmote = oldRoles;
+
+            await Database.SaveChangesAsync();
 
             var message = await channel.GetMessageAsync(menu.MessageId);
 
@@ -95,12 +100,6 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
                 }
 
                 await userMessage.ModifyAsync(m => m.Components = components.Build());
-
-                var oldRoles = menu.RoleToEmote;
-                oldRoles.Remove(role.Id);
-                menu.RoleToEmote = oldRoles;
-
-                await Database.SaveChangesAsync();
 
                 await RespondInteraction($"Successfully removed role `{role.Name}` from menu `{menu.Name}`!");
             }

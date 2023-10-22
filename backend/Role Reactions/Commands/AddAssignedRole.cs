@@ -112,7 +112,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
                 await userMessage.ModifyAsync(m => m.Components = components.Build());
 
-                var oldRoles = menu.RoleToEmote;
+                var oldRoles = menu.RoleToEmote.ToDictionary(entry => entry.Key, entry => entry.Value);
                 oldRoles.Add(role.Id, emote);
                 menu.RoleToEmote = oldRoles;
 
@@ -163,7 +163,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         var embed = new EmbedBuilder()
                 .WithCurrentTimestamp();
 
-        var oldRoles = userInfo.RoleIds;
+        var oldRoles = userInfo.RoleIds.ToList();
 
         if (user.Roles.Any(r => r.Id == role.Id))
         {
