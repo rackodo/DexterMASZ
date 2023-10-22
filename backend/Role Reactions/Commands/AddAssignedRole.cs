@@ -25,17 +25,17 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
         if (channel != null)
         {
-            var menu = Database.RoleReactionsMenu.Find(channel.Id, channel.GuildId, menuName);
+            var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuName);
 
             if (menu == null)
             {
-                await RespondInteraction($"Role menu {menuName} does not exist in this channel!");
+                await RespondInteraction($"Role menu `{menuName}` does not exist in this channel!");
                 return;
             }
 
             if (menu.Roles.ContainsKey(name))
             {
-                await RespondInteraction($"Role {name} already exists for role menu {menuName}!");
+                await RespondInteraction($"Role `{name}` already exists for role menu `{menuName}`!");
                 return;
             }
 
@@ -43,14 +43,14 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
             if (message == null)
             {
-                await RespondInteraction($"Role menu {menuName} does not have a message related to it! " +
+                await RespondInteraction($"Role menu `{menuName}` does not have a message related to it! " +
                     $"Please delete and recreate the menu.");
                 return;
             }
 
             if (!Emote.TryParse(emote, out var _))
             {
-                await RespondInteraction($"Emote {emote} could not be found!");
+                await RespondInteraction($"Emote `{emote}` could not be found!");
                 return;
             }
 
@@ -78,7 +78,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
                 if (count > 25)
                 {
-                    await RespondInteraction($"Too many roles in manu {menuName}! Please create a new role menu.");
+                    await RespondInteraction($"Too many roles in manu `{menuName}`! Please create a new role menu.");
                     return;
                 }
 
@@ -117,11 +117,12 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
                 await Database.SaveChangesAsync();
 
-                await RespondInteraction($"Successfully added role {role.Name} to menu {menuName}!");
+                await RespondInteraction($"Successfully added role `{role.Name}` to menu `{menuName}`!");
             }
             else
             {
-                await RespondInteraction($"Message for role menu {menuName} was not created by me! Please delete and recreate the menu.");
+                await RespondInteraction($"Message for role menu `{menuName}` was not created by me! " +
+                    $"Please delete and recreate the menu.");
                 return;
             }
         }

@@ -25,17 +25,17 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
         if (channel != null)
         {
-            var menu = Database.RoleReactionsMenu.Find(channel.Id, channel.GuildId, menuName);
+            var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id,menuName);
 
             if (menu == null)
             {
-                await RespondInteraction($"Role menu {menuName} does not exist in this channel!");
+                await RespondInteraction($"Role menu `{menuName}` does not exist in this channel!");
                 return;
             }
 
             if (!menu.Roles.ContainsKey(roleName))
             {
-                await RespondInteraction($"Role {roleName} does not exist for role menu {menuName}!");
+                await RespondInteraction($"Role `{roleName}` does not exist for role menu `{menuName}`!");
                 return;
             }
 
@@ -43,7 +43,7 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
             if (message == null)
             {
-                await RespondInteraction($"Role menu {menuName} does not have a message related to it! " +
+                await RespondInteraction($"Role menu `{menuName}` does not have a message related to it! " +
                     $"Please delete and recreate the menu.");
                 return;
             }
@@ -97,11 +97,12 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
                 await Database.SaveChangesAsync();
 
-                await RespondInteraction($"Successfully removed role {roleName} from menu {menuName}!");
+                await RespondInteraction($"Successfully removed role `{roleName}` from menu `{menuName}`!");
             }
             else
             {
-                await RespondInteraction($"Message for role menu {menuName} was not created by me! Please delete and recreate the menu.");
+                await RespondInteraction($"Message for role menu `{menuName}` was not created by me! " +
+                    $"Please delete and recreate the menu.");
                 return;
             }
         }

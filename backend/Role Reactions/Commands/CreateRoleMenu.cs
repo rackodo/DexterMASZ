@@ -25,11 +25,11 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
 
         if (channel != null)
         {
-            var menu = Database.RoleReactionsMenu.Find(channel.Id, channel.GuildId, title);
+            var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, title);
 
             if (menu != null)
             {
-                await RespondInteraction($"Role menu {title} already exists in this channel!");
+                await RespondInteraction($"Role menu `{title}` already exists in this channel!");
                 return;
             }
 
@@ -60,7 +60,7 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
 
             await Database.SaveChangesAsync();
 
-            await RespondInteraction($"Role menu {title} is now set up!");
+            await RespondInteraction($"Role menu `{title}` is now set up!");
         }
         else
         {
