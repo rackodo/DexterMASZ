@@ -7,6 +7,7 @@ using RoleReactions.Abstractions;
 using RoleReactions.Data;
 using RoleReactions.Models;
 using System.Runtime.InteropServices;
+using System.Xml.Linq;
 
 namespace RoleReactions.Commands;
 
@@ -16,7 +17,7 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
     [SlashCommand("remove-rm-role", "Removes a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task RemoveAssignedRoleCommand(string menuName, IRole role,
+    public async Task RemoveAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] string menuId, IRole role,
         [Optional] ITextChannel channel)
     {
         if (channel == null)
@@ -25,19 +26,17 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
         if (channel != null)
         {
-            var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id,menuName);
+            var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuId);
 
             if (menu == null)
             {
-                await RespondInteraction($"Role menu `{menuName}` does not exist in this channel!");
+                await RespondInteraction($"Role menu `{menuId}` does not exist in this channel!");
                 return;
             }
 
-            var name = role.Name;
-
-            if (!menu.Roles.ContainsKey(name))
+            if (menu.RoleToEmote.ContainsKey(role.Id))
             {
-                await RespondInteraction($"Role `{name}` does not exist for role menu `{menuName}`!");
+                await RespondInteraction($"Role `{role.Name}` already exists for role menu `{menu.Name}`!");
                 return;
             }
 
@@ -45,27 +44,22 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
             if (message == null)
             {
-                await RespondInteraction($"Role menu `{menuName}` does not have a message related to it! " +
+                await RespondInteraction($"Role menu `{menu.Name}` does not have a message related to it! " +
                     $"Please delete and recreate the menu.");
                 return;
             }
 
             if (message is IUserMessage userMessage)
             {
-                var rows = new List<List<AssignedRole>>();
-                var tempComp = new List<AssignedRole>();
+                var rows = new List<Dictionary<ulong, string>>();
+                var tempComp = new Dictionary<ulong, string>();
 
-                foreach (var storeRole in menu.Roles)
+                foreach (var storeRole in menu.RoleToEmote)
                 {
-                    if (storeRole.Key == name)
+                    if (storeRole.Key == role.Id)
                         continue;
 
-                    tempComp.Add(new AssignedRole()
-                    {
-                        RoleName = storeRole.Key,
-                        RoleId = storeRole.Value,
-                        Emote = menu.Emotes[storeRole.Key]
-                    });
+                    tempComp.Add(storeRole.Key, storeRole.Value);
 
                     if (tempComp.Count >= 5)
                         rows.Add(tempComp);
@@ -83,10 +77,12 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
                     {
                         IEmote intEmote = null;
 
-                        if (Emote.TryParse(col.Emote, out var pEmote))
+                        if (Emote.TryParse(col.Value, out var pEmote))
                             intEmote = pEmote;
 
-                        aRow.WithButton(col.RoleName, $"add-role:{col.RoleId},{Context.User.Id}", emote: intEmote);
+                        var intRole = Context.Guild.GetRole(col.Key);
+
+                        aRow.WithButton(intRole.Name, $"add-role:{intRole.Id},{Context.User.Id}", emote: intEmote);
                     }
 
                     components.AddRow(aRow);
@@ -94,16 +90,15 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
                 await userMessage.ModifyAsync(m => m.Components = components.Build());
 
-                menu.Roles.Remove(name);
-                menu.Emotes.Remove(name);
+                menu.RoleToEmote.Remove(role.Id);
 
                 await Database.SaveChangesAsync();
 
-                await RespondInteraction($"Successfully removed role `{name}` from menu `{menuName}`!");
+                await RespondInteraction($"Successfully removed role `{role.Name}` from menu `{menu.Name}`!");
             }
             else
             {
-                await RespondInteraction($"Message for role menu `{menuName}` was not created by me! " +
+                await RespondInteraction($"Message for role menu `{menu.Name}` was not created by me! " +
                     $"Please delete and recreate the menu.");
                 return;
             }

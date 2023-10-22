@@ -23,15 +23,14 @@ public partial class InitialCreate : Migration
             {
                 GuildId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
                 ChannelId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-                MenuName = table.Column<string>(type: "varchar(255)", nullable: false)
+                Id = table.Column<int>(type: "int", nullable: false),
+                Name = table.Column<string>(type: "longtext", nullable: true)
                     .Annotation("MySql:CharSet", "utf8mb4"),
                 MessageId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-                Roles = table.Column<string>(type: "longtext", nullable: true)
-                    .Annotation("MySql:CharSet", "utf8mb4"),
-                Emotes = table.Column<string>(type: "longtext", nullable: true)
+                RoleToEmote = table.Column<string>(type: "longtext", nullable: true)
                     .Annotation("MySql:CharSet", "utf8mb4")
             },
-            constraints: table => table.PrimaryKey("PK_RoleReactionsMenu", x => new { x.GuildId, x.ChannelId, x.MenuName }))
+            constraints: table => table.PrimaryKey("PK_RoleReactionsMenu", x => new { x.GuildId, x.ChannelId, x.Id }))
             .Annotation("MySql:CharSet", "utf8mb4");
 
         migrationBuilder.CreateTable(

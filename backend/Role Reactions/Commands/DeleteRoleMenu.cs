@@ -14,7 +14,7 @@ public class DeleteRoleMenu : RoleMenuCommand<DeleteRoleMenu>
 
     [SlashCommand("delete-rm", "Deletes a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task RoleMenuCommand(string title, ITextChannel channel = null)
+    public async Task RoleMenuCommand([Autocomplete(typeof(MenuHandler))] int menuId, ITextChannel channel = null)
     {
         if (channel == null)
             if (Context.Channel is ITextChannel txtChannel)
@@ -22,11 +22,11 @@ public class DeleteRoleMenu : RoleMenuCommand<DeleteRoleMenu>
 
         if (channel != null)
         {
-            var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, title);
+            var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuId);
 
             if (menu == null)
             {
-                await RespondInteraction($"Role menu `{title}` does not exist in this channel!");
+                await RespondInteraction($"Role menu `{menuId}` does not exist in this channel!");
                 return;
             }
 
@@ -35,7 +35,7 @@ public class DeleteRoleMenu : RoleMenuCommand<DeleteRoleMenu>
 
             await Database.SaveChangesAsync();
 
-            await RespondInteraction($"Role menu `{title}` is now deleted!");
+            await RespondInteraction($"Role menu `{menu.Name}` is now deleted!");
         }
         else
         {

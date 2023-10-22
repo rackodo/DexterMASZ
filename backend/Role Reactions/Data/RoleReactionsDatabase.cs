@@ -19,15 +19,9 @@ public class RoleReactionsDatabase(DbContextOptions<RoleReactionsDatabase> optio
     {
         modelBuilder
             .Entity<RoleMenu>()
-            .Property(e => e.Roles)
-            .HasConversion(new DictionaryDataConverter<string, ulong>(),
-                new DictionaryDataComparer<string, ulong>());
-
-        modelBuilder
-            .Entity<RoleMenu>()
-            .Property(e => e.Emotes)
-            .HasConversion(new DictionaryDataConverter<string, string>(),
-                new DictionaryDataComparer<string, string>());
+            .Property(e => e.RoleToEmote)
+            .HasConversion(new DictionaryDataConverter<ulong, string>(),
+                new DictionaryDataComparer<ulong, string>());
 
         modelBuilder
             .Entity<UserRoles>()

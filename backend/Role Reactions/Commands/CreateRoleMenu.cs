@@ -46,15 +46,17 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
 
             var msg = await channel.SendMessageAsync(embed: embed.Build());
 
+            var lowestId = Database.RoleReactionsMenu.Max(x => x.Id) + 1;
+
             Database.RoleReactionsMenu.Add(
                 new RoleMenu()
                 {
                     ChannelId = channel.Id,
                     GuildId = channel.GuildId,
-                    MenuName = title,
+                    Id = lowestId,
+                    Name = title,
                     MessageId = msg.Id,
-                    Roles = new Dictionary<string, ulong>(),
-                    Emotes = new Dictionary<string, string>()
+                    RoleToEmote = new Dictionary<ulong, string>()
                 }
             );
 

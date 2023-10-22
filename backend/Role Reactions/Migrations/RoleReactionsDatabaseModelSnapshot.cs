@@ -27,19 +27,19 @@ namespace RoleReactions.Migrations
                     b.Property<ulong>("ChannelId")
                         .HasColumnType("bigint unsigned");
 
-                    b.Property<string>("MenuName")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Emotes")
-                        .HasColumnType("longtext");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<ulong>("MessageId")
                         .HasColumnType("bigint unsigned");
 
-                    b.Property<string>("Roles")
+                    b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.HasKey("GuildId", "ChannelId", "MenuName");
+                    b.Property<string>("RoleToEmote")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("GuildId", "ChannelId", "Id");
 
                     b.ToTable("RoleReactionsMenu", "RoleReactions");
                 });

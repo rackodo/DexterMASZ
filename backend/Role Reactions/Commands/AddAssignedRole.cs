@@ -15,7 +15,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
     [SlashCommand("add-rm-role", "Assigns a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task AddAssignedRoleCommand(string emote, string menuName,
+    public async Task AddAssignedRoleCommand(string emote, [Autocomplete(typeof(MenuHandler))] int menuId,
         IRole role, ITextChannel channel = null)
     {
         if (channel == null)
@@ -24,19 +24,17 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
         if (channel != null)
         {
-            var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuName);
+            var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuId);
 
             if (menu == null)
             {
-                await RespondInteraction($"Role menu `{menuName}` does not exist in this channel!");
+                await RespondInteraction($"Role menu `{menuId}` does not exist in this channel!");
                 return;
             }
 
-            var name = role.Name;
-
-            if (menu.Roles.ContainsKey(name))
+            if (menu.RoleToEmote.ContainsKey(role.Id))
             {
-                await RespondInteraction($"Role `{name}` already exists for role menu `{menuName}`!");
+                await RespondInteraction($"Role `{role.Name}` already exists for role menu `{menu.Name}`!");
                 return;
             }
 
@@ -44,7 +42,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
             if (message == null)
             {
-                await RespondInteraction($"Role menu `{menuName}` does not have a message related to it! " +
+                await RespondInteraction($"Role menu `{menu.Name}` does not have a message related to it! " +
                     $"Please delete and recreate the menu.");
                 return;
             }
@@ -57,19 +55,14 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
             if (message is IUserMessage userMessage)
             {
-                var rows = new List<List<AssignedRole>>();
-                var tempComp = new List<AssignedRole>();
+                var rows = new List<Dictionary<ulong, string>>();
+                var tempComp = new Dictionary<ulong, string>();
 
                 var count = 1;
 
-                foreach (var storeRole in menu.Roles)
+                foreach (var storeRole in menu.RoleToEmote)
                 {
-                    tempComp.Add(new AssignedRole()
-                    {
-                        RoleName = storeRole.Key,
-                        RoleId = storeRole.Value,
-                        Emote = menu.Emotes[storeRole.Key]
-                    });
+                    tempComp.Add(storeRole.Key, storeRole.Value);
 
                     if (tempComp.Count >= 5)
                         rows.Add(tempComp);
@@ -79,16 +72,12 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
                 if (count > 25)
                 {
-                    await RespondInteraction($"Too many roles in manu `{menuName}`! Please create a new role menu.");
+                    await RespondInteraction($"Too many roles in manu `{menu.Name}`! " +
+                        $"Please create a new role menu.");
                     return;
                 }
 
-                tempComp.Add(new AssignedRole()
-                {
-                    RoleName = name,
-                    RoleId = role.Id,
-                    Emote = emote
-                });
+                tempComp.Add(role.Id, emote);
 
                 rows.Add(tempComp);
 
@@ -102,10 +91,12 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                     {
                         IEmote intEmote = null;
 
-                        if (Emote.TryParse(col.Emote, out var pEmote))
+                        if (Emote.TryParse(col.Value, out var pEmote))
                             intEmote = pEmote;
 
-                        aRow.WithButton(col.RoleName, $"add-rm-role:{col.RoleId},{Context.User.Id}", emote: intEmote);
+                        var intRole = Context.Guild.GetRole(col.Key);
+
+                        aRow.WithButton(intRole.Name, $"add-rm-role:{intRole.Id},{Context.User.Id}", emote: intEmote);
                     }
 
                     components.AddRow(aRow);
@@ -113,16 +104,15 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
                 await userMessage.ModifyAsync(m => m.Components = components.Build());
 
-                menu.Roles.Add(name, role.Id);
-                menu.Emotes.Add(name, emote);
+                menu.RoleToEmote.Add(role.Id, emote);
 
                 await Database.SaveChangesAsync();
 
-                await RespondInteraction($"Successfully added role `{role.Name}` to menu `{menuName}`!");
+                await RespondInteraction($"Successfully added role `{role.Name}` to menu `{menu.Name}`!");
             }
             else
             {
-                await RespondInteraction($"Message for role menu `{menuName}` was not created by me! " +
+                await RespondInteraction($"Message for role menu `{menu.Name}` was not created by me! " +
                     $"Please delete and recreate the menu.");
                 return;
             }
