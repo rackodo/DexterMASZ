@@ -148,19 +148,19 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
             Database.UserRoles.Add(userInfo);
         }
 
+        var embed = new EmbedBuilder()
+                .WithCurrentTimestamp();
+
         if (user.Roles.Any(r => r.Id == role.Id))
         {
             await user.RemoveRoleAsync(role);
 
-            var embed = new EmbedBuilder()
+            embed
                 .WithColor(Color.Red)
                 .WithTitle("Removed Role")
-                .WithDescription($"{role.Mention} has been removed from {user.Mention}!")
-                .WithCurrentTimestamp();
+                .WithDescription($"{role.Mention} has been removed from {user.Mention}!");
 
             userInfo.RoleIds.Remove(roleId);
-
-            await user.SendMessageAsync(embed: embed.Build());
         }
         else
         {
@@ -169,15 +169,14 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
             if (!userInfo.RoleIds.Contains(roleId))
                 userInfo.RoleIds.Add(roleId);
 
-            var embed = new EmbedBuilder()
+            embed
                 .WithColor(Color.Green)
                 .WithTitle("Added Role")
-                .WithDescription($"{role.Mention} has been added to {user.Mention}!")
-                .WithCurrentTimestamp();
-
-            await user.SendMessageAsync(embed: embed.Build());
+                .WithDescription($"{role.Mention} has been added to {user.Mention}!");
         }
 
         await Database.SaveChangesAsync();
+
+        await user.SendMessageAsync(embed: embed.Build());
     }
 }
