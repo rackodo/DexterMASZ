@@ -37,12 +37,12 @@ public class BotEnumTranslator : Translator
             },
             ApiError.ProtectedModCaseSuspectIsBot => PreferredLanguage switch
             {
-                Language.De => "Benutzer ist geschützt. Er ist ein Bot.",
-                Language.Fr => "L'utilisateur est protégé. C'est un robot.",
-                Language.Es => "El usuario está protegido. El es un bot.",
-                Language.Ru => "Пользователь защищен. Он бот.",
-                Language.It => "L'utente è protetto. Lui è un bot.",
-                _ => "User is protected. They are a bot."
+                Language.De => "Benutzer ist geschützt. Er ist ein Bot",
+                Language.Fr => "L'utilisateur est protégé. C'est un robot",
+                Language.Es => "El usuario está protegido. El es un bot",
+                Language.Ru => "Пользователь защищен. Он бот",
+                Language.It => "L'utente è protetto. Lui è un bot",
+                _ => "User is protected. They are a bot"
             },
             ApiError.ProtectedModCaseSuspectIsSiteAdmin => PreferredLanguage switch
             {
