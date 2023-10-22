@@ -80,7 +80,7 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
                         var intRole = Context.Guild.GetRole(col.Key);
 
-                        aRow.WithButton(intRole.Name, $"add-role:{intRole.Id},{Context.User.Id}", emote: intEmote);
+                        aRow.WithButton(intRole.Name, $"add-rm-role:{intRole.Id},{Context.User.Id}", emote: intEmote);
                     }
 
                     components.AddRow(aRow);
