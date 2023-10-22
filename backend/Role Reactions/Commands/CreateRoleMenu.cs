@@ -68,7 +68,7 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
                 }
             );
 
-            await Database.SaveChangesAsync();
+            Database.SaveChanges();
 
             await RespondInteraction($"Role menu `{title}` is now set up!");
         }

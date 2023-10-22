@@ -41,7 +41,7 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
             oldRoles.Remove(role.Id);
             menu.RoleToEmote = oldRoles;
 
-            await Database.SaveChangesAsync();
+            Database.SaveChanges();
 
             foreach (var roles in menu.RoleToEmote)
                 Console.WriteLine(roles.Key + " " + roles.Value);

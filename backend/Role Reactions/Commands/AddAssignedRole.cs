@@ -119,7 +119,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 oldRoles.Add(role.Id, emote);
                 menu.RoleToEmote = oldRoles;
 
-                await Database.SaveChangesAsync();
+                Database.SaveChanges();
 
                 await RespondInteraction($"Successfully added role `{role.Name}` to menu `{menu.Name}`!");
             }
@@ -194,7 +194,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
         userInfo.RoleIds = oldRoles;
 
-        await Database.SaveChangesAsync();
+        Database.SaveChanges();
 
         await FollowupAsync(embed: embed.Build(), ephemeral: true);
     }

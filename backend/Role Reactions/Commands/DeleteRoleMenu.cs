@@ -46,7 +46,7 @@ public class DeleteRoleMenu : RoleMenuCommand<DeleteRoleMenu>
             foreach (var role in addedRoles)
                 Database.UserRoles.Remove(role);
 
-            await Database.SaveChangesAsync();
+            Database.SaveChanges();
 
             await RespondInteraction($"Role menu `{menu.Name}` is now deleted!");
         }
