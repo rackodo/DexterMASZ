@@ -30,8 +30,21 @@ public class DeleteRoleMenu : RoleMenuCommand<DeleteRoleMenu>
                 return;
             }
 
-            Database.Remove(menu);
-            await channel.DeleteMessageAsync(menu.MessageId);
+            var message = await channel.GetMessageAsync(menu.MessageId);
+
+            if (message != null)
+                await channel.DeleteMessageAsync(menu.MessageId);
+
+            Database.RoleReactionsMenu.Remove(menu);
+
+            var addedRoles = Database.UserRoles.Where(
+                x => x.GuildId == Context.Guild.Id &&
+                x.ChannelId == Context.Channel.Id &&
+                x.Id == menuId
+            );
+
+            foreach (var role in addedRoles)
+                Database.UserRoles.Remove(role);
 
             await Database.SaveChangesAsync();
 

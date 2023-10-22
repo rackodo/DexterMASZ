@@ -14,18 +14,18 @@ public class RoleJoinService(DiscordSocketClient client, IServiceProvider servic
         using var scope = serviceProvider.CreateScope();
         var database = scope.ServiceProvider.GetRequiredService<RoleReactionsDatabase>();
 
-        var userInfo = database.UserRoles.Find(user.Guild.Id, user.Id);
+        var userInfos = database.UserRoles.Where(x => x.GuildId == user.Guild.Id && x.UserId == user.Id);
 
-        if (userInfo == null)
-            return;
-
-        foreach (var roleId in userInfo.RoleIds)
+        foreach (var userInfo in userInfos)
         {
-            var role = user.Guild.GetRole(roleId);
+            foreach (var roleId in userInfo.RoleIds)
+            {
+                var role = user.Guild.GetRole(roleId);
 
-            if (role == null) continue;
+                if (role == null) continue;
 
-            await user.AddRoleAsync(role);
+                await user.AddRoleAsync(role);
+            }
         }
     }
 }

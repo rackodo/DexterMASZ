@@ -97,7 +97,11 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                         var intRole = Context.Guild.GetRole(col.Key);
 
                         if (intRole != null)
-                            aRow.WithButton(intRole.Name, $"add-rm-role:{intRole.Id},{Context.User.Id}", emote: intEmote);
+                            aRow.WithButton(
+                                intRole.Name,
+                                $"add-rm-role:{intRole.Id},{Context.User.Id},{menu.Id}",
+                                emote: intEmote
+                            );
                     }
 
                     components.AddRow(aRow);
@@ -125,16 +129,17 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         }
     }
 
-    [ComponentInteraction("add-rm-role:*,*")]
-    public async Task AddRole(string sRoleId, string sUserId)
+    [ComponentInteraction("add-rm-role:*,*,*")]
+    public async Task AddRole(string sRoleId, string sUserId, string sMenuId)
     {
         var roleId = ulong.Parse(sRoleId);
         var userId = ulong.Parse(sUserId);
+        var menuId = int.Parse(sMenuId);
 
         var user = Context.Guild.GetUser(userId);
         var role = Context.Guild.GetRole(roleId);
 
-        var userInfo = Database.UserRoles.Find(Context.Guild.Id, userId);
+        var userInfo = Database.UserRoles.Find(Context.Guild.Id, Context.Channel.Id, menuId, userId);
 
         if (userInfo == null)
         {
