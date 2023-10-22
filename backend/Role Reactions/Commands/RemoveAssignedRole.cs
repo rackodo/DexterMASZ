@@ -15,8 +15,8 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
     [SlashCommand("remove-rm-role", "Removes a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task RemoveAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] int menuId, IRole role,
-        [Optional] ITextChannel channel)
+    public async Task RemoveAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] int menuId,
+        IRole role, ITextChannel channel = null)
     {
         if (channel == null)
             if (Context.Channel is ITextChannel txtChannel)

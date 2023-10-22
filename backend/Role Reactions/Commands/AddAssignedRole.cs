@@ -149,7 +149,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 ChannelId = Context.Channel.Id,
                 Id = menuId,
                 UserId = userId,
-                RoleIds = new List<ulong>(),
+                RoleIds = new List<ulong>()
             };
 
             Database.UserRoles.Add(userInfo);
