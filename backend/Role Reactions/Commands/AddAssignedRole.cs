@@ -47,7 +47,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 return;
             }
 
-            if (!Emote.TryParse(emote, out var _))
+            if (!Emote.TryParse(emote, out var _) && !Emoji.TryParse(emote, out var _))
             {
                 await RespondInteraction($"Emote `{emote}` could not be found!");
                 return;
@@ -93,6 +93,9 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
                         if (Emote.TryParse(col.Value, out var pEmote))
                             intEmote = pEmote;
+
+                        if (Emoji.TryParse(col.Value, out var pEmoji))
+                            intEmote = pEmoji;
 
                         var intRole = Context.Guild.GetRole(col.Key);
 
