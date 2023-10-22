@@ -10,15 +10,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Levels.Migrations
 {
     [DbContext(typeof(LevelsDatabase))]
-    [Migration("20220729162058_XPIntoXpCaseShift")]
-    partial class XPIntoXpCaseShift
+    [Migration("20231019012350_InitialCreate")]
+    partial class InitialCreate
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("Levels")
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Levels.Models.GuildLevelConfig", b =>
@@ -28,26 +29,21 @@ namespace Levels.Migrations
                         .HasColumnType("bigint unsigned");
 
                     b.Property<string>("Coefficients")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("DisabledXpChannels")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<bool>("HandleRoles")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("LevelUpMessageOverrides")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("LevelUpTemplate")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Levels")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("MaximumTextXpGiven")
@@ -67,12 +63,6 @@ namespace Levels.Migrations
 
                     b.Property<ulong>("NicknameDisabledRole")
                         .HasColumnType("bigint unsigned");
-
-                    b.Property<int>("RankcardImageRequiredLevel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RankcardImageSizeLimit")
-                        .HasColumnType("int");
 
                     b.Property<bool>("SendTextLevelUps")
                         .HasColumnType("tinyint(1)");
@@ -102,22 +92,19 @@ namespace Levels.Migrations
 
             modelBuilder.Entity("Levels.Models.GuildUserLevel", b =>
                 {
-                    b.Property<string>("Token")
-                        .HasColumnType("char(22)");
-
                     b.Property<ulong>("GuildId")
+                        .HasColumnType("bigint unsigned");
+
+                    b.Property<ulong>("UserId")
                         .HasColumnType("bigint unsigned");
 
                     b.Property<long>("TextXp")
                         .HasColumnType("bigint");
 
-                    b.Property<ulong>("UserId")
-                        .HasColumnType("bigint unsigned");
-
                     b.Property<long>("VoiceXp")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Token");
+                    b.HasKey("GuildId", "UserId");
 
                     b.ToTable("GuildUserLevels", "Levels");
                 });
@@ -129,20 +116,40 @@ namespace Levels.Migrations
                         .HasColumnType("bigint unsigned");
 
                     b.Property<string>("Background")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<uint>("LevelBgColor")
                         .HasColumnType("int unsigned");
 
+                    b.Property<int>("LevelOffsetX")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelOffsetY")
+                        .HasColumnType("int");
+
                     b.Property<uint>("OffColor")
                         .HasColumnType("int unsigned");
+
+                    b.Property<int>("PfpOffsetX")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PfpOffsetY")
+                        .HasColumnType("int");
+
+                    b.Property<float>("PfpRadiusFactor")
+                        .HasColumnType("float");
 
                     b.Property<int>("RankcardFlags")
                         .HasColumnType("int");
 
                     b.Property<uint>("TitleBgColor")
                         .HasColumnType("int unsigned");
+
+                    b.Property<int>("TitleOffsetX")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TitleOffsetY")
+                        .HasColumnType("int");
 
                     b.Property<uint>("XpColor")
                         .HasColumnType("int unsigned");

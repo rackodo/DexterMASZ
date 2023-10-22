@@ -15,22 +15,13 @@ using System.ComponentModel.DataAnnotations;
 namespace Punishments.Controllers;
 
 [Route("api/v1/guilds/{guildId}")]
-public class ModCaseTableController : AuthenticatedController
+public class ModCaseTableController(GuildConfigRepository guildConfigRepository, ModCaseRepository modCaseRepository,
+    Translation translator, DiscordRest discordRest, IdentityManager identityManager) : AuthenticatedController(identityManager, guildConfigRepository, modCaseRepository)
 {
-    private readonly DiscordRest _discordRest;
-    private readonly GuildConfigRepository _guildConfigRepository;
-    private readonly ModCaseRepository _modCaseRepository;
-    private readonly Translation _translator;
-
-    public ModCaseTableController(GuildConfigRepository guildConfigRepository, ModCaseRepository modCaseRepository,
-        Translation translator, DiscordRest discordRest, IdentityManager identityManager) :
-        base(identityManager, guildConfigRepository, modCaseRepository)
-    {
-        _guildConfigRepository = guildConfigRepository;
-        _modCaseRepository = modCaseRepository;
-        _translator = translator;
-        _discordRest = discordRest;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly GuildConfigRepository _guildConfigRepository = guildConfigRepository;
+    private readonly ModCaseRepository _modCaseRepository = modCaseRepository;
+    private readonly Translation _translator = translator;
 
     [HttpPost("modcasetable")]
     public async Task<IActionResult> GetAllModCases([FromRoute] ulong guildId,
@@ -65,10 +56,13 @@ public class ModCaseTableController : AuthenticatedController
 
         modCases = sortBy switch
         {
-            ModCaseTableSortType.SortByExpiring => modCases.Where(x => x.PunishedUntil != null)
-                .OrderBy(x => x.PunishedUntil)
-                .ToList(),
-            ModCaseTableSortType.SortByDeleting => modCases.OrderBy(x => x.MarkedToDeleteAt).ToList(),
+            ModCaseTableSortType.SortByExpiring =>
+            [
+                .. modCases.Where(x => x.PunishedUntil != null)
+                                .OrderBy(x => x.PunishedUntil)
+,
+            ],
+            ModCaseTableSortType.SortByDeleting => [.. modCases.OrderBy(x => x.MarkedToDeleteAt)],
             _ => modCases
         };
 
@@ -156,7 +150,7 @@ public class ModCaseTableController : AuthenticatedController
             table = table.Where(x =>
                 search.MarkedToDelete != null && x.MarkedToDeleteAt.HasValue == search.MarkedToDelete.Value);
 
-        List<ModCaseTableEntry> tmp = new();
+        List<ModCaseTableEntry> tmp = [];
 
         foreach (var c in table.Skip(startPage * 20).Take(20))
         {

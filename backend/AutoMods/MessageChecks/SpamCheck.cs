@@ -6,7 +6,7 @@ namespace AutoMods.MessageChecks;
 
 public static class SpamCheck
 {
-    private static readonly Dictionary<ulong, Dictionary<ulong, List<long>>> MsgBoard = new();
+    private static readonly Dictionary<ulong, Dictionary<ulong, List<long>>> MsgBoard = [];
 
     public static bool Check(IMessage message, AutoModConfig config, DiscordSocketClient _)
     {
@@ -23,7 +23,7 @@ public static class SpamCheck
 
         // Sets the guild config in msg_board if it doesn't exist.
         if (!MsgBoard.ContainsKey(guildId))
-            MsgBoard[guildId] = new Dictionary<ulong, List<long>>();
+            MsgBoard[guildId] = [];
 
         var timestamp = message.CreatedAt.ToUnixTimeSeconds();
 
@@ -42,10 +42,10 @@ public static class SpamCheck
         }
 
         // Add the message to the "msg_board".
-        if (!MsgBoard[guildId].ContainsKey(message.Author.Id))
-            MsgBoard[guildId][message.Author.Id] = new List<long> { timestamp };
+        if (!MsgBoard[guildId].TryGetValue(message.Author.Id, out var value))
+            MsgBoard[guildId][message.Author.Id] = [timestamp];
         else
-            MsgBoard[guildId][message.Author.Id].Add(timestamp);
+            value.Add(timestamp);
 
         // Counts the number of messages and check them for being too high
         return MsgBoard[guildId][message.Author.Id].Count > config.Limit;

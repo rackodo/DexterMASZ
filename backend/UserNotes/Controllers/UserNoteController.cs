@@ -8,13 +8,9 @@ using UserNotes.DTOs;
 namespace UserNotes.Controllers;
 
 [Route("api/v1/guilds/{guildId}/usernote")]
-public class UserNoteController : AuthenticatedController
+public class UserNoteController(IdentityManager identityManager, UserNoteRepository userNoteRepo) : AuthenticatedController(identityManager, userNoteRepo)
 {
-    private readonly UserNoteRepository _userNoteRepo;
-
-    public UserNoteController(IdentityManager identityManager, UserNoteRepository userNoteRepo) :
-        base(identityManager, userNoteRepo) =>
-        _userNoteRepo = userNoteRepo;
+    private readonly UserNoteRepository _userNoteRepo = userNoteRepo;
 
     [HttpGet]
     public async Task<IActionResult> GetUserNote([FromRoute] ulong guildId)

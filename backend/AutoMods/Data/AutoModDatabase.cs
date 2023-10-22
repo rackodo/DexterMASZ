@@ -7,15 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AutoMods.Data;
 
-public class AutoModDatabase : DataContext<AutoModDatabase>, IDataContextCreate
+public class AutoModDatabase(DbContextOptions<AutoModDatabase> options) : DataContext<AutoModDatabase>(options), IDataContextCreate
 {
     public DbSet<AutoModConfig> AutoModConfigs { get; set; }
 
     public DbSet<AutoModEvent> AutoModEvents { get; set; }
-
-    public AutoModDatabase(DbContextOptions<AutoModDatabase> options) : base(options)
-    {
-    }
 
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
         IServiceCollection serviceCollection) =>

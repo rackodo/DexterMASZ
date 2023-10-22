@@ -17,23 +17,14 @@ using Timer = System.Timers.Timer;
 
 namespace Punishments.Services;
 
-public class PunishmentHandler : IEvent
+public class PunishmentHandler(BotEventHandler botEventHandler, DiscordRest discordRest,
+    ILogger<PunishmentHandler> logger, IServiceProvider serviceProvider, DiscordSocketClient client) : IEvent
 {
-    private readonly BotEventHandler _botEventHandler;
-    private readonly DiscordSocketClient _client;
-    private readonly DiscordRest _discordRest;
-    private readonly ILogger<PunishmentHandler> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public PunishmentHandler(BotEventHandler botEventHandler, DiscordRest discordRest,
-        ILogger<PunishmentHandler> logger, IServiceProvider serviceProvider, DiscordSocketClient client)
-    {
-        _botEventHandler = botEventHandler;
-        _discordRest = discordRest;
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _client = client;
-    }
+    private readonly BotEventHandler _botEventHandler = botEventHandler;
+    private readonly DiscordSocketClient _client = client;
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly ILogger<PunishmentHandler> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public void RegisterEvents()
     {

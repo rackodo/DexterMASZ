@@ -5,13 +5,9 @@ using MOTDs.Models;
 
 namespace MOTDs.Data;
 
-public class MotdDatabase : DataContext<MotdDatabase>, IDataContextCreate
+public class MotdDatabase(DbContextOptions<MotdDatabase> options) : DataContext<MotdDatabase>(options), IDataContextCreate
 {
     private DbSet<GuildMotd> GuildMotDs { get; set; }
-
-    public MotdDatabase(DbContextOptions<MotdDatabase> options) : base(options)
-    {
-    }
 
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
         IServiceCollection serviceCollection) =>

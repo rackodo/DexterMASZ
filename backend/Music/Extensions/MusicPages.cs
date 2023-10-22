@@ -13,7 +13,7 @@ public static class MusicPages
             .Split(Environment.NewLine.ToCharArray(),
                 StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         var idx = 0;
-        List<PageBuilder> pages = new();
+        List<PageBuilder> pages = [];
         StringBuilder text = new();
 
         foreach (var line in lines)

@@ -94,11 +94,11 @@ public class Unban : Command<Unban>
             var embed = castInteraction.Message.Embeds.FirstOrDefault().ToEmbedBuilder()
                 .WithColor(new Color(Convert.ToUInt32(int.Parse("7289da", NumberStyles.HexNumber))));
 
-            embed.Fields = new List<EmbedFieldBuilder>
-            {
+            embed.Fields =
+            [
                 new EmbedFieldBuilder().WithName(Translator.Get<PunishmentTranslator>().Result())
                     .WithValue(Translator.Get<PunishmentTranslator>().BansDeleted())
-            };
+            ];
 
             await RespondInteraction(string.Empty, embed);
         }
@@ -112,17 +112,17 @@ public class Unban : Command<Unban>
         var modCases = (await ModCaseRepository.GetCasesForGuildAndUser(Context.Guild.Id, Convert.ToUInt64(userId)))
             .Where(x => x.PunishmentActive && x.PunishmentType == PunishmentType.Ban).ToList();
 
-        await ModCaseRepository.DeactivateModCase(modCases.ToArray());
+        await ModCaseRepository.DeactivateModCase([.. modCases]);
 
         if (Context.Interaction is SocketMessageComponent castInteraction)
         {
             var embed = castInteraction.Message.Embeds.FirstOrDefault().ToEmbedBuilder().WithColor(Color.Green);
 
-            embed.Fields = new List<EmbedFieldBuilder>
-            {
+            embed.Fields =
+            [
                 new EmbedFieldBuilder().WithName(Translator.Get<PunishmentTranslator>().Result())
                     .WithValue(Translator.Get<PunishmentTranslator>().BansDeactivated())
-            };
+            ];
 
             await RespondInteraction(string.Empty, embed);
         }
@@ -135,11 +135,11 @@ public class Unban : Command<Unban>
         {
             var embed = castInteraction.Message.Embeds.FirstOrDefault().ToEmbedBuilder().WithColor(Color.Red);
 
-            embed.Fields = new List<EmbedFieldBuilder>
-            {
+            embed.Fields =
+            [
                 new EmbedFieldBuilder().WithName(Translator.Get<PunishmentTranslator>().Result())
                     .WithValue(Translator.Get<PunishmentTranslator>().Canceled())
-            };
+            ];
 
             await RespondInteraction(string.Empty, embed);
         }

@@ -11,7 +11,7 @@ public class CachedServices
 
     public CachedServices()
     {
-        Services = new Dictionary<string, Type[]>();
+        Services = [];
 
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
@@ -30,10 +30,10 @@ public class CachedServices
         if (type.FullName == null)
             return Type.EmptyTypes;
 
-        if (Services.ContainsKey(type.FullName))
-            return Services[type.FullName];
+        if (Services.TryGetValue(type.FullName, out var value))
+            return value;
 
-        List<Type> classes = new();
+        List<Type> classes = [];
 
         foreach (var assembly in Dependents)
         {
@@ -44,9 +44,9 @@ public class CachedServices
             );
         }
 
-        Services.Add(type.FullName, classes.ToArray());
+        Services.Add(type.FullName, [.. classes]);
 
-        return classes.ToArray();
+        return [.. classes];
     }
 
     public List<T> GetInitializedClasses<T>(IServiceProvider serviceProvider) where T : class =>

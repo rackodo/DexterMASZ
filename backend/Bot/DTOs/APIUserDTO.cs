@@ -3,23 +3,13 @@ using Discord;
 
 namespace Bot.DTOs;
 
-public class ApiUserDto
+public class ApiUserDto(List<DiscordGuild> userGuilds, List<DiscordGuild> bannedGuilds,
+    List<DiscordGuild> modGuilds, List<DiscordGuild> adminGuilds, IUser user, bool isAdmin = false)
 {
-    public List<DiscordGuild> UserGuilds { get; set; }
-    public List<DiscordGuild> BannedGuilds { get; set; }
-    public List<DiscordGuild> ModGuilds { get; set; }
-    public List<DiscordGuild> AdminGuilds { get; set; }
-    public DiscordUser DiscordUser { get; set; }
-    public bool IsAdmin { get; set; }
-
-    public ApiUserDto(List<DiscordGuild> userGuilds, List<DiscordGuild> bannedGuilds,
-        List<DiscordGuild> modGuilds, List<DiscordGuild> adminGuilds, IUser user, bool isAdmin = false)
-    {
-        UserGuilds = userGuilds;
-        BannedGuilds = bannedGuilds;
-        ModGuilds = modGuilds;
-        AdminGuilds = adminGuilds;
-        DiscordUser = DiscordUser.GetDiscordUser(user);
-        IsAdmin = isAdmin;
-    }
+    public List<DiscordGuild> UserGuilds { get; set; } = userGuilds;
+    public List<DiscordGuild> BannedGuilds { get; set; } = bannedGuilds;
+    public List<DiscordGuild> ModGuilds { get; set; } = modGuilds;
+    public List<DiscordGuild> AdminGuilds { get; set; } = adminGuilds;
+    public DiscordUser DiscordUser { get; set; } = DiscordUser.GetDiscordUser(user);
+    public bool IsAdmin { get; set; } = isAdmin;
 }

@@ -13,21 +13,13 @@ using Timer = System.Timers.Timer;
 
 namespace Messaging.Services;
 
-public class ScheduledMessages : IEvent
+public class ScheduledMessages(ILogger<ScheduledMessages> logger, IServiceProvider serviceProvider,
+    DiscordRest discordRest, BotEventHandler eventHandler) : IEvent
 {
-    private readonly DiscordRest _discordRest;
-    private readonly BotEventHandler _eventHandler;
-    private readonly ILogger<ScheduledMessages> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public ScheduledMessages(ILogger<ScheduledMessages> logger, IServiceProvider serviceProvider,
-        DiscordRest discordRest, BotEventHandler eventHandler)
-    {
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _discordRest = discordRest;
-        _eventHandler = eventHandler;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly BotEventHandler _eventHandler = eventHandler;
+    private readonly ILogger<ScheduledMessages> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public void RegisterEvents() => _eventHandler.OnBotLaunched += StartScheduledTimers;
 

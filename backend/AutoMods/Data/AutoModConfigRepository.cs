@@ -11,17 +11,11 @@ using Bot.Services;
 
 namespace AutoMods.Data;
 
-public class AutoModConfigRepository : Repository, IDeleteGuildData
+public class AutoModConfigRepository(DiscordRest discordRest, AutoModDatabase autoModDatabase,
+    AutoModEventHandler eventHandler) : Repository(discordRest), IDeleteGuildData
 {
-    private readonly AutoModDatabase _autoModDatabase;
-    private readonly AutoModEventHandler _eventHandler;
-
-    public AutoModConfigRepository(DiscordRest discordRest, AutoModDatabase autoModDatabase,
-        AutoModEventHandler eventHandler) : base(discordRest)
-    {
-        _autoModDatabase = autoModDatabase;
-        _eventHandler = eventHandler;
-    }
+    private readonly AutoModDatabase _autoModDatabase = autoModDatabase;
+    private readonly AutoModEventHandler _eventHandler = eventHandler;
 
     public async Task DeleteGuildData(ulong guildId) =>
         await _autoModDatabase.DeleteAllPunishmentsConfigsForGuild(guildId);

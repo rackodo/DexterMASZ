@@ -7,16 +7,10 @@ using Punishments.Models;
 
 namespace Punishments.Events;
 
-public class PunishmentEventAudit : IEvent
+public class PunishmentEventAudit(AuditLogger auditLogger, PunishmentEventHandler punishmentEventHandler) : IEvent
 {
-    private readonly AuditLogger _auditLogger;
-    private readonly PunishmentEventHandler _punishmentEventHandler;
-
-    public PunishmentEventAudit(AuditLogger auditLogger, PunishmentEventHandler punishmentEventHandler)
-    {
-        _auditLogger = auditLogger;
-        _punishmentEventHandler = punishmentEventHandler;
-    }
+    private readonly AuditLogger _auditLogger = auditLogger;
+    private readonly PunishmentEventHandler _punishmentEventHandler = punishmentEventHandler;
 
     public void RegisterEvents()
     {

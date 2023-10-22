@@ -6,17 +6,11 @@ using Levels.Models;
 
 namespace Levels.Data;
 
-public class UserRankcardConfigRepository : Repository
+public class UserRankcardConfigRepository(DiscordRest discordRest, LevelsDatabase database,
+    LevelsEventHandler eventHandler) : Repository(discordRest)
 {
-    private readonly LevelsDatabase _database;
-    private readonly LevelsEventHandler _eventHandler;
-
-    public UserRankcardConfigRepository(DiscordRest discordRest, LevelsDatabase database,
-        LevelsEventHandler eventHandler) : base(discordRest)
-    {
-        _database = database;
-        _eventHandler = eventHandler;
-    }
+    private readonly LevelsDatabase _database = database;
+    private readonly LevelsEventHandler _eventHandler = eventHandler;
 
     public UserRankcardConfig GetRankcard(ulong userid) => _database.GetUserRankcardConfig(userid);
 

@@ -10,29 +10,17 @@ using System.Dynamic;
 namespace Bot.Controllers;
 
 [Route("api/v1/meta")]
-public class AdminStatsController : AuthenticatedController
+public class AdminStatsController(ILogger<AdminStatsController> logger, ScheduledCacher scheduler,
+    SettingsRepository settingsRepository, DiscordRest discordRest, IdentityManager identityManager,
+    IServiceProvider serviceProvider, CachedServices cachedServices) : AuthenticatedController(identityManager, settingsRepository)
 {
-    private readonly CachedServices _cachedServices;
-    private readonly DiscordRest _discordRest;
-    private readonly IdentityManager _identityManager;
-    private readonly ILogger<AdminStatsController> _logger;
-    private readonly ScheduledCacher _scheduler;
-    private readonly IServiceProvider _serviceProvider;
-    private readonly SettingsRepository _settingsRepository;
-
-    public AdminStatsController(ILogger<AdminStatsController> logger, ScheduledCacher scheduler,
-        SettingsRepository settingsRepository, DiscordRest discordRest, IdentityManager identityManager,
-        IServiceProvider serviceProvider, CachedServices cachedServices) :
-        base(identityManager, settingsRepository)
-    {
-        _logger = logger;
-        _scheduler = scheduler;
-        _settingsRepository = settingsRepository;
-        _discordRest = discordRest;
-        _serviceProvider = serviceProvider;
-        _cachedServices = cachedServices;
-        _identityManager = identityManager;
-    }
+    private readonly CachedServices _cachedServices = cachedServices;
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly IdentityManager _identityManager = identityManager;
+    private readonly ILogger<AdminStatsController> _logger = logger;
+    private readonly ScheduledCacher _scheduler = scheduler;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly SettingsRepository _settingsRepository = settingsRepository;
 
     [HttpGet("adminStats")]
     public async Task<IActionResult> Status()
@@ -41,7 +29,7 @@ public class AdminStatsController : AuthenticatedController
 
         await identity.RequireSiteAdmin();
 
-        List<string> currentLogins = new();
+        List<string> currentLogins = [];
 
         foreach (var login in _identityManager.GetCurrentIdentities().OfType<DiscordOAuthIdentity>())
         {

@@ -10,18 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace Levels.Controllers;
 
 [Route("api/v1/guilds/{guildId}/levels")]
-public class LevelsConfigController : AuthenticatedController
+public class LevelsConfigController(IdentityManager identityManager, GuildLevelConfigRepository levelsConfigRepository,
+    GuildConfigRepository guildConfigRepository) : AuthenticatedController(identityManager, levelsConfigRepository)
 {
-    private readonly GuildConfigRepository _guildConfigRepository;
-    private readonly GuildLevelConfigRepository _levelsConfigRepository;
-
-    public LevelsConfigController(IdentityManager identityManager, GuildLevelConfigRepository levelsConfigRepository,
-        GuildConfigRepository guildConfigRepository) :
-        base(identityManager, levelsConfigRepository)
-    {
-        _levelsConfigRepository = levelsConfigRepository;
-        _guildConfigRepository = guildConfigRepository;
-    }
+    private readonly GuildConfigRepository _guildConfigRepository = guildConfigRepository;
+    private readonly GuildLevelConfigRepository _levelsConfigRepository = levelsConfigRepository;
 
     [HttpGet]
     public async Task<IActionResult> GetConfig([FromRoute] ulong guildId)

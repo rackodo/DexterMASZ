@@ -11,22 +11,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bot.Controllers;
 
 [Route("api/v1/guilds")]
-public class GuildConfigController : AuthenticatedController
+public class GuildConfigController(SettingsRepository settingsRepository, GuildConfigRepository guildConfigRepo,
+    IdentityManager identityManager, IServiceProvider serviceProvider, CachedServices cachedServices) : AuthenticatedController(identityManager, settingsRepository, guildConfigRepo)
 {
-    private readonly CachedServices _cachedServices;
-    private readonly GuildConfigRepository _guildConfigRepo;
-    private readonly IServiceProvider _serviceProvider;
-    private readonly SettingsRepository _settingsRepository;
-
-    public GuildConfigController(SettingsRepository settingsRepository, GuildConfigRepository guildConfigRepo,
-        IdentityManager identityManager, IServiceProvider serviceProvider, CachedServices cachedServices)
-        : base(identityManager, settingsRepository, guildConfigRepo)
-    {
-        _settingsRepository = settingsRepository;
-        _guildConfigRepo = guildConfigRepo;
-        _serviceProvider = serviceProvider;
-        _cachedServices = cachedServices;
-    }
+    private readonly CachedServices _cachedServices = cachedServices;
+    private readonly GuildConfigRepository _guildConfigRepo = guildConfigRepo;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly SettingsRepository _settingsRepository = settingsRepository;
 
     [HttpGet("{guildId}")]
     public async Task<IActionResult> GetGuildConfig([FromRoute] ulong guildId)

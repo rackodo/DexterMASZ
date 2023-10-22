@@ -15,20 +15,13 @@ using Utilities.Dynamics;
 
 namespace UserMaps.Data;
 
-public class UserMapRepository : Repository,
+public class UserMapRepository(DiscordRest discordRest, UserMapDatabase userMapsDatabase,
+    UserMapEventHandler eventHandler) : Repository(discordRest),
     IAddAdminStats, IAddGuildStats, IAddSearch, IAddNetworks, IWhoIsResults, IDeleteGuildData
 {
-    private readonly DiscordRest _discordRest;
-    private readonly UserMapEventHandler _eventHandler;
-    private readonly UserMapDatabase _userMapsDatabase;
-
-    public UserMapRepository(DiscordRest discordRest, UserMapDatabase userMapsDatabase,
-        UserMapEventHandler eventHandler) : base(discordRest)
-    {
-        _userMapsDatabase = userMapsDatabase;
-        _discordRest = discordRest;
-        _eventHandler = eventHandler;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly UserMapEventHandler _eventHandler = eventHandler;
+    private readonly UserMapDatabase _userMapsDatabase = userMapsDatabase;
 
     public async Task AddAdminStatistics(dynamic adminStats) => adminStats.userMaps = await CountAllUserMaps();
 
@@ -37,7 +30,7 @@ public class UserMapRepository : Repository,
 
     public async Task AddNetworkData(dynamic network, List<string> modGuilds, ulong userId)
     {
-        List<UserMapExpanded> userMaps = new();
+        List<UserMapExpanded> userMaps = [];
 
         foreach (var userMap in (await GetUserMapsByUser(userId)).Where(userMap =>
                      modGuilds.Contains(userMap.GuildId.ToString())))
@@ -55,7 +48,7 @@ public class UserMapRepository : Repository,
 
     public async Task AddSearchData(dynamic data, ulong guildId, string search)
     {
-        List<UserMapExpanded> userMapsViews = new();
+        List<UserMapExpanded> userMapsViews = [];
         try
         {
             var userId = ulong.Parse(search);

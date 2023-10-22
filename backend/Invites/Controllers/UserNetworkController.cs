@@ -10,17 +10,11 @@ using System.ComponentModel.DataAnnotations;
 namespace Invites.Controllers;
 
 [Route("api/v1/network")]
-public class UserNetworkController : AuthenticatedController
+public class UserNetworkController(IdentityManager identityManager, DiscordRest discordRest,
+    InviteRepository inviteRepository) : AuthenticatedController(identityManager, inviteRepository)
 {
-    private readonly DiscordRest _discordRest;
-    private readonly InviteRepository _inviteRepository;
-
-    public UserNetworkController(IdentityManager identityManager, DiscordRest discordRest,
-        InviteRepository inviteRepository) : base(identityManager, inviteRepository)
-    {
-        _discordRest = discordRest;
-        _inviteRepository = inviteRepository;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly InviteRepository _inviteRepository = inviteRepository;
 
     [HttpGet("invite")]
     public async Task<IActionResult> GetInviteNetwork([FromQuery] [Required] string inviteUrl)
@@ -37,7 +31,7 @@ public class UserNetworkController : AuthenticatedController
         var guild = DiscordGuild.GetDiscordGuild(_discordRest.FetchGuildInfo(invites.First().GuildId,
             CacheBehavior.Default));
 
-        List<UserInviteExpanded> inviteViews = new();
+        List<UserInviteExpanded> inviteViews = [];
 
         foreach (var invite in invites)
         {

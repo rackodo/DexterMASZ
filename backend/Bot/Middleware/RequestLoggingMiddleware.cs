@@ -3,16 +3,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Bot.Middleware;
 
-public class RequestLoggingMiddleware
+public class RequestLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
 {
-    private readonly ILogger _logger;
-    private readonly RequestDelegate _next;
-
-    public RequestLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
-    {
-        _next = next;
-        _logger = loggerFactory.CreateLogger<RequestLoggingMiddleware>();
-    }
+    private readonly ILogger _logger = loggerFactory.CreateLogger<RequestLoggingMiddleware>();
+    private readonly RequestDelegate _next = next;
 
     private string GetIp(HttpContext context)
     {

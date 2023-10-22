@@ -7,17 +7,10 @@ using Levels.Models;
 
 namespace Levels.Data;
 
-public class GuildLevelConfigRepository : Repository
+public class GuildLevelConfigRepository(DiscordRest discordRest, LevelsDatabase database, LevelsEventHandler eventHandler) : Repository(discordRest)
 {
-    private readonly LevelsDatabase _database;
-    private readonly LevelsEventHandler _eventHandler;
-
-    public GuildLevelConfigRepository(DiscordRest discordRest, LevelsDatabase database, LevelsEventHandler eventHandler)
-        : base(discordRest)
-    {
-        _database = database;
-        _eventHandler = eventHandler;
-    }
+    private readonly LevelsDatabase _database = database;
+    private readonly LevelsEventHandler _eventHandler = eventHandler;
 
     public async Task<GuildLevelConfig> GetOrCreateConfig(IGuild guild) => await GetOrCreateConfig(guild.Id);
 

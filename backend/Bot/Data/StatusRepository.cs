@@ -7,19 +7,12 @@ using System.Diagnostics;
 
 namespace Bot.Data;
 
-public class StatusRepository : Repository, IAddAdminStats
+public class StatusRepository(DiscordBot discordBot, DiscordRest discordRest,
+    BotDatabase context) : Repository(discordRest), IAddAdminStats
 {
-    private readonly BotDatabase _context;
-    private readonly DiscordBot _discordBot;
-    private readonly DiscordRest _discordRest;
-
-    public StatusRepository(DiscordBot discordBot, DiscordRest discordRest,
-        BotDatabase context) : base(discordRest)
-    {
-        _discordBot = discordBot;
-        _discordRest = discordRest;
-        _context = context;
-    }
+    private readonly BotDatabase _context = context;
+    private readonly DiscordBot _discordBot = discordBot;
+    private readonly DiscordRest _discordRest = discordRest;
 
     public async Task AddAdminStatistics(dynamic adminStatus)
     {

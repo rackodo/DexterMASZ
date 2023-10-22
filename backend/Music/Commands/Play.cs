@@ -105,7 +105,7 @@ public class PlayCommand : MusicCommand<PlayCommand>
                     message,
                     TimeSpan.FromMinutes(2));
 
-                List<LavalinkTrack> tracksList = new();
+                List<LavalinkTrack> tracksList = [];
 
                 if (res?.Data?.Values != null)
                 {

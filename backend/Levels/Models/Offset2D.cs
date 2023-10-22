@@ -2,16 +2,10 @@
 
 namespace Levels.Models;
 
-public class Offset2D
+public class Offset2D(int x = 0, int y = 0)
 {
-    public int X;
-    public int Y;
-
-    public Offset2D(int x = 0, int y = 0)
-    {
-        X = x;
-        Y = y;
-    }
+    public int X = x;
+    public int Y = y;
 
     public static implicit operator Point(Offset2D o) => new(o.X, o.Y);
     public static explicit operator Offset2D(Point p) => new(p.X, p.Y);

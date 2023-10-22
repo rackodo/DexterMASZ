@@ -12,23 +12,14 @@ using UserNotes.Models;
 
 namespace UserNotes.Events;
 
-public class UserNoteEventAnnouncer : IEvent
+public class UserNoteEventAnnouncer(DiscordRest discordRest, UserNoteEventHandler eventHandler,
+    ILogger<UserNoteEventAnnouncer> logger, IServiceProvider serviceProvider, DiscordSocketClient client) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly DiscordRest _discordRest;
-    private readonly UserNoteEventHandler _eventHandler;
-    private readonly ILogger<UserNoteEventAnnouncer> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public UserNoteEventAnnouncer(DiscordRest discordRest, UserNoteEventHandler eventHandler,
-        ILogger<UserNoteEventAnnouncer> logger, IServiceProvider serviceProvider, DiscordSocketClient client)
-    {
-        _discordRest = discordRest;
-        _eventHandler = eventHandler;
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _client = client;
-    }
+    private readonly DiscordSocketClient _client = client;
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly UserNoteEventHandler _eventHandler = eventHandler;
+    private readonly ILogger<UserNoteEventAnnouncer> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public void RegisterEvents()
     {

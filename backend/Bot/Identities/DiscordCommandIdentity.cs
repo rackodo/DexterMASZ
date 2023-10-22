@@ -10,7 +10,7 @@ namespace Bot.Identities;
 
 public class DiscordCommandIdentity : Identity
 {
-    private readonly Dictionary<ulong, IGuildUser> _guildMemberships = new();
+    private readonly Dictionary<ulong, IGuildUser> _guildMemberships = [];
 
     public DiscordCommandIdentity(IUser currentUser,
         List<UserGuild> userGuilds, IServiceProvider serviceProvider) : base(currentUser.Id.ToString(), serviceProvider)
@@ -21,8 +21,8 @@ public class DiscordCommandIdentity : Identity
 
     public IGuildUser GetGuildMembership(ulong guildId)
     {
-        if (_guildMemberships.ContainsKey(guildId))
-            return _guildMemberships[guildId];
+        if (_guildMemberships.TryGetValue(guildId, out var value))
+            return value;
 
         if (CurrentUser is null)
             return null;

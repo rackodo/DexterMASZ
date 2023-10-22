@@ -7,21 +7,13 @@ using Microsoft.Extensions.Logging;
 
 namespace Bot.Events;
 
-public class BotEventAnnouncer : IEvent
+public class BotEventAnnouncer(BotEventHandler eventHandler, ILogger<BotEventAnnouncer> logger,
+    IServiceProvider serviceProvider, DiscordSocketClient client) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly BotEventHandler _eventHandler;
-    private readonly ILogger<BotEventAnnouncer> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public BotEventAnnouncer(BotEventHandler eventHandler, ILogger<BotEventAnnouncer> logger,
-        IServiceProvider serviceProvider, DiscordSocketClient client)
-    {
-        _eventHandler = eventHandler;
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _client = client;
-    }
+    private readonly DiscordSocketClient _client = client;
+    private readonly BotEventHandler _eventHandler = eventHandler;
+    private readonly ILogger<BotEventAnnouncer> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public void RegisterEvents() => _eventHandler.OnGuildRegistered += async (a, b) => await AnnounceTipsInNewGuild(a);
 

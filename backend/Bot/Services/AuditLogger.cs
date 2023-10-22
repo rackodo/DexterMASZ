@@ -16,27 +16,16 @@ using System.Text;
 
 namespace Bot.Services;
 
-public class AuditLogger : IHostedService, IEvent
+public class AuditLogger(DiscordSocketClient client, ILogger<AuditLogger> logger,
+    IServiceProvider serviceProvider, BotEventHandler eventHandler) : IHostedService, IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly StringBuilder _currentMessage;
-    private readonly BotEventHandler _eventHandler;
-    private readonly ILogger<AuditLogger> _logger;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly DiscordSocketClient _client = client;
+    private readonly StringBuilder _currentMessage = new();
+    private readonly BotEventHandler _eventHandler = eventHandler;
+    private readonly ILogger<AuditLogger> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
-    private List<Module> _modules;
-
-    public AuditLogger(DiscordSocketClient client, ILogger<AuditLogger> logger,
-        IServiceProvider serviceProvider, BotEventHandler eventHandler)
-    {
-        _client = client;
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _eventHandler = eventHandler;
-
-        _modules = new List<Module>();
-        _currentMessage = new StringBuilder();
-    }
+    private List<Module> _modules = [];
 
     public void RegisterEvents()
     {

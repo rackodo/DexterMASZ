@@ -8,13 +8,8 @@ using Microsoft.Extensions.Logging;
 namespace Bot.Controllers;
 
 [Route("api/v1/enums")]
-public class BotEnumControllers : EnumController<BotEnumTranslator>
+public class BotEnumControllers(Translation translator, ILogger<EnumController<BotEnumTranslator>> logger) : EnumController<BotEnumTranslator>(translator, logger)
 {
-    public BotEnumControllers(Translation translator, ILogger<EnumController<BotEnumTranslator>> logger) :
-        base(translator, logger)
-    {
-    }
-
     [HttpGet("apierror")]
     public async Task<IActionResult> ApiError([FromQuery] Language? language = null) =>
         await TranslateEnum<ApiError>(language);

@@ -2,16 +2,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Bot.Loggers;
 
-public class ConsoleLogger : ILogger
+public class ConsoleLogger(string categoryName) : ILogger
 {
     private const string DNetClientPrefix = "Discord.WebSocket.DiscordSocketClient";
     private const string DNetPrefix = "Discord.";
     private const LogLevel Level = LogLevel.Information;
     private const string DexterPrefix = "Dexter.";
 
-    private string _categoryName;
-
-    public ConsoleLogger(string categoryName) => _categoryName = categoryName;
+    private string _categoryName = categoryName;
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
         Func<TState, Exception, string> formatter)

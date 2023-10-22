@@ -34,7 +34,7 @@ public class PlaylistCommand : MusicCommand<PlaylistCommand>
             return;
         }
 
-        List<LavalinkTrack> postProcessedTracks = new();
+        List<LavalinkTrack> postProcessedTracks = [];
 
         StringBuilder text = new();
         var idx = 0;

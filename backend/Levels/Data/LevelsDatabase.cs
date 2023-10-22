@@ -7,12 +7,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Levels.Data;
 
-public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
+public class LevelsDatabase(DbContextOptions<LevelsDatabase> options) : DataContext<LevelsDatabase>(options), IDataContextCreate
 {
-    public LevelsDatabase(DbContextOptions<LevelsDatabase> options) : base(options)
-    {
-    }
-
     public DbSet<GuildUserLevel> GuildUserLevels { get; set; }
     public DbSet<GuildLevelConfig> GuildLevelConfigs { get; set; }
     public DbSet<UserRankcardConfig> UserRankcardConfigs { get; set; }
@@ -60,18 +56,14 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
         await SaveChangesAsync();
     }
 
-    public GuildUserLevel GetGuildUserLevel(ulong guildid, ulong userid)
-    {
-        if (CheckNullAndReport(GuildUserLevels, "GuildUserLevels"))
-            return null;
-        var token = GuildUserLevel.GenerateToken(guildid, userid);
-        return GuildUserLevels.Find(token);
-    }
+    public GuildUserLevel GetGuildUserLevel(ulong guildid, ulong userid) =>
+        CheckNullAndReport(GuildUserLevels, "GuildUserLevels") ? null :
+        GuildUserLevels.Find(guildid, userid);
 
     public GuildUserLevel[] GetGuildUserLevelByGuild(ulong guildid) =>
         CheckNullAndReport(GuildUserLevels, "GuildUserLevels")
             ? Array.Empty<GuildUserLevel>()
-            : GuildUserLevels.AsQueryable().Where(x => x.GuildId == guildid).ToArray();
+            : [.. GuildUserLevels.AsQueryable().Where(x => x.GuildId == guildid)];
 
     public async Task UpdateGuildUserLevel(GuildUserLevel guildUserLevel)
     {
@@ -147,7 +139,7 @@ public class LevelsDatabase : DataContext<LevelsDatabase>, IDataContextCreate
 
     public GuildLevelConfig[] GetAllGuildLevelConfigs() => CheckNullAndReport(GuildLevelConfigs, "GuildLevelsConfigs")
         ? Array.Empty<GuildLevelConfig>()
-        : GuildLevelConfigs.ToArray();
+        : [.. GuildLevelConfigs];
 
     public async Task UpdateGuildLevelConfig()
     {

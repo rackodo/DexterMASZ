@@ -10,18 +10,11 @@ using System.ComponentModel.DataAnnotations;
 namespace AutoMods.Controllers;
 
 [Route("api/v1/guilds/{guildId}/automods")]
-public class AutoModEventController : AuthenticatedController
+public class AutoModEventController(IdentityManager identityManager, AutoModEventRepository autoModEventRepository,
+    GuildConfigRepository guildConfigRepo) : AuthenticatedController(identityManager, autoModEventRepository, guildConfigRepo)
 {
-    private readonly AutoModEventRepository _autoModEventRepository;
-    private readonly GuildConfigRepository _guildConfigRepo;
-
-    public AutoModEventController(IdentityManager identityManager, AutoModEventRepository autoModEventRepository,
-        GuildConfigRepository guildConfigRepo) :
-        base(identityManager, autoModEventRepository, guildConfigRepo)
-    {
-        _autoModEventRepository = autoModEventRepository;
-        _guildConfigRepo = guildConfigRepo;
-    }
+    private readonly AutoModEventRepository _autoModEventRepository = autoModEventRepository;
+    private readonly GuildConfigRepository _guildConfigRepo = guildConfigRepo;
 
     [HttpGet]
     public async Task<IActionResult> GetAllItems([FromRoute] ulong guildId,

@@ -3,16 +3,9 @@ using Discord;
 
 namespace UserNotes.Models;
 
-public class UserNoteExpanded
+public class UserNoteExpanded(UserNote userNote, IUser user, IUser moderator)
 {
-    public UserNote UserNote { get; set; }
-    public DiscordUser User { get; set; }
-    public DiscordUser Moderator { get; set; }
-
-    public UserNoteExpanded(UserNote userNote, IUser user, IUser moderator)
-    {
-        UserNote = userNote;
-        User = DiscordUser.GetDiscordUser(user);
-        Moderator = DiscordUser.GetDiscordUser(moderator);
-    }
+    public UserNote UserNote { get; set; } = userNote;
+    public DiscordUser User { get; set; } = DiscordUser.GetDiscordUser(user);
+    public DiscordUser Moderator { get; set; } = DiscordUser.GetDiscordUser(moderator);
 }

@@ -10,13 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace AutoMods.Controllers;
 
 [Route("api/v1/guilds/{guildId}/automodconfig")]
-public class AutoModConfigController : AuthenticatedController
+public class AutoModConfigController(IdentityManager identityManager, AutoModConfigRepository autoModConfigRepository) : AuthenticatedController(identityManager, autoModConfigRepository)
 {
-    private readonly AutoModConfigRepository _autoModConfigRepository;
-
-    public AutoModConfigController(IdentityManager identityManager, AutoModConfigRepository autoModConfigRepository) :
-        base(identityManager, autoModConfigRepository) =>
-        _autoModConfigRepository = autoModConfigRepository;
+    private readonly AutoModConfigRepository _autoModConfigRepository = autoModConfigRepository;
 
     [HttpPut]
     public async Task<IActionResult> SetItem([FromRoute] ulong guildId, [FromBody] AutoModConfigForPutDto dto)

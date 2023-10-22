@@ -16,7 +16,7 @@ namespace Levels.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("Levels")
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Levels.Models.GuildLevelConfig", b =>
@@ -89,22 +89,19 @@ namespace Levels.Migrations
 
             modelBuilder.Entity("Levels.Models.GuildUserLevel", b =>
                 {
-                    b.Property<string>("Token")
-                        .HasColumnType("char(22)");
-
                     b.Property<ulong>("GuildId")
+                        .HasColumnType("bigint unsigned");
+
+                    b.Property<ulong>("UserId")
                         .HasColumnType("bigint unsigned");
 
                     b.Property<long>("TextXp")
                         .HasColumnType("bigint");
 
-                    b.Property<ulong>("UserId")
-                        .HasColumnType("bigint unsigned");
-
                     b.Property<long>("VoiceXp")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Token");
+                    b.HasKey("GuildId", "UserId");
 
                     b.ToTable("GuildUserLevels", "Levels");
                 });

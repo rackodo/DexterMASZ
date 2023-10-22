@@ -11,18 +11,11 @@ using Microsoft.Extensions.Logging;
 
 namespace AutoMods.Services;
 
-public class AutoModChecker : IEvent
+public class AutoModChecker(DiscordSocketClient client, ILogger<AutoModChecker> logger, IServiceProvider services) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly ILogger<AutoModChecker> _logger;
-    private readonly IServiceProvider _services;
-
-    public AutoModChecker(DiscordSocketClient client, ILogger<AutoModChecker> logger, IServiceProvider services)
-    {
-        _client = client;
-        _logger = logger;
-        _services = services;
-    }
+    private readonly DiscordSocketClient _client = client;
+    private readonly ILogger<AutoModChecker> _logger = logger;
+    private readonly IServiceProvider _services = services;
 
     public void RegisterEvents()
     {

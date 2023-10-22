@@ -8,17 +8,11 @@ using System.Dynamic;
 namespace Bot.Controllers;
 
 [Route("api/v1/guilds/{guildId}/dashboard")]
-public class GuildDashboardController : AuthenticatedController
+public class GuildDashboardController(IServiceProvider serviceProvider, CachedServices cachedServices,
+    IdentityManager identityManager) : AuthenticatedController(identityManager)
 {
-    private readonly CachedServices _cachedServices;
-    private readonly IServiceProvider _serviceProvider;
-
-    public GuildDashboardController(IServiceProvider serviceProvider, CachedServices cachedServices,
-        IdentityManager identityManager) : base(identityManager)
-    {
-        _serviceProvider = serviceProvider;
-        _cachedServices = cachedServices;
-    }
+    private readonly CachedServices _cachedServices = cachedServices;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     [HttpGet("chart")]
     public async Task<IActionResult> GetCharts([FromRoute] ulong guildId, [FromQuery] long? since = null)
@@ -66,7 +60,7 @@ public class GuildDashboardController : AuthenticatedController
         if (string.IsNullOrWhiteSpace(search))
             return Ok(new List<string>());
 
-        List<IQuickSearchEntry> entries = new();
+        List<IQuickSearchEntry> entries = [];
 
         foreach (var repo in _cachedServices.GetInitializedAuthenticatedClasses<IAddQuickEntrySearch>(_serviceProvider,
                      identity))

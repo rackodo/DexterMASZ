@@ -7,12 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Levels.Controllers;
 
 [Route("api/v1/levels")]
-public class LevelsImageServerController : BaseController
+public class LevelsImageServerController(LevelsImageRepository levelsImageRepository) : BaseController
 {
-    private readonly LevelsImageRepository _levelsImageRepository;
-
-    public LevelsImageServerController(LevelsImageRepository levelsImageRepository) =>
-        _levelsImageRepository = levelsImageRepository;
+    private readonly LevelsImageRepository _levelsImageRepository = levelsImageRepository;
 
     [HttpGet("{userId}/images/{fileName}")]
     public async Task<IActionResult> GetImage([FromRoute] ulong userId, [FromRoute] string fileName)

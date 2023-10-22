@@ -13,31 +13,20 @@ using Timer = System.Timers.Timer;
 
 namespace Bot.Services;
 
-public class ScheduledCacher : IEvent
+public class ScheduledCacher(DiscordRest discordRest, BotEventHandler eventHandler,
+    IdentityManager identityManager, ILogger<ScheduledCacher> logger, CachedServices cachedServices,
+    IServiceProvider serviceProvider, DiscordSocketClient client) : IEvent
 {
     private const int CacheIntervalMinutes = 15;
-    private readonly CachedServices _cachedServices;
-    private readonly DiscordSocketClient _client;
-    private readonly DiscordRest _discordRest;
-    private readonly BotEventHandler _eventHandler;
-    private readonly IdentityManager _identityManager;
-    private readonly ILogger<ScheduledCacher> _logger;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly CachedServices _cachedServices = cachedServices;
+    private readonly DiscordSocketClient _client = client;
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly BotEventHandler _eventHandler = eventHandler;
+    private readonly IdentityManager _identityManager = identityManager;
+    private readonly ILogger<ScheduledCacher> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
     private Timer _eventTimer;
     private DateTime _nextCacheSchedule;
-
-    public ScheduledCacher(DiscordRest discordRest, BotEventHandler eventHandler,
-        IdentityManager identityManager, ILogger<ScheduledCacher> logger, CachedServices cachedServices,
-        IServiceProvider serviceProvider, DiscordSocketClient client)
-    {
-        _discordRest = discordRest;
-        _eventHandler = eventHandler;
-        _identityManager = identityManager;
-        _logger = logger;
-        _cachedServices = cachedServices;
-        _serviceProvider = serviceProvider;
-        _client = client;
-    }
 
     public void RegisterEvents()
     {
@@ -70,7 +59,7 @@ public class ScheduledCacher : IEvent
 
     private async Task HandleGuildRegister(GuildConfig guildConfig, bool importExistingBans)
     {
-        List<ulong> handledUsers = new();
+        List<ulong> handledUsers = [];
 
         await CacheKnownGuild(guildConfig, handledUsers);
 

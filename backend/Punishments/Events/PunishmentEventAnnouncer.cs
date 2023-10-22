@@ -14,24 +14,15 @@ using Punishments.Models;
 
 namespace Punishments.Events;
 
-public class PunishmentEventAnnouncer : IEvent
+public class PunishmentEventAnnouncer(DiscordRest discordRest, PunishmentEventHandler eventHandler,
+    ILogger<PunishmentEventAnnouncer> logger, IServiceProvider serviceProvider,
+    DiscordSocketClient client) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly DiscordRest _discordRest;
-    private readonly PunishmentEventHandler _eventHandler;
-    private readonly ILogger<PunishmentEventAnnouncer> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public PunishmentEventAnnouncer(DiscordRest discordRest, PunishmentEventHandler eventHandler,
-        ILogger<PunishmentEventAnnouncer> logger, IServiceProvider serviceProvider,
-        DiscordSocketClient client)
-    {
-        _discordRest = discordRest;
-        _eventHandler = eventHandler;
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _client = client;
-    }
+    private readonly DiscordSocketClient _client = client;
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly PunishmentEventHandler _eventHandler = eventHandler;
+    private readonly ILogger<PunishmentEventAnnouncer> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public void RegisterEvents()
     {

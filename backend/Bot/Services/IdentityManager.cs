@@ -15,25 +15,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Bot.Services;
 
-public class IdentityManager : IEvent
+public class IdentityManager(BotEventHandler eventHandler, IServiceProvider serviceProvider,
+    ILogger<IdentityManager> logger, DiscordSocketClient client) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly BotEventHandler _eventHandler;
-    private readonly Dictionary<string, Identity> _identities;
-    private readonly ILogger<IdentityManager> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public IdentityManager(BotEventHandler eventHandler, IServiceProvider serviceProvider,
-        ILogger<IdentityManager> logger, DiscordSocketClient client)
-    {
-        _identities = new Dictionary<string, Identity>();
-
-        _eventHandler = eventHandler;
-        _serviceProvider = serviceProvider;
-
-        _logger = logger;
-        _client = client;
-    }
+    private readonly DiscordSocketClient _client = client;
+    private readonly BotEventHandler _eventHandler = eventHandler;
+    private readonly Dictionary<string, Identity> _identities = [];
+    private readonly ILogger<IdentityManager> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public void RegisterEvents() => _client.UserJoined += HandleUserJoined;
 
@@ -78,10 +67,10 @@ public class IdentityManager : IEvent
 
         var key = $"/discord/cmd/{user.Id}";
 
-        if (!_identities.ContainsKey(key))
+        if (!_identities.TryGetValue(key, out var value))
             return await RegisterNewIdentity(user);
 
-        var identity = _identities[key];
+        var identity = value;
 
         if (identity.ValidUntil >= DateTime.UtcNow)
             return identity;
@@ -143,9 +132,9 @@ public class IdentityManager : IEvent
 
         Identity identity;
 
-        if (_identities.ContainsKey(key))
+        if (_identities.TryGetValue(key, out var value))
         {
-            identity = _identities[key];
+            identity = value;
 
             if (identity is null)
                 throw new InvalidIdentityException();

@@ -2,22 +2,12 @@ using MOTDs.Models;
 
 namespace MOTDs.Views;
 
-public class MotdView
+public class MotdView(GuildMotd motd)
 {
-    public int Id { get; set; }
-    public string GuildId { get; set; }
-    public string UserId { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public string Message { get; set; }
-    public bool ShowMotd { get; set; }
-
-    public MotdView(GuildMotd motd)
-    {
-        Id = motd.Id;
-        GuildId = motd.GuildId.ToString();
-        UserId = motd.UserId.ToString();
-        CreatedAt = motd.CreatedAt;
-        Message = motd.Message;
-        ShowMotd = motd.ShowMotd;
-    }
+    public int Id { get; set; } = motd.Id;
+    public string GuildId { get; set; } = motd.GuildId.ToString();
+    public string UserId { get; set; } = motd.UserId.ToString();
+    public DateTime CreatedAt { get; set; } = motd.CreatedAt;
+    public string Message { get; set; } = motd.Message;
+    public bool ShowMotd { get; set; } = motd.ShowMotd;
 }

@@ -15,33 +15,19 @@ using Microsoft.Extensions.Logging;
 
 namespace Bot.Services;
 
-public class DiscordBot : IHostedService, IEvent
+public class DiscordBot(ILogger<DiscordBot> logger, DiscordSocketClient client, InteractionService interactions,
+    IServiceProvider serviceProvider, BotEventHandler eventHandler, CachedServices cachedServices) : IHostedService, IEvent
 {
-    private readonly CachedServices _cachedServices;
-    private readonly DiscordSocketClient _client;
-    private readonly BotEventHandler _eventHandler;
-    private readonly InteractionService _interactions;
-    private readonly ILogger<DiscordBot> _logger;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly CachedServices _cachedServices = cachedServices;
+    private readonly DiscordSocketClient _client = client;
+    private readonly BotEventHandler _eventHandler = eventHandler;
+    private readonly InteractionService _interactions = interactions;
+    private readonly ILogger<DiscordBot> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
-    private bool _firstReady;
-    private bool _isRunning;
-    private DateTime? _lastDisconnect;
-
-    public DiscordBot(ILogger<DiscordBot> logger, DiscordSocketClient client, InteractionService interactions,
-        IServiceProvider serviceProvider, BotEventHandler eventHandler, CachedServices cachedServices)
-    {
-        _logger = logger;
-        _client = client;
-        _interactions = interactions;
-        _serviceProvider = serviceProvider;
-        _eventHandler = eventHandler;
-        _cachedServices = cachedServices;
-
-        _firstReady = true;
-        _isRunning = false;
-        _lastDisconnect = DateTime.UtcNow;
-    }
+    private bool _firstReady = true;
+    private bool _isRunning = false;
+    private DateTime? _lastDisconnect = DateTime.UtcNow;
 
     public void RegisterEvents()
     {

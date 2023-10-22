@@ -4,17 +4,11 @@ using Bot.Services;
 
 namespace Bot.Data;
 
-public class SettingsRepository : Repository
+public class SettingsRepository(BotDatabase botDatabase, AppSettings appSettings,
+    DiscordRest discordRest) : Repository(discordRest)
 {
-    private readonly BotDatabase _botDatabase;
-    private readonly ulong _clientId;
-
-    public SettingsRepository(BotDatabase botDatabase, AppSettings appSettings,
-        DiscordRest discordRest) : base(discordRest)
-    {
-        _botDatabase = botDatabase;
-        _clientId = appSettings.ClientId;
-    }
+    private readonly BotDatabase _botDatabase = botDatabase;
+    private readonly ulong _clientId = appSettings.ClientId;
 
     public async Task<AppSettings> GetAppSettings() => await _botDatabase.GetAppSettings(_clientId);
 

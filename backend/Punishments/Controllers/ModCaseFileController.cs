@@ -11,18 +11,11 @@ using Punishments.Extensions;
 namespace Punishments.Controllers;
 
 [Route("api/v1/guilds/{guildId}/cases/{caseId}/files")]
-public class ModCaseFileController : AuthenticatedController
+public class ModCaseFileController(IdentityManager identityManager, ModCaseFileRepository caseFileRepository,
+    ModCaseRepository modCaseRepository) : AuthenticatedController(identityManager, caseFileRepository, modCaseRepository)
 {
-    private readonly ModCaseFileRepository _caseFileRepository;
-    private readonly ModCaseRepository _modCaseRepository;
-
-    public ModCaseFileController(IdentityManager identityManager, ModCaseFileRepository caseFileRepository,
-        ModCaseRepository modCaseRepository) :
-        base(identityManager, caseFileRepository, modCaseRepository)
-    {
-        _caseFileRepository = caseFileRepository;
-        _modCaseRepository = modCaseRepository;
-    }
+    private readonly ModCaseFileRepository _caseFileRepository = caseFileRepository;
+    private readonly ModCaseRepository _modCaseRepository = modCaseRepository;
 
     [Authorize]
     [HttpDelete("{filename}")]

@@ -16,31 +16,19 @@ using Timer = System.Timers.Timer;
 
 namespace Bot.Services;
 
-public class DiscordRest : IHostedService, IEvent
+public class DiscordRest(ILogger<DiscordRest> logger, IServiceProvider serviceProvider, BotEventHandler eventHandler,
+    DiscordSocketClient client) : IHostedService, IEvent
 {
     private const int DownloadIntervalMinutes = 1;
-    private readonly Dictionary<string, CacheApiResponse> _cache;
-    private readonly DiscordSocketClient _client;
+    private readonly Dictionary<string, CacheApiResponse> _cache = [];
+    private readonly DiscordSocketClient _client = client;
 
-    private readonly DiscordRestClient _discordRestClient;
-    private readonly ConcurrentDictionary<ulong, RestAction> _downloadingUsers;
-    private readonly BotEventHandler _eventHandler;
-    private readonly ILogger<DiscordRest> _logger;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly DiscordRestClient _discordRestClient = new();
+    private readonly ConcurrentDictionary<ulong, RestAction> _downloadingUsers = new();
+    private readonly BotEventHandler _eventHandler = eventHandler;
+    private readonly ILogger<DiscordRest> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
     private Timer _eventTimer;
-
-    public DiscordRest(ILogger<DiscordRest> logger, IServiceProvider serviceProvider, BotEventHandler eventHandler,
-        DiscordSocketClient client)
-    {
-        _logger = logger;
-        _client = client;
-        _serviceProvider = serviceProvider;
-        _eventHandler = eventHandler;
-
-        _discordRestClient = new DiscordRestClient();
-        _cache = new Dictionary<string, CacheApiResponse>();
-        _downloadingUsers = new ConcurrentDictionary<ulong, RestAction>();
-    }
 
     public void RegisterEvents()
     {
@@ -194,7 +182,7 @@ public class DiscordRest : IHostedService, IEvent
         }
         catch (NotFoundInCacheException)
         {
-            return new List<IBan>();
+            return [];
         }
 
         try
@@ -378,7 +366,7 @@ public class DiscordRest : IHostedService, IEvent
         }
         catch (NotFoundInCacheException)
         {
-            return new List<IGuildUser>();
+            return [];
         }
 
         try
@@ -451,7 +439,7 @@ public class DiscordRest : IHostedService, IEvent
         }
         catch (NotFoundInCacheException)
         {
-            return new List<IGuildChannel>();
+            return [];
         }
 
         try
@@ -516,7 +504,7 @@ public class DiscordRest : IHostedService, IEvent
         }
         catch (NotFoundInCacheException)
         {
-            return new List<UserGuild>();
+            return [];
         }
 
         try
@@ -736,11 +724,7 @@ public class DiscordRest : IHostedService, IEvent
 
     public Dictionary<string, CacheApiResponse> GetCache() => _cache;
 
-    public void RemoveFromCache(CacheKey key)
-    {
-        if (_cache.ContainsKey(key.GetValue()))
-            _cache.Remove(key.GetValue());
-    }
+    public void RemoveFromCache(CacheKey key) => _cache.Remove(key.GetValue());
 
     public T GetFromCache<T>(CacheKey key)
         => _cache.ContainsKey(key.GetValue()) ? _cache[key.GetValue()].GetContent<T>()

@@ -7,13 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bot.Controllers;
 
 [Route("api/v1/settings")]
-public class AppSettingsController : AuthenticatedController
+public class AppSettingsController(IdentityManager identityManager, SettingsRepository settingsRepository) : AuthenticatedController(identityManager, settingsRepository)
 {
-    private readonly SettingsRepository _settingsRepository;
-
-    public AppSettingsController(IdentityManager identityManager, SettingsRepository settingsRepository) :
-        base(identityManager, settingsRepository) =>
-        _settingsRepository = settingsRepository;
+    private readonly SettingsRepository _settingsRepository = settingsRepository;
 
     [HttpGet]
     public async Task<IActionResult> GetAppSettings()

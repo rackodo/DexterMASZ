@@ -9,16 +9,10 @@ using System.Text;
 
 namespace Bot.Services;
 
-public class FilesHandler : IDeleteGuildData
+public class FilesHandler(ILogger<FilesHandler> logger, IServiceProvider services) : IDeleteGuildData
 {
-    private readonly ILogger<FilesHandler> _logger;
-    private readonly IServiceProvider _services;
-
-    public FilesHandler(ILogger<FilesHandler> logger, IServiceProvider services)
-    {
-        _logger = logger;
-        _services = services;
-    }
+    private readonly ILogger<FilesHandler> _logger = logger;
+    private readonly IServiceProvider _services = services;
 
     public async Task DeleteGuildData(ulong guildId)
     {

@@ -12,20 +12,12 @@ using Utilities.Dynamics;
 
 namespace Invites.Data;
 
-public class InviteRepository : Repository,
+public class InviteRepository(InviteDatabase userInviteDatabase, InviteEventHandler eventHandler, DiscordRest discordRest) : Repository(discordRest),
     IAddAdminStats, IAddGuildStats, IAddNetworks, IWhoIsResults, IDeleteGuildData
 {
-    private readonly DiscordRest _discordRest;
-    private readonly InviteEventHandler _eventHandler;
-    private readonly InviteDatabase _userInviteDatabase;
-
-    public InviteRepository(InviteDatabase userInviteDatabase, InviteEventHandler eventHandler, DiscordRest discordRest)
-        : base(discordRest)
-    {
-        _userInviteDatabase = userInviteDatabase;
-        _eventHandler = eventHandler;
-        _discordRest = discordRest;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly InviteEventHandler _eventHandler = eventHandler;
+    private readonly InviteDatabase _userInviteDatabase = userInviteDatabase;
 
     public async Task AddAdminStatistics(dynamic adminStats) => adminStats.trackedInvites = await CountInvites();
 

@@ -9,13 +9,9 @@ using PrivateVcs.Models;
 namespace AutoMods.Controllers;
 
 [Route("api/v1/guilds/{guildId}/privatevcconfig")]
-public class PrivateVcConfigController : AuthenticatedController
+public class PrivateVcConfigController(IdentityManager identityManager, PrivateVcConfigRepository privateVcConfigRepository) : AuthenticatedController(identityManager, privateVcConfigRepository)
 {
-    private readonly PrivateVcConfigRepository _privateVcConfigRepository;
-
-    public PrivateVcConfigController(IdentityManager identityManager, PrivateVcConfigRepository privateVcConfigRepository) :
-        base(identityManager, privateVcConfigRepository) =>
-        _privateVcConfigRepository = privateVcConfigRepository;
+    private readonly PrivateVcConfigRepository _privateVcConfigRepository = privateVcConfigRepository;
 
     [HttpPut]
     public async Task<IActionResult> SetConfig([FromRoute] ulong guildId, [FromBody] PrivateVcConfigDto dto)

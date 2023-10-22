@@ -9,11 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Bot.Attributes;
 
-public class RequireAttribute : PreconditionAttribute
+public class RequireAttribute(params RequireCheck[] checks) : PreconditionAttribute
 {
-    private readonly RequireCheck[] _checks;
-
-    public RequireAttribute(params RequireCheck[] checks) => _checks = checks;
+    private readonly RequireCheck[] _checks = checks;
 
     public override async Task<PreconditionResult> CheckRequirementsAsync(IInteractionContext context,
         ICommandInfo commandInfo, IServiceProvider services)

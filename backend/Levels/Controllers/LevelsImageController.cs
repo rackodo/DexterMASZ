@@ -9,19 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace Levels.Controllers;
 
 [Route("api/v1/levels/{userId}/images")]
-public class LevelsImageController : AuthenticatedController
+public class LevelsImageController(IdentityManager identityManager, LevelsImageRepository levelsImageRepository,
+    UserRankcardConfigRepository levelsRankcardRepository) : AuthenticatedController(identityManager, levelsImageRepository, levelsRankcardRepository)
 {
     private const int MaximumFileSize = 10485760; //10 MiB
-    private readonly LevelsImageRepository _levelsImageRepository;
-    private readonly UserRankcardConfigRepository _levelsRankcardRepository;
-
-    public LevelsImageController(IdentityManager identityManager, LevelsImageRepository levelsImageRepository,
-        UserRankcardConfigRepository levelsRankcardRepository) :
-        base(identityManager, levelsImageRepository, levelsRankcardRepository)
-    {
-        _levelsImageRepository = levelsImageRepository;
-        _levelsRankcardRepository = levelsRankcardRepository;
-    }
+    private readonly LevelsImageRepository _levelsImageRepository = levelsImageRepository;
+    private readonly UserRankcardConfigRepository _levelsRankcardRepository = levelsRankcardRepository;
 
     [HttpDelete("{fileName}")]
     public async Task<IActionResult> DeleteImage([FromRoute] ulong userId, [FromRoute] string fileName)

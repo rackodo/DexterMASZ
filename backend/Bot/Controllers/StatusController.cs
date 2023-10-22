@@ -7,11 +7,9 @@ using System.Globalization;
 namespace Bot.Controllers;
 
 [Route("api/v1")]
-public class StatusController : BaseController
+public class StatusController(SettingsRepository settingsRepository) : BaseController
 {
-    private readonly SettingsRepository _settingsRepository;
-
-    public StatusController(SettingsRepository settingsRepository) => _settingsRepository = settingsRepository;
+    private readonly SettingsRepository _settingsRepository = settingsRepository;
 
     [HttpGet("status")]
     [HttpGet("health")]
@@ -21,9 +19,9 @@ public class StatusController : BaseController
     {
         var config = await _settingsRepository.GetAppSettings();
 
-        if (!HttpContext.Request.Headers.ContainsKey("Accept")) return Ok("OK");
+        if (!HttpContext.Request.Headers.TryGetValue("Accept", out var value)) return Ok("OK");
 
-        return HttpContext.Request.Headers["Accept"].ToString().Search("application/json")
+        return value.ToString().Search("application/json")
             ? Ok(new
             {
                 status = "OK",

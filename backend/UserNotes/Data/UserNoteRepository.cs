@@ -13,20 +13,13 @@ using Utilities.Dynamics;
 
 namespace UserNotes.Data;
 
-public class UserNoteRepository : Repository,
+public class UserNoteRepository(DiscordRest discordRest, UserNoteDatabase userNoteDatabase,
+    UserNoteEventHandler eventHandler) : Repository(discordRest),
     IAddAdminStats, IAddGuildStats, IAddSearch, IAddNetworks, IWhoIsResults, IDeleteGuildData
 {
-    private readonly DiscordRest _discordRest;
-    private readonly UserNoteEventHandler _eventHandler;
-    private readonly UserNoteDatabase _userNoteDatabase;
-
-    public UserNoteRepository(DiscordRest discordRest, UserNoteDatabase userNoteDatabase,
-        UserNoteEventHandler eventHandler) : base(discordRest)
-    {
-        _userNoteDatabase = userNoteDatabase;
-        _discordRest = discordRest;
-        _eventHandler = eventHandler;
-    }
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly UserNoteEventHandler _eventHandler = eventHandler;
+    private readonly UserNoteDatabase _userNoteDatabase = userNoteDatabase;
 
     public async Task AddAdminStatistics(dynamic adminStats) => adminStats.userNotes = await CountUserNotes();
 

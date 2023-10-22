@@ -10,13 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace GuildAudits.Controllers;
 
 [Route("api/v1/guilds/{guildId}/auditlog")]
-public class GuildAuditConfigController : AuthenticatedController
+public class GuildAuditConfigController(IdentityManager identityManager, GuildAuditConfigRepository guildAuditRepo) : AuthenticatedController(identityManager, guildAuditRepo)
 {
-    private readonly GuildAuditConfigRepository _guildAuditRepo;
-
-    public GuildAuditConfigController(IdentityManager identityManager, GuildAuditConfigRepository guildAuditRepo) :
-        base(identityManager, guildAuditRepo) =>
-        _guildAuditRepo = guildAuditRepo;
+    private readonly GuildAuditConfigRepository _guildAuditRepo = guildAuditRepo;
 
     [HttpPut]
     public async Task<IActionResult> SetItem([FromRoute] ulong guildId, [FromBody] GuildAuditConfigForPutDto dto)

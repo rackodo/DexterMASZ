@@ -88,7 +88,7 @@ public static class Rankcard
         Font fontDefault = new(fontfamily, 40);
         Font fontMini = new(fontfamily, 22);
 
-        List<RankcardLevelData> levelsData = new();
+        List<RankcardLevelData> levelsData = [];
         int totallevel;
         var totalxp = ul.TotalXp;
 
@@ -213,7 +213,7 @@ public static class Rankcard
             }
             catch (HttpRequestException)
             {
-                pfpTransform = g => g.Draw(new Pen(xpColor, 5),
+                pfpTransform = g => g.Draw(new SolidPen(xpColor, 5),
                     new EllipsePolygon(rectPfp.Left, rectPfp.Top, rectPfp.Width, rectPfp.Height));
             }
         }
@@ -224,7 +224,7 @@ public static class Rankcard
         Image result = new Image<Rgba32>(RankCardSize.Width, RankCardSize.Height);
         result.Mutate(g =>
         {
-            var offset = TextMeasurer.Measure(totallevel.ToString(), new TextOptions(fontTitle));
+            var offset = TextMeasurer.MeasureBounds(totallevel.ToString(), new TextOptions(fontTitle));
             const int margin = 5;
 
             g = bgTransform(g);
@@ -392,22 +392,16 @@ public static class Rankcard
         }
     }
 
-    internal class RankcardLevelData : LevelData
+    internal class RankcardLevelData(long xp, LevelRect rects, GuildLevelConfig guildConfig, bool isHybrid = false) : LevelData(
+        xp, guildConfig)
     {
-        public bool IsHybrid;
+        public bool IsHybrid = isHybrid;
 
         public int Rank;
 
-        public LevelRect Rects;
+        public LevelRect Rects = rects;
         public string XpType = "";
         public float Percent => ResidualXp / (float)LevelXp;
         public string XpExpr => $"{ResidualXp.ToUnit()} / {LevelXp.ToUnit()}{(IsHybrid ? "" : " XP")}";
-
-        public RankcardLevelData(long xp, LevelRect rects, GuildLevelConfig guildConfig, bool isHybrid = false) : base(
-            xp, guildConfig)
-        {
-            Rects = rects;
-            IsHybrid = isHybrid;
-        }
     }
 }

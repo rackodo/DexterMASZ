@@ -13,29 +13,18 @@ using Timer = System.Timers.Timer;
 
 namespace Levels.Services;
 
-public class LevelingService : IEvent
+public class LevelingService(DiscordSocketClient client, ILogger<LevelingService> logger, IServiceProvider services,
+    BotEventHandler botEventHandler,
+    LevelsEventHandler eventHandler) : IEvent
 {
-    private readonly BotEventHandler _botEventHandler;
-    private readonly DiscordSocketClient _client;
-    private readonly LevelsEventHandler _eventHandler;
-    private readonly Dictionary<ulong, GuildCooldowns> _guildCooldowns = new();
-    private readonly ILogger<LevelingService> _logger;
+    private readonly BotEventHandler _botEventHandler = botEventHandler;
+    private readonly DiscordSocketClient _client = client;
+    private readonly LevelsEventHandler _eventHandler = eventHandler;
+    private readonly Dictionary<ulong, GuildCooldowns> _guildCooldowns = [];
+    private readonly ILogger<LevelingService> _logger = logger;
 
-    private readonly Random _random;
-    private readonly IServiceProvider _serviceProvider;
-
-    public LevelingService(DiscordSocketClient client, ILogger<LevelingService> logger, IServiceProvider services,
-        BotEventHandler botEventHandler,
-        LevelsEventHandler eventHandler)
-    {
-        _client = client;
-        _logger = logger;
-        _serviceProvider = services;
-        _botEventHandler = botEventHandler;
-        _eventHandler = eventHandler;
-
-        _random = new Random();
-    }
+    private readonly Random _random = new();
+    private readonly IServiceProvider _serviceProvider = services;
 
     public void RegisterEvents()
     {
@@ -146,14 +135,14 @@ public class LevelingService : IEvent
 
             Task.WaitAll(guildUser.AddRolesAsync(toAdd), guildUser.RemoveRolesAsync(toRemove));
 
-            var stringify = (IEnumerable<ulong> list) =>
+            string stringify(IEnumerable<ulong> list)
             {
                 var cnt = list.Count();
                 var result = $"{cnt} role{(cnt == 1 ? "" : "s")}";
                 if (cnt > 0)
                     result += " (" + string.Join(", ", list.Select(r => guildUser.Guild.GetRole(r).Name)) + ")";
                 return result;
-            };
+            }
 
             return new UpdatedUser { AddedRoles = stringify(toAdd), RemovedRoles = stringify(toRemove) };
         }
@@ -194,10 +183,10 @@ public class LevelingService : IEvent
             return;
 
         var guild = guildChannel.Guild;
-        if (!_guildCooldowns.ContainsKey(guild.Id))
+        if (!_guildCooldowns.TryGetValue(guild.Id, out var value))
             return;
 
-        var gcds = _guildCooldowns[guild.Id];
+        var gcds = value;
         if (gcds.TextUsers.Contains(message.Author.Id))
             return;
 
@@ -247,7 +236,7 @@ public class LevelingService : IEvent
                 if (config.DisabledXpChannels.Contains(vchannel.Id)) continue;
 
                 var nonbotusers = 0;
-                List<IGuildUser> toLevel = new();
+                List<IGuildUser> toLevel = [];
                 foreach (IGuildUser uservc in vchannel.ConnectedUsers)
                 {
                     // CHECK IF USER IS RESTRICTED ON VOICE XP
@@ -282,17 +271,17 @@ public class LevelingService : IEvent
 
     private Task HandleGuildConfigChanged(GuildLevelConfig guildLevelConfig)
     {
-        if (!_guildCooldowns.ContainsKey(guildLevelConfig.Id))
+        if (!_guildCooldowns.TryGetValue(guildLevelConfig.Id, out var value))
         {
             _guildCooldowns.Add(guildLevelConfig.Id,
                 new GuildCooldowns(guildLevelConfig.Id, guildLevelConfig.XpInterval));
         }
         else
         {
-            var gcds = _guildCooldowns[guildLevelConfig.Id];
+            var gcds = value;
             if (gcds.RefreshInterval == guildLevelConfig.XpInterval) return Task.CompletedTask;
             gcds.RefreshInterval = guildLevelConfig.XpInterval;
-            _guildCooldowns[guildLevelConfig.Id].NextRefresh =
+            value.NextRefresh =
                 DateTimeOffset.Now.ToUnixTimeSeconds() + gcds.RefreshInterval;
         }
 
@@ -301,25 +290,15 @@ public class LevelingService : IEvent
 
     private Task HandleGuildConfigDeleted(GuildLevelConfig guildLevelConfig)
     {
-        if (_guildCooldowns.ContainsKey(guildLevelConfig.Id))
-            _guildCooldowns.Remove(guildLevelConfig.Id);
+        _guildCooldowns.Remove(guildLevelConfig.Id);
         return Task.CompletedTask;
     }
 
-    private class GuildCooldowns
+    private class GuildCooldowns(ulong guildId, int refreshInterval)
     {
-        public readonly ulong GuildId;
-        public readonly HashSet<ulong> TextUsers;
-        public long NextRefresh;
-        public int RefreshInterval;
-
-        public GuildCooldowns(ulong guildId, int refreshInterval)
-        {
-            GuildId = guildId;
-            RefreshInterval = refreshInterval;
-
-            NextRefresh = DateTimeOffset.Now.ToUnixTimeSeconds() + refreshInterval;
-            TextUsers = new HashSet<ulong>();
-        }
+        public readonly ulong GuildId = guildId;
+        public readonly HashSet<ulong> TextUsers = [];
+        public long NextRefresh = DateTimeOffset.Now.ToUnixTimeSeconds() + refreshInterval;
+        public int RefreshInterval = refreshInterval;
     }
 }

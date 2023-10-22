@@ -10,19 +10,13 @@ using Punishments.Models;
 
 namespace Punishments.Data;
 
-public class ModCaseTemplateRepository : Repository, IDeleteGuildData
+public class ModCaseTemplateRepository(PunishmentDatabase punishmentDatabase, PunishmentEventHandler eventHandler,
+    DiscordRest discordRest) : Repository(discordRest), IDeleteGuildData
 {
     private const int MaxAllowedModCaseTemplatesPerUser = 20;
-    private readonly PunishmentEventHandler _eventHandler;
+    private readonly PunishmentEventHandler _eventHandler = eventHandler;
 
-    private readonly PunishmentDatabase _punishmentDatabase;
-
-    public ModCaseTemplateRepository(PunishmentDatabase punishmentDatabase, PunishmentEventHandler eventHandler,
-        DiscordRest discordRest) : base(discordRest)
-    {
-        _punishmentDatabase = punishmentDatabase;
-        _eventHandler = eventHandler;
-    }
+    private readonly PunishmentDatabase _punishmentDatabase = punishmentDatabase;
 
     public async Task DeleteGuildData(ulong guildId) => await _punishmentDatabase.DeleteAllTemplatesForGuild(guildId);
 
@@ -60,7 +54,7 @@ public class ModCaseTemplateRepository : Repository, IDeleteGuildData
     public async Task<List<ModCaseTemplate>> GetTemplatesBasedOnPermissions(Identity identity)
     {
         var templates = await _punishmentDatabase.GetAllModCaseTemplates();
-        List<ModCaseTemplate> filteredTemplates = new();
+        List<ModCaseTemplate> filteredTemplates = [];
 
         foreach (var template in templates)
         {

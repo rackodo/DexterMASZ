@@ -4,43 +4,23 @@ using Messaging.Enums;
 
 namespace Messaging.Models;
 
-public class ScheduledMessageExtended
+public class ScheduledMessageExtended(ScheduledMessage message, IUser creator, IUser lastEdited,
+    IGuildChannel channel = null)
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Content { get; set; }
-    public DateTime ScheduledFor { get; set; }
-    public ScheduledMessageStatus Status { get; set; }
-    public ulong GuildId { get; set; }
-    public ulong ChannelId { get; set; }
-    public ulong CreatorId { get; set; }
-    public ulong LastEditedById { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime LastEditedAt { get; set; }
-    public ScheduledMessageFailureReason? FailureReason { get; set; }
+    public int Id { get; set; } = message.Id;
+    public string Name { get; set; } = message.Name;
+    public string Content { get; set; } = message.Content;
+    public DateTime ScheduledFor { get; set; } = message.ScheduledFor;
+    public ScheduledMessageStatus Status { get; set; } = message.Status;
+    public ulong GuildId { get; set; } = message.GuildId;
+    public ulong ChannelId { get; set; } = message.ChannelId;
+    public ulong CreatorId { get; set; } = message.CreatorId;
+    public ulong LastEditedById { get; set; } = message.LastEditedById;
+    public DateTime CreatedAt { get; set; } = message.CreatedAt;
+    public DateTime LastEditedAt { get; set; } = message.LastEditedAt;
+    public ScheduledMessageFailureReason? FailureReason { get; set; } = message.FailureReason;
 
-    public DiscordUser Creator { get; set; }
-    public DiscordUser LastEdited { get; set; }
-    public DiscordChannel Channel { get; set; }
-
-    public ScheduledMessageExtended(ScheduledMessage message, IUser creator, IUser lastEdited,
-        IGuildChannel channel = null)
-    {
-        Id = message.Id;
-        Name = message.Name;
-        Content = message.Content;
-        ScheduledFor = message.ScheduledFor;
-        Status = message.Status;
-        GuildId = message.GuildId;
-        ChannelId = message.ChannelId;
-        CreatorId = message.CreatorId;
-        LastEditedById = message.LastEditedById;
-        CreatedAt = message.CreatedAt;
-        LastEditedAt = message.LastEditedAt;
-        FailureReason = message.FailureReason;
-
-        Creator = DiscordUser.GetDiscordUser(creator);
-        LastEdited = DiscordUser.GetDiscordUser(lastEdited);
-        Channel = DiscordChannel.GetDiscordChannel(channel);
-    }
+    public DiscordUser Creator { get; set; } = DiscordUser.GetDiscordUser(creator);
+    public DiscordUser LastEdited { get; set; } = DiscordUser.GetDiscordUser(lastEdited);
+    public DiscordChannel Channel { get; set; } = DiscordChannel.GetDiscordChannel(channel);
 }

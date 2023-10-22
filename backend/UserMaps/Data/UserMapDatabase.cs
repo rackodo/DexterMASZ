@@ -5,13 +5,9 @@ using UserMaps.Models;
 
 namespace UserMaps.Data;
 
-public class UserMapDatabase : DataContext<UserMapDatabase>, IDataContextCreate
+public class UserMapDatabase(DbContextOptions<UserMapDatabase> options) : DataContext<UserMapDatabase>(options), IDataContextCreate
 {
     public DbSet<UserMap> UserMaps { get; set; }
-
-    public UserMapDatabase(DbContextOptions<UserMapDatabase> options) : base(options)
-    {
-    }
 
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
         IServiceCollection serviceCollection) =>

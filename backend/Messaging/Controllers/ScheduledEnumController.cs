@@ -9,13 +9,8 @@ using Microsoft.Extensions.Logging;
 namespace Messaging.Controllers;
 
 [Route("api/v1/enums")]
-public class ScheduledEnumController : EnumController<MessagingEnumTranslator>
+public class ScheduledEnumController(Translation translator, ILogger<EnumController<MessagingEnumTranslator>> logger) : EnumController<MessagingEnumTranslator>(translator, logger)
 {
-    public ScheduledEnumController(Translation translator, ILogger<EnumController<MessagingEnumTranslator>> logger) :
-        base(translator, logger)
-    {
-    }
-
     [HttpGet("scheduledmessagefailurereason")]
     public async Task<IActionResult> FailureReason([FromQuery] Language? language = null) =>
         await TranslateEnum<ScheduledMessageFailureReason>(language);

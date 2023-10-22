@@ -5,17 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Bot.Data;
 
-public class BotDatabase : DataContext<BotDatabase>, IDataContextCreate
+public class BotDatabase(DbContextOptions<BotDatabase> options) : DataContext<BotDatabase>(options), IDataContextCreate
 {
     private DbSet<AppSettings> AppSettings { get; set; }
 
     public DbSet<GuildConfig> GuildConfigs { get; set; }
 
     public DbSet<LeftUser> LeftUsers { get; set; }
-
-    public BotDatabase(DbContextOptions<BotDatabase> options) : base(options)
-    {
-    }
 
     public static void AddContextToServiceProvider(Action<DbContextOptionsBuilder> optionsAction,
         IServiceCollection serviceCollection) =>

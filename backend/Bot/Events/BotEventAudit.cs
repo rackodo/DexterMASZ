@@ -7,18 +7,11 @@ using Bot.Services;
 
 namespace Bot.Events;
 
-public class BotEventAudit : IEvent
+public class BotEventAudit(AuditLogger auditLogger, DiscordRest discordRest, BotEventHandler eventHandler) : IEvent
 {
-    private readonly AuditLogger _auditLogger;
-    private readonly DiscordRest _discordRest;
-    private readonly BotEventHandler _eventHandler;
-
-    public BotEventAudit(AuditLogger auditLogger, DiscordRest discordRest, BotEventHandler eventHandler)
-    {
-        _auditLogger = auditLogger;
-        _discordRest = discordRest;
-        _eventHandler = eventHandler;
-    }
+    private readonly AuditLogger _auditLogger = auditLogger;
+    private readonly DiscordRest _discordRest = discordRest;
+    private readonly BotEventHandler _eventHandler = eventHandler;
 
     public void RegisterEvents()
     {

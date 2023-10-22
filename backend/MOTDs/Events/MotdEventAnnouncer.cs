@@ -11,21 +11,13 @@ using MOTDs.Models;
 
 namespace MOTDs.Events;
 
-public class MotdEventAnnouncer : IEvent
+public class MotdEventAnnouncer(MotdEventHandler eventHandler, ILogger<MotdEventAnnouncer> logger,
+    IServiceProvider serviceProvider, DiscordSocketClient client) : IEvent
 {
-    private readonly DiscordSocketClient _client;
-    private readonly MotdEventHandler _eventHandler;
-    private readonly ILogger<MotdEventAnnouncer> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public MotdEventAnnouncer(MotdEventHandler eventHandler, ILogger<MotdEventAnnouncer> logger,
-        IServiceProvider serviceProvider, DiscordSocketClient client)
-    {
-        _eventHandler = eventHandler;
-        _logger = logger;
-        _serviceProvider = serviceProvider;
-        _client = client;
-    }
+    private readonly DiscordSocketClient _client = client;
+    private readonly MotdEventHandler _eventHandler = eventHandler;
+    private readonly ILogger<MotdEventAnnouncer> _logger = logger;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public void RegisterEvents()
     {

@@ -11,18 +11,11 @@ using Punishments.Extensions;
 namespace Punishments.Controllers;
 
 [Route("api/v1/guilds/{guildId}/cases/{caseId}/comments")]
-public class ModCaseCommentsController : AuthenticatedController
+public class ModCaseCommentsController(IdentityManager identityManager, ModCaseRepository modCaseRepository,
+    ModCaseCommentRepository modCaseCommentRepository) : AuthenticatedController(identityManager, modCaseRepository, modCaseCommentRepository)
 {
-    private readonly ModCaseCommentRepository _modCaseCommentRepository;
-    private readonly ModCaseRepository _modCaseRepository;
-
-    public ModCaseCommentsController(IdentityManager identityManager, ModCaseRepository modCaseRepository,
-        ModCaseCommentRepository modCaseCommentRepository) :
-        base(identityManager, modCaseRepository, modCaseCommentRepository)
-    {
-        _modCaseRepository = modCaseRepository;
-        _modCaseCommentRepository = modCaseCommentRepository;
-    }
+    private readonly ModCaseCommentRepository _modCaseCommentRepository = modCaseCommentRepository;
+    private readonly ModCaseRepository _modCaseRepository = modCaseRepository;
 
     [HttpPost]
     public async Task<IActionResult> CreateItem([FromRoute] ulong guildId, [FromRoute] int caseId,
