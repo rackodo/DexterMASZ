@@ -96,7 +96,8 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
                         var intRole = Context.Guild.GetRole(col.Key);
 
-                        aRow.WithButton(intRole.Name, $"add-rm-role:{intRole.Id},{Context.User.Id}", emote: intEmote);
+                        if (intRole != null)
+                            aRow.WithButton(intRole.Name, $"add-rm-role:{intRole.Id},{Context.User.Id}", emote: intEmote);
                     }
 
                     components.AddRow(aRow);
@@ -130,6 +131,10 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         var userId = ulong.Parse(sUserId);
         var roleId = ulong.Parse(sRoleId);
 
+        Console.WriteLine(sRoleId + " " + sUserId);
+
+        Console.WriteLine(userId + " " + roleId);
+
         var user = Context.Guild.GetUser(userId);
         var userRole = user.Roles.FirstOrDefault(r => r.Id == roleId);
 
@@ -157,8 +162,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 .WithDescription($"{userRole.Mention} has been removed from {user.Mention}!")
                 .WithCurrentTimestamp();
 
-            if (userInfo.RoleIds.Contains(roleId))
-                userInfo.RoleIds.Remove(roleId);
+            userInfo.RoleIds.Remove(roleId);
 
             await RespondAsync(embed: embed.Build(), ephemeral: true);
         }
