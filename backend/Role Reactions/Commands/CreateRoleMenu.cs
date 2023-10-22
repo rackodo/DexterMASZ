@@ -6,7 +6,6 @@ using Discord.Interactions;
 using RoleReactions.Abstractions;
 using RoleReactions.Data;
 using RoleReactions.Models;
-using System.Runtime.InteropServices;
 
 namespace RoleReactions.Commands;
 
@@ -54,7 +53,8 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
                     GuildId = channel.GuildId,
                     MenuName = title,
                     MessageId = msg.Id,
-                    Roles = new Dictionary<string, ulong>()
+                    Roles = new Dictionary<string, ulong>(),
+                    Emotes = new Dictionary<string, string>()
                 }
             );
 

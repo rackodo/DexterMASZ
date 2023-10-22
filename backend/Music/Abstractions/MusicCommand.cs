@@ -1,5 +1,4 @@
 ﻿using Bot.Abstractions;
-using Discord.Interactions;
 using Discord.WebSocket;
 using Lavalink4NET;
 using Lavalink4NET.Player;

@@ -16,7 +16,7 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
     [SlashCommand("remove-rm-role", "Removes a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task RemoveAssignedRoleCommand(string menuName, string roleName,
+    public async Task RemoveAssignedRoleCommand(string menuName, IRole role,
         [Optional] ITextChannel channel)
     {
         if (channel == null)
@@ -33,9 +33,11 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
                 return;
             }
 
-            if (!menu.Roles.ContainsKey(roleName))
+            var name = role.Name;
+
+            if (!menu.Roles.ContainsKey(name))
             {
-                await RespondInteraction($"Role `{roleName}` does not exist for role menu `{menuName}`!");
+                await RespondInteraction($"Role `{name}` does not exist for role menu `{menuName}`!");
                 return;
             }
 
@@ -55,7 +57,7 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
                 foreach (var storeRole in menu.Roles)
                 {
-                    if (storeRole.Key == roleName)
+                    if (storeRole.Key == name)
                         continue;
 
                     tempComp.Add(new AssignedRole()
@@ -92,12 +94,12 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
                 await userMessage.ModifyAsync(m => m.Components = components.Build());
 
-                menu.Roles.Remove(roleName);
-                menu.Emotes.Remove(roleName);
+                menu.Roles.Remove(name);
+                menu.Emotes.Remove(name);
 
                 await Database.SaveChangesAsync();
 
-                await RespondInteraction($"Successfully removed role `{roleName}` from menu `{menuName}`!");
+                await RespondInteraction($"Successfully removed role `{name}` from menu `{menuName}`!");
             }
             else
             {

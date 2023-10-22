@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
-using System.Runtime.Serialization;
 
 namespace Bot.Abstractions;
 

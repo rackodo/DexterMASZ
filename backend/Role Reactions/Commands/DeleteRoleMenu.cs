@@ -5,7 +5,6 @@ using Discord;
 using Discord.Interactions;
 using RoleReactions.Abstractions;
 using RoleReactions.Data;
-using System.Runtime.InteropServices;
 
 namespace RoleReactions.Commands;
 

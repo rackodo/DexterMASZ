@@ -1,5 +1,4 @@
 ﻿using Bot.Abstractions;
-using Discord.Interactions;
 
 namespace RoleReactions.Abstractions;
 

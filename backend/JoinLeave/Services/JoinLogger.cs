@@ -1,10 +1,8 @@
 ﻿using Bot.Abstractions;
-using Bot.Services;
 using Discord;
 using Discord.WebSocket;
 using JoinLeave.Data;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace JoinLeave.Services;
 

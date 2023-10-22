@@ -6,7 +6,6 @@ using Discord.Interactions;
 using RoleReactions.Abstractions;
 using RoleReactions.Data;
 using RoleReactions.Models;
-using System.Runtime.InteropServices;
 
 namespace RoleReactions.Commands;
 
@@ -14,10 +13,10 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 {
     public RoleReactionsDatabase Database { get; set; }
 
-    [SlashCommand("assign-rm-role", "Assigns a role to a role menu")]
+    [SlashCommand("add-rm-role", "Assigns a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task AddAssignedRoleCommand(string emote, string menuName, IRole role,
-        string name, ITextChannel channel = null)
+    public async Task AddAssignedRoleCommand(string emote, string menuName,
+        IRole role, ITextChannel channel = null)
     {
         if (channel == null)
             if (Context.Channel is ITextChannel txtChannel)
@@ -32,6 +31,8 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 await RespondInteraction($"Role menu `{menuName}` does not exist in this channel!");
                 return;
             }
+
+            var name = role.Name;
 
             if (menu.Roles.ContainsKey(name))
             {
@@ -150,7 +151,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
             {
                 GuildId = Context.Guild.Id,
                 UserId = userId,
-                RoleIds = new List<ulong>()
+                RoleIds = new List<ulong>(),
             };
 
             Database.UserRoles.Add(userInfo);
