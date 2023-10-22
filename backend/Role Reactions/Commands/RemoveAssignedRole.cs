@@ -78,6 +78,9 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
                         if (Emote.TryParse(col.Value, out var pEmote))
                             intEmote = pEmote;
 
+                        if (Emoji.TryParse(col.Value, out var pEmoji))
+                            intEmote = pEmoji;
+
                         var intRole = Context.Guild.GetRole(col.Key);
 
                         if (intRole != null)
