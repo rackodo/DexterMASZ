@@ -112,7 +112,9 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
                 await userMessage.ModifyAsync(m => m.Components = components.Build());
 
-                menu.RoleToEmote.Add(role.Id, emote);
+                var oldRoles = menu.RoleToEmote;
+                oldRoles.Add(role.Id, emote);
+                menu.RoleToEmote = oldRoles;
 
                 await Database.SaveChangesAsync();
 

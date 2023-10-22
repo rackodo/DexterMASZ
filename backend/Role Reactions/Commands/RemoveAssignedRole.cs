@@ -93,7 +93,9 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
                 await userMessage.ModifyAsync(m => m.Components = components.Build());
 
-                menu.RoleToEmote.Remove(role.Id);
+                var oldRoles = menu.RoleToEmote;
+                oldRoles.Remove(role.Id);
+                menu.RoleToEmote = oldRoles;
 
                 await Database.SaveChangesAsync();
 
