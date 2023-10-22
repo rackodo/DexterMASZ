@@ -163,6 +163,8 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         var embed = new EmbedBuilder()
                 .WithCurrentTimestamp();
 
+        var oldRoles = userInfo.RoleIds;
+
         if (user.Roles.Any(r => r.Id == role.Id))
         {
             await user.RemoveRoleAsync(role);
@@ -172,20 +174,22 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 .WithTitle("Removed Role")
                 .WithDescription($"{role.Mention} has been removed from {user.Mention}!");
 
-            userInfo.RoleIds.Remove(roleId);
+            oldRoles.Remove(roleId);
         }
         else
         {
             await user.AddRoleAsync(role);
 
-            if (!userInfo.RoleIds.Contains(roleId))
-                userInfo.RoleIds.Add(roleId);
+            if (!oldRoles.Contains(roleId))
+                oldRoles.Add(roleId);
 
             embed
                 .WithColor(Color.Green)
                 .WithTitle("Added Role")
                 .WithDescription($"{role.Mention} has been added to {user.Mention}!");
         }
+
+        userInfo.RoleIds = oldRoles;
 
         await Database.SaveChangesAsync();
 
