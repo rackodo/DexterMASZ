@@ -115,11 +115,9 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
                 await userMessage.ModifyAsync(m => m.Components = components.Build());
 
-                var oldRoles = menu.RoleToEmote.ToDictionary(entry => entry.Key, entry => entry.Value);
-                oldRoles.Add(role.Id, emote);
-                menu.RoleToEmote = oldRoles;
+                menu.RoleToEmote.Add(role.Id, emote);
 
-                Database.SaveChanges();
+                await Database.SaveChangesAsync();
 
                 await RespondInteraction($"Successfully added role `{role.Name}` to menu `{menu.Name}`!");
             }
@@ -166,8 +164,6 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         var embed = new EmbedBuilder()
                 .WithCurrentTimestamp();
 
-        var oldRoles = userInfo.RoleIds.ToList();
-
         if (user.Roles.Any(r => r.Id == role.Id))
         {
             await user.RemoveRoleAsync(role);
@@ -177,14 +173,14 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 .WithTitle("Removed Role")
                 .WithDescription($"{role.Mention} has been removed from {user.Mention}!");
 
-            oldRoles.Remove(roleId);
+            userInfo.RoleIds.Remove(roleId);
         }
         else
         {
             await user.AddRoleAsync(role);
 
-            if (!oldRoles.Contains(roleId))
-                oldRoles.Add(roleId);
+            if (!userInfo.RoleIds.Contains(roleId))
+                userInfo.RoleIds.Add(roleId);
 
             embed
                 .WithColor(Color.Green)
@@ -192,9 +188,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 .WithDescription($"{role.Mention} has been added to {user.Mention}!");
         }
 
-        userInfo.RoleIds = oldRoles;
-
-        Database.SaveChanges();
+        await Database.SaveChangesAsync();
 
         await FollowupAsync(embed: embed.Build(), ephemeral: true);
     }

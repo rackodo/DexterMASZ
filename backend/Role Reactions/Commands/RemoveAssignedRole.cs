@@ -37,11 +37,8 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
                 return;
             }
 
-            var oldRoles = menu.RoleToEmote.ToDictionary(entry => entry.Key, entry => entry.Value);
-            oldRoles.Remove(role.Id);
-            menu.RoleToEmote = oldRoles;
-
-            Database.SaveChanges();
+            menu.RoleToEmote.Remove(role.Id);
+            await Database.SaveChangesAsync();
 
             var message = await channel.GetMessageAsync(menu.MessageId);
 

@@ -32,10 +32,20 @@ public class DictionaryDataComparer<TKey, TValue> : ValueComparer<Dictionary<TKe
     private static bool AreDictionariesEqual(Dictionary<TKey, TValue> d1, Dictionary<TKey, TValue> d2)
     {
         if (d1.Keys.Except(d2.Keys).Any()) return false;
+        if (d2.Keys.Except(d1.Keys).Any()) return false;
+
+        if (d1.Count != d2.Count)
+            return false;
+
+        foreach (var kvp in d2)
+        {
+            if (!kvp.Value.Equals(d1[kvp.Key]))
+                return false;
+        }
 
         foreach (var kvp in d1)
         {
-            if (!kvp.Value.Equals(d1[kvp.Key]))
+            if (!kvp.Value.Equals(d2[kvp.Key]))
                 return false;
         }
 
