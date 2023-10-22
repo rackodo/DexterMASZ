@@ -2,7 +2,6 @@
 using Discord;
 using Microsoft.Extensions.DependencyInjection;
 using RoleReactions.Data;
-using System.Linq;
 
 namespace RoleReactions.Abstractions;
 

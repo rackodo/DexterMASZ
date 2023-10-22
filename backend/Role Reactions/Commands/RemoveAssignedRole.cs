@@ -5,9 +5,7 @@ using Discord;
 using Discord.Interactions;
 using RoleReactions.Abstractions;
 using RoleReactions.Data;
-using RoleReactions.Models;
 using System.Runtime.InteropServices;
-using System.Xml.Linq;
 
 namespace RoleReactions.Commands;
 
@@ -17,7 +15,7 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
     [SlashCommand("remove-rm-role", "Removes a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task RemoveAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] string menuId, IRole role,
+    public async Task RemoveAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] int menuId, IRole role,
         [Optional] ITextChannel channel)
     {
         if (channel == null)
