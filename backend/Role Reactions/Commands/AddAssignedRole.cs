@@ -177,6 +177,6 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
         await Database.SaveChangesAsync();
 
-        await ReplyAsync(embed: embed.Build());
+        await FollowupAsync(embed: embed.Build(), ephemeral: true);
     }
 }
