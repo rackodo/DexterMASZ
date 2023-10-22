@@ -164,7 +164,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
             userInfo.RoleIds.Remove(roleId);
 
-            await RespondAsync(embed: embed.Build(), ephemeral: true);
+            await user.SendMessageAsync(embed: embed.Build());
         }
         else
         {
@@ -179,7 +179,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 .WithDescription($"{role.Mention} has been added to {user.Mention}!")
                 .WithCurrentTimestamp();
 
-            await RespondAsync(embed: embed.Build(), ephemeral: true);
+            await user.SendMessageAsync(embed: embed.Build());
         }
 
         await Database.SaveChangesAsync();
