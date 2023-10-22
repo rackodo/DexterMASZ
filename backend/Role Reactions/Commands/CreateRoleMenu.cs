@@ -17,13 +17,15 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
     [SlashCommand("create-rm", "Create a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task RoleMenuCommand(string title, string description,
-        [Optional] IMessageChannel channel, [Optional] string colorHex)
+        ITextChannel channel = null, string colorHex = default)
     {
-        channel ??= Context.Channel;
+        if (channel == null)
+            if (Context.Channel is ITextChannel txtChannel)
+                channel = txtChannel;
 
-        if (channel is ITextChannel txtChannel)
+        if (channel != null)
         {
-            var menu = Database.RoleReactionsMenu.Find(txtChannel.Id, txtChannel.GuildId, title);
+            var menu = Database.RoleReactionsMenu.Find(channel.Id, channel.GuildId, title);
 
             if (menu != null)
             {
@@ -43,13 +45,13 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
                 .WithDescription(description)
                 .WithColor(color);
 
-            var msg = await txtChannel.SendMessageAsync(embed: embed.Build());
+            var msg = await channel.SendMessageAsync(embed: embed.Build());
 
             Database.RoleReactionsMenu.Add(
                 new RoleMenu()
                 {
-                    ChannelId = txtChannel.Id,
-                    GuildId = txtChannel.GuildId,
+                    ChannelId = channel.Id,
+                    GuildId = channel.GuildId,
                     MenuName = title,
                     MessageId = msg.Id,
                     Roles = new Dictionary<string, ulong>()

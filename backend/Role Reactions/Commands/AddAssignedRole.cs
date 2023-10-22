@@ -17,13 +17,15 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
     [SlashCommand("assign-rm-role", "Assigns a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task AddAssignedRoleCommand(string emote, string menuName, IRole role,
-        string name, [Optional] IMessageChannel channel)
+        string name, ITextChannel channel = null)
     {
-        channel ??= Context.Channel;
+        if (channel == null)
+            if (Context.Channel is ITextChannel txtChannel)
+                channel = txtChannel;
 
-        if (channel is ITextChannel txtChannel)
+        if (channel != null)
         {
-            var menu = Database.RoleReactionsMenu.Find(txtChannel.Id, txtChannel.GuildId, menuName);
+            var menu = Database.RoleReactionsMenu.Find(channel.Id, channel.GuildId, menuName);
 
             if (menu == null)
             {
@@ -37,7 +39,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 return;
             }
 
-            var message = await txtChannel.GetMessageAsync(menu.MessageId);
+            var message = await channel.GetMessageAsync(menu.MessageId);
 
             if (message == null)
             {

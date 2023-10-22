@@ -17,13 +17,15 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
     [SlashCommand("remove-rm-role", "Removes a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task RemoveAssignedRoleCommand(string menuName, string roleName,
-        [Optional] IMessageChannel channel)
+        [Optional] ITextChannel channel)
     {
-        channel ??= Context.Channel;
+        if (channel == null)
+            if (Context.Channel is ITextChannel txtChannel)
+                channel = txtChannel;
 
-        if (channel is ITextChannel txtChannel)
+        if (channel != null)
         {
-            var menu = Database.RoleReactionsMenu.Find(txtChannel.Id, txtChannel.GuildId, menuName);
+            var menu = Database.RoleReactionsMenu.Find(channel.Id, channel.GuildId, menuName);
 
             if (menu == null)
             {
@@ -37,7 +39,7 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
                 return;
             }
 
-            var message = await txtChannel.GetMessageAsync(menu.MessageId);
+            var message = await channel.GetMessageAsync(menu.MessageId);
 
             if (message == null)
             {

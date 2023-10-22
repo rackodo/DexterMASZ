@@ -15,13 +15,15 @@ public class DeleteRoleMenu : RoleMenuCommand<DeleteRoleMenu>
 
     [SlashCommand("delete-rm", "Deletes a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task RoleMenuCommand(string title, [Optional] IMessageChannel channel)
+    public async Task RoleMenuCommand(string title, ITextChannel channel = null)
     {
-        channel ??= Context.Channel;
+        if (channel == null)
+            if (Context.Channel is ITextChannel txtChannel)
+                channel = txtChannel;
 
-        if (channel is ITextChannel txtChannel)
+        if (channel != null)
         {
-            var menu = Database.RoleReactionsMenu.Find(txtChannel.Id, txtChannel.GuildId, title);
+            var menu = Database.RoleReactionsMenu.Find(channel.Id, channel.GuildId, title);
 
             if (menu == null)
             {
@@ -30,7 +32,7 @@ public class DeleteRoleMenu : RoleMenuCommand<DeleteRoleMenu>
             }
 
             Database.Remove(menu);
-            await txtChannel.DeleteMessageAsync(menu.MessageId);
+            await channel.DeleteMessageAsync(menu.MessageId);
 
             await Database.SaveChangesAsync();
 
