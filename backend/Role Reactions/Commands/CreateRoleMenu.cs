@@ -24,7 +24,12 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
 
         if (channel != null)
         {
-            var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, title);
+            var allMenus = Database.RoleReactionsMenu.Where(
+                x => x.GuildId == Context.Guild.Id &&
+                x.ChannelId == channel.Id
+            );
+
+            var menu = allMenus.FirstOrDefault(x => x.Name == title);
 
             if (menu != null)
             {
@@ -47,11 +52,6 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
             var msg = await channel.SendMessageAsync(embed: embed.Build());
 
             var lowestId = 1;
-
-            var allMenus = Database.RoleReactionsMenu.Where(
-                x => x.GuildId == Context.Guild.Id &&
-                x.ChannelId == channel.Id
-            );
 
             if (allMenus.Any())
                 lowestId += allMenus.Max(x => x.Id);
