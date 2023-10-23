@@ -14,8 +14,8 @@ public class EditRoleMenu : RoleMenuCommand<EditRoleMenu>
 
     [SlashCommand("edit-rm", "Edits a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task EditRoleMenuCommand([Autocomplete(typeof(MenuHandler))] int menuId, ITextChannel channel = null,
-        string title = default, string description = default, string colorHex = default)
+    public async Task EditRoleMenuCommand([Autocomplete(typeof(MenuHandler))] int menuId,
+        string title = default, string description = default, string colorHex = default, ITextChannel channel = null)
     {
         if (channel == null)
             if (Context.Channel is ITextChannel txtChannel)

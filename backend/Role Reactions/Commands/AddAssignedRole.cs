@@ -15,8 +15,8 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
     [SlashCommand("add-rm-role", "Assigns a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task AddAssignedRoleCommand(string emote, [Autocomplete(typeof(MenuHandler))] int menuId,
-        IRole role, ITextChannel channel = null)
+    public async Task AddAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] int menuId,
+        string emote, IRole role, ITextChannel channel = null)
     {
         if (channel == null)
             if (Context.Channel is ITextChannel txtChannel)

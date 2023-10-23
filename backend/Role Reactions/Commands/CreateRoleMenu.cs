@@ -16,7 +16,7 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
     [SlashCommand("create-rm", "Create a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task CreateRoleMenuCommand(string title, string description,
-        ITextChannel channel = null, string colorHex = default)
+        string colorHex = default, ITextChannel channel = null)
     {
         if (channel == null)
             if (Context.Channel is ITextChannel txtChannel)
