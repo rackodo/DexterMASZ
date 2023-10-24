@@ -1,6 +1,5 @@
 ﻿using Bot.Attributes;
 using Bot.Enums;
-using Bot.Translators;
 using Discord;
 using Discord.Interactions;
 using RoleReactions.Abstractions;
@@ -142,7 +141,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 embed
                     .WithColor(Color.Red)
                     .WithTitle("Could Not Add Role")
-                    .WithDescription($"{user.Mention} has {rolesInCat} category roles, " +
+                    .WithDescription($"{user.Mention} already has the maximum of {rolesInCat} roles in this category, " +
                         $"where the limit is {menu.MaximumRoles}!");
             }
         }
