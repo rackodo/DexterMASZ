@@ -64,79 +64,27 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
             return;
         }
 
-        var rows = new List<Dictionary<ulong, string>>();
-        var tempComp = new Dictionary<ulong, string>();
-
-        var count = 1;
-
-        foreach (var storeRole in menu.RoleToEmote)
-        {
-            tempComp.Add(storeRole.Key, storeRole.Value);
-
-            if (tempComp.Count >= 5)
-            {
-                rows.Add(tempComp);
-                tempComp = [];
-            }
-
-            count++;
-        }
-
-        if (count > 25)
+        if (menu.RoleToEmote.Count + 1 > 25)
         {
             await RespondInteraction($"Too many roles in manu `{menu.Name}`! " +
                 $"Please create a new role menu.");
             return;
         }
 
-        tempComp.Add(role.Id, emote);
-
-        rows.Add(tempComp);
-
-        var components = new ComponentBuilder();
-
-        foreach (var row in rows)
-        {
-            var aRow = new ActionRowBuilder();
-
-            foreach (var col in row)
-            {
-                IEmote intEmote = null;
-
-                if (Emote.TryParse(col.Value, out var pEmote))
-                    intEmote = pEmote;
-
-                if (Emoji.TryParse(col.Value, out var pEmoji))
-                    intEmote = pEmoji;
-
-                var intRole = Context.Guild.GetRole(col.Key);
-
-                if (intRole != null)
-                    aRow.WithButton(
-                        intRole.Name,
-                        $"add-rm-role:{intRole.Id},{Context.User.Id},{menu.Id}",
-                        emote: intEmote
-                    );
-            }
-
-            components.AddRow(aRow);
-        }
-
-        await userMessage.ModifyAsync(m => m.Components = components.Build());
-
         menu.RoleToEmote.Add(role.Id, emote);
-
         await Database.SaveChangesAsync();
+
+        await CreateRoleMenu(menu, userMessage);
 
         await RespondInteraction($"Successfully added role `{role.Name}` to menu `{menu.Name}`!");
     }
 
-    [ComponentInteraction("add-rm-role:*,*,*")]
-    public async Task AddRole(string sRoleId, string sUserId, string sMenuId)
+    [ComponentInteraction("add-rm-role:*,*")]
+    public async Task AddRole(string sRoleId, string sMenuId)
     {
         var roleId = ulong.Parse(sRoleId);
-        var userId = ulong.Parse(sUserId);
         var menuId = int.Parse(sMenuId);
+        var userId = Context.User.Id;
 
         var user = Context.Guild.GetUser(userId);
         var role = Context.Guild.GetRole(roleId);
@@ -151,14 +99,13 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 ChannelId = Context.Channel.Id,
                 Id = menuId,
                 UserId = userId,
-                RoleIds = new List<ulong>()
+                RoleIds = []
             };
 
             Database.UserRoles.Add(userInfo);
         }
 
-        var embed = new EmbedBuilder()
-                .WithCurrentTimestamp();
+        var embed = new EmbedBuilder().WithCurrentTimestamp();
 
         if (user.Roles.Any(r => r.Id == role.Id))
         {

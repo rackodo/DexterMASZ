@@ -8,14 +8,14 @@ using RoleReactions.Data;
 
 namespace RoleReactions.Commands;
 
-public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
+public class RefreshRoles : RoleMenuCommand<RefreshRoles>
 {
     public RoleReactionsDatabase Database { get; set; }
 
-    [SlashCommand("remove-rm-role", "Removes a role to a role menu")]
+    [SlashCommand("refresh-rm-roles", "Recreates the buttons on a role menu.")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task RemoveAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] int menuId,
-        IRole role, ITextChannel channel = null)
+    public async Task RefreshRolesCommand([Autocomplete(typeof(MenuHandler))] int menuId,
+        ITextChannel channel = null)
     {
         if (channel == null)
             if (Context.Channel is ITextChannel txtChannel)
@@ -35,12 +35,6 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
             return;
         }
 
-        if (!menu.RoleToEmote.ContainsKey(role.Id))
-        {
-            await RespondInteraction($"Role `{role.Name}` does not exist for role menu `{menu.Name}`!");
-            return;
-        }
-
         var message = await channel.GetMessageAsync(menu.MessageId);
 
         if (message == null)
@@ -57,11 +51,8 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
             return;
         }
         
-        menu.RoleToEmote.Remove(role.Id);
-        await Database.SaveChangesAsync();
-
         await CreateRoleMenu(menu, userMessage);
 
-        await RespondInteraction($"Successfully removed role `{role.Name}` from menu `{menu.Name}`!");
+        await RespondInteraction($"Successfully refreshed buttons on role menu `{menu.Name}`!");
     }
 }

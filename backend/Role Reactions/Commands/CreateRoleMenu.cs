@@ -68,7 +68,7 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
                 Id = lowestId,
                 Name = title,
                 MessageId = msg.Id,
-                RoleToEmote = new Dictionary<ulong, string>()
+                RoleToEmote = []
             }
         );
 
