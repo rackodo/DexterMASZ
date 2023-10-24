@@ -14,7 +14,7 @@ public class RefreshRoles : RoleMenuCommand<RefreshRoles>
 
     [SlashCommand("refresh-rm-roles", "Recreates the buttons on a role menu.")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task RefreshRolesCommand([Autocomplete(typeof(MenuHandler))] int menuId,
+    public async Task RefreshRolesCommand([Autocomplete(typeof(MenuHandler))] string menuStr,
         ITextChannel channel = null)
     {
         if (channel == null)
@@ -24,6 +24,16 @@ public class RefreshRoles : RoleMenuCommand<RefreshRoles>
         if (channel == null)
         {
             await RespondInteraction(Translator.Get<BotTranslator>().OnlyTextChannel());
+            return;
+        }
+
+        var menuArray = menuStr.Split(',');
+        var menuId = int.Parse(menuArray[0]);
+        var channelId = ulong.Parse(menuArray[1]);
+
+        if (channelId != channel.Id)
+        {
+            await RespondInteraction($"The role menu {menuId} does not exist in channel {channel.Name}!");
             return;
         }
 

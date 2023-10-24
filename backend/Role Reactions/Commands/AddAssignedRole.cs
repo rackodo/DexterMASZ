@@ -16,9 +16,10 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
     [SlashCommand("add-rm-role", "Assigns a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task AddAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] int menuId,
+    public async Task AddAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] string menuStr,
         string emote, IRole role, ITextChannel channel = null)
     {
+
         if (channel == null)
             if (Context.Channel is ITextChannel txtChannel)
                 channel = txtChannel;
@@ -26,6 +27,16 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         if (channel == null)
         {
             await RespondInteraction(Translator.Get<BotTranslator>().OnlyTextChannel());
+            return;
+        }
+
+        var menuArray = menuStr.Split(',');
+        var menuId = int.Parse(menuArray[0]);
+        var channelId = ulong.Parse(menuArray[1]);
+
+        if (channelId != channel.Id)
+        {
+            await RespondInteraction($"The role menu {menuId} does not exist in channel {channel.Name}!");
             return;
         }
 
