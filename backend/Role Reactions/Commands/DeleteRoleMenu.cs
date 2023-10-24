@@ -14,23 +14,13 @@ public class DeleteRoleMenu : RoleMenuCommand<DeleteRoleMenu>
 
     [SlashCommand("delete-rm", "Deletes a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task DeleteRoleMenuCommand([Autocomplete(typeof(MenuHandler))] string menuStr, ITextChannel channel = null)
+    public async Task DeleteRoleMenuCommand([Autocomplete(typeof(MenuHandler))] string menuStr)
     {
-        if (channel == null)
-            if (Context.Channel is ITextChannel txtChannel)
-                channel = txtChannel;
-
-        if (channel == null)
-        {
-            await RespondInteraction(Translator.Get<BotTranslator>().OnlyTextChannel());
-            return;
-        }
-
         var menuArray = menuStr.Split(',');
         var menuId = int.Parse(menuArray[0]);
         var channelId = ulong.Parse(menuArray[1]);
 
-        var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuId);
+        var menu = Database.RoleReactionsMenu.Find(Context.Guild.Id, channelId, menuId);
 
         if (menu == null)
         {
@@ -38,9 +28,11 @@ public class DeleteRoleMenu : RoleMenuCommand<DeleteRoleMenu>
             return;
         }
 
-        if (channelId != channel.Id)
+        var channel = Context.Guild.GetTextChannel(channelId);
+
+        if (channel == null)
         {
-            await RespondInteraction($"The role menu {menu.Name} does not match the channel {channel.Name}!");
+            await RespondInteraction($"The channel {channelId} does not exist!");
             return;
         }
 

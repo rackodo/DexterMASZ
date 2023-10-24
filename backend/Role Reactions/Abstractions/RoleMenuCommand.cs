@@ -25,7 +25,8 @@ public class RoleMenuCommand<T> : Command<T>
             }
         }
 
-        rows.Add(tempComp);
+        if (rows.Count < 5)
+            rows.Add(tempComp);
 
         var components = new ComponentBuilder();
 

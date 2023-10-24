@@ -14,34 +14,25 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
 
     [SlashCommand("remove-rm-role", "Removes a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task RemoveAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] string menuStr,
-        IRole role, ITextChannel channel = null)
+    public async Task RemoveAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] string menuStr, IRole role)
     {
-        if (channel == null)
-            if (Context.Channel is ITextChannel txtChannel)
-                channel = txtChannel;
-
-        if (channel == null)
-        {
-            await RespondInteraction(Translator.Get<BotTranslator>().OnlyTextChannel());
-            return;
-        }
-
         var menuArray = menuStr.Split(',');
         var menuId = int.Parse(menuArray[0]);
         var channelId = ulong.Parse(menuArray[1]);
 
-        var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuId);
-        
+        var menu = Database.RoleReactionsMenu.Find(Context.Guild.Id, channelId, menuId);
+
         if (menu == null)
         {
             await RespondInteraction($"Role menu `{menuId}` does not exist in this channel!");
             return;
         }
 
-        if (channelId != channel.Id)
+        var channel = Context.Guild.GetTextChannel(channelId);
+
+        if (channel == null)
         {
-            await RespondInteraction($"The role menu {menu.Name} does not match the channel {channel.Name}!");
+            await RespondInteraction($"The channel {channelId} does not exist!");
             return;
         }
 
