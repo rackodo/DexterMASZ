@@ -33,17 +33,17 @@ public class EditRoleMenu : RoleMenuCommand<EditRoleMenu>
         var menuId = int.Parse(menuArray[0]);
         var channelId = ulong.Parse(menuArray[1]);
 
-        if (channelId != channel.Id)
-        {
-            await RespondInteraction($"The role menu {menuId} does not exist in channel {channel.Name}!");
-            return;
-        }
-
         var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuId);
 
         if (menu == null)
         {
             await RespondInteraction($"Role menu `{menuId}` does not exist in this channel!");
+            return;
+        }
+
+        if (channelId != channel.Id)
+        {
+            await RespondInteraction($"The role menu {menu.Name} does not match the channel {channel.Name}!");
             return;
         }
 
