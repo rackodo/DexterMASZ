@@ -12,7 +12,7 @@ public class RefreshRoles : RoleMenuCommand<RefreshRoles>
 {
     public RoleReactionsDatabase Database { get; set; }
 
-    [SlashCommand("refresh-rm-roles", "Recreates the buttons on a role menu.")]
+    [SlashCommand("refresh-rm", "Regenerates a role menu")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task RefreshRolesCommand([Autocomplete(typeof(MenuHandler))] string menuStr,
         ITextChannel channel = null)

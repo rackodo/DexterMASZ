@@ -6,7 +6,6 @@ using Discord.Interactions;
 using RoleReactions.Abstractions;
 using RoleReactions.Data;
 using RoleReactions.Models;
-using System.Threading.Channels;
 
 namespace RoleReactions.Commands;
 

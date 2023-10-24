@@ -15,8 +15,7 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
 
     [SlashCommand("create-rm", "Create a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task CreateRoleMenuCommand(string title, string description,
-        [Summary("Set to zero for no maximum roles")] int maximumRoles = -1,
+    public async Task CreateRoleMenuCommand(string title, string description, int maxRoles = -1,
         string colorHex = default, ITextChannel channel = null)
     {
         if (channel == null)
@@ -60,7 +59,7 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
             GuildId = channel.GuildId,
             Id = lowestId,
             Name = title,
-            MaximumRoles = maximumRoles,
+            MaximumRoles = maxRoles,
             RoleToEmote = []
         };
 

@@ -9,7 +9,7 @@ public class RoleMenuCommand<T> : Command<T>
     public override async Task BeforeCommandExecute() =>
         await Context.Interaction.DeferAsync(true);
 
-    public async Task CreateRoleMenu(RoleMenu menu, IUserMessage message)
+    internal async Task CreateRoleMenu(RoleMenu menu, IUserMessage message)
     {
         var rows = new List<Dictionary<ulong, string>>();
         var tempComp = new Dictionary<ulong, string>();
@@ -59,7 +59,7 @@ public class RoleMenuCommand<T> : Command<T>
         await message.ModifyAsync(m => m.Components = components.Build());
     }
 
-    public void ApplyMenuData(RoleMenu menu, EmbedBuilder builder) =>
+    internal static void ApplyMenuData(RoleMenu menu, EmbedBuilder builder) =>
         builder
             .WithTitle(menu.Name)
             .WithFooter(menu.MaximumRoles <= 0 ?

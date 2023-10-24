@@ -15,8 +15,7 @@ public class EditRoleMenu : RoleMenuCommand<EditRoleMenu>
     [SlashCommand("edit-rm", "Edits a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task EditRoleMenuCommand([Autocomplete(typeof(MenuHandler))] string menuStr,
-        string title = default, string description = default,
-        [Summary("Set to zero for no maximum roles")] int maximumRoles = -1,
+        string title = default, string description = default, int maxRoles = -1,
         string colorHex = default, ITextChannel channel = null)
     {
         if (channel == null)
@@ -79,9 +78,9 @@ public class EditRoleMenu : RoleMenuCommand<EditRoleMenu>
             await Database.SaveChangesAsync();
         }
 
-        if (maximumRoles >= 0)
+        if (maxRoles >= 0)
         {
-            menu.MaximumRoles = maximumRoles;
+            menu.MaximumRoles = maxRoles;
             await Database.SaveChangesAsync();
         }
 
