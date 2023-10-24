@@ -15,7 +15,9 @@ public class EditRoleMenu : RoleMenuCommand<EditRoleMenu>
     [SlashCommand("edit-rm", "Edits a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task EditRoleMenuCommand([Autocomplete(typeof(MenuHandler))] int menuId,
-        string title = default, string description = default, string colorHex = default, ITextChannel channel = null)
+        string title = default, string description = default,
+        [Summary("Set to zero for no maximum roles")] int maximumRoles = -1,
+        string colorHex = default, ITextChannel channel = null)
     {
         if (channel == null)
             if (Context.Channel is ITextChannel txtChannel)
@@ -64,7 +66,12 @@ public class EditRoleMenu : RoleMenuCommand<EditRoleMenu>
         if (!string.IsNullOrEmpty(title))
         {
             menu.Name = title;
-            embedBuilder.WithTitle(title);
+            await Database.SaveChangesAsync();
+        }
+
+        if (maximumRoles >= 0)
+        {
+            menu.MaximumRoles = maximumRoles;
             await Database.SaveChangesAsync();
         }
 
@@ -83,11 +90,11 @@ public class EditRoleMenu : RoleMenuCommand<EditRoleMenu>
             embedBuilder.WithColor(color);
         }
 
+        ApplyMenuData(menu, embedBuilder);
+
         var newEmbed = embedBuilder.Build();
 
         await userMessage.ModifyAsync(m => m.Embed = newEmbed);
-
-        await Database.SaveChangesAsync();
 
         await RespondInteraction($"Role menu `{menu.Name}` is has now been edited!");
     }

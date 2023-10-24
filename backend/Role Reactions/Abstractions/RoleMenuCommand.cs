@@ -58,4 +58,12 @@ public class RoleMenuCommand<T> : Command<T>
 
         await message.ModifyAsync(m => m.Components = components.Build());
     }
+
+    public void ApplyMenuData(RoleMenu menu, EmbedBuilder builder) =>
+        builder
+            .WithTitle(menu.Name)
+            .WithFooter(menu.MaximumRoles <= 0 ?
+                "No maximum roles" :
+                $"Maximum roles: {menu.MaximumRoles}"
+            );
 }

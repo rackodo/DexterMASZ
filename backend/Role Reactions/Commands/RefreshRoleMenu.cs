@@ -50,7 +50,20 @@ public class RefreshRoles : RoleMenuCommand<RefreshRoles>
                 $"Please delete and recreate the menu.");
             return;
         }
-        
+
+        var embed = userMessage.Embeds.FirstOrDefault();
+
+        if (embed == null)
+        {
+            await RespondInteraction($"Embed for role menu `{menu.Name}` could not be found!");
+            return;
+        }
+
+        var embedBuilder = embed.ToEmbedBuilder();
+        ApplyMenuData(menu, embedBuilder);
+        var newEmbed = embedBuilder.Build();
+        await userMessage.ModifyAsync(m => m.Embed = newEmbed);
+
         await CreateRoleMenu(menu, userMessage);
 
         await RespondInteraction($"Successfully refreshed buttons on role menu `{menu.Name}`!");

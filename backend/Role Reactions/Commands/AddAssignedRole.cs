@@ -6,6 +6,7 @@ using Discord.Interactions;
 using RoleReactions.Abstractions;
 using RoleReactions.Data;
 using RoleReactions.Models;
+using System.Threading.Channels;
 
 namespace RoleReactions.Commands;
 
@@ -83,12 +84,13 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
     public async Task AddRole(string sRoleId, string sMenuId)
     {
         var roleId = ulong.Parse(sRoleId);
-        var menuId = int.Parse(sMenuId);
-        var userId = Context.User.Id;
-
-        var user = Context.Guild.GetUser(userId);
         var role = Context.Guild.GetRole(roleId);
 
+        var menuId = int.Parse(sMenuId);
+        var menu = Database.RoleReactionsMenu.Find(Context.Guild.Id, Context.Channel.Id, menuId);
+
+        var userId = Context.User.Id;
+        var user = Context.Guild.GetUser(userId);
         var userInfo = Database.UserRoles.Find(Context.Guild.Id, Context.Channel.Id, menuId, userId);
 
         if (userInfo == null)
@@ -120,15 +122,28 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         }
         else
         {
-            await user.AddRoleAsync(role);
+            var rolesInCat = user.Roles.Count(x => menu.RoleToEmote.ContainsKey(x.Id));
 
-            if (!userInfo.RoleIds.Contains(roleId))
-                userInfo.RoleIds.Add(roleId);
+            if (rolesInCat < menu.MaximumRoles || menu.MaximumRoles <= 0)
+            {
+                await user.AddRoleAsync(role);
 
-            embed
-                .WithColor(Color.Green)
-                .WithTitle("Added Role")
-                .WithDescription($"{role.Mention} has been added to {user.Mention}!");
+                if (!userInfo.RoleIds.Contains(roleId))
+                    userInfo.RoleIds.Add(roleId);
+
+                embed
+                    .WithColor(Color.Green)
+                    .WithTitle("Added Role")
+                    .WithDescription($"{role.Mention} has been added to {user.Mention}!");
+            }
+            else
+            {
+                embed
+                    .WithColor(Color.Red)
+                    .WithTitle("Could Not Add Role")
+                    .WithDescription($"{user.Mention} has {rolesInCat} category roles, " +
+                        $"where the limit is {menu.MaximumRoles}!");
+            }
         }
 
         await Database.SaveChangesAsync();
