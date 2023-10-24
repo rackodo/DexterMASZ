@@ -67,6 +67,6 @@ public class RefreshRoles : RoleMenuCommand<RefreshRoles>
 
         await CreateRoleMenu(menu, userMessage);
 
-        await RespondInteraction($"Successfully refreshed buttons on role menu `{menu.Name}`!");
+        await RespondInteraction($"Successfully refreshed the role menu `{menu.Name}`!");
     }
 }
