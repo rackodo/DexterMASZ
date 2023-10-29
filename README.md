@@ -18,7 +18,7 @@
       <h2>Built With</h2>
       <p>
         <ul>
-          <li><a href="https://dotnet.microsoft.com/download/dotnet/5.0">.NET 6.0</a></li>
+          <li><a href="https://dotnet.microsoft.com/download/dotnet/8.0">.NET 8.0</a></li>
           <li><a href="https://github.com/discord-net/Discord.Net">Discord.NET</a></li>
           <li><a href="https://github.com/angelobreuer/Lavalink4NET">Lavalink4Net</a> - Music Plugin</li>
         </ul>
