@@ -32,6 +32,11 @@ public class UpdateAllXp : Command<UpdateAllXp>
 
         await RespondInteraction($"Updating all user roles in {guild.Name}!");
 
+        var infoMsg = await Context.Channel.SendMessageAsync("Running update script...");
+
+        var added = new Dictionary<IGuildUser, ulong[]>();
+        var removed = new Dictionary<IGuildUser, ulong[]>();
+
         foreach (var user in users)
         {
             var xp = userXps.FirstOrDefault(x => x.UserId == user.Id);
@@ -52,20 +57,51 @@ public class UpdateAllXp : Command<UpdateAllXp>
                 .Where(x => user.RoleIds.Contains(x));
 
             if (addedRoles.Any())
-                await user.AddRolesAsync(addedRoles);
+                added.Add(user, addedRoles.ToArray());
 
             if (removedRoles.Any())
-                await user.RemoveRolesAsync(removedRoles);
+                removed.Add(user, removedRoles.ToArray());
 
             count++;
 
             if (count % 50 == 0)
-            {
-                var progress = Math.Floor((double)count / totalCount * 100);
-                await RespondInteraction($"Progress {count}/{totalCount} ({progress}%)");
-            }
+                await infoMsg.ModifyAsync(x =>
+                    x.Content = "Calculating... " + GetProgressString(count, totalCount)
+                );
         }
 
-        await RespondInteraction($"Successfully updated all users in {guild.Name}!");
+        count = 0;
+        totalCount = added.Count;
+
+        foreach (var addedUser in added)
+        {
+            await addedUser.Key.AddRolesAsync(addedUser.Value);
+
+            await infoMsg.ModifyAsync(x =>
+                x.Content = "Adding Roles... " + GetProgressString(count, totalCount)
+            );
+        }
+
+        count = 0;
+        totalCount = removed.Count;
+
+        foreach (var addedUser in added)
+        {
+            await addedUser.Key.AddRolesAsync(addedUser.Value);
+
+            await infoMsg.ModifyAsync(x =>
+                x.Content = "Removing Roles... " + GetProgressString(count, totalCount)
+            );
+        }
+
+        await infoMsg.ModifyAsync(x =>
+            x.Content = $"Successfully updated all users in {guild.Name}!"
+        );
+    }
+
+    public static string GetProgressString(int count, int total)
+    {
+        var progress = Math.Floor((double)count / total * 100);
+        return $"Progress {count}/{total} ({progress}%)";
     }
 }
