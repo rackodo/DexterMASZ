@@ -86,9 +86,9 @@ public class UpdateAllXp : Command<UpdateAllXp>
         count = 0;
         totalCount = removed.Count;
 
-        foreach (var addedUser in added)
+        foreach (var removedUser in removed)
         {
-            await addedUser.Key.AddRolesAsync(addedUser.Value);
+            await removedUser.Key.RemoveRolesAsync(removedUser.Value);
 
             if (count % 50 == 0)
                 await infoMsg.ModifyAsync(x =>
