@@ -77,9 +77,10 @@ public class UpdateAllXp : Command<UpdateAllXp>
         {
             await addedUser.Key.AddRolesAsync(addedUser.Value);
 
-            await infoMsg.ModifyAsync(x =>
-                x.Content = "Adding Roles... " + GetProgressString(count, totalCount)
-            );
+            if (count % 50 == 0)
+                await infoMsg.ModifyAsync(x =>
+                    x.Content = "Adding Roles... " + GetProgressString(count, totalCount)
+                );
         }
 
         count = 0;
@@ -89,9 +90,10 @@ public class UpdateAllXp : Command<UpdateAllXp>
         {
             await addedUser.Key.AddRolesAsync(addedUser.Value);
 
-            await infoMsg.ModifyAsync(x =>
-                x.Content = "Removing Roles... " + GetProgressString(count, totalCount)
-            );
+            if (count % 50 == 0)
+                await infoMsg.ModifyAsync(x =>
+                    x.Content = "Removing Roles... " + GetProgressString(count, totalCount)
+                );
         }
 
         await infoMsg.ModifyAsync(x =>
