@@ -64,7 +64,7 @@ public class UpdateAllXp : Command<UpdateAllXp>
 
             count++;
 
-            if (count % 50 == 0)
+            if (count % 100 == 0)
                 await infoMsg.ModifyAsync(x =>
                     x.Content = "Calculating... " + GetProgressString(count, totalCount)
                 );
@@ -77,7 +77,9 @@ public class UpdateAllXp : Command<UpdateAllXp>
         {
             await addedUser.Key.AddRolesAsync(addedUser.Value);
 
-            if (count % 50 == 0)
+            count++;
+
+            if (count % 5 == 0)
                 await infoMsg.ModifyAsync(x =>
                     x.Content = "Adding Roles... " + GetProgressString(count, totalCount)
                 );
@@ -90,7 +92,9 @@ public class UpdateAllXp : Command<UpdateAllXp>
         {
             await removedUser.Key.RemoveRolesAsync(removedUser.Value);
 
-            if (count % 50 == 0)
+            count++;
+
+            if (count % 5 == 0)
                 await infoMsg.ModifyAsync(x =>
                     x.Content = "Removing Roles... " + GetProgressString(count, totalCount)
                 );
@@ -104,6 +108,6 @@ public class UpdateAllXp : Command<UpdateAllXp>
     public static string GetProgressString(int count, int total)
     {
         var progress = Math.Floor((double)count / total * 100);
-        return $"Progress {count}/{total} ({progress}%)";
+        return $"progress {count}/{total} ({progress}%)";
     }
 }
