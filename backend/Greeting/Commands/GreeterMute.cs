@@ -28,7 +28,7 @@ public class GreeterMute : PunishmentCommand<GreeterMute>
     [RequireGreeter]
     [SlashCommand("gmute", "Greeter mute command, executes on valid critera")]
     public async Task MuteCommand(
-        [Summary("title", "The title of the mute case")] [MaxLength(200)]
+        [Summary("title", "The title of the mute case")] [MaxLength(180)]
         string title,
         [Summary("user", "User to punish")] IGuildUser user,
         [Summary("description", "The description of the mod case")]
@@ -55,7 +55,7 @@ public class GreeterMute : PunishmentCommand<GreeterMute>
 
         var modCase = new ModCase
         {
-            Title = title,
+            Title = $"GREETMUTE: {title}",
             GuildId = Context.Guild.Id,
             UserId = user.Id,
             ModId = Identity.GetCurrentUser().Id,
