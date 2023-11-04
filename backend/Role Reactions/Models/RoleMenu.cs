@@ -10,5 +10,6 @@ public class RoleMenu
     public int Id { get; set; }
     public string Name { get; set; }
     public ulong MessageId { get; set; }
+    public int MaximumRoles { get; set; }
     public Dictionary<ulong, string> RoleToEmote { get; set; }
 }

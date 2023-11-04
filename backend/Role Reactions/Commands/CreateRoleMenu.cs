@@ -15,7 +15,7 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
 
     [SlashCommand("create-rm", "Create a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task CreateRoleMenuCommand(string title, string description,
+    public async Task CreateRoleMenuCommand(string title, string description, int maxRoles = -1,
         string colorHex = default, ITextChannel channel = null)
     {
         if (channel == null)
@@ -48,29 +48,30 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
                 Convert.ToUInt32(colorHex.ToUpper().Replace("#", ""), 16)
             );
 
-        var embed = new EmbedBuilder()
-            .WithTitle(title)
-            .WithDescription(description)
-            .WithColor(color);
-
-        var msg = await channel.SendMessageAsync(embed: embed.Build());
-
         var lowestId = 1;
 
         if (allMenus.Any())
             lowestId += allMenus.Max(x => x.Id);
 
-        Database.RoleReactionsMenu.Add(
-            new RoleMenu()
-            {
-                ChannelId = channel.Id,
-                GuildId = channel.GuildId,
-                Id = lowestId,
-                Name = title,
-                MessageId = msg.Id,
-                RoleToEmote = new Dictionary<ulong, string>()
-            }
-        );
+        var roleMenu = new RoleMenu()
+        {
+            ChannelId = channel.Id,
+            GuildId = channel.GuildId,
+            Id = lowestId,
+            Name = title,
+            MaximumRoles = maxRoles,
+            RoleToEmote = []
+        };
+
+        var embed = new EmbedBuilder()
+            .WithDescription(description)
+            .WithColor(color);
+
+        var msg = await channel.SendMessageAsync(embed: embed.Build());
+
+        roleMenu.MessageId = msg.Id;
+
+        Database.RoleReactionsMenu.Add(roleMenu);
 
         await Database.SaveChangesAsync();
 

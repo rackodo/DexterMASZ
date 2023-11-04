@@ -8,13 +8,13 @@ using RoleReactions.Data;
 
 namespace RoleReactions.Commands;
 
-public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
+public class RefreshRoles : RoleMenuCommand<RefreshRoles>
 {
     public RoleReactionsDatabase Database { get; set; }
 
-    [SlashCommand("remove-rm-role", "Removes a role to a role menu")]
+    [SlashCommand("refresh-rm", "Regenerates a role menu")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task RemoveAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] string menuStr, IRole role)
+    public async Task RefreshRolesCommand([Autocomplete(typeof(MenuHandler))] string menuStr)
     {
         var menuArray = menuStr.Split(',');
         var menuId = int.Parse(menuArray[0]);
@@ -36,12 +36,6 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
             return;
         }
 
-        if (!menu.RoleToEmote.ContainsKey(role.Id))
-        {
-            await RespondInteraction($"Role `{role.Name}` does not exist for role menu `{menu.Name}`!");
-            return;
-        }
-
         var message = await channel.GetMessageAsync(menu.MessageId);
 
         if (message == null)
@@ -57,12 +51,22 @@ public class RemoveAssignedRole : RoleMenuCommand<RemoveAssignedRole>
                 $"Please delete and recreate the menu.");
             return;
         }
-        
-        menu.RoleToEmote.Remove(role.Id);
-        await Database.SaveChangesAsync();
+
+        var embed = userMessage.Embeds.FirstOrDefault();
+
+        if (embed == null)
+        {
+            await RespondInteraction($"Embed for role menu `{menu.Name}` could not be found!");
+            return;
+        }
+
+        var embedBuilder = embed.ToEmbedBuilder();
+        ApplyMenuData(menu, embedBuilder);
+        var newEmbed = embedBuilder.Build();
+        await userMessage.ModifyAsync(m => m.Embed = newEmbed);
 
         await CreateRoleMenu(menu, userMessage);
 
-        await RespondInteraction($"Successfully removed role `{role.Name}` from menu `{menu.Name}`!");
+        await RespondInteraction($"Successfully refreshed the role menu `{menu.Name}`!");
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Bot.Attributes;
 using Bot.Enums;
-using Bot.Translators;
 using Discord;
 using Discord.Interactions;
 using RoleReactions.Abstractions;
@@ -15,24 +14,26 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
     [SlashCommand("add-rm-role", "Assigns a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task AddAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] int menuId,
-        string emote, IRole role, ITextChannel channel = null)
+    public async Task AddAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] string menuStr,
+        string emote, IRole role)
     {
-        if (channel == null)
-            if (Context.Channel is ITextChannel txtChannel)
-                channel = txtChannel;
+        var menuArray = menuStr.Split(',');
+        var menuId = int.Parse(menuArray[0]);
+        var channelId = ulong.Parse(menuArray[1]);
 
-        if (channel == null)
-        {
-            await RespondInteraction(Translator.Get<BotTranslator>().OnlyTextChannel());
-            return;
-        }
-
-        var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuId);
+        var menu = Database.RoleReactionsMenu.Find(Context.Guild.Id, channelId, menuId);
 
         if (menu == null)
         {
             await RespondInteraction($"Role menu `{menuId}` does not exist in this channel!");
+            return;
+        }
+
+        var channel = Context.Guild.GetTextChannel(channelId);
+
+        if (channel == null)
+        {
+            await RespondInteraction($"The channel {channelId} does not exist!");
             return;
         }
 
@@ -64,83 +65,32 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
             return;
         }
 
-        var rows = new List<Dictionary<ulong, string>>();
-        var tempComp = new Dictionary<ulong, string>();
-
-        var count = 1;
-
-        foreach (var storeRole in menu.RoleToEmote)
-        {
-            tempComp.Add(storeRole.Key, storeRole.Value);
-
-            if (tempComp.Count >= 5)
-            {
-                rows.Add(tempComp);
-                tempComp = [];
-            }
-
-            count++;
-        }
-
-        if (count > 25)
+        if (menu.RoleToEmote.Count + 1 > 25)
         {
             await RespondInteraction($"Too many roles in manu `{menu.Name}`! " +
                 $"Please create a new role menu.");
             return;
         }
 
-        tempComp.Add(role.Id, emote);
-
-        rows.Add(tempComp);
-
-        var components = new ComponentBuilder();
-
-        foreach (var row in rows)
-        {
-            var aRow = new ActionRowBuilder();
-
-            foreach (var col in row)
-            {
-                IEmote intEmote = null;
-
-                if (Emote.TryParse(col.Value, out var pEmote))
-                    intEmote = pEmote;
-
-                if (Emoji.TryParse(col.Value, out var pEmoji))
-                    intEmote = pEmoji;
-
-                var intRole = Context.Guild.GetRole(col.Key);
-
-                if (intRole != null)
-                    aRow.WithButton(
-                        intRole.Name,
-                        $"add-rm-role:{intRole.Id},{Context.User.Id},{menu.Id}",
-                        emote: intEmote
-                    );
-            }
-
-            components.AddRow(aRow);
-        }
-
-        await userMessage.ModifyAsync(m => m.Components = components.Build());
-
         menu.RoleToEmote.Add(role.Id, emote);
-
         await Database.SaveChangesAsync();
+
+        await CreateRoleMenu(menu, userMessage);
 
         await RespondInteraction($"Successfully added role `{role.Name}` to menu `{menu.Name}`!");
     }
 
-    [ComponentInteraction("add-rm-role:*,*,*")]
-    public async Task AddRole(string sRoleId, string sUserId, string sMenuId)
+    [ComponentInteraction("add-rm-role:*,*")]
+    public async Task AddRole(string sRoleId, string sMenuId)
     {
         var roleId = ulong.Parse(sRoleId);
-        var userId = ulong.Parse(sUserId);
-        var menuId = int.Parse(sMenuId);
-
-        var user = Context.Guild.GetUser(userId);
         var role = Context.Guild.GetRole(roleId);
 
+        var menuId = int.Parse(sMenuId);
+        var menu = Database.RoleReactionsMenu.Find(Context.Guild.Id, Context.Channel.Id, menuId);
+
+        var userId = Context.User.Id;
+        var user = Context.Guild.GetUser(userId);
         var userInfo = Database.UserRoles.Find(Context.Guild.Id, Context.Channel.Id, menuId, userId);
 
         if (userInfo == null)
@@ -151,14 +101,13 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 ChannelId = Context.Channel.Id,
                 Id = menuId,
                 UserId = userId,
-                RoleIds = new List<ulong>()
+                RoleIds = []
             };
 
             Database.UserRoles.Add(userInfo);
         }
 
-        var embed = new EmbedBuilder()
-                .WithCurrentTimestamp();
+        var embed = new EmbedBuilder().WithCurrentTimestamp();
 
         if (user.Roles.Any(r => r.Id == role.Id))
         {
@@ -173,15 +122,28 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         }
         else
         {
-            await user.AddRoleAsync(role);
+            var rolesInCat = user.Roles.Count(x => menu.RoleToEmote.ContainsKey(x.Id));
 
-            if (!userInfo.RoleIds.Contains(roleId))
-                userInfo.RoleIds.Add(roleId);
+            if (rolesInCat < menu.MaximumRoles || menu.MaximumRoles <= 0)
+            {
+                await user.AddRoleAsync(role);
 
-            embed
-                .WithColor(Color.Green)
-                .WithTitle("Added Role")
-                .WithDescription($"{role.Mention} has been added to {user.Mention}!");
+                if (!userInfo.RoleIds.Contains(roleId))
+                    userInfo.RoleIds.Add(roleId);
+
+                embed
+                    .WithColor(Color.Green)
+                    .WithTitle("Added Role")
+                    .WithDescription($"{role.Mention} has been added to {user.Mention}!");
+            }
+            else
+            {
+                embed
+                    .WithColor(Color.Red)
+                    .WithTitle("Could Not Add Role")
+                    .WithDescription($"{user.Mention} already has the maximum of {rolesInCat} roles in this category, " +
+                        $"where the limit is {menu.MaximumRoles}!");
+            }
         }
 
         await Database.SaveChangesAsync();

@@ -78,6 +78,10 @@ public class Experience : Command<Experience>
             {
                 if (levelRole.Value.Length == 0) continue;
                 var r = guildInfo.GetRole(levelRole.Value.First());
+
+                if (r == null)
+                    continue;
+
                 if (levelRole.Key > totalLevel)
                 {
                     roleTargetLevel = levelRole.Key;
@@ -91,9 +95,9 @@ public class Experience : Command<Experience>
 
             if (!found)
             {
-                if (guildlevelconfig.Levels.ContainsKey(maxLevel))
+                if (guildlevelconfig.Levels.TryGetValue(maxLevel, out var value))
                 {
-                    var levelXp = guildlevelconfig.Levels[maxLevel].FirstOrDefault();
+                    var levelXp = value.FirstOrDefault();
 
                     if (levelXp != default)
                     {

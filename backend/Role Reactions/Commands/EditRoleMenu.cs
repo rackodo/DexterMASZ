@@ -14,24 +14,27 @@ public class EditRoleMenu : RoleMenuCommand<EditRoleMenu>
 
     [SlashCommand("edit-rm", "Edits a menu that users can pick their roles from!")]
     [Require(RequireCheck.GuildAdmin)]
-    public async Task EditRoleMenuCommand([Autocomplete(typeof(MenuHandler))] int menuId,
-        string title = default, string description = default, string colorHex = default, ITextChannel channel = null)
+    public async Task EditRoleMenuCommand([Autocomplete(typeof(MenuHandler))] string menuStr,
+        string title = default, string description = default, int maxRoles = -1,
+        string colorHex = default)
     {
-        if (channel == null)
-            if (Context.Channel is ITextChannel txtChannel)
-                channel = txtChannel;
+        var menuArray = menuStr.Split(',');
+        var menuId = int.Parse(menuArray[0]);
+        var channelId = ulong.Parse(menuArray[1]);
 
-        if (channel == null)
-        {
-            await RespondInteraction(Translator.Get<BotTranslator>().OnlyTextChannel());
-            return;
-        }
-
-        var menu = Database.RoleReactionsMenu.Find(channel.GuildId, channel.Id, menuId);
+        var menu = Database.RoleReactionsMenu.Find(Context.Guild.Id, channelId, menuId);
 
         if (menu == null)
         {
             await RespondInteraction($"Role menu `{menuId}` does not exist in this channel!");
+            return;
+        }
+
+        var channel = Context.Guild.GetTextChannel(channelId);
+
+        if (channel == null)
+        {
+            await RespondInteraction($"The channel {channelId} does not exist!");
             return;
         }
 
@@ -64,7 +67,12 @@ public class EditRoleMenu : RoleMenuCommand<EditRoleMenu>
         if (!string.IsNullOrEmpty(title))
         {
             menu.Name = title;
-            embedBuilder.WithTitle(title);
+            await Database.SaveChangesAsync();
+        }
+
+        if (maxRoles >= 0)
+        {
+            menu.MaximumRoles = maxRoles;
             await Database.SaveChangesAsync();
         }
 
@@ -83,11 +91,11 @@ public class EditRoleMenu : RoleMenuCommand<EditRoleMenu>
             embedBuilder.WithColor(color);
         }
 
+        ApplyMenuData(menu, embedBuilder);
+
         var newEmbed = embedBuilder.Build();
 
         await userMessage.ModifyAsync(m => m.Embed = newEmbed);
-
-        await Database.SaveChangesAsync();
 
         await RespondInteraction($"Role menu `{menu.Name}` is has now been edited!");
     }
