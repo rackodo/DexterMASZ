@@ -25,6 +25,7 @@ public class TempAddGf : Command<TempAddGf>
             GuildId = Context.Guild.Id,
             LoggingChannel = 536690500959207444
         });
+        await GreeterDatabase.SaveChangesAsync();
         await RespondInteraction("Done!");
     }
 }
