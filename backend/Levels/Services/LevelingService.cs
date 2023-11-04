@@ -61,10 +61,10 @@ public class LevelingService(DiscordSocketClient client, ILogger<LevelingService
         await levelrepo.UpdateLevel(level);
     }
 
-    public async Task<UpdatedUser> HandleUpdateRoles(IGuildUser user)
+    public async Task HandleUpdateRoles(IGuildUser user)
     {
         using var scope = _serviceProvider.CreateScope();
-        return await HandleUpdateRoles(user, scope);
+        var uuser = await HandleUpdateRoles(user, scope);
     }
 
     public async Task<UpdatedUser> HandleUpdateRoles(IGuildUser user, IServiceScope serviceScope)
