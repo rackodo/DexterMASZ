@@ -17,6 +17,8 @@
 		</PackageReference>
 
 		<ProjectReference Include="..\AutoMods\AutoMods.csproj" />
+
+		<ProjectReference Include="..\Greeting\Greeting.csproj" />
 		<ProjectReference Include="..\GuildAudits\GuildAudits.csproj" />
 		<ProjectReference Include="..\JoinLeave\JoinLeave.csproj" />
 		<ProjectReference Include="..\Levels\Levels.csproj" />

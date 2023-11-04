@@ -247,10 +247,7 @@ public class ModCaseRepository : Repository,
 
         foreach (var label in labels)
         {
-            if (countMap.TryGetValue(label, out var value))
-                countMap[label] = ++value;
-            else
-                countMap[label] = 1;
+            countMap[label] = countMap.TryGetValue(label, out var value) ? ++value : 1;
         }
 
         List<ModCaseLabel> result = [];

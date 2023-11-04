@@ -16,6 +16,8 @@ public class PunishmentCommand<T> : Command<T>
     public IServiceProvider ServiceProvider { get; set; }
     public DiscordRest DiscordRest { get; set; }
 
+    public AnnouncementResult AnnouncedResult;
+
     public override async Task BeforeCommandExecute()
     {
         await Context.Interaction.DeferAsync(!GuildConfig.StaffChannels.Contains(Context.Channel.Id));
@@ -29,6 +31,8 @@ public class PunishmentCommand<T> : Command<T>
         {
             var (_, result, finalWarned) =
                 await ModCaseRepository.CreateModCase(modCase);
+
+            AnnouncedResult = result;
 
             if (finalWarned && modCase.PunishmentType != PunishmentType.FinalWarn)
             {

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>preview</LangVersion>
+        <EnablePreviewFeatures>True</EnablePreviewFeatures>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Invites\Invites.csproj" />
+        <ProjectReference Include="..\Punishments\Punishments.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,6 +1,7 @@
 ﻿using AutoMods;
 using Bot;
 using Bot.Abstractions;
+using Greeting;
 using GuildAudits;
 using Invites;
 using JoinLeave;
@@ -24,6 +25,7 @@ public static class ImportModules
         {
             new BotModule(),
             new AutoModModule(),
+            new GreeterModule(),
             new GuildAuditModule(),
             new InviteModule(),
             new JoinLeaveModule(),
