@@ -33,7 +33,7 @@ internal class RequireGreeterAttribute : PreconditionAttribute
 
         return !greetConfig.AllowedGreetChannels.Contains(context.Channel.Id)
             ? PreconditionResult.FromError(
-                new UnauthorizedException($"This command can only be used in the '{channelNames}` channel(s)!"))
+                new UnauthorizedException($"This command can only be used in the `{channelNames}` channel(s)!"))
             : !greetConfig.AllowedGreetRoles.Any(r => gUser.RoleIds.Contains(r))
             ? PreconditionResult.FromError(
                 new UnauthorizedException($"This command can only be run by users with the `{roleNames}` role(s)!"))
