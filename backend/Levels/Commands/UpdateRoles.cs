@@ -38,23 +38,6 @@ public class UpdateRoles : Command<UpdateRoles>
             return;
         }
 
-        if (user != Context.User)
-            try
-            {
-                await Identity.RequirePermission(DiscordPermission.Moderator, Context.Guild.Id);
-            }
-            catch (UnauthorizedException)
-            {
-                await RespondInteraction(
-                    "You must be staff to use this command on a different user. The target user can use this command without a given user to update their own roles.");
-                return;
-            }
-            catch (Exception e)
-            {
-                await RespondInteraction("An unexpected error occurred while processing the command: " + e.Message);
-                return;
-            }
-
         var level = await GuildUserLevelRepository!.GetOrCreateLevel(Context.Guild.Id, user.Id);
         var guildlevelconfig = await GuildLevelConfigRepository!.GetOrCreateConfig(Context.Guild.Id);
         var calclevel = new CalculatedGuildUserLevel(level, guildlevelconfig);
