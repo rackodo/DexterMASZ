@@ -9,6 +9,7 @@ using Greeting.Attributes;
 using Bot.Exceptions;
 using Microsoft.Extensions.Logging;
 using Punishments.Extensions;
+using Humanizer;
 
 namespace Greeting.Commands;
 
@@ -51,7 +52,7 @@ public class GreeterMute : PunishmentCommand<GreeterMute>
 
         if (offset > greetGate.DisallowedMuteExistence)
             throw new UnauthorizedException($"This user is too old to be muted by greeters! " +
-                $"They joined {offset} ago, wheras the max is {greetGate.DisallowedMuteExistence}.");
+                $"They joined {offset.Humanize()} ago, wheras the max is {greetGate.DisallowedMuteExistence.Humanize()}.");
 
         var modCase = new ModCase
         {
