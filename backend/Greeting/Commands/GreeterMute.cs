@@ -56,7 +56,7 @@ public class GreeterMute : PunishmentCommand<GreeterMute>
 
         var modCase = new ModCase
         {
-            Title = $"GREETMUTE: {title}",
+            Title = title,
             GuildId = Context.Guild.Id,
             UserId = user.Id,
             ModId = Identity.GetCurrentUser().Id,
@@ -65,7 +65,8 @@ public class GreeterMute : PunishmentCommand<GreeterMute>
             PunishmentActive = true,
             Severity = SeverityType.Low,
             PunishedUntil = DateTime.UtcNow + greetGate.PunishmentTime,
-            CreationType = CaseCreationType.ByCommand
+            CreationType = CaseCreationType.ByCommand,
+            Labels = ["GreetMute"]
         };
 
         await RunModCase(modCase);

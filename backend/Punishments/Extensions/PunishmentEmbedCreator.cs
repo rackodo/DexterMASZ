@@ -55,8 +55,10 @@ public static class PunishmentEmbedCreator
         if (suspect != null)
             embed.WithThumbnailUrl(suspect.GetAvatarOrDefaultUrl());
 
-        embed.AddField($"**{translator.Get<BotTranslator>().Description()}**", modCase.Description.Truncate(1000))
-            .WithTitle($"#{modCase.CaseId} {modCase.Title}")
+        if (modCase.Title != modCase.Description)
+            embed.AddField($"**{translator.Get<BotTranslator>().Description()}**", modCase.Description.Truncate(1000));
+
+        embed.WithTitle($"#{modCase.CaseId} {modCase.Title}")
             .WithFooter(
                 $"{translator.Get<BotTranslator>().UserId()}: {modCase.Id} | {translator.Get<PunishmentTranslator>().CaseId()}: {modCase.CaseId}")
             .AddField($"⚖️ - {translator.Get<PunishmentTranslator>().Punishment()}",
