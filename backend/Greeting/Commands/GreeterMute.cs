@@ -16,15 +16,6 @@ namespace Greeting.Commands;
 public class GreeterMute : PunishmentCommand<GreeterMute>
 {
     public GreeterDatabase GreeterDatabase { get; set; }
-    private GreetGateModel greetGate;
-
-    public override async Task BeforeCommandExecute()
-    {
-        greetGate = await GreeterDatabase.GreeterConfigs.FindAsync(Context.Guild.Id);
-
-        await Context.Interaction.DeferAsync(greetGate == null);
-        ModCaseRepository.AsUser(Identity);
-    }
 
     [RequireGreeter]
     [SlashCommand("gmute", "Greeter mute command, executes on valid critera")]
@@ -35,6 +26,7 @@ public class GreeterMute : PunishmentCommand<GreeterMute>
         [Summary("description", "The description of the mod case")]
         string description = "")
     {
+        var greetGate = await GreeterDatabase.GreeterConfigs.FindAsync(Context.Guild.Id);
         var disallowedRole = user.RoleIds.FirstOrDefault(r => greetGate.DisallowedMuteRoles.Contains(r));
 
         if (disallowedRole != default)
