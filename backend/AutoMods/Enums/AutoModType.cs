@@ -11,5 +11,6 @@ public enum AutoModType
     CustomWordFilter,
     TooManyMessages,
     TooManyDuplicatedCharacters,
-    TooManyLinks
+    TooManyLinks,
+    NoLinksAllowed
 }

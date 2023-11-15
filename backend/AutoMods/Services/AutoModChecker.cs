@@ -140,73 +140,41 @@ public class AutoModChecker(DiscordSocketClient client, ILogger<AutoModChecker> 
     private async Task<bool> CheckAutoMod(AutoModType autoModType, IMessage message,
         Func<IMessage, AutoModConfig, DiscordSocketClient, Task<bool>> predicate, IServiceScope scope)
     {
-        var guild = ((ITextChannel)message.Channel).Guild;
+        var autoModConfig = await GetAutomodConfig(autoModType, message, scope);
 
-        var autoModConfig = (await scope.ServiceProvider.GetRequiredService<AutoModConfigRepository>()
-                .GetConfigsByGuild(guild.Id))
-            .FirstOrDefault(x => x.AutoModType == autoModType);
-
-        if (autoModConfig == null) return false;
-
-        if (!await predicate(message, autoModConfig, _client)) return false;
-
-        if (await IsProtectedByFilter(message, autoModConfig, scope)) return false;
-
-        var channel = (ITextChannel)message.Channel;
-
-        _logger.LogInformation(
-            $"U: {message.Author.Id} | C: {channel.Id} | G: {channel.Guild.Id} triggered {autoModConfig.AutoModType}.");
-
-        await ExecutePunishment(message, autoModConfig, scope);
-
-        if (autoModConfig.AutoModType != AutoModType.TooManyAutomods)
-            await CheckAutoMod(AutoModType.TooManyAutomods, message, CheckMultipleEvents, scope);
-
-        return true;
+        return autoModConfig != null &&
+            await predicate(message, autoModConfig, _client) &&
+            await FinaliseAutoMod(autoModConfig, message, scope);
     }
 
     private async Task<bool> CheckAutoMod(AutoModType autoModType, IMessage message,
         Func<IMessage, AutoModConfig, DiscordSocketClient, bool> predicate, IServiceScope scope)
     {
-        var guild = ((ITextChannel)message.Channel).Guild;
+        var autoModConfig = await GetAutomodConfig(autoModType, message, scope);
 
-        var autoModConfig = (await scope.ServiceProvider.GetRequiredService<AutoModConfigRepository>()
-                .GetConfigsByGuild(guild.Id))
-            .FirstOrDefault(x => x.AutoModType == autoModType);
-
-        if (autoModConfig == null) return false;
-
-        if (!predicate(message, autoModConfig, _client)) return false;
-
-        if (await IsProtectedByFilter(message, autoModConfig, scope)) return false;
-
-        var channel = (ITextChannel)message.Channel;
-
-        _logger.LogInformation(
-            $"U: {message.Author.Id} | C: {channel.Id} | G: {channel.Guild.Id} triggered {autoModConfig.AutoModType}.");
-
-        await ExecutePunishment(message, autoModConfig, scope);
-
-        if (autoModConfig.AutoModType != AutoModType.TooManyAutomods)
-            await CheckAutoMod(AutoModType.TooManyAutomods, message, CheckMultipleEvents, scope);
-
-        return true;
+        return autoModConfig != null
+            && predicate(message, autoModConfig, _client) &&
+            await FinaliseAutoMod(autoModConfig, message, scope);
     }
 
     private async Task CheckAutoMod(AutoModType autoModType, IMessage message,
         Func<IMessage, AutoModConfig, IServiceScope, Task<bool>> predicate, IServiceScope scope)
     {
-        var guild = ((ITextChannel)message.Channel).Guild;
-
-        var autoModConfig = (await scope.ServiceProvider.GetRequiredService<AutoModConfigRepository>()
-                .GetConfigsByGuild(guild.Id))
-            .FirstOrDefault(x => x.AutoModType == autoModType);
+        var autoModConfig = await GetAutomodConfig(autoModType, message, scope);
 
         if (autoModConfig == null) return;
 
         if (!await predicate(message, autoModConfig, scope)) return;
 
-        if (await IsProtectedByFilter(message, autoModConfig, scope)) return;
+        await FinaliseAutoMod(autoModConfig, message, scope);
+    }
+
+    private async Task<bool> FinaliseAutoMod(AutoModConfig autoModConfig, IMessage message, IServiceScope scope)
+    {
+        if (await IsProtectedByFilter(message, autoModConfig, scope)) return false;
+
+        if (autoModConfig.AutoModType == AutoModType.TooManyLinks && autoModConfig.Limit == 0)
+            autoModConfig.AutoModType = AutoModType.NoLinksAllowed;
 
         var channel = (ITextChannel)message.Channel;
 
@@ -217,6 +185,17 @@ public class AutoModChecker(DiscordSocketClient client, ILogger<AutoModChecker> 
 
         if (autoModConfig.AutoModType != AutoModType.TooManyAutomods)
             await CheckAutoMod(AutoModType.TooManyAutomods, message, CheckMultipleEvents, scope);
+        
+        return true;
+    }
+
+    private static async Task<AutoModConfig> GetAutomodConfig(AutoModType autoModType, IMessage message, IServiceScope scope)
+    {
+        var guild = ((ITextChannel)message.Channel).Guild;
+
+        return (await scope.ServiceProvider.GetRequiredService<AutoModConfigRepository>()
+                .GetConfigsByGuild(guild.Id))
+            .FirstOrDefault(x => x.AutoModType == autoModType);
     }
 
     private static async Task<bool> IsProtectedByFilter(IMessage message, AutoModConfig autoModConfig,

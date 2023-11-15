@@ -18,4 +18,5 @@ public class AutoModConfigForPutDto
     public int? Limit { get; set; }
     public string CustomWordFilter { get; set; }
     public AutoModChannelNotificationBehavior ChannelNotificationBehavior { get; set; }
+    public bool SendDmNotification { get; set; }
 }

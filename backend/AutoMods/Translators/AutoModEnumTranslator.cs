@@ -141,6 +141,7 @@ public class AutoModEnumTranslator : Translator
                 Language.It => "Troppi link utilizzati",
                 _ => "Too many links used"
             },
+            AutoModType.NoLinksAllowed => "No links allowed in this channel",
             _ => "Unknown"
         };
 
