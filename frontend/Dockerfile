@@ -1,4 +1,4 @@
-FROM node:16.18 AS compile-frontend
+FROM node:18.13 AS compile-frontend
 WORKDIR /angular
 
 COPY dexter/ .
