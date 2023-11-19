@@ -60,7 +60,8 @@ public class CreateRoleMenu : RoleMenuCommand<CreateRoleMenu>
             Id = lowestId,
             Name = title,
             MaximumRoles = maxRoles,
-            RoleToEmote = []
+            RoleToEmote = [],
+            RoleToPrerequesite = []
         };
 
         var embed = new EmbedBuilder()

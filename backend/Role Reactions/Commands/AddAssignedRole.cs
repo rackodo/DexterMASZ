@@ -15,7 +15,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
     [SlashCommand("add-rm-role", "Assigns a role to a role menu")]
     [Require(RequireCheck.GuildAdmin)]
     public async Task AddAssignedRoleCommand([Autocomplete(typeof(MenuHandler))] string menuStr,
-        string emote, IRole role)
+        string emote, IRole roleToAssign, IRole prerequesiteRole)
     {
         var menuArray = menuStr.Split(',');
         var menuId = int.Parse(menuArray[0]);
@@ -37,9 +37,9 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
             return;
         }
 
-        if (menu.RoleToEmote.ContainsKey(role.Id))
+        if (menu.RoleToEmote.ContainsKey(roleToAssign.Id))
         {
-            await RespondInteraction($"Role `{role.Name}` already exists for role menu `{menu.Name}`!");
+            await RespondInteraction($"Role `{roleToAssign.Name}` already exists for role menu `{menu.Name}`!");
             return;
         }
 
@@ -72,12 +72,16 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
             return;
         }
 
-        menu.RoleToEmote.Add(role.Id, emote);
+        menu.RoleToEmote.Add(roleToAssign.Id, emote);
+
+        if (prerequesiteRole != null)
+            menu.RoleToPrerequesite.Add(roleToAssign.Id, prerequesiteRole.Id);
+
         await Database.SaveChangesAsync();
 
         await CreateRoleMenu(menu, userMessage);
 
-        await RespondInteraction($"Successfully added role `{role.Name}` to menu `{menu.Name}`!");
+        await RespondInteraction($"Successfully added role `{roleToAssign.Name}` to menu `{menu.Name}`!");
     }
 
     [ComponentInteraction("add-rm-role:*,*")]
@@ -92,6 +96,11 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
         var userId = Context.User.Id;
         var user = Context.Guild.GetUser(userId);
         var userInfo = Database.UserRoles.Find(Context.Guild.Id, Context.Channel.Id, menuId, userId);
+
+        IRole preRequesiteRole = null;
+
+        if (menu.RoleToPrerequesite.TryGetValue(roleId, out var preRoleId))
+            preRequesiteRole = Context.Guild.GetRole(preRoleId);
 
         if (userInfo == null)
         {
@@ -126,15 +135,32 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
 
             if (rolesInCat < menu.MaximumRoles || menu.MaximumRoles <= 0)
             {
-                await user.AddRoleAsync(role);
+                var meetsPrerequesite = true;
 
-                if (!userInfo.RoleIds.Contains(roleId))
-                    userInfo.RoleIds.Add(roleId);
+                if (preRequesiteRole != null)
+                    if (!user.Roles.Any(r => r.Id == preRequesiteRole.Id))
+                        meetsPrerequesite = false;
 
-                embed
-                    .WithColor(Color.Green)
-                    .WithTitle("Added Role")
-                    .WithDescription($"{role.Mention} has been added to {user.Mention}!");
+                if (meetsPrerequesite)
+                {
+                    await user.AddRoleAsync(role);
+
+                    if (!userInfo.RoleIds.Contains(roleId))
+                        userInfo.RoleIds.Add(roleId);
+
+                    embed
+                        .WithColor(Color.Green)
+                        .WithTitle("Added Role")
+                        .WithDescription($"{role.Mention} has been added to {user.Mention}!");
+                }
+                else
+                {
+                    embed
+                        .WithColor(Color.Red)
+                        .WithTitle("Could Not Add Role")
+                        .WithDescription($"{user.Mention} does not have the prerequesite role " +
+                            $"of {preRequesiteRole.Mention} to assign this role!");
+                }
             }
             else
             {

@@ -24,6 +24,12 @@ public class RoleReactionsDatabase(DbContextOptions<RoleReactionsDatabase> optio
                 new DictionaryDataComparer<ulong, string>());
 
         modelBuilder
+            .Entity<RoleMenu>()
+            .Property(e => e.RoleToPrerequesite)
+            .HasConversion(new DictionaryDataConverter<ulong, ulong>(),
+                new DictionaryDataComparer<ulong, ulong>());
+
+        modelBuilder
             .Entity<UserRoles>()
             .Property(e => e.RoleIds)
             .HasConversion(new ListDataConverter<ulong>(),
