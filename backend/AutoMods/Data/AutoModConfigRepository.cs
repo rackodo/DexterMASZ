@@ -25,6 +25,9 @@ public class AutoModConfigRepository(DiscordRest discordRest, AutoModDatabase au
 
     public async Task<AutoModConfig> GetConfigsByGuildAndType(ulong guildId, AutoModType type)
     {
+        if (type == AutoModType.NoLinksAllowed)
+            type = AutoModType.TooManyLinks;
+
         var config = await _autoModDatabase.SelectPunishmentsConfigForGuildAndType(guildId, type);
 
         return config ?? throw new ResourceNotFoundException($"Auto mod config {guildId}/{type} does not exist.");
