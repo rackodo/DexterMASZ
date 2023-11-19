@@ -1,6 +1,5 @@
 ﻿using Bot.Attributes;
 using Bot.Enums;
-using Bot.Translators;
 using Discord;
 using Discord.Interactions;
 using RoleReactions.Abstractions;

@@ -1,7 +1,6 @@
 ﻿using Discord.Interactions;
 using Discord;
 using Greeting.Data;
-using Greeting.Models;
 using Punishments.Abstractions;
 using Punishments.Enums;
 using Punishments.Models;

@@ -1,7 +1,5 @@
 ﻿using Bot.Abstractions;
 using Bot.Data;
-using Bot.Enums;
-using Bot.Exceptions;
 using Bot.Services;
 using Discord;
 using Discord.Interactions;

@@ -68,6 +68,10 @@ public class LeftUserDto : IUser
     /// <inheritdoc />
     public string GlobalName => Username;
 
+    public string AvatarDecorationHash => throw new NotImplementedException();
+
+    public ulong? AvatarDecorationSkuId => throw new NotImplementedException();
+
     public Task<IDMChannel> CreateDMChannelAsync(RequestOptions options = null)
         => throw new NotImplementedException();
 
@@ -87,4 +91,10 @@ public class LeftUserDto : IUser
             PublicFlags = PublicFlags,
             Username = Username
         };
+
+    public string GetDisplayAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
+        => CDN.GetUserAvatarUrl(Id, AvatarId, size, format);
+
+    public string GetAvatarDecorationUrl()
+        => CDN.GetAvatarDecorationUrl(AvatarDecorationHash);
 }
