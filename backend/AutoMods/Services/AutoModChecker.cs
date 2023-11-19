@@ -173,17 +173,19 @@ public class AutoModChecker(DiscordSocketClient client, ILogger<AutoModChecker> 
     {
         if (await IsProtectedByFilter(message, autoModConfig, scope)) return false;
 
-        if (autoModConfig.AutoModType == AutoModType.TooManyLinks && autoModConfig.Limit == 0)
-            autoModConfig.AutoModType = AutoModType.NoLinksAllowed;
+        var modType = autoModConfig.AutoModType;
+
+        if (modType == AutoModType.TooManyLinks && autoModConfig.Limit == 0)
+            modType = AutoModType.NoLinksAllowed;
 
         var channel = (ITextChannel)message.Channel;
 
         _logger.LogInformation(
-            $"U: {message.Author.Id} | C: {channel.Id} | G: {channel.Guild.Id} triggered {autoModConfig.AutoModType}.");
+            $"U: {message.Author.Id} | C: {channel.Id} | G: {channel.Guild.Id} triggered {modType}.");
 
-        await ExecutePunishment(message, autoModConfig, scope);
+        await ExecutePunishment(message, modType, autoModConfig.AutoModAction, scope);
 
-        if (autoModConfig.AutoModType != AutoModType.TooManyAutomods)
+        if (modType != AutoModType.TooManyAutomods)
             await CheckAutoMod(AutoModType.TooManyAutomods, message, CheckMultipleEvents, scope);
         
         return true;
@@ -244,13 +246,13 @@ public class AutoModChecker(DiscordSocketClient client, ILogger<AutoModChecker> 
         return existing.Where(x => x.AutoModType != AutoModType.TooManyAutomods).Count() > config.Limit.Value;
     }
 
-    private async Task ExecutePunishment(IMessage message, AutoModConfig autoModConfig, IServiceScope scope)
+    private async Task ExecutePunishment(IMessage message, AutoModType type, AutoModAction action, IServiceScope scope)
     {
         AutoModEvent modEvent = new()
         {
             GuildId = ((ITextChannel)message.Channel).Guild.Id,
-            AutoModType = autoModConfig.AutoModType,
-            AutoModAction = autoModConfig.AutoModAction,
+            AutoModType = type,
+            AutoModAction = action,
             UserId = message.Author.Id,
             MessageId = message.Id,
             MessageContent = message.Content
