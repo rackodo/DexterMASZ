@@ -1,5 +1,5 @@
 ﻿using Discord;
-using Lavalink4NET.Player;
+using Lavalink4NET.Tracks;
 using System.Text;
 
 namespace Music.Extensions;

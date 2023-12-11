@@ -14,7 +14,7 @@ public class QueueNotEmptyAttribute : PreconditionAttribute
     {
         var audio = services.GetRequiredService<IAudioService>();
         var music = services.GetRequiredService<MusicService>();
-        var player = await audio.EnsureConnected(context, music);
+        var player = await audio.GetPlayerAsync(context, music);
 
         return player.Queue.IsEmpty ?
             PreconditionResult.FromError("Queue must not be empty before running this command!") :

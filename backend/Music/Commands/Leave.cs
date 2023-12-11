@@ -10,7 +10,7 @@ public class LeaveCommand : MusicCommand<LeaveCommand>
     [BotChannel]
     public async Task Leave()
     {
-        await Player.StopAsync(true);
+        await Player.StopAsync();
 
         await RespondInteraction("Left this session, the queue has been cleaned");
     }

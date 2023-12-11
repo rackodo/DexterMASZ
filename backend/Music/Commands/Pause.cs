@@ -1,6 +1,6 @@
 ﻿using Bot.Attributes;
 using Discord.Interactions;
-using Lavalink4NET.Player;
+using Lavalink4NET.Players;
 using Music.Abstractions;
 
 namespace Music.Commands;
@@ -11,14 +11,13 @@ public class PauseCommand : MusicCommand<PauseCommand>
     [BotChannel]
     public async Task Pause()
     {
-        if (Player.State == PlayerState.Paused)
+        if (Player.State is PlayerState.Paused)
         {
-            await RespondInteraction("Paused earlier");
+            await RespondAsync("Player is already paused.");
             return;
         }
 
         await Player.PauseAsync();
-
-        await RespondInteraction("Pausing");
+        await RespondAsync("Paused.");
     }
 }

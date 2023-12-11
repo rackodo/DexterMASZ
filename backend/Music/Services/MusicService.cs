@@ -2,9 +2,9 @@
 using Discord;
 using Discord.WebSocket;
 using Lavalink4NET;
-using Lavalink4NET.Events;
-using Lavalink4NET.Player;
-using Lavalink4NET.Tracking;
+using Lavalink4NET.Events.Players;
+using Lavalink4NET.InactivityTracking;
+using Lavalink4NET.Players;
 
 namespace Music.Services;
 
@@ -27,7 +27,7 @@ public class MusicService(DiscordSocketClient client, IAudioService lavalink, In
 
         _lavalink.TrackStarted += OnTrackStarted;
         _lavalink.TrackStuck += OnTrackStuck;
-        _lavalink.TrackEnd += OnTrackEnd;
+        _lavalink.TrackEnded += OnTrackEnd;
         _lavalink.TrackException += OnTrackException;
     }
 
@@ -77,12 +77,12 @@ public class MusicService(DiscordSocketClient client, IAudioService lavalink, In
                 $"by {Format.Bold(Format.Sanitize(currentTrack?.Author ?? "Unknown"))}",
                 embed: new EmbedBuilder()
                     .WithTitle("Error message")
-                    .WithDescription(e.ErrorMessage)
+                    .WithDescription(e.Exception.Message)
                     .Build()
             );
     }
 
-    public SocketTextChannel GetMusicChannel(LavalinkPlayer player)
+    public SocketTextChannel GetMusicChannel(ILavalinkPlayer player)
     {
         ulong channelId;
 
@@ -99,7 +99,7 @@ public class MusicService(DiscordSocketClient client, IAudioService lavalink, In
                 if (originalState.VoiceChannel.ConnectedUsers.Count == 1)
                     if (originalState.VoiceChannel.ConnectedUsers.First().Id == _client.CurrentUser.Id)
                     {
-                        var player = _lavalink.GetPlayer(originalState.VoiceChannel.Guild.Id);
+                        var player = await _lavalink.Players.GetPlayerAsync(originalState.VoiceChannel.Guild.Id);
                         if (player != null)
                             await player.DisconnectAsync();
                     }
@@ -107,8 +107,8 @@ public class MusicService(DiscordSocketClient client, IAudioService lavalink, In
 
     private async Task SetupLavalink()
     {
-        await _lavalink.InitializeAsync();
-        if (!_inactivityTracker.IsTracking) _inactivityTracker.BeginTracking();
+        await _lavalink.StartAsync();
+        await _inactivityTracker.StartAsync();
     }
 
     public void SetStartTimeAsCurrent(ulong guildId)

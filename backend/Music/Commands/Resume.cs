@@ -1,6 +1,6 @@
 ﻿using Bot.Attributes;
 using Discord.Interactions;
-using Lavalink4NET.Player;
+using Lavalink4NET.Players;
 using Music.Abstractions;
 using Music.Attributes;
 
@@ -13,14 +13,13 @@ public class ResumeCommand : MusicCommand<ResumeCommand>
     [QueueNotEmpty]
     public async Task Resume()
     {
-        if (Player.State != PlayerState.Paused)
+        if (Player.State is not PlayerState.Paused)
         {
-            await RespondInteraction("Resumed earlier");
+            await RespondAsync("Player is not paused.");
             return;
         }
 
         await Player.ResumeAsync();
-
-        await RespondInteraction("Resuming");
+        await RespondAsync("Resumed.");
     }
 }

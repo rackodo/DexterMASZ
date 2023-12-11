@@ -3,12 +3,12 @@ using Bot.Models;
 using Bot.Services;
 using Discord.WebSocket;
 using Fergun.Interactive;
-using Lavalink4NET;
 using Lavalink4NET.Artwork;
+using Lavalink4NET.Clients;
 using Lavalink4NET.DiscordNet;
-using Lavalink4NET.Logging.Microsoft;
+using Lavalink4NET.Extensions;
+using Lavalink4NET.InactivityTracking;
 using Lavalink4NET.Lyrics;
-using Lavalink4NET.MemoryCache;
 using Lavalink4NET.Tracking;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,24 +26,22 @@ public class MusicModule : Module
         services
             .AddSingleton(new InteractiveConfig { DefaultTimeout = TimeSpan.FromMinutes(5) })
             .AddSingleton<InteractiveService>()
-            .AddSingleton<ILavalinkCache, LavalinkCache>()
-            .AddSingleton<IAudioService, LavalinkNode>()
+            .AddLavalink()
             .AddSingleton<LyricsOptions>()
             .AddSingleton<LyricsService>()
             .AddSingleton<ArtworkService>()
             .AddSingleton(new InactivityTrackingOptions
             {
-                PollInterval = TimeSpan.FromMinutes(5), DisconnectDelay = TimeSpan.Zero, TrackInactivity = true
+                DefaultPollInterval = TimeSpan.FromMinutes(5), InactivityBehavior = PlayerInactivityBehavior.Pause, TrackingMode = InactivityTrackingMode.Any
             })
             .AddSingleton<InactivityTrackingService>()
             .AddSingleton<IDiscordClientWrapper, DiscordClientWrapper>(x =>
                 new DiscordClientWrapper(x.GetRequiredService<DiscordSocketClient>()))
-            .AddMicrosoftExtensionsLavalinkLogging()
-            .AddSingleton(new LavalinkNodeOptions
+            .ConfigureLavalink(config =>
             {
-                DebugPayloads = true,
-                DisconnectOnStop = false,
-                RestUri = $"http://{Host}:{Port}",
-                WebSocketUri = $"ws://{Host}:{Port}"
+                config.BaseAddress = new Uri($"http://{Host}:{Port}");
+                config.WebSocketUri = new Uri($"ws://{Host}:{Port}/v4/websocket");
+                config.ReadyTimeout = TimeSpan.FromSeconds(10);
+                config.Passphrase = "youshallnotpass";
             });
 }

@@ -12,7 +12,7 @@ public class ClearMusicCommand : MusicCommand<ClearMusicCommand>
     [QueueNotEmpty]
     public async Task Clear()
     {
-        Player.Queue.Clear();
+        await Player.Queue.ClearAsync();
 
         await RespondInteraction("Cleared all tracks of the queue");
     }

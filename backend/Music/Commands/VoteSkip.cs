@@ -1,6 +1,7 @@
 ﻿using Bot.Attributes;
 using Discord;
 using Discord.Interactions;
+using Lavalink4NET.Players.Vote;
 using Music.Abstractions;
 
 namespace Music.Commands;
@@ -19,11 +20,16 @@ public class VoteSkipCommand : MusicCommand<VoteSkipCommand>
             return;
         }
 
-        var info = await Player.VoteAsync(Context.User.Id);
+        var info = await Player.VoteAsync(Context.User.Id, options: new UserVoteOptions()
+        {
+            Factor = .5f
+        });
 
-        if (info.WasSkipped)
+        var votes = await Player.GetVotesAsync();
+
+        if (info == UserVoteResult.Skipped)
             await RespondInteraction($"Skipped - {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
         else
-            await RespondInteraction($"Votes required: {info.Votes.Count}/{Math.Ceiling(info.Percentage * info.TotalUsers)}");
+            await RespondInteraction($"Votes required: {votes.Votes.Count()}/{Math.Ceiling(votes.Percentage * votes.TotalUsers)}");
     }
 }

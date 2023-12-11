@@ -3,11 +3,15 @@ using Bot.Extensions;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Lavalink4NET.Player;
-using Lavalink4NET.Rest;
+using Lavalink4NET.Integrations.Lavasearch;
+using Lavalink4NET.Integrations.Lavasearch.Extensions;
+using Lavalink4NET.Players;
+using Lavalink4NET.Rest.Entities.Tracks;
+using Lavalink4NET.Tracks;
 using Music.Abstractions;
 using Music.Enums;
 using Music.Extensions;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace Music.Commands;
@@ -20,12 +24,12 @@ public class PlayCommand : MusicCommand<PlayCommand>
         [Summary("query", "Music query")] string query,
         [Summary("source", "Music source")] MusicSource source)
     {
-        var searchMode = SearchMode.None;
         StringBuilder tInfoSb = new();
 
         if (Uri.IsWellFormedUriString(query, UriKind.Absolute))
         {
-            var track = await Lavalink.GetTrackAsync(query);
+            var search = await Audio.Tracks.SearchAsync(query);
+            var track = search.Tracks.FirstOrDefault();
 
             if (track == null)
             {
@@ -33,40 +37,20 @@ public class PlayCommand : MusicCommand<PlayCommand>
                 return;
             }
 
-            Player.Queue.Add(track);
+            await Player.PlayAsync(track);
             track.AddTrackToSb(tInfoSb);
         }
         else
         {
-            switch (source)
+            if (!string.IsNullOrEmpty(query))
             {
-                case MusicSource.SoundCloud:
-                    searchMode = SearchMode.SoundCloud;
-                    break;
-                case MusicSource.YouTube:
-                    searchMode = SearchMode.YouTube;
-                    break;
-                case MusicSource.Spotify:
-                    query = $"spsearch:{query}";
-                    break;
-                case MusicSource.Deezer:
-                    query = $"dzsearch:{query}";
-                    break;
-                case MusicSource.YandexMusic:
-                    query = $"ymsearch:{query}";
-                    break;
-                case MusicSource.None:
-                    break;
-                default:
-                    await RespondInteraction("Unable to get search mode");
-                    return;
-            }
+                var tracks = await Audio.Tracks.SearchAsync(
+                    query: query,
+                    loadOptions: new TrackLoadOptions(SearchMode: source.GetSearchMode()),
+                    categories: ImmutableArray.Create(SearchCategory.Track)
+                );
 
-            if (query != null)
-            {
-                var tracks = await Lavalink.GetTracksAsync(query, searchMode);
-
-                var lavalinkTracks = tracks.ToList();
+                var lavalinkTracks = tracks.Tracks.ToList();
 
                 if (!lavalinkTracks.Any())
                 {
@@ -133,7 +117,8 @@ public class PlayCommand : MusicCommand<PlayCommand>
                         track.AddTrackToSb(tInfoSb);
                     }
 
-                    Player.Queue.AddRange(tracksList);
+                    foreach (var track in tracksList)
+                        await Player.PlayAsync(track);
                 }
                 else
                 {

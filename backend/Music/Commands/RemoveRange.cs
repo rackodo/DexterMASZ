@@ -34,14 +34,16 @@ public class RemoveRangeCommand : MusicCommand<RemoveRangeCommand>
 
         for (var p = startIndexInt; p <= endIndexInt; ++p)
         {
-            var track = Player.Queue[p];
+            var queuedTrack = Player.Queue[p];
+            var track = queuedTrack.Track;
+
             var page = new PageBuilder();
             page.WithText(
                 $"{Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
             pages.Add(page);
         }
 
-        Player.Queue.RemoveRange(startIndexInt, endIndexInt - startIndexInt + 1);
+        await Player.Queue.RemoveRangeAsync(startIndexInt, endIndexInt - startIndexInt + 1);
 
         await RespondInteraction("Sending removed songs...");
         await InteractiveService.SendPaginator(pages, Context);

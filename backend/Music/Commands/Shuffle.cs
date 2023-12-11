@@ -12,7 +12,7 @@ public class ShuffleCommand : MusicCommand<ShuffleCommand>
     [QueueNotEmpty]
     public async Task Shuffle()
     {
-        Player.Queue.Shuffle();
+        await Player.Queue.ShuffleAsync();
 
         await RespondInteraction("Shuffled the queue");
     }

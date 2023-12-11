@@ -21,7 +21,7 @@ public static class EventInvoke
             {
                 try
                 {
-                    await subscription.Invoke().ConfigureAwait(false);
+                    await subscription.Invoke();
                 }
                 catch (Exception ex)
                 {
@@ -41,7 +41,7 @@ public static class EventInvoke
             {
                 try
                 {
-                    await subscription.Invoke(arg).ConfigureAwait(false);
+                    await subscription.Invoke(arg);
                 }
                 catch (Exception ex)
                 {
@@ -61,7 +61,7 @@ public static class EventInvoke
             {
                 try
                 {
-                    await subscription.Invoke(arg1, arg2).ConfigureAwait(false);
+                    await subscription.Invoke(arg1, arg2);
                 }
                 catch (Exception ex)
                 {
@@ -82,7 +82,7 @@ public static class EventInvoke
             {
                 try
                 {
-                    await subscription.Invoke(arg1, arg2, arg3).ConfigureAwait(false);
+                    await subscription.Invoke(arg1, arg2, arg3);
                 }
                 catch (Exception ex)
                 {
@@ -104,7 +104,7 @@ public static class EventInvoke
             {
                 try
                 {
-                    await subscription.Invoke(arg1, arg2, arg3, arg4).ConfigureAwait(false);
+                    await subscription.Invoke(arg1, arg2, arg3, arg4);
                 }
                 catch (Exception ex)
                 {
@@ -125,7 +125,7 @@ public static class EventInvoke
             {
                 try
                 {
-                    await subscription.Invoke(arg1, arg2, arg3, arg4, arg5).ConfigureAwait(false);
+                    await subscription.Invoke(arg1, arg2, arg3, arg4, arg5);
                 }
                 catch (Exception ex)
                 {

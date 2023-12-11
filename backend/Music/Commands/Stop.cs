@@ -10,8 +10,13 @@ public class StopCommand : MusicCommand<StopCommand>
     [BotChannel]
     public async Task Stop()
     {
-        await Player.StopAsync();
+        if (Player.CurrentItem is null)
+        {
+            await RespondAsync("Nothing playing!");
+            return;
+        }
 
-        await RespondInteraction("Stopped this session, the queue has been cleaned");
+        await Player.StopAsync();
+        await RespondAsync("Stopped playing.");
     }
 }

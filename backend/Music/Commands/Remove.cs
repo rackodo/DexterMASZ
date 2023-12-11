@@ -24,8 +24,11 @@ public class RemoveCommand : MusicCommand<RemoveCommand>
 
         var posInt = Convert.ToInt32(index);
 
-        var track = Player.Queue[posInt];
-        Player.Queue.RemoveAt(posInt);
+        var queuedTrack = Player.Queue[posInt];
+
+        var track = queuedTrack.Track;
+
+        await Player.Queue.RemoveAtAsync(posInt);
 
         await RespondInteraction($"Removed track at index {index}: {Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(Format.Sanitize(track.Author))}");
     }

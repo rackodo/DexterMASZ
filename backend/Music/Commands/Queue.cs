@@ -18,14 +18,14 @@ public class QueueCommand : MusicCommand<QueueCommand>
     [QueueNotEmpty]
     public async Task Queue()
     {
-        var queue = Player.Queue;
-
         var idx = 0;
 
         StringBuilder text = new();
 
-        foreach (var track in queue)
+        foreach (var queuedTrack in Player.Queue)
         {
+            var track = queuedTrack.Track;
+
             var testStr =
                 $"{idx + 1} - {Format.Url($"{Format.Bold(Format.Sanitize(track.Title))} by {Format.Bold(track.Author)}", track.Uri?.AbsoluteUri ?? "https://example.com")}";
             text.AppendLine(testStr);

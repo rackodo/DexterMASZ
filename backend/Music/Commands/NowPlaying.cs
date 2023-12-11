@@ -40,11 +40,11 @@ public class NowPlayingCommand : MusicCommand<NowPlayingCommand>
                 .AddField("Source", Format.Sanitize(track.Uri?.AbsoluteUri ?? "Unknown"))
                 .AddField(isStream ? "Playtime" : "Position", isStream
                     ? DateTime.UtcNow.Subtract(startTime).Humanize()
-                    : $"{Player.Position.RelativePosition:g}".Split('.').First() +
+                    : $"{Player.Position.Value.RelativePosition:g}".Split('.').First() +
                       "/" +
                       $"{track.Duration:g}".Split('.').First()
                 )
-                .AddField("Loop Mode", Player.LoopMode)
+                .AddField("Loop Mode", Player.RepeatMode)
                 .AddField("Player State", Player.State)
         );
     }
