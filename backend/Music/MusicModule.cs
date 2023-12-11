@@ -18,7 +18,7 @@ namespace Music;
 
 public class MusicModule : Module
 {
-    public const string Host = "lavalink.usfurries.com";
+    public const string Host = "localhost";
     public const int Port = 2333;
     public const string Pass = "youshallnotpass";
 
