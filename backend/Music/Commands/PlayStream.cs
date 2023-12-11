@@ -16,7 +16,7 @@ public class PlayStreamCommand : MusicCommand<PlayStreamCommand>
     {
         if (!Uri.IsWellFormedUriString(streamUrl, UriKind.Absolute))
         {
-            await RespondInteraction("I need a valid stream URL to function");
+            await RespondInteraction("You need to provide a valid URL");
             return;
         }
 

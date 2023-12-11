@@ -31,7 +31,7 @@ public class ModCaseCommentsController(IdentityManager identityManager, ModCaseR
 
         // Suspects can only comment if last comment was not by him.
         if (!await identity.HasPermission(DiscordPermission.Moderator, guildId))
-            if (modCase.Comments.Any())
+            if (modCase.Comments.Count != 0)
                 if (modCase.Comments.Last().UserId == currentUser.Id)
                     throw new AlreadyCommentedException();
 
