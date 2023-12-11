@@ -3,15 +3,11 @@ using Bot.Extensions;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Lavalink4NET.Integrations.Lavasearch;
-using Lavalink4NET.Integrations.Lavasearch.Extensions;
 using Lavalink4NET.Players;
-using Lavalink4NET.Rest.Entities.Tracks;
 using Lavalink4NET.Tracks;
 using Music.Abstractions;
 using Music.Enums;
 using Music.Extensions;
-using System.Collections.Immutable;
 using System.Text;
 
 namespace Music.Commands;
@@ -22,14 +18,14 @@ public class PlayCommand : MusicCommand<PlayCommand>
     [BotChannel]
     public async Task Play(
         [Summary("query", "Music query")] string query,
-        [Summary("source", "Music source")] MusicSource source)
+        [Summary("source", "Music source")] MusicSource source = MusicSource.Default)
     {
         StringBuilder tInfoSb = new();
+        var searchMode = source.GetSearchMode();
 
         if (Uri.IsWellFormedUriString(query, UriKind.Absolute))
         {
-            var search = await Audio.Tracks.SearchAsync(query);
-            var track = search.Tracks.FirstOrDefault();
+            var track = await Audio.Tracks.LoadTrackAsync(query, searchMode);
 
             if (track == null)
             {
@@ -42,13 +38,9 @@ public class PlayCommand : MusicCommand<PlayCommand>
         }
         else
         {
-            if (!string.IsNullOrEmpty(query))
+            if (query != null)
             {
-                var tracks = await Audio.Tracks.SearchAsync(
-                    query: query,
-                    loadOptions: new TrackLoadOptions(SearchMode: source.GetSearchMode()),
-                    categories: ImmutableArray.Create(SearchCategory.Track)
-                );
+                var tracks = await Audio.Tracks.LoadTracksAsync(query, searchMode);
 
                 var lavalinkTracks = tracks.Tracks.ToList();
 

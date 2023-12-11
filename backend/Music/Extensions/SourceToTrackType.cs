@@ -7,7 +7,7 @@ public static class SourceToTrackType
 {
     public static TrackSearchMode GetSearchMode(this MusicSource source) => source switch
     {
-        MusicSource.None => TrackSearchMode.None,
+        MusicSource.Default => TrackSearchMode.None,
         MusicSource.YouTube => TrackSearchMode.YouTube,
         MusicSource.YouTubeMusic => TrackSearchMode.YouTubeMusic,
         MusicSource.SoundCloud => TrackSearchMode.SoundCloud,

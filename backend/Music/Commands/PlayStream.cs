@@ -1,0 +1,38 @@
+﻿using Bot.Attributes;
+using Discord.Interactions;
+using Lavalink4NET.Rest.Entities.Tracks;
+using Microsoft.AspNetCore.Components.Routing;
+using Music.Abstractions;
+using Music.Enums;
+using Music.Extensions;
+using System.Numerics;
+
+namespace Music.Commands;
+
+public class PlayStreamCommand : MusicCommand<PlayStreamCommand>
+{
+    [SlashCommand("play-stream", "Play a stream")]
+    [BotChannel]
+    public async Task PlayStream(
+        [Summary("stream-url", "Stream URL")] string streamUrl,
+        [Summary("source", "Music source")] MusicSource source = MusicSource.Default)
+    {
+        if (!Uri.IsWellFormedUriString(streamUrl, UriKind.Absolute))
+        {
+            await RespondInteraction("I need a valid stream URL to function");
+            return;
+        }
+
+        var track = await Audio.Tracks.LoadTrackAsync(streamUrl, source.GetSearchMode());
+
+        if (track == null)
+        {
+            await RespondInteraction($"Unable to get the stream from {streamUrl}");
+            return;
+        }
+
+        await Player.PlayAsync(track);
+
+        await RespondInteraction($"Now streaming from {streamUrl}");
+    }
+}

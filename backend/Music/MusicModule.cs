@@ -32,20 +32,18 @@ public class MusicModule : Module
 
             .AddSingleton<LyricsOptions>()
             .AddSingleton<LyricsService>()
+
             .AddSingleton<ArtworkService>()
 
-            .AddSingleton(new InactivityTrackingOptions
+            .ConfigureInactivityTracking(options =>
             {
-                DefaultPollInterval = TimeSpan.FromMinutes(5),
-                DefaultTimeout = TimeSpan.FromMinutes(5),
-                UseDefaultTrackers = true
+                options.DefaultPollInterval = TimeSpan.FromMinutes(5);
+                options.DefaultTimeout = TimeSpan.FromMinutes(5);
+                options.UseDefaultTrackers = true;
             })
             .Configure<IdleInactivityTrackerOptions>(config => config.Timeout = TimeSpan.FromSeconds(10))
             .AddInactivityTracking()
             .AddSingleton<InactivityTrackingService>()
-
-            .AddSingleton<IDiscordClientWrapper, DiscordClientWrapper>(x =>
-                new DiscordClientWrapper(x.GetRequiredService<DiscordSocketClient>()))
 
             .ConfigureLavalink(config =>
             {

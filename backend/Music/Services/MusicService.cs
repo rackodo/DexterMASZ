@@ -22,7 +22,6 @@ public class MusicService(DiscordSocketClient client, IAudioService lavalink, In
 
     public void RegisterEvents()
     {
-        _client.Ready += SetupLavalink;
         _client.UserVoiceStateUpdated += CheckLeft;
 
         _lavalink.TrackStarted += OnTrackStarted;
@@ -103,12 +102,6 @@ public class MusicService(DiscordSocketClient client, IAudioService lavalink, In
                         if (player != null)
                             await player.DisconnectAsync();
                     }
-    }
-
-    private async Task SetupLavalink()
-    {
-        await _lavalink.StartAsync();
-        await _inactivityTracker.StartAsync();
     }
 
     public void SetStartTimeAsCurrent(ulong guildId)
