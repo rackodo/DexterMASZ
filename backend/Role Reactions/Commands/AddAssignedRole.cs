@@ -167,8 +167,7 @@ public class AddAssignedRole : RoleMenuCommand<AddAssignedRole>
                 embed
                     .WithColor(Color.Red)
                     .WithTitle("Could Not Add Role")
-                    .WithDescription($"{user.Mention} already has the maximum of {rolesInCat} roles in this category, " +
-                        $"where the limit is {menu.MaximumRoles}!");
+                    .WithDescription($"{user.Mention} already has the maximum of {rolesInCat} roles in this category!");
             }
         }
 
