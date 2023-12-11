@@ -4,7 +4,6 @@ using Music.Exceptions;
 using Lavalink4NET;
 using Music.Services;
 using Discord;
-using Discord.Interactions;
 using Lavalink4NET.DiscordNet;
 
 namespace Music.Extensions;

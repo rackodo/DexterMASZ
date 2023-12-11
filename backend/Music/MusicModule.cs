@@ -8,6 +8,8 @@ using Lavalink4NET.Clients;
 using Lavalink4NET.DiscordNet;
 using Lavalink4NET.Extensions;
 using Lavalink4NET.InactivityTracking;
+using Lavalink4NET.InactivityTracking.Extensions;
+using Lavalink4NET.InactivityTracking.Trackers.Idle;
 using Lavalink4NET.Lyrics;
 using Lavalink4NET.Tracking;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,7 @@ public class MusicModule : Module
 {
     public const string Host = "lavalink.usfurries.com";
     public const int Port = 2333;
+    public const string Pass = "youshallnotpass";
 
     public override string[] Contributors { get; } = ["Swyreee", "Ferox"];
 
@@ -26,22 +29,30 @@ public class MusicModule : Module
         services
             .AddSingleton(new InteractiveConfig { DefaultTimeout = TimeSpan.FromMinutes(5) })
             .AddSingleton<InteractiveService>()
-            .AddLavalink()
+
             .AddSingleton<LyricsOptions>()
             .AddSingleton<LyricsService>()
             .AddSingleton<ArtworkService>()
+
             .AddSingleton(new InactivityTrackingOptions
             {
-                DefaultPollInterval = TimeSpan.FromMinutes(5), InactivityBehavior = PlayerInactivityBehavior.Pause, TrackingMode = InactivityTrackingMode.Any
+                DefaultPollInterval = TimeSpan.FromMinutes(5),
+                DefaultTimeout = TimeSpan.FromMinutes(5),
+                UseDefaultTrackers = true
             })
+            .Configure<IdleInactivityTrackerOptions>(config => config.Timeout = TimeSpan.FromSeconds(10))
+            .AddInactivityTracking()
             .AddSingleton<InactivityTrackingService>()
+
             .AddSingleton<IDiscordClientWrapper, DiscordClientWrapper>(x =>
                 new DiscordClientWrapper(x.GetRequiredService<DiscordSocketClient>()))
+
             .ConfigureLavalink(config =>
             {
                 config.BaseAddress = new Uri($"http://{Host}:{Port}");
                 config.WebSocketUri = new Uri($"ws://{Host}:{Port}/v4/websocket");
                 config.ReadyTimeout = TimeSpan.FromSeconds(10);
-                config.Passphrase = "youshallnotpass";
-            });
+                config.Passphrase = Pass;
+            })
+            .AddLavalink();
 }
