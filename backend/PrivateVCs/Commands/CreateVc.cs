@@ -158,16 +158,8 @@ public class CreateVc : Command<CreateVc>
         {
             await newChannel.AddPermissionOverwriteAsync(staffRole,
                 OverwritePermissions.InheritAll.Modify(
-                    speak: PermValue.Allow,
-                    useVoiceActivation: PermValue.Allow,
-                    stream: PermValue.Allow,
-                    sendMessages: PermValue.Allow,
-                    readMessageHistory: PermValue.Allow,
-                    useExternalEmojis: PermValue.Allow,
-                    addReactions: PermValue.Allow,
-
-                    manageChannel: PermValue.Allow,
                     viewChannel: PermValue.Allow,
+                    manageChannel: PermValue.Allow,
                     connect: PermValue.Allow,
                     muteMembers: PermValue.Allow,
                     deafenMembers: PermValue.Allow,
