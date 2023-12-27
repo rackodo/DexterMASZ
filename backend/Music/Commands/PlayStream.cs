@@ -1,11 +1,8 @@
 ﻿using Bot.Attributes;
 using Discord.Interactions;
-using Lavalink4NET.Rest.Entities.Tracks;
-using Microsoft.AspNetCore.Components.Routing;
 using Music.Abstractions;
 using Music.Enums;
 using Music.Extensions;
-using System.Numerics;
 
 namespace Music.Commands;
 

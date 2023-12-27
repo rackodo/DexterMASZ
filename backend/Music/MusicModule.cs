@@ -1,17 +1,13 @@
 ﻿using Bot.Abstractions;
 using Bot.Models;
 using Bot.Services;
-using Discord.WebSocket;
 using Fergun.Interactive;
 using Lavalink4NET.Artwork;
-using Lavalink4NET.Clients;
-using Lavalink4NET.DiscordNet;
 using Lavalink4NET.Extensions;
 using Lavalink4NET.InactivityTracking;
 using Lavalink4NET.InactivityTracking.Extensions;
 using Lavalink4NET.InactivityTracking.Trackers.Idle;
 using Lavalink4NET.Lyrics;
-using Lavalink4NET.Tracking;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Music;
