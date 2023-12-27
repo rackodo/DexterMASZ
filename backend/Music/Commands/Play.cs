@@ -4,6 +4,7 @@ using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Lavalink4NET.Players;
+using Lavalink4NET.Rest.Entities.Tracks;
 using Lavalink4NET.Tracks;
 using Music.Abstractions;
 using Music.Enums;
@@ -40,11 +41,14 @@ public class PlayCommand : MusicCommand<PlayCommand>
         {
             if (query != null)
             {
+                if (source == MusicSource.Default)
+                    searchMode = TrackSearchMode.YouTube;
+
                 var tracks = await Audio.Tracks.LoadTracksAsync(query, searchMode);
 
                 var lavalinkTracks = tracks.Tracks.ToList();
 
-                if (!lavalinkTracks.Any())
+                if (lavalinkTracks.Count == 0)
                 {
                     await RespondInteraction("Unable to get tracks. If this was a link to a stream or playlist, please use `/music play-stream` or `play-playlist`.");
 
