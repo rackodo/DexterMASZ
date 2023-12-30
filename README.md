@@ -1,3 +1,5 @@
+Don't like the look of rank cards... I'm gonna fix it.
+
 <html>
    <body>
       <h1 align="center" style="position: relative;">
